@@ -1,0 +1,142 @@
+name: Create Release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install bump2version bumpversion # Install bump2version if not already installed
+
+      - name: Bump version
+        env:
+            GITHUB_USERNAME: daquintero
+            GITHUB_EMAIL: darioaquintero@gmail.com
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Use the appropriate bumpversion command for your project
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          bump2version patch  # Minor increase
+          export VERSION=$(bumpversion --dry-run --list setup.py | grep '^new_version=' | sed -r 's/^new_version=//')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          git tag -d v$VERSION
+          git tag v$VERSION
+
+#      - name: Bump version and push tag
+#        uses: jaumann/github-bumpversion-action@v0.0.7
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+#      - name: Set version as environment variable
+#        run: |
+#          export VERSION=$(bumpversion --list setup.py | grep '^new_version=' | sed -r 's/^new_version=//')
+#          echo $VERSION
+
+#      - name: Commit files
+#        env:
+#          GITHUB_USERNAME: daquintero
+#          GITHUB_EMAIL: darioaquintero@gmail.com
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          git config --local user.email "darioaquintero@gmail.com"
+#          git config --local user.name "daquintero"
+#          git commit -am "UP: BumpVersion v${{ env.VERSION }}"
+#
+#      - name: Commit files
+#        run: |
+#          git tag v$VERSION
+#          git commit -a -m "PYPI: v$VERSION"
+#          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+#          git config --local user.name "github-actions[bot]"
+
+      - name: Push changes
+        env:
+          GITHUB_USERNAME: daquintero
+          GITHUB_EMAIL: darioaquintero@gmail.com
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
+
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION }}  # Use the incremented version as the tag name
+          release_name: ${{ env.VERSION }}  # Customize the release name
+          body: |
+            Update PYPI ${{ env.VERSION }}
+          draft: false
+          release: true
+
+#name: Create Release
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#
+#permissions:
+#  contents: write
+#
+#jobs:
+#  create_release:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Python
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: 3.x
+#
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install bumpversion  # Install bumpversion if not already installed
+#
+#      - name: Bump version
+#        env:
+#            GITHUB_USERNAME: daquintero
+#            GITHUB_EMAIL: darioaquintero@gmail.com
+#            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          # Use the appropriate bumpversion command for your project
+#          bumpversion patch  # Minor increase
+#
+#      - name: Set version as environment variable
+#        run: |
+#          export VERSION=$(bumpversion --dry-run --list | grep '^new_version=' | sed -r 's/^new_version=//')
+#
+#      - name: Create release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: v${{ env.VERSION }}  # Use the incremented version as the tag name
+#          release_name: Release ${{ env.VERSION }}  # Customize the release name
+#          body: |
+#            Update PYPI v${{ env.VERSION }}
+#          draft: false
+#          prerelease: false
