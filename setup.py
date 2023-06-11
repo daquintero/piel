@@ -4,7 +4,7 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
@@ -34,6 +34,21 @@ setup(
             'piel=piel.cli:main',
         ],
     },
+    extras_require={
+                "develop": [
+                    "sphinx",
+                    "sphinx_autodoc_typehints",
+                    "sphinx-pydantic",
+                    "sphinx-autoapi",
+                    "sphinx-autobuild",
+                    "sphinx_rtd_theme",
+                    "sphinx-gallery",
+                    "nbsphinx",
+                    "myst_parser",
+                    "pandoc",
+                    "flake8"
+                ]
+            },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
@@ -44,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/daquintero/piel',
-    version='0.0.1',
+    version='0.0.2',
     zip_safe=False,
 )
