@@ -1,0 +1,1 @@
+mamba install cocotb[bus]
