@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: ca84e500209b3757213759d4d522f8ed307cd638
+    hooks:
+      - id: check-yaml
+        exclude: ^(conda\.recipe/meta\.yaml|conda_build/templates/.*\.yaml|docs/click/meta\.yaml|conda/meta\.yaml|conda/construct.yaml|.*\.pic\.yml|conda/constructor/Miniforge3/construct.yaml)
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/asottile/blacken-docs
+    rev: 7b71075ceb458be255e24da587c0275818b51faa
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [black==23.3.0]
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: ad3ff374e97e29ca87c94b5dc7eccdd29adc6296
+    hooks:
+      - id: codespell
+        args: ["-L TE,TE/TM,te,ba,FPR,fpr_spacing,ro,nd,donot,schem"]
+        additional_dependencies:
+          - tomli
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "7c149cf0b9d2c4f7558de1ea5d2c137ca074d9d0"
+    hooks:
+      - id: ruff
+
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: d2425a62376c2197448cce2f825d5a0c3926b862
+    hooks:
+      - id: pretty-format-toml
+        args: [--autofix]
