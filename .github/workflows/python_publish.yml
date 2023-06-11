@@ -36,10 +36,10 @@ jobs:
       run: python -m build
 
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@master
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
-        password: ${{secrets.PYPI_PASSWORD}}
+        password: pypi-${{secrets.PYPI_PASSWORD}}
 
 #    - name: Publish to PyPI
 #      env:
