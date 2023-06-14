@@ -14,4 +14,5 @@ of quantum photonic circuits.
 * [`OpenLane`](https://github.com/The-OpenROAD-Project/OpenLane) - implements the RTL-to-GDSII flow for the
   electronic logic and outputs performance parameters of the implemented circuitry.
 * [`OpenSTA`]() -
+* [`yosys`]() -
 * [`verilator`]() -
