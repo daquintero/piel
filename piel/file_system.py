@@ -3,7 +3,12 @@ import shutil
 
 def copy_source_folder(source_directory: str, target_directory: str):
     if os.path.exists(target_directory):
-        shutil.rmtree(target_directory)
+        answer = input("Confirm deletion of: " + target_directory)
+        if answer.upper() in ["Y", "YES"]:
+            shutil.rmtree(target_directory)
+        elif answer.upper() in["N", "NO"]:
+            print("Copying files now from: " + source_directory + " to " + target_directory)
+
     shutil.copytree(
         source_directory,
         target_directory,

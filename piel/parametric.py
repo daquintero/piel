@@ -23,7 +23,7 @@ def multi_parameter_sweep(
 
     Make sure to use the parameter_names from default_design when writing up the parameter_sweep dictionary key name.
 
-    Example input formats::
+    Example project_structure formats::
 
         example_parameter_sweep_dictionary = {
             "parameter_1": np.arange(1, -40, 1),

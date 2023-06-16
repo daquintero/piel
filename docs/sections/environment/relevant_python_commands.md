@@ -17,6 +17,8 @@ import shutil # Shell utilities
 | Get absolute path of current running file                  | `pathlib.Path(__file__).resolve()`            |
 | Get absolute path of the directory of current running file | `pathlib.Path(__file__).parent.resolve()`     |
 | Get environment variable                                   | `os.environ["<variablename>"]`                |
+| Get POSIX representation of PATH                           | `pathlib.Path(".").as_posix()`                |
 | Get relative path of current running file                  | `pathlib.Path(__file__)`                      |
+| Get string representation of PATH                          | `str(pathlib.Path("."))`                      |
 | Set environment variable                                   | `os.environ["<variablename>"]` = "<newvalue>" |
 

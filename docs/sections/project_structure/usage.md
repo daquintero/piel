@@ -1,6 +1,6 @@
-# Usage
+# Project Structure Usage
 
-It is very simple. You need to structure your logic design files in a directory with this structure:
+It is very simple and follows convention. You need to structure your logic design files in a directory with this structure:
 
 Pre-generation file required configuration
 ```

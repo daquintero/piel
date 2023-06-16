@@ -2,7 +2,7 @@
 import os
 import pathlib
 
-os.environ["PIEL_PACKAGE_DIRECTORY"] = pathlib.Path(__file__).parent.resolve()
+os.environ["PIEL_PACKAGE_DIRECTORY"] = str(pathlib.Path(__file__).parent.parent.resolve())
 
 __author__ = """Dario Quintero"""
 __email__ = "darioaquintero@gmail.com"
