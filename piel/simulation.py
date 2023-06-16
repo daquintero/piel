@@ -40,6 +40,7 @@ def configure_cocotb_simulation(
     """
     pass
 
+
 def run_cocotb_simulation(
     design_directory: str,
 ):

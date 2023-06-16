@@ -32,27 +32,16 @@ example_open_lane_configuration = {
     "VERILOG_INCLUDE_DIRS": "dir::src/",
     "pdk::sky130*": {
         "FP_CORE_UTIL": 45,
-        "scl::sky130_fd_sc_hd": {
-            "CLOCK_PERIOD": 10
-        },
-        "scl::sky130_fd_sc_hdll": {
-            "CLOCK_PERIOD": 10
-        },
-        "scl::sky130_fd_sc_hs": {
-            "CLOCK_PERIOD": 8
-        },
-        "scl::sky130_fd_sc_ls": {
-            "CLOCK_PERIOD": 10,
-            "SYNTH_MAX_FANOUT": 5
-        },
-        "scl::sky130_fd_sc_ms": {
-            "CLOCK_PERIOD": 10
-        }
+        "scl::sky130_fd_sc_hd": {"CLOCK_PERIOD": 10},
+        "scl::sky130_fd_sc_hdll": {"CLOCK_PERIOD": 10},
+        "scl::sky130_fd_sc_hs": {"CLOCK_PERIOD": 8},
+        "scl::sky130_fd_sc_ls": {"CLOCK_PERIOD": 10, "SYNTH_MAX_FANOUT": 5},
+        "scl::sky130_fd_sc_ms": {"CLOCK_PERIOD": 10},
     },
     "pdk::gf180mcu*": {
         "CLOCK_PERIOD": 24.0,
         "FP_CORE_UTIL": 40,
         "SYNTH_MAX_FANOUT": 4,
         "PL_TARGET_DENSITY": 0.5,
-    }
+    },
 }

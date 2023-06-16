@@ -1,9 +1,9 @@
 import openlane
 from .defaults import test_spm_open_lane_configuration
 
+
 def run_openlane(
-    design_directory: str = ".",
-    configuration: dict =test_spm_open_lane_configuration
+    design_directory: str = ".", configuration: dict = test_spm_open_lane_configuration
 ):
     Classic = openlane.Flow.get("Classic")
 
@@ -14,6 +14,5 @@ def run_openlane(
 
     flow.start()
 
-__all__ = [
-    "run_openlane"
-]
+
+__all__ = ["run_openlane"]

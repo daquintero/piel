@@ -15,6 +15,5 @@ Pre-generation file required configuration
             source_files.v # Required by all
         tb/
             test_design.py # Required cocotb
-
 ```
 
