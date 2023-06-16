@@ -62,7 +62,7 @@ setup(
     packages=find_packages(include=["piel", "piel.*"]),
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/daquintero/piel",
-    version="0.0.20",
+    url='https://github.com/daquintero/piel',
+    version='0.0.21',
     zip_safe=False,
 )
