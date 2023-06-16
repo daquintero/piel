@@ -20,7 +20,7 @@ docker exec -it <yourdockercontainername> bash
 
 You can explore the environment a little bit just between running `ls` and `cd` commands. If it has started from the default installation you should have started under the `foss/designs` folder. It is here that we will load our initial design for evaluation and interconnectivity.
 
-Now, we can begin.
+Now, we can begin and follow the other tutorials.
 
 ## For Developers
 

@@ -1,5 +1,5 @@
-Welcome to piel's documentation!
-======================================
+`PIEL`: Photonic and Integrated Electronic System Design Tools!
+==============================================================
 
 .. toctree::
    :maxdepth: 2
@@ -7,6 +7,8 @@ Welcome to piel's documentation!
 
    readme
    installation
+   integration
+   environment/index
    usage
    modules
    contributing
