@@ -23,7 +23,7 @@ Photonic and electronic co-simulation system design tools interfaced with open-s
 * [Future] FPGA modelling and integration
 
 ## Environment Requirements
-* This will only work in a linux system due to the tool dependencies.
+* Please install the Linux Docker environment provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools).
 
 ## Credits
 This package was created with Cookiecutter and the `audreyr/cookiecutter-pypackage` project template.
