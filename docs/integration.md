@@ -5,7 +5,7 @@ of quantum photonic circuits.
 
 # Project Structure
 
-`piel` is composed of the following modules:
+`piel` is composed of the following modules all which are contained in the docker environment file provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools):
 * [`caravel`]() -
 * [`cocotb`](https://github.com/cocotb/cocotb) - implements the methods that allow the configuration of signal
   stimulus to the electronic logic directly from Python.

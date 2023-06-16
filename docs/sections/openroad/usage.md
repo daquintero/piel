@@ -2,7 +2,7 @@
 
 It is very simple. You need to structure your logic design files in a directory with this structure:
 
-Pre-generation file configuration
+Pre-generation file required configuration
 ```
     design_folder_name
         io/
@@ -17,3 +17,4 @@ Pre-generation file configuration
             test_design.py # Required cocotb
 
 ```
+

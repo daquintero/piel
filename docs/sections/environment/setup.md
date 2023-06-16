@@ -1,3 +1,3 @@
 # Environment Setup Instructions
 
-Eventually I will provide a docker file, but for now this file details the environment installation instructions.
+Install the docker environment provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools).
