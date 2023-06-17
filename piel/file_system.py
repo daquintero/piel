@@ -24,7 +24,7 @@ def copy_source_folder(source_directory: str, target_directory: str):
 
 
 def setup_example_design(
-    project_source: Literal(["piel", "openlane"]) ="piel",
+    project_source: Literal["piel", "openlane"] = "piel",
     example_name:str="simple_design"
 ):
     """
