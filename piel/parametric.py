@@ -57,7 +57,6 @@ def multi_parameter_sweep(
 
     return parameter_sweep_design_dictionary_array
 
-
 __all__ = [
     "single_parameter_sweep",
     "multi_parameter_sweep",
