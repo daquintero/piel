@@ -4,7 +4,7 @@ from .defaults import test_spm_open_lane_configuration
 
 
 def run_openlane_flow(
-    configuration: dict | None,
+    configuration: dict | None = test_spm_open_lane_configuration,
     design_directory: str = "/foss/designs/spm",
 ) -> None:
     """
@@ -19,12 +19,14 @@ def run_openlane_flow(
     """
     if configuration is None:
         # Get extract configuration file from config.json on directory
-        configuration = json.load(design_directory + "/config.json")
+        config_json_filepath = design_directory + "/config.json"
+        config_json = open(config_json_filepath)
+        configuration = json.load(config_json)
 
     Classic = openlane.Flow.get("Classic")
 
     flow = Classic(
-        configuration,
+        config=configuration,
         design_dir=design_directory,
     )
 
