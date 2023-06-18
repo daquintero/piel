@@ -22,7 +22,7 @@ Functions
 .. py:function:: copy_source_folder(source_directory: str, target_directory: str)
 
 
-.. py:function:: setup_example_design(example_name: str = 'simple_design')
+.. py:function:: setup_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design')
 
    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
