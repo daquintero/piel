@@ -8,7 +8,7 @@ os.environ["PIEL_PACKAGE_DIRECTORY"] = str(
 
 __author__ = """Dario Quintero"""
 __email__ = "darioaquintero@gmail.com"
-__version__ = "0.0.24"
+__version__ = "0.0.25"
 
 from .defaults import *
 from .file_system import *
