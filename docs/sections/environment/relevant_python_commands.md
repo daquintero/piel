@@ -11,14 +11,17 @@ import shutil # Shell utilities
 
 ## Useful Commands Table
 
-| Description                                                | Command                                       |
-|------------------------------------------------------------|-----------------------------------------------|
-| Check if "examplepath" directory exists                    | `pathlib.Path.exists(<examplepath>)`          |
-| Get absolute path of current running file                  | `pathlib.Path(__file__).resolve()`            |
-| Get absolute path of the directory of current running file | `pathlib.Path(__file__).parent.resolve()`     |
-| Get environment variable                                   | `os.environ["<variablename>"]`                |
-| Get POSIX representation of PATH                           | `pathlib.Path(".").as_posix()`                |
-| Get relative path of current running file                  | `pathlib.Path(__file__)`                      |
-| Get string representation of PATH                          | `str(pathlib.Path("."))`                      |
-| Set environment variable                                   | `os.environ["<variablename>"]` = "<newvalue>" |
+| Description                                                | Command                                                    |
+|------------------------------------------------------------|------------------------------------------------------------|
+| Copy a file from a source to a destination filepaths       | `shutil.copyfile(<sourcefilepath>, <destinationfilepath>`  |
+| Check if "examplepath" directory exists                    | `pathlib.Path.exists("<examplepath>")`                     |
+| Get absolute PATH of current running file                  | `pathlib.Path(__file__).resolve()`                         |
+| Get absolute PATH of the directory of current running file | `pathlib.Path(__file__).parent.resolve()`                  |
+| Get current working directory PATH                         | `pathlib.Path(".")`                                        |
+| Get environment variable                                   | `os.environ["<variablename>"]`                             |
+| Get POSIX representation of PATH                           | `pathlib.Path("<examplepath>").as_posix()`                 |
+| Get relative PATH of current running file                  | `pathlib.Path(__file__)`                                   |
+| Get string representation of PATH                          | `str(pathlib.Path("<examplepath>"))`                       |
+| Get subpath from existing PATH                             | `pathlib.Path("<examplepath>") / "<subdirectory>"`         |
+| Set environment variable                                   | `os.environ["<variablename>"]` = "<newvalue>"              |
 

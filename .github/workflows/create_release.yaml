@@ -46,7 +46,7 @@ jobs:
 
 #      - name: Set version as environment variable
 #        run: |
-#          export VERSION=$(bumpversion --list setup.py | grep '^new_version=' | sed -r 's/^new_version=//')
+#          export VERSION=$(bumpversion --list 00_setup.py | grep '^new_version=' | sed -r 's/^new_version=//')
 #          echo $VERSION
 
 #      - name: Commit files
