@@ -9,6 +9,7 @@
    installation
    integration
    environment/index
+   examples
    usage
    modules
    contributing
