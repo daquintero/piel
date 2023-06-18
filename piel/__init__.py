@@ -6,7 +6,7 @@ os.environ["PIEL_PACKAGE_DIRECTORY"] = str(pathlib.Path(__file__).parent.parent.
 
 __author__ = """Dario Quintero"""
 __email__ = "darioaquintero@gmail.com"
-__version__ = '0.0.23'
+__version__ = '0.0.24'
 
 from .defaults import *
 from .file_system import *
