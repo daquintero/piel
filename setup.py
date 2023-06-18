@@ -13,6 +13,8 @@ with open("HISTORY.rst") as history_file:
 requirements = [
     "Click>=7.0",
     "openlane",
+    "cocotb",
+    "gdsfactory",
 ]
 
 test_requirements = [

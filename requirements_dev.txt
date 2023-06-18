@@ -28,3 +28,6 @@ jupyterlab~=3.0
 jupytext
 setuptools>=40.8.0
 wheel
+openlane
+cocotb
+gdsfactory
