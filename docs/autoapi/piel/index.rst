@@ -72,7 +72,7 @@ Attributes
    
 
 .. py:data:: __version__
-   :value: '0.0.24'
+   :value: '0.0.25'
 
    
 
