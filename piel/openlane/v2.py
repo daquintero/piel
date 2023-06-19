@@ -1,6 +1,6 @@
 import json
 import openlane
-from .defaults import test_spm_open_lane_configuration
+from piel.defaults import test_spm_open_lane_configuration
 
 
 def run_openlane_flow(

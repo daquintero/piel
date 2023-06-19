@@ -3,7 +3,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Environment:
+   :caption: Contents:
 
    readme
    installation

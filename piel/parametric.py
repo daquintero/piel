@@ -1,3 +1,6 @@
+import itertools
+
+
 def single_parameter_sweep(
     base_design_configuration: dict,
     parameter_name: str,
@@ -13,7 +16,7 @@ def single_parameter_sweep(
 
 def multi_parameter_sweep(
     base_design_configuration: dict, parameter_sweep_dictionary: dict
-):
+) -> list:
     """
     This multiparameter sweep is pretty cool, as it will generate designer list of dictionaries that comprise of all the possible combinations of your parameter sweeps. For example, if you are sweeping `parameter_1 = np.arange(0, 2) = array([0, 1])`, and `parameter_2 = np.arange(2, 4) = array([2, 3])`, then this function will generate list of dictionaries based on the default_design dictionary, but that will comprise of all the potential parameter combinations within this list.
 
