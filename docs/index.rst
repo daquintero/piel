@@ -3,14 +3,15 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Environment:
 
    readme
    installation
    integration
-   environment/index
    examples
    usage
+   sections/environment/index
+   sections/codesign/index
    modules
    contributing
    authors
