@@ -1,11 +1,15 @@
 import os
 import pathlib
 import json
-from ..parametric import multi_parameter_sweep
-from ..file_system import copy_source_folder, return_path, write_script
+from ..file_system import (
+    return_path,
+    write_script,
+    run_script,
+    permit_script_execution,
+)
 
 
-def configure_openlane_v1_flow_script(
+def configure_flow_script_openlane_v1(
     design_directory: str | pathlib.Path,
     design_name: str,
 ) -> None:
@@ -39,8 +43,33 @@ def configure_openlane_v1_flow_script(
         )
 
 
+def check_config_json_exists_openlane_v1(
+    design_name: str,
+    root_directory: str | pathlib.Path | None = None,
+) -> bool:
+    """
+    Checks if a design has a `config.json` file.
+
+    Args:
+        design_name(str): Name of the design.
+
+    Returns:
+        config_json_exists(bool): True if `config.json` exists.
+    """
+    if root_directory is None:
+        root_directory = get_latest_version_root_openlane_v1()
+
+    config_json_exists = False
+    openlane_v1_design_directory = root_directory / "designs"
+    design_directory = openlane_v1_design_directory / design_name
+    if (design_directory / "config.json").exists():
+        config_json_exists = True
+    return config_json_exists
+
+
 def check_design_exists_openlane_v1(
     design_name: str,
+    root_directory: str | pathlib.Path | None = None,
 ) -> bool:
     """
     Checks if a design exists in the OpenLane v1 design folder.
@@ -53,74 +82,89 @@ def check_design_exists_openlane_v1(
     Returns:
         design_exists(bool): True if design exists.
     """
+    if root_directory is None:
+        root_directory = get_latest_version_root_openlane_v1()
+
     design_exists = False
-    openlane_v1_design_directory = pathlib.Path(os.environ["OPENLANE_ROOT"]) / "designs"
+    openlane_v1_design_directory = root_directory / "designs"
     all_openlane_v1_designs = list(openlane_v1_design_directory.iterdir())
     if design_name in all_openlane_v1_designs:
         design_exists = True
     return design_exists
 
 
-def configure_parametric_designs(
-    parameter_sweep_dictionary: dict,
-    source_design_directory: str | pathlib.Path,
-) -> list:
-    """
-    For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
-
-    Args:
-        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
-        source_design_directory(str | pathlib.Path): Source design directory.
-
-    Returns:
-        configuration_sweep(list): List of configurations to sweep.
-    """
-    source_design_directory = return_path(source_design_directory)
-    source_design_configuration_path = source_design_directory / "config.json"
-    with open(source_design_configuration_path, "r") as config_json:
-        source_configuration = json.load(config_json)
-    configuration_sweep = multi_parameter_sweep(
-        base_design_configuration=source_configuration,
-        parameter_sweep_dictionary=parameter_sweep_dictionary,
-    )
-    return configuration_sweep
-
-
-def create_parametric_designs(
-    parameter_sweep_dictionary: dict,
-    source_design_directory: str | pathlib.Path,
-    target_directory: str | pathlib.Path,
+def configure_and_run_design_openlane_v1(
+    design_name: str,
+    configuration: dict | None = None,
+    root_directory: str | pathlib.Path | None = None,
 ) -> None:
     """
-    Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+    Configures and runs an OpenLane v1 design.
+
+    This function does the following:
+    1. Checks that the design_directory provided is under $OPENLANE_ROOT
+    2. Checks if `config.json` has already been provided for this design. If a configuration dictionary is inputted into the function parameters, then it overwrites the default `config.json`.
+    3. Creates a script directory, a script is written and permissions are provided for it to be executable.
+    4. It executes the `openlane_flow.sh` script in the `scripts` directory.
 
     Args:
-        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
-        source_design_directory(str): Source design directory.
-        target_directory(str): Target directory.
+        design_name(str): Name of the design.
+        configuration(dict | None): Configuration dictionary.
+        root_directory(str | pathlib.Path): Design directory.
 
     Returns:
         None
     """
-    source_design_directory = return_path(source_design_directory)
-    source_design_name = source_design_directory.parent.name
-    target_directory = return_path(target_directory)
-    parameter_sweep_configuration_list = configure_parametric_designs(
-        parameter_sweep_dictionary=parameter_sweep_dictionary,
-        source_design_directory=source_design_directory,
-    )
+    if root_directory is None:
+        root_directory = get_latest_version_root_openlane_v1()
 
-    for configuration_i in parameter_sweep_configuration_list:
-        configuration_id = id(configuration_i)
-        configuration_i["parametric_id"] = configuration_id
-        # TODO improve this for relevant parametric variation naming
-        target_directory_i = (
-            target_directory / source_design_name + "_" + str(configuration_id)
+    root_directory = return_path(root_directory)
+    design_exists = check_design_exists_openlane_v1(design_name)
+    design_directory = root_directory / "designs" / design_name
+
+    # Check design existence
+    if design_exists:
+        pass
+    else:
+        raise ValueError(
+            "Design: "
+            + design_name
+            + " is not found in "
+            + str(root_directory / "designs")
         )
-        copy_source_folder(
-            source_directory=source_design_directory,
-            target_directory=target_directory_i,
-        )
+
+    # Check configuration
+    config_json_exists = check_config_json_exists_openlane_v1(design_name)
+
+    if config_json_exists:
+        pass
+    else:
+        if configuration is None:
+            raise ValueError(
+                "Configuration dictionary is None. Please provide a configuration dictionary."
+            )
+        else:
+            write_openlane_configuration(
+                configuration=configuration, design_directory=design_directory
+            )
+
+    # Create script directory
+    configure_flow_script_openlane_v1(design_directory=design_directory)
+
+    # Execute script
+    openlane_flow_script_path = design_directory / "scripts" / "openlane_flow.sh"
+    permit_script_execution(openlane_flow_script_path)
+    run_script(openlane_flow_script_path)
+
+
+def get_latest_version_root_openlane_v1() -> pathlib.Path:
+    """
+    Gets the latest version root of OpenLane v1.
+    """
+    openlane_tool_directory = pathlib.Path(os.environ["OPENLANE_ROOT"])
+    latest_openlane_version = list(openlane_tool_directory.iterdir())
+    openlane_v1_design_directory = openlane_tool_directory / latest_openlane_version[-1]
+    return openlane_v1_design_directory
 
 
 def write_openlane_configuration(
@@ -141,34 +185,11 @@ def write_openlane_configuration(
         json.dump(configuration, write_file, indent=4)
 
 
-def configure_and_run_openlane_v1_design(
-    design_directory: str | pathlib.Path,
-    configuration: dict | None = None,
-) -> None:
-    """
-    Configures and runs an OpenLane v1 design.
-
-    This function does the following:
-    1. Checks that the design_directory provided is under $OPENLANE_ROOT
-    2. Checks if `config.json` has already been provided for this design. If a configuration dictionary is inputted into the function parameters, then it overwrites the default `config.json`.
-    3. Creates a script directory, a script is written and permissions are provided for it to be executable.
-    4. It executes the `openlane_flow.sh` script in the `scripts` directory.
-
-    Args:
-        design_directory(str | pathlib.Path): Design directory.
-        configuration(dict | None): Configuration dictionary.
-
-    Returns:
-        None
-    """
-    design_directory = return_path(design_directory)
-    pass
-
-
 __all__ = [
+    "check_config_json_exists_openlane_v1",
     "check_design_exists_openlane_v1",
-    "configure_openlane_v1_flow_script",
-    "configure_parametric_designs",
-    "create_parametric_designs",
+    "configure_and_run_design_openlane_v1",
+    "configure_flow_script_openlane_v1",
+    "get_latest_version_root_openlane_v1",
     "write_openlane_configuration",
 ]

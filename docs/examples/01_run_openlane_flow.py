@@ -49,14 +49,22 @@ openlane_root_directory = (
 )
 openlane_root_directory
 
+# We can find out all the default designs in Openlane designs accordingly
+
+(openlane_root_directory / "designs").iterdir()
+
 # ### Run Default `spm` Design using `piel`
 
 # #### The Fast Version
 
 # `piel` provides a set of functions for easily configuring and running a design into `Openlane v1`. For the default `spm` that already has a set up `config.json` file and project structure:
 
+
+# #### The Slow Version
+
+
+# ## OpenLane V2 Flow
+
 piel.run_openlane_flow(
     design_directory="/foss/designs/spm",
 )
-
-# #### The Slow Version
