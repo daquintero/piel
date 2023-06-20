@@ -19,6 +19,13 @@ def create_gdsfactory_component_from_openlane(
     This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
 
     It will look into the latest design run and extract the final OpenLane-generated GDS. You do not have to have run this with OpenLane2 as it just looks at the latest run.
+
+    Args:
+        design_directory(str): Design directory PATH.
+        run_name(str): Name of the run to extract the GDS from. If None, it will look at the latest run.
+
+    Returns:
+        component(gf.Component): GDSFactory component.
     """
     design_directory = return_path(design_directory)
     design_name = design_directory.parent.name

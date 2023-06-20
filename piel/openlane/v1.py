@@ -10,6 +10,13 @@ def write_openlane_configuration(
 ) -> None:
     """
     Writes a config.json onto a design_directory
+
+    Args:
+        configuration(dict): OpenLane configuration dictionary.
+        design_directory(str): Design directory PATH.
+
+    Returns:
+        None
     """
     with open(str((design_directory / "config.json").resolve()), "w") as write_file:
         json.dump(configuration, write_file, indent=4)
@@ -21,6 +28,13 @@ def configure_parametric_designs(
 ) -> list:
     """
     For a given source_design_directory, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
+
+    Args:
+        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
+        source_design_directory(str): Source design directory.
+
+    Returns:
+        configuration_sweep(list): List of configurations to sweep.
     """
     source_design_directory = return_path(source_design_directory)
     source_design_configuration_path = source_design_directory / "config.json"
@@ -40,6 +54,14 @@ def create_parametric_designs(
 ) -> None:
     """
     Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+
+    Args:
+        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
+        source_design_directory(str): Source design directory.
+        target_directory(str): Target directory.
+
+    Returns:
+        None
     """
     source_design_directory = return_path(source_design_directory)
     source_design_name = source_design_directory.parent.name

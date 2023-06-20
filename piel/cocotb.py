@@ -43,6 +43,17 @@ def configure_cocotb_simulation(
 
         # include cocotb's make rules to take care of the simulator setup
         include $(shell cocotb-config --makefiles)/Makefile.sim
+
+    Args:
+        design_directory (str | pathlib.Path): The directory where the design is located.
+        simulator (Literal["icarus", "verilator"]): The simulator to use.
+        top_level_language (Literal["verilog", "vhdl"]): The top level language.
+        top_level_verilog_module (str): The top level verilog module.
+        test_python_module (str): The test python module.
+        design_sources_list (list | None, optional): A list of design sources. Defaults to None.
+
+    Returns:
+        None
     """
     design_directory = return_path(design_directory)
     design_sources_directory = design_directory / "src"
@@ -89,8 +100,16 @@ def run_cocotb_simulation(
     design_directory: str,
 ) -> subprocess.CompletedProcess:
     """
-    Equivalent to running the cocotb makefile::
+    Equivalent to running the cocotb makefile:
+    .. code-block::
         make
+
+    Args:
+        design_directory (str): The directory where the design is located.
+
+    Returns:
+        subprocess.CompletedProcess: The subprocess.CompletedProcess object.
+
     """
     test_directory = return_path(design_directory) / "tb"
     commands_list = ["cd" + str(test_directory.resolve()), "make"]

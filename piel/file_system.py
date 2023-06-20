@@ -8,6 +8,12 @@ from typing import Literal
 def check_example_design(design_name: str | pathlib.Path = "simple_design") -> bool:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
+
+    Args:
+        design_name(str): Name of the design to check.
+
+    Returns:
+        None
     """
     design_folder = (
         pathlib.Path(os.environ["DESIGNS"]) / design_name
@@ -20,6 +26,13 @@ def copy_source_folder(
 ) -> None:
     """
     Copies the files from a source_directory to a target_directory
+
+    Args:
+        source_directory(str): Source directory.
+        target_directory(str): Target directory.
+
+    Returns:
+        None
     """
     source_directory = return_path(source_directory)
     target_directory = return_path(target_directory)
@@ -51,6 +64,12 @@ def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     Returns a pathlib.Path to be able to perform operations accordingly internally.
 
     This allows us to maintain compatibility between POSIX and Windows systems.
+
+    Args:
+        input_path(str): Input path.
+
+    Returns:
+        pathlib.Path: Pathlib path.
     """
     if type(input_path) == str:
         output_path = pathlib.Path(input_path)
@@ -65,6 +84,13 @@ def setup_example_design(
 ) -> None:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
+
+    Args:
+        project_source(str): Source of the project.
+        example_name(str): Name of the example design.
+
+    Returns:
+        None
     """
     if project_source == "piel":
         example_design_folder = (
@@ -87,6 +113,14 @@ def write_script(
 ) -> None:
     """
     Records a `script_name` in the `scripts` project directory.
+
+    Args:
+        design_directory(str): Design directory.
+        script(str): Script to write.
+        script_name(str): Name of the script.
+
+    Returns:
+        None
     """
     design_directory = return_path(design_directory)
     file = open(str(design_directory / script_name), "w")
