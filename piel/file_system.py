@@ -1,7 +1,7 @@
-import shutil
-import pathlib
 import openlane
 import os
+import pathlib
+import shutil
 from typing import Literal
 
 
@@ -15,7 +15,9 @@ def check_example_design(design_name: str | pathlib.Path = "simple_design") -> b
     return design_folder.exists()
 
 
-def copy_source_folder(source_directory: str, target_directory: str) -> None:
+def copy_source_folder(
+    source_directory: str | pathlib.Path, target_directory: str | pathlib.Path
+) -> None:
     """
     Copies the files from a source_directory to a target_directory
     """
@@ -44,7 +46,7 @@ def copy_source_folder(source_directory: str, target_directory: str) -> None:
     )
 
 
-def return_path(input_path: str | pathlib.Path):
+def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     """
     Returns a pathlib.Path to be able to perform operations accordingly internally.
 
@@ -78,9 +80,25 @@ def setup_example_design(
     )
 
 
+def write_script(
+    design_directory: str | pathlib.Path,
+    script: str,
+    script_name: str,
+) -> None:
+    """
+    Records a `script_name` in the `scripts` project directory.
+    """
+    design_directory = return_path(design_directory)
+    file = open(str(design_directory / script_name), "w")
+    file.write(script)
+    file.close()
+
+
 __all__ = [
     "check_example_design",
     "copy_source_folder",
-    "setup_example_design",
     "check_example_design",
+    "setup_example_design",
+    "return_path",
+    "write_script",
 ]

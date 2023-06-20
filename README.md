@@ -15,9 +15,11 @@ Photonic and electronic co-simulation system design tools interfaced with open-s
 * Individual and interposer design integration.
 
 ## Dependency Toolset
+This package provides a wrapper to easily co-design microelectronics through the functionality of the [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools) and photonics via [GDSFactory](gdsfactory/gdsfactory: An open source platform for end to-end photonic chip design and validation)
+
 * `gdsfactory` for the photonic design
 * `OpenROAD OpenLane` for the micro-electronic layout design
-* `verilator` for the digital HDL simulations
+* `verilator` & `iverilog` for the digital HDL simulations
 * `cocotb` for python-based testbench modelling
 * `porf` my custom package for `OpenROAD` data extraction.
 * [Future] FPGA modelling and integration

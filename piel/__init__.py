@@ -6,7 +6,7 @@ from .defaults import *  # NOQA: F403
 from .file_system import *  # NOQA: F403
 from .openlane import *  # NOQA: F403
 from .parametric import *  # NOQA: F403
-from .simulation import *  # NOQA: F403
+from .cocotb import *  # NOQA: F403
 
 os.environ["PIEL_PACKAGE_DIRECTORY"] = str(
     pathlib.Path(__file__).parent.parent.resolve()
