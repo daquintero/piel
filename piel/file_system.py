@@ -1,7 +1,10 @@
+import subprocess
+
 import openlane
 import os
 import pathlib
 import shutil
+import stat
 from typing import Literal
 
 
@@ -59,6 +62,20 @@ def copy_source_folder(
     )
 
 
+def permit_script_execution(script_path: str | pathlib.Path) -> None:
+    """
+    Permits the execution of a script.
+
+    Args:
+        script_path(str): Script path.
+
+    Returns:
+        None
+    """
+    script = return_path(script_path)
+    script.chmod(script.stat().st_mode | stat.S_IEXEC)
+
+
 def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     """
     Returns a pathlib.Path to be able to perform operations accordingly internally.
@@ -76,6 +93,20 @@ def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     elif type(input_path) == pathlib.Path:
         output_path = input_path
     return output_path
+
+
+def run_script(script_path: str | pathlib.Path) -> None:
+    """
+    Runs a script on the filesystem `script_path`.
+
+    Args:
+        script_path(str): Script path.
+
+    Returns:
+        None
+    """
+    script = return_path(script_path)
+    subprocess.run(script, shell=True, check=True, capture_output=True)
 
 
 def setup_example_design(
@@ -132,6 +163,7 @@ __all__ = [
     "check_example_design",
     "copy_source_folder",
     "check_example_design",
+    "permit_script_execution",
     "setup_example_design",
     "return_path",
     "write_script",

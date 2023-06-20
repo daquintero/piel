@@ -1,7 +1,7 @@
 # Enable flake8-bugbear (`B`) rules.
 
 # Never enforce `E501` (line length violations).
-ignore = ["E501"]
+ignore = ["E501", "E402", "B018"]
 select = ["E", "F", "B"]
 # Avoid trying to fix flake8-bugbear (`B`) violations.
 unfixable = ["B"]
