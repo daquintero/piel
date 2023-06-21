@@ -1,8 +1,22 @@
+import itertools
+
+
 def single_parameter_sweep(
     base_design_configuration: dict,
     parameter_name: str,
     parameter_sweep_values: list,
 ):
+    """
+    This function takes a base_design_configuration dictionary and sweeps a single parameter over a list of values. It returns a list of dictionaries that correspond to the parameter sweep.
+
+    Args:
+        base_design_configuration(dict): Base design configuration dictionary.
+        parameter_name(str): Name of parameter to sweep.
+        parameter_sweep_values(list): List of values to sweep.
+
+    Returns:
+        parameter_sweep_design_dictionary_array(list): List of dictionaries that correspond to the parameter sweep.
+    """
     parameter_sweep_design_dictionary_array = []
     for parameter in parameter_sweep_values:
         design = base_design_configuration.copy()
@@ -13,7 +27,7 @@ def single_parameter_sweep(
 
 def multi_parameter_sweep(
     base_design_configuration: dict, parameter_sweep_dictionary: dict
-):
+) -> list:
     """
     This multiparameter sweep is pretty cool, as it will generate designer list of dictionaries that comprise of all the possible combinations of your parameter sweeps. For example, if you are sweeping `parameter_1 = np.arange(0, 2) = array([0, 1])`, and `parameter_2 = np.arange(2, 4) = array([2, 3])`, then this function will generate list of dictionaries based on the default_design dictionary, but that will comprise of all the potential parameter combinations within this list.
 
@@ -24,8 +38,9 @@ def multi_parameter_sweep(
 
     Make sure to use the parameter_names from default_design when writing up the parameter_sweep dictionary key name.
 
-    Example project_structure formats::
+    Example project_structure formats:
 
+    .. code-block:: python
         example_parameter_sweep_dictionary = {
             "parameter_1": np.arange(1, -40, 1),
             "parameter_2": np.arange(1, -40, 1),
@@ -34,8 +49,15 @@ def multi_parameter_sweep(
         example_base_design_configuration = {
             "parameter_1": 10.0,
             "parameter_2": 40.0,
-            "parameter_3": 0
+            "parameter_3": 0,
         }
+
+    Args:
+        base_design_configuration(dict): Dictionary of the default design configuration.
+        parameter_sweep_dictionary(dict): Dictionary of the parameter sweep. The keys should be the same as the keys in the base_design_configuration dictionary.
+
+    Returns:
+        parameter_sweep_design_dictionary_array(list): List of dictionaries that comprise of all the possible combinations of your parameter sweeps.
     """
     parameter_names_sweep_list = []
     parameter_sweep_values_list = []

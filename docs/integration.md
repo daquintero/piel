@@ -10,9 +10,15 @@ of quantum photonic circuits.
 * [`cocotb`](https://github.com/cocotb/cocotb) - implements the methods that allow the configuration of signal
   stimulus to the electronic logic directly from Python.
 * [`gdsfactory`]() -
-* [`porf`]() -
-* [`OpenLane`](https://github.com/The-OpenROAD-Project/OpenLane) - implements the RTL-to-GDSII flow for the
+* [`porf`]() -  performance parameter data extraction
+* [`OpenLane v1`](https://github.com/The-OpenROAD-Project/OpenLane) - implements the RTL-to-GDSII flow for the
   electronic logic and outputs performance parameters of the implemented circuitry.
-* [`OpenSTA`]() -
+* [`OpenSTA`]() - timing-data extraction.
+* [`sax`]() system-frequency domain model.
 * [`yosys`]() -
-* [`verilator`]() -
+* [`verilator`]() - time-domain digital simulator.
+
+
+## Implementation Principle
+
+`piel` aims to provide an integrated workflow to co-design photonics and electronics. It does not aim to replace the individual functionality of each design tool, but rather provide a glue to easily connect them all together and extract the system performance.
