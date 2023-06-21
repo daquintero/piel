@@ -138,9 +138,11 @@ def permit_directory_all(directory_path: str | pathlib.Path) -> None:
         directory_path.chmod(0o777)
     except PermissionError:
         print(
-            "Could not change permissions of directory: "
-            + str(directory_path.resolve())
-            + " to 777. Your Python executable might not have the required permissions."
+            UserWarning(
+                "Could not change permissions of directory: "
+                + str(directory_path.resolve())
+                + " to 777. Your Python executable might not have the required permissions. Restructure your project directory so Python does not have to change permissions."
+            )
         )
 
 
@@ -236,9 +238,11 @@ def write_script(
             create_new_directory(directory_path)
         except PermissionError:
             print(
-                "Could not create directory: "
-                + str(directory_path.resolve())
-                + ". Your Python executable might not have the required permissions. Restructure your project directory so Python does not have to change permissions."
+                UserWarning(
+                    "Could not create directory: "
+                    + str(directory_path.resolve())
+                    + ". Your Python executable might not have the required permissions. Restructure your project directory so Python does not have to change permissions."
+                )
             )
 
     file = open(str(directory_path / script_name), "w")
