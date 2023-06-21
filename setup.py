@@ -66,6 +66,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url='https://github.com/daquintero/piel',
-    version="0.0.27",
+    version="0.0.28",
     zip_safe=False,
 )
