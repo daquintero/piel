@@ -1,11 +1,13 @@
 import os
 import pathlib
 import json
+from .utils import configure_parametric_designs
 from ..file_system import (
-    return_path,
-    write_script,
-    run_script,
+    copy_source_folder,
     permit_script_execution,
+    return_path,
+    run_script,
+    write_script,
 )
 
 
@@ -22,10 +24,9 @@ def configure_flow_script_openlane_v1(
     Returns:
         None
     """
-    if root_directory is None:
-        root_directory = get_latest_version_root_openlane_v1()
-
-    design_directory = root_directory / "designs" / design_name
+    design_directory = get_design_directory_from_root_openlane_v1(
+        design_name=design_name, root_directory=root_directory
+    )
     if check_design_exists_openlane_v1(design_name):
         commands_list = [
             "#!/bin/sh",
@@ -60,12 +61,10 @@ def check_config_json_exists_openlane_v1(
     Returns:
         config_json_exists(bool): True if `config.json` exists.
     """
-    if root_directory is None:
-        root_directory = get_latest_version_root_openlane_v1()
-
     config_json_exists = False
-    openlane_v1_design_directory = root_directory / "designs"
-    design_directory = openlane_v1_design_directory / design_name
+    design_directory = get_design_directory_from_root_openlane_v1(
+        design_name=design_name, root_directory=root_directory
+    )
     if (design_directory / "config.json").exists():
         config_json_exists = True
     return config_json_exists
@@ -119,23 +118,10 @@ def configure_and_run_design_openlane_v1(
     Returns:
         None
     """
-    if root_directory is None:
-        root_directory = get_latest_version_root_openlane_v1()
 
-    root_directory = return_path(root_directory)
-    design_exists = check_design_exists_openlane_v1(design_name)
-    design_directory = root_directory / "designs" / design_name
-
-    # Check design existence
-    if design_exists:
-        pass
-    else:
-        raise ValueError(
-            "Design: "
-            + design_name
-            + " is not found in "
-            + str(root_directory / "designs")
-        )
+    design_directory = get_design_directory_from_root_openlane_v1(
+        design_name=design_name, root_directory=root_directory
+    )
 
     # Check configuration
     config_json_exists = check_config_json_exists_openlane_v1(design_name)
@@ -161,6 +147,43 @@ def configure_and_run_design_openlane_v1(
     run_script(openlane_flow_script_path)
 
 
+def create_parametric_designs_openlane_v1(
+    parameter_sweep_dictionary: dict,
+    source_design_directory: str | pathlib.Path,
+    target_directory: str | pathlib.Path,
+) -> None:
+    """
+    Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+
+    Args:
+        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
+        source_design_directory(str): Source design directory.
+        target_directory(str): Target directory.
+
+    Returns:
+        None
+    """
+    source_design_directory = return_path(source_design_directory)
+    source_design_name = source_design_directory.parent.name
+    target_directory = return_path(target_directory)
+    parameter_sweep_configuration_list = configure_parametric_designs(
+        parameter_sweep_dictionary=parameter_sweep_dictionary,
+        source_design_directory=source_design_directory,
+    )
+
+    for configuration_i in parameter_sweep_configuration_list:
+        configuration_id = id(configuration_i)
+        configuration_i["parametric_id"] = configuration_id
+        # TODO improve this for relevant parametric variation naming
+        target_directory_i = (
+            target_directory / source_design_name + "_" + str(configuration_id)
+        )
+        copy_source_folder(
+            source_directory=source_design_directory,
+            target_directory=target_directory_i,
+        )
+
+
 def get_latest_version_root_openlane_v1() -> pathlib.Path:
     """
     Gets the latest version root of OpenLane v1.
@@ -169,6 +192,69 @@ def get_latest_version_root_openlane_v1() -> pathlib.Path:
     latest_openlane_version = list(openlane_tool_directory.iterdir())
     openlane_v1_design_directory = openlane_tool_directory / latest_openlane_version[-1]
     return openlane_v1_design_directory
+
+
+def get_design_directory_from_root_openlane_v1(
+    design_name: str,
+    root_directory: str | pathlib.Path | None = None,
+) -> pathlib.Path:
+    """
+    Gets the design directory from the root directory.
+
+    Args:
+        design_name(str): Name of the design.
+        root_directory(str | pathlib.Path): Design directory.
+
+    Returns:
+        design_directory(pathlib.Path): Design directory.
+    """
+    if root_directory is None:
+        root_directory = get_latest_version_root_openlane_v1()
+
+    root_directory = return_path(root_directory)
+    design_exists = check_design_exists_openlane_v1(design_name)
+    if design_exists:
+        pass
+    else:
+        raise ValueError(
+            "Design: "
+            + design_name
+            + " is not found in "
+            + str(root_directory / "designs")
+        )
+    design_directory = root_directory / "designs" / design_name
+    return design_directory
+
+
+def read_configuration_openlane_v1(
+    design_name: str,
+    root_directory: str | pathlib.Path | None = None,
+) -> dict:
+    """
+    Reads a `config.json` from a design directory.
+
+    Args:
+        design_name(str): Design name.
+        root_directory(str | pathlib.Path): Design directory.
+
+    Returns:
+        configuration(dict): Configuration dictionary.
+    """
+    config_json_exists = check_config_json_exists_openlane_v1(design_name)
+    if config_json_exists:
+        design_directory = get_design_directory_from_root_openlane_v1(
+            design_name=design_name, root_directory=root_directory
+        )
+        with open(str((design_directory / "config.json").resolve()), "r") as read_file:
+            configuration = json.load(read_file)
+        return configuration
+    else:
+        raise ValueError(
+            "Configuration file for design: "
+            + design_name
+            + " is not found in "
+            + str(root_directory / "designs" / design_name)
+        )
 
 
 def write_configuration_openlane_v1(
@@ -194,6 +280,9 @@ __all__ = [
     "check_design_exists_openlane_v1",
     "configure_and_run_design_openlane_v1",
     "configure_flow_script_openlane_v1",
+    "create_parametric_designs_openlane_v1",
+    "get_design_directory_from_root_openlane_v1",
     "get_latest_version_root_openlane_v1",
+    "read_configuration_openlane_v1",
     "write_configuration_openlane_v1",
 ]

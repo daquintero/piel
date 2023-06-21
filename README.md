@@ -1,4 +1,4 @@
-# `piel` - Photonic and Integrated ELectronic system design
+# `piel` - Photonic and Integrated ELectronic tools
 [![PyPI Version](https://img.shields.io/pypi/v/piel.svg)](https://pypi.python.org/pypi/piel)
 [![Build Status](https://img.shields.io/travis/daquintero/piel.svg)](https://travis-ci.com/daquintero/piel)
 [![Documentation Status](https://readthedocs.org/projects/piel/badge/?version=latest)](https://piel.readthedocs.io/en/latest/?version=latest)

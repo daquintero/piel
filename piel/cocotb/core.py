@@ -9,7 +9,7 @@ The nice thing about cocotb is that as long as the photonic simulations can be w
 import pathlib
 import subprocess
 from typing import Literal
-from .file_system import return_path, write_script
+from piel.file_system import return_path, write_script
 
 
 def check_cocotb_testbench_exists(

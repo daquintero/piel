@@ -1,7 +1,7 @@
 import pathlib
 import json
 from ..parametric import multi_parameter_sweep
-from ..file_system import return_path, copy_source_folder
+from ..file_system import return_path
 
 
 def find_design_run(
@@ -51,45 +51,7 @@ def configure_parametric_designs(
     return configuration_sweep
 
 
-def create_parametric_designs(
-    parameter_sweep_dictionary: dict,
-    source_design_directory: str | pathlib.Path,
-    target_directory: str | pathlib.Path,
-) -> None:
-    """
-    Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
-
-    Args:
-        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
-        source_design_directory(str): Source design directory.
-        target_directory(str): Target directory.
-
-    Returns:
-        None
-    """
-    source_design_directory = return_path(source_design_directory)
-    source_design_name = source_design_directory.parent.name
-    target_directory = return_path(target_directory)
-    parameter_sweep_configuration_list = configure_parametric_designs(
-        parameter_sweep_dictionary=parameter_sweep_dictionary,
-        source_design_directory=source_design_directory,
-    )
-
-    for configuration_i in parameter_sweep_configuration_list:
-        configuration_id = id(configuration_i)
-        configuration_i["parametric_id"] = configuration_id
-        # TODO improve this for relevant parametric variation naming
-        target_directory_i = (
-            target_directory / source_design_name + "_" + str(configuration_id)
-        )
-        copy_source_folder(
-            source_directory=source_design_directory,
-            target_directory=target_directory_i,
-        )
-
-
 __all__ = [
     "configure_parametric_designs",
-    "create_parametric_designs",
     "find_design_run",
 ]

@@ -8,8 +8,8 @@ It is worth noting that GDSFactory has already the following PDKs installed:
 """
 import gdsfactory as gf
 import pathlib
-from .openlane.utils import find_design_run
-from .file_system import return_path
+from ..openlane.utils import find_design_run
+from ..file_system import return_path
 
 
 def create_gdsfactory_component_from_openlane(
