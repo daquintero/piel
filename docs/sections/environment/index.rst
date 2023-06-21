@@ -10,3 +10,4 @@ Environment
     design_files_interaction
     relevant_python_commands
     relevant_docker_commands
+    docker_environment_configuration
