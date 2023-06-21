@@ -148,7 +148,7 @@ def configure_and_run_design_openlane_v1(
                 "Configuration dictionary is None. Please provide a configuration dictionary."
             )
         else:
-            write_openlane_configuration(
+            write_configuration_openlane_v1(
                 configuration=configuration, design_directory=design_directory
             )
 
@@ -171,7 +171,7 @@ def get_latest_version_root_openlane_v1() -> pathlib.Path:
     return openlane_v1_design_directory
 
 
-def write_openlane_configuration(
+def write_configuration_openlane_v1(
     configuration: dict,
     design_directory: str | pathlib.Path,
 ) -> None:
@@ -195,5 +195,5 @@ __all__ = [
     "configure_and_run_design_openlane_v1",
     "configure_flow_script_openlane_v1",
     "get_latest_version_root_openlane_v1",
-    "write_openlane_configuration",
+    "write_configuration_openlane_v1",
 ]

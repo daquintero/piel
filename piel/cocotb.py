@@ -55,8 +55,7 @@ def configure_cocotb_simulation(
 
     If no design_sources_list is provided then it adds all the design sources under the `src` folder.
 
-    In the form:
-    .. code-block::
+    In the form::
         Makefile
         # defaults
         SIM ?= icarus
@@ -73,6 +72,7 @@ def configure_cocotb_simulation(
 
         # include cocotb's make rules to take care of the simulator setup
         include $(shell cocotb-config --makefiles)/Makefile.sim
+
 
     Args:
         design_directory (str | pathlib.Path): The directory where the design is located.
@@ -130,8 +130,7 @@ def run_cocotb_simulation(
     design_directory: str,
 ) -> subprocess.CompletedProcess:
     """
-    Equivalent to running the cocotb makefile:
-    .. code-block::
+    Equivalent to running the cocotb makefile::
         make
 
     Args:

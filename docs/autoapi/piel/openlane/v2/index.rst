@@ -1,7 +1,7 @@
-:py:mod:`piel.openlane_v2`
+:py:mod:`piel.openlane.v2`
 ==========================
 
-.. py:module:: piel.openlane_v2
+.. py:module:: piel.openlane.v2
 
 
 Module Contents
@@ -13,7 +13,7 @@ Functions
 
 .. autoapisummary::
 
-   piel.openlane_v2.run_openlane_flow
+   piel.openlane.v2.run_openlane_flow
 
 
 
@@ -27,5 +27,3 @@ Functions
    :type design_directory: str
 
    :returns: None
-
-

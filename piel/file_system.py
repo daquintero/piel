@@ -253,7 +253,6 @@ def write_script(
 __all__ = [
     "check_example_design",
     "copy_source_folder",
-    "check_example_design",
     "permit_script_execution",
     "setup_example_design",
     "return_path",
