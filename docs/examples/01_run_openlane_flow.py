@@ -1,67 +1,55 @@
 # # Run OpenLane Flow
 
-# +
-
 import piel
 
-# -
-
-# Assume we are starting from the iic-osic-home design directory, all our design files are there in the format as described in the piel `sections/project_structure` documentation.
-
-# We first enter the Docker environment by running:
-# ```
-# ./start_shell.sh
-# # Or ./start_vnc.sh for a graphical environment
-# ```
+# Assume we are starting from the iic-osic-home design directory, all our design files are there in the format as described in the piel `sections/project_structure` documentation. You have followed the previous environment docs/examples/00_setup_environment to run the projects in this example:
 #
-# Now we are in the especially configured Docker environment under `/foss/designs` and you are able to `git clone` your projects in the special recommended structure into this directory.
-#
+
 # We will go through the process of running `Openlane v1` and `Openlane v2` configured projects:
 
 # ## OpenLane V1 Flow
-
-# ### Interacting with the Environment
-
-# For those who do not like shell scripting, I am afraid to tell you there is no escape when designing digital microelectronics, it is important to learn. However, `piel` provides a set of wrappers to make the design process faster, easier and more integrated into exisisting tools.
-#
-# <!-- TODO ADD RST documentation links -->
-# We give you a list of python functions that explain methodologies of interaction with the design project environment in `docs/sections/environment/python_useful_commands` but we will review important ones now:
-
-# You can interact with standard `OpenLane` [environment variables](https://openlane.readthedocs.io/en/latest/reference/configuration.html) through:
-
-import os
-
-os.environ["OPENLANE_ROOT"]
-
-# This gives us the source directory of the OpenLane v1 installation under `foss/tools/`, but not the version directory, nor the directory of the standard `./flow.tcl` design inclusion and execution.
-
-# We can find out what version directory has been installed through `pathlib` functionality:
-
-import pathlib
-
-openlane_installed_versions = pathlib.Path(os.environ["OPENLANE_ROOT"]).iterdir()
-openlane_installed_versions
-
-# This will return all the `OpenLane v1` versions that have been installed. In my case it is just `2023.05`, so I will set my OpenLane root directory to be based on the latest here:
-
-openlane_root_directory = (
-    pathlib.Path(os.environ["OPENLANE_ROOT"]) / openlane_installed_versions[-1]
-)
-openlane_root_directory
-
-# We can find out all the default designs in Openlane designs accordingly
-
-(openlane_root_directory / "designs").iterdir()
 
 # ### Run Default `spm` Design using `piel`
 
 # #### The Fast Version
 
-# `piel` provides a set of functions for easily configuring and running a design into `Openlane v1`. For the default `spm` that already has a set up `config.json` file and project structure:
+# `piel` provides a set of functions for easily configuring and running a design into `Openlane v1`. For the default `spm` that already has a set up `config.json` file and project structure inside `$OPENLANE_ROOT/<latestversion>/designs`:
 
+
+design_name = "spm"
+
+piel.configure_and_run_design_openlane_v1(
+    design_name=design_name,
+)
 
 # #### The Slow Version
 
+
+# Get the latest version OpenLane v1 root directory:
+
+root_directory = piel.get_latest_version_root_openlane_v1()
+root_directory
+
+# Check that the design_directory provided is under $OPENLANE_ROOT/<"latestversion">/designs:
+
+design_exists = piel.check_design_exists_openlane_v1(design_name)
+design_directory = root_directory / "designs" / design_name
+design_exists
+
+# Check if `config.json` has already been provided for this design. If a configuration dictionary is inputted into the function parameters, then it overwrites the default `config.json`
+
+config_json_exists = piel.check_config_json_exists_openlane_v1(design_name)
+config_json_exists
+
+# Create a script directory, a script is written and permissions are provided for it to be executable.
+
+piel.configure_flow_script_openlane_v1(design_directory=design_directory)
+
+# Permit and execute the `openlane_flow.sh` script in the `scripts` directory.
+
+openlane_flow_script_path = design_directory / "scripts" / "openlane_flow.sh"
+piel.permit_script_execution(openlane_flow_script_path)
+piel.run_script(openlane_flow_script_path)
 
 # ## OpenLane V2 Flow
 

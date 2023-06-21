@@ -102,10 +102,10 @@ def configure_and_run_design_openlane_v1(
     Configures and runs an OpenLane v1 design.
 
     This function does the following:
-    1. Checks that the design_directory provided is under $OPENLANE_ROOT
-    2. Checks if `config.json` has already been provided for this design. If a configuration dictionary is inputted into the function parameters, then it overwrites the default `config.json`.
-    3. Creates a script directory, a script is written and permissions are provided for it to be executable.
-    4. It executes the `openlane_flow.sh` script in the `scripts` directory.
+    1. Check that the design_directory provided is under $OPENLANE_ROOT/<latestversion>/designs
+    2. Check if `config.json` has already been provided for this design. If a configuration dictionary is inputted into the function parameters, then it overwrites the default `config.json`.
+    3. Create a script directory, a script is written and permissions are provided for it to be executable.
+    4. Permit and execute the `openlane_flow.sh` script in the `scripts` directory.
 
     Args:
         design_name(str): Name of the design.
