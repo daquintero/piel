@@ -159,6 +159,7 @@ make_cocotb = run_cocotb_simulation
 
 
 __all__ = [
+    "check_cocotb_testbench_exists",
     "configure_cocotb_simulation",
     "make_cocotb",
     "run_cocotb_simulation",
