@@ -33,7 +33,7 @@ def configure_flow_script_openlane_v1(
         ]
         script = ";\n".join(commands_list)
         write_script(
-            design_directory=design_directory / "scripts",
+            directory_path=design_directory / "scripts",
             script=script,
             script_name="openlane_flow.sh",
         )

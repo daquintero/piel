@@ -8,6 +8,25 @@ import stat
 from typing import Literal
 
 
+def check_directory_exists(directory_path: str | pathlib.Path) -> bool:
+    """
+    Checks if a directory exists.
+
+    Args:
+        directory_path(str | pathlib.Path): Input path.
+
+    Returns:
+        directory_exists(bool): True if directory exists.
+    """
+    directory_exists = False
+    directory_path = return_path(directory_path)
+    if directory_path.exists():
+        directory_exists = True
+    else:
+        pass
+    return directory_exists
+
+
 def check_example_design(design_name: str | pathlib.Path = "simple_design") -> bool:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
@@ -62,6 +81,24 @@ def copy_source_folder(
     )
 
 
+def create_new_directory(
+    directory_path: str | pathlib.Path,
+) -> None:
+    """
+    Creates a new directory.
+
+    If the parents of the target_directory do not exist, they will be created too.
+
+    Args:
+        directory_path(str | pathlib.Path): Input path.
+
+    Returns:
+        None
+    """
+    directory_path = return_path(directory_path)
+    directory_path.mkdir(parents=True)
+
+
 def permit_script_execution(script_path: str | pathlib.Path) -> None:
     """
     Permits the execution of a script.
@@ -93,7 +130,9 @@ def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     elif isinstance(input_path, pathlib.Path):
         output_path = input_path
     else:
-        raise ValueError("input_path: " + str(input_path) + " is of type: " + str(type(input_path)))
+        raise ValueError(
+            "input_path: " + str(input_path) + " is of type: " + str(type(input_path))
+        )
     return output_path
 
 
@@ -140,7 +179,7 @@ def setup_example_design(
 
 
 def write_script(
-    design_directory: str | pathlib.Path,
+    directory_path: str | pathlib.Path,
     script: str,
     script_name: str,
 ) -> None:
@@ -148,15 +187,23 @@ def write_script(
     Records a `script_name` in the `scripts` project directory.
 
     Args:
-        design_directory(str): Design directory.
+        directory_path(str): Design directory.
         script(str): Script to write.
         script_name(str): Name of the script.
 
     Returns:
         None
     """
-    design_directory = return_path(design_directory)
-    file = open(str(design_directory / script_name), "w")
+    directory_path = return_path(directory_path)
+
+    directory_exists = check_directory_exists(directory_path)
+
+    if directory_exists:
+        pass
+    else:
+        create_new_directory(directory_path)
+
+    file = open(str(directory_path / script_name), "w")
     file.write(script)
     file.close()
 

@@ -122,7 +122,7 @@ def configure_cocotb_simulation(
 
     script = ";\n".join(commands_list)
     write_script(
-        design_directory=design_directory / "tb", script=script, script_name="Makefile"
+        directory_path=design_directory / "tb", script=script, script_name="Makefile"
     )
 
 
@@ -146,7 +146,7 @@ def run_cocotb_simulation(
     script = ";\n".join(commands_list)
     # Save script if desired to run directly
     write_script(
-        design_directory=test_directory,
+        directory_path=test_directory,
         script=script,
         script_name="run_cocotb_simulation.sh",
     )
