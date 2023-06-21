@@ -178,7 +178,7 @@ def run_script(script_path: str | pathlib.Path) -> None:
         None
     """
     script = return_path(script_path)
-    subprocess.run(script, shell=True, check=True, capture_output=True)
+    subprocess.run(str(script.resolve()), check=True, capture_output=True)
 
 
 def setup_example_design(
@@ -253,5 +253,6 @@ __all__ = [
     "permit_script_execution",
     "setup_example_design",
     "return_path",
+    "run_script",
     "write_script",
 ]

@@ -25,13 +25,14 @@ def configure_flow_script_openlane_v1(
     if root_directory is None:
         root_directory = get_latest_version_root_openlane_v1()
 
-    design_directory = root_directory / "designs"
+    design_directory = root_directory / "designs" / design_name
     if check_design_exists_openlane_v1(design_name):
         commands_list = [
-            "cd $OPENLANE_ROOT",
+            "#!/bin/sh",
+            "cd " + str(root_directory),
             "./flow.tcl -design " + design_name,
         ]
-        script = ";\n".join(commands_list)
+        script = " \n".join(commands_list)
         write_script(
             directory_path=design_directory / "scripts",
             script=script,
@@ -152,7 +153,7 @@ def configure_and_run_design_openlane_v1(
             )
 
     # Create script directory
-    configure_flow_script_openlane_v1(design_directory=design_directory)
+    configure_flow_script_openlane_v1(design_name=design_name)
 
     # Execute script
     openlane_flow_script_path = design_directory / "scripts" / "openlane_flow.sh"
