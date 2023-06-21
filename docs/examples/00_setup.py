@@ -70,7 +70,7 @@ os.environ["OPENLANE_ROOT"]
 
 import pathlib
 
-openlane_installed_versions = pathlib.Path(os.environ["OPENLANE_ROOT"]).iterdir()
+openlane_installed_versions = list(pathlib.Path(os.environ["OPENLANE_ROOT"]).iterdir())
 openlane_installed_versions
 
 # This will return all the `OpenLane v1` versions that have been installed. In my case it is just `2023.05`, so I will set my OpenLane root directory to be based on the latest here:
@@ -82,4 +82,6 @@ openlane_root_directory
 
 # We can find out all the default designs in Openlane designs accordingly
 
-(openlane_root_directory / "designs").iterdir()
+list((openlane_root_directory / "designs").iterdir())
+
+

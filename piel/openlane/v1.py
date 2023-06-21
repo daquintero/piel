@@ -10,19 +10,22 @@ from ..file_system import (
 
 
 def configure_flow_script_openlane_v1(
-    design_directory: str | pathlib.Path,
     design_name: str,
+    root_directory: str | pathlib.Path | None = None,
 ) -> None:
     """
     Configures the OpenLane v1 flow script after checking that the design directory exists.
 
     Args:
-        design_directory(str | pathlib.Path): Design directory.
+        design_directory(str | pathlib.Path | None): Design directory. Defaults to latest OpenLane root.
 
     Returns:
         None
     """
-    design_directory = return_path(design_directory)
+    if root_directory is None:
+        root_directory = get_latest_version_root_openlane_v1()
+
+    design_directory = root_directory / "designs"
     if check_design_exists_openlane_v1(design_name):
         commands_list = [
             "cd $OPENLANE_ROOT",
@@ -88,7 +91,7 @@ def check_design_exists_openlane_v1(
     design_exists = False
     openlane_v1_design_directory = root_directory / "designs"
     all_openlane_v1_designs = list(openlane_v1_design_directory.iterdir())
-    if design_name in all_openlane_v1_designs:
+    if (openlane_v1_design_directory / design_name) in all_openlane_v1_designs:
         design_exists = True
     return design_exists
 

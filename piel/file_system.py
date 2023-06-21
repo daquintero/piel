@@ -90,8 +90,10 @@ def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     """
     if type(input_path) == str:
         output_path = pathlib.Path(input_path)
-    elif type(input_path) == pathlib.Path:
+    elif isinstance(input_path, pathlib.Path):
         output_path = input_path
+    else:
+        raise ValueError("input_path: " + str(input_path) + " is of type: " + str(type(input_path)))
     return output_path
 
 

@@ -30,6 +30,8 @@ piel.configure_and_run_design_openlane_v1(
 root_directory = piel.get_latest_version_root_openlane_v1()
 root_directory
 
+list((root_directory / "designs").iterdir())
+
 # Check that the design_directory provided is under $OPENLANE_ROOT/<"latestversion">/designs:
 
 design_exists = piel.check_design_exists_openlane_v1(design_name)
@@ -43,7 +45,7 @@ config_json_exists
 
 # Create a script directory, a script is written and permissions are provided for it to be executable.
 
-piel.configure_flow_script_openlane_v1(design_directory=design_directory)
+piel.configure_flow_script_openlane_v1(design_directory=design_directory, design_name=design_name)
 
 # Permit and execute the `openlane_flow.sh` script in the `scripts` directory.
 
