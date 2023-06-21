@@ -58,6 +58,7 @@ setup(
     },
     install_requires=requirements,
     license="MIT license",
+    long_description_content_type="text/markdown",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
     keywords="piel",
@@ -65,7 +66,7 @@ setup(
     packages=find_packages(include=["piel", "piel.*"]),
     test_suite="tests",
     tests_require=test_requirements,
-    url='https://github.com/daquintero/piel',
+    url="https://github.com/daquintero/piel",
     version="0.0.28",
     zip_safe=False,
 )
