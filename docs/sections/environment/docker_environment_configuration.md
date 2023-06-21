@@ -34,6 +34,8 @@ pip install jupytext
 
 ## Required Toolset
 
+As of right now, the openlane flow can only be run in a `root` environment.
+
 To install `jupyter lab` and related plugins.
 
 Run in the docker environment:
