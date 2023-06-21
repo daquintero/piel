@@ -96,6 +96,16 @@ def create_new_directory(
         None
     """
     directory_path = return_path(directory_path)
+
+    # Check permissions of the parent to be able to create the directory
+    parent_directory = directory_path.parent
+    parent_directory_permissions = oct(parent_directory.stat().st_mode)
+
+    # If permissions are not read, write and execute for all, we change them
+    if parent_directory_permissions != "0o777":
+        permit_directory_all(parent_directory)
+
+    # Create the directory
     directory_path.mkdir(parents=True)
 
 
@@ -111,6 +121,20 @@ def permit_script_execution(script_path: str | pathlib.Path) -> None:
     """
     script = return_path(script_path)
     script.chmod(script.stat().st_mode | stat.S_IEXEC)
+
+
+def permit_directory_all(directory_path: str | pathlib.Path) -> None:
+    """
+    Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
+
+    Args:
+        directory_path(str | pathlib.Path): Input path.
+
+    Returns:
+        None
+    """
+    directory_path = return_path(directory_path)
+    directory_path.chmod(0o777)
 
 
 def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
