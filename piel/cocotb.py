@@ -12,6 +12,36 @@ from typing import Literal
 from .file_system import return_path, write_script
 
 
+def check_cocotb_testbench_exists(
+    design_directory: str | pathlib.Path,
+) -> bool:
+    """
+    Checks if a cocotb testbench exists in the design directory.
+
+    Args:
+        design_directory(str | pathlib.Path): Design directory.
+
+    Returns:
+        cocotb_testbench_exists(bool): True if cocotb testbench exists.
+    """
+    cocotb_testbench_exists = False
+    design_directory = return_path(design_directory)
+    testbench_directory = design_directory / "tb"
+    testbench_directory_exists = testbench_directory.exists()
+
+    if testbench_directory_exists:
+        # Check if cocotb python files are present
+        cocotb_python_files = list(testbench_directory.glob("*.py"))
+        if len(cocotb_python_files) > 0:
+            cocotb_testbench_exists = True
+        else:
+            pass
+    else:
+        pass
+
+    return cocotb_testbench_exists
+
+
 def configure_cocotb_simulation(
     design_directory: str | pathlib.Path,
     simulator: Literal["icarus", "verilator"],
