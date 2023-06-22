@@ -1,7 +1,7 @@
 import os
 import pathlib
 import json
-from .utils import configure_parametric_designs
+from ..parametric import multi_parameter_sweep
 from ..file_system import (
     copy_source_folder,
     permit_script_execution,
@@ -9,43 +9,6 @@ from ..file_system import (
     run_script,
     write_script,
 )
-
-
-def configure_flow_script_openlane_v1(
-    design_name: str,
-    root_directory: str | pathlib.Path | None = None,
-) -> None:
-    """
-    Configures the OpenLane v1 flow script after checking that the design directory exists.
-
-    Args:
-        design_directory(str | pathlib.Path | None): Design directory. Defaults to latest OpenLane root.
-
-    Returns:
-        None
-    """
-    design_directory = get_design_directory_from_root_openlane_v1(
-        design_name=design_name, root_directory=root_directory
-    )
-    if check_design_exists_openlane_v1(design_name):
-        commands_list = [
-            "#!/bin/sh",
-            "cd " + str(root_directory),
-            "./flow.tcl -design " + design_name,
-        ]
-        script = " \n".join(commands_list)
-        write_script(
-            directory_path=design_directory / "scripts",
-            script=script,
-            script_name="openlane_flow.sh",
-        )
-    else:
-        raise ValueError(
-            "Design: "
-            + str(design_name)
-            + " not found in "
-            + os.environ["OPENLANE_ROOT"]
-        )
 
 
 def check_config_json_exists_openlane_v1(
@@ -147,37 +110,111 @@ def configure_and_run_design_openlane_v1(
     run_script(openlane_flow_script_path)
 
 
-def create_parametric_designs_openlane_v1(
+def configure_flow_script_openlane_v1(
+    design_name: str,
+    root_directory: str | pathlib.Path | None = None,
+) -> None:
+    """
+    Configures the OpenLane v1 flow script after checking that the design directory exists.
+
+    Args:
+        design_directory(str | pathlib.Path | None): Design directory. Defaults to latest OpenLane root.
+
+    Returns:
+        None
+    """
+    design_directory = get_design_directory_from_root_openlane_v1(
+        design_name=design_name, root_directory=root_directory
+    )
+    if check_design_exists_openlane_v1(design_name):
+        commands_list = [
+            "#!/bin/sh",
+            "cd " + str(root_directory),
+            "./flow.tcl -design " + design_name,
+        ]
+        script = " \n".join(commands_list)
+        write_script(
+            directory_path=design_directory / "scripts",
+            script=script,
+            script_name="openlane_flow.sh",
+        )
+    else:
+        raise ValueError(
+            "Design: "
+            + str(design_name)
+            + " not found in "
+            + os.environ["OPENLANE_ROOT"]
+        )
+
+
+def configure_parametric_designs_openlane_v1(
+    design_name: str,
     parameter_sweep_dictionary: dict,
-    source_design_directory: str | pathlib.Path,
-    target_directory: str | pathlib.Path,
+    add_id: bool = True,
+) -> list:
+    """
+    For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
+
+    Args:
+        add_id(bool): Add an ID to the design name. Defaults to True.
+        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
+        source_design_directory(str | pathlib.Path): Source design directory.
+
+    Returns:
+        configuration_sweep(list): List of configurations to sweep.
+    """
+    source_configuration = read_configuration_openlane_v1(design_name=design_name)
+    configuration_sweep = multi_parameter_sweep(
+        base_design_configuration=source_configuration,
+        parameter_sweep_dictionary=parameter_sweep_dictionary,
+    )
+    if add_id:
+        i = 0
+        for configuration_i in configuration_sweep:
+            # Checks the unique ID of the configuration
+            configuration_id = id(configuration_i)
+            # Adds the ID to the configuration list
+            configuration_sweep[i]["id"] = configuration_id
+            i += 1
+    return configuration_sweep
+
+
+def create_parametric_designs_openlane_v1(
+    design_name: str,
+    parameter_sweep_dictionary: dict,
+    target_directory: str | pathlib.Path | None = None,
 ) -> None:
     """
     Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
 
     Args:
+        design_name(str): Name of the design.
         parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
-        source_design_directory(str): Source design directory.
-        target_directory(str): Target directory.
+        target_directory(str | pathlib.Path | None): Optional target directory.
 
     Returns:
         None
     """
-    source_design_directory = return_path(source_design_directory)
-    source_design_name = source_design_directory.parent.name
-    target_directory = return_path(target_directory)
-    parameter_sweep_configuration_list = configure_parametric_designs(
+    source_design_directory = get_design_directory_from_root_openlane_v1(
+        design_name=design_name
+    )
+    source_design_name = design_name
+
+    if target_directory is None:
+        target_directory = get_latest_version_root_openlane_v1() / "designs"
+
+    parameter_sweep_configuration_list = configure_parametric_designs_openlane_v1(
+        add_id=True,
+        design_name=design_name,
         parameter_sweep_dictionary=parameter_sweep_dictionary,
-        source_design_directory=source_design_directory,
     )
 
     for configuration_i in parameter_sweep_configuration_list:
-        configuration_id = id(configuration_i)
-        configuration_i["parametric_id"] = configuration_id
-        # TODO improve this for relevant parametric variation naming
+        # Create a target directory with the name of the design and the configuration ID
         target_directory_i = (
-            target_directory / source_design_name + "_" + str(configuration_id)
+            target_directory / source_design_name + "_" + str(configuration_i["id"])
         )
+        # Copy the source design directory to the target directory
         copy_source_folder(
             source_directory=source_design_directory,
             target_directory=target_directory_i,
@@ -279,6 +316,7 @@ __all__ = [
     "check_config_json_exists_openlane_v1",
     "check_design_exists_openlane_v1",
     "configure_and_run_design_openlane_v1",
+    "configure_parametric_designs_openlane_v1",
     "configure_flow_script_openlane_v1",
     "create_parametric_designs_openlane_v1",
     "get_design_directory_from_root_openlane_v1",

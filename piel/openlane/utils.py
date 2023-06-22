@@ -1,6 +1,4 @@
 import pathlib
-import json
-from ..parametric import multi_parameter_sweep
 from ..file_system import return_path
 
 
@@ -26,32 +24,6 @@ def find_design_run(
     return runs_design_directory / latest_run
 
 
-def configure_parametric_designs(
-    parameter_sweep_dictionary: dict,
-    source_design_directory: str | pathlib.Path,
-) -> list:
-    """
-    For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
-
-    Args:
-        parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
-        source_design_directory(str | pathlib.Path): Source design directory.
-
-    Returns:
-        configuration_sweep(list): List of configurations to sweep.
-    """
-    source_design_directory = return_path(source_design_directory)
-    source_design_configuration_path = source_design_directory / "config.json"
-    with open(source_design_configuration_path, "r") as config_json:
-        source_configuration = json.load(config_json)
-    configuration_sweep = multi_parameter_sweep(
-        base_design_configuration=source_configuration,
-        parameter_sweep_dictionary=parameter_sweep_dictionary,
-    )
-    return configuration_sweep
-
-
 __all__ = [
-    "configure_parametric_designs",
     "find_design_run",
 ]
