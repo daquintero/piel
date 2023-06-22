@@ -8,22 +8,26 @@ import stat
 from typing import Literal
 
 
-def check_directory_exists(directory_path: str | pathlib.Path) -> bool:
+def check_path_exists(
+    path: str | pathlib.Path,
+    raise_errors: bool = False,
+) -> bool:
     """
     Checks if a directory exists.
 
     Args:
-        directory_path(str | pathlib.Path): Input path.
+        path(str | pathlib.Path): Input path.
 
     Returns:
         directory_exists(bool): True if directory exists.
     """
     directory_exists = False
-    directory_path = return_path(directory_path)
-    if directory_path.exists():
+    path = return_path(path)
+    if path.exists():
         directory_exists = True
     else:
-        pass
+        if raise_errors:
+            raise ValueError("Path: " + str(path) + " does not exist.")
     return directory_exists
 
 
@@ -229,7 +233,7 @@ def write_script(
     """
     directory_path = return_path(directory_path)
 
-    directory_exists = check_directory_exists(directory_path)
+    directory_exists = check_path_exists(directory_path)
 
     if directory_exists:
         pass
@@ -251,6 +255,7 @@ def write_script(
 
 
 __all__ = [
+    "check_path_exists",
     "check_example_design",
     "copy_source_folder",
     "permit_script_execution",

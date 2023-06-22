@@ -5,7 +5,7 @@ from ..file_system import return_path
 def find_design_run(
     design_directory: str | pathlib.Path,
     run_name: str | None = None,
-) -> str:
+) -> pathlib.Path:
     """
     For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
 
