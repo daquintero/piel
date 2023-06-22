@@ -50,9 +50,11 @@ parametrised_configuration_list = piel.configure_parametric_designs_openlane_v1(
     parameter_sweep_dictionary=synthesis_parameter_iteration,
 )
 
-# This function allows you to check the parameter configuration before creating the parametrised directories. Once you are ready you can do:
+# This function allows you to check the parameter configuration before creating the parametrised directories. Once you are ready you can do with the same `parameter_sweep_dictionary`:
 
-piel.create_parametric_designs_openlane_v1()
+piel.create_parametric_designs_openlane_v1(
+    design_name=example_design_name,
+    parameter_sweep_dictionary=synthesis_parameter_iteration,
+)
 
-
-# The first step is to configure a set of parametric designs based on variations of an input parameter.
+# You should be able to verify these designs have been set correctly in the root directory:

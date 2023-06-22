@@ -15,6 +15,7 @@ requirements = [
     "openlane",
     "cocotb",
     "gdsfactory",
+    "pandas",
 ]
 
 test_requirements = [

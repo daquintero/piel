@@ -33,3 +33,11 @@ Once you have a copy of the source, you can install it with:
 ``` console
 $ python setup.py install
 ```
+
+## Usage
+
+To use piel in a project you can then do:
+
+```python
+import piel
+```

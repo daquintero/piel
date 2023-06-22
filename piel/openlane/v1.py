@@ -1,3 +1,7 @@
+"""
+These set of functions aim to provide functionality to automate interacting with OpenLanes v1 design into Python environment, whilst `OpenLanes2` is under development.
+"""
+
 import os
 import pathlib
 import json

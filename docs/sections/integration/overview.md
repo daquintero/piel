@@ -1,9 +1,9 @@
-# About
+# Integration
 
 `piel` allows the integration and co-simulation between electronics and photonics through with `gdsfactory` for a range
 of quantum photonic circuits.
 
-# Project Structure
+## Project Structure
 
 `piel` is composed of the following modules all which are contained in the docker environment file provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools):
 * [`caravel`]() -

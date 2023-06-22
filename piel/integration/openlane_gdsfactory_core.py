@@ -13,7 +13,7 @@ from ..file_system import return_path
 
 
 def create_gdsfactory_component_from_openlane(
-    design_directory: str | pathlib.Path, run_name: str | None = None
+    design_directory: str | pathlib.Path = None, run_name: str | None = None
 ) -> gf.Component:
     """
     This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
