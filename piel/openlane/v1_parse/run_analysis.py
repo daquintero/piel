@@ -8,6 +8,17 @@ from .openlane_opensta_v1 import run_parser
 
 
 def get_all_rpt_files(run_directory=None):
+    """
+    This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+    Args:
+        run_directory (str, optional): The run directory to perform the analysis on. Defaults to None.
+
+    Returns:
+        all_rpt_files_list (list): List of all the .rpt files in the run directory.
+        timing_sta_files_list (list): List of all the .rpt files in the run directory.
+        power_sta_files_list (list): List of all the .rpt files in the run directory.
+    """
     all_rpt_files_list = []
     timing_sta_files_list = []
     power_sta_files_list = []
@@ -31,10 +42,15 @@ def get_all_rpt_files(run_directory=None):
 def extract_metrics_timing(timing_sta_files_list):
     """
     For every file in the sta timing file, extract the propagation delay and save the file meta data into a dictionary.
+
+    Args:
+        timing_sta_files_list (list): List of all the .rpt files in the run directory.
+
+    Returns:
+        timing_metrics_list (list): List of dictionaries containing the file meta data and the propagation delay.
     """
     timing_metrics_list = []
     for file in timing_sta_files_list:
-        print(file)
         file_directory_data = os.path.normpath(file).split(os.path.sep)
         frame_timing_data, propagation_delay = run_parser(file_address=file)
         metrics = {
@@ -47,6 +63,15 @@ def extract_metrics_timing(timing_sta_files_list):
 
 
 def run_analysis(run_directory):
+    """
+    This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+    Args:
+        run_directory (str, optional): The run directory to perform the analysis on. Defaults to None.
+
+    Returns:
+        timing_metrics_list (list): List of dictionaries containing the file meta data and the propagation delay.
+    """
     all_rpt_files_list, timing_sta_files_list, power_sta_files_list = get_all_rpt_files(
         run_directory
     )
