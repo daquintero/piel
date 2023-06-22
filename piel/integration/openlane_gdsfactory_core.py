@@ -37,7 +37,11 @@ def create_gdsfactory_component_from_openlane(
     )
     latest_design_run_directory = find_design_run(design_directory, run_name=run_name)
     final_gds_run = (
-        latest_design_run_directory / "results" / "final" / "gds" / design_name + ".gds"
+        latest_design_run_directory
+        / "results"
+        / "final"
+        / "gds"
+        / (design_name + ".gds")
     )
     check_path_exists(final_gds_run, raise_errors=True)
     component = gf.import_gds(final_gds_run, name=design_name)

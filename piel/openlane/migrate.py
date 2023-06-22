@@ -11,7 +11,7 @@ def get_design_from_openlane_migration(
     design_name_v1: str | None = None,
     design_directory: str | pathlib.Path | None = None,
     root_directory_v1: str | pathlib.Path | None = None,
-) -> pathlib.Path:
+) -> (str, pathlib.Path):
     """
     This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.
 
@@ -28,10 +28,15 @@ def get_design_from_openlane_migration(
     """
     if design_directory is not None:
         design_directory = return_path(design_directory)
-        design_name = design_directory.parent.name
+        design_name = design_directory.name
+        return design_name, design_directory
     elif v1:
         design_directory = get_design_directory_from_root_openlane_v1(
             design_name=design_name_v1, root_directory=root_directory_v1
         )
         design_name = design_name_v1
-    return design_name, design_directory
+        return design_name, design_directory
+    else:
+        raise ValueError(
+            "You must provide either a design_directory or a design_name_v1"
+        )
