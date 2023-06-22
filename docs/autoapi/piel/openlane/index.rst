@@ -4,13 +4,22 @@
 .. py:module:: piel.openlane
 
 
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   v1_parse/index.rst
+
+
 Submodules
 ----------
 .. toctree::
    :titlesonly:
    :maxdepth: 1
 
-   parse_results_v1/index.rst
+   migrate/index.rst
    utils/index.rst
    v1/index.rst
    v2/index.rst
@@ -25,47 +34,69 @@ Functions
 
 .. autoapisummary::
 
-   piel.openlane.configure_parametric_designs
-   piel.openlane.create_parametric_designs
+   piel.openlane.get_design_directory_from_root_openlane_v1
+   piel.openlane.return_path
+   piel.openlane.get_design_from_openlane_migration
    piel.openlane.find_design_run
    piel.openlane.check_config_json_exists_openlane_v1
    piel.openlane.check_design_exists_openlane_v1
    piel.openlane.configure_and_run_design_openlane_v1
+   piel.openlane.configure_parametric_designs_openlane_v1
    piel.openlane.configure_flow_script_openlane_v1
+   piel.openlane.create_parametric_designs_openlane_v1
+   piel.openlane.get_design_directory_from_root_openlane_v1
    piel.openlane.get_latest_version_root_openlane_v1
+   piel.openlane.read_configuration_openlane_v1
    piel.openlane.write_configuration_openlane_v1
    piel.openlane.run_openlane_flow
 
 
 
-.. py:function:: configure_parametric_designs(parameter_sweep_dictionary: dict, source_design_directory: str | pathlib.Path) -> list
+.. py:function:: get_design_directory_from_root_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> pathlib.Path
 
-   For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
+   Gets the design directory from the root directory.
 
-   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
-   :type parameter_sweep_dictionary: dict
-   :param source_design_directory: Source design directory.
-   :type source_design_directory: str | pathlib.Path
+   :param design_name: Name of the design.
+   :type design_name: str
+   :param root_directory: Design directory.
+   :type root_directory: str | pathlib.Path
 
-   :returns: List of configurations to sweep.
-   :rtype: configuration_sweep(list)
+   :returns: Design directory.
+   :rtype: design_directory(pathlib.Path)
 
 
-.. py:function:: create_parametric_designs(parameter_sweep_dictionary: dict, source_design_directory: str | pathlib.Path, target_directory: str | pathlib.Path) -> None
+.. py:function:: return_path(input_path: str | pathlib.Path) -> pathlib.Path
 
-   Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+   Returns a pathlib.Path to be able to perform operations accordingly internally.
 
-   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
-   :type parameter_sweep_dictionary: dict
-   :param source_design_directory: Source design directory.
-   :type source_design_directory: str
-   :param target_directory: Target directory.
-   :type target_directory: str
+   This allows us to maintain compatibility between POSIX and Windows systems.
+
+   :param input_path: Input path.
+   :type input_path: str
+
+   :returns: Pathlib path.
+   :rtype: pathlib.Path
+
+
+.. py:function:: get_design_from_openlane_migration(v1: bool = True, design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, root_directory_v1: str | pathlib.Path | None = None) -> (str, pathlib.Path)
+
+   This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.
+
+   This function checks if the inputs are to be treated as v1 inputs. If so, and a `design_name` is provided then it will set the `design_directory` to the corresponding `design_name` directory in the corresponding `root_directory_v1 / designs`. If no `root_directory` is provided then it returns `$OPENLANE_ROOT/"<latest>"/. If a `design_directory` is provided then this will always take precedence even with a `v1` flag.
+
+   :param v1: If True, it will migrate from v1 to v2.
+   :type v1: bool
+   :param design_name_v1: Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
+   :type design_name_v1: str
+   :param design_directory: Design directory PATH. Optional path for v2-based designs.
+   :type design_directory: str
+   :param root_directory_v1: Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"
+   :type root_directory_v1: str
 
    :returns: None
 
 
-.. py:function:: find_design_run(design_directory: str | pathlib.Path, run_name: str | None = None) -> str
+.. py:function:: find_design_run(design_directory: str | pathlib.Path, run_name: str | None = None) -> pathlib.Path
 
    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
 
@@ -116,6 +147,21 @@ Functions
    :returns: None
 
 
+.. py:function:: configure_parametric_designs_openlane_v1(design_name: str, parameter_sweep_dictionary: dict, add_id: bool = True) -> list
+
+   For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
+
+   :param add_id: Add an ID to the design name. Defaults to True.
+   :type add_id: bool
+   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
+   :type parameter_sweep_dictionary: dict
+   :param source_design_directory: Source design directory.
+   :type source_design_directory: str | pathlib.Path
+
+   :returns: List of configurations to sweep.
+   :rtype: configuration_sweep(list)
+
+
 .. py:function:: configure_flow_script_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> None
 
    Configures the OpenLane v1 flow script after checking that the design directory exists.
@@ -126,9 +172,49 @@ Functions
    :returns: None
 
 
+.. py:function:: create_parametric_designs_openlane_v1(design_name: str, parameter_sweep_dictionary: dict, target_directory: str | pathlib.Path | None = None) -> None
+
+   Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+
+   :param design_name: Name of the design.
+   :type design_name: str
+   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
+   :type parameter_sweep_dictionary: dict
+   :param target_directory: Optional target directory.
+   :type target_directory: str | pathlib.Path | None
+
+   :returns: None
+
+
+.. py:function:: get_design_directory_from_root_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> pathlib.Path
+
+   Gets the design directory from the root directory.
+
+   :param design_name: Name of the design.
+   :type design_name: str
+   :param root_directory: Design directory.
+   :type root_directory: str | pathlib.Path
+
+   :returns: Design directory.
+   :rtype: design_directory(pathlib.Path)
+
+
 .. py:function:: get_latest_version_root_openlane_v1() -> pathlib.Path
 
    Gets the latest version root of OpenLane v1.
+
+
+.. py:function:: read_configuration_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> dict
+
+   Reads a `config.json` from a design directory.
+
+   :param design_name: Design name.
+   :type design_name: str
+   :param root_directory: Design directory.
+   :type root_directory: str | pathlib.Path
+
+   :returns: Configuration dictionary.
+   :rtype: configuration(dict)
 
 
 .. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: str | pathlib.Path) -> None

@@ -15,6 +15,8 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
+   cocotb/index.rst
+   integration/index.rst
    openlane/index.rst
 
 
@@ -25,10 +27,8 @@ Submodules
    :maxdepth: 1
 
    cli/index.rst
-   cocotb/index.rst
    defaults/index.rst
    file_system/index.rst
-   gdsfactory/index.rst
    parametric/index.rst
    piel/index.rst
 
@@ -42,6 +42,10 @@ Functions
 
 .. autoapisummary::
 
+   piel.check_cocotb_testbench_exists
+   piel.configure_cocotb_simulation
+   piel.run_cocotb_simulation
+   piel.check_path_exists
    piel.check_example_design
    piel.copy_source_folder
    piel.permit_script_execution
@@ -49,21 +53,23 @@ Functions
    piel.return_path
    piel.run_script
    piel.write_script
-   piel.configure_parametric_designs
-   piel.create_parametric_designs
+   piel.create_gdsfactory_component_from_openlane
+   piel.get_design_directory_from_root_openlane_v1
+   piel.return_path
+   piel.get_design_from_openlane_migration
    piel.find_design_run
    piel.check_config_json_exists_openlane_v1
    piel.check_design_exists_openlane_v1
    piel.configure_and_run_design_openlane_v1
+   piel.configure_parametric_designs_openlane_v1
    piel.configure_flow_script_openlane_v1
+   piel.create_parametric_designs_openlane_v1
    piel.get_latest_version_root_openlane_v1
+   piel.read_configuration_openlane_v1
    piel.write_configuration_openlane_v1
    piel.run_openlane_flow
    piel.single_parameter_sweep
    piel.multi_parameter_sweep
-   piel.check_cocotb_testbench_exists
-   piel.configure_cocotb_simulation
-   piel.run_cocotb_simulation
 
 
 
@@ -72,13 +78,85 @@ Attributes
 
 .. autoapisummary::
 
-   piel.test_spm_open_lane_configuration
-   piel.example_open_lane_configuration
    piel.make_cocotb
    piel.write_cocotb_makefile
+   piel.test_spm_open_lane_configuration
+   piel.example_open_lane_configuration
    piel.__author__
    piel.__email__
    piel.__version__
+
+
+.. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
+
+   Checks if a cocotb testbench exists in the design directory.
+
+   :param design_directory: Design directory.
+   :type design_directory: str | pathlib.Path
+
+   :returns: True if cocotb testbench exists.
+   :rtype: cocotb_testbench_exists(bool)
+
+
+.. py:function:: configure_cocotb_simulation(design_directory: str | pathlib.Path, simulator: Literal[icarus, verilator], top_level_language: Literal[verilog, vhdl], top_level_verilog_module: str, test_python_module: str, design_sources_list: list | None = None)
+
+   Writes a cocotb makefile.
+
+   If no design_sources_list is provided then it adds all the design sources under the `src` folder.
+
+   In the form::
+       Makefile
+       # defaults
+       SIM ?= icarus
+       TOPLEVEL_LANG ?= verilog
+
+       VERILOG_SOURCES += $(PWD)/my_design.sv
+       # use VHDL_SOURCES for VHDL files
+
+       # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
+       TOPLEVEL = my_design
+
+       # MODULE is the basename of the Python test file
+       MODULE = test_my_design
+
+       # include cocotb's make rules to take care of the simulator setup
+       include $(shell cocotb-config --makefiles)/Makefile.sim
+
+
+   :param design_directory: The directory where the design is located.
+   :type design_directory: str | pathlib.Path
+   :param simulator: The simulator to use.
+   :type simulator: Literal["icarus", "verilator"]
+   :param top_level_language: The top level language.
+   :type top_level_language: Literal["verilog", "vhdl"]
+   :param top_level_verilog_module: The top level verilog module.
+   :type top_level_verilog_module: str
+   :param test_python_module: The test python module.
+   :type test_python_module: str
+   :param design_sources_list: A list of design sources. Defaults to None.
+   :type design_sources_list: list | None, optional
+
+   :returns: None
+
+
+.. py:data:: make_cocotb
+
+
+
+.. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
+
+   Equivalent to running the cocotb makefile::
+       make
+
+   :param design_directory: The directory where the design is located.
+   :type design_directory: str
+
+   :returns: The subprocess.CompletedProcess object.
+   :rtype: subprocess.CompletedProcess
+
+
+.. py:data:: write_cocotb_makefile
+
 
 
 .. py:data:: test_spm_open_lane_configuration
@@ -87,6 +165,17 @@ Attributes
 
 .. py:data:: example_open_lane_configuration
 
+
+
+.. py:function:: check_path_exists(path: str | pathlib.Path, raise_errors: bool = False) -> bool
+
+   Checks if a directory exists.
+
+   :param path: Input path.
+   :type path: str | pathlib.Path
+
+   :returns: True if directory exists.
+   :rtype: directory_exists(bool)
 
 
 .. py:function:: check_example_design(design_name: str | pathlib.Path = 'simple_design') -> bool
@@ -170,34 +259,70 @@ Attributes
    :returns: None
 
 
-.. py:function:: configure_parametric_designs(parameter_sweep_dictionary: dict, source_design_directory: str | pathlib.Path) -> list
+.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
 
-   For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
+   This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
 
-   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
-   :type parameter_sweep_dictionary: dict
-   :param source_design_directory: Source design directory.
-   :type source_design_directory: str | pathlib.Path
+   It will look into the latest design run and extract the final OpenLane-generated GDS. You do not have to have run this with OpenLane2 as it just looks at the latest run.
 
-   :returns: List of configurations to sweep.
-   :rtype: configuration_sweep(list)
+   :param design_name_v1: Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
+   :type design_name_v1: str
+   :param design_directory: Design directory PATH.
+   :type design_directory: str
+   :param run_name: Name of the run to extract the GDS from. If None, it will look at the latest run.
+   :type run_name: str
+   :param v1: If True, it will import the design from the OpenLane v1 configuration.
+   :type v1: bool
+
+   :returns: GDSFactory component.
+   :rtype: component(gf.Component)
 
 
-.. py:function:: create_parametric_designs(parameter_sweep_dictionary: dict, source_design_directory: str | pathlib.Path, target_directory: str | pathlib.Path) -> None
+.. py:function:: get_design_directory_from_root_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> pathlib.Path
 
-   Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+   Gets the design directory from the root directory.
 
-   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
-   :type parameter_sweep_dictionary: dict
-   :param source_design_directory: Source design directory.
-   :type source_design_directory: str
-   :param target_directory: Target directory.
-   :type target_directory: str
+   :param design_name: Name of the design.
+   :type design_name: str
+   :param root_directory: Design directory.
+   :type root_directory: str | pathlib.Path
+
+   :returns: Design directory.
+   :rtype: design_directory(pathlib.Path)
+
+
+.. py:function:: return_path(input_path: str | pathlib.Path) -> pathlib.Path
+
+   Returns a pathlib.Path to be able to perform operations accordingly internally.
+
+   This allows us to maintain compatibility between POSIX and Windows systems.
+
+   :param input_path: Input path.
+   :type input_path: str
+
+   :returns: Pathlib path.
+   :rtype: pathlib.Path
+
+
+.. py:function:: get_design_from_openlane_migration(v1: bool = True, design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, root_directory_v1: str | pathlib.Path | None = None) -> (str, pathlib.Path)
+
+   This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.
+
+   This function checks if the inputs are to be treated as v1 inputs. If so, and a `design_name` is provided then it will set the `design_directory` to the corresponding `design_name` directory in the corresponding `root_directory_v1 / designs`. If no `root_directory` is provided then it returns `$OPENLANE_ROOT/"<latest>"/. If a `design_directory` is provided then this will always take precedence even with a `v1` flag.
+
+   :param v1: If True, it will migrate from v1 to v2.
+   :type v1: bool
+   :param design_name_v1: Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
+   :type design_name_v1: str
+   :param design_directory: Design directory PATH. Optional path for v2-based designs.
+   :type design_directory: str
+   :param root_directory_v1: Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"
+   :type root_directory_v1: str
 
    :returns: None
 
 
-.. py:function:: find_design_run(design_directory: str | pathlib.Path, run_name: str | None = None) -> str
+.. py:function:: find_design_run(design_directory: str | pathlib.Path, run_name: str | None = None) -> pathlib.Path
 
    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
 
@@ -248,6 +373,21 @@ Attributes
    :returns: None
 
 
+.. py:function:: configure_parametric_designs_openlane_v1(design_name: str, parameter_sweep_dictionary: dict, add_id: bool = True) -> list
+
+   For a given `source_design_directory`, this function reads in the config.json file and returns a set of parametric sweeps that gets used when creating a set of parametric designs.
+
+   :param add_id: Add an ID to the design name. Defaults to True.
+   :type add_id: bool
+   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
+   :type parameter_sweep_dictionary: dict
+   :param source_design_directory: Source design directory.
+   :type source_design_directory: str | pathlib.Path
+
+   :returns: List of configurations to sweep.
+   :rtype: configuration_sweep(list)
+
+
 .. py:function:: configure_flow_script_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> None
 
    Configures the OpenLane v1 flow script after checking that the design directory exists.
@@ -258,9 +398,36 @@ Attributes
    :returns: None
 
 
+.. py:function:: create_parametric_designs_openlane_v1(design_name: str, parameter_sweep_dictionary: dict, target_directory: str | pathlib.Path | None = None) -> None
+
+   Takes a OpenLane v1 source directory and creates a parametric combination of these designs.
+
+   :param design_name: Name of the design.
+   :type design_name: str
+   :param parameter_sweep_dictionary: Dictionary of parameters to sweep.
+   :type parameter_sweep_dictionary: dict
+   :param target_directory: Optional target directory.
+   :type target_directory: str | pathlib.Path | None
+
+   :returns: None
+
+
 .. py:function:: get_latest_version_root_openlane_v1() -> pathlib.Path
 
    Gets the latest version root of OpenLane v1.
+
+
+.. py:function:: read_configuration_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> dict
+
+   Reads a `config.json` from a design directory.
+
+   :param design_name: Design name.
+   :type design_name: str
+   :param root_directory: Design directory.
+   :type root_directory: str | pathlib.Path
+
+   :returns: Configuration dictionary.
+   :rtype: configuration(dict)
 
 
 .. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: str | pathlib.Path) -> None
@@ -335,78 +502,6 @@ Attributes
    :rtype: parameter_sweep_design_dictionary_array(list)
 
 
-.. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
-
-   Checks if a cocotb testbench exists in the design directory.
-
-   :param design_directory: Design directory.
-   :type design_directory: str | pathlib.Path
-
-   :returns: True if cocotb testbench exists.
-   :rtype: cocotb_testbench_exists(bool)
-
-
-.. py:function:: configure_cocotb_simulation(design_directory: str | pathlib.Path, simulator: Literal[icarus, verilator], top_level_language: Literal[verilog, vhdl], top_level_verilog_module: str, test_python_module: str, design_sources_list: list | None = None)
-
-   Writes a cocotb makefile.
-
-   If no design_sources_list is provided then it adds all the design sources under the `src` folder.
-
-   In the form::
-       Makefile
-       # defaults
-       SIM ?= icarus
-       TOPLEVEL_LANG ?= verilog
-
-       VERILOG_SOURCES += $(PWD)/my_design.sv
-       # use VHDL_SOURCES for VHDL files
-
-       # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-       TOPLEVEL = my_design
-
-       # MODULE is the basename of the Python test file
-       MODULE = test_my_design
-
-       # include cocotb's make rules to take care of the simulator setup
-       include $(shell cocotb-config --makefiles)/Makefile.sim
-
-
-   :param design_directory: The directory where the design is located.
-   :type design_directory: str | pathlib.Path
-   :param simulator: The simulator to use.
-   :type simulator: Literal["icarus", "verilator"]
-   :param top_level_language: The top level language.
-   :type top_level_language: Literal["verilog", "vhdl"]
-   :param top_level_verilog_module: The top level verilog module.
-   :type top_level_verilog_module: str
-   :param test_python_module: The test python module.
-   :type test_python_module: str
-   :param design_sources_list: A list of design sources. Defaults to None.
-   :type design_sources_list: list | None, optional
-
-   :returns: None
-
-
-.. py:data:: make_cocotb
-
-
-
-.. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
-
-   Equivalent to running the cocotb makefile::
-       make
-
-   :param design_directory: The directory where the design is located.
-   :type design_directory: str
-
-   :returns: The subprocess.CompletedProcess object.
-   :rtype: subprocess.CompletedProcess
-
-
-.. py:data:: write_cocotb_makefile
-
-
-
 .. py:data:: __author__
    :value: 'Dario Quintero'
 
@@ -418,4 +513,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.27'
+   :value: '0.0.29'

@@ -1,20 +1,21 @@
-:py:mod:`piel.cocotb`
-=====================
+:py:mod:`piel.cocotb.core`
+==========================
 
-.. py:module:: piel.cocotb
+.. py:module:: piel.cocotb.core
+
+.. autoapi-nested-parse::
+
+   The objective of this file is to provide the simulation ports and interconnection to consider modelling digital and mixed signal logic.
+
+   The main simulation driver is cocotb, and this generates a set of files that correspond to time-domain digital simulations.
+   The cocotb verification software can also be used to perform mixed signal simulation, and digital data can be inputted as a bitstream into a photonic solver, although the ideal situation would be to have integrated photonic time-domain models alongside the electronic simulation solver, and maybe this is where it will go. It can be assumed that, as is currently, cocotb can interface python with multiple solvers until someone (and I'd love to do this) writes an equivalent python-based or C++ based python time-domain simulation solver.
+
+   The nice thing about cocotb is that as long as the photonic simulations can be written asyncrhonously, time-domain simulations can be closely integrated or simulated through this verification software.
 
 
-Submodules
-----------
-.. toctree::
-   :titlesonly:
-   :maxdepth: 1
 
-   core/index.rst
-
-
-Package Contents
-----------------
+Module Contents
+---------------
 
 
 Functions
@@ -22,9 +23,9 @@ Functions
 
 .. autoapisummary::
 
-   piel.cocotb.check_cocotb_testbench_exists
-   piel.cocotb.configure_cocotb_simulation
-   piel.cocotb.run_cocotb_simulation
+   piel.cocotb.core.check_cocotb_testbench_exists
+   piel.cocotb.core.configure_cocotb_simulation
+   piel.cocotb.core.run_cocotb_simulation
 
 
 
@@ -33,8 +34,8 @@ Attributes
 
 .. autoapisummary::
 
-   piel.cocotb.make_cocotb
-   piel.cocotb.write_cocotb_makefile
+   piel.cocotb.core.write_cocotb_makefile
+   piel.cocotb.core.make_cocotb
 
 
 .. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
@@ -89,10 +90,6 @@ Attributes
    :returns: None
 
 
-.. py:data:: make_cocotb
-
-
-
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
    Equivalent to running the cocotb makefile::
@@ -106,3 +103,7 @@ Attributes
 
 
 .. py:data:: write_cocotb_makefile
+
+
+
+.. py:data:: make_cocotb
