@@ -4,9 +4,10 @@ These functions do not work currently.
 
 import pathlib
 import pandas as pd
+from ...file_system import check_path_exists
 
 
-def read_file_meta_data(file_path: str | pathlib.Path) -> pd.DataFrame:
+def read_file_meta_data(file_path: str | pathlib.Path):
     """
     Read the file and extract the metadata
 
@@ -15,8 +16,11 @@ def read_file_meta_data(file_path: str | pathlib.Path) -> pd.DataFrame:
 
     Returns:
         file_lines_data (pd.DataFrame): Dataframe containing the file lines
+        maximum_frame_amount (int): Maximum number of frames in the file
+        frame_meta_data (dict): Dictionary containing the frame metadata
     """
-    file = open(file_path, "r")
+    check_path_exists(file_path)
+    file = open(str(file_path.resolve()), "r")
     file_lines_raw = file.readlines()
     file_lines_data = pd.DataFrame({"lines": file_lines_raw})
     maximum_frame_amount, frame_meta_data = configure_frame_id(file_lines_data)
@@ -24,7 +28,19 @@ def read_file_meta_data(file_path: str | pathlib.Path) -> pd.DataFrame:
     return file_lines_data, maximum_frame_amount, frame_meta_data
 
 
-def configure_frame_id(file_lines_data):
+def configure_frame_id(
+    file_lines_data: pd.DataFrame,
+):
+    """
+    Configure the frame id for each line in the file
+
+    Args:
+        file_lines_data (pd.DataFrame): Dataframe containing the file lines
+
+    Returns:
+        maximum_frame_amount (int): Maximum number of frames in the file
+        file_lines_data (pd.DataFrame): Dataframe containing the file lines
+    """
     file_lines_data["delimiters_line"] = file_lines_data.lines.str.contains(
         "=========="
     )
@@ -50,6 +66,16 @@ def configure_frame_id(file_lines_data):
 
 
 def configure_timing_data_rows(file_lines_data, maximum_frame_amount):
+    """
+    Configure the timing data rows for each frame in the file
+
+    Args:
+        file_lines_data (pd.DataFrame): Dataframe containing the file lines
+        maximum_frame_amount (int): Maximum number of frames in the file
+
+    Returns:
+        frame_meta_data (dict): Dictionary containing the frame metadata
+    """
     frame_meta_data = {}
     for frame in range(maximum_frame_amount):
         timing_rows_index = file_lines_data.index[
@@ -73,6 +99,18 @@ def configure_timing_data_rows(file_lines_data, maximum_frame_amount):
 
 
 def extract_frame_meta_data(file_lines_data):
+    """
+    Extract the frame metadata
+
+    Args:
+        file_lines_data (pd.DataFrame): Dataframe containing the file lines
+
+    Returns:
+        start_point_name (pd.DataFrame): Dataframe containing the start point names
+        end_point_name (pd.DataFrame): Dataframe containing the end point names
+        path_group_name (pd.DataFrame): Dataframe containing the path group names
+        path_type_name (pd.DataFrame): Dataframe containing the path type names
+    """
     file_lines_data["start_point_line"] = file_lines_data.lines.str.contains(
         "Startpoint"
     )
@@ -98,6 +136,15 @@ def extract_frame_meta_data(file_lines_data):
 
 
 def extract_timing_data(file_address, frame_meta_data, frame_id=0):
+    """
+    Extract the timing data
+
+    Args:
+        file_address (str | pathlib.Path): Path to the file
+
+    Returns:
+        timing_data (pd.DataFrame): Dataframe containing the timing data
+    """
     timing_data = pd.read_fwf(
         file_address,
         colspecs=[(0, 6), (6, 14), (14, 22), (22, 30), (30, 38), (38, 40), (40, 100)],
@@ -111,6 +158,17 @@ def extract_timing_data(file_address, frame_meta_data, frame_id=0):
 
 
 def calculate_propagation_delay(net_name_in, net_name_out, timing_data):
+    """
+    Calculate the propagation delay
+
+    Args:
+        net_name_in (str): Name of the input net
+        net_name_out (str): Name of the output net
+        timing_data (pd.DataFrame): Dataframe containing the timing data
+
+    Returns:
+        propagation_delay_dataframe (pd.DataFrame): Dataframe containing the propagation delay
+    """
     if (
         len(
             timing_data[
@@ -148,6 +206,16 @@ def calculate_propagation_delay(net_name_in, net_name_out, timing_data):
 
 
 def run_parser(file_address):
+    """
+    Run the parser
+
+    Args:
+        file_address (str | pathlib.Path): Path to the file
+
+    Returns:
+        frame_timing_data (dict): Dictionary containing the frame timing data
+        propagation_delay (dict): Dictionary containing the propagation delay
+    """
     file_lines_data, maximum_frame_amount, frame_meta_data = read_file_meta_data(
         file_address
     )

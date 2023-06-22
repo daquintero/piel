@@ -21,6 +21,7 @@ This package provides a wrapper to easily co-design microelectronics through the
 
 Some individual tools already integrated are:
 * [cocotb](https://github.com/cocotb/cocotb) - implements the methods that allow the testbenching configuration of signal stimulus to the electronic logic directly from Python.
+* [GDSFactory](https://github.com/gdsfactory/gdsfactory) - design tools for GDSFactory
 * [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - implements the RTL-to-GDSII flow for the
   electronic logic and outputs performance parameters of the implemented circuitry.
 
