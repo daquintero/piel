@@ -1,0 +1,81 @@
+:py:mod:`piel.openlane.parse.utils`
+===================================
+
+.. py:module:: piel.openlane.parse.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.openlane.parse.utils.contains_in_lines
+   piel.openlane.parse.utils.create_dataframe
+   piel.openlane.parse.utils.get_file_line_by_keyword
+   piel.openlane.parse.utils.read_file_lines
+   piel.openlane.parse.utils.read_file
+
+
+
+.. py:function:: contains_in_lines(file_lines_data: pandas.DataFrame, keyword: str)
+
+   Check if the keyword is contained in the file lines
+
+   :param file_lines_data: Dataframe containing the file lines
+   :type file_lines_data: pd.DataFrame
+   :param keyword: Keyword to search for
+   :type keyword: str
+
+   :returns: Dataframe containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
+
+
+.. py:function:: create_dataframe(file_lines_raw)
+
+   Create a DataFrame from the raw lines of a file
+
+   :param file_lines_raw: list containing the file lines
+   :type file_lines_raw: list
+
+   :returns: Dataframe containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
+
+
+.. py:function:: get_file_line_by_keyword(file_lines_data: pandas.DataFrame, keyword: str, regex: str)
+
+   Extract the data from the file lines using the given keyword and regex
+
+   :param file_lines_data: Dataframe containing the file lines
+   :type file_lines_data: pd.DataFrame
+   :param keyword: Keyword to search for
+   :type keyword: str
+   :param regex: Regex to extract the data
+   :type regex: str
+
+   :returns: Dataframe containing the extracted values
+   :rtype: extracted_values (pd.DataFrame)
+
+
+.. py:function:: read_file_lines(file)
+
+   Extract lines from the file
+
+   :param file: the opened file
+
+   :returns: list containing the file lines
+   :rtype: file_lines_raw (list)
+
+
+.. py:function:: read_file(file_path: str | pathlib.Path)
+
+   Read the file from the given path
+
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
+
+   :returns: the opened file
+   :rtype: file

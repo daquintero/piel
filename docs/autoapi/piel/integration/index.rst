@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    openlane_gdsfactory_core/index.rst
+   sax_cocotb/index.rst
 
 
 Package Contents
