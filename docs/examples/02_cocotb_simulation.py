@@ -21,5 +21,4 @@ piel.configure_cocotb_simulation(
 )
 
 # Run cocotb simulation
-
 piel.run_cocotb_simulation(design_directory)

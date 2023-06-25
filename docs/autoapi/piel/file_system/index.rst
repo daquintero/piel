@@ -13,6 +13,7 @@ Functions
 
 .. autoapisummary::
 
+   piel.file_system.check_path_exists
    piel.file_system.check_example_design
    piel.file_system.copy_source_folder
    piel.file_system.permit_script_execution
@@ -21,6 +22,17 @@ Functions
    piel.file_system.setup_example_design
    piel.file_system.write_script
 
+
+
+.. py:function:: check_path_exists(path: str | pathlib.Path, raise_errors: bool = False) -> bool
+
+   Checks if a directory exists.
+
+   :param path: Input path.
+   :type path: str | pathlib.Path
+
+   :returns: True if directory exists.
+   :rtype: directory_exists(bool)
 
 
 .. py:function:: check_example_design(design_name: str | pathlib.Path = 'simple_design') -> bool

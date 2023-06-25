@@ -1,29 +1,33 @@
-import subprocess
-
+import glob
 import openlane
 import os
 import pathlib
 import shutil
 import stat
+import subprocess
 from typing import Literal
 
 
-def check_directory_exists(directory_path: str | pathlib.Path) -> bool:
+def check_path_exists(
+    path: str | pathlib.Path,
+    raise_errors: bool = False,
+) -> bool:
     """
     Checks if a directory exists.
 
     Args:
-        directory_path(str | pathlib.Path): Input path.
+        path(str | pathlib.Path): Input path.
 
     Returns:
         directory_exists(bool): True if directory exists.
     """
     directory_exists = False
-    directory_path = return_path(directory_path)
-    if directory_path.exists():
+    path = return_path(path)
+    if path.exists():
         directory_exists = True
     else:
-        pass
+        if raise_errors:
+            raise ValueError("Path: " + str(path) + " does not exist.")
     return directory_exists
 
 
@@ -107,6 +111,28 @@ def create_new_directory(
 
     # Create the directory
     directory_path.mkdir(parents=True)
+
+
+def get_files_recursively_in_directory(
+    path: str | pathlib.Path,
+    extension: str = "*",
+):
+    """
+    Returns a list of files in a directory.
+
+    Args:
+        path(str | pathlib.Path): Input path.
+        extension(str): File extension.
+
+    Returns:
+        file_list(list): List of files.
+    """
+    path = return_path(path)
+    file_list = []
+    for x in os.walk(str(path.resolve())):
+        for file_path in glob.glob(os.path.join(x[0], f"*.{extension}")):
+            file_list.append(file_path)
+    return file_list
 
 
 def permit_script_execution(script_path: str | pathlib.Path) -> None:
@@ -229,7 +255,7 @@ def write_script(
     """
     directory_path = return_path(directory_path)
 
-    directory_exists = check_directory_exists(directory_path)
+    directory_exists = check_path_exists(directory_path)
 
     if directory_exists:
         pass
@@ -251,6 +277,7 @@ def write_script(
 
 
 __all__ = [
+    "check_path_exists",
     "check_example_design",
     "copy_source_folder",
     "permit_script_execution",

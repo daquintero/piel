@@ -7,11 +7,9 @@
 
    readme
    installation
-   integration
    examples
-   usage
-   flow
    sections/environment/index
+   sections/integration/index
    sections/codesign/index
    modules
    contributing

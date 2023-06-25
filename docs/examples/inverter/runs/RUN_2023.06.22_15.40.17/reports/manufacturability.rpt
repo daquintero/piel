@@ -1,0 +1,19 @@
+Design Name: inverter
+Run Directory: /foss/tools/openlane/2023.05/designs/inverter/runs/RUN_2023.06.22_15.40.17
+----------------------------------------
+
+Magic DRC Summary:
+Source: /foss/tools/openlane/2023.05/designs/inverter/runs/RUN_2023.06.22_15.40.17/reports/signoff/drc.rpt
+Total Magic DRC violations is 0
+----------------------------------------
+
+LVS Summary:
+Source: /foss/tools/openlane/2023.05/designs/inverter/runs/RUN_2023.06.22_15.40.17/logs/signoff/36-inverter.lef.lvs.log
+Number of nets: 6                          |Number of nets: 6                          
+Design is LVS clean.
+----------------------------------------
+
+Antenna Summary:
+Source: /foss/tools/openlane/2023.05/designs/inverter/runs/RUN_2023.06.22_15.40.17/logs/signoff/38-antenna.log
+Pin violations: 0
+Net violations: 0

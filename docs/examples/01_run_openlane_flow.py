@@ -9,14 +9,32 @@ import piel
 
 # ## OpenLane V1 Flow
 
-# ### Run Default `spm` Design using `piel`
+# ### Interacting with Existing Designs
+# Let us first begin by exploring the default `spm` design. Note that this design has to be included in the `OPENLANE_ROOT/<latestversion>/designs` directory for this to be valid, or the `root_directory` parameter has to be setup depending on your environment.
+
+# Configure our example design name:
+design_name = "spm"
+
+# Check that the design exists in the OpenLane v1 design folder:
+piel.check_design_exists_openlane_v1(design_name)
+
+# Check if `config.json` has already been provided for this design.
+piel.check_config_json_exists_openlane_v1(design_name)
+
+# Read the `config.json` file for this design:
+example_config_json = piel.read_configuration_openlane_v1(design_name)
+example_config_json
+
+# Get the design directory for this design:
+design_directory = piel.get_design_directory_from_root_openlane_v1(design_name)
+design_directory
+
+# ### Run Flow `spm` Design using `piel`
 
 # #### The Fast Version
 
 # `piel` provides a set of functions for easily configuring and running a design into `Openlane v1`. For the default `spm` that already has a set up `config.json` file and project structure inside `$OPENLANE_ROOT/<latestversion>/designs`:
 
-
-design_name = "spm"
 
 piel.configure_and_run_design_openlane_v1(
     design_name=design_name,
