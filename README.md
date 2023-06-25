@@ -20,10 +20,10 @@ Photonic and electronic co-simulation system design tools interfaced with open-s
 This package provides a wrapper to easily co-design microelectronics through the functionality of the [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools) and photonics via [GDSFactory](https://github.com/gdsfactory/gdsfactory).
 
 Some individual tools already integrated are:
-* [cocotb](https://github.com/cocotb/cocotb) - implements the methods that allow the testbenching configuration of signal stimulus to the electronic logic directly from Python.
-* [GDSFactory](https://github.com/gdsfactory/gdsfactory) - design tools for GDSFactory
-* [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - implements the RTL-to-GDSII flow for the
-  electronic logic and outputs performance parameters of the implemented circuitry.
+* [cocotb](https://github.com/cocotb/cocotb) - a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python.
+* [GDSFactory](https://github.com/gdsfactory/gdsfactory) - An open source platform for end to-end photonic chip design and validation
+* [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for design exploration and optimization
+* [sax](https://github.com/flaport/sax) - S-parameter based frequency domain circuit simulations and optimizations using JAX.
 
 Coming next GDSFactory netlisting and layout integration.
 
