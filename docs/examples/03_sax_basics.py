@@ -6,12 +6,12 @@
 
 # We begin by importing a parametric circuit from `gdsfactory`:
 import gdsfactory as gf
-from gdsfactory.components.mzi import mzi2x2_2x2
+from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
 
 example_component_lattice = [
-    [mzi2x2_2x2(), 0, mzi2x2_2x2()],
-    [0, mzi2x2_2x2(), 0],
-    [mzi2x2_2x2(), 0, mzi2x2_2x2()],
+    [mzi2x2_2x2_phase_shifter(), 0, mzi2x2_2x2(delta_length=80.0)],
+    [0, mzi2x2_2x2(delta_length=50.0), 0],
+    [mzi2x2_2x2(delta_length=100.0), 0, mzi2x2_2x2_phase_shifter()],
 ]
 
 switch_circuit = gf.components.generic_component_lattice(

@@ -1,10 +1,10 @@
-import subprocess
-
+import glob
 import openlane
 import os
 import pathlib
 import shutil
 import stat
+import subprocess
 from typing import Literal
 
 
@@ -111,6 +111,28 @@ def create_new_directory(
 
     # Create the directory
     directory_path.mkdir(parents=True)
+
+
+def get_files_recursively_in_directory(
+    path: str | pathlib.Path,
+    extension: str = "*",
+):
+    """
+    Returns a list of files in a directory.
+
+    Args:
+        path(str | pathlib.Path): Input path.
+        extension(str): File extension.
+
+    Returns:
+        file_list(list): List of files.
+    """
+    path = return_path(path)
+    file_list = []
+    for x in os.walk(str(path.resolve())):
+        for file_path in glob.glob(os.path.join(x[0], f"*.{extension}")):
+            file_list.append(file_path)
+    return file_list
 
 
 def permit_script_execution(script_path: str | pathlib.Path) -> None:

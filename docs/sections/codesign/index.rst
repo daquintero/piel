@@ -6,3 +6,5 @@ Co-Design Functionality
     :caption: Contents:
     connectivity
     parametric
+    tools_interconnection
+    time_domain
