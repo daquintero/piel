@@ -1,5 +1,5 @@
-`PIEL`: Photonic and Integrated Electronic System Design Tools!
-==============================================================
+`piel` - Photonic and Integrated ELectronic tools
+=================================================
 
 .. toctree::
    :maxdepth: 2
@@ -14,7 +14,7 @@
    modules
    contributing
    authors
-   history
+   about/index
 
 Indices and tables
 ==================
