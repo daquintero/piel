@@ -1,4 +1,4 @@
-# # GDSFactory Layout Integration
+# # GDSFactory-OpenLane Layout Integration
 
 # This is the simplest implementation of the integration between `OpenLane` and `gdsfactory`.
 import piel

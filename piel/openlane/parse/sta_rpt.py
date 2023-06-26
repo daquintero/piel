@@ -1,7 +1,12 @@
 import pandas as pd
 import pathlib
 from ...file_system import return_path
-from .utils import contains_in_lines, read_file_lines, get_file_line_by_keyword
+from .utils import (
+    contains_in_lines,
+    read_file_lines,
+    get_file_line_by_keyword,
+    create_file_lines_dataframe,
+)
 
 
 def calculate_max_frame_amount(
@@ -16,7 +21,7 @@ def calculate_max_frame_amount(
     Returns:
         maximum_frame_amount (int): Maximum number of frames in the file
     """
-    return max(file_lines_data["frame_id"].tolist())
+    return max(file_lines_data["frame_id"].tolist()) + 1
 
 
 def calculate_propagation_delay_from_timing_data(
@@ -64,22 +69,20 @@ def calculate_propagation_delay_from_timing_data(
 
 
 def calculate_propagation_delay_from_file(
-    file: str | pathlib.Path,
+    file_path: str | pathlib.Path,
 ):
     """
     Calculate the propagation delay for each frame in the file
 
     Args:
-        file (str | pathlib.Path): Path to the file
+        file_path (str | pathlib.Path): Path to the file
 
     Returns:
         propagation_delay (dict): Dictionary containing the propagation delay
     """
-    file = return_path(file)
     # TODO Check file is RPT
-    file_lines_data = read_file_lines(file)
+    file_lines_data = get_frame_lines_data(file_path)
     maximum_frame_amount = calculate_max_frame_amount(file_lines_data)
-
     (
         start_point_name,
         end_point_name,
@@ -87,7 +90,7 @@ def calculate_propagation_delay_from_file(
         path_type_name,
     ) = get_frame_meta_data(file_lines_data)
 
-    frame_timing_data = {}
+    frame_timing_data = get_all_timing_data_from_file(file_path)
     propagation_delay = {}
     for frame_id in range(maximum_frame_amount):
         if len(start_point_name.values) > frame_id:
@@ -117,7 +120,7 @@ def configure_timing_data_rows(
         timing_rows_index = file_lines_data.index[
             file_lines_data["timing_data_line"] & (file_lines_data["frame_id"] == frame)
         ].tolist()
-        if len(timing_rows_index) >= 1:
+        if len(timing_rows_index) > 0:
             frame_meta_data[frame] = {
                 "start_index": timing_rows_index[0],
                 "end_index": timing_rows_index[-1],
@@ -224,6 +227,26 @@ def get_frame_meta_data(file_lines_data):
     return start_point_name, end_point_name, path_group_name, path_type_name
 
 
+def get_frame_lines_data(
+    file_path: str | pathlib.Path,
+):
+    """
+    Calculate the timing data for each frame in the file
+
+    Args:
+        file_path (str | pathlib.Path): Path to the file
+
+    Returns:
+        file_lines_data (pd.DataFrame): DataFrame containing the file lines
+    """
+    file_path = return_path(file_path)
+    # TODO Check file is RPT
+    file_lines = read_file_lines(file_path)
+    file_lines_data = create_file_lines_dataframe(file_lines)
+    file_lines_data = configure_frame_id(file_lines_data)
+    return file_lines_data
+
+
 def get_frame_timing_data(
     file: str | pathlib.Path, frame_meta_data: dict, frame_id: int = 0
 ):
@@ -246,26 +269,24 @@ def get_frame_timing_data(
 
 
 def get_all_timing_data_from_file(
-    file: str | pathlib.Path,
+    file_path: str | pathlib.Path,
 ):
     """
     Calculate the timing data for each frame in the file
 
     Args:
-        file (str | pathlib.Path): Path to the file
+        file_path (str | pathlib.Path): Path to the file
 
     Returns:
         frame_timing_data (dict): Dictionary containing the timing data for each frame
     """
-    file = return_path(file)
-    # TODO Check file is RPT
-    file_lines_data = read_file_lines(file)
+    file_lines_data = get_frame_lines_data(file_path)
     maximum_frame_amount = calculate_max_frame_amount(file_lines_data)
     frame_meta_data = configure_timing_data_rows(file_lines_data)
     frame_timing_data = {}
     for frame_id in range(maximum_frame_amount):
         frame_timing_data[frame_id] = get_frame_timing_data(
-            file, frame_meta_data, frame_id
+            file_path, frame_meta_data, frame_id
         )
     return frame_timing_data
 

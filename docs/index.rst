@@ -1,5 +1,5 @@
-`piel` - Photonic and Integrated ELectronic tools
-=================================================
+**P**\hotonic & **I**\ntegrated **EL**\ectronic tools
+=====================================================
 
 .. toctree::
    :maxdepth: 2
@@ -11,10 +11,10 @@
    sections/environment/index
    sections/integration/index
    sections/codesign/index
-   modules
    contributing
+   sections/about/index
    authors
-   about/index
+
 
 Indices and tables
 ==================

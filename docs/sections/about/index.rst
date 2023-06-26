@@ -6,3 +6,4 @@ About
     :caption: Contents:
 
     relevant_projects
+    AUTHORS

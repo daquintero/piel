@@ -20,7 +20,7 @@ def contains_in_lines(
     return file_lines_data.lines.str.contains(keyword)
 
 
-def create_dataframe(file_lines_raw):
+def create_file_lines_dataframe(file_lines_raw):
     """
     Create a DataFrame from the raw lines of a file
 
@@ -54,16 +54,18 @@ def get_file_line_by_keyword(
     return extracted_values
 
 
-def read_file_lines(file):
+def read_file_lines(file_path: str | pathlib.Path):
     """
     Extract lines from the file
 
     Args:
-        file: the opened file
+        file_path (str | pathlib.Path): Path to the file
 
     Returns:
         file_lines_raw (list): list containing the file lines
     """
+    file_path = return_path(file_path)
+    file = read_file(file_path)
     return file.readlines()
 
 
