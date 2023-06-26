@@ -194,3 +194,4 @@ bpad_*.err
 waves.shm/
 
 ivl_vhdl_work/
+RUN_*
