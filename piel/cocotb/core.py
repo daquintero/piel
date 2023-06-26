@@ -6,10 +6,11 @@ The cocotb verification software can also be used to perform mixed signal simula
 
 The nice thing about cocotb is that as long as the photonic simulations can be written asyncrhonously, time-domain simulations can be closely integrated or simulated through this verification software.
 """
+import functools
 import pathlib
 import subprocess
 from typing import Literal
-from piel.file_system import return_path, write_script
+from piel.file_system import return_path, write_script, delete_path_list_in_directory
 
 
 def check_cocotb_testbench_exists(
@@ -128,6 +129,12 @@ def configure_cocotb_simulation(
     )
 
 
+delete_simulation_output_files = functools.partial(
+    delete_path_list_in_directory,
+    path_list=["sim_build", "__pychache__", "ivl_vhdl_work"],
+)
+
+
 def run_cocotb_simulation(
     design_directory: str,
 ) -> subprocess.CompletedProcess:
@@ -157,14 +164,9 @@ def run_cocotb_simulation(
     return run
 
 
-write_cocotb_makefile = configure_cocotb_simulation
-make_cocotb = run_cocotb_simulation
-
-
 __all__ = [
     "check_cocotb_testbench_exists",
     "configure_cocotb_simulation",
-    "make_cocotb",
+    "delete_simulation_output_files",
     "run_cocotb_simulation",
-    "write_cocotb_makefile",
 ]
