@@ -58,19 +58,23 @@ def configure_cocotb_simulation(
     In the form
     .. code-block::
 
-        Makefile
+        #!/bin/sh
+        # Makefile
         # defaults
         SIM ?= icarus
         TOPLEVEL_LANG ?= verilog
+        
+        # Note we need to include the test script to the PYTHONPATH
+        export PYTHONPATH = 
 
         VERILOG_SOURCES += $(PWD)/my_design.sv
         # use VHDL_SOURCES for VHDL files
 
         # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-        TOPLEVEL = my_design
+        TOPLEVEL := my_design
 
         # MODULE is the basename of the Python test file
-        MODULE = test_my_design
+        MODULE := test_my_design
 
         # include cocotb's make rules to take care of the simulator setup
         include $(shell cocotb-config --makefiles)/Makefile.sim
@@ -95,7 +99,8 @@ def configure_cocotb_simulation(
         design_sources_list = list(design_sources_directory.iterdir())
 
     top_commands_list = [
-        "Makefile",
+        "#!/bin/bash",
+        "# Makefile",
         "SIM ?= " + simulator,
         "TOPLEVEL_LANG ?= " + top_level_language,
     ]
@@ -112,8 +117,8 @@ def configure_cocotb_simulation(
             middle_commands_list.append("VHDL_SOURCES += " + str(source_file.resolve()))
 
     bottom_commands_list = [
-        "TOPLEVEL = " + top_level_verilog_module,
-        "MODULE = " + test_python_module,
+        "TOPLEVEL := " + top_level_verilog_module,
+        "MODULE := " + test_python_module,
         "include $(shell cocotb-config --makefiles)/Makefile.sim",
     ]
 
@@ -122,7 +127,7 @@ def configure_cocotb_simulation(
     commands_list.extend(middle_commands_list)
     commands_list.extend(bottom_commands_list)
 
-    script = ";\n".join(commands_list)
+    script = " \n".join(commands_list)
     write_script(
         directory_path=design_directory / "tb", script=script, script_name="Makefile"
     )
@@ -146,7 +151,7 @@ def run_cocotb_simulation(
     """
     test_directory = return_path(design_directory) / "tb"
     commands_list = ["cd " + str(test_directory.resolve()), "make"]
-    script = " \n ".join(commands_list)
+    script = "; \n".join(commands_list)
     # Save script if desired to run directly
     write_script(
         directory_path=test_directory,

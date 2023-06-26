@@ -1,2 +1,2 @@
-cd C:\Users\dario\Documents\phd\piel\docs\examples\simple_design\tb
- make
+cd /foss/designs/piel/docs/examples/simple_design/tb; 
+make
