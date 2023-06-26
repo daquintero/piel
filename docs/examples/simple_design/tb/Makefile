@@ -1,6 +1,7 @@
 Makefile;
 SIM ?= icarus;
 TOPLEVEL_LANG ?= verilog;
+VERILOG_SOURCES += C:\Users\dario\Documents\phd\piel\docs\examples\simple_design\src\.ipynb_checkpoints;
 VERILOG_SOURCES += C:\Users\dario\Documents\phd\piel\docs\examples\simple_design\src\adder.sv;
 VERILOG_SOURCES += C:\Users\dario\Documents\phd\piel\docs\examples\simple_design\src\adder.vhdl;
 TOPLEVEL = adder;

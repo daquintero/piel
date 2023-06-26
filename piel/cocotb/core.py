@@ -55,7 +55,9 @@ def configure_cocotb_simulation(
 
     If no design_sources_list is provided then it adds all the design sources under the `src` folder.
 
-    In the form::
+    In the form
+    .. code-block::
+
         Makefile
         # defaults
         SIM ?= icarus
@@ -130,7 +132,9 @@ def run_cocotb_simulation(
     design_directory: str,
 ) -> subprocess.CompletedProcess:
     """
-    Equivalent to running the cocotb makefile::
+    Equivalent to running the cocotb makefile
+    .. code-block::
+
         make
 
     Args:
@@ -141,15 +145,15 @@ def run_cocotb_simulation(
 
     """
     test_directory = return_path(design_directory) / "tb"
-    commands_list = ["cd" + str(test_directory.resolve()), "make"]
-    script = ";\n".join(commands_list)
+    commands_list = ["cd " + str(test_directory.resolve()), "make"]
+    script = " \n ".join(commands_list)
     # Save script if desired to run directly
     write_script(
         directory_path=test_directory,
         script=script,
         script_name="run_cocotb_simulation.sh",
     )
-    run = subprocess.run(script, capture_output=True, shell=True)
+    run = subprocess.run(script, capture_output=True, shell=True, check=True)
     return run
 
 

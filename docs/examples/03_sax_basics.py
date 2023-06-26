@@ -14,8 +14,8 @@ example_component_lattice = [
     [mzi2x2_2x2(delta_length=100.0), 0, mzi2x2_2x2_phase_shifter()],
 ]
 
-switch_circuit = gf.components.generic_component_lattice(
-    physical_network=example_component_lattice
+switch_circuit = gf.components.component_lattice_generic(
+    network=example_component_lattice
 )
 switch_circuit
 

@@ -20,5 +20,7 @@ piel.configure_cocotb_simulation(
     design_sources_list=list((design_directory / "src").iterdir()),
 )
 
+# Now we can create the simulation output files from the `makefile`
+
 # Run cocotb simulation
 piel.run_cocotb_simulation(design_directory)

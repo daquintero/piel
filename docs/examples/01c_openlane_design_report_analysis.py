@@ -24,4 +24,6 @@ timing_data = piel.get_all_timing_data_from_file(file_path=run_output_sta_file_l
 ]
 timing_data
 
+# We can extract the propagation delay from the input and output frame accordingly.
+
 piel.calculate_propagation_delay_from_file(file_path=run_output_sta_file_list[0])[0]
