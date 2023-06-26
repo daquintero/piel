@@ -1,13 +1,9 @@
 # This file is public domain, it can be freely copied without restrictions.
 # SPDX-License-Identifier: CC0-1.0
 # Simple tests for an adder module
-import os
 import random
-import sys
-from pathlib import Path
 
 import cocotb
-from cocotb.runner import get_runner
 from cocotb.triggers import Timer
 
 if cocotb.simulator.is_running():
@@ -35,7 +31,7 @@ async def adder_basic_test(dut):
 async def adder_randomised_test(dut):
     """Test for adding 2 random numbers multiple times"""
 
-    for i in range(10):
+    for i in range(10):  # NOQA: B007
         A = random.randint(0, 15)
         B = random.randint(0, 15)
 
@@ -49,5 +45,3 @@ async def adder_randomised_test(dut):
         ), "Randomised test failed with: {A} + {B} = {X}".format(
             A=dut.A.value, B=dut.B.value, X=dut.X.value
         )
-
-

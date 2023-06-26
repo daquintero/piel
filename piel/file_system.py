@@ -310,7 +310,9 @@ def setup_example_design(
     """
     if project_source == "piel":
         example_design_folder = (
-            os.environ["PIEL_PACKAGE_DIRECTORY"] + "/docs/examples/" + example_name
+            os.environ["PIEL_PACKAGE_DIRECTORY"]
+            + "/docs/examples/designs/"
+            + example_name
         )
     elif project_source == "openlane":
         example_design_folder = (

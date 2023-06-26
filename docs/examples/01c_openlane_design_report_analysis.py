@@ -5,7 +5,7 @@ import piel
 # First, we get the directory of the latest run:
 
 latest_run_output = piel.find_design_run(
-    design_directory="inverter",
+    design_directory="./designs" / piel.return_path("inverter"),
 )
 latest_run_output
 

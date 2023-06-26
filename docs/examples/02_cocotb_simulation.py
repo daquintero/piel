@@ -1,9 +1,8 @@
 # # CocoTB Simulation
 
-import pathlib
 import piel
 
-design_directory = pathlib.Path("simple_design")
+design_directory = "./designs" / piel.return_path("simple_design")
 
 # Check that there exist cocotb python test files already in our design directory:
 
