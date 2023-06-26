@@ -64,9 +64,9 @@ def configure_cocotb_simulation(
         # defaults
         SIM ?= icarus
         TOPLEVEL_LANG ?= verilog
-        
+
         # Note we need to include the test script to the PYTHONPATH
-        export PYTHONPATH = 
+        export PYTHONPATH =
 
         VERILOG_SOURCES += $(PWD)/my_design.sv
         # use VHDL_SOURCES for VHDL files
@@ -136,7 +136,7 @@ def configure_cocotb_simulation(
 
 delete_simulation_output_files = functools.partial(
     delete_path_list_in_directory,
-    path_list=["sim_build", "__pychache__", "ivl_vhdl_work"],
+    path_list=["sim_build", "__pycache__", "ivl_vhdl_work"],
 )
 
 

@@ -9,10 +9,11 @@ with open("README.md") as readme_file:
 
 requirements = [
     "Click>=7.0",
-    "openlane",
     "cocotb",
     "gdsfactory",
+    "openlane",
     "pandas",
+    "sax",
 ]
 
 test_requirements = [
