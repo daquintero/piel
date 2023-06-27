@@ -17,6 +17,8 @@ example_component_lattice = [
 switch_circuit = gf.components.component_lattice_generic(
     network=example_component_lattice
 )
-switch_circuit
+switch_circuit.plot_widget()
+
+# ![switch_circuit_plot_widget](img/03_sax_basics/switch_circuit_plot_widget.png)
 
 # Now we need to include our device models, we will start with basic ones and expand from that.

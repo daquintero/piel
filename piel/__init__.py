@@ -3,8 +3,8 @@ import os
 import pathlib
 
 # Libraries
-import components as components
-import models as models
+from piel import components  # NOQA: F401
+from piel import models  # NOQA: F401
 
 # Functions
 from .cocotb import *

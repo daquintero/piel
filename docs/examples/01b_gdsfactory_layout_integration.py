@@ -17,4 +17,6 @@ inverter_component = piel.create_gdsfactory_component_from_openlane(
     design_directory="./designs" / piel.return_path("inverter"),
 )
 
-inverter_component
+inverter_component.plot_widget()
+
+# ![inverter_component_plot_widget](./img/01b_gdsfactory_layout_integation/inverter_component_plot_widget.png)
