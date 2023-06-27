@@ -11,6 +11,8 @@
    sections/environment/index
    sections/integration/index
    sections/codesign/index
+   sections/components/index
+   sections/models/index
    contributing
    sections/about/index
    authors
