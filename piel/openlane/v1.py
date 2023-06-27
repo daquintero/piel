@@ -9,6 +9,7 @@ from ..parametric import multi_parameter_sweep
 from ..file_system import (
     copy_source_folder,
     permit_script_execution,
+    read_json,
     return_path,
     run_script,
     write_script,
@@ -286,8 +287,7 @@ def read_configuration_openlane_v1(
         design_directory = get_design_directory_from_root_openlane_v1(
             design_name=design_name, root_directory=root_directory
         )
-        with open(str((design_directory / "config.json").resolve()), "r") as read_file:
-            configuration = json.load(read_file)
+        configuration = read_json(design_directory / "config.json")
         return configuration
     else:
         raise ValueError(

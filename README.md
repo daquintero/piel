@@ -13,6 +13,7 @@ Photonic and electronic co-simulation system design tools interfaced with open-s
 * Co-simulation and optimisation between integrated photonic and electronic chip design.
 * System interconnection modelling in multiple environments.
 * Individual and interposer design integration.
+* Multi-domain electronics and photonics component models
 
 `piel` aims to provide an integrated workflow to co-design photonics and electronics. It does not aim to replace the individual functionality of each design tool, but rather provide a glue to easily connect them all together and extract the system performance.
 
@@ -24,8 +25,6 @@ Some individual tools already integrated are:
 * [GDSFactory](https://github.com/gdsfactory/gdsfactory) - An open source platform for end to-end photonic chip design and validation
 * [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for design exploration and optimization
 * [sax](https://github.com/flaport/sax) - S-parameter based frequency domain circuit simulations and optimizations using JAX.
-
-Coming next GDSFactory netlisting and layout integration.
 
 ## Environment Requirements
 * Please install the Linux Docker environment provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools).

@@ -7,7 +7,7 @@ import cocotb
 from cocotb.triggers import Timer
 
 if cocotb.simulator.is_running():
-    from ..model import adder_model
+    from ..models import adder_model
 
 
 @cocotb.test()

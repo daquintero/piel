@@ -1,4 +1,5 @@
 import glob
+import json
 import openlane
 import os
 import pathlib
@@ -257,6 +258,22 @@ def permit_directory_all(directory_path: str | pathlib.Path) -> None:
         )
 
 
+def read_json(path: str | pathlib.Path) -> dict:
+    """
+    Reads a JSON file.
+
+    Args:
+        path(str | pathlib.Path): Input path.
+
+    Returns:
+        json_data(dict): JSON data.
+    """
+    path = return_path(path)
+    with open(path, "r") as json_file:
+        json_data = json.load(json_file)
+    return json_data
+
+
 def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     """
     Returns a pathlib.Path to be able to perform operations accordingly internally.
@@ -374,6 +391,7 @@ __all__ = [
     "permit_directory_all",
     "permit_script_execution",
     "setup_example_design",
+    "read_json",
     "return_path",
     "run_script",
     "write_script",
