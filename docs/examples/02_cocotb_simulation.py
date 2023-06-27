@@ -2,7 +2,7 @@
 
 import piel
 
-design_directory = "./designs" / piel.return_path("simple_design")
+design_directory = "./designs" / piel.return_path("simple_design") / "simple_design"
 
 # Check that there exist cocotb python test files already in our design directory:
 

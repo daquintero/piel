@@ -1,1 +1,1 @@
-a = 1
+from simple_design.models import adder_model

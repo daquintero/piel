@@ -1,4 +1,3 @@
-import models
-import tb
+from simple_design import models
 
-__all__ = ["models", "tb"]
+__all__ = ["models"]
