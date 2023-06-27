@@ -20,6 +20,7 @@ Functions
    piel.openlane.parse.sta_rpt.configure_frame_id
    piel.openlane.parse.sta_rpt.filter_timing_data_by_net_name_and_type
    piel.openlane.parse.sta_rpt.get_frame_meta_data
+   piel.openlane.parse.sta_rpt.get_frame_lines_data
    piel.openlane.parse.sta_rpt.get_frame_timing_data
    piel.openlane.parse.sta_rpt.get_all_timing_data_from_file
    piel.openlane.parse.sta_rpt.read_sta_rpt_fwf_file
@@ -52,12 +53,12 @@ Functions
    :rtype: propagation_delay_dataframe (pd.DataFrame)
 
 
-.. py:function:: calculate_propagation_delay_from_file(file: str | pathlib.Path)
+.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
 
    Calculate the propagation delay for each frame in the file
 
-   :param file: Path to the file
-   :type file: str | pathlib.Path
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: Dictionary containing the propagation delay
    :rtype: propagation_delay (dict)
@@ -114,6 +115,17 @@ Functions
    :rtype: start_point_name (pd.DataFrame)
 
 
+.. py:function:: get_frame_lines_data(file_path: str | pathlib.Path)
+
+   Calculate the timing data for each frame in the file
+
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
+
+   :returns: DataFrame containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
+
+
 .. py:function:: get_frame_timing_data(file: str | pathlib.Path, frame_meta_data: dict, frame_id: int = 0)
 
    Extract the timing data from the file
@@ -129,12 +141,12 @@ Functions
    :rtype: timing_data (pd.DataFrame)
 
 
-.. py:function:: get_all_timing_data_from_file(file: str | pathlib.Path)
+.. py:function:: get_all_timing_data_from_file(file_path: str | pathlib.Path)
 
    Calculate the timing data for each frame in the file
 
-   :param file: Path to the file
-   :type file: str | pathlib.Path
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: Dictionary containing the timing data for each frame
    :rtype: frame_timing_data (dict)

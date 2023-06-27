@@ -16,7 +16,9 @@ Subpackages
    :maxdepth: 3
 
    cocotb/index.rst
+   components/index.rst
    integration/index.rst
+   models/index.rst
    openlane/index.rst
 
 
@@ -27,10 +29,11 @@ Submodules
    :maxdepth: 1
 
    cli/index.rst
+   config/index.rst
    defaults/index.rst
    file_system/index.rst
    parametric/index.rst
-   piel/index.rst
+   project_structure/index.rst
 
 
 Package Contents
@@ -48,8 +51,14 @@ Functions
    piel.check_path_exists
    piel.check_example_design
    piel.copy_source_folder
+   piel.create_new_directory
+   piel.delete_path
+   piel.delete_path_list_in_directory
+   piel.get_files_recursively_in_directory
+   piel.permit_directory_all
    piel.permit_script_execution
    piel.setup_example_design
+   piel.read_json
    piel.return_path
    piel.run_script
    piel.write_script
@@ -75,6 +84,7 @@ Functions
    piel.contains_in_lines
    piel.read_file_lines
    piel.get_file_line_by_keyword
+   piel.create_file_lines_dataframe
    piel.calculate_max_frame_amount
    piel.calculate_propagation_delay_from_timing_data
    piel.calculate_propagation_delay_from_file
@@ -82,11 +92,11 @@ Functions
    piel.configure_frame_id
    piel.filter_timing_data_by_net_name_and_type
    piel.get_frame_meta_data
+   piel.get_frame_lines_data
    piel.get_frame_timing_data
    piel.get_all_timing_data_from_file
    piel.read_sta_rpt_fwf_file
    piel.check_path_exists
-   piel.create_dataframe
    piel.read_file
    piel.run_openlane_flow
    piel.single_parameter_sweep
@@ -99,8 +109,9 @@ Attributes
 
 .. autoapisummary::
 
-   piel.make_cocotb
-   piel.write_cocotb_makefile
+   piel.delete_simulation_output_files
+   piel.numerical_solver
+   piel.nso
    piel.test_spm_open_lane_configuration
    piel.example_open_lane_configuration
    piel.__author__
@@ -125,20 +136,26 @@ Attributes
 
    If no design_sources_list is provided then it adds all the design sources under the `src` folder.
 
-   In the form::
-       Makefile
+   In the form
+   .. code-block::
+
+       #!/bin/sh
+       # Makefile
        # defaults
        SIM ?= icarus
        TOPLEVEL_LANG ?= verilog
+
+       # Note we need to include the test script to the PYTHONPATH
+       export PYTHONPATH =
 
        VERILOG_SOURCES += $(PWD)/my_design.sv
        # use VHDL_SOURCES for VHDL files
 
        # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-       TOPLEVEL = my_design
+       TOPLEVEL := my_design
 
        # MODULE is the basename of the Python test file
-       MODULE = test_my_design
+       MODULE := test_my_design
 
        # include cocotb's make rules to take care of the simulator setup
        include $(shell cocotb-config --makefiles)/Makefile.sim
@@ -160,13 +177,15 @@ Attributes
    :returns: None
 
 
-.. py:data:: make_cocotb
+.. py:data:: delete_simulation_output_files
 
 
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
-   Equivalent to running the cocotb makefile::
+   Equivalent to running the cocotb makefile
+   .. code-block::
+
        make
 
    :param design_directory: The directory where the design is located.
@@ -176,7 +195,11 @@ Attributes
    :rtype: subprocess.CompletedProcess
 
 
-.. py:data:: write_cocotb_makefile
+.. py:data:: numerical_solver
+
+
+
+.. py:data:: nso
 
 
 
@@ -221,6 +244,67 @@ Attributes
    :returns: None
 
 
+.. py:function:: create_new_directory(directory_path: str | pathlib.Path) -> None
+
+   Creates a new directory.
+
+   If the parents of the target_directory do not exist, they will be created too.
+
+   :param directory_path: Input path.
+   :type directory_path: str | pathlib.Path
+
+   :returns: None
+
+
+.. py:function:: delete_path(path: str | pathlib.Path) -> None
+
+   Deletes a path.
+
+   :param path: Input path.
+   :type path: str | pathlib.Path
+
+   :returns: None
+
+
+.. py:function:: delete_path_list_in_directory(directory_path: str | pathlib.Path, path_list: list, ignore_confirmation: bool = False, validate_individual: bool = False) -> None
+
+   Deletes a list of files in a directory.
+
+   :param directory_path: Input path.
+   :type directory_path: str | pathlib.Path
+   :param path_list: List of files.
+   :type path_list: list
+   :param ignore_confirmation: Ignore confirmation. Default: False.
+   :type ignore_confirmation: bool
+   :param validate_individual: Validate individual files. Default: False.
+   :type validate_individual: bool
+
+   :returns: None
+
+
+.. py:function:: get_files_recursively_in_directory(path: str | pathlib.Path, extension: str = '*')
+
+   Returns a list of files in a directory.
+
+   :param path: Input path.
+   :type path: str | pathlib.Path
+   :param extension: File extension.
+   :type extension: str
+
+   :returns: List of files.
+   :rtype: file_list(list)
+
+
+.. py:function:: permit_directory_all(directory_path: str | pathlib.Path) -> None
+
+   Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
+
+   :param directory_path: Input path.
+   :type directory_path: str | pathlib.Path
+
+   :returns: None
+
+
 .. py:function:: permit_script_execution(script_path: str | pathlib.Path) -> None
 
    Permits the execution of a script.
@@ -241,6 +325,17 @@ Attributes
    :type example_name: str
 
    :returns: None
+
+
+.. py:function:: read_json(path: str | pathlib.Path) -> dict
+
+   Reads a JSON file.
+
+   :param path: Input path.
+   :type path: str | pathlib.Path
+
+   :returns: JSON data.
+   :rtype: json_data(dict)
 
 
 .. py:function:: return_path(input_path: str | pathlib.Path) -> pathlib.Path
@@ -533,11 +628,12 @@ Attributes
    :rtype: file_lines_data (pd.DataFrame)
 
 
-.. py:function:: read_file_lines(file)
+.. py:function:: read_file_lines(file_path: str | pathlib.Path)
 
    Extract lines from the file
 
-   :param file: the opened file
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: list containing the file lines
    :rtype: file_lines_raw (list)
@@ -556,6 +652,17 @@ Attributes
 
    :returns: Dataframe containing the extracted values
    :rtype: extracted_values (pd.DataFrame)
+
+
+.. py:function:: create_file_lines_dataframe(file_lines_raw)
+
+   Create a DataFrame from the raw lines of a file
+
+   :param file_lines_raw: list containing the file lines
+   :type file_lines_raw: list
+
+   :returns: Dataframe containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
 
 
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)
@@ -584,12 +691,12 @@ Attributes
    :rtype: propagation_delay_dataframe (pd.DataFrame)
 
 
-.. py:function:: calculate_propagation_delay_from_file(file: str | pathlib.Path)
+.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
 
    Calculate the propagation delay for each frame in the file
 
-   :param file: Path to the file
-   :type file: str | pathlib.Path
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: Dictionary containing the propagation delay
    :rtype: propagation_delay (dict)
@@ -646,6 +753,17 @@ Attributes
    :rtype: start_point_name (pd.DataFrame)
 
 
+.. py:function:: get_frame_lines_data(file_path: str | pathlib.Path)
+
+   Calculate the timing data for each frame in the file
+
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
+
+   :returns: DataFrame containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
+
+
 .. py:function:: get_frame_timing_data(file: str | pathlib.Path, frame_meta_data: dict, frame_id: int = 0)
 
    Extract the timing data from the file
@@ -661,12 +779,12 @@ Attributes
    :rtype: timing_data (pd.DataFrame)
 
 
-.. py:function:: get_all_timing_data_from_file(file: str | pathlib.Path)
+.. py:function:: get_all_timing_data_from_file(file_path: str | pathlib.Path)
 
    Calculate the timing data for each frame in the file
 
-   :param file: Path to the file
-   :type file: str | pathlib.Path
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: Dictionary containing the timing data for each frame
    :rtype: frame_timing_data (dict)
@@ -696,17 +814,6 @@ Attributes
 
    :returns: True if directory exists.
    :rtype: directory_exists(bool)
-
-
-.. py:function:: create_dataframe(file_lines_raw)
-
-   Create a DataFrame from the raw lines of a file
-
-   :param file_lines_raw: list containing the file lines
-   :type file_lines_raw: list
-
-   :returns: Dataframe containing the file lines
-   :rtype: file_lines_data (pd.DataFrame)
 
 
 .. py:function:: read_file(file_path: str | pathlib.Path)
@@ -791,4 +898,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.30'
+   :value: '0.0.31'

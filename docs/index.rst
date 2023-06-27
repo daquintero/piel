@@ -1,5 +1,7 @@
-**P**\hotonic & **I**\ntegrated **EL**\ectronic tools
-=====================================================
+**P**\hotonics & **I**\ntegrated **EL**\ectronic
+===============================================
+Co-simulation system design tools interfaced with open-source design software like GDSFactory and OpenROAD.
+
 
 .. toctree::
    :maxdepth: 2

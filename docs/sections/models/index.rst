@@ -1,5 +1,5 @@
-Tools Integration
-=================
+Models Library
+==============
 
 .. toctree::
     :maxdepth: 2

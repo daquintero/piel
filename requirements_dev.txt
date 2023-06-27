@@ -31,4 +31,3 @@ wheel
 openlane
 cocotb
 gdsfactory
-m2r2

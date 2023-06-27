@@ -41,6 +41,7 @@ Functions
    piel.openlane.parse.contains_in_lines
    piel.openlane.parse.read_file_lines
    piel.openlane.parse.get_file_line_by_keyword
+   piel.openlane.parse.create_file_lines_dataframe
    piel.openlane.parse.calculate_max_frame_amount
    piel.openlane.parse.calculate_propagation_delay_from_timing_data
    piel.openlane.parse.calculate_propagation_delay_from_file
@@ -48,13 +49,14 @@ Functions
    piel.openlane.parse.configure_frame_id
    piel.openlane.parse.filter_timing_data_by_net_name_and_type
    piel.openlane.parse.get_frame_meta_data
+   piel.openlane.parse.get_frame_lines_data
    piel.openlane.parse.get_frame_timing_data
    piel.openlane.parse.get_all_timing_data_from_file
    piel.openlane.parse.read_sta_rpt_fwf_file
    piel.openlane.parse.check_path_exists
    piel.openlane.parse.return_path
    piel.openlane.parse.contains_in_lines
-   piel.openlane.parse.create_dataframe
+   piel.openlane.parse.create_file_lines_dataframe
    piel.openlane.parse.get_file_line_by_keyword
    piel.openlane.parse.read_file_lines
    piel.openlane.parse.read_file
@@ -157,11 +159,12 @@ Functions
    :rtype: file_lines_data (pd.DataFrame)
 
 
-.. py:function:: read_file_lines(file)
+.. py:function:: read_file_lines(file_path: str | pathlib.Path)
 
    Extract lines from the file
 
-   :param file: the opened file
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: list containing the file lines
    :rtype: file_lines_raw (list)
@@ -180,6 +183,17 @@ Functions
 
    :returns: Dataframe containing the extracted values
    :rtype: extracted_values (pd.DataFrame)
+
+
+.. py:function:: create_file_lines_dataframe(file_lines_raw)
+
+   Create a DataFrame from the raw lines of a file
+
+   :param file_lines_raw: list containing the file lines
+   :type file_lines_raw: list
+
+   :returns: Dataframe containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
 
 
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)
@@ -208,12 +222,12 @@ Functions
    :rtype: propagation_delay_dataframe (pd.DataFrame)
 
 
-.. py:function:: calculate_propagation_delay_from_file(file: str | pathlib.Path)
+.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
 
    Calculate the propagation delay for each frame in the file
 
-   :param file: Path to the file
-   :type file: str | pathlib.Path
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: Dictionary containing the propagation delay
    :rtype: propagation_delay (dict)
@@ -270,6 +284,17 @@ Functions
    :rtype: start_point_name (pd.DataFrame)
 
 
+.. py:function:: get_frame_lines_data(file_path: str | pathlib.Path)
+
+   Calculate the timing data for each frame in the file
+
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
+
+   :returns: DataFrame containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
+
+
 .. py:function:: get_frame_timing_data(file: str | pathlib.Path, frame_meta_data: dict, frame_id: int = 0)
 
    Extract the timing data from the file
@@ -285,12 +310,12 @@ Functions
    :rtype: timing_data (pd.DataFrame)
 
 
-.. py:function:: get_all_timing_data_from_file(file: str | pathlib.Path)
+.. py:function:: get_all_timing_data_from_file(file_path: str | pathlib.Path)
 
    Calculate the timing data for each frame in the file
 
-   :param file: Path to the file
-   :type file: str | pathlib.Path
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: Dictionary containing the timing data for each frame
    :rtype: frame_timing_data (dict)
@@ -348,7 +373,7 @@ Functions
    :rtype: file_lines_data (pd.DataFrame)
 
 
-.. py:function:: create_dataframe(file_lines_raw)
+.. py:function:: create_file_lines_dataframe(file_lines_raw)
 
    Create a DataFrame from the raw lines of a file
 
@@ -374,11 +399,12 @@ Functions
    :rtype: extracted_values (pd.DataFrame)
 
 
-.. py:function:: read_file_lines(file)
+.. py:function:: read_file_lines(file_path: str | pathlib.Path)
 
    Extract lines from the file
 
-   :param file: the opened file
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: list containing the file lines
    :rtype: file_lines_raw (list)

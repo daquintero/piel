@@ -14,7 +14,7 @@ Functions
 .. autoapisummary::
 
    piel.openlane.parse.utils.contains_in_lines
-   piel.openlane.parse.utils.create_dataframe
+   piel.openlane.parse.utils.create_file_lines_dataframe
    piel.openlane.parse.utils.get_file_line_by_keyword
    piel.openlane.parse.utils.read_file_lines
    piel.openlane.parse.utils.read_file
@@ -34,7 +34,7 @@ Functions
    :rtype: file_lines_data (pd.DataFrame)
 
 
-.. py:function:: create_dataframe(file_lines_raw)
+.. py:function:: create_file_lines_dataframe(file_lines_raw)
 
    Create a DataFrame from the raw lines of a file
 
@@ -60,11 +60,12 @@ Functions
    :rtype: extracted_values (pd.DataFrame)
 
 
-.. py:function:: read_file_lines(file)
+.. py:function:: read_file_lines(file_path: str | pathlib.Path)
 
    Extract lines from the file
 
-   :param file: the opened file
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
 
    :returns: list containing the file lines
    :rtype: file_lines_raw (list)

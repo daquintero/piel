@@ -1,5 +1,5 @@
-Tools Integration
-=================
+Components Library
+==================
 
 .. toctree::
     :maxdepth: 2
