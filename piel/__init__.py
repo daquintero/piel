@@ -2,7 +2,13 @@
 import os
 import pathlib
 
+# Libraries
+from piel import components  # NOQA: F401
+from piel import models  # NOQA: F401
+
+# Functions
 from .cocotb import *
+from .config import *
 from .defaults import *
 from .file_system import *
 from .integration import *

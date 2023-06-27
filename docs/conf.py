@@ -102,6 +102,7 @@ nbsphinx_allow_errors = True  # Continue through Jupyter errors
 nbsphinx_custom_formats = {
     ".py": lambda s: jupytext.reads(s, ".py"),
 }
+nbsphinx_execute = "never"
 version = piel.__version__
 
 latex_elements: dict = {

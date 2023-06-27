@@ -6,10 +6,11 @@ The cocotb verification software can also be used to perform mixed signal simula
 
 The nice thing about cocotb is that as long as the photonic simulations can be written asyncrhonously, time-domain simulations can be closely integrated or simulated through this verification software.
 """
+import functools
 import pathlib
 import subprocess
 from typing import Literal
-from piel.file_system import return_path, write_script
+from piel.file_system import return_path, write_script, delete_path_list_in_directory
 
 
 def check_cocotb_testbench_exists(
@@ -55,20 +56,26 @@ def configure_cocotb_simulation(
 
     If no design_sources_list is provided then it adds all the design sources under the `src` folder.
 
-    In the form::
-        Makefile
+    In the form
+    .. code-block::
+
+        #!/bin/sh
+        # Makefile
         # defaults
         SIM ?= icarus
         TOPLEVEL_LANG ?= verilog
+
+        # Note we need to include the test script to the PYTHONPATH
+        export PYTHONPATH =
 
         VERILOG_SOURCES += $(PWD)/my_design.sv
         # use VHDL_SOURCES for VHDL files
 
         # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-        TOPLEVEL = my_design
+        TOPLEVEL := my_design
 
         # MODULE is the basename of the Python test file
-        MODULE = test_my_design
+        MODULE := test_my_design
 
         # include cocotb's make rules to take care of the simulator setup
         include $(shell cocotb-config --makefiles)/Makefile.sim
@@ -93,7 +100,8 @@ def configure_cocotb_simulation(
         design_sources_list = list(design_sources_directory.iterdir())
 
     top_commands_list = [
-        "Makefile",
+        "#!/bin/bash",
+        "# Makefile",
         "SIM ?= " + simulator,
         "TOPLEVEL_LANG ?= " + top_level_language,
     ]
@@ -110,8 +118,8 @@ def configure_cocotb_simulation(
             middle_commands_list.append("VHDL_SOURCES += " + str(source_file.resolve()))
 
     bottom_commands_list = [
-        "TOPLEVEL = " + top_level_verilog_module,
-        "MODULE = " + test_python_module,
+        "TOPLEVEL := " + top_level_verilog_module,
+        "MODULE := " + test_python_module,
         "include $(shell cocotb-config --makefiles)/Makefile.sim",
     ]
 
@@ -120,17 +128,25 @@ def configure_cocotb_simulation(
     commands_list.extend(middle_commands_list)
     commands_list.extend(bottom_commands_list)
 
-    script = ";\n".join(commands_list)
+    script = " \n".join(commands_list)
     write_script(
         directory_path=design_directory / "tb", script=script, script_name="Makefile"
     )
+
+
+delete_simulation_output_files = functools.partial(
+    delete_path_list_in_directory,
+    path_list=["sim_build", "__pycache__", "ivl_vhdl_work"],
+)
 
 
 def run_cocotb_simulation(
     design_directory: str,
 ) -> subprocess.CompletedProcess:
     """
-    Equivalent to running the cocotb makefile::
+    Equivalent to running the cocotb makefile
+    .. code-block::
+
         make
 
     Args:
@@ -141,26 +157,21 @@ def run_cocotb_simulation(
 
     """
     test_directory = return_path(design_directory) / "tb"
-    commands_list = ["cd" + str(test_directory.resolve()), "make"]
-    script = ";\n".join(commands_list)
+    commands_list = ["cd " + str(test_directory.resolve()), "make"]
+    script = "; \n".join(commands_list)
     # Save script if desired to run directly
     write_script(
         directory_path=test_directory,
         script=script,
         script_name="run_cocotb_simulation.sh",
     )
-    run = subprocess.run(script, capture_output=True, shell=True)
+    run = subprocess.run(script, capture_output=True, shell=True, check=True)
     return run
-
-
-write_cocotb_makefile = configure_cocotb_simulation
-make_cocotb = run_cocotb_simulation
 
 
 __all__ = [
     "check_cocotb_testbench_exists",
     "configure_cocotb_simulation",
-    "make_cocotb",
+    "delete_simulation_output_files",
     "run_cocotb_simulation",
-    "write_cocotb_makefile",
 ]

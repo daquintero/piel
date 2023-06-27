@@ -1,4 +1,5 @@
 import glob
+import json
 import openlane
 import os
 import pathlib
@@ -85,6 +86,25 @@ def copy_source_folder(
     )
 
 
+def convert_list_to_path_list(
+    input_list: list[str | pathlib.Path],
+) -> list[pathlib.Path]:
+    """
+    Converts a list of strings or pathlib.Path to a list of pathlib.Path.
+
+    Args:
+        input_list(list[str | pathlib.Path]): Input list.
+
+    Returns:
+        output_list(list[pathlib.Path]): Output list.
+    """
+    output_list = []
+    for item in input_list:
+        item = return_path(item)
+        output_list.append(item)
+    return output_list
+
+
 def create_new_directory(
     directory_path: str | pathlib.Path,
 ) -> None:
@@ -111,6 +131,72 @@ def create_new_directory(
 
     # Create the directory
     directory_path.mkdir(parents=True)
+
+
+def delete_path(path: str | pathlib.Path) -> None:
+    """
+    Deletes a path.
+
+    Args:
+        path(str | pathlib.Path): Input path.
+
+    Returns:
+        None
+    """
+    path = return_path(path)
+    if path.exists():
+        if path.is_dir():
+            shutil.rmtree(path)
+        elif path.is_file():
+            path.unlink()
+
+
+def delete_path_list_in_directory(
+    directory_path: str | pathlib.Path,
+    path_list: list,
+    ignore_confirmation: bool = False,
+    validate_individual: bool = False,
+) -> None:
+    """
+    Deletes a list of files in a directory.
+
+    Args:
+        directory_path(str | pathlib.Path): Input path.
+        path_list(list): List of files.
+        ignore_confirmation(bool): Ignore confirmation. Default: False.
+        validate_individual(bool): Validate individual files. Default: False.
+
+    Returns:
+        None
+    """
+    directory_path = return_path(directory_path)
+    path_list = convert_list_to_path_list(path_list)
+    if validate_individual:
+        if ignore_confirmation:
+            for path in path_list:
+                if path.exists():
+                    delete_path(path)
+        else:
+            for path in path_list:
+                if path.exists():
+                    answer = input("Confirm deletion of: " + str(path))
+                    if answer.upper() in ["Y", "YES"]:
+                        delete_path(path)
+                    elif answer.upper() in ["N", "NO"]:
+                        print("Skipping deletion of: " + str(path))
+    else:
+        if ignore_confirmation:
+            for path in path_list:
+                if path.exists():
+                    delete_path(path)
+        else:
+            answer = input("Confirm deletion of: " + str(path_list))
+            if answer.upper() in ["Y", "YES"]:
+                for path in path_list:
+                    if path.exists():
+                        delete_path(path)
+            elif answer.upper() in ["N", "NO"]:
+                print("Skipping deletion of: " + str(path_list))
 
 
 def get_files_recursively_in_directory(
@@ -172,6 +258,22 @@ def permit_directory_all(directory_path: str | pathlib.Path) -> None:
         )
 
 
+def read_json(path: str | pathlib.Path) -> dict:
+    """
+    Reads a JSON file.
+
+    Args:
+        path(str | pathlib.Path): Input path.
+
+    Returns:
+        json_data(dict): JSON data.
+    """
+    path = return_path(path)
+    with open(path, "r") as json_file:
+        json_data = json.load(json_file)
+    return json_data
+
+
 def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     """
     Returns a pathlib.Path to be able to perform operations accordingly internally.
@@ -225,7 +327,9 @@ def setup_example_design(
     """
     if project_source == "piel":
         example_design_folder = (
-            os.environ["PIEL_PACKAGE_DIRECTORY"] + "/docs/examples/" + example_name
+            os.environ["PIEL_PACKAGE_DIRECTORY"]
+            + "/docs/examples/designs/"
+            + example_name
         )
     elif project_source == "openlane":
         example_design_folder = (
@@ -280,8 +384,14 @@ __all__ = [
     "check_path_exists",
     "check_example_design",
     "copy_source_folder",
+    "create_new_directory",
+    "delete_path",
+    "delete_path_list_in_directory",
+    "get_files_recursively_in_directory",
+    "permit_directory_all",
     "permit_script_execution",
     "setup_example_design",
+    "read_json",
     "return_path",
     "run_script",
     "write_script",

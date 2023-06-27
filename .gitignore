@@ -104,3 +104,94 @@ ENV/
 # IDE settings
 .vscode/
 .idea/
+
+# Cocotb
+*.py[cod]
+
+# C extensions
+*.so
+*.dll
+
+# C objects
+*.o
+
+# Python and C++ code coverage
+.coverage
+.coverage.cocotb
+*.gcno
+*.gcda
+*.gcov
+
+# Packaging
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+sdist
+obj
+develop-eggs
+.installed.cfg
+__pycache__
+.tox
+.nox
+.eggs
+
+# Vim tmp files
+*.swp
+*~
+
+# VSCode project files
+.vscode/
+*.code-workspace
+
+# Emacs tmp files
+\#*\#
+\.\#*
+
+# Mergetool tmp files
+*.orig
+*.bak
+
+# Waveforms
+*.vcd
+*.fst
+*.fst.hier
+
+# Results
+results.xml
+combined_results.xml
+
+# Debuggers
+.gdb_history
+
+# VCS files
+*.tab
+sim_build
+ucli.key
+
+# Pytest
+.pytest_cache
+
+# Cadence Incisive/Xcelium
+*.elog
+irun.log
+xrun.log
+irun.key
+xrun.key
+irun.history
+xrun.history
+INCA_libs
+xcelium.d
+ncelab_*.err
+xmelab_*.err
+ncsim_*.err
+xmsim_*.err
+bpad_*.err
+.bpad/
+.simvision/
+waves.shm/
+
+ivl_vhdl_work/
+RUN_*

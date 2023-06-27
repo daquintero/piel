@@ -12,3 +12,4 @@ Examples
    examples/01c_openlane_design_report_analysis
    examples/02_cocotb_simulation
    examples/03_sax_basics
+   examples/04_multi_domain_interconnect

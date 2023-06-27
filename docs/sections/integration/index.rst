@@ -7,4 +7,5 @@ Tools Integration
 
     overview
     tools_integration_methodology
+    cocotb
     cocotb_sax

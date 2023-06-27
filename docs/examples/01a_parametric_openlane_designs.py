@@ -11,7 +11,7 @@ openlane_v1_designs_directory = piel.get_latest_version_root_openlane_v1() / "de
 example_design_name = "simple_design"
 
 piel.copy_source_folder(
-    source_directory=example_design_name,
+    source_directory="./designs" / piel.return_path(example_design_name),
     target_directory=openlane_v1_designs_directory,
 )
 

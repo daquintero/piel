@@ -33,8 +33,7 @@ Attributes
 
 .. autoapisummary::
 
-   piel.cocotb.make_cocotb
-   piel.cocotb.write_cocotb_makefile
+   piel.cocotb.delete_simulation_output_files
 
 
 .. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
@@ -54,20 +53,26 @@ Attributes
 
    If no design_sources_list is provided then it adds all the design sources under the `src` folder.
 
-   In the form::
-       Makefile
+   In the form
+   .. code-block::
+
+       #!/bin/sh
+       # Makefile
        # defaults
        SIM ?= icarus
        TOPLEVEL_LANG ?= verilog
+
+       # Note we need to include the test script to the PYTHONPATH
+       export PYTHONPATH =
 
        VERILOG_SOURCES += $(PWD)/my_design.sv
        # use VHDL_SOURCES for VHDL files
 
        # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
-       TOPLEVEL = my_design
+       TOPLEVEL := my_design
 
        # MODULE is the basename of the Python test file
-       MODULE = test_my_design
+       MODULE := test_my_design
 
        # include cocotb's make rules to take care of the simulator setup
        include $(shell cocotb-config --makefiles)/Makefile.sim
@@ -89,13 +94,15 @@ Attributes
    :returns: None
 
 
-.. py:data:: make_cocotb
+.. py:data:: delete_simulation_output_files
 
 
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
-   Equivalent to running the cocotb makefile::
+   Equivalent to running the cocotb makefile
+   .. code-block::
+
        make
 
    :param design_directory: The directory where the design is located.
@@ -103,6 +110,3 @@ Attributes
 
    :returns: The subprocess.CompletedProcess object.
    :rtype: subprocess.CompletedProcess
-
-
-.. py:data:: write_cocotb_makefile
