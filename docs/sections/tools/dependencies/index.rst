@@ -1,5 +1,5 @@
-Projects
-==================
+Dependency Bindings
+======================
 
 .. toctree::
     :maxdepth: 2
