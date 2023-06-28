@@ -898,4 +898,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.31'
+   :value: '0.0.32'

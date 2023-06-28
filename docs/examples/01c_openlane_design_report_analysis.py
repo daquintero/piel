@@ -20,7 +20,7 @@ run_output_sta_file_list = piel.get_all_timing_sta_files(
 )
 run_output_sta_file_list
 
-# + active=""
+# ```
 # ['C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\placement\\10-dpl_sta.max.rpt',
 #  'C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\placement\\10-dpl_sta.min.rpt',
 #  'C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\routing\\13-rsz_design_sta.max.rpt',
@@ -39,7 +39,7 @@ run_output_sta_file_list
 #  'C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\signoff\\27-mca\\rcx_nom_sta.min.rpt',
 #  'C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\synthesis\\2-syn_sta.max.rpt',
 #  'C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\synthesis\\2-syn_sta.min.rpt']
-# -
+# ```
 
 # Say we want to explore the output of one particular timing file. We can extract all the timing data accordingly:
 

@@ -44,7 +44,7 @@ autoclass_content = "both"  # Add __init__ doc (ie. params) to class summaries
 autodoc_inherit_docstrings = True  # If no docstring, inherit from base class
 author = "Dario Quintero"
 copyright = "2023, Dario Quintero"
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "examples/designs"]
 extensions = [
     "autoapi.extension",
     "IPython.sphinxext.ipython_console_highlighting",
@@ -70,7 +70,7 @@ latex_documents = [
     (master_doc, "piel.tex", "piel Documentation", "Dario Quintero", "manual"),
 ]
 html_show_sourcelink = (
-    False  # Remove 'view source code' from top of page (for html, not python)
+    True  # Remove 'view source code' from top of page (for html, not python)
 )
 html_static_path = ["_static"]
 html_theme = "alabaster"
