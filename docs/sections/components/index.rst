@@ -1,4 +1,4 @@
-Components Library
+Components
 ==================
 
 .. toctree::
@@ -6,3 +6,6 @@ Components Library
     :caption: Contents:
 
     overview
+
+.. toctree::
+    ../../autoapi/piel/components/index.rst
