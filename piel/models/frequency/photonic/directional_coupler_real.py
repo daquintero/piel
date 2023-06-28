@@ -1,3 +1,6 @@
+"""
+Translated from https://github.com/flaport/sax or https://github.com/flaport/photontorch/tree/master
+"""
 # def realistic_directional_coupler(length=12.8e-6, k0=0.2332, n0=0.0208, de1_k0=1.2435, de1_n0=0.1169, de2_k0=5.3022, de2_n0=0.4821, wl0=1.55e-6):
 #     wl = torch.tensor(1.55e-6, dtype=torch.float64)
 #     dwl = wl - wl0
