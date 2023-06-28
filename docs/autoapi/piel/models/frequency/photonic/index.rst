@@ -18,3 +18,65 @@ Submodules
    mmi1x2/index.rst
    mmi2x2/index.rst
    straight_waveguide/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.models.frequency.photonic.coupler
+   piel.models.frequency.photonic.directional_coupler_with_length
+   piel.models.frequency.photonic.directional_coupler
+   piel.models.frequency.photonic.grating_coupler
+   piel.models.frequency.photonic.mmi1x2_50_50
+   piel.models.frequency.photonic.mmi2x2_50_50
+   piel.models.frequency.photonic.waveguide
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.models.frequency.photonic.nso
+   piel.models.frequency.photonic.nso
+   piel.models.frequency.photonic.nso
+
+
+.. py:function:: coupler(coupling=0.5)
+
+
+.. py:data:: nso
+
+
+
+.. py:function:: directional_coupler_with_length(length=1e-05, coupling=0.5, loss=0, neff=2.34, wl0=1.55e-06, ng=3.4, phase=0)
+
+
+.. py:function:: directional_coupler(coupling=0.5)
+
+
+.. py:data:: nso
+
+
+
+.. py:function:: grating_coupler(R=0.0, R_in=0.0, Tmax=1.0, bandwidth=6e-08, wl0=1.55e-06)
+
+
+.. py:function:: mmi1x2_50_50()
+
+
+.. py:function:: mmi2x2_50_50()
+
+
+.. py:data:: nso
+
+
+
+.. py:function:: waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0)

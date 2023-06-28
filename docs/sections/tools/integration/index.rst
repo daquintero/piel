@@ -7,3 +7,6 @@ Integrations
 
     methodology
     cocotb_sax
+
+.. toctree::
+    ../../../autoapi/piel/integration/index.rst

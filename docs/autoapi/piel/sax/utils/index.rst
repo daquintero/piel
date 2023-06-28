@@ -1,7 +1,7 @@
-:py:mod:`utils`
-===============
+:py:mod:`piel.sax.utils`
+========================
 
-.. py:module:: utils
+.. py:module:: piel.sax.utils
 
 .. autoapi-nested-parse::
 
@@ -18,7 +18,7 @@ Functions
 
 .. autoapisummary::
 
-   utils.get_common_netlist_instance_keys
+   piel.sax.utils.get_common_netlist_instance_keys
 
 
 

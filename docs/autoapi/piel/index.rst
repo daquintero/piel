@@ -20,6 +20,7 @@ Subpackages
    integration/index.rst
    models/index.rst
    openlane/index.rst
+   sax/index.rst
 
 
 Submodules
