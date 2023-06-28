@@ -9,4 +9,5 @@ Co-Design Functionality
     parametric
     tools_interconnection
     time_domain
+    sax
     models

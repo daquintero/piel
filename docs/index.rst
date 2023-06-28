@@ -1,15 +1,13 @@
-**P**\hotonics & **I**\ntegrated **EL**\ectronic
+**P**\hotonic & **I**\ntegrated **EL**\ectronic
 ===============================================
 Co-simulation system design tools interfaced with open-source design software like GDSFactory and OpenROAD.
-
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   readme
-   installation
    examples
+   installation
    sections/environment/index
    sections/integration/index
    sections/codesign/index
@@ -17,7 +15,6 @@ Co-simulation system design tools interfaced with open-source design software li
    sections/models/index
    contributing
    sections/about/index
-   authors
 
 
 Indices and tables
