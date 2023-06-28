@@ -2,7 +2,7 @@
 
 Install the docker environment provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools).
 
-Start your docker environment accorignly running, for example:
+Start your docker environment accordingly running, for example:
 ```shell
 cd iic-osic-tools
 ./start_vnc.sh

@@ -1,4 +1,4 @@
-Models Library
+Models
 ==============
 
 .. toctree::
@@ -6,3 +6,5 @@ Models Library
     :caption: Contents:
 
     overview
+    domains
+    time_domain

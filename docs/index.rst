@@ -7,9 +7,8 @@ Co-simulation system design tools interfaced with open-source design software li
    :caption: Contents:
 
    examples
-   installation
    sections/environment/index
-   sections/integration/index
+   sections/tools/index
    sections/codesign/index
    sections/components/index
    sections/models/index

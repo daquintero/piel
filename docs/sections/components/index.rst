@@ -1,4 +1,4 @@
-Components Library
+Components
 ==================
 
 .. toctree::
