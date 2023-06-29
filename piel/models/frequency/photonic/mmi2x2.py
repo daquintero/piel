@@ -12,3 +12,6 @@ def mmi2x2_50_50():
         ("o2", "o4"): 0.5**0.5,
     }
     return sax.reciprocal(S)
+
+
+__all__ = ["mmi2x2_50_50"]

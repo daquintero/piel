@@ -13,3 +13,6 @@ def waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0):
     transmission = amplitude * nso.exp(1j * phase)
     sdict = nso.reciprocal({("in0", "out0"): transmission})
     return sdict
+
+
+__all__ = ["waveguide"]

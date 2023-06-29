@@ -11,6 +11,7 @@
 # We begin by importing a parametric circuit from `gdsfactory`:
 import gdsfactory as gf
 from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
+import piel
 import sax
 
 # We create a balanced MZI lattice full of the same `mzi2x2_2x2` components to demonstrate `sax` network basics.
@@ -84,7 +85,12 @@ sax.get_required_circuit_models(mzi2x2_netlist)
 # ['bend_euler', 'mmi2x2', 'straight']
 # ```
 
-# `piel` provides a library with a list of models, that we hope we can extend and improve with your contribution! We create our model dictionary accordingly
+# `piel` provides a library with a list of models, that we hope we can extend and improve with your contribution! We create our model dictionary accordingly based on our default photonic frequency library:
+
+default_models = piel.models.frequency.photonic.get_default_models()
+default_models
+
+sax.circuit(netlist=mzi2x2_netlist, models=default_models)
 
 # ### Basic Models
 
@@ -132,4 +138,3 @@ mixed_switch_circuit_netlist["ports"].keys()
 
 # + active=""
 # mixed_switch_circuit_netlist["connections"]
-# -
