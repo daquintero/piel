@@ -6,6 +6,7 @@ Integrations
     :caption: Contents:
 
     methodology
+    case_study
     cocotb_sax
 
 .. toctree::
