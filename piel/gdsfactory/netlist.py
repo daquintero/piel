@@ -36,7 +36,7 @@ def get_input_ports_tuple_index(
 
     Returns:
         matches_ports_index_tuple_order(tuple): The ordered input ports index tuple.
-        matched_ports_list(tuple): The ordered input ports name tuple.
+        matched_ports_name_tuple_order(tuple): The ordered input ports name tuple.
 
     """
     # TODO optimise this computaiton
@@ -49,11 +49,11 @@ def get_input_ports_tuple_index(
         ]
         # This sorts in numerical order
         matched_ports_list.sort()
-        matched_ports_list = tuple(matched_ports_list)
+        matched_ports_name_tuple_order = tuple(matched_ports_list)
         matches_ports_index_tuple_order = tuple(
             [ports_index[port] for port in matched_ports_list]
         )
-    return matches_ports_index_tuple_order, matched_ports_list
+    return matches_ports_index_tuple_order, matched_ports_name_tuple_order
 
 
 def get_input_ports_index(

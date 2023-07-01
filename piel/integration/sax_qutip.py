@@ -1,8 +1,10 @@
-import sax
 import qutip  # NOQA : F401
+from ..sax.utils import sax_s_parameters_to_matrix
+
+__all__ = ["sax_s_dict_to_qutip_unitary"]
 
 
-def sax_s_parameters_to_qutip_unitary(sax_model=sax.Model):
+def sax_s_dict_to_qutip_unitary(sdict: dict):
     """
     This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
     dimensions of the matrix can be observed.
@@ -28,4 +30,5 @@ def sax_s_parameters_to_qutip_unitary(sax_model=sax.Model):
 
     From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
     """
-    pass
+    s_parameter_columns = sax_s_parameters_to_matrix(sdict)
+    return s_parameter_columns

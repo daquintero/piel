@@ -2,8 +2,8 @@
 This file provides a set of utilities that allow much easier integration between `sax` and the relevant tools that we use.
 """
 import sax
+from ..gdsfactory.netlist import get_input_ports_tuple_index
 from typing import Optional  # NOQA : F401
-from ..config import nso
 
 __all__ = ["get_sdense_ports_index", "sax_s_parameters_to_matrix", "snet"]
 
@@ -13,7 +13,7 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
     This function returns the ports index of the sax dense S-parameter matrix.
 
     Given that the order of the iteration is provided by the user, the dictionary keys will also be ordered
-    accordingly when iterating over them.
+    accordingly when iterating over them. This requires the user to provide a set of ordered.
 
     TODO verify reasonable iteration order.
 
@@ -50,7 +50,7 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
 
 def sax_s_parameters_to_matrix(
     sdict=sax.SDict,
-) -> nso.ndarray:
+) -> tuple:
     """
     This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
     dimensions of the matrix can be observed.
@@ -72,13 +72,18 @@ def sax_s_parameters_to_matrix(
             S_{41} & S_{42} & S_{43} & S_{44} \\
         \\end{bmatrix}
 
+    # TODO Autodoc
     """
     dense_s_parameter_matrix, dense_s_parameter_index = sax.sdense(sdict)
     # Now we get the indexes of the input ports that we care about to restructure the dense matrix with the columns
     # we care about.
-
-    get_sdense_ports_index(all_ports_index=dense_s_parameter_index)
-    pass
+    (
+        matches_ports_index_tuple_order,
+        matched_ports_name_tuple_order,
+    ) = get_input_ports_tuple_index(ports_index=dense_s_parameter_index)
+    # We now select the s-dense
+    s_parameter_columns = dense_s_parameter_matrix[[matches_ports_index_tuple_order]]
+    return s_parameter_columns, matches_ports_index_tuple_order
 
 
 snet = sax_s_parameters_to_matrix

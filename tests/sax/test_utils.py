@@ -1,5 +1,4 @@
 import piel
-import sax
 
 test_s_parameters = sp = {
     ("in_o_0", "in_o_0"): 0j,
@@ -68,38 +67,17 @@ test_s_parameters = sp = {
     ("out_o_1", "in_o_2"): (0.007822711346586061 + 0.08514973701412341j),
 }
 
-test_s_dense = sax.sdense(test_s_parameters)
-
-test_ports_index = test_s_dense[1]
-
 
 def test_import_functions():
-    """
-    Test these functions exist
-    """
-    get_input_ports_index_exists = "get_input_ports_index" in dir(piel.gdsfactory)
-    get_input_ports_tuple_index_exists = "get_input_ports_tuple_index" in dir(
-        piel.gdsfactory
-    )
-    return get_input_ports_index_exists and get_input_ports_tuple_index_exists
+    sax_s_parameters_to_matrix_exists = "sax_s_parameters_to_matrix" in dir(piel.sax)
+    return sax_s_parameters_to_matrix_exists
 
 
-def test_get_input_ports_tuple_index():
-    (
-        matches_ports_index_tuple_order,
-        matched_ports_list,
-    ) = piel.get_input_ports_tuple_index(ports_index=test_ports_index)
-    # print(matches_ports_index_tuple_order)
-    # print(matched_ports_list)
-    return 0
-
-
-def test_get_input_ports_index():
-    ports_index_order = piel.get_input_ports_index(ports_index=test_ports_index)
-    # print(ports_index_order)
+def test_sax_s_parameters_to_matrix():
+    matrix = piel.sax_s_parameters_to_matrix(sdict=test_s_parameters)
+    return matrix
 
 
 if __name__ == "__main__":
     test_import_functions()
-    test_get_input_ports_tuple_index()
-    test_get_input_ports_index()
+    test_sax_s_parameters_to_matrix()
