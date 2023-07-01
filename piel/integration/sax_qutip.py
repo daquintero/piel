@@ -31,4 +31,5 @@ def sax_s_dict_to_qutip_unitary(sdict: dict):
     From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
     """
     s_parameter_columns = sax_s_parameters_to_matrix(sdict)
+
     return s_parameter_columns
