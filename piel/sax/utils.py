@@ -17,8 +17,27 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
 
     TODO verify reasonable iteration order.
 
+    .. code-block:: python
+        # The input_ports_order can be a tuple of tuples that contain the index and port name. Eg.
+        input_ports_order = ((0, "in_o_0"), (5, "in_o_1"), (6, "in_o_2"), (7, "in_o_3"))
+
+        # The all_ports_index is a dictionary of the ports index. Eg.
+        all_ports_index = {
+            "in_o_0": 0,
+            "out_o_0": 1,
+            "out_o_1": 2,
+            "out_o_2": 3,
+            "out_o_3": 4,
+            "in_o_1": 5,
+            "in_o_2": 6,
+            "in_o_3": 7,
+        }
+
+        # Output
+        {"in_o_0": 0, "in_o_1": 5, "in_o_2": 6, "in_o_3": 7}
+
     Args:
-        input_ports_order (tuple): The ports order tuple.
+        input_ports_order (tuple): The ports order tuple. Can be a tuple of tuples that contain the index and port name.
         all_ports_index (dict): The ports index dictionary.
 
     Returns:
@@ -55,7 +74,8 @@ def sax_s_parameters_to_matrix(
 
     """
     dense_s_parameter_matrix, dense_s_parameter_index = sax.sdense(sdict)
-    # Now we get the indexes of the input ports that we care about to restructure the dense matrix with the columns we care about.
+    # Now we get the indexes of the input ports that we care about to restructure the dense matrix with the columns
+    # we care about.
 
     get_sdense_ports_index(all_ports_index=dense_s_parameter_index)
     pass

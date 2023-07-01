@@ -11,6 +11,7 @@ from .cocotb import *
 from .config import *
 from .defaults import *
 from .file_system import *
+from .gdsfactory import *
 from .integration import *
 from .openlane import *
 from .parametric import *

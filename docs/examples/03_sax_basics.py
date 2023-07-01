@@ -342,6 +342,8 @@ active_switch_circuit_model()
 
 # This gives us a lot of power, and which is why I love `sax`. What we can do now is modify the composed `sax` function to add a simple active phase parameter. We will start simple and extend this more thoroguhly to different electronic signals representations in the next example.
 
+import sax
+
 sp = {
     ("in_o_0", "in_o_0"): 0j,
     ("out_o_0", "out_o_0"): 0j,
@@ -411,4 +413,6 @@ sp = {
 
 sax.sdense(sp)
 
-sax.sdense(sp)[0]
+import piel
+
+piel
