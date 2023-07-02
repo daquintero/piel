@@ -1,10 +1,10 @@
 import qutip  # NOQA : F401
 from ..sax.utils import sax_s_parameters_to_matrix
 
-__all__ = ["sax_s_dict_to_qutip_unitary"]
+__all__ = ["sax_s_dict_to_ideal_qutip_unitary"]
 
 
-def sax_s_dict_to_qutip_unitary(sdict: dict):
+def sax_s_dict_to_ideal_qutip_unitary(sdict: dict):
     """
     This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
     dimensions of the matrix can be observed.
@@ -29,6 +29,27 @@ def sax_s_dict_to_qutip_unitary(sdict: dict):
         \\end{bmatrix}
 
     From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
+
+    For example, a ``qutip`` representation of an s-gate gate would be:
+
+    ..code-block:: python
+        import numpy as np
+        import qutip
+
+        # S-Gate
+        s_gate_matrix = np.array([[1.,   0],
+                                 [0., 1.j]])
+        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
+
+    In mathematical notation, this S-gate would be written as:
+
+    ..math::
+        S = \\begin{bmatrix}
+            1 & 0 \\
+            0 & i \\
+        \\end{bmatrix}
+
+    When mapping in between sax-matrices and qutip matrices, we need to be careful about the indexing.
     """
     s_parameter_columns = sax_s_parameters_to_matrix(sdict)
 

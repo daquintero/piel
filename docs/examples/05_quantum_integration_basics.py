@@ -19,6 +19,8 @@ switch_circuit_model, switch_circuit_model_info = sax.circuit(
 )
 default_state_s_parameters = switch_circuit_model()
 
-# We convert from the `sax` unitary to a unitary that can be inputted into a `qutip` model. Fortunately, `piel` has got you covered:
+# We convert from the `sax` unitary to an ideal "unitary" that can be inputted into a `qutip` model. Fortunately, `piel` has got you covered:
+# It is important to note some inherent assumptions and limitations of the translation process.
 
-qutip_unitary = piel.sax_s_dict_to_qutip_unitary(default_state_s_parameters)
+
+qutip_unitary = piel.sax_s_dict_to_ideal_qutip_unitary(default_state_s_parameters)
