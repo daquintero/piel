@@ -1,4 +1,6 @@
 pip>=19.2.3
+bokeh
+jupyter_bokeh
 bump2version
 wheel
 watchdog

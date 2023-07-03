@@ -3,7 +3,6 @@ This file contains a range of functions used to read, plot and analyse cocotb si
 """
 import functools
 import pandas as pd
-import bokeh as bh
 from ..config import piel_path_types
 from ..file_system import return_path, get_files_recursively_in_directory
 
@@ -45,41 +44,45 @@ def read_simulation_data(file_path):
 
 
 def simple_plot_simulation_data(simulation_data: pd.DataFrame):
-    source = bh.models.ColumnDataSource(
-        data=dict(time=simulation_data.time, signal=simulation_data.X)
+    from bokeh.models import ColumnDataSource
+    from bokeh.plotting import figure, show
+    from bokeh.layouts import column
+
+    source = ColumnDataSource(
+        data=dict(time=simulation_data.t, signal=simulation_data.x)
     )
 
-    p = bh.plotting.figure(
+    p = figure(
         height=300,
         width=800,
         tools="xpan",
         toolbar_location=None,
-        x_axis_type="datetime",
+        # x_axis_type="datetime",
         x_axis_location="above",
         background_fill_color="#efefef",
     )
 
-    p.line("date", "close", source=source)
-    p.yaxis.axis_label = "Price"
+    p.line("time", "signal", source=source)
+    # p.yaxis.axis_label = "Price"
 
-    select = bh.plotting.figure(
+    select = figure(
         title="Drag the middle and edges of the selection box to change the range above",
         height=130,
         width=800,
         y_range=p.y_range,
-        x_axis_type="datetime",
+        # x_axis_type="datetime",
         y_axis_type=None,
         tools="",
         toolbar_location=None,
         background_fill_color="#efefef",
     )
 
-    range_tool = bh.models.RangeTool(x_range=p.x_range)
-    range_tool.overlay.fill_color = "navy"
-    range_tool.overlay.fill_alpha = 0.2
+    # range_tool = RangeTool(x_range=p.x_range)
+    # range_tool.overlay.fill_color = "navy"
+    # range_tool.overlay.fill_alpha = 0.2
 
-    select.line("date", "close", source=source)
+    select.line("time", "signal", source=source)
     select.ygrid.grid_line_color = None
-    select.add_tools(range_tool)
+    # select.add_tools(range_tool)
 
-    bh.plotting.show(bh.layouts.column(p, select))
+    return show(column(p, select))
