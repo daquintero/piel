@@ -23,3 +23,14 @@ piel.configure_cocotb_simulation(
 
 # Run cocotb simulation
 piel.run_cocotb_simulation(design_directory)
+
+# However, what we would like to do is extract timing information of the circuit in Python and get corresponding
+# graphs. We would like to have this digital signal information interact with our photonics model. Note that when
+# running a `cocotb` simulation, this is done through asynchronous coroutines, so it is within the testbench file
+# that any interaction and modelling with the photonics networks is implemented.
+
+# ## Data Visualisation
+
+# The user is free to write their own data visualisation structure and toolset. Conveniently, `piel` does provide a standard plotting tool for these type of `cocotb` signal outputs accordingly.
+#
+# We first list the files for our design directory:

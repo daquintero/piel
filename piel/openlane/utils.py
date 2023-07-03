@@ -1,15 +1,18 @@
 import pathlib
+from ..config import piel_path_types
 from ..file_system import return_path
 
 
 def find_design_run(
-    design_directory: str | pathlib.Path,
+    design_directory: piel_path_types,
     run_name: str | None = None,
 ) -> pathlib.Path:
     """
     For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
 
     They get sorted based on a reverse `list.sort()` method.
+
+    # TODO docs
     """
     design_directory = return_path(design_directory)
     runs_design_directory = design_directory / "runs"

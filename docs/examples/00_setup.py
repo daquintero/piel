@@ -31,6 +31,8 @@
 
 import piel
 
+piel.__version__
+
 # ## Example Setup
 
 # We will start by first setting up the design folder. You can get your own design folder, or you can use the `docs/examples/simple_design` folder as a reference for our project. In the future, you might want to have your project as a git clonable repository you can just add to a designs folder. You can also use the example OpenLanes ones.
@@ -41,13 +43,28 @@ piel.setup_example_design()
 
 # You can check that the design has been copied appropriately by running:
 
-# +
-
 piel.check_example_design()
-# -
 
 # Now we have a project we can work from.
 
+
+# ## Recommended Project Structure
+
+# In `docs/sections/environment/project_strucutre.md` TODO link, the recommended project structure of your codesign projects is described. This structure has been carefully thought of in order to have the most seamless co-design experience when using all the tools. It follows standard convention that merges both the `photonic` and `electronic` design flows into a single one.
+#
+# Install your project as a Python package through `pip install . -e`, this makes the package accessible throughout your full filesystem, and it means `piel` can interact with your design at any location in your filesystem. After you do that, you can then run the following commands.
+
+# `piel` provides a set of useful functions to interact with your project. You can find out your Python project directory through:
+
+import simple_design
+
+piel.return_path(simple_design)
+
+# ```
+# WindowsPath('c:/users/dario/documents/phd/piel/docs/examples/designs/simple_design/simple_design')
+# ```
+
+# This means that in any corresponding `piel` functionality, wherever a path is required, you can just use your project module import, and the operations will be performed on that directory.
 
 # ## Interacting with the Environment
 
@@ -83,5 +100,3 @@ openlane_root_directory
 # We can find out all the default designs in Openlane designs accordingly
 
 list((openlane_root_directory / "designs").iterdir())
-
-

@@ -6,18 +6,20 @@ import pathlib
 import shutil
 import stat
 import subprocess
+import types
 from typing import Literal
+from .config import piel_path_types
 
 
 def check_path_exists(
-    path: str | pathlib.Path,
+    path: piel_path_types,
     raise_errors: bool = False,
 ) -> bool:
     """
     Checks if a directory exists.
 
     Args:
-        path(str | pathlib.Path): Input path.
+        path(piel_path_types): Input path.
 
     Returns:
         directory_exists(bool): True if directory exists.
@@ -32,31 +34,40 @@ def check_path_exists(
     return directory_exists
 
 
-def check_example_design(design_name: str | pathlib.Path = "simple_design") -> bool:
+def check_example_design(
+    design_name: str = "simple_design",
+    designs_directory: piel_path_types | None = None,
+) -> bool:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
     Args:
         design_name(str): Name of the design to check.
+        designs_directory(piel_path_types): Directory that contains the DESIGNS environment flag.
+        # TODO
 
     Returns:
         None
     """
+    if designs_directory is None:
+        designs_directory = pathlib.Path(os.environ["DESIGNS"])
+
     design_folder = (
-        pathlib.Path(os.environ["DESIGNS"]) / design_name
+        designs_directory / design_name
     )  # TODO verify this copying operation
     return design_folder.exists()
 
 
 def copy_source_folder(
-    source_directory: str | pathlib.Path, target_directory: str | pathlib.Path
+    source_directory: piel_path_types,
+    target_directory: piel_path_types,
 ) -> None:
     """
     Copies the files from a source_directory to a target_directory
 
     Args:
-        source_directory(str): Source directory.
-        target_directory(str): Target directory.
+        source_directory(piel_path_types): Source directory.
+        target_directory(piel_path_types): Target directory.
 
     Returns:
         None
@@ -87,13 +98,13 @@ def copy_source_folder(
 
 
 def convert_list_to_path_list(
-    input_list: list[str | pathlib.Path],
+    input_list: list[piel_path_types],
 ) -> list[pathlib.Path]:
     """
     Converts a list of strings or pathlib.Path to a list of pathlib.Path.
 
     Args:
-        input_list(list[str | pathlib.Path]): Input list.
+        input_list(list[piel_path_types]): Input list.
 
     Returns:
         output_list(list[pathlib.Path]): Output list.
@@ -152,7 +163,7 @@ def delete_path(path: str | pathlib.Path) -> None:
 
 
 def delete_path_list_in_directory(
-    directory_path: str | pathlib.Path,
+    directory_path: piel_path_types,
     path_list: list,
     ignore_confirmation: bool = False,
     validate_individual: bool = False,
@@ -161,7 +172,7 @@ def delete_path_list_in_directory(
     Deletes a list of files in a directory.
 
     Args:
-        directory_path(str | pathlib.Path): Input path.
+        directory_path(piel_path_types): Input path.
         path_list(list): List of files.
         ignore_confirmation(bool): Ignore confirmation. Default: False.
         validate_individual(bool): Validate individual files. Default: False.
@@ -200,14 +211,14 @@ def delete_path_list_in_directory(
 
 
 def get_files_recursively_in_directory(
-    path: str | pathlib.Path,
+    path: piel_path_types,
     extension: str = "*",
 ):
     """
     Returns a list of files in a directory.
 
     Args:
-        path(str | pathlib.Path): Input path.
+        path(piel_path_types): Input path.
         extension(str): File extension.
 
     Returns:
@@ -221,12 +232,12 @@ def get_files_recursively_in_directory(
     return file_list
 
 
-def permit_script_execution(script_path: str | pathlib.Path) -> None:
+def permit_script_execution(script_path: piel_path_types) -> None:
     """
     Permits the execution of a script.
 
     Args:
-        script_path(str): Script path.
+        script_path(piel_path_types): Script path.
 
     Returns:
         None
@@ -235,12 +246,12 @@ def permit_script_execution(script_path: str | pathlib.Path) -> None:
     script.chmod(script.stat().st_mode | stat.S_IEXEC)
 
 
-def permit_directory_all(directory_path: str | pathlib.Path) -> None:
+def permit_directory_all(directory_path: piel_path_types) -> None:
     """
     Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
 
     Args:
-        directory_path(str | pathlib.Path): Input path.
+        directory_path(piel_path_types): Input path.
 
     Returns:
         None
@@ -258,12 +269,12 @@ def permit_directory_all(directory_path: str | pathlib.Path) -> None:
         )
 
 
-def read_json(path: str | pathlib.Path) -> dict:
+def read_json(path: piel_path_types) -> dict:
     """
     Reads a JSON file.
 
     Args:
-        path(str | pathlib.Path): Input path.
+        path(piel_path_types): Input path.
 
     Returns:
         json_data(dict): JSON data.
@@ -274,7 +285,7 @@ def read_json(path: str | pathlib.Path) -> dict:
     return json_data
 
 
-def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
+def return_path(input_path: piel_path_types) -> pathlib.Path:
     """
     Returns a pathlib.Path to be able to perform operations accordingly internally.
 
@@ -290,6 +301,8 @@ def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
         output_path = pathlib.Path(input_path)
     elif isinstance(input_path, pathlib.Path):
         output_path = input_path
+    elif isinstance(input_path, types.ModuleType):
+        output_path = pathlib.Path(input_path.__file__).parent
     else:
         raise ValueError(
             "input_path: " + str(input_path) + " is of type: " + str(type(input_path))
@@ -297,12 +310,12 @@ def return_path(input_path: str | pathlib.Path) -> pathlib.Path:
     return output_path
 
 
-def run_script(script_path: str | pathlib.Path) -> None:
+def run_script(script_path: piel_path_types) -> None:
     """
     Runs a script on the filesystem `script_path`.
 
     Args:
-        script_path(str): Script path.
+        script_path(piel_path_types): Script path.
 
     Returns:
         None
@@ -342,7 +355,7 @@ def setup_example_design(
 
 
 def write_script(
-    directory_path: str | pathlib.Path,
+    directory_path: piel_path_types,
     script: str,
     script_name: str,
 ) -> None:
@@ -350,7 +363,7 @@ def write_script(
     Records a `script_name` in the `scripts` project directory.
 
     Args:
-        directory_path(str): Design directory.
+        directory_path(piel_path_types): Design directory.
         script(str): Script to write.
         script_name(str): Name of the script.
 
