@@ -19,35 +19,33 @@ Quantum Information Basics
 
 Properties of unitary matrices:
 
-.. table:: Unitary Properties
-   :align: center
+.. list-table:: Unitary Properties
+   :header-rows: 1
 
-   +-------------------+----------------------+
-   | Unitary Property  | Notation             |
-   +===================+======================+
-   | Unitary           | :math:`U^\dagger U = I` |
-   +-------------------+----------------------+
-   | Normal            | :math:`U U^\dagger = U^\dagger U = I` |
-   +-------------------+----------------------+
-   | Invertible        | :math:`U^\dagger = U^{-1}` |
-   +-------------------+----------------------+
-   | Unit Eigenvalues  | :math:`|\lambda|^2 = 1` |
-   +-------------------+----------------------+
-   | Length Preserving | :math:`\langle U \psi \rangle = \langle \psi \rangle` |
-   +-------------------+----------------------+
+   * - Unitary Property
+     - Notation
+   * - Unitary
+     - :math:`U^\dagger U = I`
+   * - Normal
+     - :math:`U U^\dagger = U^\dagger U = I`
+   * - Invertible
+     - :math:`U^\dagger = U^{-1}`
+   * - Unit Eigenvalues
+     - :math:`\| \lambda \| ^2 = 1`
+   * - Length Preserving
+     - :math:`\langle U \psi \rangle = \langle \psi \rangle`
 
 Properties of Hamiltonian matrices:
 
-.. table:: Hamiltonian Properties
+.. list-table:: Hamiltonian Properties
    :align: center
 
-   +-------------------------+-----------------+
-   | Hamiltonian Property    | Notation        |
-   +=========================+=================+
-   | Hermitian               | :math:`H^\dagger = H` |
-   +-------------------------+-----------------+
-   | Normal                  | :math:`H H^\dagger = H^\dagger H` |
-   +-------------------------+-----------------+
+   * - Unitary Property
+     - Notation
+   * - Hermitian
+     - :math:`H^\dagger = H`
+   * - Normal
+     - :math:`H H^\dagger = H^\dagger H`
 
 .. TODO check this.
 .. \text{Real Eigenvalues} & \lambda \in \mathbb{R} \\

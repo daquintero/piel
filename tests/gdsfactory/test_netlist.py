@@ -88,7 +88,7 @@ def test_get_input_ports_tuple_index():
     (
         matches_ports_index_tuple_order,
         matched_ports_list,
-    ) = piel.get_input_ports_tuple_index(ports_index=test_ports_index)
+    ) = piel.get_matched_ports_tuple_index(ports_index=test_ports_index)
     # print(matches_ports_index_tuple_order)
     # print(matched_ports_list)
     return 0

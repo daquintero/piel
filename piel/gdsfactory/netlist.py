@@ -1,15 +1,19 @@
 from typing import Literal
 
-__all__ = ["get_input_ports_index", "get_input_ports_tuple_index"]
+__all__ = ["get_input_ports_index", "get_matched_ports_tuple_index"]
 
 
-def get_input_ports_tuple_index(
+def get_matched_ports_tuple_index(
     ports_index: dict,
     sorting_algorithm: Literal["prefix"] = "prefix",
     prefix: str = "in",
 ) -> (tuple, tuple):
     """
-    This function returns the input ports of a component. However, input ports may have different sets of prefixes and suffixes. This function implements different sorting algorithms for different ports names. The default algorithm is `prefix`, which sorts the ports by their prefix. The Endianness implementation means that the tuple order is determined according to the last numerical index order of the port numbering. Returns just a tuple of the index.
+    This function returns the input ports of a component. However, input ports may have different sets of prefixes
+    and suffixes. This function implements different sorting algorithms for different ports names. The default
+    algorithm is `prefix`, which sorts the ports by their prefix. The Endianness implementation means that the tuple
+    order is determined according to the last numerical index order of the port numbering. Returns just a tuple of
+    the index.
 
     .. code-block:: python
 
@@ -93,8 +97,8 @@ def get_input_ports_index(
     # TODO optimise this computaiton
     ports_index_order = tuple()
     if sorting_algorithm == "prefix":
-        matched_ports_index_tuple, matched_ports_list = get_input_ports_tuple_index(
-            ports_index=ports_index, prefix=prefix, sorting_algorithm=sorting_algorithm
+        matched_ports_index_tuple, matched_ports_list = get_matched_ports_tuple_index(
+            ports_index=ports_index, sorting_algorithm=sorting_algorithm, prefix=prefix
         )
         ports_index_order = tuple(
             zip(matched_ports_index_tuple, matched_ports_list, strict=True)

@@ -74,7 +74,7 @@ def test_import_functions():
 
 
 def test_sax_s_parameters_to_matrix():
-    matrix = piel.sax_s_parameters_to_matrix(sdict=test_s_parameters)
+    matrix = piel.sax_to_s_parameters_standard_matrix(sax_input=test_s_parameters)
     return matrix
 
 

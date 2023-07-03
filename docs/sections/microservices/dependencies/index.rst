@@ -6,6 +6,7 @@ Dependency Bindings
     :caption: Contents:
 
     principle
+    gdsfactory
     openlane
     cocotb
     sax

@@ -17,6 +17,7 @@ Subpackages
 
    cocotb/index.rst
    components/index.rst
+   gdsfactory/index.rst
    integration/index.rst
    models/index.rst
    openlane/index.rst
@@ -63,7 +64,11 @@ Functions
    piel.return_path
    piel.run_script
    piel.write_script
+   piel.get_input_ports_index
+   piel.get_matched_ports_tuple_index
    piel.create_gdsfactory_component_from_openlane
+   piel.sax_to_ideal_qutip_unitary
+   piel.standard_s_parameters_to_ideal_qutip_unitary
    piel.get_design_directory_from_root_openlane_v1
    piel.return_path
    piel.get_design_from_openlane_migration
@@ -102,6 +107,8 @@ Functions
    piel.run_openlane_flow
    piel.single_parameter_sweep
    piel.multi_parameter_sweep
+   piel.get_sdense_ports_index
+   piel.sax_to_s_parameters_standard_matrix
 
 
 
@@ -115,6 +122,7 @@ Attributes
    piel.nso
    piel.test_spm_open_lane_configuration
    piel.example_open_lane_configuration
+   piel.snet
    piel.__author__
    piel.__email__
    piel.__version__
@@ -376,6 +384,77 @@ Attributes
    :returns: None
 
 
+.. py:function:: get_input_ports_index(ports_index: dict, sorting_algorithm: Literal[get_input_ports_index.prefix] = 'prefix', prefix: str = 'in') -> tuple
+
+   This function returns the input ports of a component. However, input ports may have different sets of prefixes and suffixes. This function implements different sorting algorithms for different ports names. The default algorithm is `prefix`, which sorts the ports by their prefix. The Endianness implementation means that the tuple order is determined according to the last numerical index order of the port numbering.
+
+   .. code-block:: python
+
+       raw_ports_index = {
+           "in_o_0": 0,
+           "out_o_0": 1,
+           "out_o_1": 2,
+           "out_o_2": 3,
+           "out_o_3": 4,
+           "in_o_1": 5,
+           "in_o_2": 6,
+           "in_o_3": 7,
+       }
+
+       get_input_ports_index(ports_index=raw_ports_index)
+
+       # Output
+       ((0, "in_o_0"), (5, "in_o_1"), (6, "in_o_2"), (7, "in_o_3"))
+
+   :param ports_index: The ports index dictionary.
+   :type ports_index: dict
+   :param sorting_algorithm: The sorting algorithm to use. Defaults to "prefix".
+   :type sorting_algorithm: Literal["prefix"], optional
+   :param prefix: The prefix to use for the sorting algorithm. Defaults to "in".
+   :type prefix: str, optional
+
+   :returns: The ordered input ports index tuple.
+   :rtype: tuple
+
+
+.. py:function:: get_matched_ports_tuple_index(ports_index: dict, sorting_algorithm: Literal[get_matched_ports_tuple_index.prefix] = 'prefix', prefix: str = 'in') -> (tuple, tuple)
+
+   This function returns the input ports of a component. However, input ports may have different sets of prefixes
+   and suffixes. This function implements different sorting algorithms for different ports names. The default
+   algorithm is `prefix`, which sorts the ports by their prefix. The Endianness implementation means that the tuple
+   order is determined according to the last numerical index order of the port numbering. Returns just a tuple of
+   the index.
+
+   .. code-block:: python
+
+       raw_ports_index = {
+           "in_o_0": 0,
+           "out_o_0": 1,
+           "out_o_1": 2,
+           "out_o_2": 3,
+           "out_o_3": 4,
+           "in_o_1": 5,
+           "in_o_2": 6,
+           "in_o_3": 7,
+       }
+
+       get_input_ports_tuple_index(ports_index=raw_ports_index)
+
+       # Output
+       (0, 5, 6, 7)
+
+   :param ports_index: The ports index dictionary.
+   :type ports_index: dict
+   :param sorting_algorithm: The sorting algorithm to use. Defaults to "prefix".
+   :type sorting_algorithm: Literal["prefix"], optional
+   :param prefix: The prefix to use for the sorting algorithm. Defaults to "in".
+   :type prefix: str, optional
+
+   :returns: The ordered input ports index tuple.
+             matched_ports_name_tuple_order(tuple): The ordered input ports name tuple.
+   :rtype: matches_ports_index_tuple_order(tuple)
+
+
 .. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
 
    This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
@@ -393,6 +472,79 @@ Attributes
 
    :returns: GDSFactory component.
    :rtype: component(gf.Component)
+
+
+.. py:function:: sax_to_ideal_qutip_unitary(sax_input: sax.SType)
+
+   This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
+   dimensions of the matrix can be observed.
+
+   I think this means we need to transpose the output of the filtered sax SDense matrix to map it to a QuTip matrix.
+   Note that the documentation and formatting of the standard `sax` mapping to a S-parameter standard notation is already in described in piel/piel/sax/utils.py.
+
+   From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
+
+   For example, a ``qutip`` representation of an s-gate gate would be:
+
+   ..code-block:: python
+
+       import numpy as np
+       import qutip
+       # S-Gate
+       s_gate_matrix = np.array([[1.,   0],
+                                [0., 1.j]])
+       s_gate = qutip.Qobj(mat, dims=[[2], [2]])
+
+   In mathematical notation, this S-gate would be written as:
+
+   ..math::
+
+       S = \begin{bmatrix}
+           1 & 0 \
+           0 & i \
+       \end{bmatrix}
+
+   :param sax_input: A dictionary of S-parameters in the form of a SDict from `sax`.
+   :type sax_input: sax.SType
+
+   Returns:
+
+
+
+.. py:function:: standard_s_parameters_to_ideal_qutip_unitary(s_parameters_standard_matrix: piel.config.nso.ndarray)
+
+   This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
+   dimensions of the matrix can be observed.
+
+   I think this means we need to transpose the output of the filtered sax SDense matrix to map it to a QuTip matrix.
+   Note that the documentation and formatting of the standard `sax` mapping to a S-parameter standard notation is already in described in piel/piel/sax/utils.py.
+
+   From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
+
+   For example, a ``qutip`` representation of an s-gate gate would be:
+
+   ..code-block:: python
+       import numpy as np
+       import qutip
+
+       # S-Gate
+       s_gate_matrix = np.array([[1.,   0],
+                                [0., 1.j]])
+       s_gate = qutip.Qobj(mat, dims=[[2], [2]])
+
+   In mathematical notation, this S-gate would be written as:
+
+   ..math::
+       S = \begin{bmatrix}
+           1 & 0 \
+           0 & i \
+       \end{bmatrix}
+
+   :param s_parameters_standard_matrix: A dictionary of S-parameters in the form of a SDict from `sax`.
+   :type s_parameters_standard_matrix: nso.ndarray
+
+   :returns: A QuTip QObj representation of the S-parameters in a unitary matrix.
+   :rtype: qobj_unitary (qutip.Qobj)
 
 
 .. py:function:: get_design_directory_from_root_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> pathlib.Path
@@ -888,6 +1040,138 @@ Attributes
    :rtype: parameter_sweep_design_dictionary_array(list)
 
 
+.. py:function:: get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> dict
+
+   This function returns the ports index of the sax dense S-parameter matrix.
+
+   Given that the order of the iteration is provided by the user, the dictionary keys will also be ordered
+   accordingly when iterating over them. This requires the user to provide a set of ordered.
+
+   TODO verify reasonable iteration order.
+
+   .. code-block:: python
+
+       # The input_ports_order can be a tuple of tuples that contain the index and port name. Eg.
+       input_ports_order = ((0, "in_o_0"), (5, "in_o_1"), (6, "in_o_2"), (7, "in_o_3"))
+       # The all_ports_index is a dictionary of the ports index. Eg.
+       all_ports_index = {
+           "in_o_0": 0,
+           "out_o_0": 1,
+           "out_o_1": 2,
+           "out_o_2": 3,
+           "out_o_3": 4,
+           "in_o_1": 5,
+           "in_o_2": 6,
+           "in_o_3": 7,
+       }
+       # Output
+       {"in_o_0": 0, "in_o_1": 5, "in_o_2": 6, "in_o_3": 7}
+
+   :param input_ports_order: The ports order tuple. Can be a tuple of tuples that contain the index and port name.
+   :type input_ports_order: tuple
+   :param all_ports_index: The ports index dictionary.
+   :type all_ports_index: dict
+
+   :returns: The ordered input ports index tuple.
+   :rtype: tuple
+
+
+.. py:function:: sax_to_s_parameters_standard_matrix(sax_input: sax.SType) -> tuple
+
+   A ``sax`` S-parameter SDict is provided as a dictionary of tuples with (port0, port1) as the key. This
+   determines the direction of the scattering relationship. It means that the number of terms in an S-parameter
+   matrix is the number of ports squared.
+
+   In order to generalise, this function returns both the S-parameter matrices and the indexing ports based on the
+   amount provided. In terms of computational speed, we definitely would like this function to be algorithmically
+   very fast. For now, I will write a simple python implementation and optimise in the future.
+
+   It is possible to see the `sax` SDense notation equivalence here:
+   https://flaport.github.io/sax/nbs/08_backends.html
+
+   .. code-block:: python
+
+       import jax.numpy as jnp
+       from sax.core import SDense
+
+       # Directional coupler SDense representation
+       dc_sdense: SDense = (
+           jnp.array([[0, 0, τ, κ], [0, 0, κ, τ], [τ, κ, 0, 0], [κ, τ, 0, 0]]),
+           {"in0": 0, "in1": 1, "out0": 2, "out1": 3},
+       )
+
+
+       # Directional coupler SDict representation
+       # Taken from https://flaport.github.io/sax/nbs/05_models.html
+       def coupler(*, coupling: float = 0.5) -> SDict:
+           kappa = coupling**0.5
+           tau = (1 - coupling) ** 0.5
+           sdict = reciprocal(
+               {
+                   ("in0", "out0"): tau,
+                   ("in0", "out1"): 1j * kappa,
+                   ("in1", "out0"): 1j * kappa,
+                   ("in1", "out1"): tau,
+               }
+           )
+           return sdict
+
+   If we were to relate the mapping accordingly based on the ports indexes, a S-Parameter matrix in the form of
+   :math:`S_{(output,i),(input,i)}` would be:
+
+   .. math::
+
+       S = \begin{bmatrix}
+               S_{00} & S_{10} \\
+               S_{01} & S_{11} \\
+           \end{bmatrix} =
+           \begin{bmatrix}
+           \tau & j \kappa \\
+           j \kappa & \tau \\
+           \end{bmatrix}
+
+   Note that the standard S-parameter and hence unitary representation is in the form of:
+
+   .. math::
+
+       S = \begin{bmatrix}
+               S_{00} & S_{01} \\
+               S_{10} & S_{11} \\
+           \end{bmatrix}
+
+
+   .. math::
+
+       \begin{bmatrix}
+           b_{1} \\
+           \vdots \\
+           b_{n}
+       \end{bmatrix}
+       =
+       \begin{bmatrix}
+           S_{11} & \dots & S_{1n} \\
+           \vdots & \ddots & \vdots \\
+           S_{n1} & \dots & S_{nn}
+       \end{bmatrix}
+       \begin{bmatrix}
+           a_{1} \\
+           \vdots \\
+           a_{n}
+       \end{bmatrix}
+
+   TODO check with Floris, does this mean we need to transpose the matrix?
+
+   :param sax_input: The sax S-parameter dictionary.
+   :type sax_input: sax.SType
+
+   :returns: The S-parameter matrix and the input ports index tuple in the standard S-parameter notation.
+   :rtype: tuple
+
+
+.. py:data:: snet
+
+
+
 .. py:data:: __author__
    :value: 'Dario Quintero'
 
@@ -899,4 +1183,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.33'
+   :value: '0.0.35'
