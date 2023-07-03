@@ -3,6 +3,11 @@
 
 .. py:module:: piel.models.frequency.photonic.mmi2x2
 
+.. autoapi-nested-parse::
+
+   Translated from https://github.com/flaport/sax or https://github.com/flaport/photontorch/tree/master
+
+
 
 Module Contents
 ---------------

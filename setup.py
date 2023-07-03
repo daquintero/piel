@@ -14,6 +14,7 @@ requirements = [
     "openlane",
     "pandas",
     "sax",
+    "qutip",
 ]
 
 test_requirements = [

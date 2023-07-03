@@ -32,3 +32,4 @@ openlane
 cocotb
 gdsfactory
 sax
+qutip

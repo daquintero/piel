@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    coupler_simple/index.rst
+   defaults/index.rst
    directional_coupler_length/index.rst
    directional_coupler_real/index.rst
    directional_coupler_simple/index.rst
@@ -36,6 +37,8 @@ Functions
    piel.models.frequency.photonic.mmi1x2_50_50
    piel.models.frequency.photonic.mmi2x2_50_50
    piel.models.frequency.photonic.waveguide
+   piel.models.frequency.photonic.simple_straight
+   piel.models.frequency.photonic.get_default_models
 
 
 
@@ -44,7 +47,6 @@ Attributes
 
 .. autoapisummary::
 
-   piel.models.frequency.photonic.nso
    piel.models.frequency.photonic.nso
    piel.models.frequency.photonic.nso
 
@@ -75,8 +77,15 @@ Attributes
 .. py:function:: mmi2x2_50_50()
 
 
-.. py:data:: nso
-
-
-
 .. py:function:: waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0)
+
+
+.. py:function:: simple_straight(length=10.0, width=0.5)
+
+
+.. py:function:: get_default_models() -> dict
+
+   Returns the default models dictionary.
+
+   :returns: Default models dictionary.
+   :rtype: dict
