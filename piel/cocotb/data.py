@@ -17,8 +17,6 @@ get_simulation_output_files = functools.partial(
     get_files_recursively_in_directory, path="./tb/out/", extension="csv"
 )
 
-""
-
 
 def get_simulation_output_files_from_design(
     design_directory: piel_path_types,
