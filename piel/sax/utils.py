@@ -49,6 +49,7 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
 
 def sax_to_s_parameters_standard_matrix(
     sax_input: sax.SType,
+    input_ports_order: tuple | None,
 ) -> tuple:
     """
     A ``sax`` S-parameter SDict is provided as a dictionary of tuples with (port0, port1) as the key. This
@@ -143,6 +144,7 @@ def sax_to_s_parameters_standard_matrix(
     dense_s_parameter_matrix, dense_s_parameter_index = sax.sdense(sax_input)
     # Now we get the indexes of the input ports that we care about to restructure the dense matrix with the columns
     # we care about.
+
     (
         input_ports_index_tuple_order,
         input_matched_ports_name_tuple_order,
@@ -151,6 +153,7 @@ def sax_to_s_parameters_standard_matrix(
         output_ports_index_tuple_order,
         output_matched_ports_name_tuple_order,
     ) = get_matched_ports_tuple_index(ports_index=dense_s_parameter_index, prefix="out")
+
     # We now select the SDense columns that we care about.
     s_parameters_standard_matrix = dense_s_parameter_matrix[
         [output_ports_index_tuple_order]

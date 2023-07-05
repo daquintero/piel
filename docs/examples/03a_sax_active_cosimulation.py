@@ -4,17 +4,36 @@
 import gdsfactory as gf
 from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
 import numpy as np
-import piel  # NOQA : F401
-import sax  # NOQA : F401
+import piel
+import sax
 
-# ## Active Generic Controlled Lattice
+# ## Component Models
+#
+# ### Active MZI 2x2 Phase Shifter
 
-# First, let's look at our actively driven component
+# First, let's look at our actively driven component:
 
-mzi2x2_2x2_phase_shifter_netlist = mzi2x2_2x2_phase_shifter().get_netlist()
+mzi2x2_2x2_phase_shifter().show()
+mzi2x2_2x2_phase_shifter().plot_widget()
+
+# ![mzi2x2_2x2_phase_shifter](../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
+
+mzi2x2_2x2_phase_shifter_netlist = mzi2x2_2x2_phase_shifter().get_netlist(
+    exclude_port_types="electrical"
+)
 mzi2x2_2x2_phase_shifter_netlist["instances"].keys()
 
-# Note that the netlist is very identical to a non-actively driven component in a recursive implementation.
+# ```
+# dict_keys(['bend_euler_1', 'bend_euler_2', 'bend_euler_3', 'bend_euler_4', 'bend_euler_5', 'bend_euler_6', 'bend_euler_7', 'bend_euler_8', 'cp1', 'cp2', 'straight_4', 'straight_5', 'straight_6', 'straight_7', 'straight_8', 'straight_9', 'sxb', 'sxt', 'syl', 'sytl'])
+# ```
+
+# From the `mzi2x2_2x2_phase_shifter` component definition, we know that the `sxt` instance in the netlist corresponds to the `straight_heater_metal_undercut` actively driven phase shifter in our network.
+
+mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
+
+# So what we do is that if we define an active mode for this waveguide, we can model the network system.
+
+# ### Active MZI 2x2 Component Lattice
 
 example_component_lattice = [
     [mzi2x2_2x2_phase_shifter(), 0, mzi2x2_2x2(delta_length=80.0)],
@@ -25,6 +44,7 @@ example_component_lattice = [
 mixed_switch_circuit = gf.components.component_lattice_generic(
     network=example_component_lattice
 )
+# mixed_switch_circuit.show()
 mixed_switch_circuit.plot_widget()
 
 # ![img](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
@@ -95,7 +115,7 @@ basic_ideal_phase_map
 
 # This allows us to create an operational model of our phase shifter. It is also possible, that if we have a phase-voltage curve, we can also map that to the analog signal, and the analog signal to the DAC converter accordingly, when a Pandas dataframe is provided.
 #
-# ## Example Electro-Optic Operational Connectivity
+# ### Example simulation from our `cocotb` `simple_design` outputs
 #
 # We have some bit string simulation results from our `simple_design` `cocotb` simulation which is in the form of a simple Pandas dataframe as discussed in example `docs/examples/02_cocotb_simulation`
 #
@@ -150,3 +170,60 @@ example_simple_simulation_data
 # |  8 |          8 | 1101  |  100  | 10001 | 18001 |  1.72279 |
 # |  9 |          9 | 1001  |  11   | 1100  | 20001 |  1.21609 |
 # | 10 |         10 | 1011  | 1111  | 11010 | 22001 |  2.63486 |
+
+# ## Connecting into Active Unitary Calculations
+
+# ### Simple Active 2x2 MZI Phase Shifter
+
+# In order to determine the variation of the unitary dependent on an active phase, we need to first define our circuit model and which phase shifter we would be modulating. We will compose an active MZI2x2 switch based on the decomposition provided by the extracted `sax` netlist. First we determine what are our circuit missing models.
+
+sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
+
+# We have some basic models in `piel` we can use to compose our circuit
+
+all_models = piel.models.frequency.get_all_models()
+all_models
+
+straight_heater_metal_undercut = all_models["ideal_active_waveguide"]
+straight_heater_metal_undercut
+
+our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
+    {"straight_heater_metal_undercut": straight_heater_metal_undercut}
+)
+our_custom_library
+
+mzi2x2_model, mzi2x2_model_info = sax.circuit(
+    netlist=mzi2x2_2x2_phase_shifter_netlist, models=our_custom_library
+)
+mzi2x2_model()
+
+# Because we want to model the phase change applied from our heated waveguide, which we know previously corresponds to the `sxb` instance, we can recalculate our s-parameter matrix according to our applied phase:
+
+mzi2x2_model(sxt={"active_phase_rad": np.pi})
+
+# We can clearly see our unitary is changing according to the `active_phase_rad` that we have applied to our circuit.
+
+# #### Digital Data-Driven Active MZI 2x2
+
+# Now we can compute what the unitary of our photonic circuit would be for each of the phases applied in our `cocotb` `simple_design` simulation outputs:
+
+mzi2x2_active_unitary_array = list()
+for phase_i in example_simple_simulation_data.phase:
+    mzi2x2_active_unitary_i = mzi2x2_model(sxt={"active_phase_rad": phase_i})
+    mzi2x2_active_unitary_array.append(mzi2x2_active_unitary_i)
+
+# We can copy this to a new dataframe and append the data in accordingly:
+
+mzi2x2_simple_simulation_data = example_simple_simulation_data.copy()
+mzi2x2_simple_simulation_data["unitary"] = mzi2x2_active_unitary_array
+mzi2x2_simple_simulation_data
+
+# Now we have a direct mapping between our digital state, time, and unitary changes in our `mzi` shifted circuit.
+
+# ### Active MZI 2x2 Component Lattice
+
+# Now we can do the same for our larger component lattice, and we will use our composed model accordingly.
+
+mixed_switch_circuit_netlist["instances"].keys()
+
+sax.get_required_circuit_models(mixed_switch_circuit_netlist)

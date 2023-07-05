@@ -104,10 +104,10 @@ piel.models.frequency.photonic.get_default_models()
 
 # Let's explore one of our default models. Each model has its source in the documentation.
 
-piel.models.frequency.photonic.get_default_models()["straight"]()
+piel.models.frequency.get_default_models()["straight"]()
 
 mzi2x2_model, mzi2x2_model_info = sax.circuit(
-    netlist=mzi2x2_netlist, models=piel.models.frequency.photonic.get_default_models()
+    netlist=mzi2x2_netlist, models=piel.models.frequency.get_default_models()
 )
 mzi2x2_model
 
@@ -173,7 +173,7 @@ mzi2x2_model(bend_euler_1={"length": 15}, bend_euler_3={"length": 20})
 
 switch_circuit_model, switch_circuit_model_info = sax.circuit(
     netlist=recursive_netlist,
-    models=piel.models.frequency.photonic.get_default_models(),
+    models=piel.models.frequency.get_default_models(),
 )
 
 # We can get the unitary accordingly:

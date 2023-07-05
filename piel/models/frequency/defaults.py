@@ -1,5 +1,5 @@
-from .straight_waveguide import waveguide
-from .mmi2x2 import mmi2x2_50_50
+from .photonic.straight_waveguide import waveguide
+from .photonic.mmi2x2 import mmi2x2_50_50
 
 
 # Default model dictionary library that can be overwritten for specific modelling applications.

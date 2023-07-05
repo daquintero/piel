@@ -1,4 +1,4 @@
-from .photonic.defaults import get_default_models
+from .defaults import get_default_models
 
 
 def compose_custom_model_library_from_defaults(custom_models: dict) -> dict:
