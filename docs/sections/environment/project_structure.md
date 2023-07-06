@@ -68,9 +68,13 @@ design_folder_name
             __init__.py
             Makefile # cocotb in here
             test_design.py # Required cocotb
+            out/
+                output.csv # Recommended: cocotb simulation output files go here.
     .gitignore
     setup.py
     README.md
 ```
 
 In a tapeout, this design_folder could be treated as a standalone package with version control via a `.gitignore` and local installation via a packaged `setup.py` script. Documentation could be written through `Sphinx` via `python` and `verilog` plugins.
+
+Note that this structure is beneficial for a number of reasons. When your design is imported, it can be used as a directory input to any `piel` function. As long as you have followed the structure of the project, then you do not have to deal with filepaths, and you can automate the design and simulation operations of the co-design tools.

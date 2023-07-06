@@ -6,4 +6,3 @@ from .grating_coupler import *
 from .mmi1x2 import *
 from .mmi2x2 import *
 from .straight_waveguide import *
-from .defaults import get_default_models  # NOQA: F401

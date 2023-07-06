@@ -1,16 +1,16 @@
 """
 This file allows us to automate several aspects of creating a fully compatible project structure.
 """
-import pathlib
+from .config import piel_path_types
 from .file_system import return_path, write_script, read_json, check_path_exists
 
 
-def read_configuration(design_directory: str | pathlib.Path) -> dict:
+def read_configuration(design_directory: piel_path_types) -> dict:
     """
     This function reads the configuration file found in the design directory.
 
     Args:
-        design_directory(str): Design directory PATH.
+        design_directory(piel_path_types): Design directory PATH.
 
     Returns:
         config_dictionary(dict): Configuration dictionary.
@@ -22,12 +22,12 @@ def read_configuration(design_directory: str | pathlib.Path) -> dict:
     return config_dictionary
 
 
-def create_setup_py_from_config_json(design_directory: str | pathlib.Path) -> None:
+def create_setup_py_from_config_json(design_directory: piel_path_types) -> None:
     """
     This function creates a setup.py file from the config.json file found in the design directory.
 
     Args:
-        design_directory(str): Design directory PATH.
+        design_directory(piel_path_types): Design directory PATH or module name.
 
     Returns:
         None

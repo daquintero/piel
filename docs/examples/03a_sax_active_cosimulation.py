@@ -3,17 +3,37 @@
 # We begin by importing a parametric circuit from `gdsfactory`:
 import gdsfactory as gf
 from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
-import piel  # NOQA : F401
-import sax  # NOQA : F401
+import numpy as np
+import piel
+import sax
 
-# ## Active Generic Controlled Lattice
+# ## Component Models
+#
+# ### Active MZI 2x2 Phase Shifter
 
-# First, let's look at our actively driven component
+# First, let's look at our actively driven component:
 
-mzi2x2_2x2_phase_shifter_netlist = mzi2x2_2x2_phase_shifter().get_netlist()
+mzi2x2_2x2_phase_shifter().show()
+mzi2x2_2x2_phase_shifter().plot_widget()
+
+# ![mzi2x2_2x2_phase_shifter](../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
+
+mzi2x2_2x2_phase_shifter_netlist = mzi2x2_2x2_phase_shifter().get_netlist(
+    exclude_port_types="electrical"
+)
 mzi2x2_2x2_phase_shifter_netlist["instances"].keys()
 
-# Note that the netlist is very identical to a non-actively driven component in a recursive implementation.
+# ```
+# dict_keys(['bend_euler_1', 'bend_euler_2', 'bend_euler_3', 'bend_euler_4', 'bend_euler_5', 'bend_euler_6', 'bend_euler_7', 'bend_euler_8', 'cp1', 'cp2', 'straight_4', 'straight_5', 'straight_6', 'straight_7', 'straight_8', 'straight_9', 'sxb', 'sxt', 'syl', 'sytl'])
+# ```
+
+# From the `mzi2x2_2x2_phase_shifter` component definition, we know that the `sxt` instance in the netlist corresponds to the `straight_heater_metal_undercut` actively driven phase shifter in our network.
+
+mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
+
+# So what we do is that if we define an active mode for this waveguide, we can model the network system.
+
+# ### Active MZI 2x2 Component Lattice
 
 example_component_lattice = [
     [mzi2x2_2x2_phase_shifter(), 0, mzi2x2_2x2(delta_length=80.0)],
@@ -24,9 +44,10 @@ example_component_lattice = [
 mixed_switch_circuit = gf.components.component_lattice_generic(
     network=example_component_lattice
 )
+# mixed_switch_circuit.show()
 mixed_switch_circuit.plot_widget()
 
-# ![img](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
+# ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
 mixed_switch_circuit_netlist = mixed_switch_circuit.get_netlist(
     exclude_port_types="electrical"
@@ -41,5 +62,264 @@ mixed_switch_circuit_netlist["ports"].keys()
 
 # To extract the connectivity data
 
-# + active=""
-# mixed_switch_circuit_netlist["connections"]
+mixed_switch_circuit_netlist["connections"]
+
+# ## Electronic-to-Phase Mapping
+#
+# Let us explore first the fundamental relationship between electronic signals to optical phase. When we apply an electronic signal to our actively controlled switches, we expect to change the phase we are applying. The relationship between an electronic signal to the phase strength applied is dependent on the electro-optic modulator tecnology, and this relationship may also be nonlinear. Note that in practice, an analog mapping signal drives the phase response of the modulator which requires an analog circuit interconnect which might distort or drift the desired signal to apply. To start, we will explore an ideal digital-to-phase mapping and then extend this system modelling with analog circuit components and performance.
+#
+# ### Ideal Digital-to-Phase Mapping
+#
+# For example, assume we have a 4-bit DAC. We know that our applied phase shift $\phi=0$ at our digital code $b0000$. Assume we have an ideal linear phase-shifter that maps the code $b1111$ to $\phi=\pi$. `piel` provides a convenient function to extract this code-to-phase mapping:
+
+basic_ideal_phase_map = piel.models.logic.electro_optic.linear_bit_phase_map(
+    bits_amount=5, final_phase_rad=np.pi, initial_phase_rad=0
+)
+basic_ideal_phase_map
+
+# |    |   bits |    phase |
+# |---:|-------:|---------:|
+# |  0 |      0 | 0        |
+# |  1 |      1 | 0.101341 |
+# |  2 |     10 | 0.202681 |
+# |  3 |     11 | 0.304022 |
+# |  4 |    100 | 0.405363 |
+# |  5 |    101 | 0.506703 |
+# |  6 |    110 | 0.608044 |
+# |  7 |    111 | 0.709385 |
+# |  8 |   1000 | 0.810726 |
+# |  9 |   1001 | 0.912066 |
+# | 10 |   1010 | 1.01341  |
+# | 11 |   1011 | 1.11475  |
+# | 12 |   1100 | 1.21609  |
+# | 13 |   1101 | 1.31743  |
+# | 14 |   1110 | 1.41877  |
+# | 15 |   1111 | 1.52011  |
+# | 16 |  10000 | 1.62145  |
+# | 17 |  10001 | 1.72279  |
+# | 18 |  10010 | 1.82413  |
+# | 19 |  10011 | 1.92547  |
+# | 20 |  10100 | 2.02681  |
+# | 21 |  10101 | 2.12815  |
+# | 22 |  10110 | 2.2295   |
+# | 23 |  10111 | 2.33084  |
+# | 24 |  11000 | 2.43218  |
+# | 25 |  11001 | 2.53352  |
+# | 26 |  11010 | 2.63486  |
+# | 27 |  11011 | 2.7362   |
+# | 28 |  11100 | 2.83754  |
+# | 29 |  11101 | 2.93888  |
+# | 30 |  11110 | 3.04022  |
+# | 31 |  11111 | 3.14156  |
+#
+
+# This allows us to create an operational model of our phase shifter. It is also possible, that if we have a phase-voltage curve, we can also map that to the analog signal, and the analog signal to the DAC converter accordingly, when a Pandas dataframe is provided.
+#
+# ### Example simulation from our `cocotb` `simple_design` outputs
+#
+# We have some bit string simulation results from our `simple_design` `cocotb` simulation which is in the form of a simple Pandas dataframe as discussed in example `docs/examples/02_cocotb_simulation`
+#
+
+import simple_design
+
+cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(
+    simple_design
+)
+example_simple_simulation_data = piel.read_simulation_data(
+    cocotb_simulation_output_files[0]
+)
+example_simple_simulation_data
+
+# |    |   Unnamed: 0 |    a |    b |     x |     t |
+# |---:|-------------:|-----:|-----:|------:|------:|
+# |  0 |            0 |  101 | 1010 |  1111 |  2001 |
+# |  1 |            1 | 1001 | 1001 | 10010 |  4001 |
+# |  2 |            2 |    0 | 1011 |  1011 |  6001 |
+# |  3 |            3 |  100 |  101 |  1001 |  8001 |
+# |  4 |            4 |  101 |    0 |   101 | 10001 |
+# |  5 |            5 |   11 |    0 |    11 | 12001 |
+# |  6 |            6 |  101 | 1011 | 10000 | 14001 |
+# |  7 |            7 | 1000 |  101 |  1101 | 16001 |
+# |  8 |            8 | 1101 |  100 | 10001 | 18001 |
+# |  9 |            9 | 1001 |   11 |  1100 | 20001 |
+# | 10 |           10 | 1011 | 1111 | 11010 | 22001 |
+
+# We can get the phase that is mapped to this electronic data accordingly:
+
+basic_ideal_phase_array = (
+    piel.models.logic.electro_optic.return_phase_array_from_data_series(
+        data_series=example_simple_simulation_data.x, phase_map=basic_ideal_phase_map
+    )
+)
+
+# We can append this into our initial time-domain dataframe:
+
+example_simple_simulation_data["phase"] = basic_ideal_phase_array
+example_simple_simulation_data
+
+# |    | Unnamed: 0 |   a   |   b   |   x   |   t   |  phase   |
+# |---:|-----------:|------:|------:|------:|------:|---------:|
+# |  0 |          0 |  101  | 1010  | 1111  | 2001  |  1.52011 |
+# |  1 |          1 | 1001  | 1001  | 10010 | 4001  |  1.82413 |
+# |  2 |          2 |   0   | 1011  | 1011  | 6001  |  1.11475 |
+# |  3 |          3 |  100  |  101  | 1001  | 8001  | 0.912066 |
+# |  4 |          4 |  101  |   0   |  101  | 10001 | 0.506703 |
+# |  5 |          5 |  11   |   0   |  11   | 12001 | 0.304022 |
+# |  6 |          6 |  101  | 1011  | 10000 | 14001 |  1.62145 |
+# |  7 |          7 | 1000  |  101  | 1101  | 16001 |  1.31743 |
+# |  8 |          8 | 1101  |  100  | 10001 | 18001 |  1.72279 |
+# |  9 |          9 | 1001  |  11   | 1100  | 20001 |  1.21609 |
+# | 10 |         10 | 1011  | 1111  | 11010 | 22001 |  2.63486 |
+
+# This looks like this in GTKWave:
+
+# ![example_simple_design_outputs](../_static/img/examples/02_cocotb_simulation/example_simple_design_outputs.PNG)
+
+# ## Connecting into Active Unitary Calculations
+
+# ### Simple Active 2x2 MZI Phase Shifter
+
+# In order to determine the variation of the unitary dependent on an active phase, we need to first define our circuit model and which phase shifter we would be modulating. We will compose an active MZI2x2 switch based on the decomposition provided by the extracted `sax` netlist. First we determine what are our circuit missing models.
+
+sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
+
+# ``['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_undercut']```
+
+# We have some basic models in `piel` we can use to compose our circuit
+
+all_models = piel.models.frequency.get_all_models()
+all_models
+
+straight_heater_metal_undercut = all_models["ideal_active_waveguide"]
+straight_heater_metal_undercut
+
+our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
+    {"straight_heater_metal_undercut": straight_heater_metal_undercut}
+)
+our_custom_library
+
+mzi2x2_model, mzi2x2_model_info = sax.circuit(
+    netlist=mzi2x2_2x2_phase_shifter_netlist, models=our_custom_library
+)
+piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
+
+# ```
+# (array([[-0.11042854-0.27825136j, -0.3519612 -0.88685119j],
+#         [-0.3519612 -0.88685119j,  0.11042854+0.27825136j]]),
+#  ('o2', 'o1'))
+# ```
+
+# Because we want to model the phase change applied from our heated waveguide, which we know previously corresponds to the `sxb` instance, we can recalculate our s-parameter matrix according to our applied phase:
+
+piel.sax_to_s_parameters_standard_matrix(
+    mzi2x2_model(sxt={"active_phase_rad": np.pi}),
+    input_ports_order=(
+        "o2",
+        "o1",
+    ),
+)
+
+# ```
+# (array([[-0.88685119+0.3519612j ,  0.27825136-0.11042854j],
+#         [ 0.27825136-0.11042854j,  0.88685119-0.3519612j ]]),
+#  ('o2', 'o1'))
+# ```
+
+# We can clearly see our unitary is changing according to the `active_phase_rad` that we have applied to our circuit.
+
+# #### Digital Data-Driven Active MZI 2x2
+
+# Now we can compute what the unitary of our photonic circuit would be for each of the phases applied in our `cocotb` `simple_design` simulation outputs:
+
+mzi2x2_active_unitary_array = list()
+for phase_i in example_simple_simulation_data.phase:
+    mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
+        mzi2x2_model(sxt={"active_phase_rad": phase_i}),
+        input_ports_order=(
+            "o2",
+            "o1",
+        ),
+    )
+    mzi2x2_active_unitary_array.append(mzi2x2_active_unitary_i)
+
+# We can copy this to a new dataframe and append the data in accordingly:
+
+mzi2x2_simple_simulation_data = example_simple_simulation_data.copy()
+mzi2x2_simple_simulation_data["unitary"] = mzi2x2_active_unitary_array
+mzi2x2_simple_simulation_data
+
+# Now we have a direct mapping between our digital state, time, and unitary changes in our `mzi` shifted circuit.
+
+# #### Visualising Photonic and Electronic Data
+
+# ##### Static
+
+# Now we have computed how our photonic circuit changes based on an electronic input. Let us assume we are constantly inputting a power of 1dB on the `o2` top input port of the MZI, and we can measure the optical amplitude on the output.
+
+optical_port_input = np.array([1, 0])
+optical_port_input
+
+# Let's run an example:
+
+mzi2x2_simple_simulation_data.unitary.iloc[0]
+
+example_optical_power_output = np.dot(
+    mzi2x2_simple_simulation_data.unitary.iloc[0][0], optical_port_input
+)
+example_optical_power_output
+
+# Now we can calculate this in our steady state in time:
+
+output_amplitude_array_0 = np.array([])
+output_amplitude_array_1 = np.array([])
+for unitary_i in mzi2x2_simple_simulation_data.unitary:
+    output_amplitude_i = np.dot(unitary_i[0], optical_port_input)
+    output_amplitude_array_0 = np.append(
+        output_amplitude_array_0, output_amplitude_i[0]
+    )
+    output_amplitude_array_1 = np.append(
+        output_amplitude_array_1, output_amplitude_i[1]
+    )
+output_amplitude_array_0
+
+# ```
+# array([-0.16426986+0.4086031j , -0.29089065+0.49165187j,
+#        -0.04476771+0.24661686j, -0.01183396+0.1509602j ,
+#        -0.00628735-0.05025993j, -0.03390155-0.14758559j,
+#        -0.20359414+0.44052313j, -0.09628268+0.33368601j,
+#        -0.24594593+0.46830107j, -0.06831739+0.29145769j,
+#        -0.68513737+0.5007716j ])
+# ```
+
+mzi2x2_simple_simulation_data["output_amplitude_array_0"] = output_amplitude_array_0
+mzi2x2_simple_simulation_data["output_amplitude_array_1"] = output_amplitude_array_1
+mzi2x2_simple_simulation_data
+
+# |    | Unnamed: 0 | a    | b    | x    | t    | phase   | unitary                                                                                  | optical_output_for_steady_input        |
+# |----|------------|------|------|------|------|---------|------------------------------------------------------------------------------------------|----------------------------------------|
+# |  0 | 0          | 101  | 1010 | 1111 | 2001 | 1.52011 | (array([[ 0.33489325-0.83300986j, -0.16426986+0.4086031j ],[ 0.16426986-0.4086031j ,  0.33489325-0.83300986j]]), ('o2', 'o1')) | [0.33489325-0.83300986j 0.16426986-0.4086031j ] |
+# |  1 | 1          | 1001 | 1001 | 10010| 4001 | 1.82413 | (array([[ 0.41794202-0.70638908j, -0.29089065+0.49165187j],[ 0.29089065-0.49165187j,  0.41794202-0.70638908j]]), ('o2', 'o1')) | [0.41794202-0.70638908j 0.29089065-0.49165187j] |
+# |  2 | 2          | 0    | 1011 | 1011 | 6001 | 1.11475 | (array([[ 0.17290701-0.95251202j, -0.04476771+0.24661686j],[ 0.04476771-0.24661686j,  0.17290701-0.95251202j]]), ('o2', 'o1')) | [0.17290701-0.95251202j 0.04476771-0.24661686j] |
+# |  3 | 3          | 100  | 101  | 1001 | 8001 | 0.912066| (array([[ 0.07725035-0.98544577j, -0.01183396+0.1509602j ],[ 0.01183396-0.1509602j ,  0.07725035-0.98544577j]]), ('o2', 'o1')) | [0.07725035-0.98544577j 0.01183396-0.1509602j ] |
+# |  4 | 4          | 101  | 0    | 101  | 10001| 0.506703 | (array([[-0.12396978-0.99099238j, -0.00628735-0.05025993j],[ 0.00628735+0.05025993j, -0.12396978-0.99099238j]]), ('o2', 'o1')) | [-0.12396978-0.99099238j  0.00628735+0.05025993j]|
+# |  5 | 5          | 11   | 0    | 11   | 12001| 0.304022 | (array([[-0.22129543-0.96337818j, -0.03390155-0.14758559j],[ 0.03390155+0.14758559j, -0.22129543-0.96337818j]]), ('o2', 'o1')) | [-0.22129543-0.96337818j  0.03390155+0.14758559j]|
+# |  6 | 6          | 101  | 1011 | 10000| 14001| 1.62145  | (array([[ 0.36681329-0.79368558j, -0.20359414+0.44052313j],[ 0.20359414-0.44052313j,  0.36681329-0.79368558j]]), ('o2', 'o1')) | [0.36681329-0.79368558j 0.20359414-0.44052313j] |
+# |  7 | 7          | 1000 | 101  | 1101 | 16001| 1.31743  | (array([[ 0.25997616-0.90099705j, -0.09628268+0.33368601j],[ 0.09628268-0.33368601j,  0.25997616-0.90099705j]]), ('o2', 'o1')) | [0.25997616-0.90099705j 0.09628268-0.33368601j] |
+# |  8 | 8          | 1101 | 100  | 10001| 18001| 1.72279  | (array([[ 0.39459122-0.7513338j , -0.24594593+0.46830107j],[ 0.24594593-0.46830107j,  0.39459122-0.7513338j ]]), ('o2', 'o1')) | [0.39459122-0.7513338j  0.24594593-0.46830107j] |
+# |  9 | 9          | 1001 | 11   | 1100 | 20001| 1.21609  | (array([[ 0.21774784-0.92896234j, -0.06831739+0.29145769j],[ 0.06831739-0.29145769j,  0.21774784-0.92896234j]]), ('o2', 'o1')) | [0.21774784-0.92896234j 0.06831739-0.29145769j] |
+# | 10 | 10         | 1011 | 1111 | 11010| 22001| 2.63486  | (array([[ 0.42706175-0.31214236j, -0.68513737+0.5007716j ],[ 0.68513737-0.5007716j ,  0.42706175-0.31214236j]]), ('o2', 'o1')) | [0.42706175-0.31214236j 0.68513737-0.5007716j ]  |
+#
+#
+
+# This allows us to plot our optical signal amplitudes in the context of our active unitary variation, we can also simulate how optical inputs that are changing within the state of the unitary affect the total systems. However, for the sake of easy visualisation, we can begin to explore this. Note these results are just for trivial inputs.
+
+# Note that we are trying to plot our signals amplitude, phase in time so it is a three dimensional visualisation.
+
+
+# ### Active MZI 2x2 Component Lattice
+
+# Now we can do the same for our larger component lattice, and we will use our composed model accordingly.
+
+mixed_switch_circuit_netlist["instances"].keys()
+
+sax.get_required_circuit_models(mixed_switch_circuit_netlist)

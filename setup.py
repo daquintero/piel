@@ -8,6 +8,8 @@ with open("README.md") as readme_file:
     readme = readme_file.read()
 
 requirements = [
+    "bokeh",
+    "jupyter_bokeh",
     "Click>=7.0",
     "cocotb",
     "gdsfactory",
