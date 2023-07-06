@@ -1,6 +1,6 @@
 import openlane
-from ..config import piel_path_types
-from ..file_system import return_path, read_json
+from piel.config import piel_path_types
+from piel.file_system import return_path, read_json
 from piel.defaults import test_spm_open_lane_configuration
 
 

@@ -1,6 +1,6 @@
 import pandas as pd
 import pathlib
-from ...file_system import return_path
+from piel.file_system import return_path
 from .utils import (
     contains_in_lines,
     read_file_lines,

@@ -1,6 +1,6 @@
 import pandas as pd
 import pathlib
-from ...file_system import check_path_exists, return_path
+from piel.file_system import check_path_exists, return_path
 
 
 def contains_in_lines(

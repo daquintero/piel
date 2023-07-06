@@ -295,26 +295,104 @@ mzi2x2_simple_simulation_data["output_amplitude_array_0"] = output_amplitude_arr
 mzi2x2_simple_simulation_data["output_amplitude_array_1"] = output_amplitude_array_1
 mzi2x2_simple_simulation_data
 
-# |    | Unnamed: 0 | a    | b    | x    | t    | phase   | unitary                                                                                  | optical_output_for_steady_input        |
-# |----|------------|------|------|------|------|---------|------------------------------------------------------------------------------------------|----------------------------------------|
-# |  0 | 0          | 101  | 1010 | 1111 | 2001 | 1.52011 | (array([[ 0.33489325-0.83300986j, -0.16426986+0.4086031j ],[ 0.16426986-0.4086031j ,  0.33489325-0.83300986j]]), ('o2', 'o1')) | [0.33489325-0.83300986j 0.16426986-0.4086031j ] |
-# |  1 | 1          | 1001 | 1001 | 10010| 4001 | 1.82413 | (array([[ 0.41794202-0.70638908j, -0.29089065+0.49165187j],[ 0.29089065-0.49165187j,  0.41794202-0.70638908j]]), ('o2', 'o1')) | [0.41794202-0.70638908j 0.29089065-0.49165187j] |
-# |  2 | 2          | 0    | 1011 | 1011 | 6001 | 1.11475 | (array([[ 0.17290701-0.95251202j, -0.04476771+0.24661686j],[ 0.04476771-0.24661686j,  0.17290701-0.95251202j]]), ('o2', 'o1')) | [0.17290701-0.95251202j 0.04476771-0.24661686j] |
-# |  3 | 3          | 100  | 101  | 1001 | 8001 | 0.912066| (array([[ 0.07725035-0.98544577j, -0.01183396+0.1509602j ],[ 0.01183396-0.1509602j ,  0.07725035-0.98544577j]]), ('o2', 'o1')) | [0.07725035-0.98544577j 0.01183396-0.1509602j ] |
-# |  4 | 4          | 101  | 0    | 101  | 10001| 0.506703 | (array([[-0.12396978-0.99099238j, -0.00628735-0.05025993j],[ 0.00628735+0.05025993j, -0.12396978-0.99099238j]]), ('o2', 'o1')) | [-0.12396978-0.99099238j  0.00628735+0.05025993j]|
-# |  5 | 5          | 11   | 0    | 11   | 12001| 0.304022 | (array([[-0.22129543-0.96337818j, -0.03390155-0.14758559j],[ 0.03390155+0.14758559j, -0.22129543-0.96337818j]]), ('o2', 'o1')) | [-0.22129543-0.96337818j  0.03390155+0.14758559j]|
-# |  6 | 6          | 101  | 1011 | 10000| 14001| 1.62145  | (array([[ 0.36681329-0.79368558j, -0.20359414+0.44052313j],[ 0.20359414-0.44052313j,  0.36681329-0.79368558j]]), ('o2', 'o1')) | [0.36681329-0.79368558j 0.20359414-0.44052313j] |
-# |  7 | 7          | 1000 | 101  | 1101 | 16001| 1.31743  | (array([[ 0.25997616-0.90099705j, -0.09628268+0.33368601j],[ 0.09628268-0.33368601j,  0.25997616-0.90099705j]]), ('o2', 'o1')) | [0.25997616-0.90099705j 0.09628268-0.33368601j] |
-# |  8 | 8          | 1101 | 100  | 10001| 18001| 1.72279  | (array([[ 0.39459122-0.7513338j , -0.24594593+0.46830107j],[ 0.24594593-0.46830107j,  0.39459122-0.7513338j ]]), ('o2', 'o1')) | [0.39459122-0.7513338j  0.24594593-0.46830107j] |
-# |  9 | 9          | 1001 | 11   | 1100 | 20001| 1.21609  | (array([[ 0.21774784-0.92896234j, -0.06831739+0.29145769j],[ 0.06831739-0.29145769j,  0.21774784-0.92896234j]]), ('o2', 'o1')) | [0.21774784-0.92896234j 0.06831739-0.29145769j] |
-# | 10 | 10         | 1011 | 1111 | 11010| 22001| 2.63486  | (array([[ 0.42706175-0.31214236j, -0.68513737+0.5007716j ],[ 0.68513737-0.5007716j ,  0.42706175-0.31214236j]]), ('o2', 'o1')) | [0.42706175-0.31214236j 0.68513737-0.5007716j ]  |
-#
-#
+# |    | Unnamed: 0 | a    | b    | x     | t     | phase    | unitary                                                                                                        | output_amplitude_array_0                      | output_amplitude_array_1                   |
+# |---:|-----------:|-----:|-----:|------:|------:|---------:|-----------------------------------------------------------------------------------------------------------------|----------------------------------------------|-------------------------------------------|
+# |  0 | 0          |  101 | 1010 |  1111 |  2001 | 1.52011  | array([[-0.16426986+0.4086031j ,  0.33489325-0.83300986j],[ 0.33489325-0.83300986j,  0.16426986-0.4086031j ]]), ('o2', 'o1') | -0.16426986489554396+0.40860309522788557j  | 0.3348932484400226-0.8330098644113894j   |
+# |  1 | 1          | 1001 | 1001 | 10010 |  4001 | 1.82413  | array([[-0.29089065+0.49165187j,  0.41794202-0.70638908j],[ 0.41794202-0.70638908j,  0.29089065-0.49165187j]]), ('o2', 'o1') | -0.2908906510099731+0.4916518717461718j    | 0.41794202495830884-0.7063890782969602j  |
+# |  2 | 2          |    0 | 1011 |  1011 |  6001 | 1.11475  | array([[-0.04476771+0.24661686j,  0.17290701-0.95251202j],[ 0.17290701-0.95251202j,  0.04476771-0.24661686j]]), ('o2', 'o1') | -0.04476771225818654+0.24661685816779796j  | 0.172907011379935-0.9525120170487468j    |
+# |  3 | 3          |  100 |  101 |  1001 |  8001 | 0.912066 | array([[-0.01183396+0.1509602j ,  0.07725035-0.98544577j],[ 0.07725035-0.98544577j,  0.01183396-0.1509602j ]]), ('o2', 'o1') | -0.01183396305024137+0.15096020006539462j  | 0.07725035327753166-0.985445766256692j   |
+# |  4 | 4          |  101 | 0    | 101   | 10001 | 0.506703 | array([[-0.00628735-0.05025993j, -0.12396978-0.99099238j],[-0.12396978-0.99099238j,  0.00628735+0.05025993j]]), ('o2', 'o1') | -0.006287346214285949-0.050259929453309954j   | -0.12396977624117292-0.9909923830926474j    |
+# |  5 | 5          |  11  | 0    | 11    | 12001 | 0.304022 | array([[-0.03390155-0.14758559j, -0.22129543-0.96337818j],[-0.22129543-0.96337818j,  0.03390155+0.14758559j]]), ('o2', 'o1') | -0.03390155326515837-0.14758558714522307j     | -0.22129543393308604-0.963378176041775j     |
+# |  6 | 6          |  101 | 1011 | 10000 | 14001 | 1.62145  | array([[-0.20359414+0.44052313j, 0.36681329-0.79368558j],[ 0.36681329-0.79368558j,  0.20359414-0.44052313j]]), ('o2', 'o1')  | -0.2035941443096877+0.4405231323314459j       | 0.36681328554358295-0.7936855849972456j     |
+# |  7 | 7          | 1000 | 101  | 1101  | 16001 | 1.31743  | array([[-0.09628268+0.33368601j, 0.25997616-0.90099705j],[ 0.25997616-0.90099705j,  0.09628268-0.33368601j]]), ('o2', 'o1')  | -0.0962826752595154+0.33368600691282485j      | 0.2599761601249619-0.9009970540474179j      |
+# |  8 | 8          | 1101 | 100  | 10001 | 18001 | 1.72279  | array([[-0.24594593+0.46830107j, 0.39459122-0.7513338j ],[ 0.39459122-0.7513338j ,  0.24594593-0.46830107j]]), ('o2', 'o1') | -0.24594593237703394+0.46830106903747976j    | 0.3945912222496168-0.7513337969298994j      |
+# |  9 | 9          | 1001 | 11   | 1100  | 20001 | 1.21609  | array([[-0.06831739+0.29145769j, 0.21774784-0.92896234j],[ 0.21774784-0.92896234j,  0.06831739+0.29145769j]]), ('o2', 'o1') | -0.0683173918484482+0.2914576912480423j      | 0.21774784446017936-0.9289623374584851j     |
+# | 10 | 10         | 1011 | 1111 | 11010 | 22001 | 2.63486  | array([[-0.68513737+0.5007716j , 0.42706175-0.31214236j],[ 0.42706175-0.31214236j,  0.68513737-0.5007716j ]]), ('o2', 'o1') | -0.6851373654811859+0.5007715993013784j      | 0.42706175251351547-0.3121423638257475j     |
 
 # This allows us to plot our optical signal amplitudes in the context of our active unitary variation, we can also simulate how optical inputs that are changing within the state of the unitary affect the total systems. However, for the sake of easy visualisation, we can begin to explore this. Note these results are just for trivial inputs.
 
 # Note that we are trying to plot our signals amplitude, phase in time so it is a three dimensional visualisation.
+#
+# First, let's transform our complex data into amplitude and phase
 
+
+mzi2x2_simple_simulation_data["output_amplitude_array_0_abs"] = np.abs(
+    mzi2x2_simple_simulation_data.output_amplitude_array_0
+)
+mzi2x2_simple_simulation_data["output_amplitude_array_0_phase_rad"] = np.angle(
+    mzi2x2_simple_simulation_data.output_amplitude_array_0
+)
+mzi2x2_simple_simulation_data["output_amplitude_array_0_phase_deg"] = np.angle(
+    mzi2x2_simple_simulation_data.output_amplitude_array_0, deg=True
+)
+mzi2x2_simple_simulation_data["output_amplitude_array_1_abs"] = np.abs(
+    mzi2x2_simple_simulation_data.output_amplitude_array_1
+)
+mzi2x2_simple_simulation_data["output_amplitude_array_1_phase_rad"] = np.angle(
+    mzi2x2_simple_simulation_data.output_amplitude_array_1
+)
+mzi2x2_simple_simulation_data["output_amplitude_array_1_phase_deg"] = np.angle(
+    mzi2x2_simple_simulation_data.output_amplitude_array_1, deg=True
+)
+mzi2x2_simple_simulation_data
+
+
+# For the sake of simplicity, we can plot phase and amplitude over time. Make sure to install `jupyter_bokeh` widgets.
+
+
+def plot_amplitude_phase_multiline_bokeh():
+    from bokeh.plotting import figure, show
+    from bokeh.layouts import column
+
+    p = figure(
+        width=800,
+        height=300,
+        title="",
+        tools="",
+        toolbar_location=None,
+        match_aspect=True,
+        y_range=[0, 1],
+    )
+    p2 = figure(width=800, height=300, x_range=p.x_range)
+    p3 = figure(width=800, height=300, x_range=p.x_range)
+
+    p.line(
+        mzi2x2_simple_simulation_data.t / 1000,
+        mzi2x2_simple_simulation_data.output_amplitude_array_0_abs,
+    )
+    # color="navy", alpha=0.4, line_width=4)
+
+    p.line(
+        mzi2x2_simple_simulation_data.t / 1000,
+        mzi2x2_simple_simulation_data.output_amplitude_array_1_abs,
+    )
+    # color="navy", alpha=0.4, line_width=4)
+
+    p2.line(
+        mzi2x2_simple_simulation_data.t / 1000,
+        mzi2x2_simple_simulation_data.output_amplitude_array_0_phase_deg,
+    )
+    # color="navy", alpha=0.4, line_width=4)
+
+    p2.line(
+        mzi2x2_simple_simulation_data.t / 1000,
+        mzi2x2_simple_simulation_data.output_amplitude_array_1_phase_deg,
+    )
+
+    p3.line(
+        mzi2x2_simple_simulation_data.t / 1000,
+        mzi2x2_simple_simulation_data.phase,
+    )
+    # color="navy", alpha=0.4, line_width=4)
+
+    # color="navy", alpha=0.4, line_width=4)
+
+    # show(p)
+    # layout = gridplot([[p], [p2]])
+    return show(column(p, p2, p3))
+
+
+plot_amplitude_phase_multiline_bokeh()
 
 # ### Active MZI 2x2 Component Lattice
 

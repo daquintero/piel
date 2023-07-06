@@ -5,8 +5,8 @@ These set of functions aim to provide functionality to automate interacting with
 import os
 import pathlib
 import json
-from ..parametric import multi_parameter_sweep
-from ..file_system import (
+from piel.parametric import multi_parameter_sweep
+from piel.file_system import (
     copy_source_folder,
     permit_script_execution,
     read_json,

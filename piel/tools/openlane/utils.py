@@ -1,6 +1,6 @@
 import pathlib
-from ..config import piel_path_types
-from ..file_system import return_path
+from piel.config import piel_path_types
+from piel.file_system import return_path
 
 
 def find_design_run(
