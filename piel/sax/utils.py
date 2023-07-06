@@ -49,7 +49,7 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
 
 def sax_to_s_parameters_standard_matrix(
     sax_input: sax.SType,
-    input_ports_order: tuple | None,
+    input_ports_order: tuple | None = None,
 ) -> tuple:
     """
     A ``sax`` S-parameter SDict is provided as a dictionary of tuples with (port0, port1) as the key. This
@@ -137,22 +137,47 @@ def sax_to_s_parameters_standard_matrix(
 
     Args:
         sax_input (sax.SType): The sax S-parameter dictionary.
+        input_ports_order (tuple): The ports order tuple containing the names and order of the input ports.
 
     Returns:
         tuple: The S-parameter matrix and the input ports index tuple in the standard S-parameter notation.
     """
     dense_s_parameter_matrix, dense_s_parameter_index = sax.sdense(sax_input)
+    # print(dense_s_parameter_index)
+    all_ports_list = dense_s_parameter_index.keys()
     # Now we get the indexes of the input ports that we care about to restructure the dense matrix with the columns
     # we care about.
-
-    (
-        input_ports_index_tuple_order,
-        input_matched_ports_name_tuple_order,
-    ) = get_matched_ports_tuple_index(ports_index=dense_s_parameter_index, prefix="in")
-    (
-        output_ports_index_tuple_order,
-        output_matched_ports_name_tuple_order,
-    ) = get_matched_ports_tuple_index(ports_index=dense_s_parameter_index, prefix="out")
+    if input_ports_order is not None:
+        output_ports_order = tuple(set(all_ports_list) - set(input_ports_order))
+        (
+            input_ports_index_tuple_order,
+            input_matched_ports_name_tuple_order,
+        ) = get_matched_ports_tuple_index(
+            ports_index=dense_s_parameter_index,
+            selected_ports_tuple=input_ports_order,
+            sorting_algorithm="selected_ports",
+        )
+        (
+            output_ports_index_tuple_order,
+            output_matched_ports_name_tuple_order,
+        ) = get_matched_ports_tuple_index(
+            ports_index=dense_s_parameter_index,
+            selected_ports_tuple=output_ports_order,
+            sorting_algorithm="selected_ports",
+        )
+    else:
+        (
+            input_ports_index_tuple_order,
+            input_matched_ports_name_tuple_order,
+        ) = get_matched_ports_tuple_index(
+            ports_index=dense_s_parameter_index, prefix="in"
+        )
+        (
+            output_ports_index_tuple_order,
+            output_matched_ports_name_tuple_order,
+        ) = get_matched_ports_tuple_index(
+            ports_index=dense_s_parameter_index, prefix="out"
+        )
 
     # We now select the SDense columns that we care about.
     s_parameters_standard_matrix = dense_s_parameter_matrix[
@@ -163,7 +188,7 @@ def sax_to_s_parameters_standard_matrix(
         :, [input_ports_index_tuple_order][0]
     ]
     # TODO verify matrix transpose for unitary match.
-    return s_parameters_standard_matrix.T, input_ports_index_tuple_order
+    return s_parameters_standard_matrix.T, input_matched_ports_name_tuple_order
 
 
 snet = sax_to_s_parameters_standard_matrix

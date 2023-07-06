@@ -47,7 +47,7 @@ mixed_switch_circuit = gf.components.component_lattice_generic(
 # mixed_switch_circuit.show()
 mixed_switch_circuit.plot_widget()
 
-# ![img](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
+# ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
 mixed_switch_circuit_netlist = mixed_switch_circuit.get_netlist(
     exclude_port_types="electrical"
@@ -171,6 +171,10 @@ example_simple_simulation_data
 # |  9 |          9 | 1001  |  11   | 1100  | 20001 |  1.21609 |
 # | 10 |         10 | 1011  | 1111  | 11010 | 22001 |  2.63486 |
 
+# This looks like this in GTKWave:
+
+# ![example_simple_design_outputs](../_static/img/examples/02_cocotb_simulation/example_simple_design_outputs.PNG)
+
 # ## Connecting into Active Unitary Calculations
 
 # ### Simple Active 2x2 MZI Phase Shifter
@@ -178,6 +182,8 @@ example_simple_simulation_data
 # In order to determine the variation of the unitary dependent on an active phase, we need to first define our circuit model and which phase shifter we would be modulating. We will compose an active MZI2x2 switch based on the decomposition provided by the extracted `sax` netlist. First we determine what are our circuit missing models.
 
 sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
+
+# ``['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_undercut']```
 
 # We have some basic models in `piel` we can use to compose our circuit
 
@@ -195,11 +201,29 @@ our_custom_library
 mzi2x2_model, mzi2x2_model_info = sax.circuit(
     netlist=mzi2x2_2x2_phase_shifter_netlist, models=our_custom_library
 )
-mzi2x2_model()
+piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
+
+# ```
+# (array([[-0.11042854-0.27825136j, -0.3519612 -0.88685119j],
+#         [-0.3519612 -0.88685119j,  0.11042854+0.27825136j]]),
+#  ('o2', 'o1'))
+# ```
 
 # Because we want to model the phase change applied from our heated waveguide, which we know previously corresponds to the `sxb` instance, we can recalculate our s-parameter matrix according to our applied phase:
 
-mzi2x2_model(sxt={"active_phase_rad": np.pi})
+piel.sax_to_s_parameters_standard_matrix(
+    mzi2x2_model(sxt={"active_phase_rad": np.pi}),
+    input_ports_order=(
+        "o2",
+        "o1",
+    ),
+)
+
+# ```
+# (array([[-0.88685119+0.3519612j ,  0.27825136-0.11042854j],
+#         [ 0.27825136-0.11042854j,  0.88685119-0.3519612j ]]),
+#  ('o2', 'o1'))
+# ```
 
 # We can clearly see our unitary is changing according to the `active_phase_rad` that we have applied to our circuit.
 
@@ -209,7 +233,13 @@ mzi2x2_model(sxt={"active_phase_rad": np.pi})
 
 mzi2x2_active_unitary_array = list()
 for phase_i in example_simple_simulation_data.phase:
-    mzi2x2_active_unitary_i = mzi2x2_model(sxt={"active_phase_rad": phase_i})
+    mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
+        mzi2x2_model(sxt={"active_phase_rad": phase_i}),
+        input_ports_order=(
+            "o2",
+            "o1",
+        ),
+    )
     mzi2x2_active_unitary_array.append(mzi2x2_active_unitary_i)
 
 # We can copy this to a new dataframe and append the data in accordingly:
@@ -219,6 +249,72 @@ mzi2x2_simple_simulation_data["unitary"] = mzi2x2_active_unitary_array
 mzi2x2_simple_simulation_data
 
 # Now we have a direct mapping between our digital state, time, and unitary changes in our `mzi` shifted circuit.
+
+# #### Visualising Photonic and Electronic Data
+
+# ##### Static
+
+# Now we have computed how our photonic circuit changes based on an electronic input. Let us assume we are constantly inputting a power of 1dB on the `o2` top input port of the MZI, and we can measure the optical amplitude on the output.
+
+optical_port_input = np.array([1, 0])
+optical_port_input
+
+# Let's run an example:
+
+mzi2x2_simple_simulation_data.unitary.iloc[0]
+
+example_optical_power_output = np.dot(
+    mzi2x2_simple_simulation_data.unitary.iloc[0][0], optical_port_input
+)
+example_optical_power_output
+
+# Now we can calculate this in our steady state in time:
+
+output_amplitude_array_0 = np.array([])
+output_amplitude_array_1 = np.array([])
+for unitary_i in mzi2x2_simple_simulation_data.unitary:
+    output_amplitude_i = np.dot(unitary_i[0], optical_port_input)
+    output_amplitude_array_0 = np.append(
+        output_amplitude_array_0, output_amplitude_i[0]
+    )
+    output_amplitude_array_1 = np.append(
+        output_amplitude_array_1, output_amplitude_i[1]
+    )
+output_amplitude_array_0
+
+# ```
+# array([-0.16426986+0.4086031j , -0.29089065+0.49165187j,
+#        -0.04476771+0.24661686j, -0.01183396+0.1509602j ,
+#        -0.00628735-0.05025993j, -0.03390155-0.14758559j,
+#        -0.20359414+0.44052313j, -0.09628268+0.33368601j,
+#        -0.24594593+0.46830107j, -0.06831739+0.29145769j,
+#        -0.68513737+0.5007716j ])
+# ```
+
+mzi2x2_simple_simulation_data["output_amplitude_array_0"] = output_amplitude_array_0
+mzi2x2_simple_simulation_data["output_amplitude_array_1"] = output_amplitude_array_1
+mzi2x2_simple_simulation_data
+
+# |    | Unnamed: 0 | a    | b    | x    | t    | phase   | unitary                                                                                  | optical_output_for_steady_input        |
+# |----|------------|------|------|------|------|---------|------------------------------------------------------------------------------------------|----------------------------------------|
+# |  0 | 0          | 101  | 1010 | 1111 | 2001 | 1.52011 | (array([[ 0.33489325-0.83300986j, -0.16426986+0.4086031j ],[ 0.16426986-0.4086031j ,  0.33489325-0.83300986j]]), ('o2', 'o1')) | [0.33489325-0.83300986j 0.16426986-0.4086031j ] |
+# |  1 | 1          | 1001 | 1001 | 10010| 4001 | 1.82413 | (array([[ 0.41794202-0.70638908j, -0.29089065+0.49165187j],[ 0.29089065-0.49165187j,  0.41794202-0.70638908j]]), ('o2', 'o1')) | [0.41794202-0.70638908j 0.29089065-0.49165187j] |
+# |  2 | 2          | 0    | 1011 | 1011 | 6001 | 1.11475 | (array([[ 0.17290701-0.95251202j, -0.04476771+0.24661686j],[ 0.04476771-0.24661686j,  0.17290701-0.95251202j]]), ('o2', 'o1')) | [0.17290701-0.95251202j 0.04476771-0.24661686j] |
+# |  3 | 3          | 100  | 101  | 1001 | 8001 | 0.912066| (array([[ 0.07725035-0.98544577j, -0.01183396+0.1509602j ],[ 0.01183396-0.1509602j ,  0.07725035-0.98544577j]]), ('o2', 'o1')) | [0.07725035-0.98544577j 0.01183396-0.1509602j ] |
+# |  4 | 4          | 101  | 0    | 101  | 10001| 0.506703 | (array([[-0.12396978-0.99099238j, -0.00628735-0.05025993j],[ 0.00628735+0.05025993j, -0.12396978-0.99099238j]]), ('o2', 'o1')) | [-0.12396978-0.99099238j  0.00628735+0.05025993j]|
+# |  5 | 5          | 11   | 0    | 11   | 12001| 0.304022 | (array([[-0.22129543-0.96337818j, -0.03390155-0.14758559j],[ 0.03390155+0.14758559j, -0.22129543-0.96337818j]]), ('o2', 'o1')) | [-0.22129543-0.96337818j  0.03390155+0.14758559j]|
+# |  6 | 6          | 101  | 1011 | 10000| 14001| 1.62145  | (array([[ 0.36681329-0.79368558j, -0.20359414+0.44052313j],[ 0.20359414-0.44052313j,  0.36681329-0.79368558j]]), ('o2', 'o1')) | [0.36681329-0.79368558j 0.20359414-0.44052313j] |
+# |  7 | 7          | 1000 | 101  | 1101 | 16001| 1.31743  | (array([[ 0.25997616-0.90099705j, -0.09628268+0.33368601j],[ 0.09628268-0.33368601j,  0.25997616-0.90099705j]]), ('o2', 'o1')) | [0.25997616-0.90099705j 0.09628268-0.33368601j] |
+# |  8 | 8          | 1101 | 100  | 10001| 18001| 1.72279  | (array([[ 0.39459122-0.7513338j , -0.24594593+0.46830107j],[ 0.24594593-0.46830107j,  0.39459122-0.7513338j ]]), ('o2', 'o1')) | [0.39459122-0.7513338j  0.24594593-0.46830107j] |
+# |  9 | 9          | 1001 | 11   | 1100 | 20001| 1.21609  | (array([[ 0.21774784-0.92896234j, -0.06831739+0.29145769j],[ 0.06831739-0.29145769j,  0.21774784-0.92896234j]]), ('o2', 'o1')) | [0.21774784-0.92896234j 0.06831739-0.29145769j] |
+# | 10 | 10         | 1011 | 1111 | 11010| 22001| 2.63486  | (array([[ 0.42706175-0.31214236j, -0.68513737+0.5007716j ],[ 0.68513737-0.5007716j ,  0.42706175-0.31214236j]]), ('o2', 'o1')) | [0.42706175-0.31214236j 0.68513737-0.5007716j ]  |
+#
+#
+
+# This allows us to plot our optical signal amplitudes in the context of our active unitary variation, we can also simulate how optical inputs that are changing within the state of the unitary affect the total systems. However, for the sake of easy visualisation, we can begin to explore this. Note these results are just for trivial inputs.
+
+# Note that we are trying to plot our signals amplitude, phase in time so it is a three dimensional visualisation.
+
 
 # ### Active MZI 2x2 Component Lattice
 

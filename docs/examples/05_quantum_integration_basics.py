@@ -14,7 +14,7 @@ import qutip  # NOQA : F401
 switch_circuit = gf.components.component_lattice_generic()
 switch_circuit.plot_widget()
 
-# ![img](../_static/img/examples/03_sax_basics/default_switch_circuit_plot_widget.PNG)
+# ![default_switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/default_switch_circuit_plot_widget.PNG)
 
 recursive_netlist = switch_circuit.get_netlist_recursive()
 switch_circuit_model, switch_circuit_model_info = sax.circuit(
@@ -63,7 +63,7 @@ qutip_unitary = piel.standard_s_parameters_to_ideal_qutip_unitary(
 
 qutip_unitary
 
-# ![img](../_static/img/examples/05_quantum_integration_basics/example_qutip_unitary.PNG)
+# ![example_qutip_unitary](../_static/img/examples/05_quantum_integration_basics/example_qutip_unitary.PNG)
 
 qutip_unitary.check_isunitary()
 

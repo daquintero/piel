@@ -5,7 +5,8 @@ __all__ = ["get_input_ports_index", "get_matched_ports_tuple_index"]
 
 def get_matched_ports_tuple_index(
     ports_index: dict,
-    sorting_algorithm: Literal["prefix"] = "prefix",
+    selected_ports_tuple: tuple,
+    sorting_algorithm: Literal["prefix", "selected_ports"] = "prefix",
     prefix: str = "in",
 ) -> (tuple, tuple):
     """
@@ -56,6 +57,18 @@ def get_matched_ports_tuple_index(
         matched_ports_name_tuple_order = tuple(matched_ports_list)
         matches_ports_index_tuple_order = tuple(
             [ports_index[port] for port in matched_ports_list]
+        )
+    elif sorting_algorithm == "selected_ports":
+        matched_ports_list = selected_ports_tuple
+        matched_ports_name_tuple_order = tuple(matched_ports_list)
+        matches_ports_index_tuple_order = tuple(
+            [ports_index[port] for port in matched_ports_list]
+        )
+    else:
+        raise ValueError(
+            "matches_ports_index_tuple_order "
+            + str(matches_ports_index_tuple_order)
+            + " not defined."
         )
     return matches_ports_index_tuple_order, matched_ports_name_tuple_order
 

@@ -61,3 +61,7 @@ example_simple_simulation_data
 # Now we can plot the corresponding data using the built-in interactive `bokeh` signal analyser function:
 
 piel.simple_plot_simulation_data(example_simple_simulation_data)
+
+# This looks like this:
+
+# ![example_simple_design_outputs](../_static/img/examples/02_cocotb_simulation/example_simple_design_outputs.PNG)
