@@ -339,75 +339,45 @@ mzi2x2_simple_simulation_data
 
 # We will now convert the data into a plottable form, as when VCD or timing data files are parsed, they assume only a steady point and the plotter includes the lines. However, because we need to account for this type of co-simulation formats, we need to transform the data into a plotting form.
 
-mzi2x2_simple_simulation_data_lines = piel.points_to_lines_fixed_transient(
+mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
     data=mzi2x2_simple_simulation_data,
     time_index_name="t",
     fixed_transient_time=1,
 )
-import pandas as pd
-import matplotlib.pyplot as plt
 
-data = pd.DataFrame(mzi2x2_simple_simulation_data_lines).sort_values(by="t")
-plt.plot(data.t, data.output_amplitude_array_1_abs)
-plt.plot(data.t, data.output_amplitude_array_1_phase)
+# #### Basic Plots
+#
+# Here we are plotting how the electrical phase applied by the testbench 5-bit digital data, maps onto the optical phase applied on the heated waveguide, and we can use `sax` to measure the optical amplitude and phase at both ports of the MZI2x2.
+#
+# Note, that for now, we will assume that our applied optical phase is applied onto an ideal phase shifter, where the bandwidth is infinite, and where the applied operation translates to the optical input perfectly. We will make a more realistic time-dependent model of our circuit later.
+#
+# For the sake of simplicity, we can plot phase and amplitude over time driven by a digitally-encoded applied phase.
 
+piel.visual.plot_simple_multi_row(
+    data=mzi2x2_simple_simulation_data_lines,
+    x_axis_column_name="t",
+    row_list=[
+        "phase",
+        "output_amplitude_array_0_abs",
+        "output_amplitude_array_0_phase_deg",
+    ],
+    y_axis_title_list=["e1 Phase", "o3 Amplitude", "o3 Phase"],
+)
 
-# For the sake of simplicity, we can plot phase and amplitude over time. Make sure to install `jupyter_bokeh` widgets.
+# ![simple_ideal_o3_mzi_2x2_plots](../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG)
 
+piel.visual.plot_simple_multi_row(
+    data=mzi2x2_simple_simulation_data_lines,
+    x_axis_column_name="t",
+    row_list=[
+        "phase",
+        "output_amplitude_array_1_abs",
+        "output_amplitude_array_1_phase_deg",
+    ],
+    y_axis_title_list=["e1 Phase", "o4 Amplitude", "o4 Phase"],
+)
 
-def plot_amplitude_phase_multiline_bokeh():
-    from bokeh.plotting import figure, show
-    from bokeh.layouts import column
-
-    p = figure(
-        width=800,
-        height=300,
-        title="",
-        tools="",
-        toolbar_location=None,
-        match_aspect=True,
-        y_range=[0, 1],
-    )
-    p2 = figure(width=800, height=300, x_range=p.x_range)
-    p3 = figure(width=800, height=300, x_range=p.x_range)
-
-    p.line(
-        mzi2x2_simple_simulation_data.t / 1000,
-        mzi2x2_simple_simulation_data.output_amplitude_array_0_abs,
-    )
-    # color="navy", alpha=0.4, line_width=4)
-
-    p.line(
-        mzi2x2_simple_simulation_data.t / 1000,
-        mzi2x2_simple_simulation_data.output_amplitude_array_1_abs,
-    )
-    # color="navy", alpha=0.4, line_width=4)
-
-    p2.line(
-        mzi2x2_simple_simulation_data.t / 1000,
-        mzi2x2_simple_simulation_data.output_amplitude_array_0_phase_deg,
-    )
-    # color="navy", alpha=0.4, line_width=4)
-
-    p2.line(
-        mzi2x2_simple_simulation_data.t / 1000,
-        mzi2x2_simple_simulation_data.output_amplitude_array_1_phase_deg,
-    )
-
-    p3.line(
-        mzi2x2_simple_simulation_data.t / 1000,
-        mzi2x2_simple_simulation_data.phase,
-    )
-    # color="navy", alpha=0.4, line_width=4)
-
-    # color="navy", alpha=0.4, line_width=4)
-
-    # show(p)
-    # layout = gridplot([[p], [p2]])
-    return show(column(p, p2, p3))
-
-
-plot_amplitude_phase_multiline_bokeh()
+# ![simple_ideal_o4_mzi_2x2_plots](../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG)
 
 # ### Active MZI 2x2 Component Lattice
 

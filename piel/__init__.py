@@ -5,6 +5,7 @@ import pathlib
 # Libraries
 from piel import components  # NOQA: F401
 from piel import models  # NOQA: F401
+from piel import visual  # NOQA: F401
 
 # Functions
 
@@ -14,7 +15,6 @@ from .file_system import *
 from .integration import *
 from .parametric import *
 from .tools import *
-from .visual import *
 
 
 os.environ["PIEL_PACKAGE_DIRECTORY"] = str(
