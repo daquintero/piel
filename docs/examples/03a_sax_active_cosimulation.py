@@ -337,6 +337,21 @@ mzi2x2_simple_simulation_data["output_amplitude_array_1_phase_deg"] = np.angle(
 mzi2x2_simple_simulation_data
 
 
+# We will now convert the data into a plottable form, as when VCD or timing data files are parsed, they assume only a steady point and the plotter includes the lines. However, because we need to account for this type of co-simulation formats, we need to transform the data into a plotting form.
+
+mzi2x2_simple_simulation_data_lines = piel.points_to_lines_fixed_transient(
+    data=mzi2x2_simple_simulation_data,
+    time_index_name="t",
+    fixed_transient_time=1,
+)
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.DataFrame(mzi2x2_simple_simulation_data_lines).sort_values(by="t")
+plt.plot(data.t, data.output_amplitude_array_1_abs)
+plt.plot(data.t, data.output_amplitude_array_1_phase)
+
+
 # For the sake of simplicity, we can plot phase and amplitude over time. Make sure to install `jupyter_bokeh` widgets.
 
 

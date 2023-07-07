@@ -40,6 +40,7 @@ def points_to_lines_fixed_transient(
     """
     if type(data) == pd.DataFrame:
         data = data.to_dict()
+        data = data.copy()
     else:
         data = data.copy()
 
@@ -71,10 +72,16 @@ def append_row_to_dict(
     for key in keys_list:
         # Iterates over each key
         # Gets data at key and appends into dictionary at the end
+        index_length = len(data[key])
         if type(data[key]) == list:
             data[key].append(data[key][copy_index])
         elif type(data[key]) == np.ndarray:
             data[key] = np.append(data[key], data[key][copy_index])
+        elif type(data[key]) == dict:
+            # Assumes a key,value {index: value} form that starts from 0
+            # Find length of the dictionary
+            data[key][index_length] = data[key][copy_index]
+            pass
         else:
             raise ValueError(
                 "data[key] invalid " + str(data[key]) + " for key: " + str(key)
@@ -82,5 +89,8 @@ def append_row_to_dict(
 
         if key in set_value.keys():
             # If value to set in the key set of the dictionary then update copied row latest appended
-            data[key][-1] = set_value[key]
+            if (type(data[key]) == list) or (type(data[key]) == np.ndarray):
+                data[key][-1] = set_value[key]
+            elif type(data[key]) == dict:
+                data[key][index_length] = set_value[key]
     return data
