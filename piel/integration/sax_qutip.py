@@ -14,13 +14,15 @@ def standard_s_parameters_to_ideal_qutip_unitary(
     dimensions of the matrix can be observed.
 
     I think this means we need to transpose the output of the filtered sax SDense matrix to map it to a QuTip matrix.
-    Note that the documentation and formatting of the standard `sax` mapping to a S-parameter standard notation is already in described in piel/piel/sax/utils.py.
+    Note that the documentation and formatting of the standard `sax` mapping to a S-parameter standard notation is
+    already in described in piel/piel/sax/utils.py.
 
     From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
 
     For example, a ``qutip`` representation of an s-gate gate would be:
 
     ..code-block:: python
+
         import numpy as np
         import qutip
 
@@ -32,6 +34,7 @@ def standard_s_parameters_to_ideal_qutip_unitary(
     In mathematical notation, this S-gate would be written as:
 
     ..math::
+
         S = \\begin{bmatrix}
             1 & 0 \\
             0 & i \\
@@ -42,6 +45,7 @@ def standard_s_parameters_to_ideal_qutip_unitary(
 
     Returns:
         qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
+
     """
     # TODO make a function any SAX input.
     qobj_unitary = qutip.Qobj(s_parameters_standard_matrix)
@@ -54,9 +58,11 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
     dimensions of the matrix can be observed.
 
     I think this means we need to transpose the output of the filtered sax SDense matrix to map it to a QuTip matrix.
-    Note that the documentation and formatting of the standard `sax` mapping to a S-parameter standard notation is already in described in piel/piel/sax/utils.py.
+    Note that the documentation and formatting of the standard `sax` mapping to a S-parameter standard notation is
+    already in described in piel/piel/sax/utils.py.
 
-    From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly. https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
+    From this stage we can implement a ``QObj`` matrix accordingly and perform simulations accordingly.
+    https://qutip.org/docs/latest/guide/qip/qip-basics.html#unitaries
 
     For example, a ``qutip`` representation of an s-gate gate would be:
 
@@ -82,7 +88,7 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
         sax_input (sax.SType): A dictionary of S-parameters in the form of a SDict from `sax`.
 
     Returns:
-
+        qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
     """
     # TODO make a function any SAX input.
     (

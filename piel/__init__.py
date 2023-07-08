@@ -6,6 +6,7 @@ import pathlib
 from piel import components  # NOQA: F401
 from piel import models  # NOQA: F401
 from piel import visual  # NOQA: F401
+from piel import tools  # NOQA: F401
 
 # Functions
 
@@ -23,4 +24,4 @@ os.environ["PIEL_PACKAGE_DIRECTORY"] = str(
 
 __author__ = """Dario Quintero"""
 __email__ = "darioaquintero@gmail.com"
-__version__ = "0.0.38"
+__version__ = "0.0.39"

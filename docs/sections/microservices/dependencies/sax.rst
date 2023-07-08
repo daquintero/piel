@@ -44,4 +44,4 @@ API
 ------
 
 .. toctree::
-    ../../../autoapi/piel/sax/index.rst
+    ../../../autoapi/piel/tools/sax/index.rst

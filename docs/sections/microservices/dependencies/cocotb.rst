@@ -20,4 +20,4 @@ can be integrated accordingly are:
 
 .. toctree::
     cocotb_useful_commands
-    ../../../autoapi/piel/cocotb/index.rst
+    ../../../autoapi/piel/tools/cocotb/index.rst
