@@ -17,7 +17,6 @@ Functions
    piel.tools.openlane.parse.utils.create_file_lines_dataframe
    piel.tools.openlane.parse.utils.get_file_line_by_keyword
    piel.tools.openlane.parse.utils.read_file_lines
-   piel.tools.openlane.parse.utils.read_file
 
 
 
@@ -69,14 +68,3 @@ Functions
 
    :returns: list containing the file lines
    :rtype: file_lines_raw (list)
-
-
-.. py:function:: read_file(file_path: str | pathlib.Path)
-
-   Read the file from the given path
-
-   :param file_path: Path to the file
-   :type file_path: str | pathlib.Path
-
-   :returns: the opened file
-   :rtype: file

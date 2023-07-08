@@ -7,7 +7,6 @@ __all__ = [
     "create_file_lines_dataframe",
     "get_file_line_by_keyword",
     "read_file_lines",
-    "read_file_lines",
 ]
 
 

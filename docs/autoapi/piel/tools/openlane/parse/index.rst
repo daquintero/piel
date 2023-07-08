@@ -31,20 +31,13 @@ Functions
 
 .. autoapisummary::
 
-   piel.tools.openlane.parse.return_path
-   piel.tools.openlane.parse.get_files_recursively_in_directory
-   piel.tools.openlane.parse.filter_timing_sta_files
-   piel.tools.openlane.parse.filter_power_sta_files
    piel.tools.openlane.parse.get_all_timing_sta_files
    piel.tools.openlane.parse.get_all_power_sta_files
-   piel.tools.openlane.parse.return_path
-   piel.tools.openlane.parse.contains_in_lines
-   piel.tools.openlane.parse.read_file_lines
-   piel.tools.openlane.parse.get_file_line_by_keyword
-   piel.tools.openlane.parse.create_file_lines_dataframe
+   piel.tools.openlane.parse.filter_timing_sta_files
+   piel.tools.openlane.parse.filter_power_sta_files
    piel.tools.openlane.parse.calculate_max_frame_amount
-   piel.tools.openlane.parse.calculate_propagation_delay_from_timing_data
    piel.tools.openlane.parse.calculate_propagation_delay_from_file
+   piel.tools.openlane.parse.calculate_propagation_delay_from_timing_data
    piel.tools.openlane.parse.configure_timing_data_rows
    piel.tools.openlane.parse.configure_frame_id
    piel.tools.openlane.parse.filter_timing_data_by_net_name_and_type
@@ -53,62 +46,11 @@ Functions
    piel.tools.openlane.parse.get_frame_timing_data
    piel.tools.openlane.parse.get_all_timing_data_from_file
    piel.tools.openlane.parse.read_sta_rpt_fwf_file
-   piel.tools.openlane.parse.check_path_exists
-   piel.tools.openlane.parse.return_path
    piel.tools.openlane.parse.contains_in_lines
    piel.tools.openlane.parse.create_file_lines_dataframe
    piel.tools.openlane.parse.get_file_line_by_keyword
    piel.tools.openlane.parse.read_file_lines
-   piel.tools.openlane.parse.read_file
 
-
-
-.. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
-
-   Returns a pathlib.Path to be able to perform operations accordingly internally.
-
-   This allows us to maintain compatibility between POSIX and Windows systems.
-
-   :param input_path: Input path.
-   :type input_path: str
-
-   :returns: Pathlib path.
-   :rtype: pathlib.Path
-
-
-.. py:function:: get_files_recursively_in_directory(path: piel.config.piel_path_types, extension: str = '*')
-
-   Returns a list of files in a directory.
-
-   :param path: Input path.
-   :type path: piel_path_types
-   :param extension: File extension.
-   :type extension: str
-
-   :returns: List of files.
-   :rtype: file_list(list)
-
-
-.. py:function:: filter_timing_sta_files(file_list)
-
-   Filter the timing sta files from the list of files
-
-   :param file_list: List containing the file paths
-   :type file_list: list
-
-   :returns: List containing the timing sta files
-   :rtype: timing_sta_files (list)
-
-
-.. py:function:: filter_power_sta_files(file_list)
-
-   Filter the power sta files from the list of files
-
-   :param file_list: List containing the file paths
-   :type file_list: list
-
-   :returns: List containing the power sta files
-   :rtype: power_sta_files (list)
 
 
 .. py:function:: get_all_timing_sta_files(run_directory)
@@ -133,67 +75,26 @@ Functions
    :rtype: power_sta_files_list (list)
 
 
-.. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
+.. py:function:: filter_timing_sta_files(file_list)
 
-   Returns a pathlib.Path to be able to perform operations accordingly internally.
+   Filter the timing sta files from the list of files
 
-   This allows us to maintain compatibility between POSIX and Windows systems.
+   :param file_list: List containing the file paths
+   :type file_list: list
 
-   :param input_path: Input path.
-   :type input_path: str
-
-   :returns: Pathlib path.
-   :rtype: pathlib.Path
+   :returns: List containing the timing sta files
+   :rtype: timing_sta_files (list)
 
 
-.. py:function:: contains_in_lines(file_lines_data: pandas.DataFrame, keyword: str)
+.. py:function:: filter_power_sta_files(file_list)
 
-   Check if the keyword is contained in the file lines
+   Filter the power sta files from the list of files
 
-   :param file_lines_data: Dataframe containing the file lines
-   :type file_lines_data: pd.DataFrame
-   :param keyword: Keyword to search for
-   :type keyword: str
+   :param file_list: List containing the file paths
+   :type file_list: list
 
-   :returns: Dataframe containing the file lines
-   :rtype: file_lines_data (pd.DataFrame)
-
-
-.. py:function:: read_file_lines(file_path: str | pathlib.Path)
-
-   Extract lines from the file
-
-   :param file_path: Path to the file
-   :type file_path: str | pathlib.Path
-
-   :returns: list containing the file lines
-   :rtype: file_lines_raw (list)
-
-
-.. py:function:: get_file_line_by_keyword(file_lines_data: pandas.DataFrame, keyword: str, regex: str)
-
-   Extract the data from the file lines using the given keyword and regex
-
-   :param file_lines_data: Dataframe containing the file lines
-   :type file_lines_data: pd.DataFrame
-   :param keyword: Keyword to search for
-   :type keyword: str
-   :param regex: Regex to extract the data
-   :type regex: str
-
-   :returns: Dataframe containing the extracted values
-   :rtype: extracted_values (pd.DataFrame)
-
-
-.. py:function:: create_file_lines_dataframe(file_lines_raw)
-
-   Create a DataFrame from the raw lines of a file
-
-   :param file_lines_raw: list containing the file lines
-   :type file_lines_raw: list
-
-   :returns: Dataframe containing the file lines
-   :rtype: file_lines_data (pd.DataFrame)
+   :returns: List containing the power sta files
+   :rtype: power_sta_files (list)
 
 
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)
@@ -205,6 +106,17 @@ Functions
 
    :returns: Maximum number of frames in the file
    :rtype: maximum_frame_amount (int)
+
+
+.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
+
+   Calculate the propagation delay for each frame in the file
+
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
+
+   :returns: Dictionary containing the propagation delay
+   :rtype: propagation_delay (dict)
 
 
 .. py:function:: calculate_propagation_delay_from_timing_data(net_name_in: str, net_name_out: str, timing_data: pandas.DataFrame)
@@ -220,17 +132,6 @@ Functions
 
    :returns: Dataframe containing the propagation delay
    :rtype: propagation_delay_dataframe (pd.DataFrame)
-
-
-.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
-
-   Calculate the propagation delay for each frame in the file
-
-   :param file_path: Path to the file
-   :type file_path: str | pathlib.Path
-
-   :returns: Dictionary containing the propagation delay
-   :rtype: propagation_delay (dict)
 
 
 .. py:function:: configure_timing_data_rows(file_lines_data: pandas.DataFrame)
@@ -336,30 +237,6 @@ Functions
    :rtype: file_data (pd.DataFrame)
 
 
-.. py:function:: check_path_exists(path: piel.config.piel_path_types, raise_errors: bool = False) -> bool
-
-   Checks if a directory exists.
-
-   :param path: Input path.
-   :type path: piel_path_types
-
-   :returns: True if directory exists.
-   :rtype: directory_exists(bool)
-
-
-.. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
-
-   Returns a pathlib.Path to be able to perform operations accordingly internally.
-
-   This allows us to maintain compatibility between POSIX and Windows systems.
-
-   :param input_path: Input path.
-   :type input_path: str
-
-   :returns: Pathlib path.
-   :rtype: pathlib.Path
-
-
 .. py:function:: contains_in_lines(file_lines_data: pandas.DataFrame, keyword: str)
 
    Check if the keyword is contained in the file lines
@@ -408,14 +285,3 @@ Functions
 
    :returns: list containing the file lines
    :rtype: file_lines_raw (list)
-
-
-.. py:function:: read_file(file_path: str | pathlib.Path)
-
-   Read the file from the given path
-
-   :param file_path: Path to the file
-   :type file_path: str | pathlib.Path
-
-   :returns: the opened file
-   :rtype: file
