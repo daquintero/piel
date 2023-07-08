@@ -10,6 +10,7 @@ with open("README.md") as readme_file:
 requirements = [
     "bokeh",
     "jupyter_bokeh",
+    "jupytext",
     "Click>=7.0",
     "cocotb",
     "gdsfactory",

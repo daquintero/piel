@@ -1,7 +1,7 @@
 import qutip  # NOQA : F401
 import sax
 from ..config import nso
-from ..sax.utils import sax_to_s_parameters_standard_matrix
+from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
 
 __all__ = ["sax_to_ideal_qutip_unitary", "standard_s_parameters_to_ideal_qutip_unitary"]
 

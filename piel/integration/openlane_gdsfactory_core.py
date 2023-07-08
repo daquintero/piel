@@ -8,8 +8,8 @@ It is worth noting that GDSFactory has already the following PDKs installed:
 import gdsfactory as gf
 from ..config import piel_path_types
 from ..file_system import check_path_exists
-from ..openlane.migrate import get_design_from_openlane_migration
-from ..openlane.utils import find_design_run
+from piel.tools.openlane.migrate import get_design_from_openlane_migration
+from piel.tools.openlane import find_design_run
 
 
 def create_gdsfactory_component_from_openlane(
