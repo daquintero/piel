@@ -379,6 +379,11 @@ piel.visual.plot_simple_multi_row(
 
 # ![simple_ideal_o4_mzi_2x2_plots](../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG)
 
+# ### Non-Ideal Electronic Models
+
+# One thing we might want to do is to consider how the total electronic signals vary according to the electrical load that implements our phase shifter operation. In this case, it is a resistive heater. We might want to explore how the RC and heat dissipation dyanamics of our heater affects our full optical switching performance based on our digital input.
+
+
 # ### Active MZI 2x2 Component Lattice
 
 # Now we can do the same for our larger component lattice, and we will use our composed model accordingly.

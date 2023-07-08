@@ -23,6 +23,7 @@ def plot_simple_multi_row(
         x_axis_column_name (str, optional): Column name of the x axis. Defaults to "t".
         row_list (list, optional): List of column names to plot. Defaults to None.
         y_axis_title_list (list, optional): List of y axis titles. Defaults to None.
+        x_axis_title (str, optional): Title of the x axis. Defaults to None.
 
     Returns:
         plt: Matplotlib plot.

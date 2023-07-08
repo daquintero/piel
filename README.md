@@ -18,6 +18,10 @@ Microservices to codesign photonics, electronics, quantum, and more.
 
 `piel` aims to provide an integrated workflow to co-design photonics and electronics, classically and quantum. It does not aim to replace the individual functionality of each design tool, but rather provide a glue to easily connect them all together and extract the system performance.
 
+## Examples
+
+Follow the many [examples in the documentation](https://piel.readthedocs.io/en/stable/examples.html).
+
 ## Microservices Toolset
 This package provides interconnection functions to easily co-design microelectronics through the functionality of the [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools) and photonics via [GDSFactory](https://github.com/gdsfactory/gdsfactory).
 
@@ -30,3 +34,7 @@ Some existing microservice dependency integrations are:
 
 ## Environment Requirements
 * Please install the Linux Docker environment provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools).
+
+
+## Contribution
+If you feel dedicated enough to become a project maintainer, or just want to do a single contributor, let's do this together!
