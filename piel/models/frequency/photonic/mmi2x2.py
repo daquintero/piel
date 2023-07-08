@@ -3,6 +3,8 @@ Translated from https://github.com/flaport/sax or https://github.com/flaport/pho
 """
 import sax
 
+__all__ = ["mmi2x2_50_50"]
+
 
 def mmi2x2_50_50():
     S = {
@@ -12,6 +14,3 @@ def mmi2x2_50_50():
         ("o2", "o4"): 0.5**0.5,
     }
     return sax.reciprocal(S)
-
-
-__all__ = ["mmi2x2_50_50"]

@@ -1,3 +1,6 @@
+__all__ = ["convert_awg_to_m2"]
+
+
 def convert_awg_to_m2(awg: int) -> float:
     """
     Converts an AWG value to meters squared.

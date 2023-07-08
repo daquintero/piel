@@ -5,6 +5,10 @@ import pathlib
 from .v1 import get_design_directory_from_root_openlane_v1
 from piel.file_system import return_path
 
+__all__ = [
+    "get_design_from_openlane_migration",
+]
+
 
 def get_design_from_openlane_migration(
     v1: bool = True,

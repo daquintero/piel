@@ -4,6 +4,8 @@ Translated from https://github.com/flaport/sax or https://github.com/flaport/pho
 import sax
 from ....config import nso
 
+__all__ = ["directional_coupler_with_length"]
+
 
 def directional_coupler_with_length(
     length=1e-5, coupling=0.5, loss=0, neff=2.34, wl0=1.55e-6, ng=3.40, phase=0

@@ -18,4 +18,4 @@ Note that PYSPICE despite being recently inactive, already has working bindings 
 
 The benefit of integrating `pyspice` is that it already has a range of built-in functionality for circuit and signal analysis, that can be easily ported into `piel` and integrated into the codesign process.
 
-Note that `pyspice` is a a OOP-based project, which means that class-based functionality is prevalent when implementing simulations and systems.
+Note that `pyspice` is a a OOP-based project, which means that class-based functionality is prevalent when implementing simulations and systems, these are fundamentally run within the integration functions.

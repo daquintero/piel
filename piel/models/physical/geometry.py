@@ -1,5 +1,7 @@
 from ...config import nso
 
+__all__ = ["calculate_cross_sectional_area_m2"]
+
 
 def calculate_cross_sectional_area_m2(
     diameter_m: float,

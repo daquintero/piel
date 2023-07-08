@@ -7,6 +7,12 @@ import pathlib
 import sys
 import types
 
+__all__ = [
+    "numerical_solver",
+    "nso",
+    "piel_path_types",
+]
+
 
 if "jax" in sys.modules:
     import jax.numpy as jnp
@@ -23,9 +29,3 @@ else:
 
 nso = numerical_solver
 piel_path_types = str | pathlib.Path | types.ModuleType
-
-__all__ = [
-    "numerical_solver",
-    "nso",
-    "piel_path_types",
-]

@@ -3,6 +3,8 @@ Translated from https://github.com/flaport/sax or https://github.com/flaport/pho
 """
 from ....config import nso
 
+__all__ = ["grating_coupler"]
+
 
 def grating_coupler(R=0.0, R_in=0.0, Tmax=1.0, bandwidth=0.06e-6, wl0=1.55e-6):
     # Constants

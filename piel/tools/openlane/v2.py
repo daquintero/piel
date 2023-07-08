@@ -3,6 +3,8 @@ from piel.config import piel_path_types
 from piel.file_system import return_path, read_json
 from piel.defaults import test_spm_open_lane_configuration
 
+__all__ = ["run_openlane_flow"]
+
 
 def run_openlane_flow(
     configuration: dict | None = test_spm_open_lane_configuration,
@@ -32,6 +34,3 @@ def run_openlane_flow(
     )
 
     flow.start()
-
-
-__all__ = ["run_openlane_flow"]
