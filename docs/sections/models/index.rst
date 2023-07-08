@@ -9,6 +9,7 @@ Models
 
     domains
     time_domain
+    spice_integration
 
 .. toctree::
     ../../autoapi/piel/models/index.rst

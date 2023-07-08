@@ -3,6 +3,8 @@ Translated from https://github.com/flaport/sax or https://github.com/flaport/pho
 """
 import sax
 
+__all__ = ["mmi1x2_50_50"]
+
 
 def mmi1x2_50_50():
     S = {

@@ -73,8 +73,6 @@ Functions
    piel.simple_plot_simulation_data
    piel.get_input_ports_index
    piel.get_matched_ports_tuple_index
-   piel.get_design_directory_from_root_openlane_v1
-   piel.return_path
    piel.get_design_from_openlane_migration
    piel.find_design_run
    piel.check_config_json_exists_openlane_v1
@@ -83,21 +81,17 @@ Functions
    piel.configure_parametric_designs_openlane_v1
    piel.configure_flow_script_openlane_v1
    piel.create_parametric_designs_openlane_v1
+   piel.get_design_directory_from_root_openlane_v1
    piel.get_latest_version_root_openlane_v1
    piel.read_configuration_openlane_v1
    piel.write_configuration_openlane_v1
-   piel.get_files_recursively_in_directory
-   piel.filter_timing_sta_files
-   piel.filter_power_sta_files
    piel.get_all_timing_sta_files
    piel.get_all_power_sta_files
-   piel.contains_in_lines
-   piel.read_file_lines
-   piel.get_file_line_by_keyword
-   piel.create_file_lines_dataframe
+   piel.filter_timing_sta_files
+   piel.filter_power_sta_files
    piel.calculate_max_frame_amount
-   piel.calculate_propagation_delay_from_timing_data
    piel.calculate_propagation_delay_from_file
+   piel.calculate_propagation_delay_from_timing_data
    piel.configure_timing_data_rows
    piel.configure_frame_id
    piel.filter_timing_data_by_net_name_and_type
@@ -106,8 +100,10 @@ Functions
    piel.get_frame_timing_data
    piel.get_all_timing_data_from_file
    piel.read_sta_rpt_fwf_file
-   piel.check_path_exists
-   piel.read_file
+   piel.contains_in_lines
+   piel.create_file_lines_dataframe
+   piel.get_file_line_by_keyword
+   piel.read_file_lines
    piel.run_openlane_flow
    piel.get_sdense_ports_index
    piel.sax_to_s_parameters_standard_matrix
@@ -357,8 +353,7 @@ Attributes
        import numpy as np
        import qutip
        # S-Gate
-       s_gate_matrix = np.array([[1.,   0],
-                                [0., 1.j]])
+       s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
    In mathematical notation, this S-gate would be written as:
@@ -396,8 +391,7 @@ Attributes
        import qutip
 
        # S-Gate
-       s_gate_matrix = np.array([[1.,   0],
-                                [0., 1.j]])
+       s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
    In mathematical notation, this S-gate would be written as:
@@ -628,32 +622,6 @@ Attributes
    :rtype: matches_ports_index_tuple_order(tuple)
 
 
-.. py:function:: get_design_directory_from_root_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> pathlib.Path
-
-   Gets the design directory from the root directory.
-
-   :param design_name: Name of the design.
-   :type design_name: str
-   :param root_directory: Design directory.
-   :type root_directory: str | pathlib.Path
-
-   :returns: Design directory.
-   :rtype: design_directory(pathlib.Path)
-
-
-.. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
-
-   Returns a pathlib.Path to be able to perform operations accordingly internally.
-
-   This allows us to maintain compatibility between POSIX and Windows systems.
-
-   :param input_path: Input path.
-   :type input_path: str
-
-   :returns: Pathlib path.
-   :rtype: pathlib.Path
-
-
 .. py:function:: get_design_from_openlane_migration(v1: bool = True, design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, root_directory_v1: str | pathlib.Path | None = None) -> (str, pathlib.Path)
 
    This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.
@@ -666,7 +634,7 @@ Attributes
    :type design_name_v1: str
    :param design_directory: Design directory PATH. Optional path for v2-based designs.
    :type design_directory: str
-   :param root_directory_v1: Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"
+   :param root_directory_v1: Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"`
    :type root_directory_v1: str
 
    :returns: None
@@ -764,6 +732,19 @@ Attributes
    :returns: None
 
 
+.. py:function:: get_design_directory_from_root_openlane_v1(design_name: str, root_directory: str | pathlib.Path | None = None) -> pathlib.Path
+
+   Gets the design directory from the root directory.
+
+   :param design_name: Name of the design.
+   :type design_name: str
+   :param root_directory: Design directory.
+   :type root_directory: str | pathlib.Path
+
+   :returns: Design directory.
+   :rtype: design_directory(pathlib.Path)
+
+
 .. py:function:: get_latest_version_root_openlane_v1() -> pathlib.Path
 
    Gets the latest version root of OpenLane v1.
@@ -794,17 +775,26 @@ Attributes
    :returns: None
 
 
-.. py:function:: get_files_recursively_in_directory(path: piel.config.piel_path_types, extension: str = '*')
+.. py:function:: get_all_timing_sta_files(run_directory)
 
-   Returns a list of files in a directory.
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
 
-   :param path: Input path.
-   :type path: piel_path_types
-   :param extension: File extension.
-   :type extension: str
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
 
-   :returns: List of files.
-   :rtype: file_list(list)
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: timing_sta_files_list (list)
+
+
+.. py:function:: get_all_power_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: power_sta_files_list (list)
 
 
 .. py:function:: filter_timing_sta_files(file_list)
@@ -829,78 +819,6 @@ Attributes
    :rtype: power_sta_files (list)
 
 
-.. py:function:: get_all_timing_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: timing_sta_files_list (list)
-
-
-.. py:function:: get_all_power_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: power_sta_files_list (list)
-
-
-.. py:function:: contains_in_lines(file_lines_data: pandas.DataFrame, keyword: str)
-
-   Check if the keyword is contained in the file lines
-
-   :param file_lines_data: Dataframe containing the file lines
-   :type file_lines_data: pd.DataFrame
-   :param keyword: Keyword to search for
-   :type keyword: str
-
-   :returns: Dataframe containing the file lines
-   :rtype: file_lines_data (pd.DataFrame)
-
-
-.. py:function:: read_file_lines(file_path: str | pathlib.Path)
-
-   Extract lines from the file
-
-   :param file_path: Path to the file
-   :type file_path: str | pathlib.Path
-
-   :returns: list containing the file lines
-   :rtype: file_lines_raw (list)
-
-
-.. py:function:: get_file_line_by_keyword(file_lines_data: pandas.DataFrame, keyword: str, regex: str)
-
-   Extract the data from the file lines using the given keyword and regex
-
-   :param file_lines_data: Dataframe containing the file lines
-   :type file_lines_data: pd.DataFrame
-   :param keyword: Keyword to search for
-   :type keyword: str
-   :param regex: Regex to extract the data
-   :type regex: str
-
-   :returns: Dataframe containing the extracted values
-   :rtype: extracted_values (pd.DataFrame)
-
-
-.. py:function:: create_file_lines_dataframe(file_lines_raw)
-
-   Create a DataFrame from the raw lines of a file
-
-   :param file_lines_raw: list containing the file lines
-   :type file_lines_raw: list
-
-   :returns: Dataframe containing the file lines
-   :rtype: file_lines_data (pd.DataFrame)
-
-
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)
 
    Calculate the maximum frame amount based on the frame IDs in the DataFrame
@@ -910,6 +828,17 @@ Attributes
 
    :returns: Maximum number of frames in the file
    :rtype: maximum_frame_amount (int)
+
+
+.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
+
+   Calculate the propagation delay for each frame in the file
+
+   :param file_path: Path to the file
+   :type file_path: str | pathlib.Path
+
+   :returns: Dictionary containing the propagation delay
+   :rtype: propagation_delay (dict)
 
 
 .. py:function:: calculate_propagation_delay_from_timing_data(net_name_in: str, net_name_out: str, timing_data: pandas.DataFrame)
@@ -925,17 +854,6 @@ Attributes
 
    :returns: Dataframe containing the propagation delay
    :rtype: propagation_delay_dataframe (pd.DataFrame)
-
-
-.. py:function:: calculate_propagation_delay_from_file(file_path: str | pathlib.Path)
-
-   Calculate the propagation delay for each frame in the file
-
-   :param file_path: Path to the file
-   :type file_path: str | pathlib.Path
-
-   :returns: Dictionary containing the propagation delay
-   :rtype: propagation_delay (dict)
 
 
 .. py:function:: configure_timing_data_rows(file_lines_data: pandas.DataFrame)
@@ -1041,26 +959,54 @@ Attributes
    :rtype: file_data (pd.DataFrame)
 
 
-.. py:function:: check_path_exists(path: piel.config.piel_path_types, raise_errors: bool = False) -> bool
+.. py:function:: contains_in_lines(file_lines_data: pandas.DataFrame, keyword: str)
 
-   Checks if a directory exists.
+   Check if the keyword is contained in the file lines
 
-   :param path: Input path.
-   :type path: piel_path_types
+   :param file_lines_data: Dataframe containing the file lines
+   :type file_lines_data: pd.DataFrame
+   :param keyword: Keyword to search for
+   :type keyword: str
 
-   :returns: True if directory exists.
-   :rtype: directory_exists(bool)
+   :returns: Dataframe containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
 
 
-.. py:function:: read_file(file_path: str | pathlib.Path)
+.. py:function:: create_file_lines_dataframe(file_lines_raw)
 
-   Read the file from the given path
+   Create a DataFrame from the raw lines of a file
+
+   :param file_lines_raw: list containing the file lines
+   :type file_lines_raw: list
+
+   :returns: Dataframe containing the file lines
+   :rtype: file_lines_data (pd.DataFrame)
+
+
+.. py:function:: get_file_line_by_keyword(file_lines_data: pandas.DataFrame, keyword: str, regex: str)
+
+   Extract the data from the file lines using the given keyword and regex
+
+   :param file_lines_data: Dataframe containing the file lines
+   :type file_lines_data: pd.DataFrame
+   :param keyword: Keyword to search for
+   :type keyword: str
+   :param regex: Regex to extract the data
+   :type regex: str
+
+   :returns: Dataframe containing the extracted values
+   :rtype: extracted_values (pd.DataFrame)
+
+
+.. py:function:: read_file_lines(file_path: str | pathlib.Path)
+
+   Extract lines from the file
 
    :param file_path: Path to the file
    :type file_path: str | pathlib.Path
 
-   :returns: the opened file
-   :rtype: file
+   :returns: list containing the file lines
+   :rtype: file_lines_raw (list)
 
 
 .. py:function:: run_openlane_flow(configuration: dict | None = test_spm_open_lane_configuration, design_directory: piel.config.piel_path_types = '/foss/designs/spm') -> None
@@ -1220,4 +1166,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.39'
+   :value: '0.0.40'

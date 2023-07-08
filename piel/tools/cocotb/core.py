@@ -12,6 +12,13 @@ import subprocess
 from typing import Literal
 from piel.file_system import return_path, write_script, delete_path_list_in_directory
 
+__all__ = [
+    "check_cocotb_testbench_exists",
+    "configure_cocotb_simulation",
+    "delete_simulation_output_files",
+    "run_cocotb_simulation",
+]
+
 
 def check_cocotb_testbench_exists(
     design_directory: str | pathlib.Path,
@@ -167,11 +174,3 @@ def run_cocotb_simulation(
     )
     run = subprocess.run(script, capture_output=True, shell=True, check=True)
     return run
-
-
-__all__ = [
-    "check_cocotb_testbench_exists",
-    "configure_cocotb_simulation",
-    "delete_simulation_output_files",
-    "run_cocotb_simulation",
-]

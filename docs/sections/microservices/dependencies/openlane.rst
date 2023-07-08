@@ -18,4 +18,5 @@ explicitly functions can be shared. This is in the case of internal
 functionality.
 
 .. toctree::
+
     ../../../autoapi/piel/tools/openlane/index.rst

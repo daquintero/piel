@@ -2,6 +2,10 @@ import pathlib
 from piel.config import piel_path_types
 from piel.file_system import return_path
 
+__all__ = [
+    "find_design_run",
+]
+
 
 def find_design_run(
     design_directory: piel_path_types,
@@ -40,8 +44,3 @@ def find_design_run(
                 "No OpenLane design runs were found in: " + str(runs_design_directory)
             )
     return run_path
-
-
-__all__ = [
-    "find_design_run",
-]

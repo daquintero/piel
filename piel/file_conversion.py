@@ -3,6 +3,11 @@ from pyDigitalWaveTools.vcd.parser import VcdParser
 from .file_system import return_path
 from .config import piel_path_types
 
+__all__ = [
+    "read_csv_to_pandas",
+    "read_vcd_to_json",
+]
+
 
 def read_csv_to_pandas(file_path: piel_path_types):
     """

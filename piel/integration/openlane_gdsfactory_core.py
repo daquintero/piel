@@ -11,6 +11,8 @@ from ..file_system import check_path_exists
 from piel.tools.openlane.migrate import get_design_from_openlane_migration
 from piel.tools.openlane import find_design_run
 
+__all__ = ["create_gdsfactory_component_from_openlane"]
+
 
 def create_gdsfactory_component_from_openlane(
     design_name_v1: str | None = None,
@@ -46,6 +48,3 @@ def create_gdsfactory_component_from_openlane(
     check_path_exists(final_gds_run, raise_errors=True)
     component = gf.import_gds(final_gds_run, name=design_name)
     return component
-
-
-__all__ = ["create_gdsfactory_component_from_openlane"]

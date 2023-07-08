@@ -18,6 +18,7 @@ nbsphinx
 openlane
 pandoc
 pip>=19.2.3
+pyspice
 pytest
 qutip
 sax

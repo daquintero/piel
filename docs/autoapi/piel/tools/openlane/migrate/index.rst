@@ -34,7 +34,7 @@ Functions
    :type design_name_v1: str
    :param design_directory: Design directory PATH. Optional path for v2-based designs.
    :type design_directory: str
-   :param root_directory_v1: Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"
+   :param root_directory_v1: Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"`
    :type root_directory_v1: str
 
    :returns: None

@@ -2,6 +2,13 @@ import pandas as pd
 import pathlib
 from piel.file_system import check_path_exists, return_path
 
+__all__ = [
+    "contains_in_lines",
+    "create_file_lines_dataframe",
+    "get_file_line_by_keyword",
+    "read_file_lines",
+]
+
 
 def contains_in_lines(
     file_lines_data: pd.DataFrame,

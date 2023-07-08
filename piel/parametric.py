@@ -1,5 +1,10 @@
 import itertools
 
+__all__ = [
+    "single_parameter_sweep",
+    "multi_parameter_sweep",
+]
+
 
 def single_parameter_sweep(
     base_design_configuration: dict,
@@ -78,9 +83,3 @@ def multi_parameter_sweep(
         parameter_sweep_design_dictionary_array.extend([design])
 
     return parameter_sweep_design_dictionary_array
-
-
-__all__ = [
-    "single_parameter_sweep",
-    "multi_parameter_sweep",
-]

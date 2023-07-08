@@ -6,7 +6,6 @@ import pathlib
 from piel import components  # NOQA: F401
 from piel import models  # NOQA: F401
 from piel import visual  # NOQA: F401
-from piel import tools  # NOQA: F401
 
 # Functions
 

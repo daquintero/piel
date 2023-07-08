@@ -1,5 +1,9 @@
 from .defaults import get_default_models
 
+__all__ = [
+    "compose_custom_model_library_from_defaults",
+]
+
 
 def compose_custom_model_library_from_defaults(custom_models: dict) -> dict:
     """
@@ -12,8 +16,3 @@ def compose_custom_model_library_from_defaults(custom_models: dict) -> dict:
         dict: Composed models dictionary.
     """
     return {**get_default_models(), **custom_models}
-
-
-__all__ = [
-    "compose_custom_model_library_from_defaults",
-]

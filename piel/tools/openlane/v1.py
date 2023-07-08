@@ -15,6 +15,19 @@ from piel.file_system import (
     write_script,
 )
 
+__all__ = [
+    "check_config_json_exists_openlane_v1",
+    "check_design_exists_openlane_v1",
+    "configure_and_run_design_openlane_v1",
+    "configure_parametric_designs_openlane_v1",
+    "configure_flow_script_openlane_v1",
+    "create_parametric_designs_openlane_v1",
+    "get_design_directory_from_root_openlane_v1",
+    "get_latest_version_root_openlane_v1",
+    "read_configuration_openlane_v1",
+    "write_configuration_openlane_v1",
+]
+
 
 def check_config_json_exists_openlane_v1(
     design_name: str,
@@ -314,17 +327,3 @@ def write_configuration_openlane_v1(
     """
     with open(str((design_directory / "config.json").resolve()), "w") as write_file:
         json.dump(configuration, write_file, indent=4)
-
-
-__all__ = [
-    "check_config_json_exists_openlane_v1",
-    "check_design_exists_openlane_v1",
-    "configure_and_run_design_openlane_v1",
-    "configure_parametric_designs_openlane_v1",
-    "configure_flow_script_openlane_v1",
-    "create_parametric_designs_openlane_v1",
-    "get_design_directory_from_root_openlane_v1",
-    "get_latest_version_root_openlane_v1",
-    "read_configuration_openlane_v1",
-    "write_configuration_openlane_v1",
-]

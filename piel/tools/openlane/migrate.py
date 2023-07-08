@@ -5,6 +5,10 @@ import pathlib
 from .v1 import get_design_directory_from_root_openlane_v1
 from piel.file_system import return_path
 
+__all__ = [
+    "get_design_from_openlane_migration",
+]
+
 
 def get_design_from_openlane_migration(
     v1: bool = True,
@@ -21,7 +25,7 @@ def get_design_from_openlane_migration(
         v1(bool): If True, it will migrate from v1 to v2.
         design_name_v1(str): Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
         design_directory(str): Design directory PATH. Optional path for v2-based designs.
-        root_directory_v1(str): Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"
+        root_directory_v1(str): Root directory of OpenLane v1. If set to None it will return `$OPENLANE_ROOT/"<latest>"`
 
     Returns:
         None

@@ -11,6 +11,24 @@ from typing import Literal
 from .config import piel_path_types
 
 
+__all__ = [
+    "check_path_exists",
+    "check_example_design",
+    "copy_source_folder",
+    "create_new_directory",
+    "delete_path",
+    "delete_path_list_in_directory",
+    "get_files_recursively_in_directory",
+    "permit_directory_all",
+    "permit_script_execution",
+    "setup_example_design",
+    "read_json",
+    "return_path",
+    "run_script",
+    "write_script",
+]
+
+
 def check_path_exists(
     path: piel_path_types,
     raise_errors: bool = False,
@@ -391,21 +409,3 @@ def write_script(
     file = open(str(directory_path / script_name), "w")
     file.write(script)
     file.close()
-
-
-__all__ = [
-    "check_path_exists",
-    "check_example_design",
-    "copy_source_folder",
-    "create_new_directory",
-    "delete_path",
-    "delete_path_list_in_directory",
-    "get_files_recursively_in_directory",
-    "permit_directory_all",
-    "permit_script_execution",
-    "setup_example_design",
-    "read_json",
-    "return_path",
-    "run_script",
-    "write_script",
-]

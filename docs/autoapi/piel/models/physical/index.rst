@@ -42,18 +42,6 @@ Functions
 
 
 
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   piel.models.physical.nso
-
-
-.. py:data:: nso
-
-
-
 .. py:function:: calculate_cross_sectional_area_m2(diameter_m: float) -> float
 
    Calculates the cross sectional area of a circle in meters squared.

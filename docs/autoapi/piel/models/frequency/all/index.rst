@@ -17,9 +17,12 @@ Functions
 
 
 
-.. py:function:: get_all_models() -> dict
+.. py:function:: get_all_models(custom_library: dict | None = None) -> dict
 
    Returns the default models dictionary.
+
+   :param custom_library: Custom defaults dictionary.
+   :type custom_library: dict
 
    :returns: Default models dictionary.
    :rtype: dict

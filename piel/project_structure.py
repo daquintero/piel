@@ -4,6 +4,11 @@ This file allows us to automate several aspects of creating a fully compatible p
 from .config import piel_path_types
 from .file_system import return_path, write_script, read_json, check_path_exists
 
+__all__ = [
+    "read_configuration",
+    "create_setup_py_from_config_json",
+]
+
 
 def read_configuration(design_directory: piel_path_types) -> dict:
     """
