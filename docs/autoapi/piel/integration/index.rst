@@ -68,8 +68,7 @@ Functions
        import numpy as np
        import qutip
        # S-Gate
-       s_gate_matrix = np.array([[1.,   0],
-                                [0., 1.j]])
+       s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
    In mathematical notation, this S-gate would be written as:
@@ -107,8 +106,7 @@ Functions
        import qutip
 
        # S-Gate
-       s_gate_matrix = np.array([[1.,   0],
-                                [0., 1.j]])
+       s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
    In mathematical notation, this S-gate would be written as:

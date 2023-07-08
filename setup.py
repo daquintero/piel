@@ -16,6 +16,7 @@ requirements = [
     "gdsfactory",
     "openlane",
     "pandas",
+    "pyspice",
     "sax",
     "qutip",
 ]

@@ -5,12 +5,13 @@ One particular implementation of phase mapping would be:
 
 .. list-table:: Example Basic Phase Mapping
    :header-rows: 1
+
    * - Bit
      - Phase
    * - b0
-     - :math:`\phi_0 \to 0`
+     - :math:`\\phi_0 \\to 0`
    * - b1
-     - :math:`\phi_1 \to \pi`
+     - :math:`\\phi_1 \\to \\pi`
 
 We can define the two corresponding angles that this would be.
 

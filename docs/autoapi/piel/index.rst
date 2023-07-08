@@ -357,8 +357,7 @@ Attributes
        import numpy as np
        import qutip
        # S-Gate
-       s_gate_matrix = np.array([[1.,   0],
-                                [0., 1.j]])
+       s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
    In mathematical notation, this S-gate would be written as:
@@ -396,8 +395,7 @@ Attributes
        import qutip
 
        # S-Gate
-       s_gate_matrix = np.array([[1.,   0],
-                                [0., 1.j]])
+       s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
    In mathematical notation, this S-gate would be written as:
@@ -1220,4 +1218,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.39'
+   :value: '0.0.40'

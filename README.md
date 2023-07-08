@@ -29,6 +29,7 @@ Some existing microservice dependency integrations are:
 * [cocotb](https://github.com/cocotb/cocotb) - a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python.
 * [GDSFactory](https://github.com/gdsfactory/gdsfactory) - An open source platform for end to-end photonic chip design and validation
 * [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for design exploration and optimization
+* [pyspice](https://github.com/PySpice-org/PySpice) - Simulate electronic circuit using Python and the Ngspice / Xyce simulators
 * [sax](https://github.com/flaport/sax) - S-parameter based frequency domain circuit simulations and optimizations using JAX.
 * [qutip](https://github.com/qutip/qutip) - QuTiP: Quantum Toolbox in Python
 

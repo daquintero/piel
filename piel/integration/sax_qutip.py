@@ -27,8 +27,7 @@ def standard_s_parameters_to_ideal_qutip_unitary(
         import qutip
 
         # S-Gate
-        s_gate_matrix = np.array([[1.,   0],
-                                 [0., 1.j]])
+        s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
         s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
     In mathematical notation, this S-gate would be written as:
@@ -71,8 +70,7 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
         import numpy as np
         import qutip
         # S-Gate
-        s_gate_matrix = np.array([[1.,   0],
-                                 [0., 1.j]])
+        s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
         s_gate = qutip.Qobj(mat, dims=[[2], [2]])
 
     In mathematical notation, this S-gate would be written as:

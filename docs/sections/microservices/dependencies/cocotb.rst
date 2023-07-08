@@ -19,5 +19,6 @@ can be integrated accordingly are:
 -  `GHDL <https://docs.cocotb.org/en/stable/simulator_support.html>`__
 
 .. toctree::
+
     cocotb_useful_commands
     ../../../autoapi/piel/tools/cocotb/index.rst
