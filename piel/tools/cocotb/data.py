@@ -23,7 +23,13 @@ def get_simulation_output_files_from_design(
     extension: str = "csv",
 ):
     """
-    # TODO DOCS
+    This function returns a list of all the simulation output files in the design directory.
+
+    Args:
+        design_directory (piel_path_types): The path to the design directory.
+
+    Returns:
+        output_files (list): List of all the simulation output files in the design directory.
     """
     design_directory = return_path(design_directory)
     output_files = get_files_recursively_in_directory(
@@ -32,9 +38,15 @@ def get_simulation_output_files_from_design(
     return output_files
 
 
-def read_simulation_data(file_path):
+def read_simulation_data(file_path: piel_path_types):
     """
     This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
+
+    Args:
+        file_path (piel_path_types): The path to the simulation data file.
+
+    Returns:
+        simulation_data (pd.DataFrame): The simulation data in a Pandas dataframe.
     """
     file_path = return_path(file_path)
     simulation_data = pd.read_csv(file_path)

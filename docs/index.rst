@@ -1,6 +1,6 @@
 **P**\hotonic & **I**\ntegrated **EL**\ectronic
 ===============================================
-Co-simulation system design tools interfaced with open-source design software like GDSFactory and OpenROAD.
+Microservices to codesign photonics, electronics, quantum, and more. Built upon open-source tools like ``GDSFactory``, ``OpenROAD``, ``pyspice``, ``qutip``, and more.
 
 .. toctree::
    :maxdepth: 2
