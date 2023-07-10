@@ -12,7 +12,7 @@ Microservices to codesign photonics, electronics, quantum, and more.
 ## Target functionality
 * Co-simulation and optimisation between integrated photonic and electronic chip design.
 * System interconnection modelling in multiple environments.
-* Individual and interposer design integration.
+* Chip and interposer design integration.
 * Multi-domain electronics and photonics component models.
 * Quantum models of physical circuitry
 
@@ -33,9 +33,6 @@ Some existing microservice dependency integrations are:
 * [sax](https://github.com/flaport/sax) - S-parameter based frequency domain circuit simulations and optimizations using JAX.
 * [qutip](https://github.com/qutip/qutip) - QuTiP: Quantum Toolbox in Python
 
-## Environment Requirements
-* Please install the Linux Docker environment provided by [IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools).
-
 
 ## Contribution
-If you feel dedicated enough to become a project maintainer, or just want to do a single contributor, let's do this together!
+If you feel dedicated enough to become a project maintainer, or just want to do a single contribution, let's do this together!
