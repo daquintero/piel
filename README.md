@@ -1,10 +1,10 @@
-# `piel` - Photonic and Integrated ELectronic tools
+# `piel` - Photonic, Interconnect & ELectronic
 [![PyPI Version](https://img.shields.io/pypi/v/piel.svg)](https://pypi.python.org/pypi/piel)
 [![Build Status](https://img.shields.io/travis/daquintero/piel.svg)](https://travis-ci.com/daquintero/piel)
 [![Documentation Status](https://readthedocs.org/projects/piel/badge/?version=latest)](https://piel.readthedocs.io/en/latest/?version=latest)
 [![Updates](https://pyup.io/repos/github/daquintero/piel/shield.svg)](https://pyup.io/repos/github/daquintero/piel/)
 
-Microservices to codesign photonics, electronics, quantum, and more.
+Microservices to codesign photonics, electronics, communications, quantum, and more.
 
 - Free software: MIT license
 - Documentation: [https://piel.readthedocs.io](https://piel.readthedocs.io)

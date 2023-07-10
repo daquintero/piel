@@ -1,4 +1,4 @@
-**P**\hotonic & **I**\ntegrated **EL**\ectronic
+**P**\hotonic-**I**\nterconnect-**EL**\ectronic
 ===============================================
 Microservices to codesign photonics, electronics, quantum, and more. Built upon open-source tools like ``GDSFactory``, ``OpenROAD``, ``pyspice``, ``qutip``, and more.
 

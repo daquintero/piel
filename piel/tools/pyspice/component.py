@@ -10,5 +10,6 @@ although it is easy to export the circuit as a raw SPICE directive after composi
 
 This composition tends to be implemented in a `SubCircuit` hierarchical implementation, as this allows for more modularisation of the netlisted devices. Another aspect of complexity is that `PySpice` is class-based composed, so that means that functions define class definitions and return them, or instantiate default ones.
 
-Let's assume that we can get an extracted SPICE netlist of our circuit, that includes all nodes, and component circuit definitions. This could then be simulated accordingly for the whole circuit between inputs and outputs. This would have to be constructed out of component models and a provided netlist in a similar fashion to ``SAX``.
-"""
+Let's assume that we can get an extracted SPICE netlist of our circuit, that includes all nodes, and component
+circuit definitions. This could then be simulated accordingly for the whole circuit between inputs and outputs. This
+would have to be constructed out of component models and a provided netlist in a similar fashion to ``SAX``. """
