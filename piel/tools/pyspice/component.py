@@ -13,3 +13,23 @@ This composition tends to be implemented in a `SubCircuit` hierarchical implemen
 Let's assume that we can get an extracted SPICE netlist of our circuit, that includes all nodes, and component
 circuit definitions. This could then be simulated accordingly for the whole circuit between inputs and outputs. This
 would have to be constructed out of component models and a provided netlist in a similar fashion to ``SAX``. """
+from PySpice.Spice.Netlist import Circuit
+
+
+def write_pyspice_circuit(circuit_name: str = "c"):
+    """
+    This function returns a generic PySPICE circuit.
+    TODO Docs
+    """
+    circuit = Circuit(circuit_name)
+    return circuit
+
+
+def write_pyspice_circuit_from_raw_spice(raw_spice: str, circuit_name: str = "c"):
+    """
+    This function returns a PySpice circuit composed from raw SPICE text.
+    TODO Docs
+    """
+    circuit = Circuit(circuit_name)
+    circuit.raw_spice = raw_spice
+    return circuit

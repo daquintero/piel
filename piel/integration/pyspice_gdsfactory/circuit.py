@@ -147,4 +147,20 @@ the `Netlist` module.
 `sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
 construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
 parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
-this would be done from the component instance, but does not have to be done necessarily. """
+this would be done from the component instance as that way the component model can be integrated with its geometrical
+parameters, but does not have to be done necessarily."""
+
+
+def gdsfactory_netlist_to_pyspice(
+    gdsfactory_netlist: dict,
+    return_raw_spice: bool = False,
+):
+    """
+    This function converts a GDSFactory electrical netlist into a standard PySpice configuration. It follows the same
+    principle as the `sax` circuit composition. It returns a PySpice circuit and can return it in raw_spice form if
+    necessary.
+
+    Each GDSFactory netlist has a set of instances, each with a corresponding model, and each instance with a given
+    set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
+    the instance model we provide. We know the connectivity from the instance. So this iterates across instances, and appends connectivity from it.
+    """
