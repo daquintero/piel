@@ -1,11 +1,11 @@
-from typing import Literal
+from typing import Literal, Optional
 
 __all__ = ["get_input_ports_index", "get_matched_ports_tuple_index"]
 
 
 def get_matched_ports_tuple_index(
     ports_index: dict,
-    selected_ports_tuple: tuple,
+    selected_ports_tuple: Optional[tuple] = None,
     sorting_algorithm: Literal["prefix", "selected_ports"] = "prefix",
     prefix: str = "in",
 ) -> (tuple, tuple):
@@ -36,6 +36,7 @@ def get_matched_ports_tuple_index(
 
     Args:
         ports_index (dict): The ports index dictionary.
+        selected_ports_tuple (tuple, optional): The selected ports tuple. Defaults to None.
         sorting_algorithm (Literal["prefix"], optional): The sorting algorithm to use. Defaults to "prefix".
         prefix (str, optional): The prefix to use for the sorting algorithm. Defaults to "in".
 

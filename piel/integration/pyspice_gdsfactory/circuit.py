@@ -142,13 +142,18 @@ Our example GDSFactory netlist format is in the simplified form:
 This is particularly useful when creating our components and connectivity, because what we can do is instantiate our
 devices with their corresponding values, and then create our connectivity accordingly. To do this properly from our
 GDSFactory netlist to PySpice, we can then extract the total SPICE circuit, and convert it to a VLSIR format using
-the `Netlist` module.
+the `Netlist` module. The reason why we can't use the Netlist package from Dan Fritchman directly is that we need to
+apply a set of models that translate a particular component instantiation into an electrical model. Because we are
+not yet doing layout extraction as that requires EM solvers, we need to create some sort of SPICE level assignment
+based on the provided dictionary.
 
 `sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
 construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
 parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
 this would be done from the component instance as that way the component model can be integrated with its geometrical
-parameters, but does not have to be done necessarily."""
+parameters, but does not have to be done necessarily.
+
+"""
 
 
 def gdsfactory_netlist_to_pyspice(
@@ -164,5 +169,5 @@ def gdsfactory_netlist_to_pyspice(
     set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
     the instance model we provides.
 
-    We know that the gdsfactory
+    We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own composition circuit.
     """

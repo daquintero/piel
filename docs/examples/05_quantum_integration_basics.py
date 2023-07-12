@@ -12,6 +12,7 @@ import qutip  # NOQA : F401
 # We follow the same process as the previous examples:
 
 switch_circuit = gf.components.component_lattice_generic()
+switch_circuit.show()
 switch_circuit.plot_widget()
 
 # ![default_switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/default_switch_circuit_plot_widget.PNG)
@@ -19,7 +20,7 @@ switch_circuit.plot_widget()
 recursive_netlist = switch_circuit.get_netlist_recursive()
 switch_circuit_model, switch_circuit_model_info = sax.circuit(
     netlist=recursive_netlist,
-    models=piel.models.frequency.photonic.get_default_models(),
+    models=piel.models.frequency.get_default_models(),
 )
 default_state_s_parameters = switch_circuit_model()
 
@@ -70,3 +71,13 @@ qutip_unitary.check_isunitary()
 qutip_unitary.dims
 
 qutip_unitary.eigenstates
+
+# ## Calculating the Permanent
+
+# We can also integrated the `piel` toolchain, with another set of packages for quantum photonic system design such as those provided by `XanaduAI`. We will use their `thewalrus` package to calculate the permanent of our matrix.
+
+piel.sax_circuit_permanent(default_state_s_parameters)
+
+# The way this works is straightforward:
+
+piel.unitary_permanent(s_parameters_standard_matrix)

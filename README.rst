@@ -14,10 +14,10 @@ Target functionality
 
 -  Co-simulation and optimisation between integrated photonic and
    electronic chip design.
--  System interconnection modelling in multiple environments.
+-  System interconnection modelling in multiple domains.
 -  Chip and interposer design integration.
--  Multi-domain electronics and photonics component models.
--  Quantum models of physical circuitry
+-  Component models translation library between simulation tools.
+-  Quantum models of physical circuitry.
 
 ``piel`` aims to provide an integrated workflow to co-design photonics
 and electronics, classically and quantum. It does not aim to replace the
@@ -44,6 +44,7 @@ Some existing microservice dependency integrations are:
 * `OpenLane v1 <https://github.com/The-OpenROAD-Project/OpenLane>`__ - an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for design exploration and optimization
 * `pyspice <https://github.com/PySpice-org/PySpice>`__ - Simulate electronic circuit using Python and the Ngspice / Xyce simulators
 * `sax <https://github.com/flaport/sax>`__ - S-parameter based frequency domain circuit simulations and optimizations using JAX.
+* `thewalrus <https://github.com/XanaduAI/thewalrus>`__ -A library for the calculation of hafnians, Hermite polynomials and Gaussian boson sampling.
 * `qutip <https://github.com/qutip/qutip>`__ - QuTiP: Quantum Toolbox in Python
 
 Contribution

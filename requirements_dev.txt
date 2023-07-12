@@ -30,6 +30,7 @@ sphinx_autodoc_typehints
 sphinx-gallery
 sphinx-pydantic
 sphinx_rtd_theme
+thewalrus
 tox
 twine
 watchdog

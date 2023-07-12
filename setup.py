@@ -18,7 +18,7 @@ requirements = [
     "pandas",
     "pyspice",
     "sax",
-    "qutip",
+    "thewalrus" "qutip",
 ]
 
 test_requirements = [
