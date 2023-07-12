@@ -219,7 +219,7 @@ Attributes
    :rtype: tuple
 
 
-.. py:function:: get_matched_ports_tuple_index(ports_index: dict, selected_ports_tuple: tuple, sorting_algorithm: Literal[get_matched_ports_tuple_index.prefix, selected_ports] = 'prefix', prefix: str = 'in') -> (tuple, tuple)
+.. py:function:: get_matched_ports_tuple_index(ports_index: dict, selected_ports_tuple: Optional[tuple] = None, sorting_algorithm: Literal[get_matched_ports_tuple_index.prefix, selected_ports] = 'prefix', prefix: str = 'in') -> (tuple, tuple)
 
    This function returns the input ports of a component. However, input ports may have different sets of prefixes
    and suffixes. This function implements different sorting algorithms for different ports names. The default
@@ -247,6 +247,8 @@ Attributes
 
    :param ports_index: The ports index dictionary.
    :type ports_index: dict
+   :param selected_ports_tuple: The selected ports tuple. Defaults to None.
+   :type selected_ports_tuple: tuple, optional
    :param sorting_algorithm: The sorting algorithm to use. Defaults to "prefix".
    :type sorting_algorithm: Literal["prefix"], optional
    :param prefix: The prefix to use for the sorting algorithm. Defaults to "in".

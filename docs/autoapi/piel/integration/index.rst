@@ -22,6 +22,7 @@ Submodules
    openlane_gdsfactory_core/index.rst
    sax_cocotb/index.rst
    sax_qutip/index.rst
+   sax_thewalrus/index.rst
 
 
 Package Contents
@@ -35,6 +36,9 @@ Functions
 
    piel.integration.create_gdsfactory_component_from_openlane
    piel.integration.gdsfactory_netlist_to_pyspice
+   piel.integration.sax_to_s_parameters_standard_matrix
+   piel.integration.unitary_permanent
+   piel.integration.sax_circuit_permanent
    piel.integration.sax_to_ideal_qutip_unitary
    piel.integration.standard_s_parameters_to_ideal_qutip_unitary
 
@@ -69,7 +73,132 @@ Functions
    set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
    the instance model we provides.
 
-   We know that the gdsfactory
+   We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own composition circuit.
+
+
+.. py:function:: sax_to_s_parameters_standard_matrix(sax_input: sax.SType, input_ports_order: tuple | None = None) -> tuple
+
+   A ``sax`` S-parameter SDict is provided as a dictionary of tuples with (port0, port1) as the key. This
+   determines the direction of the scattering relationship. It means that the number of terms in an S-parameter
+   matrix is the number of ports squared.
+
+   In order to generalise, this function returns both the S-parameter matrices and the indexing ports based on the
+   amount provided. In terms of computational speed, we definitely would like this function to be algorithmically
+   very fast. For now, I will write a simple python implementation and optimise in the future.
+
+   It is possible to see the `sax` SDense notation equivalence here:
+   https://flaport.github.io/sax/nbs/08_backends.html
+
+   .. code-block:: python
+
+       import jax.numpy as jnp
+       from sax.core import SDense
+
+       # Directional coupler SDense representation
+       dc_sdense: SDense = (
+           jnp.array([[0, 0, τ, κ], [0, 0, κ, τ], [τ, κ, 0, 0], [κ, τ, 0, 0]]),
+           {"in0": 0, "in1": 1, "out0": 2, "out1": 3},
+       )
+
+
+       # Directional coupler SDict representation
+       # Taken from https://flaport.github.io/sax/nbs/05_models.html
+       def coupler(*, coupling: float = 0.5) -> SDict:
+           kappa = coupling**0.5
+           tau = (1 - coupling) ** 0.5
+           sdict = reciprocal(
+               {
+                   ("in0", "out0"): tau,
+                   ("in0", "out1"): 1j * kappa,
+                   ("in1", "out0"): 1j * kappa,
+                   ("in1", "out1"): tau,
+               }
+           )
+           return sdict
+
+   If we were to relate the mapping accordingly based on the ports indexes, a S-Parameter matrix in the form of
+   :math:`S_{(output,i),(input,i)}` would be:
+
+   .. math::
+
+       S = \begin{bmatrix}
+               S_{00} & S_{10} \\
+               S_{01} & S_{11} \\
+           \end{bmatrix} =
+           \begin{bmatrix}
+           \tau & j \kappa \\
+           j \kappa & \tau \\
+           \end{bmatrix}
+
+   Note that the standard S-parameter and hence unitary representation is in the form of:
+
+   .. math::
+
+       S = \begin{bmatrix}
+               S_{00} & S_{01} \\
+               S_{10} & S_{11} \\
+           \end{bmatrix}
+
+
+   .. math::
+
+       \begin{bmatrix}
+           b_{1} \\
+           \vdots \\
+           b_{n}
+       \end{bmatrix}
+       =
+       \begin{bmatrix}
+           S_{11} & \dots & S_{1n} \\
+           \vdots & \ddots & \vdots \\
+           S_{n1} & \dots & S_{nn}
+       \end{bmatrix}
+       \begin{bmatrix}
+           a_{1} \\
+           \vdots \\
+           a_{n}
+       \end{bmatrix}
+
+   TODO check with Floris, does this mean we need to transpose the matrix?
+
+   :param sax_input: The sax S-parameter dictionary.
+   :type sax_input: sax.SType
+   :param input_ports_order: The ports order tuple containing the names and order of the input ports.
+   :type input_ports_order: tuple
+
+   :returns: The S-parameter matrix and the input ports index tuple in the standard S-parameter notation.
+   :rtype: tuple
+
+
+.. py:function:: unitary_permanent(unitary_matrix: numpy.ndarray) -> tuple
+
+   The permanent of a unitary is used to determine the state probability of combinatorial Gaussian boson samping systems.
+
+   ``thewalrus`` Ryser's algorithm permananet implementation is described here: https://the-walrus.readthedocs.io/en/latest/gallery/permanent_tutorial.html
+
+   # TODO maybe implement subroutine if computation is taking forever.
+   # TODO why two outputs? Understand this properly later.
+
+   :param unitary_permanent: The unitary matrix.
+   :type unitary_permanent: np.ndarray
+
+   :returns: The circuit permanent and the time it took to compute it.
+   :rtype: tuple
+
+
+.. py:function:: sax_circuit_permanent(sax_input: sax.SType) -> tuple
+
+   The permanent of a unitary is used to determine the state probability of combinatorial Gaussian boson samping systems.
+
+   ``thewalrus`` Ryser's algorithm permananet implementation is described here: https://the-walrus.readthedocs.io/en/latest/gallery/permanent_tutorial.html
+
+   # TODO maybe implement subroutine if computation is taking forever.
+
+   :param sax_input: The sax S-parameter dictionary.
+   :type sax_input: sax.SType
+
+   :returns: The circuit permanent and the time it took to compute it.
+   :rtype: tuple
 
 
 .. py:function:: sax_to_ideal_qutip_unitary(sax_input: sax.SType)

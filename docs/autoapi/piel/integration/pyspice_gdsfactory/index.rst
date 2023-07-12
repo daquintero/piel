@@ -37,4 +37,4 @@ Functions
    set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
    the instance model we provides.
 
-   We know that the gdsfactory
+   We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own composition circuit.

@@ -52,6 +52,8 @@ To guarantee full functionality of ``piel``, the recommended environment install
 
 This is a preliminary table, I mostly develop on Linux, you need to verify your system configuration or use the recommended Docker environment. TODO I am unsure about the OS X integrations.
 
+In the future, we will have custom installations for different types of users so they can install minimal dependencies for their use case.
+
 Docker Configuration
 --------------------
 

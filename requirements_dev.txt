@@ -27,6 +27,7 @@ sphinx
 sphinx-autoapi
 sphinx-autobuild
 sphinx_autodoc_typehints
+sphinx-book-theme
 sphinx-gallery
 sphinx-pydantic
 sphinx_rtd_theme
