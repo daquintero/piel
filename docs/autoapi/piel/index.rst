@@ -61,6 +61,7 @@ Functions
    piel.run_script
    piel.write_script
    piel.create_gdsfactory_component_from_openlane
+   piel.gdsfactory_netlist_to_pyspice
    piel.sax_to_ideal_qutip_unitary
    piel.standard_s_parameters_to_ideal_qutip_unitary
    piel.single_parameter_sweep
@@ -85,10 +86,10 @@ Functions
    piel.get_latest_version_root_openlane_v1
    piel.read_configuration_openlane_v1
    piel.write_configuration_openlane_v1
-   piel.get_all_timing_sta_files
-   piel.get_all_power_sta_files
    piel.filter_timing_sta_files
    piel.filter_power_sta_files
+   piel.get_all_timing_sta_files
+   piel.get_all_power_sta_files
    piel.calculate_max_frame_amount
    piel.calculate_propagation_delay_from_file
    piel.calculate_propagation_delay_from_timing_data
@@ -334,6 +335,19 @@ Attributes
    :rtype: component(gf.Component)
 
 
+.. py:function:: gdsfactory_netlist_to_pyspice(gdsfactory_netlist: dict, return_raw_spice: bool = False)
+
+   This function converts a GDSFactory electrical netlist into a standard PySpice configuration. It follows the same
+   principle as the `sax` circuit composition. It returns a PySpice circuit and can return it in raw_spice form if
+   necessary.
+
+   Each GDSFactory netlist has a set of instances, each with a corresponding model, and each instance with a given
+   set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
+   the instance model we provides.
+
+   We know that the gdsfactory
+
+
 .. py:function:: sax_to_ideal_qutip_unitary(sax_input: sax.SType)
 
    This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
@@ -540,12 +554,24 @@ Attributes
 
 .. py:function:: get_simulation_output_files_from_design(design_directory: piel.config.piel_path_types, extension: str = 'csv')
 
-   # TODO DOCS
+   This function returns a list of all the simulation output files in the design directory.
+
+   :param design_directory: The path to the design directory.
+   :type design_directory: piel_path_types
+
+   :returns: List of all the simulation output files in the design directory.
+   :rtype: output_files (list)
 
 
-.. py:function:: read_simulation_data(file_path)
+.. py:function:: read_simulation_data(file_path: piel.config.piel_path_types)
 
    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
+
+   :param file_path: The path to the simulation data file.
+   :type file_path: piel_path_types
+
+   :returns: The simulation data in a Pandas dataframe.
+   :rtype: simulation_data (pd.DataFrame)
 
 
 .. py:function:: simple_plot_simulation_data(simulation_data: pandas.DataFrame)
@@ -775,28 +801,6 @@ Attributes
    :returns: None
 
 
-.. py:function:: get_all_timing_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: timing_sta_files_list (list)
-
-
-.. py:function:: get_all_power_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: power_sta_files_list (list)
-
-
 .. py:function:: filter_timing_sta_files(file_list)
 
    Filter the timing sta files from the list of files
@@ -817,6 +821,28 @@ Attributes
 
    :returns: List containing the power sta files
    :rtype: power_sta_files (list)
+
+
+.. py:function:: get_all_timing_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: timing_sta_files_list (list)
+
+
+.. py:function:: get_all_power_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: power_sta_files_list (list)
 
 
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)
@@ -1166,4 +1192,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.40'
+   :value: '0.0.41'

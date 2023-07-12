@@ -4,6 +4,15 @@
 .. py:module:: piel.integration
 
 
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   pyspice_gdsfactory/index.rst
+
+
 Submodules
 ----------
 .. toctree::
@@ -25,6 +34,7 @@ Functions
 .. autoapisummary::
 
    piel.integration.create_gdsfactory_component_from_openlane
+   piel.integration.gdsfactory_netlist_to_pyspice
    piel.integration.sax_to_ideal_qutip_unitary
    piel.integration.standard_s_parameters_to_ideal_qutip_unitary
 
@@ -47,6 +57,19 @@ Functions
 
    :returns: GDSFactory component.
    :rtype: component(gf.Component)
+
+
+.. py:function:: gdsfactory_netlist_to_pyspice(gdsfactory_netlist: dict, return_raw_spice: bool = False)
+
+   This function converts a GDSFactory electrical netlist into a standard PySpice configuration. It follows the same
+   principle as the `sax` circuit composition. It returns a PySpice circuit and can return it in raw_spice form if
+   necessary.
+
+   Each GDSFactory netlist has a set of instances, each with a corresponding model, and each instance with a given
+   set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
+   the instance model we provides.
+
+   We know that the gdsfactory
 
 
 .. py:function:: sax_to_ideal_qutip_unitary(sax_input: sax.SType)

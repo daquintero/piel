@@ -162,5 +162,7 @@ def gdsfactory_netlist_to_pyspice(
 
     Each GDSFactory netlist has a set of instances, each with a corresponding model, and each instance with a given
     set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
-    the instance model we provide. We know the connectivity from the instance. So this iterates across instances, and appends connectivity from it.
+    the instance model we provides.
+
+    We know that the gdsfactory
     """
