@@ -3,36 +3,39 @@ import networkx as nx
 # import sax
 from sax.circuit import (
     create_dag,
-    find_leaves,
-    find_root,
     _ensure_recursive_netlist_dict,
     remove_unused_instances,
     _extract_instance_models,
     _validate_net,
+    _validate_dag,
+    _validate_models,
 )
 from sax.netlist import RecursiveNetlist
 
 from ...models.physical.electronic.spice import get_default_models
+from .utils import convert_tuples_to_strings
 
 __all__ = [
-    "rename_gdsfactory_connections_to_spice",
     "reshape_gdsfactory_netlist_to_spice_dictionary",
 ]
 
 
-def rename_gdsfactory_connections_to_spice(connections: dict):
+def get_matching_connections(names: list, connections: dict):
     """
-    We convert the connection connectivity of the gdsfactory netlist into names that can be integrated into a SPICE
-    netlist. It iterates on each key value pair, and replaces each comma with an underscore.
-
     # TODO docs
     """
-    spice_connections = {}
+    matching_connections = []
     for key, value in connections.items():
-        new_key = key.replace(",", "_")
-        new_value = value.replace(",", "_")
-        spice_connections[new_key] = new_value
-    return spice_connections
+        for name in names:
+            if name in key or name in value:
+                matching_connections.append((key, value))
+    return matching_connections
+
+
+def get_matching_port_nets(names, connections):
+    matching_tuples = get_matching_connections(names, connections)
+    matching_strings = convert_tuples_to_strings(matching_tuples)
+    return matching_strings
 
 
 def reshape_gdsfactory_netlist_to_spice_dictionary(
@@ -71,33 +74,58 @@ def reshape_gdsfactory_netlist_to_spice_dictionary(
             }
         }
     """
+    spice_netlist = {}
+    spice_netlist["instances"] = gdsfactory_netlist["instances"]
+    if models is None:
+        models = get_default_models()
+
     netlist = _ensure_recursive_netlist_dict(gdsfactory_netlist)
 
     # TODO: do the following two steps *after* recursive netlist parsing.
     netlist = remove_unused_instances(netlist)
     netlist, instance_models = _extract_instance_models(netlist)
-    recursive_netlist: RecursiveNetlist = _validate_net(netlist)
 
-    if models is None:
-        models = get_default_models()
+    recnet: RecursiveNetlist = _validate_net(netlist)
+    dependency_dag: nx.DiGraph = _validate_dag(
+        create_dag(recnet, models)
+    )  # directed acyclic graph
+    models = _validate_models({**(models or {}), **instance_models}, dependency_dag)
 
-    # TODO we might need to implement undirected graphs for valid SPICE circuits, hack for now. Mainly for path measurements no?
-    dependency_graph = create_dag(recursive_netlist)
-    # required_models = find_leaves(dependency_graph)
-    model_names = list(nx.topological_sort(dependency_graph))[::-1]
     new_models = {}
-    # current_models = {}
+    current_models = {}
+    model_names = list(nx.topological_sort(dependency_dag))[::-1]
     for model_name in model_names:
         if model_name in models:
             new_models[model_name] = models[model_name]
             continue
 
-        flatnet = recursive_netlist.__root__[model_name]
+        flatnet = recnet.__root__[model_name]
+        # connections, ports, new_models = _make_singlemode_or_multimode(
+        #     flatnet, modes, new_models
+        # )
+        current_models.update(new_models)
+        new_models = {}
         inst2model = {
             k: models[inst.component] for k, inst in flatnet.instances.items()
         }
-        print(inst2model)
-    print(model_names)
-    print(find_leaves(dependency_graph))
-    print(find_root(dependency_graph))
-    return dependency_graph
+
+        # Iterate over every instance and append the corresponding required SPICE connectivity
+        for instance_name_i, _ in list(spice_netlist["instances"].items()):
+            print(instance_name_i)
+            spice_netlist["instances"][instance_name_i][
+                "connections"
+            ] = get_matching_connections(
+                names=[instance_name_i], connections=gdsfactory_netlist["connections"]
+            )
+            spice_netlist["instances"][instance_name_i][
+                "nets"
+            ] = get_matching_port_nets(
+                names=[instance_name_i], connections=gdsfactory_netlist["connections"]
+            )
+            spice_netlist["instances"][instance_name_i]["spice_model"] = inst2model[
+                instance_name_i
+            ]
+    # print(model_names)
+    # print(find_leaves(dependency_dag))
+    # print(find_root(dependency_dag))
+    return dependency_dag, flatnet, spice_netlist

@@ -111,11 +111,13 @@ our_resistive_heater_netlist = our_resistive_heater().get_netlist(
 #
 #
 
-g = piel.reshape_gdsfactory_netlist_to_spice_dictionary(our_resistive_heater_netlist)  #
+g = piel.reshape_gdsfactory_netlist_to_spice_dictionary(our_resistive_heater_netlist)
 
-g.__root__.keys()
+g[2]
 
-g.degree()
+g[1].instances.keys()
+
+g[0].degree()
 
 # This will allow us to create our SPICE connectivity accordingly because it is in a suitable netlist format. Each of these components in this netlist is some form of an electrical model or component. We start off from our instance definitions. They are in this format:
 
