@@ -146,16 +146,10 @@ the `Netlist` module. The reason why we can't use the Netlist package from Dan F
 apply a set of models that translate a particular component instantiation into an electrical model. Because we are
 not yet doing layout extraction as that requires EM solvers, we need to create some sort of SPICE level assignment
 based on the provided dictionary.
-
-`sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
-construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
-parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
-this would be done from the component instance as that way the component model can be integrated with its geometrical
-parameters, but does not have to be done necessarily. This comes down to implementing a backend function to compile
-SAX compiled circuit.
 """
+from PySpice.Spice.Netlist import Circuit
 
-__all__ = ["gdsfactory_netlist_to_pyspice"]
+__all__ = ["gdsfactory_netlist_to_pyspice", "spice_netlist_to_pyspice_circuit"]
 
 
 def gdsfactory_netlist_to_pyspice(
@@ -176,3 +170,32 @@ def gdsfactory_netlist_to_pyspice(
     from the reshaped gdsfactory dictionary into our own structure.
     """
     pass
+
+
+def spice_netlist_to_pyspice_circuit(spice_netlist: dict):
+    """
+    This function converts a SPICE netlist into a PySpice circuit.
+
+    # TODO implement validators
+    """
+    circuit = Circuit(spice_netlist["name"])
+    instance_id = 0
+    for _, instance_settings_i in spice_netlist["instances"].items():
+        spice_nets = list(instance_settings_i["spice_nets"].items())
+        if len(spice_nets) < 2:
+            circuit = instance_settings_i["spice_model"](
+                circuit=circuit,
+                instance_id=instance_id,
+                input_node=spice_nets[0][1],
+                output_node="out",
+            )
+        else:
+            circuit = instance_settings_i["spice_model"](
+                circuit=circuit,
+                instance_id=instance_id,
+                input_node=spice_nets[0][1],
+                output_node=spice_nets[1][1],
+            )
+        # TODO value and multicircuit compatibility
+        instance_id += 1
+    return circuit

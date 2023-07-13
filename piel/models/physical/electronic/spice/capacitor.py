@@ -7,7 +7,7 @@ circuit netlist accordingly, and creating a mapping from the instance definition
 """
 
 
-def basic_capacitor(settings) -> str:
+def add_basic_capacitor(settings) -> str:
     """
     This function takes in the settings from a gdsfactory component, some connectivity node translated directly from
     the gdsfactory netlist.

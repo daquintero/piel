@@ -3,9 +3,16 @@ These functions map a particular model, with an instance representation that cor
 connectivity, and returns a PySpice representation of the circuit. This function will be called after parsing the
 circuit netlist accordingly, and creating a mapping from the instance definitions to the fundamental components.
 """
+from PySpice.Spice.Netlist import Circuit
+from PySpice.Unit import u_kOhm
 
 
-def basic_resistor():
+def add_basic_resistor(
+    circuit: Circuit,
+    instance_id: int,
+    input_node: str,
+    output_node: str,
+):
     """
     SPICE Resistor Structure
 
@@ -31,4 +38,5 @@ def basic_resistor():
     .. code-block::
         RHOT n1 n2 10k TEMP=500
     """
-    pass
+    circuit.R(instance_id, input_node, output_node, u_kOhm(10))
+    return circuit

@@ -1,6 +1,13 @@
+"""
+`sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
+construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
+parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
+this would be done from the component instance as that way the component model can be integrated with its geometrical
+parameters, but does not have to be done necessarily. This comes down to implementing a backend function to compile
+SAX compiled circuit.
+"""
+import copy
 import networkx as nx
-
-# import sax
 from sax.circuit import (
     create_dag,
     _ensure_recursive_netlist_dict,
@@ -16,7 +23,7 @@ from ...models.physical.electronic.spice import get_default_models
 from .utils import convert_tuples_to_strings
 
 __all__ = [
-    "reshape_gdsfactory_netlist_to_spice_dictionary",
+    "gdsfactory_netlist_to_spice_netlist",
 ]
 
 
@@ -38,7 +45,7 @@ def get_matching_port_nets(names, connections):
     return matching_strings
 
 
-def reshape_gdsfactory_netlist_to_spice_dictionary(
+def gdsfactory_netlist_to_spice_netlist(
     gdsfactory_netlist: dict,
     models=None,
 ):
@@ -64,18 +71,22 @@ def reshape_gdsfactory_netlist_to_spice_dictionary(
         2. Verify that the models have been provided. Each model describes the type of component this is, how many ports it requires and so on.
         3. Map the connections to each instance port as part of the instance dictionary.
 
-    We should get as an output a dictionary in the form:
+    We should get as an output a dictionary in the structure:
 
     .. code-block::
-
         {
             instance_1: {
-                "connections"
+                ...
+                "connections": [('straight_1,e1', 'taper_1,e2'),
+                                ('straight_1,e2', 'taper_2,e2')],
+                'spice_nets': {'e1': 'straight_1__e1___taper_1__e2',
+                        'e2': 'straight_1__e2___taper_2__e2'},
+                'spice_model': <function piel.models.physical.electronic.spice.resistor.basic_resistor()>},
             }
+            ...
         }
     """
-    spice_netlist = {}
-    spice_netlist["instances"] = gdsfactory_netlist["instances"]
+    spice_netlist = copy.copy(gdsfactory_netlist)
     if models is None:
         models = get_default_models()
 
@@ -100,9 +111,6 @@ def reshape_gdsfactory_netlist_to_spice_dictionary(
             continue
 
         flatnet = recnet.__root__[model_name]
-        # connections, ports, new_models = _make_singlemode_or_multimode(
-        #     flatnet, modes, new_models
-        # )
         current_models.update(new_models)
         new_models = {}
         inst2model = {
@@ -111,21 +119,17 @@ def reshape_gdsfactory_netlist_to_spice_dictionary(
 
         # Iterate over every instance and append the corresponding required SPICE connectivity
         for instance_name_i, _ in list(spice_netlist["instances"].items()):
-            print(instance_name_i)
             spice_netlist["instances"][instance_name_i][
                 "connections"
             ] = get_matching_connections(
                 names=[instance_name_i], connections=gdsfactory_netlist["connections"]
             )
             spice_netlist["instances"][instance_name_i][
-                "nets"
+                "spice_nets"
             ] = get_matching_port_nets(
                 names=[instance_name_i], connections=gdsfactory_netlist["connections"]
             )
             spice_netlist["instances"][instance_name_i]["spice_model"] = inst2model[
                 instance_name_i
             ]
-    # print(model_names)
-    # print(find_leaves(dependency_dag))
-    # print(find_root(dependency_dag))
-    return dependency_dag, flatnet, spice_netlist
+    return spice_netlist

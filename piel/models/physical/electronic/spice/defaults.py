@@ -1,10 +1,10 @@
 # from .capacitor import basic_capacitor
-from .resistor import basic_resistor
+from .resistor import add_basic_resistor
 
 __default_models_dictionary__ = {
-    "taper": basic_resistor,
-    "straight": basic_resistor,
-    "via_stack": basic_resistor,
+    "taper": add_basic_resistor,
+    "straight": add_basic_resistor,
+    "via_stack": add_basic_resistor,
 }
 
 
