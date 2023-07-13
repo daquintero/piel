@@ -151,8 +151,8 @@ based on the provided dictionary.
 construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
 parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
 this would be done from the component instance as that way the component model can be integrated with its geometrical
-parameters, but does not have to be done necessarily.
-
+parameters, but does not have to be done necessarily. This comes down to implementing a backend function to compile
+SAX compiled circuit.
 """
 
 

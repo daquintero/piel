@@ -3,15 +3,18 @@
 # This example demonstrates the modelling of multi-physical component interconnection and system design.
 
 from gdsfactory.components import mzi2x2_2x2_phase_shifter
+import piel
 
 # ## Start from `gdsfactory`
 
 # Let us begin from the `mzi2x2_2x2_phase_shifter` circuit we have been analysing so far in our examples, but this time, we will explore further aspects of the electrical interconnect, and try to extract or extend the simulation functionality. Note that this flattened netlist is the lowest level connectivity analysis, for very computationally complex extraction. Explore the electrical circuit connectivity using the keys below.
 
-mzi2x2_2x2_phase_shifter_netlist_flat = mzi2x2_2x2_phase_shifter().get_netlist_flat(
-    exclude_port_types="optical"
-)
-mzi2x2_2x2_phase_shifter_netlist_flat.keys()
+# + active=""
+# mzi2x2_2x2_phase_shifter_netlist_flat = mzi2x2_2x2_phase_shifter().get_netlist_flat(
+#     exclude_port_types="optical"
+# )
+# mzi2x2_2x2_phase_shifter_netlist_flat.keys()
+# -
 
 # Note that this netlist just gives us electrical ports and connectivity for this component.
 
@@ -26,7 +29,7 @@ mzi2x2_2x2_phase_shifter_netlist = mzi2x2_2x2_phase_shifter().get_netlist(
 )
 mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 
-# ```
+# ```python
 # {'component': 'straight_heater_metal_undercut',
 #  'info': {'resistance': None},
 #  'settings': {'cross_section': 'strip',
@@ -37,11 +40,13 @@ mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 # So this top heater instance `info` instance definition, it already includes a `resistance` field. However, in the default component definition, it is defined as `None`. Let us give some more details about our circuit, and this would normally be provided by the PDK information of your foundry.
 
 # +
-from gdsfactory.components.straight_heater_metal import straight_heater_metal
+from gdsfactory.components.straight_heater_metal import straight_heater_metal_simple
 import functools
 
 # Defines the resistance parameters
-our_resistive_heater = functools.partial(straight_heater_metal, ohms_per_square=2)
+our_resistive_heater = functools.partial(
+    straight_heater_metal_simple, ohms_per_square=2
+)
 
 our_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
     straight_x_top=our_resistive_heater,
@@ -56,7 +61,7 @@ our_resistive_mzi_2x2_2x2_phase_shifter_netlist = (
 )
 our_resistive_mzi_2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 
-# ```
+# ```python
 # {'component': 'straight_heater_metal_undercut',
 #  'info': {'resistance': 1000.0},
 #  'settings': {'cross_section': 'strip',
@@ -73,6 +78,7 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
     straight_x_top=our_resistive_heater,
     length_x=100,
 )
+our_short_resistive_mzi_2x2_2x2_phase_shifter.show()
 our_short_resistive_mzi_2x2_2x2_phase_shifter.plot_widget()
 
 # ![our_short_resistive_heater](../_static/img/examples/04_multi_domain_interconnect/our_short_resistive_heater.PNG)
@@ -84,6 +90,68 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 # {'resistance': 500.0}
 
 # So this is very cool, we have our device model giving us electrical data when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `PySpice` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
+
+# ## Extracting the SPICE circuit and assigning model parameters
+
+# We will exemplify how `piel` microservices enable the extraction and configuration of the SPICE circuit. This is done by implementing a SPICE netlist construction backend to the circuit composition functions in `sax`, and is composed in a way that is then integrated into `PySpice` or any SPICE-based solver through the `VLSIR` `Netlist`.
+#
+# The way this is achieved is by extracting all the `instances`, `connections`, `ports`, `models` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
+
+our_resistive_heater_netlist = our_resistive_heater().get_netlist(
+    allow_multiple=True, exclude_port_types="optical"
+)
+# our_resistive_mzi_2x2_2x2_phase_shifter_netlist = our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="optical")
+# our_resistive_heater_netlist
+
+# We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist, as currently the comma formatting is not compatible as of July 2023.
+
+spice_connection_names = piel.convert_gdsfactory_connections_to_spice_node_names(
+    connections=our_resistive_heater_netlist["connections"]
+)
+spice_connection_names
+
+# ```python
+# {'straight_1_e1': 'taper_1_e2',
+#  'straight_1_e2': 'taper_2_e2',
+#  'taper_1_e1': 'via_stack_1_e3',
+#  'taper_2_e1': 'via_stack_2_e1'}
+# ```
+
+# This will allow us to create our SPICE connectivity accordingly because it is in a suitable netlist format. Each of these components in this netlist is some form of an electrical model or component. We start off from our instance definitions. They are in this format:
+
+our_resistive_heater_netlist["instances"]["straight_1"]
+
+# ```python
+# {'component': 'straight',
+#  'info': {'length': 320.0,
+#   'width': 0.5,
+#   'cross_section': 'strip_heater_metal',
+#   'settings': {'width': 0.5,
+#    'layer': 'WG',
+#    'heater_width': 2.5,
+#    'layer_heater': 'HEATER'},
+#   'function_name': 'strip_heater_metal'},
+#  'settings': {'cross_section': 'strip_heater_metal',
+#   'heater_width': 2.5,
+#   'length': 320.0}}
+# ```
+
+# We know its connectivity from they key name. In this case, `straight_1` is connected to `taper1` and `taper2`. We know that it is a resistive element, so that means that the SPICE netlist will be in the form:
+# ```
+# R<SOMEID>
+# ```
+
+# We can extract the electrical components of our heater implementation on its own first.
+
+import sax
+
+sax.get_required_circuit_models(our_resistive_heater_netlist)
+
+a = sax.extract_circuit_elements(our_resistive_heater_netlist)
+nodes = [n for n, d in a.out_degree() if d == 0]
+nodes
+
+a.nodes
 
 # ## `PySpice` Integration
 
