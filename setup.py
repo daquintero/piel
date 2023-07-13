@@ -14,6 +14,7 @@ requirements = [
     "Click>=7.0",
     "cocotb",
     "gdsfactory",
+    "networkx",
     "openlane",
     "pandas",
     "pyspice",

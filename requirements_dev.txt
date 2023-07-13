@@ -15,6 +15,7 @@ jupyterlab~=3.0
 jupytext
 myst_parser
 nbsphinx
+networkx
 openlane
 pandoc
 pip>=19.2.3

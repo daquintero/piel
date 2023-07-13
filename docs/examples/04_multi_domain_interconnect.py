@@ -103,19 +103,19 @@ our_resistive_heater_netlist = our_resistive_heater().get_netlist(
 # our_resistive_mzi_2x2_2x2_phase_shifter_netlist = our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="optical")
 # our_resistive_heater_netlist
 
-# We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist, as currently the comma formatting is not compatible as of
+# We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist. However, to do this we need to assign what type of element each component each gdsfactory instance is. We show an algorithm that does the following in order to construct our SPICE netlist:
+#
+# 1. Extract all instances and required models from the netlist
+# 2. Verify that the models have been provided. Each model describes the type of component this is, how many ports it requires and so on.
+# 3. Map the connections to each instance port as part of the instance dictionary.
+#
+#
 
-spice_connection_names = piel.convert_gdsfactory_connections_to_spice_node_names(
-    connections=our_resistive_heater_netlist["connections"]
-)
-spice_connection_names
+g = piel.reshape_gdsfactory_netlist_to_spice_dictionary(our_resistive_heater_netlist)  #
 
-# ```python
-# {'straight_1_e1': 'taper_1_e2',
-#  'straight_1_e2': 'taper_2_e2',
-#  'taper_1_e1': 'via_stack_1_e3',
-#  'taper_2_e1': 'via_stack_2_e1'}
-# ```
+g.__root__.keys()
+
+g.degree()
 
 # This will allow us to create our SPICE connectivity accordingly because it is in a suitable netlist format. Each of these components in this netlist is some form of an electrical model or component. We start off from our instance definitions. They are in this format:
 
