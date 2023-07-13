@@ -11,5 +11,3 @@ Submodules
    :maxdepth: 1
 
    cable/index.rst
-   capacitor/index.rst
-   resistor/index.rst

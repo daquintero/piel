@@ -1,7 +1,7 @@
-:py:mod:`piel.integration.openlane_gdsfactory_core`
-===================================================
+:py:mod:`piel.integration.gdsfactory_openlane`
+==============================================
 
-.. py:module:: piel.integration.openlane_gdsfactory_core
+.. py:module:: piel.integration.gdsfactory_openlane
 
 .. autoapi-nested-parse::
 
@@ -22,7 +22,7 @@ Functions
 
 .. autoapisummary::
 
-   piel.integration.openlane_gdsfactory_core.create_gdsfactory_component_from_openlane
+   piel.integration.gdsfactory_openlane.create_gdsfactory_component_from_openlane
 
 
 

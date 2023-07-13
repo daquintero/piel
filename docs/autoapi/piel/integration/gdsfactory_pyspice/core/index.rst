@@ -1,7 +1,7 @@
-:py:mod:`piel.integration.pyspice_gdsfactory.circuit`
-=====================================================
+:py:mod:`piel.integration.gdsfactory_pyspice.core`
+==================================================
 
-.. py:module:: piel.integration.pyspice_gdsfactory.circuit
+.. py:module:: piel.integration.gdsfactory_pyspice.core
 
 .. autoapi-nested-parse::
 
@@ -12,8 +12,8 @@
    individual circuit models of the devices that we will interconnect, and then map them to a larger netlist. This means
    that it is necessary to create specific SPICE models for each particular component, say in an electrical netlist.
 
-   This functions converts a GDSFactory netlist, with a set of component models, into `PySPICE` that accounts for the instance
-   properties, which can then be connected into a VLSIR compatible `Netlist` implementation.
+   This functions convert a GDSFactory netlist, with a set of component models, into `PySPICE` that accounts for the
+   instance properties, which can then be connected into a VLSIR compatible `Netlist` implementation.
 
    Eventually we will implement RCX where we can extract the netlist with parasitics directly from the layout,
    but for now this will be the implementation. The output structure of our SPICE should be compatible with the
@@ -154,12 +154,6 @@
    not yet doing layout extraction as that requires EM solvers, we need to create some sort of SPICE level assignment
    based on the provided dictionary.
 
-   `sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
-   construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
-   parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
-   this would be done from the component instance as that way the component model can be integrated with its geometrical
-   parameters, but does not have to be done necessarily.
-
 
 
 Module Contents
@@ -171,7 +165,8 @@ Functions
 
 .. autoapisummary::
 
-   piel.integration.pyspice_gdsfactory.circuit.gdsfactory_netlist_to_pyspice
+   piel.integration.gdsfactory_pyspice.core.gdsfactory_netlist_to_pyspice
+   piel.integration.gdsfactory_pyspice.core.spice_netlist_to_pyspice_circuit
 
 
 
@@ -185,4 +180,13 @@ Functions
    set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
    the instance model we provides.
 
-   We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own composition circuit.
+   We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
+   composition circuit. Write the SPICE component based on the model into a total circuit representation in string
+   from the reshaped gdsfactory dictionary into our own structure.
+
+
+.. py:function:: spice_netlist_to_pyspice_circuit(spice_netlist: dict)
+
+   This function converts a SPICE netlist into a PySpice circuit.
+
+   # TODO implement validators
