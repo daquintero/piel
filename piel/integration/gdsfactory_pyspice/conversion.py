@@ -74,6 +74,7 @@ def gdsfactory_netlist_to_spice_netlist(
     We should get as an output a dictionary in the structure:
 
     .. code-block::
+
         {
             instance_1: {
                 ...

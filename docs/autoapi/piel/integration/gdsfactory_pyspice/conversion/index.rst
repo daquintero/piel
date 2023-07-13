@@ -53,6 +53,7 @@ Functions
    We should get as an output a dictionary in the structure:
 
    .. code-block::
+
        {
            instance_1: {
                ...

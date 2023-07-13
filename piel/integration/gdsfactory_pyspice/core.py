@@ -15,6 +15,7 @@ but for now this will be the implementation. The output structure of our SPICE s
 We follow the principle in: https://eee.guc.edu.eg/Courses/Electronics/ELCT503%20Semiconductors/Lab/spicehowto.pdf
 
 .. code-block::
+
     Spice Simulation 1-1
     *** MODEL Descriptions ***
     .model nm NMOS level=2 VT0=0.7
@@ -33,11 +34,13 @@ We follow the principle in: https://eee.guc.edu.eg/Courses/Electronics/ELCT503%2
 Note that the netlist device connectivity structure of most passive components is in the form:
 
 .. code-block::
+
     <DEVICE ID> <CONNECTION_0> <CONNECTION_1> <DEVICE_VALUE> <MORE_PARAMETERS>
 
 Our example GDSFactory netlist format is in the simplified form:
 
 .. code-block::
+
     {
         "connections": {
             "straight_1": {

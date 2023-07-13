@@ -388,6 +388,7 @@ Attributes
    We should get as an output a dictionary in the structure:
 
    .. code-block::
+
        {
            instance_1: {
                ...
@@ -1372,4 +1373,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.41'
+   :value: '0.0.42'

@@ -19,11 +19,13 @@ def add_basic_resistor(
     See Mike Smith “WinSpice3 User’s Manual” 25 October, 1999
 
     .. code-block::
+
         RXXXXXXX N1 N2 <VALUE> <MNAME> <L=LENGTH> <W=WIDTH> <TEMP=T>
 
     Where the terminals are:
 
     .. code-block::
+
         N1 = the first terminal
         N2 = the second terminal
         <VALUE> = resistance in ohms.
@@ -36,6 +38,7 @@ def add_basic_resistor(
     An example is:
 
     .. code-block::
+
         RHOT n1 n2 10k TEMP=500
     """
     circuit.R(instance_id, input_node, output_node, u_kOhm(10))
