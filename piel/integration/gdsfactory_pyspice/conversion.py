@@ -1,16 +1,6 @@
+import sax
+
 __all__ = ["rename_gdsfactory_connections_to_spice"]
-
-
-def instance_to_pyspice(component_model):
-    """
-    This function maps a particular model, with an instance representation that corresponds to the given netlist
-    connectivity, and returns a PySpice representation of the circuit. This function will be called after parsing the
-    circuit netlist accordingly, and creating a mapping from the instance definitions to the fundamental components.
-
-    Args:
-        component_model(func): Function that represents a SPICE component with the given parameters.
-    """
-    pass
 
 
 def rename_gdsfactory_connections_to_spice(connections: dict):
@@ -28,12 +18,15 @@ def rename_gdsfactory_connections_to_spice(connections: dict):
     return spice_connections
 
 
-def reshape_gdsfactory_netlist_to_spice_dictionary():
+def reshape_gdsfactory_netlist_to_spice_dictionary(
+    gdsfactory_netlist: dict,
+):
     """
     This function maps the connections of a netlist to a node that can be used in a SPICE netlist. SPICE netlists are
     in the form of:
 
     .. code-block::
+
         RXXXXXXX N1 N2 <VALUE> <MNAME> <L=LENGTH> <W=WIDTH> <TEMP=T>
 
     This means that every instance, is an electrical type, and we define the two particular nodes in which it is
@@ -41,12 +34,15 @@ def reshape_gdsfactory_netlist_to_spice_dictionary():
     connectivity for every instance. Then we can define that as a line of the SPICE netlist with a particular
     electrical model. For passives this works fine when it's a two port network such as sources, or electrical
     elements. However, non-passive elements like transistors have three ports or more which are provided in an ordered form.
-     The output format would ideally be in this form:
+
+    This means that the order of translations is as follows:
 
     .. code-block::
-        {
-            instance_someid: {
-                "connections"
-            }
-        }
+
+        1. Extract all instances and required models from the netlist
+        2. Verify that the models have been provided. Each model describes the type of component this is, how many ports it requires and so on.
+        3. Map the connections to each instance port as part of the instance dictionary.
     """
+    recursive_netlist = sax.netlist(gdsfactory_netlist)
+    dependency_graph = sax.circuit.create_dag(recursive_netlist)
+    return dependency_graph

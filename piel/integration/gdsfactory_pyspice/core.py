@@ -5,8 +5,8 @@ Note that to be able to construct a full circuit model of the netlist tools prov
 individual circuit models of the devices that we will interconnect, and then map them to a larger netlist. This means
 that it is necessary to create specific SPICE models for each particular component, say in an electrical netlist.
 
-This functions converts a GDSFactory netlist, with a set of component models, into `PySPICE` that accounts for the instance
-properties, which can then be connected into a VLSIR compatible `Netlist` implementation.
+This functions convert a GDSFactory netlist, with a set of component models, into `PySPICE` that accounts for the
+instance properties, which can then be connected into a VLSIR compatible `Netlist` implementation.
 
 Eventually we will implement RCX where we can extract the netlist with parasitics directly from the layout,
 but for now this will be the implementation. The output structure of our SPICE should be compatible with the
@@ -155,6 +155,8 @@ parameters, but does not have to be done necessarily. This comes down to impleme
 SAX compiled circuit.
 """
 
+__all__ = ["gdsfactory_netlist_to_pyspice"]
+
 
 def gdsfactory_netlist_to_pyspice(
     gdsfactory_netlist: dict,
@@ -169,5 +171,8 @@ def gdsfactory_netlist_to_pyspice(
     set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
     the instance model we provides.
 
-    We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own composition circuit.
+    We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
+    composition circuit. Write the SPICE component based on the model into a total circuit representation in string
+    from the reshaped gdsfactory dictionary into our own structure.
     """
+    pass

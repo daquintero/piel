@@ -103,7 +103,7 @@ our_resistive_heater_netlist = our_resistive_heater().get_netlist(
 # our_resistive_mzi_2x2_2x2_phase_shifter_netlist = our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="optical")
 # our_resistive_heater_netlist
 
-# We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist, as currently the comma formatting is not compatible as of July 2023.
+# We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist, as currently the comma formatting is not compatible as of
 
 spice_connection_names = piel.convert_gdsfactory_connections_to_spice_node_names(
     connections=our_resistive_heater_netlist["connections"]
