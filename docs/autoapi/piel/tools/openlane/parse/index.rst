@@ -31,10 +31,10 @@ Functions
 
 .. autoapisummary::
 
-   piel.tools.openlane.parse.get_all_timing_sta_files
-   piel.tools.openlane.parse.get_all_power_sta_files
    piel.tools.openlane.parse.filter_timing_sta_files
    piel.tools.openlane.parse.filter_power_sta_files
+   piel.tools.openlane.parse.get_all_timing_sta_files
+   piel.tools.openlane.parse.get_all_power_sta_files
    piel.tools.openlane.parse.calculate_max_frame_amount
    piel.tools.openlane.parse.calculate_propagation_delay_from_file
    piel.tools.openlane.parse.calculate_propagation_delay_from_timing_data
@@ -51,28 +51,6 @@ Functions
    piel.tools.openlane.parse.get_file_line_by_keyword
    piel.tools.openlane.parse.read_file_lines
 
-
-
-.. py:function:: get_all_timing_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: timing_sta_files_list (list)
-
-
-.. py:function:: get_all_power_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: power_sta_files_list (list)
 
 
 .. py:function:: filter_timing_sta_files(file_list)
@@ -95,6 +73,28 @@ Functions
 
    :returns: List containing the power sta files
    :rtype: power_sta_files (list)
+
+
+.. py:function:: get_all_timing_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: timing_sta_files_list (list)
+
+
+.. py:function:: get_all_power_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: power_sta_files_list (list)
 
 
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)

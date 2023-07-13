@@ -69,11 +69,13 @@ extensions = [
 latex_documents = [
     (master_doc, "piel.tex", "piel Documentation", "Dario Quintero", "manual"),
 ]
+html_logo = "_static/img/logo.png"
 html_show_sourcelink = (
     True  # Remove 'view source code' from top of page (for html, not python)
 )
 html_static_path = ["_static"]
-html_theme = "alabaster"
+html_theme = "sphinx_book_theme"
+html_title = "s "
 htmlhelp_basename = "pieldoc"
 man_pages = [(master_doc, "piel", "piel Documentation", [author], 1)]
 project = "piel"

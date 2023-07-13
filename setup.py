@@ -14,11 +14,12 @@ requirements = [
     "Click>=7.0",
     "cocotb",
     "gdsfactory",
+    "networkx",
     "openlane",
     "pandas",
     "pyspice",
     "sax",
-    "qutip",
+    "thewalrus" "qutip",
 ]
 
 test_requirements = [
@@ -39,7 +40,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    description="Photonic and electronic co-simulation system design tools interfaced with open-source design software like GDSFactory and OpenROAD.",
+    description="Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more.",
     entry_points={
         "console_scripts": [
             "piel=piel.cli:main",

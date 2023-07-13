@@ -9,3 +9,7 @@ However, this leads to another further complexity, how to integrate analog elect
 ## Tools Integration
 
 The implementation mechanism followed is to create parametric SPICE components that can be closely integrated with our existing device models and have a mapping to the electronic and photonic simulation software. The way this is implemented also follows microservices architectures as to minimise the computational architecture required for these systems.
+
+## Photonic Time Delay Synchronisation
+
+Another complexity of simulating these systems is that photonic pulses might also be propagating in time alongside the electronic signals. `sax` already implements some functionality to analyse the time-delay of such photonic circuits, but a resolution mechanism is required to interconnect these circuits together and a corresponding time-delay model needs to be provided to the components.

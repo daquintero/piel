@@ -15,6 +15,7 @@ jupyterlab~=3.0
 jupytext
 myst_parser
 nbsphinx
+networkx
 openlane
 pandoc
 pip>=19.2.3
@@ -27,9 +28,11 @@ sphinx
 sphinx-autoapi
 sphinx-autobuild
 sphinx_autodoc_typehints
+sphinx-book-theme
 sphinx-gallery
 sphinx-pydantic
 sphinx_rtd_theme
+thewalrus
 tox
 twine
 watchdog

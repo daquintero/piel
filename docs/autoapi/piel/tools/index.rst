@@ -13,6 +13,7 @@ Subpackages
    cocotb/index.rst
    gdsfactory/index.rst
    openlane/index.rst
+   pyspice/index.rst
    sax/index.rst
 
 
@@ -45,10 +46,10 @@ Functions
    piel.tools.get_latest_version_root_openlane_v1
    piel.tools.read_configuration_openlane_v1
    piel.tools.write_configuration_openlane_v1
-   piel.tools.get_all_timing_sta_files
-   piel.tools.get_all_power_sta_files
    piel.tools.filter_timing_sta_files
    piel.tools.filter_power_sta_files
+   piel.tools.get_all_timing_sta_files
+   piel.tools.get_all_power_sta_files
    piel.tools.calculate_max_frame_amount
    piel.tools.calculate_propagation_delay_from_file
    piel.tools.calculate_propagation_delay_from_timing_data
@@ -162,12 +163,24 @@ Attributes
 
 .. py:function:: get_simulation_output_files_from_design(design_directory: piel.config.piel_path_types, extension: str = 'csv')
 
-   # TODO DOCS
+   This function returns a list of all the simulation output files in the design directory.
+
+   :param design_directory: The path to the design directory.
+   :type design_directory: piel_path_types
+
+   :returns: List of all the simulation output files in the design directory.
+   :rtype: output_files (list)
 
 
-.. py:function:: read_simulation_data(file_path)
+.. py:function:: read_simulation_data(file_path: piel.config.piel_path_types)
 
    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
+
+   :param file_path: The path to the simulation data file.
+   :type file_path: piel_path_types
+
+   :returns: The simulation data in a Pandas dataframe.
+   :rtype: simulation_data (pd.DataFrame)
 
 
 .. py:function:: simple_plot_simulation_data(simulation_data: pandas.DataFrame)
@@ -206,7 +219,7 @@ Attributes
    :rtype: tuple
 
 
-.. py:function:: get_matched_ports_tuple_index(ports_index: dict, selected_ports_tuple: tuple, sorting_algorithm: Literal[get_matched_ports_tuple_index.prefix, selected_ports] = 'prefix', prefix: str = 'in') -> (tuple, tuple)
+.. py:function:: get_matched_ports_tuple_index(ports_index: dict, selected_ports_tuple: Optional[tuple] = None, sorting_algorithm: Literal[get_matched_ports_tuple_index.prefix, selected_ports] = 'prefix', prefix: str = 'in') -> (tuple, tuple)
 
    This function returns the input ports of a component. However, input ports may have different sets of prefixes
    and suffixes. This function implements different sorting algorithms for different ports names. The default
@@ -234,6 +247,8 @@ Attributes
 
    :param ports_index: The ports index dictionary.
    :type ports_index: dict
+   :param selected_ports_tuple: The selected ports tuple. Defaults to None.
+   :type selected_ports_tuple: tuple, optional
    :param sorting_algorithm: The sorting algorithm to use. Defaults to "prefix".
    :type sorting_algorithm: Literal["prefix"], optional
    :param prefix: The prefix to use for the sorting algorithm. Defaults to "in".
@@ -397,28 +412,6 @@ Attributes
    :returns: None
 
 
-.. py:function:: get_all_timing_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: timing_sta_files_list (list)
-
-
-.. py:function:: get_all_power_sta_files(run_directory)
-
-   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
-
-   :param run_directory: The run directory to perform the analysis on. Defaults to None.
-   :type run_directory: str, optional
-
-   :returns: List of all the .rpt files in the run directory.
-   :rtype: power_sta_files_list (list)
-
-
 .. py:function:: filter_timing_sta_files(file_list)
 
    Filter the timing sta files from the list of files
@@ -439,6 +432,28 @@ Attributes
 
    :returns: List containing the power sta files
    :rtype: power_sta_files (list)
+
+
+.. py:function:: get_all_timing_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: timing_sta_files_list (list)
+
+
+.. py:function:: get_all_power_sta_files(run_directory)
+
+   This function aims to list and perform analysis on all the relevant files in a particular run between all the corners.
+
+   :param run_directory: The run directory to perform the analysis on. Defaults to None.
+   :type run_directory: str, optional
+
+   :returns: List of all the .rpt files in the run directory.
+   :rtype: power_sta_files_list (list)
 
 
 .. py:function:: calculate_max_frame_amount(file_lines_data: pandas.DataFrame)
