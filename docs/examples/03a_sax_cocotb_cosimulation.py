@@ -1,4 +1,4 @@
-# # SAX Active Co-simulation
+# # Digital & Photonic Cosimulation with `sax` and `cocotb`
 
 # We begin by importing a parametric circuit from `gdsfactory`:
 import gdsfactory as gf

@@ -14,7 +14,7 @@ but for now this will be the implementation. The output structure of our SPICE s
 
 We follow the principle in: https://eee.guc.edu.eg/Courses/Electronics/ELCT503%20Semiconductors/Lab/spicehowto.pdf
 
-.. code-block::
+.. code-block:: spice
 
     Spice Simulation 1-1
     *** MODEL Descriptions ***
@@ -33,7 +33,7 @@ We follow the principle in: https://eee.guc.edu.eg/Courses/Electronics/ELCT503%2
 
 Note that the netlist device connectivity structure of most passive components is in the form:
 
-.. code-block::
+.. code-block:: spice
 
     <DEVICE ID> <CONNECTION_0> <CONNECTION_1> <DEVICE_VALUE> <MORE_PARAMETERS>
 
@@ -179,6 +179,15 @@ def spice_netlist_to_pyspice_circuit(spice_netlist: dict):
     """
     This function converts a SPICE netlist into a PySpice circuit.
 
+    Part of the complexity of this function is the multiport nature of some components and models, and assigning the
+    parameters accordingly into the SPICE function. This is because not every SPICE component will be bi-port,
+    and many will have multi-ports and parameters accordingly. Each model can implement the composition into a
+    PySpice circuit, but they depend on a set of parameters that must be set from the instance. Another aspect is
+    that we may want to assign the component ID according to the type of component. However, we can also assign the
+    ID based on the individual instance in the circuit, which is also a reasonable approximation. However,
+    it could be said, that the ideal implementation would be for each component model provided to return the SPICE
+    instance including connectivity except for the ID.
+
     # TODO implement validators
     """
     circuit = Circuit(spice_netlist["name"])
@@ -186,12 +195,7 @@ def spice_netlist_to_pyspice_circuit(spice_netlist: dict):
     for _, instance_settings_i in spice_netlist["instances"].items():
         spice_nets = list(instance_settings_i["spice_nets"].items())
         if len(spice_nets) < 2:
-            circuit = instance_settings_i["spice_model"](
-                circuit=circuit,
-                instance_id=instance_id,
-                input_node=spice_nets[0][1],
-                output_node="out",
-            )
+            pass
         else:
             circuit = instance_settings_i["spice_model"](
                 circuit=circuit,
@@ -199,6 +203,6 @@ def spice_netlist_to_pyspice_circuit(spice_netlist: dict):
                 input_node=spice_nets[0][1],
                 output_node=spice_nets[1][1],
             )
-        # TODO value and multicircuit compatibility
-        instance_id += 1
+            # TODO value and multicircuit compatibility
+            instance_id += 1
     return circuit

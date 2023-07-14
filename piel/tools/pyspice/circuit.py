@@ -15,21 +15,34 @@ circuit definitions. This could then be simulated accordingly for the whole circ
 would have to be constructed out of component models and a provided netlist in a similar fashion to ``SAX``. """
 from PySpice.Spice.Netlist import Circuit
 
+__all__ = ["create_pyspice_circuit", "write_raw_spice_to_pyspice_circuit"]
 
-def write_pyspice_circuit(circuit_name: str = "c"):
+
+def create_pyspice_circuit(circuit_name: str = "c") -> Circuit:
     """
-    This function returns a generic PySPICE circuit.
-    TODO Docs
+    This function returns a generic PySPICE circuit. This is useful for adding SPICE directives to a circuit.
+
+    Args:
+        circuit_name (str): Name of the circuit
+
+    Returns:
+        Circuit: PySpice circuit
     """
     circuit = Circuit(circuit_name)
     return circuit
 
 
-def write_pyspice_circuit_from_raw_spice(raw_spice: str, circuit_name: str = "c"):
+def write_raw_spice_to_pyspice_circuit(circuit: Circuit, raw_spice: str) -> Circuit:
     """
-    This function returns a PySpice circuit composed from raw SPICE text.
-    TODO Docs
+    This function returns a PySpice circuit including the raw SPICE text. This is useful for adding SPICE directives
+    to a circuit.
+
+    Args:
+        circuit (Circuit): PySpice circuit
+        raw_spice (str): Raw SPICE text
+
+    Returns:
+        Circuit: PySpice circuit including the raw SPICE text
     """
-    circuit = Circuit(circuit_name)
-    circuit.raw_spice = raw_spice
+    circuit.raw_spice += raw_spice
     return circuit

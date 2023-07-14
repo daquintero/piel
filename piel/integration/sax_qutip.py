@@ -21,11 +21,10 @@ def standard_s_parameters_to_ideal_qutip_unitary(
 
     For example, a ``qutip`` representation of an s-gate gate would be:
 
-    ..code-block:: python
+    ..code-block::
 
         import numpy as np
         import qutip
-
         # S-Gate
         s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
         s_gate = qutip.Qobj(mat, dims=[[2], [2]])
@@ -35,8 +34,8 @@ def standard_s_parameters_to_ideal_qutip_unitary(
     ..math::
 
         S = \\begin{bmatrix}
-            1 & 0 \\
-            0 & i \\
+            1 & 0 \\\\
+            0 & i \\\\
         \\end{bmatrix}
 
     Args:
@@ -65,7 +64,7 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
 
     For example, a ``qutip`` representation of an s-gate gate would be:
 
-    ..code-block:: python
+    ..code-block::
 
         import numpy as np
         import qutip
@@ -78,8 +77,8 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
     ..math::
 
         S = \\begin{bmatrix}
-            1 & 0 \\
-            0 & i \\
+            1 & 0 \\\\
+            0 & i \\\\
         \\end{bmatrix}
 
     Args:
