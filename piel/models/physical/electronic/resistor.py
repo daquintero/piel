@@ -1,10 +1,3 @@
-"""
-These functions map a particular model, with an instance representation that corresponds to the given netlist
-connectivity, and returns a SPICE representation of the circuit. This function will be called after parsing the
-circuit netlist accordingly, and creating a mapping from the instance definitions to the fundamental components.
-"""
-
-
 def add_basic_resistor(
     circuit,
     instance_id: int,
@@ -16,7 +9,7 @@ def add_basic_resistor(
 
     See Mike Smith “WinSpice3 User’s Manual” 25 October, 1999
 
-    .. code-block::
+    .. code-block:: spice
 
         RXXXXXXX N1 N2 <VALUE> <MNAME> <L=LENGTH> <W=WIDTH> <TEMP=T>
 

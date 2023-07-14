@@ -1,10 +1,12 @@
-# from .capacitor import basic_capacitor
-from .resistor import add_basic_resistor
+from .taper import Taper
+from .straight import Straight
+
+__all__ = ["get_default_models"]
 
 __default_models_dictionary__ = {
-    "taper": add_basic_resistor,
-    "straight": add_basic_resistor,
-    "via_stack": add_basic_resistor,
+    "taper": Taper,
+    "straight": Straight,
+    "via_stack": Straight,
 }
 
 
