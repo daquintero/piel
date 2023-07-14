@@ -6,6 +6,7 @@ cocotb
 coverage
 flake8
 gdsfactory
+hdl21
 ipyevents
 ipytree
 ipywidgets>=7.6.0,<9
@@ -20,7 +21,6 @@ openlane
 pandoc
 pip>=19.2.3
 pydata-sphinx-theme>=0.13.3
-pyspice
 pytest
 qutip
 sax

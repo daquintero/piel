@@ -89,11 +89,11 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 
 # {'resistance': 500.0}
 
-# So this is very cool, we have our device model giving us electrical data when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `PySpice` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
+# So this is very cool, we have our device model giving us electrical data when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
 
 # ## Extracting the SPICE circuit and assigning model parameters
 
-# We will exemplify how `piel` microservices enable the extraction and configuration of the SPICE circuit. This is done by implementing a SPICE netlist construction backend to the circuit composition functions in `sax`, and is composed in a way that is then integrated into `PySpice` or any SPICE-based solver through the `VLSIR` `Netlist`.
+# We will exemplify how `piel` microservices enable the extraction and configuration of the SPICE circuit. This is done by implementing a SPICE netlist construction backend to the circuit composition functions in `sax`, and is composed in a way that is then integrated into `hdl21` or any SPICE-based solver through the `VLSIR` `Netlist`.
 #
 # The way this is achieved is by extracting all the `instances`, `connections`, `ports`, `models` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
 
@@ -145,9 +145,9 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 # R<SOMEID>
 # ```
 #
-# We can compose our SPICE using PySpice using the models we have provided. The final circuit can be extracted accordingly:
+# We can compose our SPICE using hdl21 using the models we have provided. The final circuit can be extracted accordingly:
 
-spice_circuit = piel.spice_netlist_to_pyspice_circuit(
+spice_circuit = piel.spice_dictionary_to_spice_netlist(
     spice_netlist=our_resistive_heater_spice_netlist
 )
 print(spice_circuit)
@@ -164,7 +164,7 @@ spice_circuit
 
 # We can extract the electrical components of our heater implementation on its own first.
 
-# ## `PySpice` Integration
+# ## `SPICE` Integration
 
 # We have seen in the previous example how to integrate digital-driven data with photonic circuit steady-state simulations. However, this is making a big assumption: whenever digital codes are applied to photonic components, the photonic component responds immediately. We need to account for the electrical load physics in order to perform more accurate simulation models of our systems.
 #
@@ -173,7 +173,7 @@ spice_circuit
 
 # ### Creating our Stimulus
 
-# Let's first look into how to map a numpy data into a SPICE waveform. The interconnect of electrical stimulus will be done specifically through standard numpy arrays. One of the main complexities of inputting the SPICE signal information is that SPICE solvers are designed to input specific types of signals such as sine waves, step responses, pulses, squares, sawtooth waves with parameters defined for those signals. However, we might want to explore how custom signals affect our circuit, say in a particular modulation regime. Adding non-standard waves is custom behaviour in some SPICE solvers. However, this can be done in the form of a "Piecewise Linear Controlled Source" as in the 12.2.7 section of the [NGSpice documentation](https://ngspice.sourceforge.io/docs/ngspice-manual.pdf.). One of the complexities is that `PySpice` is not using the latest version of NGSPice. For the sake of simplicity, we will start with the pre-built signal sources.
+# Let's first look into how to map a numpy data into a SPICE waveform. The interconnect of electrical stimulus will be done specifically through standard numpy arrays. One of the main complexities of inputting the SPICE signal information is that SPICE solvers are designed to input specific types of signals such as sine waves, step responses, pulses, squares, sawtooth waves with parameters defined for those signals. However, we might want to explore how custom signals affect our circuit, say in a particular modulation regime. Adding non-standard waves is custom behaviour in some SPICE solvers. However, this can be done in the form of a "Piecewise Linear Controlled Source" as in the 12.2.7 section of the [NGSpice documentation](https://ngspice.sourceforge.io/docs/ngspice-manual.pdf.). For the sake of simplicity, we will start with the pre-built signal sources.
 
 # ### Mixed-Signal Electronic Photonic Simulation Methodology
 

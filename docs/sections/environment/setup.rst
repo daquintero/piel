@@ -34,7 +34,7 @@ To guarantee full functionality of ``piel``, the recommended environment install
         - *
         -
         -
-      * - ``pyspice``
+      * - ``hdl21``
         - ``ngspice`` & ``xyce``
         - ``ngspice`` & ``xyce``
         - ``ngspice`` & ``xyce``

@@ -13,13 +13,14 @@ requirements = [
     "jupytext",
     "Click>=7.0",
     "cocotb",
+    "hdl21",
     "gdsfactory",
     "networkx",
     "openlane",
     "pandas",
-    "pyspice",
     "sax",
-    "thewalrus" "qutip",
+    "thewalrus",
+    "qutip",
 ]
 
 test_requirements = [

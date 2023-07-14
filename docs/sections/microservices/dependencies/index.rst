@@ -10,4 +10,4 @@ Dependency Bindings
     openlane
     cocotb
     sax
-    pyspice
+    spice
