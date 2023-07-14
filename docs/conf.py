@@ -75,7 +75,12 @@ html_show_sourcelink = (
 )
 html_static_path = ["_static"]
 html_theme = "sphinx_book_theme"
-html_title = "s "
+html_title = "piel"
+html_theme_options = {
+    "repository_url": "https://github.com/daquintero/piel",
+    "use_repository_button": True,
+    "use_issues_button": True,
+}
 htmlhelp_basename = "pieldoc"
 man_pages = [(master_doc, "piel", "piel Documentation", [author], 1)]
 project = "piel"

@@ -24,11 +24,11 @@ pytest
 qutip
 sax
 setuptools>=40.8.0
-sphinx
+sphinx>4
 sphinx-autoapi
 sphinx-autobuild
 sphinx_autodoc_typehints
-sphinx-book-theme
+sphinx-book-theme==0.3.3
 sphinx-gallery
 sphinx-pydantic
 sphinx_rtd_theme
