@@ -8,6 +8,7 @@ Integrations
     methodology
     case_study
     cocotb_sax
+    gdsfactory_spice
     sax_qutip
 
 .. toctree::

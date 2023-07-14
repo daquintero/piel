@@ -12,8 +12,8 @@ Subpackages
 
    cocotb/index.rst
    gdsfactory/index.rst
+   hdl21/index.rst
    openlane/index.rst
-   pyspice/index.rst
    sax/index.rst
 
 

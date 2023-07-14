@@ -54,7 +54,7 @@ Functions
 
 
 
-.. py:function:: add_basic_resistor(circuit: PySpice.Spice.Netlist.Circuit, instance_id: int, input_node: str, output_node: str)
+.. py:function:: add_basic_resistor(circuit, instance_id: int, input_node: str, output_node: str)
 
    SPICE Resistor Structure
 

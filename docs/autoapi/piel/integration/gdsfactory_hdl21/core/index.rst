@@ -1,11 +1,11 @@
-:py:mod:`piel.integration.gdsfactory_pyspice.core`
-==================================================
+:py:mod:`piel.integration.gdsfactory_hdl21.core`
+================================================
 
-.. py:module:: piel.integration.gdsfactory_pyspice.core
+.. py:module:: piel.integration.gdsfactory_hdl21.core
 
 .. autoapi-nested-parse::
 
-   Most of the ``pyspice``-``gdsfactory`` integration functions will be contributed directly to `gdsfactory`. However,
+   Most of the ``hdl21``-``gdsfactory`` integration functions will be contributed directly to `gdsfactory`. However,
    some `translation language` inherent to the ``piel`` implementation of these tools is included here.
 
    Note that to be able to construct a full circuit model of the netlist tools provided, it is necessary to create
@@ -21,7 +21,7 @@
 
    We follow the principle in: https://eee.guc.edu.eg/Courses/Electronics/ELCT503%20Semiconductors/Lab/spicehowto.pdf
 
-   .. code-block::
+   .. code-block:: spice
 
        Spice Simulation 1-1
        *** MODEL Descriptions ***
@@ -40,7 +40,7 @@
 
    Note that the netlist device connectivity structure of most passive components is in the form:
 
-   .. code-block::
+   .. code-block:: spice
 
        <DEVICE ID> <CONNECTION_0> <CONNECTION_1> <DEVICE_VALUE> <MORE_PARAMETERS>
 
@@ -151,7 +151,7 @@
 
    This is particularly useful when creating our components and connectivity, because what we can do is instantiate our
    devices with their corresponding values, and then create our connectivity accordingly. To do this properly from our
-   GDSFactory netlist to PySpice, we can then extract the total SPICE circuit, and convert it to a VLSIR format using
+   GDSFactory netlist to hdl21, we can then extract the total SPICE circuit, and convert it to a VLSIR format using
    the `Netlist` module. The reason why we can't use the Netlist package from Dan Fritchman directly is that we need to
    apply a set of models that translate a particular component instantiation into an electrical model. Because we are
    not yet doing layout extraction as that requires EM solvers, we need to create some sort of SPICE level assignment
@@ -168,16 +168,15 @@ Functions
 
 .. autoapisummary::
 
-   piel.integration.gdsfactory_pyspice.core.gdsfactory_netlist_to_pyspice
-   piel.integration.gdsfactory_pyspice.core.spice_netlist_to_pyspice_circuit
+   piel.integration.gdsfactory_hdl21.core.gdsfactory_netlist_to_spice_netlist
+   piel.integration.gdsfactory_hdl21.core.spice_dictionary_to_spice_netlist
 
 
 
-.. py:function:: gdsfactory_netlist_to_pyspice(gdsfactory_netlist: dict, return_raw_spice: bool = False)
+.. py:function:: gdsfactory_netlist_to_spice_netlist(gdsfactory_netlist: dict, return_raw_spice: bool = False)
 
-   This function converts a GDSFactory electrical netlist into a standard PySpice configuration. It follows the same
-   principle as the `sax` circuit composition. It returns a PySpice circuit and can return it in raw_spice form if
-   necessary.
+   This function converts a GDSFactory electrical netlist into a standard SPICE netlist. It follows the same
+   principle as the `sax` circuit composition.
 
    Each GDSFactory netlist has a set of instances, each with a corresponding model, and each instance with a given
    set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
@@ -188,8 +187,17 @@ Functions
    from the reshaped gdsfactory dictionary into our own structure.
 
 
-.. py:function:: spice_netlist_to_pyspice_circuit(spice_netlist: dict)
+.. py:function:: spice_dictionary_to_spice_netlist(spice_netlist: dict)
 
-   This function converts a SPICE netlist into a PySpice circuit.
+   This function converts a gdsfactory-spice converted netlist using the component models into a SPICE circuit.
+
+   Part of the complexity of this function is the multiport nature of some components and models, and assigning the
+   parameters accordingly into the SPICE function. This is because not every SPICE component will be bi-port,
+   and many will have multi-ports and parameters accordingly. Each model can implement the composition into a
+   SPICE circuit, but they depend on a set of parameters that must be set from the instance. Another aspect is
+   that we may want to assign the component ID according to the type of component. However, we can also assign the
+   ID based on the individual instance in the circuit, which is also a reasonable approximation. However,
+   it could be said, that the ideal implementation would be for each component model provided to return the SPICE
+   instance including connectivity except for the ID.
 
    # TODO implement validators

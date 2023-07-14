@@ -31,11 +31,10 @@ Functions
 
    For example, a ``qutip`` representation of an s-gate gate would be:
 
-   ..code-block:: python
+   ..code-block::
 
        import numpy as np
        import qutip
-
        # S-Gate
        s_gate_matrix = np.array([[1.,   0], [0., 1.j]])
        s_gate = qutip.Qobj(mat, dims=[[2], [2]])
@@ -45,8 +44,8 @@ Functions
    ..math::
 
        S = \begin{bmatrix}
-           1 & 0 \
-           0 & i \
+           1 & 0 \\
+           0 & i \\
        \end{bmatrix}
 
    :param s_parameters_standard_matrix: A dictionary of S-parameters in the form of a SDict from `sax`.
@@ -70,7 +69,7 @@ Functions
 
    For example, a ``qutip`` representation of an s-gate gate would be:
 
-   ..code-block:: python
+   ..code-block::
 
        import numpy as np
        import qutip
@@ -83,8 +82,8 @@ Functions
    ..math::
 
        S = \begin{bmatrix}
-           1 & 0 \
-           0 & i \
+           1 & 0 \\
+           0 & i \\
        \end{bmatrix}
 
    :param sax_input: A dictionary of S-parameters in the form of a SDict from `sax`.

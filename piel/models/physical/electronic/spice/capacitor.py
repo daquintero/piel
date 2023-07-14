@@ -2,7 +2,7 @@
 to create a parametric SPICE directive.
 
 These functions map a particular model, with an instance representation that corresponds to the given netlist
-connectivity, and returns a PySpice representation of the circuit. This function will be called after parsing the
+connectivity, and returns a SPICE representation of the circuit. This function will be called after parsing the
 circuit netlist accordingly, and creating a mapping from the instance definitions to the fundamental components.
 """
 

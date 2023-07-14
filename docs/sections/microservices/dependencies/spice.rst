@@ -1,5 +1,5 @@
-``spice`` & ``pyspice``
-=======================
+``SPICE``
+=========
 
 Most photonic components are commonly driven from analogue signals that represent electrical-optical signal conversion. It is necessary to represent these analogue signals before they can be digitised. The analogue electrical load effects need to be considered as well, otherwise, circuits implemented in these tools will inaccurately measure signal transfer between domains.
 

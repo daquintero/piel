@@ -1,7 +1,7 @@
-:py:mod:`piel.integration.gdsfactory_pyspice.utils`
-===================================================
+:py:mod:`piel.integration.gdsfactory_hdl21.utils`
+=================================================
 
-.. py:module:: piel.integration.gdsfactory_pyspice.utils
+.. py:module:: piel.integration.gdsfactory_hdl21.utils
 
 
 Module Contents
@@ -13,8 +13,8 @@ Functions
 
 .. autoapisummary::
 
-   piel.integration.gdsfactory_pyspice.utils.rename_gdsfactory_connections_to_spice
-   piel.integration.gdsfactory_pyspice.utils.convert_tuples_to_strings
+   piel.integration.gdsfactory_hdl21.utils.rename_gdsfactory_connections_to_spice
+   piel.integration.gdsfactory_hdl21.utils.convert_tuples_to_strings
 
 
 

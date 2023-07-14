@@ -1,22 +1,21 @@
-:py:mod:`piel.integration.gdsfactory_pyspice`
-=============================================
+:py:mod:`piel.integration.gdsfactory_hdl21.conversion`
+======================================================
 
-.. py:module:: piel.integration.gdsfactory_pyspice
+.. py:module:: piel.integration.gdsfactory_hdl21.conversion
 
+.. autoapi-nested-parse::
 
-Submodules
-----------
-.. toctree::
-   :titlesonly:
-   :maxdepth: 1
-
-   conversion/index.rst
-   core/index.rst
-   utils/index.rst
+   `sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
+   construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
+   parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
+   this would be done from the component instance as that way the component model can be integrated with its geometrical
+   parameters, but does not have to be done necessarily. This comes down to implementing a backend function to compile
+   SAX compiled circuit.
 
 
-Package Contents
-----------------
+
+Module Contents
+---------------
 
 
 Functions
@@ -24,32 +23,8 @@ Functions
 
 .. autoapisummary::
 
-   piel.integration.gdsfactory_pyspice.gdsfactory_netlist_to_pyspice
-   piel.integration.gdsfactory_pyspice.spice_netlist_to_pyspice_circuit
-   piel.integration.gdsfactory_pyspice.gdsfactory_netlist_to_spice_netlist
+   piel.integration.gdsfactory_hdl21.conversion.gdsfactory_netlist_to_spice_netlist
 
-
-
-.. py:function:: gdsfactory_netlist_to_pyspice(gdsfactory_netlist: dict, return_raw_spice: bool = False)
-
-   This function converts a GDSFactory electrical netlist into a standard PySpice configuration. It follows the same
-   principle as the `sax` circuit composition. It returns a PySpice circuit and can return it in raw_spice form if
-   necessary.
-
-   Each GDSFactory netlist has a set of instances, each with a corresponding model, and each instance with a given
-   set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
-   the instance model we provides.
-
-   We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
-   composition circuit. Write the SPICE component based on the model into a total circuit representation in string
-   from the reshaped gdsfactory dictionary into our own structure.
-
-
-.. py:function:: spice_netlist_to_pyspice_circuit(spice_netlist: dict)
-
-   This function converts a SPICE netlist into a PySpice circuit.
-
-   # TODO implement validators
 
 
 .. py:function:: gdsfactory_netlist_to_spice_netlist(gdsfactory_netlist: dict, models=None)

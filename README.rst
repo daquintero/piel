@@ -40,9 +40,9 @@ photonics via `GDSFactory <https://github.com/gdsfactory/gdsfactory>`__.
 Some existing microservice dependency integrations are:
 
 * `cocotb <https://github.com/cocotb/cocotb>`__ - a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python.
+* `hdl21 <https://github.com/dan-fritchman/Hdl21>`__ - Analog Hardware Description Library in Python
 * `GDSFactory <https://github.com/gdsfactory/gdsfactory>`__ - An open source platform for end to-end photonic chip design and validation
 * `OpenLane v1 <https://github.com/The-OpenROAD-Project/OpenLane>`__ - an automated RTL to GDSII flow based on several components including OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for design exploration and optimization
-* `pyspice <https://github.com/PySpice-org/PySpice>`__ - Simulate electronic circuit using Python and the Ngspice / Xyce simulators
 * `sax <https://github.com/flaport/sax>`__ - S-parameter based frequency domain circuit simulations and optimizations using JAX.
 * `thewalrus <https://github.com/XanaduAI/thewalrus>`__ -A library for the calculation of hafnians, Hermite polynomials and Gaussian boson sampling.
 * `qutip <https://github.com/qutip/qutip>`__ - QuTiP: Quantum Toolbox in Python

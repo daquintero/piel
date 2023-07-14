@@ -6,7 +6,7 @@
 .. autoapi-nested-parse::
 
    These functions map a particular model, with an instance representation that corresponds to the given netlist
-   connectivity, and returns a PySpice representation of the circuit. This function will be called after parsing the
+   connectivity, and returns a SPICE representation of the circuit. This function will be called after parsing the
    circuit netlist accordingly, and creating a mapping from the instance definitions to the fundamental components.
 
 
@@ -24,7 +24,7 @@ Functions
 
 
 
-.. py:function:: add_basic_resistor(circuit: PySpice.Spice.Netlist.Circuit, instance_id: int, input_node: str, output_node: str)
+.. py:function:: add_basic_resistor(circuit, instance_id: int, input_node: str, output_node: str)
 
    SPICE Resistor Structure
 
