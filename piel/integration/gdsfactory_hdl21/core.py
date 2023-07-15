@@ -246,14 +246,9 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
     connections_list = convert_connections_to_tuples(spice_netlist["connections"])
     for connection_tuple in connections_list:
         # Connects the corresponding ports.
-        print(type(circuit.instances[connection_tuple[0][0]]))
-        # print(dir(circuit.instances[connection_tuple[0][0]]))
-        # return circuit.instances[connection_tuple[0][0]]
-        pass
-        # circuit.instances[connection_tuple[0][0]].result.ports[
-        #     connection_tuple[0][1]
-        # ] = circuit.instances[connection_tuple[1][0]].result.ports[
-        #     connection_tuple[1][1]
-        # ]
+        print(connection_tuple[1])
+        circuit.instances[connection_tuple[0][0]].ports[
+            connection_tuple[0][1]
+        ] = circuit.instances[connection_tuple[1][0]].ports[connection_tuple[1][1]]
 
     return circuit
