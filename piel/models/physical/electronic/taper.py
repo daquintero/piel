@@ -17,8 +17,6 @@ def taper(params: TaperParameters) -> h.Module:
     @h.module
     class Taper:
         e1, e2 = h.Ports(2)
-        h.r1 = h.IdealResistor(r=1e3)
-        h.r1.p = e1
-        h.r1.n = e2
+        r1 = h.IdealResistor(r=1e3)(p=e1, n=e2)
 
     return Taper
