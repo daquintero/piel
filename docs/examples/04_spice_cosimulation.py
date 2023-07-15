@@ -145,15 +145,17 @@ our_resistive_heater_circuit = piel.construct_hdl21_module(
     spice_netlist=our_resistive_heater_spice_netlist
 )
 # our_resistive_heater_circuit
-our_resistive_heater_circuit.result
+our_resistive_heater_circuit.instances
 
 # ```python
-# {'straight_1': GeneratorCall(gen=straight),
-#  'taper_1': GeneratorCall(gen=taper),
-#  'taper_2': GeneratorCall(gen=taper),
-#  'via_stack_1': GeneratorCall(gen=via_stack),
-#  'via_stack_2': GeneratorCall(gen=via_stack)}
+# {'straight_1': Module(name=Straight),
+#  'taper_1': Module(name=Taper),
+#  'taper_2': Module(name=Taper),
+#  'via_stack_1': Module(name=ViaStack),
+#  'via_stack_2': Module(name=ViaStack)}
 # ```
+
+our_resistive_heater_circuit.instances["straight_1"].ports
 
 # Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly.
 
@@ -261,6 +263,8 @@ def MyFirstGenerator(params: MyParams) -> h.Module:
     m.i = h.Input(width=params.width)
     return m
 
+
+MyFirstGenerator(w=10)
 
 h.elaborate(MyFirstGenerator(w=10))
 

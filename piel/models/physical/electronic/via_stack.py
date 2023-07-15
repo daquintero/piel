@@ -1,15 +1,9 @@
 import hdl21 as h
 
-__all__ = ["via_stack", "ViaStackParameters"]
+__all__ = ["via_stack"]
 
 
-@h.paramclass
-class ViaStackParameters:
-    pass
-
-
-@h.generator
-def via_stack(params: ViaStackParameters) -> h.Module:
+def via_stack(**kwargs) -> h.Module:
     """
     Implements a `hdl21` taper resistor class. We need to include the mapping ports as we expect our gdsfactory component to be with the instance of the model.
     """

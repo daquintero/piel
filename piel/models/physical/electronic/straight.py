@@ -1,19 +1,9 @@
 import hdl21 as h
 
-__all__ = ["straight", "StraightParameters"]
+__all__ = ["straight"]
 
 
-@h.paramclass
-class StraightParameters:
-    """
-    These are all the potential parametric configuration variables
-    """
-
-    pass
-
-
-@h.generator
-def straight(params: StraightParameters) -> h.Module:
+def straight(**kwargs) -> h.Module:
     """
     Implements a `hdl21` taper resistor class.
     """

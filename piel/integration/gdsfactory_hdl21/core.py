@@ -228,45 +228,32 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
 
     # TODO implement validators
     """
-
-    @h.paramclass
-    class TopLevelParams:
-        name = h.Param(
-            str, desc="Name of the top level module", default=spice_netlist["name"]
+    circuit = h.Module(name=spice_netlist["name"])
+    instance_id = 0
+    # Declare all the instances
+    for instance_name_i, instance_settings_i in spice_netlist["instances"].items():
+        elaborated_instance_i = instance_settings_i["hdl21_model"](
+            **instance_settings_i["settings"]
         )
+        circuit.instances[instance_name_i] = elaborated_instance_i
+        instance_id += 1
 
-    @h.generator
-    def create_top_level_instances(params: TopLevelParams) -> h.Module:
-        circuit = h.Module(name=spice_netlist["name"])
-        instance_id = 0
-        # Declare all the instances
-        for instance_name_i, instance_settings_i in spice_netlist["instances"].items():
-            elaborated_instance_i = instance_settings_i["hdl21_model"](
-                **instance_settings_i["settings"]
-            )
-            circuit.instances[instance_name_i] = elaborated_instance_i
-            instance_id += 1
+    # Create top level ports
+    for port_name_i, _ in spice_netlist["ports"].items():
+        # TODO include directionality on port_settings so that it can be easily interconencted with hdl21
+        circuit.ports[port_name_i] = h.Port()
 
-        # Create top level ports
-        for port_name_i, _ in spice_netlist["ports"].items():
-            # TODO include directionality on port_settings so that it can be easily interconencted with hdl21
-            circuit.ports[port_name_i] = h.Port()
-        return circuit
+    connections_list = convert_connections_to_tuples(spice_netlist["connections"])
+    for connection_tuple in connections_list:
+        # Connects the corresponding ports.
+        print(type(circuit.instances[connection_tuple[0][0]]))
+        # print(dir(circuit.instances[connection_tuple[0][0]]))
+        # return circuit.instances[connection_tuple[0][0]]
+        pass
+        # circuit.instances[connection_tuple[0][0]].result.ports[
+        #     connection_tuple[0][1]
+        # ] = circuit.instances[connection_tuple[1][0]].result.ports[
+        #     connection_tuple[1][1]
+        # ]
 
-    def create_connectivity(circuit, **kwargs):
-        # Create the connectivity
-        connections_list = convert_connections_to_tuples(spice_netlist["connections"])
-        for connection_tuple in connections_list:
-            # Connects the corresponding ports.
-            print(circuit.instances[connection_tuple[0][0]].result)
-            circuit.instances[connection_tuple[0][0]].result.ports[
-                connection_tuple[0][1]
-            ] = circuit.instances[connection_tuple[1][0]].result.ports[
-                connection_tuple[1][1]
-            ]
-        return circuit
-
-    circuit = create_top_level_instances(spice_netlist, **kwargs)
-    # print(circuit)
-    # circuit = create_connectivity(circuit, **kwargs)
     return circuit
