@@ -1,36 +1,29 @@
-def add_basic_resistor(
-    circuit,
-    instance_id: int,
-    input_node: str,
-    output_node: str,
-):
-    """
-    SPICE Resistor Structure
+"""
+SPICE Resistor Structure
 
-    See Mike Smith “WinSpice3 User’s Manual” 25 October, 1999
+See Mike Smith “WinSpice3 User’s Manual” 25 October, 1999
 
-    .. code-block:: spice
+.. code-block:: spice
 
-        RXXXXXXX N1 N2 <VALUE> <MNAME> <L=LENGTH> <W=WIDTH> <TEMP=T>
+    RXXXXXXX N1 N2 <VALUE> <MNAME> <L=LENGTH> <W=WIDTH> <TEMP=T>
 
-    Where the terminals are:
+Where the terminals are:
 
-    .. code-block::
+.. code-block::
 
-        N1 = the first terminal
-        N2 = the second terminal
-        <VALUE> = resistance in ohms.
-        <MNAME> = name of the model used (useful for semiconductor resistors)
-        <L=LENGTH> = length of the resistor (useful for semiconductor resistors)
-        <W=WIDTH> = width of the resistor (useful for semiconductor resistors)
-        <TEMP=T> = temperature of the resistor in Kelvin (useful in noise analysis and
-        semiconductor resistors)
+    N1 = the first terminal
+    N2 = the second terminal
+    <VALUE> = resistance in ohms.
+    <MNAME> = name of the model used (useful for semiconductor resistors)
+    <L=LENGTH> = length of the resistor (useful for semiconductor resistors)
+    <W=WIDTH> = width of the resistor (useful for semiconductor resistors)
+    <TEMP=T> = temperature of the resistor in Kelvin (useful in noise analysis and
+    semiconductor resistors)
 
-    An example is:
+An example is:
 
-    .. code-block::
+.. code-block::
 
-        RHOT n1 n2 10k TEMP=500
-    """
-    # circuit.R(instance_id, input_node, output_node, u_kOhm(10))
-    return circuit
+    RHOT n1 n2 10k TEMP=500
+
+"""

@@ -144,28 +144,83 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 our_resistive_heater_circuit = piel.construct_hdl21_module(
     spice_netlist=our_resistive_heater_spice_netlist
 )
-dir(our_resistive_heater_circuit)
-our_resistive_heater_circuit.instances["straight_1"].elaborate()
+# our_resistive_heater_circuit
+our_resistive_heater_circuit.instances
 
 # ```
-# {'straight_1': GeneratorCall(gen=Straight),
-#  'taper_1': GeneratorCall(gen=Taper),
-#  'taper_2': GeneratorCall(gen=Taper),
-#  'via_stack_1': GeneratorCall(gen=Straight),
-#  'via_stack_2': GeneratorCall(gen=Straight)}
+# {'straight_1': Module(name=Straight()),
+#  'taper_1': Module(name=Taper()),
+#  'taper_2': Module(name=Taper()),
+#  'via_stack_1': Module(name=Straight()),
+#  'via_stack_2': Module(name=Straight())}
 # ```
+
+# Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly.
 
 our_resistive_heater_circuit.ports
 
 
+# ```
+# {'e1': Signal(name=None, width=1, desc=None),
+#  'e2': Signal(name=None, width=1, desc=None)}
+# ```
+
+# This is also the case for each subinstance.
+
+our_resistive_heater_circuit.instances["straight_1"].ports
+
+# ```
+# {'e1': Signal(name='e1', width=1, desc=None),
+#  'e2': Signal(name='e2', width=1, desc=None)}
+# ```
+
+dir(our_resistive_heater_circuit)
+
+# We can also see the internal connectivity by exporting to a SPICE netlist:
+
 import hdl21 as h
+
+h.netlist(our_resistive_heater_circuit, dest="spice")
+
+
+@h.module
+class Straight:
+    e1, e2 = h.Port()
+    h.r1 = h.IdealResistor(r=1e3)
+    h.r1.p = e1
+    h.r1.n = e2
+
+
+h.IdealResistor(r=1e3).p = h.Port
 
 a = h.Module(name="hey")
 a.i = h.Port()
 a.instances["hy"] = h.Module(name="s")
 a.instances
 
+
+# +
 import hdl21 as h
+import sys
+
+
+@h.module
+class Rlc:
+    p, n = h.Ports(2)
+
+    res = h.Res(r=1e3)(p=p, n=n)
+    cap = h.Cap(c=1e3)(p=p, n=n)
+    ind = h.Ind(l=1e-9)(p=p, n=n)
+
+
+# Write a spice-format netlist to stdout
+
+
+# -
+
+Rlc.instances
+
+h.netlist(Rlc, sys.stdout, fmt="spice")
 
 
 @h.paramclass

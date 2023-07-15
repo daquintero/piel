@@ -213,7 +213,7 @@ def gdsfactory_netlist_to_spice_netlist(
     pass
 
 
-def construct_hdl21_module(spice_netlist: dict):
+def construct_hdl21_module(spice_netlist: dict) -> h.Module:
     """
     This function converts a gdsfactory-spice converted netlist using the component models into a SPICE circuit.
 
@@ -239,17 +239,16 @@ def construct_hdl21_module(spice_netlist: dict):
         instance_id += 1
 
     # Create top level ports
+    for port_name_i, _ in spice_netlist["ports"].items():
+        # TODO include directionality on port_settings so that it can be easily interconencted with hdl21
+        circuit.ports[port_name_i] = h.Port()
 
     # Create the connectivity
     connections_list = convert_connections_to_tuples(spice_netlist["connections"])
     for connection_tuple in connections_list:
-        print(connection_tuple)
-        pass
-        # print(connection_tuple[0][0])
-        # print(connection_tuple[1][0])
-        # circuit.instances[connection_tuple[0][0]].connect(
-        #     connection_tuple[0][1],
-        #     circuit.instances[connection_tuple[1][0]].ports[connection_tuple[1][1]]
-        # )
+        # Connects the corresponding ports.
+        circuit.instances[connection_tuple[0][0]].ports[
+            connection_tuple[0][1]
+        ] = circuit.instances[connection_tuple[1][0]].ports[connection_tuple[1][1]]
 
     return circuit

@@ -1,6 +1,6 @@
 import hdl21 as h
 
-__all__ = ["Taper", "TaperParameters"]
+__all__ = ["taper", "TaperParameters"]
 
 
 @h.paramclass
@@ -9,9 +9,16 @@ class TaperParameters:
 
 
 @h.generator
-def Taper(params: TaperParameters) -> h.Module:
+def taper(params: TaperParameters) -> h.Module:
     """
-    Implements a `hdl21` taper resistor class.
+    Implements a `hdl21` taper resistor class. We need to include the mapping ports as we expect our gdsfactory component to be with the instance of the model.
     """
-    h.a = h.IdealResistor(r=1e3)
-    return h
+
+    @h.module
+    class Taper:
+        e1, e2 = h.Ports(2)
+        h.r1 = h.IdealResistor(r=1e3)
+        h.r1.p = e1
+        h.r1.n = e2
+
+    return Taper

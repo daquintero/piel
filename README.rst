@@ -27,7 +27,7 @@ to easily connect them all together and extract the system performance.
 Examples
 --------
 
-Follow the many `examples in the documentation <https://piel.readthedocs.io/en/stable/examples.html>`__.
+Follow the many `examples in the documentation <https://piel.readthedocs.io/en/latest/examples.html>`__.
 
 Microservices Toolset
 ---------------------
