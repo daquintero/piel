@@ -144,7 +144,8 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 our_resistive_heater_circuit = piel.construct_hdl21_module(
     spice_netlist=our_resistive_heater_spice_netlist
 )
-our_resistive_heater_circuit.instances
+dir(our_resistive_heater_circuit)
+our_resistive_heater_circuit.instances["straight_1"].elaborate()
 
 # ```
 # {'straight_1': GeneratorCall(gen=Straight),
@@ -163,6 +164,27 @@ a = h.Module(name="hey")
 a.i = h.Port()
 a.instances["hy"] = h.Module(name="s")
 a.instances
+
+import hdl21 as h
+
+
+@h.paramclass
+class MyParams:
+    # Required
+    width = h.Param(dtype=int, desc="Width. Required", default=10)
+    # Optional - including a default value
+    text = h.Param(dtype=str, desc="Optional string", default="My Favorite Module")
+
+
+@h.generator
+def MyFirstGenerator(params: MyParams) -> h.Module:
+    # A very exciting first generator function
+    m = h.Module()
+    m.i = h.Input(width=params.width)
+    return m
+
+
+h.elaborate(MyFirstGenerator(w=10))
 
 # We can now simulate so much more. Note that this API is WIP.
 

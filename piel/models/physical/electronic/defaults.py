@@ -1,12 +1,31 @@
-from .taper import Taper
-from .straight import Straight
+# from .taper import Taper
+# from .straight import Straight
 
 __all__ = ["get_default_models"]
 
+import hdl21 as h
+
+
+@h.paramclass
+class MyParams:
+    # Required
+    width = h.Param(dtype=int, desc="Width. Required", default=10)
+    # Optional - including a default value
+    text = h.Param(dtype=str, desc="Optional string", default="My Favorite Module")
+
+
+@h.generator
+def MyFirstGenerator(params: MyParams) -> h.Module:
+    # A very exciting first generator function
+    m = h.Module()
+    m.i = h.Input(width=params.width)
+    return m
+
+
 __default_models_dictionary__ = {
-    "taper": Taper,
-    "straight": Straight,
-    "via_stack": Straight,
+    "taper": MyFirstGenerator,
+    "straight": MyFirstGenerator,
+    "via_stack": MyFirstGenerator,
 }
 
 

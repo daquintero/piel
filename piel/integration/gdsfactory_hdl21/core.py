@@ -232,9 +232,10 @@ def construct_hdl21_module(spice_netlist: dict):
     instance_id = 0
     # Declare all the instances
     for instance_name_i, instance_settings_i in spice_netlist["instances"].items():
-        circuit.instances[instance_name_i] = instance_settings_i["hdl21_model"](
-            **instance_settings_i["settings"]
-        )()
+        elaborated_instance_i = h.elaborate(
+            instance_settings_i["hdl21_model"](**instance_settings_i["settings"])
+        )
+        circuit.instances[instance_name_i] = elaborated_instance_i
         instance_id += 1
 
     # Create top level ports
