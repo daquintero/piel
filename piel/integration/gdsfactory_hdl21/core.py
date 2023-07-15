@@ -234,8 +234,8 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
     for instance_name_i, instance_settings_i in spice_netlist["instances"].items():
         instance_i = instance_settings_i["hdl21_model"](
             name=instance_name_i, **instance_settings_i["settings"]
-        )
-        circuit.instances[instance_name_i] = instance_i
+        )()
+        circuit.add(val=instance_i, name=instance_name_i)
         instance_id += 1
 
     # Create top level ports
@@ -247,13 +247,13 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
     connections_list = convert_connections_to_tuples(spice_netlist["connections"])
     for connection_tuple in connections_list:
         # Connects the corresponding ports.
-        # print(circuit.instances[connection_tuple[0][0]])
-        print(connection_tuple)
-        pass
-        # circuit.instances[connection_tuple[0][0]]({
-        #     connection_tuple[0][1]: "VDD",
-        # })
+        first_instance = getattr(circuit, connection_tuple[0][0])
+        second_instance = getattr(circuit, connection_tuple[1][0])
+        second_port = getattr(second_instance, connection_tuple[1][1])
+        first_instance.connect(connection_tuple[0][1], second_port)
+        # circuit.instances[connection_tuple[0][0]].ports[
+        #     connection_tuple[0][1]
         # ] = circuit.instances[connection_tuple[1][0]]().ports[
         #     connection_tuple[1][1]
         # ]
-    return circuit
+    return h.elaborate(circuit)
