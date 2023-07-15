@@ -136,7 +136,7 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 #  'settings': {'cross_section': 'strip_heater_metal',
 #   'heater_width': 2.5,
 #   'length': 320.0},
-#  'hdl21_model': <function piel.models.physical.electronic.straight.straight(**kwargs) -> hdl21.module.Module>}
+#  'hdl21_model': Generator(name=Straight)}
 # ```
 
 # We can compose our SPICE using ``hdl21`` using the models we have provided. The final circuit can be extracted accordingly:
@@ -155,29 +155,24 @@ our_resistive_heater_circuit.instances
 #  'via_stack_2': Module(name=ViaStack)}
 # ```
 
+our_resistive_heater_circuit.instances["straight_1"].ports
+
 # Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly.
 
 our_resistive_heater_circuit.ports
 
 
-# ```python
+# ```
 # {'e1': Signal(name=None, width=1, desc=None),
 #  'e2': Signal(name=None, width=1, desc=None)}
 # ```
 
-# We can also extract similar information for our subinstances.
-
-our_resistive_heater_circuit.instances["straight_1"].ports
-
-dir(our_resistive_heater_circuit.instances["straight_1"])
-our_resistive_heater_circuit.instances["straight_1"].namespace
-
-# We can also get the netlist of each subinstance using the inherent `hdl21` functionality:
+# We can also extract information for our subinstances. We can also get the netlist of each subinstance using the inherent `hdl21` functionality:
 
 import hdl21 as h
 import sys
 
-h.netlist(our_resistive_heater_circuit.instances["taper_1"], sys.stdout, fmt="spice")
+h.netlist(our_resistive_heater_circuit.instances["straight_1"], sys.stdout, fmt="spice")
 
 # ```spice
 # * Anonymous `circuit.Package`
@@ -208,27 +203,18 @@ our_resistive_heater_circuit.instances["straight_1"].result.ports
 
 import hdl21 as h
 
-# h.Param()
+h.Param()
 
-# +
-# h.netlist(our_resistive_heater_circuit.instances, sys.stdout, fmt="spice")
-
-
-# +
-@h.module
-class Straight1:
-    e1, e2 = h.Ports(2)
-    r1 = h.IdealResistor(r=1e3)(p=e1, n=e2)
+h.netlist(our_resistive_heater_circuit, dest="spice")
 
 
 @h.module
 class Straight:
-    e1, e2 = h.Ports(2)
-    r1 = h.IdealResistor(r=1e3)(p=e1, n=e2)
+    e1, e2 = h.Port()
+    h.r1 = h.IdealResistor(r=1e3)
+    h.r1.p = e1
+    h.r1.n = e2
 
-
-h.netlist(Straight, sys.stdout, fmt="spice")
-# -
 
 h.IdealResistor(r=1e3).p = h.Port
 
