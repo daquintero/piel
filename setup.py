@@ -20,6 +20,7 @@ requirements = [
     "pandas",
     "sax",
     "thewalrus",
+    "vlsir",
     "qutip",
 ]
 

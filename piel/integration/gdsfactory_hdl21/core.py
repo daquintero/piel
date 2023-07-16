@@ -241,7 +241,7 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
     # Create top level ports
     for port_name_i, _ in spice_netlist["ports"].items():
         # TODO include directionality on port_settings so that it can be easily interconencted with hdl21
-        circuit.ports[port_name_i] = h.Port(name=port_name_i)
+        circuit.add(val=h.Port(name=port_name_i))
 
     # Create the connectivity
     connections_list = convert_connections_to_tuples(spice_netlist["connections"])
@@ -264,14 +264,15 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
                     instance_port_spice_name_i = instance_port_name_i.replace(",", "__")
                     instance_name_i, port_name_i = instance_port_name_i.split(",")
                     instance_i = getattr(circuit, instance_name_i)
-                    # instance_port_i = getattr(instance_i, port_name_i)
                     circuit.add(val=h.Port(), name=instance_port_spice_name_i)
                     circuit_port_i = getattr(circuit, instance_port_spice_name_i)
                     instance_i.connect(port_name_i, circuit_port_i)
-                    # instance_i.replace(port_name_i, circuit_port_i)
-                    # circuit_port_i = instance_port_i
-                    # circuit.add(val=getattr(instance_i, port_name_i), name=instance_port_spice_name_i)
 
-    # TODO Create the top level connectivity between the top circuit ports to the instances ports.
+    # Create the top level connectivity between the top circuit ports to the instances ports.
+    for circuit_port_name_i, instance_port_name_raw_i in spice_netlist["ports"].items():
+        instance_name_i, instance_port_name_i = instance_port_name_raw_i.split(",")
+        instance_i = getattr(circuit, instance_name_i)
+        circuit_port_i = getattr(circuit, circuit_port_name_i)
+        instance_i.connect(instance_port_name_i, circuit_port_i)
 
     return h.elaborate(circuit)
