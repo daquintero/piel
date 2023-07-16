@@ -188,6 +188,7 @@ not have to deal with directionality. After instance declaration, and models for
 corresponding port topology, it is then straightforward to parse the connectivity and implement the network,
 and extract the SPICE. """
 import hdl21 as h
+from hdl21.elab.elaborators.conntypes import get_unconnected_instance_connections
 from .conversion import convert_connections_to_tuples
 
 __all__ = ["gdsfactory_netlist_to_spice_netlist", "construct_hdl21_module"]
@@ -256,4 +257,13 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
         # ] = circuit.instances[connection_tuple[1][0]]().ports[
         #     connection_tuple[1][1]
         # ]
+
+    # Check missing conns and create top-level ports for them if necessary:
+    for instance_name_i, _ in circuit.instances.items():
+        instance_i = getattr(circuit, instance_name_i)
+        print(instance_i)
+        print(circuit)
+        print(instance_i.conns)
+        print(get_unconnected_instance_connections(module=circuit, inst=instance_i))
+
     return h.elaborate(circuit)

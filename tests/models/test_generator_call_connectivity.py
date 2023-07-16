@@ -39,6 +39,10 @@ a = MySecondGenerator(width=10)
 print(a)
 b = h.elaborate(a)
 print(b)
-import sys
+# import sys
 
-print(h.netlist(b, sys.stdout, fmt="spice"))
+# from hdl21.elab.elaborators.conntypes import get_unconnected_instance_connections
+
+# missing_conns = get_unconnected_instance_connections(b, inst=getattr(b, "a"))
+# print(missing_conns)
+# print(h.netlist(b, sys.stdout, fmt="spice"))
