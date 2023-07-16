@@ -2,7 +2,9 @@
 
 # This example demonstrates the modelling of multi-physical component interconnection and system design.
 
+import sys
 from gdsfactory.components import mzi2x2_2x2_phase_shifter
+import hdl21 as h
 import piel
 
 # ## Start from `gdsfactory`
@@ -105,18 +107,21 @@ our_resistive_heater_netlist = our_resistive_heater().get_netlist(
 
 # We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist. However, to do this we need to assign what type of element each component each gdsfactory instance is. We show an algorithm that does the following in order to construct our SPICE netlist:
 #
-# 1. Extract all instances and required models from the netlist
-# 2. Verify that the models have been provided. Each model describes the type of component this is, how many ports it requires and so on.
-# 3. Map the connections to each instance port as part of the instance dictionary.
+# 1. Parse the gdsfactory netlist, assign the electrical ports for the model. Extract all instances and
+# required models from the netlist.
+# 2. Verify that the models have been provided. Each model describes the type of
+# component this is, how many ports it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
+# netlist, this is reasonable as it is composed, and not a generator class. This generates a large amount of instantiated ``hdl21`` modules that are generated from `generators`.
+# 3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the ports accordingly.
 #
 # `piel` does this for you already:
 
-our_resistive_heater_spice_netlist = piel.gdsfactory_netlist_to_spice_netlist(
+our_resistive_heater_spice_netlist = piel.gdsfactory_netlist_with_hdl21_models(
     our_resistive_heater_netlist
 )
 our_resistive_heater_spice_netlist
 
-# This will allow us to create our SPICE connectivity accordingly because it is in a suitable netlist format. Each of these components in this netlist is some form of an electrical model or component. We start off from our instance definitions. They are in this format:
+# This will allow us to create our SPICE connectivity accordingly because it is in a suitable netlist format using `hdl21`. Each of these components in this netlist is some form of an electrical model or component. We start off from our instance definitions. They are in this format:
 
 our_resistive_heater_netlist["instances"]["straight_1"]
 
@@ -133,36 +138,211 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 #  'settings': {'cross_section': 'strip_heater_metal',
 #   'heater_width': 2.5,
 #   'length': 320.0},
-#  'connections': [('straight_1,e1', 'taper_1,e2'),
-#   ('straight_1,e2', 'taper_2,e2')],
-#  'spice_nets': {'e1': 'straight_1__e1___taper_1__e2',
-#   'e2': 'straight_1__e2___taper_2__e2'},
-#  'spice_model': <function piel.models.physical.electronic.spice.resistor.basic_resistor()>}
+#  'hdl21_model': Generator(name=Straight)}
 # ```
 
-# We know its connectivity from they key name. In this case, `straight_1` is connected to `taper1` and `taper2`. We know that it is a resistive element, so that means that the SPICE netlist will be in the form:
-# ```
-# R<SOMEID>
-# ```
-#
-# We can compose our SPICE using hdl21 using the models we have provided. The final circuit can be extracted accordingly:
+# We can compose our SPICE using ``hdl21`` using the models we have provided. The final circuit can be extracted accordingly:
 
-spice_circuit = piel.spice_dictionary_to_spice_netlist(
+our_resistive_heater_circuit = piel.construct_hdl21_module(
     spice_netlist=our_resistive_heater_spice_netlist
 )
-print(spice_circuit)
+our_resistive_heater_circuit.instances
+
+# ```python
+# {'straight_1': Instance(name=straight_1 of=GeneratorCall(gen=straight)),
+#  'taper_1': Instance(name=taper_1 of=GeneratorCall(gen=taper)),
+#  'taper_2': Instance(name=taper_2 of=GeneratorCall(gen=taper)),
+#  'via_stack_1': Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)),
+#  'via_stack_2': Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack))}
+# ```
+
+# Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly. Note that the unconnected ports need to be exposed for proper SPICE composition.
+
+our_resistive_heater_circuit.ports
+
+# ```python
+# {'e1': Signal(name=None, width=1, desc=None),
+#  'e2': Signal(name=None, width=1, desc=None),
+#  'via_stack_1__e1': PortRef(inst=Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)), portname='e1'),
+#  'via_stack_1__e2': PortRef(inst=Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)), portname='e2'),
+#  'via_stack_1__e4': PortRef(inst=Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)), portname='e4'),
+#  'via_stack_2__e2': PortRef(inst=Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack)), portname='e2'),
+#  'via_stack_2__e3': PortRef(inst=Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack)), portname='e3'),
+#  'via_stack_2__e4': PortRef(inst=Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack)), portname='e4')}
+# ```
+
+# Same for the signals
+
+our_resistive_heater_circuit.signals
+
+# ```python
+# {'taper_1_e2': Signal(name='taper_1_e2', width=1, desc=None),
+#  'taper_2_e2': Signal(name='taper_2_e2', width=1, desc=None),
+#  'via_stack_1_e3': Signal(name='via_stack_1_e3', width=1, desc=None),
+#  'via_stack_1_e1': Signal(name='via_stack_1_e1', width=1, desc=None),
+#  'via_stack_1_e2': Signal(name='via_stack_1_e2', width=1, desc=None),
+#  'via_stack_1_e4': Signal(name='via_stack_1_e4', width=1, desc=None),
+#  'via_stack_2_e1': Signal(name='via_stack_2_e1', width=1, desc=None),
+#  'via_stack_2_e2': Signal(name='via_stack_2_e2', width=1, desc=None),
+#  'via_stack_2_e3': Signal(name='via_stack_2_e3', width=1, desc=None),
+#  'via_stack_2_e4': Signal(name='via_stack_2_e4', width=1, desc=None)}
+# ```
+
+# We can explore the models we have provided too:
+
+piel_hdl21_models = piel.models.physical.electronic.get_default_models()
+piel_hdl21_models
+
+# We can extract the SPICE out of each model
+
+h.netlist(piel_hdl21_models["straight"](), sys.stdout, fmt="spice")
+
+# ```spice
+# * Anonymous `circuit.Package`
+# * Generated by `vlsirtools.SpiceNetlister`
+# *
+#
+# .SUBCKT Straight__
+# + e1 e2
+# * No parameters
+#
+# rr1
+# + e1 e2
+# + 1000
+# * No parameters
+#
+#
+# .ENDS
+# ```
+
+# We can also extract information for our subinstances. We can also get the netlist of each subinstance using the inherent `hdl21` functionality:
+
+h.netlist(
+    our_resistive_heater_circuit.instances["straight_1"].of, sys.stdout, fmt="spice"
+)
 
 # ```
-# .title straight_heater_metal_s_b8a2a400
-# R0 straight_1__e1___taper_1__e2 straight_1__e2___taper_2__e2 10kOhm
-# R2 straight_1__e2___taper_2__e2 taper_2__e1___via_stack_2__e1 10kOhm
+# * Anonymous `circuit.Package`
+# * Generated by `vlsirtools.SpiceNetlister`
+# *
+#
+# .SUBCKT Straight__
+# + e1 e2
+# * No parameters
+#
+# rr1
+# + e1 e2
+# + 1000
+# * No parameters
+#
+#
+# .ENDS
+# ```
+
+# One of the main complexities of this translation is that for the SPICE to be generated, the network has to be valid. Sometimes, in direct `gdsfactory` components, there could be incomplete or undeclared port networks. This means that for the SPICE to be generated, we have to fix the connectivity in some form, and means that there might not be a direct translation from `gdsfactory`. This is inherently related to the way that the construction of the netlists are generated. This means that to some form, we need to connect the unconnected ports in order for the full netlist to be generated. The complexity is in components such as the via where there are four ports to it on each side. SPICE would treat them as four different inputs that need to be connected.
+
+# Now let's extract the SPICE for our heater circuit:
+
+h.netlist(our_resistive_heater_circuit, sys.stdout, fmt="spice")
+
+# ```
+# * Anonymous `circuit.Package`
+# * Generated by `vlsirtools.SpiceNetlister`
+# *
+#
+# .SUBCKT Straight__
+# + e1 e2
+# * No parameters
+#
+# rr1
+# + e1 e2
+# + 1000
+# * No parameters
+#
+#
+# .ENDS
+#
+# .SUBCKT Taper__
+# + e1 e2
+# * No parameters
+#
+# rr1
+# + e1 e2
+# + 1000
+# * No parameters
+#
+#
+# .ENDS
+#
+# .SUBCKT ViaStack__
+# + e1 e2 e3 e4
+# * No parameters
+#
+# rr1
+# + e1 e2
+# + 1000
+# * No parameters
+#
+#
+# rr2
+# + e2 e3
+# + 1000
+# * No parameters
+#
+#
+# rr3
+# + e3 e4
+# + 1000
+# * No parameters
+#
+#
+# rr4
+# + e4 e1
+# + 1000
+# * No parameters
+#
+#
+# .ENDS
+#
+# .SUBCKT straight_heater_metal_s_b8a2a400
+# + e1 e2 via_stack_1__e1 via_stack_1__e2 via_stack_1__e4 via_stack_2__e2 via_stack_2__e3 via_stack_2__e4
+# * No parameters
+#
+# xstraight_1
+# + taper_1_e2 taper_2_e2
+# + Straight__
+# * No parameters
+#
+#
+# xtaper_1
+# + via_stack_1_e3 taper_1_e2
+# + Taper__
+# * No parameters
+#
+#
+# xtaper_2
+# + via_stack_2_e1 taper_2_e2
+# + Taper__
+# * No parameters
+#
+#
+# xvia_stack_1
+# + via_stack_1__e1 via_stack_1__e2 via_stack_1_e3 via_stack_1__e4
+# + ViaStack__
+# * No parameters
+#
+#
+# xvia_stack_2
+# + via_stack_2_e1 via_stack_2__e2 via_stack_2__e3 via_stack_2__e4
+# + ViaStack__
+# * No parameters
+#
+#
+# .ENDS
+#
 # ```
 
 # We can now simulate so much more. Note that this API is WIP.
-
-spice_circuit
-
-# We can extract the electrical components of our heater implementation on its own first.
 
 # ## `SPICE` Integration
 
@@ -173,14 +353,6 @@ spice_circuit
 
 # ### Creating our Stimulus
 
-# Let's first look into how to map a numpy data into a SPICE waveform. The interconnect of electrical stimulus will be done specifically through standard numpy arrays. One of the main complexities of inputting the SPICE signal information is that SPICE solvers are designed to input specific types of signals such as sine waves, step responses, pulses, squares, sawtooth waves with parameters defined for those signals. However, we might want to explore how custom signals affect our circuit, say in a particular modulation regime. Adding non-standard waves is custom behaviour in some SPICE solvers. However, this can be done in the form of a "Piecewise Linear Controlled Source" as in the 12.2.7 section of the [NGSpice documentation](https://ngspice.sourceforge.io/docs/ngspice-manual.pdf.). For the sake of simplicity, we will start with the pre-built signal sources.
+# Let's first look into how to map a numpy data into a SPICE waveform.
 
 # ### Mixed-Signal Electronic Photonic Simulation Methodology
-
-# We can now simulate SPICE-based circuits alongside our defined layout electrical models. This allows us the power to implement our own sources, and our own components in a more complete manner. However, this does not fundamentally solve the problem we have on multiple time domain simulations. We have timing data from digital sources and analog electronic sources. If you have delayed photonic signals, then we also have timing data independently in the photonic domain. This leads to a major time-synchronisation issue. It is in this type of problem structure that a microservice implementation again comes to the rescue.
-#
-# For example, digital signals are particularly valuable and useful when considering steady-state signal propagation. Analogue signals are particularly interesting in the transition between electronic states, as the rise-times and signal-shapes will be determined by RC constants primarily. In the midst of all of this, photonic signals can change independently. There is a direct control from the electronics to the unitary of the component, and at discretised points in time the unitary can be computed. For the period of discrete time this signal is valid, the unitary can be computed. The accuracy desired is just determined by the discretization time. In that period of time, there is a linear relationship between optical signal inputs, and outputs.
-#
-# As an approximation, if the signals are switching between logic levels, then it is reasonable to compute the analog rise-time and fall-time signals accordingly and operate on them linearly if the digital clock period is high. However, if the logic levels in which the signal is switching is
-
-#

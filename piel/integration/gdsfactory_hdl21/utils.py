@@ -1,3 +1,6 @@
+__all__ = ["rename_gdsfactory_connections_to_spice", "convert_tuples_to_strings"]
+
+
 def rename_gdsfactory_connections_to_spice(connections: dict):
     """
     We convert the connection connectivity of the gdsfactory netlist into names that can be integrated into a SPICE

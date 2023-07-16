@@ -12,6 +12,6 @@ Examples
    examples/01c_openlane_design_report_analysis
    examples/02_cocotb_simulation
    examples/03_sax_basics
-   examples/03a_sax_active_cosimulation
-   examples/04_multi_domain_interconnect
+   examples/03a_sax_cocotb_cosimulation
+   examples/04_spice_cosimulation
    examples/05_quantum_integration_basics

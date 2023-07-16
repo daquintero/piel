@@ -1,4 +1,6 @@
-"""The way each of these models should work is that they use the settings from the `gdsfactory` component,
+"""
+# TODO move and update.
+The way each of these models should work is that they use the settings from the `gdsfactory` component,
 to create a parametric SPICE directive.
 
 These functions map a particular model, with an instance representation that corresponds to the given netlist

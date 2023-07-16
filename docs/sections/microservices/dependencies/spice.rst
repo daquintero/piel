@@ -13,5 +13,4 @@ Integration Scheme
 In `piel`, the `SPICE`-generated circuits will always be raw `SPICE` rather than using a package to create a circuit model or related. This is because any serious `SPICE` program will always accept raw inputs that can be integrated into its solvers. This will allow us in the future to integrate with `SPECTRE` and other related programs.
 
 .. toctree::
-
     relevant_spice_projects

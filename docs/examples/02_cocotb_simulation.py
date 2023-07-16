@@ -47,7 +47,7 @@ cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(
 )
 cocotb_simulation_output_files
 
-# ```
+# ```python
 # ['C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\simple_design\\simple_design\\tb\\out\\adder_randomised_test.csv']
 # ```
 
