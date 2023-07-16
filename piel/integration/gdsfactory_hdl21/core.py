@@ -188,7 +188,6 @@ not have to deal with directionality. After instance declaration, and models for
 corresponding port topology, it is then straightforward to parse the connectivity and implement the network,
 and extract the SPICE. """
 import hdl21 as h
-from hdl21.elab.elaborators.conntypes import get_unconnected_instance_connections
 from .conversion import convert_connections_to_tuples
 
 __all__ = ["gdsfactory_netlist_to_spice_netlist", "construct_hdl21_module"]
@@ -250,20 +249,38 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
         # Connects the corresponding ports.
         first_instance = getattr(circuit, connection_tuple[0][0])
         second_instance = getattr(circuit, connection_tuple[1][0])
+        first_port_name = connection_tuple[0][1]
         second_port = getattr(second_instance, connection_tuple[1][1])
-        first_instance.connect(connection_tuple[0][1], second_port)
-        # circuit.instances[connection_tuple[0][0]].ports[
-        #     connection_tuple[0][1]
-        # ] = circuit.instances[connection_tuple[1][0]]().ports[
-        #     connection_tuple[1][1]
-        # ]
+        first_instance.connect(first_port_name, second_port)
 
+    # Expose all the missing electrical warning connection internal ports to the outer circuit composition so that full modelling can be performed, and no construction errors.
+    if "warnings" in spice_netlist:
+        if "electrical" in spice_netlist["warnings"]:
+            if "unconnected_ports" in spice_netlist["warnings"]["electrical"]:
+                unconnected_ports_list = spice_netlist["warnings"]["electrical"][
+                    "unconnected_ports"
+                ][0]["ports"]
+                for instance_port_i in unconnected_ports_list:
+                    instance_port_spice_name_i = instance_port_i.replace(",", "__")
+                    instance_name_i, port_name_i = instance_port_i.split(",")
+                    instance_i = getattr(circuit, instance_name_i)
+                    circuit.ports[instance_port_spice_name_i] = getattr(
+                        instance_i, port_name_i
+                    )
+
+    # circuit.instances[connection_tuple[0][0]].ports[
+    #     connection_tuple[0][1]
+    # ] = circuit.instances[connection_tuple[1][0]]().ports[
+    #     connection_tuple[1][1]
+    # ]
+
+    # print(get_unconnected_instance_connections(module=circuit, inst=getattr(circuit, "via_stack_1")))
     # Check missing conns and create top-level ports for them if necessary:
-    for instance_name_i, _ in circuit.instances.items():
-        instance_i = getattr(circuit, instance_name_i)
-        print(instance_i)
-        print(circuit)
-        print(instance_i.conns)
-        print(get_unconnected_instance_connections(module=circuit, inst=instance_i))
+    # for instance_name_i, _ in circuit.instances.items():
+    #     instance_i = getattr(circuit, instance_name_i)
+    #     print(instance_i)
+    #     print(circuit)
+    #     print(instance_i.conns)
+    #     print(get_unconnected_instance_connections(module=circuit, inst=instance_i))
 
     return h.elaborate(circuit)

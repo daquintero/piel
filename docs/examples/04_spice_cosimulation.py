@@ -149,20 +149,26 @@ our_resistive_heater_circuit = piel.construct_hdl21_module(
 our_resistive_heater_circuit.instances
 
 # ```python
-# {'straight_1': Instance(name=None of=GeneratorCall(gen=straight)),
-#  'taper_1': Instance(name=None of=GeneratorCall(gen=taper)),
-#  'taper_2': Instance(name=None of=GeneratorCall(gen=taper)),
-#  'via_stack_1': Instance(name=None of=GeneratorCall(gen=via_stack)),
-#  'via_stack_2': Instance(name=None of=GeneratorCall(gen=via_stack))}
+# {'straight_1': Instance(name=straight_1 of=GeneratorCall(gen=straight)),
+#  'taper_1': Instance(name=taper_1 of=GeneratorCall(gen=taper)),
+#  'taper_2': Instance(name=taper_2 of=GeneratorCall(gen=taper)),
+#  'via_stack_1': Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)),
+#  'via_stack_2': Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack))}
 # ```
 
-# Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly.
+# Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly. Note that the unconnected ports need to be exposed for proper SPICE composition.
 
 our_resistive_heater_circuit.ports
 
 # ```python
 # {'e1': Signal(name=None, width=1, desc=None),
-#  'e2': Signal(name=None, width=1, desc=None)}
+#  'e2': Signal(name=None, width=1, desc=None),
+#  'via_stack_1__e1': PortRef(inst=Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)), portname='e1'),
+#  'via_stack_1__e2': PortRef(inst=Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)), portname='e2'),
+#  'via_stack_1__e4': PortRef(inst=Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)), portname='e4'),
+#  'via_stack_2__e2': PortRef(inst=Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack)), portname='e2'),
+#  'via_stack_2__e3': PortRef(inst=Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack)), portname='e3'),
+#  'via_stack_2__e4': PortRef(inst=Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack)), portname='e4')}
 # ```
 
 # Same for the signals
@@ -173,7 +179,13 @@ our_resistive_heater_circuit.signals
 # {'taper_1_e2': Signal(name='taper_1_e2', width=1, desc=None),
 #  'taper_2_e2': Signal(name='taper_2_e2', width=1, desc=None),
 #  'via_stack_1_e3': Signal(name='via_stack_1_e3', width=1, desc=None),
-#  'via_stack_2_e1': Signal(name='via_stack_2_e1', width=1, desc=None)}
+#  'via_stack_1_e1': Signal(name='via_stack_1_e1', width=1, desc=None),
+#  'via_stack_1_e2': Signal(name='via_stack_1_e2', width=1, desc=None),
+#  'via_stack_1_e4': Signal(name='via_stack_1_e4', width=1, desc=None),
+#  'via_stack_2_e1': Signal(name='via_stack_2_e1', width=1, desc=None),
+#  'via_stack_2_e2': Signal(name='via_stack_2_e2', width=1, desc=None),
+#  'via_stack_2_e3': Signal(name='via_stack_2_e3', width=1, desc=None),
+#  'via_stack_2_e4': Signal(name='via_stack_2_e4', width=1, desc=None)}
 # ```
 
 # We can explore the models we have provided too:
@@ -226,6 +238,8 @@ h.netlist(
 #
 # .ENDS
 # ```
+
+# One of the main complexities of this translation is that for the SPICE to be generated, the network has to be valid. Sometimes, in direct `gdsfactory` components, there could be incomplete or undeclared port networks. This means that for the SPICE to be generated, we have to fix the connectivity in some form, and means that there might not be a direct translation from `gdsfactory`. This is inherently related to the way that the construction of the netlists are generated. This means that to some form, we need to connect the unconnected ports in order for the full netlist to be generated. The complexity is in components such as the via where there are four ports to it on each side. SPICE would treat them as four different inputs that need to be connected.
 
 # Now let's extract the SPICE for our heater circuit:
 

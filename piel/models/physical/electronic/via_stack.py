@@ -26,7 +26,8 @@ def via_stack(params: ViaStackParameters) -> h.Module:
         # e1 = e2 = e3 = e4
         # Top port e5 is output of via
         r1 = h.IdealResistor(r=1e3)(p=e1, n=e2)
-        r2 = h.IdealResistor(r=1e3)(p=e3, n=e4)
-        r1.p = r2.p
+        r2 = h.IdealResistor(r=1e3)(p=e2, n=e3)
+        r3 = h.IdealResistor(r=1e3)(p=e3, n=e4)
+        r4 = h.IdealResistor(r=1e3)(p=e4, n=e1)
 
     return ViaStack
