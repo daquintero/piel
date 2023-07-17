@@ -1,5 +1,7 @@
 # Motivation
 
+## Open-Source Motivation
+
 Standing on the shoulders of open-source giants.
 
 As scientists, not as software developers, sometimes we have a knack for reinventing the (software) wheel in our projects whilst not creating interfaces for utility connectivity of the work we do. I see a tendency to focus on solving a specific circumstantial problem, rather than allowing others to clearly understand the context and issue, let the knowledge from multiple disciplines contribute to a good solution, and generalise the functionality of our toolset to achieve more in the future.

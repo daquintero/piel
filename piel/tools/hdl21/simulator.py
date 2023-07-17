@@ -1,3 +1,25 @@
+import hdl21 as h
+from hdl21.sim import Save, SaveMode, Tran
+
+
+def configure_transient_simulation(
+    circuit: h.Module,
+    stop_time_s: float,
+    step_time_s: float,
+):
+    """
+    This function configures the transient simulation for the circuit.
+    """
+
+    @h.sim
+    class Simulation:
+        tb = circuit
+        transient_tb = Tran(stop_time_s=stop_time_s, step_time_s=step_time_s)
+        save_all = Save(SaveMode.ALL)
+
+    return Simulation
+
+
 # def configure_ngspice_simulator(
 #     circuit,
 # ) -> Circuit:

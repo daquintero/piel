@@ -1,7 +1,7 @@
 **P**\hotonic **I**\ntegrated **EL**\ectronics
 ===============================================
 
-|PyPI Version| |Build Status| |Documentation Status| |Updates|
+|PyPI Name| |PyPI Version| |Build Status| |Documentation Status| |MIT| |Black|
 
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.
@@ -37,6 +37,8 @@ microelectronics through the functionality of the
 `IIC-OSIC-TOOLS <https://github.com/iic-jku/iic-osic-tools>`__ and
 photonics via `GDSFactory <https://github.com/gdsfactory/gdsfactory>`__.
 
+.. image:: docs/_static/img/piel_microservice_structure.png
+
 Some existing microservice dependency integrations are:
 
 * `cocotb <https://github.com/cocotb/cocotb>`__ - a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python.
@@ -53,11 +55,18 @@ Contribution
 If you feel dedicated enough to become a project maintainer, or just
 want to do a single contribution, let's do this together!
 
-.. |PyPI Version| image:: https://img.shields.io/pypi/v/piel.svg
-   :target: https://pypi.python.org/pypi/piel
+
+.. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
 .. |Build Status| image:: https://img.shields.io/travis/daquintero/piel.svg
    :target: https://travis-ci.com/daquintero/piel
 .. |Documentation Status| image:: https://readthedocs.org/projects/piel/badge/?version=latest
    :target: https://piel.readthedocs.io/en/latest/?version=latest
+.. |MIT| image:: https://img.shields.io/github/license/gdsfactory/gdsfactory
+   :target: https://choosealicense.com/licenses/mit/
+.. |PyPI Name| image:: https://img.shields.io/badge/pypi-piel-blue
+   :target: https://pypi.python.org/pypi/piel
+.. |PyPI Version| image:: https://img.shields.io/pypi/v/piel.svg
+   :target: https://pypi.python.org/pypi/piel
 .. |Updates| image:: https://pyup.io/repos/github/daquintero/piel/shield.svg
    :target: https://pyup.io/repos/github/daquintero/piel/
