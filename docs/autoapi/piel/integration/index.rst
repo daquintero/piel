@@ -126,6 +126,21 @@ Functions
    .. code-block::
 
        >>> import gdsfactory as gf
+              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
+              >>> from piel.models.physical.electronic import get_default_models
+              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"),generators=get_default_models())
+
+
+              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
+              >>> from piel.models.physical.electronic import get_default_models
+              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), generators=get_default_models())
+
+
+              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
+              >>> from piel.models.physical.electronic import get_default_models
+              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), generators=get_default_models())
+
+
        >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
        >>> from piel.models.physical.electronic import get_default_models
        >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), models=get_default_models())

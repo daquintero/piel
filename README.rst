@@ -37,6 +37,8 @@ microelectronics through the functionality of the
 `IIC-OSIC-TOOLS <https://github.com/iic-jku/iic-osic-tools>`__ and
 photonics via `GDSFactory <https://github.com/gdsfactory/gdsfactory>`__.
 
+.. image:: docs/_static/img/piel_microservice_structure.png
+
 Some existing microservice dependency integrations are:
 
 * `cocotb <https://github.com/cocotb/cocotb>`__ - a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python.

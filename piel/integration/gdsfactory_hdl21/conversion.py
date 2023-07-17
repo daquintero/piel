@@ -24,7 +24,7 @@ from .utils import convert_tuples_to_strings
 
 __all__ = [
     "convert_connections_to_tuples",
-    "gdsfactory_netlist_with_hdl21_models",
+    "gdsfactory_netlist_with_hdl21_generators",
 ]
 
 
@@ -91,9 +91,9 @@ def get_matching_port_nets(names, connections):
     return matching_strings
 
 
-def gdsfactory_netlist_with_hdl21_models(
+def gdsfactory_netlist_with_hdl21_generators(
     gdsfactory_netlist: dict,
-    models=None,
+    generators=None,
 ):
     """
     This function allows us to map the ``hdl21`` models dictionary in a `sax`-like implementation to the ``GDSFactory`` netlist. This allows us to iterate over each instance in the netlist and construct a circuit after this function.]
@@ -103,20 +103,20 @@ def gdsfactory_netlist_with_hdl21_models(
     .. code-block::
 
         >>> import gdsfactory as gf
-        >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
+        >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_generators
         >>> from piel.models.physical.electronic import get_default_models
-        >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), models=get_default_models())
+        >>> gdsfactory_netlist_with_hdl21_generators(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"),generators=get_default_models())
 
     Args:
         gdsfactory_netlist: The netlist from ``GDSFactory`` to map to the ``hdl21`` models dictionary.
-        models: The ``hdl21`` models dictionary to map to the ``GDSFactory`` netlist.
+        generators: The ``hdl21`` models dictionary to map to the ``GDSFactory`` netlist.
 
     Returns:
         The ``GDSFactory`` netlist with the ``hdl21`` models dictionary.
     """
     electrical_models_netlist = copy.copy(gdsfactory_netlist)
-    if models is None:
-        models = get_default_models()
+    if generators is None:
+        generators = get_default_models()
 
     netlist = _ensure_recursive_netlist_dict(gdsfactory_netlist)
 
@@ -126,23 +126,25 @@ def gdsfactory_netlist_with_hdl21_models(
 
     recnet: RecursiveNetlist = _validate_net(netlist)
     dependency_dag: nx.DiGraph = _validate_dag(
-        create_dag(recnet, models)
+        create_dag(recnet, generators)
     )  # directed acyclic graph
-    models = _validate_models({**(models or {}), **instance_models}, dependency_dag)
+    generators = _validate_models(
+        {**(generators or {}), **instance_models}, dependency_dag
+    )
 
     new_models = {}
     current_models = {}
     model_names = list(nx.topological_sort(dependency_dag))[::-1]
     for model_name in model_names:
-        if model_name in models:
-            new_models[model_name] = models[model_name]
+        if model_name in generators:
+            new_models[model_name] = generators[model_name]
             continue
 
         flatnet = recnet.__root__[model_name]
         current_models.update(new_models)
         new_models = {}
         inst2model = {
-            k: models[inst.component] for k, inst in flatnet.instances.items()
+            k: generators[inst.component] for k, inst in flatnet.instances.items()
         }
 
         # Iterate over every instance and append the corresponding required SPICE connectivity

@@ -187,17 +187,19 @@ model too. For the sake of easiness, we can describe these as ``hdl21`` equivale
 not have to deal with directionality. After instance declaration, and models for each of these components with the
 corresponding port topology, it is then straightforward to parse the connectivity and implement the network,
 and extract the SPICE. """
+import hdl21
 import hdl21 as h
-from .conversion import convert_connections_to_tuples
+from .conversion import (
+    convert_connections_to_tuples,
+    gdsfactory_netlist_with_hdl21_generators,
+)
 
 __all__ = ["gdsfactory_netlist_to_spice_netlist", "construct_hdl21_module"]
 
 
 def gdsfactory_netlist_to_spice_netlist(
-    gdsfactory_netlist: dict,
-    models: dict,
-    return_raw_spice: bool = False,
-):
+    gdsfactory_netlist: dict, generators: dict, **kwargs
+) -> hdl21.Module:
     """
     This function converts a GDSFactory electrical netlist into a standard SPICE netlist. It follows the same
     principle as the `sax` circuit composition.
@@ -209,8 +211,19 @@ def gdsfactory_netlist_to_spice_netlist(
     We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
     composition circuit. Write the SPICE component based on the model into a total circuit representation in string
     from the reshaped gdsfactory dictionary into our own structure.
+
+    Args:
+        gdsfactory_netlist: GDSFactory netlist
+        generators: Dictionary of Generators
+
+    Returns:
+        hdl21 module or raw SPICE string
     """
-    pass
+    spice_netlist = gdsfactory_netlist_with_hdl21_generators(
+        gdsfactory_netlist=gdsfactory_netlist, generators=generators
+    )
+    hdl21_module = construct_hdl21_module(spice_netlist=spice_netlist)
+    return hdl21_module
 
 
 def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
