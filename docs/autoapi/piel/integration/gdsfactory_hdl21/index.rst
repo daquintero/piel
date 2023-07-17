@@ -27,11 +27,11 @@ Functions
    piel.integration.gdsfactory_hdl21.gdsfactory_netlist_to_spice_netlist
    piel.integration.gdsfactory_hdl21.construct_hdl21_module
    piel.integration.gdsfactory_hdl21.convert_connections_to_tuples
-   piel.integration.gdsfactory_hdl21.gdsfactory_netlist_with_hdl21_models
+   piel.integration.gdsfactory_hdl21.gdsfactory_netlist_with_hdl21_generators
 
 
 
-.. py:function:: gdsfactory_netlist_to_spice_netlist(gdsfactory_netlist: dict, models: dict, return_raw_spice: bool = False)
+.. py:function:: gdsfactory_netlist_to_spice_netlist(gdsfactory_netlist: dict, generators: dict, **kwargs) -> hdl21.Module
 
    This function converts a GDSFactory electrical netlist into a standard SPICE netlist. It follows the same
    principle as the `sax` circuit composition.
@@ -43,6 +43,11 @@ Functions
    We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
    composition circuit. Write the SPICE component based on the model into a total circuit representation in string
    from the reshaped gdsfactory dictionary into our own structure.
+
+   :param gdsfactory_netlist: GDSFactory netlist
+   :param generators: Dictionary of Generators
+
+   :returns: hdl21 module or raw SPICE string
 
 
 .. py:function:: construct_hdl21_module(spice_netlist: dict, **kwargs) -> hdl21.Module
@@ -82,7 +87,7 @@ Functions
        ('via_stack_1', 'e3')), (('taper_2', 'e1'), ('via_stack_2', 'e1'))]
 
 
-.. py:function:: gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist: dict, models=None)
+.. py:function:: gdsfactory_netlist_with_hdl21_generators(gdsfactory_netlist: dict, generators=None)
 
    This function allows us to map the ``hdl21`` models dictionary in a `sax`-like implementation to the ``GDSFactory`` netlist. This allows us to iterate over each instance in the netlist and construct a circuit after this function.]
 
@@ -91,46 +96,11 @@ Functions
    .. code-block::
 
        >>> import gdsfactory as gf
-                     >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_generators
-                     >>> from piel.models.physical.electronic import get_default_models
-                     >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"),generators=get_default_models())
-
-
-                     >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
-                     >>> from piel.models.physical.electronic import get_default_models
-                     >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), generators=get_default_models())
-
-
-                     >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
-                     >>> from piel.models.physical.electronic import get_default_models
-                     >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), generators=get_default_models())
-
-
-              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
-              >>> from piel.models.physical.electronic import get_default_models
-              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), models=get_default_models())
-
-
-              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
-              >>> from piel.models.physical.electronic import get_default_models
-              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"),generators=get_default_models())
-
-
-              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
-              >>> from piel.models.physical.electronic import get_default_models
-              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), generators=get_default_models())
-
-
-              >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
-              >>> from piel.models.physical.electronic import get_default_models
-              >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), generators=get_default_models())
-
-
-       >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_models
+       >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_generators
        >>> from piel.models.physical.electronic import get_default_models
-       >>> gdsfactory_netlist_with_hdl21_models(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"), models=get_default_models())
+       >>> gdsfactory_netlist_with_hdl21_generators(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"),generators=get_default_models())
 
    :param gdsfactory_netlist: The netlist from ``GDSFactory`` to map to the ``hdl21`` models dictionary.
-   :param models: The ``hdl21`` models dictionary to map to the ``GDSFactory`` netlist.
+   :param generators: The ``hdl21`` models dictionary to map to the ``GDSFactory`` netlist.
 
    :returns: The ``GDSFactory`` netlist with the ``hdl21`` models dictionary.

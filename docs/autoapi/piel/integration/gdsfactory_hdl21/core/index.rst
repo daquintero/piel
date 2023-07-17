@@ -211,7 +211,7 @@ Functions
 
 
 
-.. py:function:: gdsfactory_netlist_to_spice_netlist(gdsfactory_netlist: dict, models: dict, return_raw_spice: bool = False)
+.. py:function:: gdsfactory_netlist_to_spice_netlist(gdsfactory_netlist: dict, generators: dict, **kwargs) -> hdl21.Module
 
    This function converts a GDSFactory electrical netlist into a standard SPICE netlist. It follows the same
    principle as the `sax` circuit composition.
@@ -223,6 +223,11 @@ Functions
    We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
    composition circuit. Write the SPICE component based on the model into a total circuit representation in string
    from the reshaped gdsfactory dictionary into our own structure.
+
+   :param gdsfactory_netlist: GDSFactory netlist
+   :param generators: Dictionary of Generators
+
+   :returns: hdl21 module or raw SPICE string
 
 
 .. py:function:: construct_hdl21_module(spice_netlist: dict, **kwargs) -> hdl21.Module

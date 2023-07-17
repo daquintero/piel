@@ -30,6 +30,7 @@ is an input or output is essential based on the initially parsed netlist. A gene
 and the output module can be connected as part of a larger instantiation accordingly.
 
 .. code-block::
+
     import hdl21 as h
     @h.generator
     def MyFirstGenerator(params: MyParams) -> h.Module:
