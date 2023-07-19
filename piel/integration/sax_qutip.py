@@ -1,5 +1,6 @@
 import qutip  # NOQA : F401
 import sax
+import numpy as np
 import jax.numpy as jnp
 from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
 
@@ -49,7 +50,8 @@ def matrix_to_qutip_qobj(
         qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
 
     """
-    qobj_unitary = qutip.Qobj(s_parameters_standard_matrix)
+    s_parameter_standard_matrix_numpy = np.asarray(s_parameters_standard_matrix)
+    qobj_unitary = qutip.Qobj(s_parameter_standard_matrix_numpy)
     return qobj_unitary
 
 
@@ -95,7 +97,8 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
         s_parameters_standard_matrix,
         input_ports_index_tuple_order,
     ) = sax_to_s_parameters_standard_matrix(sax_input)
-    qobj_unitary = matrix_to_qutip_qobj(s_parameters_standard_matrix)
+    s_parameter_standard_matrix_numpy = np.asarray(s_parameters_standard_matrix)
+    qobj_unitary = matrix_to_qutip_qobj(s_parameter_standard_matrix_numpy)
     return qobj_unitary
 
 
@@ -109,7 +112,8 @@ def verify_matrix_is_unitary(matrix: jnp.ndarray) -> bool:
     Returns:
         bool: True if the matrix is unitary, False otherwise.
     """
-    qobj = matrix_to_qutip_qobj(matrix)
+    matrix_numpy = np.asarray(matrix)
+    qobj = matrix_to_qutip_qobj(matrix_numpy)
     return qobj.check_isunitary()
 
 

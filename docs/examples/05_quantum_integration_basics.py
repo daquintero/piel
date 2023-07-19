@@ -35,16 +35,20 @@ default_state_s_parameters = switch_circuit_model()
 ) = piel.sax_to_s_parameters_standard_matrix(default_state_s_parameters)
 s_parameters_standard_matrix
 
+# ```python
+# Array([[ 0.40105772+0.49846345j, -0.45904815-0.197149j  ,
+#          0.00180554+0.17483076j,  0.4000432 +0.38792986j],
+#        [-0.4590482 -0.197149j  , -0.8361797 +0.13278401j,
+#         -0.03938162-0.03818914j, -0.17480364+0.00356933j],
+#        [ 0.00180554+0.17483076j, -0.03938162-0.03818914j,
+#         -0.8536251 +0.11586684j,  0.11507235-0.45943272j],
+#        [ 0.40004322+0.3879298j , -0.17480363+0.00356933j,
+#          0.11507231-0.45943272j, -0.5810837 -0.31133226j]],      dtype=complex64)
 # ```
-# array([[ 0.40117208+0.49838198j, -0.45906927-0.19706765j,
-#          0.00184268+0.17482864j,  0.40013665+0.38783803j],
-#        [-0.45906927-0.19706765j, -0.83617032+0.13289595j,
-#         -0.03938958-0.0381789j , -0.17480098+0.0036143j ],
-#        [ 0.00184268+0.17482864j, -0.03938958-0.0381789j ,
-#         -0.85361747+0.11598505j,  0.11497926-0.45944187j],
-#        [ 0.40013665+0.38783803j, -0.17480098+0.0036143j ,
-#          0.11497926-0.45944187j, -0.58117378-0.31118139j]])
-# ```
+
+import numpy as np
+
+np.asarray(s_parameters_standard_matrix)
 
 # We can explore some properties of this matrix:
 
@@ -84,13 +88,20 @@ s_parameters_standard_matrix.shape
 
 # For, example, we might want to just calculate it for the first two input modes. This would be indexed when starting from the first row and column as `start_index` = (0,0) and `stop_index` = (`unitary_size`, `unitary_size`). Note that an error will be raised if a non-unitary matrix is inputted. Some examples are:
 
-s_parameters_standard_matrix
+our_subunitary = piel.subunitary_selection(
+    s_parameters_standard_matrix, start_index=(0, 0), stop_index=(1, 1)
+)
+our_subunitary
 
-import jax.numpy as jnp
+# ```python
+# Array([[ 0.40105772+0.49846345j, -0.45904815-0.197149j  ],
+#        [-0.4590482 -0.197149j  , -0.8361797 +0.13278401j]],      dtype=complex64)
+# ```
 
-jax_array = jnp.array(s_parameters_standard_matrix)
-jax_array
+# We can now calculate the permanent of this submatrix:
 
-jax_array.at[jnp.array([0, 1])].get()
+piel.unitary_permanent(our_subunitary)
 
-jnp.ndarray
+# ```python
+# ((-0.2296868-0.18254918j), 0.0)
+# ```

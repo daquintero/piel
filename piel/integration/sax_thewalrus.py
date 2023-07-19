@@ -4,6 +4,7 @@ import thewalrus
 import jax.numpy as jnp
 from ..tools.sax import sax_to_s_parameters_standard_matrix
 from typing import Optional
+import numpy as np
 
 __all__ = ["sax_circuit_permanent", "subunitary_selection", "unitary_permanent"]
 
@@ -43,7 +44,17 @@ def subunitary_selection(
 
     TODO implement validation of a 2D matrix.
     """
-    pass
+    start_row = start_index[0]
+    end_row = stop_index[0]
+    start_column = start_index[1]
+    end_column = stop_index[1]
+    column_range = jnp.arange(start_column, end_column + 1)
+    row_range = jnp.arange(start_row, end_row + 1)
+    unitary_matrix_row_selection = unitary_matrix.at[row_range, :].get()
+    unitary_matrix_row_column_selection = unitary_matrix_row_selection.at[
+        :, column_range
+    ].get()
+    return unitary_matrix_row_column_selection
 
 
 def unitary_permanent(
@@ -68,7 +79,8 @@ def unitary_permanent(
 
     """
     start_time = time.time()
-    circuit_permanent = thewalrus.perm(unitary_matrix)
+    unitary_matrix_numpy = np.asarray(unitary_matrix)
+    circuit_permanent = thewalrus.perm(unitary_matrix_numpy)
     end_time = time.time()
     computed_time = end_time - start_time
     return circuit_permanent, computed_time
