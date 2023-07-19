@@ -1,7 +1,7 @@
 import sax
 import time
 import thewalrus
-from ..config import nso
+import jax.numpy as jnp
 from ..tools.sax import sax_to_s_parameters_standard_matrix
 from typing import Optional
 
@@ -33,7 +33,7 @@ def sax_circuit_permanent(
 
 
 def subunitary_selection(
-    unitary_matrix: nso.ndarray,
+    unitary_matrix: jnp.ndarray,
     stop_index: tuple,
     start_index: Optional[tuple] = (0, 0),
 ):
@@ -47,7 +47,7 @@ def subunitary_selection(
 
 
 def unitary_permanent(
-    unitary_matrix: nso.ndarray,
+    unitary_matrix: jnp.ndarray,
 ) -> tuple:
     """
     The permanent of a unitary is used to determine the state probability of combinatorial Gaussian boson samping systems.

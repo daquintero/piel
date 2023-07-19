@@ -1,4 +1,4 @@
-from ...config import nso
+import jax.numpy as jnp
 
 __all__ = ["calculate_cross_sectional_area_m2"]
 
@@ -15,4 +15,4 @@ def calculate_cross_sectional_area_m2(
     Returns:
         float: Cross sectional area in meters squared.
     """
-    return nso.pi * (diameter_m**2) / 4
+    return jnp.pi * (diameter_m**2) / 4

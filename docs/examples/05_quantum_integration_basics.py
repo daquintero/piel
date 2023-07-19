@@ -78,8 +78,6 @@ piel.sax_circuit_permanent(default_state_s_parameters)
 
 # The way this works is straightforward:
 
-piel.unitary_permanent(s_parameters_standard_matrix)
-
 # We might want to calculate the permanent of subsections of the larger unitary to calculate certain operations probability:
 
 s_parameters_standard_matrix.shape
@@ -94,3 +92,5 @@ jax_array = jnp.array(s_parameters_standard_matrix)
 jax_array
 
 jax_array.at[jnp.array([0, 1])].get()
+
+jnp.ndarray

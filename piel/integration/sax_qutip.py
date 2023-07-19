@@ -1,6 +1,6 @@
 import qutip  # NOQA : F401
 import sax
-from ..config import nso
+import jax.numpy as jnp
 from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
 
 __all__ = [
@@ -11,7 +11,7 @@ __all__ = [
 
 
 def matrix_to_qutip_qobj(
-    s_parameters_standard_matrix: nso.ndarray,
+    s_parameters_standard_matrix: jnp.ndarray,
 ):
     """
     This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
@@ -99,12 +99,12 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
     return qobj_unitary
 
 
-def verify_matrix_is_unitary(matrix: nso.ndarray) -> bool:
+def verify_matrix_is_unitary(matrix: jnp.ndarray) -> bool:
     """
     Verify that the matrix is unitary.
 
     Args:
-        matrix (nso.ndarray): The matrix to verify.
+        matrix (jnp.ndarray): The matrix to verify.
 
     Returns:
         bool: True if the matrix is unitary, False otherwise.
