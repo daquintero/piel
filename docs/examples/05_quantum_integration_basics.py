@@ -58,19 +58,17 @@ s_parameters_standard_matrix.shape
 # See docs/microservices/dependencies/qutip for further theory and validation. TODO link.
 # -
 
-qutip_unitary = piel.standard_s_parameters_to_ideal_qutip_unitary(
-    s_parameters_standard_matrix
-)
+qutip_qobj = piel.standard_s_parameters_to_qutip_qobj(s_parameters_standard_matrix)
 
-qutip_unitary
+qutip_qobj
 
 # ![example_qutip_unitary](../_static/img/examples/05_quantum_integration_basics/example_qutip_unitary.PNG)
 
-qutip_unitary.check_isunitary()
+qutip_qobj.check_isunitary()
 
-qutip_unitary.dims
+qutip_qobj.dims
 
-qutip_unitary.eigenstates
+qutip_qobj.eigenstates
 
 # ## Calculating the Permanent
 
@@ -81,3 +79,18 @@ piel.sax_circuit_permanent(default_state_s_parameters)
 # The way this works is straightforward:
 
 piel.unitary_permanent(s_parameters_standard_matrix)
+
+# We might want to calculate the permanent of subsections of the larger unitary to calculate certain operations probability:
+
+s_parameters_standard_matrix.shape
+
+# For, example, we might want to just calculate it for the first two input modes. This would be indexed when starting from the first row and column as `start_index` = (0,0) and `stop_index` = (`unitary_size`, `unitary_size`). Note that an error will be raised if a non-unitary matrix is inputted. Some examples are:
+
+s_parameters_standard_matrix
+
+import jax.numpy as jnp
+
+jax_array = jnp.array(s_parameters_standard_matrix)
+jax_array
+
+jax_array.at[jnp.array([0, 1])].get()

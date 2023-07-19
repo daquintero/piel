@@ -3,10 +3,14 @@ import sax
 from ..config import nso
 from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
 
-__all__ = ["sax_to_ideal_qutip_unitary", "standard_s_parameters_to_ideal_qutip_unitary"]
+__all__ = [
+    "sax_to_ideal_qutip_unitary",
+    "standard_s_parameters_to_qutip_qobj",
+    "verify_matrix_is_unitary",
+]
 
 
-def standard_s_parameters_to_ideal_qutip_unitary(
+def matrix_to_qutip_qobj(
     s_parameters_standard_matrix: nso.ndarray,
 ):
     """
@@ -45,7 +49,6 @@ def standard_s_parameters_to_ideal_qutip_unitary(
         qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
 
     """
-    # TODO make a function any SAX input.
     qobj_unitary = qutip.Qobj(s_parameters_standard_matrix)
     return qobj_unitary
 
@@ -92,7 +95,22 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
         s_parameters_standard_matrix,
         input_ports_index_tuple_order,
     ) = sax_to_s_parameters_standard_matrix(sax_input)
-    qobj_unitary = standard_s_parameters_to_ideal_qutip_unitary(
-        s_parameters_standard_matrix
-    )
+    qobj_unitary = matrix_to_qutip_qobj(s_parameters_standard_matrix)
     return qobj_unitary
+
+
+def verify_matrix_is_unitary(matrix: nso.ndarray) -> bool:
+    """
+    Verify that the matrix is unitary.
+
+    Args:
+        matrix (nso.ndarray): The matrix to verify.
+
+    Returns:
+        bool: True if the matrix is unitary, False otherwise.
+    """
+    qobj = matrix_to_qutip_qobj(matrix)
+    return qobj.check_isunitary()
+
+
+standard_s_parameters_to_qutip_qobj = matrix_to_qutip_qobj
