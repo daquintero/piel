@@ -11,6 +11,7 @@ ipyevents
 ipytree
 ipywidgets>=7.6.0,<9
 jax
+jaxlib
 jupyter_bokeh
 jupyter_packaging~=0.7.9
 jupyterlab~=3.0
