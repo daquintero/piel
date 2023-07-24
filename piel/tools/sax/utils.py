@@ -1,7 +1,7 @@
 """
 This file provides a set of utilities that allow much easier integration between `sax` and the relevant tools that we use.
 """
-import numpy as np
+import jax.numpy as jnp
 import sax
 from ..gdsfactory.netlist import get_matched_ports_tuple_index
 from typing import Optional  # NOQA : F401
@@ -180,18 +180,17 @@ def sax_to_s_parameters_standard_matrix(
             ports_index=dense_s_parameter_index, prefix="out"
         )
 
+    output_ports_index_tuple_order_jax = jnp.asarray(output_ports_index_tuple_order)
+    input_ports_index_tuple_order_jax = jnp.asarray(input_ports_index_tuple_order)
     # We now select the SDense columns that we care about.
-    dense_s_parameter_matrix = np.asarray(
-        dense_s_parameter_matrix
-    )  # TODO port to JAX multiindexing
-    s_parameters_standard_matrix = dense_s_parameter_matrix[
-        [output_ports_index_tuple_order]
-    ][0]
+    s_parameters_standard_matrix = dense_s_parameter_matrix.at[
+        output_ports_index_tuple_order_jax
+    ].get()
+    s_parameters_standard_matrix = s_parameters_standard_matrix.at[
+        :, input_ports_index_tuple_order_jax
+    ].get()
     # Now we select the SDense rows that we care about after transposing the matrix.
-    s_parameters_standard_matrix = s_parameters_standard_matrix[
-        :, [input_ports_index_tuple_order][0]
-    ]
-    # TODO verify matrix transpose for unitary match.
+    # TODO verify matrix transpose for unitary match. I think it is right.
     return s_parameters_standard_matrix.T, input_matched_ports_name_tuple_order
 
 

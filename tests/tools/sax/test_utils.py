@@ -78,6 +78,11 @@ def test_sax_s_parameters_to_matrix():
     return matrix
 
 
+def test_sax_multi_indexing():
+    matrix = piel.sax_to_s_parameters_standard_matrix(sax_input=test_s_parameters)
+    return matrix
+
+
 if __name__ == "__main__":
     test_import_functions()
     test_sax_s_parameters_to_matrix()

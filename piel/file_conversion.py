@@ -1,5 +1,4 @@
 import pandas as pd
-from pyDigitalWaveTools.vcd.parser import VcdParser
 from .file_system import return_path
 from .config import piel_path_types
 
@@ -19,6 +18,8 @@ def read_csv_to_pandas(file_path: piel_path_types):
 
 
 def read_vcd_to_json(file_path: piel_path_types):
+    from pyDigitalWaveTools.vcd.parser import VcdParser
+
     file_path = return_path(file_path)
     with open(str(file_path.resolve())) as vcd_file:
         vcd = VcdParser()

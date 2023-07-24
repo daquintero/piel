@@ -14,6 +14,7 @@ requirements = [
     "Click>=7.0",
     "cocotb",
     "hdl21",
+    "jax",
     "gdsfactory",
     "networkx",
     "openlane",

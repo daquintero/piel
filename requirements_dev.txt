@@ -10,6 +10,7 @@ hdl21
 ipyevents
 ipytree
 ipywidgets>=7.6.0,<9
+jax
 jupyter_bokeh
 jupyter_packaging~=0.7.9
 jupyterlab~=3.0
