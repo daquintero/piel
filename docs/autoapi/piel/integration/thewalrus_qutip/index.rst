@@ -1,0 +1,51 @@
+:py:mod:`piel.integration.thewalrus_qutip`
+==========================================
+
+.. py:module:: piel.integration.thewalrus_qutip
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.integration.thewalrus_qutip.fock_transition_probability_amplitude
+
+
+
+.. py:function:: fock_transition_probability_amplitude(initial_fock_state: qutip.Qobj, final_fock_state: qutip.Qobj, unitary_matrix: jax.numpy.ndarray)
+
+       This function returns the transition probability amplitude between two Fock states when propagating in between
+       the unitary_matrix which represents a quantum state circuit.
+
+       Note that based on (TODO cite Jeremy), the initial Fock state corresponds to the columns of the unitary and the
+       final Fock states corresponds to the rows of the unitary.
+
+       .. math ::
+
+   ewcommand{\ket}[1]{\left|{#1}
+   ight
+   angle}
+
+       The subunitary :math:`U_{f_1}^{f_2}` is composed from the larger unitary by selecting the rows from the output state
+       Fock state occupation of :math:`\ket{f_2}`, and columns from the input :math:`\ket{f_1}`. In our case, we need to select the
+       columns indexes :math:`(0,3)` and rows indexes :math:`(1,2)`.
+
+       If we consider a photon number of more than one for the transition Fock states, then the Permanent needs to be
+       normalised. The probability amplitude for the transition is described as:
+
+       .. math ::
+           a(\ket{f_1}     o \ket{f_2}) =
+   rac{    ext{per}(U_{f_1}^{f_2})}{\sqrt{(j_1! j_2! ... j_N!)(j_1^{'}! j_2^{'}! ... j_N^{'}!)}}
+
+       Args:
+           initial_fock_state (qutip.Qobj): A QuTip QObj representation of the initial Fock state.
+           final_fock_state (qutip.Qobj): A QuTip QObj representation of the final Fock state.
+           unitary_matrix (jnp.ndarray): A JAX NumPy array representation of the unitary matrix.
+
+       Returns:
+           float: The transition probability amplitude between the initial and final Fock states.
