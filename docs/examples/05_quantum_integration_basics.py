@@ -188,3 +188,7 @@ piel.fock_transition_probability_amplitude(
 # ```
 #
 # TODO this is not numerically right but the functions are fine because we need to verify the unitary-ness of the model composed matrices.
+
+# ## Fock-State Generation
+
+# It might be desired to generate a large amount of Fock-states to evaluate how the system behaves when performing a particular operation. `piel` provides a few handy functions. For an amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire.

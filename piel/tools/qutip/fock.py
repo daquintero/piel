@@ -49,3 +49,13 @@ def fock_state_nonzero_indexes(fock_state: qutip.Qobj):
         if photon_number_amount[0] != 0:
             nonzero_indexes.append(index)
     return tuple(nonzero_indexes)
+
+
+def all_fock_states_from_photon_number(
+    mode_amount: int,
+    photon_amount: int = 1,
+):
+    """
+    For a specific amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire. This returns a list of all corresponding Fock states.
+    """
+    pass
