@@ -114,8 +114,10 @@ Functions
    piel.convert_numeric_to_prefix
    piel.get_sdense_ports_index
    piel.sax_to_s_parameters_standard_matrix
+   piel.all_fock_states_from_photon_number
    piel.fock_state_nonzero_indexes
    piel.fock_state_to_photon_number_factorial
+   piel.fock_states_at_mode_index
    piel.verify_matrix_is_unitary
    piel.subunitary_selection_on_range
    piel.subunitary_selection_on_index
@@ -1283,7 +1285,20 @@ Attributes
 
 
 
-.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj)
+.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1) -> list[qutip.Qobj]
+
+   For a specific amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire. This returns a list of all corresponding Fock states.
+
+   :param mode_amount: The amount of modes in the system.
+   :type mode_amount: int
+   :param photon_amount: The amount of photons in the system. Defaults to 1.
+   :type photon_amount: int, optional
+
+   :returns: A list of all the Fock states.
+   :rtype: list
+
+
+.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj) -> tuple[int]
 
    This function returns the indexes of the nonzero elements of a Fock state.
 
@@ -1294,7 +1309,7 @@ Attributes
    :rtype: tuple
 
 
-.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj)
+.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj) -> float
 
        This function converts a Fock state defined as:
 
@@ -1317,6 +1332,21 @@ Attributes
        Returns:
            float: The photon number factorial of the Fock state.
 
+
+
+.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1) -> list[qutip.Qobj]
+
+   This function returns a list of valid Fock states that fulfill a condition of having a maximum photon number at a specific mode index.
+
+   :param mode_amount: The amount of modes in the system.
+   :type mode_amount: int
+   :param target_mode_index: The mode index to check the photon number at.
+   :type target_mode_index: int
+   :param maximum_photon_amount: The amount of photons in the system. Defaults to 1.
+   :type maximum_photon_amount: int, optional
+
+   :returns: A list of all the Fock states.
+   :rtype: list
 
 
 .. py:data:: standard_s_parameters_to_qutip_qobj
@@ -1361,4 +1391,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.43'
+   :value: '0.0.44'
