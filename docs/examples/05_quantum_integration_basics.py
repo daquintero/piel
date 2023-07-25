@@ -191,4 +191,11 @@ piel.fock_transition_probability_amplitude(
 
 # ## Fock-State Generation
 
-# It might be desired to generate a large amount of Fock-states to evaluate how the system behaves when performing a particular operation. `piel` provides a few handy functions. For an amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire.
+# It might be desired to generate a large amount of Fock-states to evaluate how the system behaves when performing a particular operation. `piel` provides a few handy functions. For an determined amount of modes and maximum photon number on each state, we can generate all the possible Fock states in `qutip` notation.
+
+input_fock_states = piel.all_fock_states_from_photon_number(
+    mode_amount=4, photon_amount=1
+)
+input_fock_states[10]
+
+# Quantum object: dims = [[4], [1]], shape = (4, 1), type = ket $\left(\begin{matrix}1.0\\0.0\\1.0\\0.0\\\end{matrix}\right)$
