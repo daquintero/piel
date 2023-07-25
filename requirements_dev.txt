@@ -4,6 +4,7 @@ bump2version
 Click
 cocotb
 coverage
+cython==0.29.21
 flake8
 gdsfactory
 hdl21
