@@ -68,7 +68,7 @@ Ready to contribute? Here's how to set up `piel` for local development.
 
     $ mkvirtualenv piel
     $ cd piel/
-    $ python setup.py develop
+    $ pip install -e .
 
 4. Create a branch for local development::
 

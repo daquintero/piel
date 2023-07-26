@@ -1,5 +1,5 @@
 import hdl21 as h
-from hdl21.sim import Save, SaveMode, Tran
+import hdl21.sim as hs
 
 
 def configure_transient_simulation(
@@ -11,11 +11,19 @@ def configure_transient_simulation(
     This function configures the transient simulation for the circuit.
     """
 
-    @h.sim
+    @hs.sim
     class Simulation:
+        """Custom Simulation class"""
+
+        # Simulation Stimulus
+        op = hs.Op()  # DC Operating Point Analysis
+        a_path = "."
+        include_that_path = hs.Include(a_path)
+
+    class Simulatioan:
         tb = circuit
-        transient_tb = Tran(stop_time_s=stop_time_s, step_time_s=step_time_s)
-        save_all = Save(SaveMode.ALL)
+        transient_tb = hs.Tran(stop_time_s=stop_time_s, step_time_s=step_time_s)
+        save_all = hs.Save(hs.SaveMode.ALL)
 
     return Simulation
 

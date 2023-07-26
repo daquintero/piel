@@ -14,4 +14,5 @@ Examples
    examples/03_sax_basics
    examples/03a_sax_cocotb_cosimulation
    examples/04_spice_cosimulation
+   examples/04a_power_consumption_estimation
    examples/05_quantum_integration_basics
