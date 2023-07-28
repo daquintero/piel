@@ -1,15 +1,14 @@
 # **P**hotonic **I**ntegrated **EL**ectronics
-
 [![PyPI
-Name](https://img.shields.io/badge/pypi-piel-blue)](https://pypi.python.org/pypi/piel)
+Name](https://img.shields.io/badge/pypi-piel-blue?style=for-the-badge)](https://pypi.python.org/pypi/piel)
 [![PyPI
-Version](https://img.shields.io/pypi/v/piel.svg)](https://pypi.python.org/pypi/piel)
+Version](https://img.shields.io/pypi/v/piel.svg?style=for-the-badge)](https://pypi.python.org/pypi/piel)
 [![Build
-Status](https://img.shields.io/travis/daquintero/piel.svg)](https://travis-ci.com/daquintero/piel)
+Status](https://img.shields.io/travis/daquintero/piel.svg?style=for-the-badge)](https://travis-ci.com/daquintero/piel)
 [![Documentation
-Status](https://readthedocs.org/projects/piel/badge/?version=latest)](https://piel.readthedocs.io/en/latest/?version=latest)
-[![MIT](https://img.shields.io/github/license/gdsfactory/gdsfactory)](https://choosealicense.com/licenses/mit/)
-[![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+Status](https://readthedocs.org/projects/piel/badge/?style=for-the-badge)](https://piel.readthedocs.io/en/latest/?version=latest)
+[![MIT](https://img.shields.io/github/license/gdsfactory/gdsfactory?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
+[![Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
 
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.
