@@ -320,7 +320,10 @@ def return_path(input_path: piel_path_types) -> pathlib.Path:
     elif isinstance(input_path, pathlib.Path):
         output_path = input_path
     elif isinstance(input_path, types.ModuleType):
-        output_path = pathlib.Path(input_path.__file__).parent
+        # TODO Untested
+        output_path = input_path
+    elif isinstance(input_path, os.PathLike):
+        output_path = pathlib.Path(input_path)
     else:
         raise ValueError(
             "input_path: " + str(input_path) + " is of type: " + str(type(input_path))

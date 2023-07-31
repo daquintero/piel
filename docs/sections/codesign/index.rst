@@ -5,4 +5,5 @@ Co-Design Functionality
     :caption: Contents:
 
     parametric
-    electro_optic_time_domain
+    power_time_metrics
+    mixed_signal_electronic_photonic
