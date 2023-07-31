@@ -381,6 +381,18 @@ simple_operating_point_simulation
 results = piel.run_simulation(simulation=simple_operating_point_simulation)
 results
 
+# ```python
+# SimResult(an=[OpResult(analysis_name='operating_point_tb', data={'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': 0.0})])
+# ```
+
+# We can access the data as a dictionary too:
+
+results.an[0].data
+
+# ```python
+# {'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': 0.0}
+# ```
+
 # #### A Simple Transient Simulation
 #
 

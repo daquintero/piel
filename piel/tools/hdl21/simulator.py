@@ -91,10 +91,8 @@ def configure_transient_simulation(
 
 
 def save_results_to_csv(
-        results: hs.SimResult,
-        file_name: str,
-        save_directory : piel_path_types = "."
-    ):
+    results: hs.SimResult, file_name: str, save_directory: piel_path_types = "."
+):
     """
     This function converts the simulation results to a pandas dataframe and saves it to a csv file.
 
@@ -102,12 +100,15 @@ def save_results_to_csv(
         directory (piel_path_types): Directory where the simulation will be run
     """
 
-    
     save_directory = return_path(save_directory)
     # TODO check that there are more than one analysis
-    analysis_results = results.an[0].data 
-    print(type(next(iter(analysis_results.values()))) not in (list, dict, tuple, np.ndarray))
-    if type(next(iter(analysis_results.values()))) not in (list, dict, tuple, np.ndarray):
+    analysis_results = results.an[0].data
+    if type(next(iter(analysis_results.values()))) not in (
+        list,
+        dict,
+        tuple,
+        np.ndarray,
+    ):
         # Check that dict values are scalars
         analysis_results = pd.DataFrame(analysis_results, index=[0])
     else:
@@ -146,8 +147,8 @@ def run_simulation(
     else:
         print("Simulator not supported.")
         return
-    
+
     if to_csv:
         save_results_to_csv(results, simulation.tb.name)
-    
+
     return results
