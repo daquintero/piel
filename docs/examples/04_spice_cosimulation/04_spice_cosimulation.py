@@ -348,7 +348,7 @@ h.netlist(example_straight_resistor, sys.stdout, fmt="spice")
 
 # ### Creating our Stimulus
 
-# Let's first look into how to map a numpy data into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom module that we will use to perform this simulation:
+# Let's first look into how to map a numpy data into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing:
 
 
 @h.module
@@ -361,3 +361,8 @@ class Tb:
     # Our component under test
     example_straight_resistor.e1 = VDC.p
     example_straight_resistor.e2 = VSS
+
+
+# $$
+# \tau / \text{r}
+# $$

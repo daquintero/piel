@@ -56,7 +56,7 @@ Let us evaluate how our circuit operates for these devices. In terms of a carrie
 
 $$ V_{out,RC}(t) = (1-e^{-t/\tau}) $$
 
-Our time constant $\tau = RC$. And we know that $50\% V_{out,RC} = 0.69\tau$ and $90\% V_{out,RC} = 2.2\tau$ based on Eq. 1.13, page 34 on Rabay.
+Our time constant $\tau = RC$. And we know that $50\% V_{out,RC} = 0.69\tau$ and $90\% V_{out,RC} = 2.2\tau$ based on Eq. 1.13, page 34 on Rabaey.
 
 Energy input from signal source to charge a capacitor, independent of
 series resistance R, although this determines rise times.
@@ -65,8 +65,6 @@ $$E_{in} =  \int_{0}^{\infty} i_{in}(t) v_{in}(t) dt = V \int_{0}^{\infty} C \fr
 
 During charge-up, the energy stored in resistor is:
 $$E_c = \int_{0}^{\infty} i_c (t) V_{out} (t) dt = \int_{0}^{\infty} C \frac{dV_{out}}{dt} dt = C \int_{0}^{V} V_{out} dV_{out} = \frac{CV^2}{2}$$
-
-
 
 The other half of the energy gets dissipated in the resistor during
 rising edge, and the rest of the capacitor energy gets dissipated on the
@@ -91,6 +89,35 @@ Rabay describes the importance of this definition very well:
 > The rise/fall time of a signal is largely determined by the strength of the driving gate, and the load presented by the node itself, which sums the contributions of the connecting gates (fan-out) and the wiring parasitics.
 
 We will explore this definition in the context of our drivers and loads thoroughly. An important relationship worth remembering is that in a simple RC series circuit, it takes $2.2 \tau = 2.2 RC$ to reach the 90% signal transition point.
+
+This means that when digitizing the time of an RC signal in terms of defining the time step of our SPICE simulation, we need to decide the amount of resolution between the RC metric as a fraction of the RC time constant.
+
+We go back to our basics by remembering some relationships in the *The Art of Electronics* by Paul Horowitz and Winfield Hill.
+
+#### Low-Pass RC Filter
+
+TODO ADD IMAGE
+
+In a low-pass series RC circuit filter common in P/EIC layout, the following transfer function relationships are also important. This is the equivalent circuit formed in between a signal routing wire, eg. DC wire to a heater, and the return path capacitive coupled signal. This relationship is also significant when deriving transmission line design parameters, but we will discuss this later.
+
+This *low-pass* filter passes lower frequencies and blocks higher frequencies depending on the time constant of the circuit. Note that the capacitor has a decreasing reactance (the complex impedance component $X_C$) with an increasing frequency. Unless it is specifically designed for higher RF frequencies you must take care of what bandwidths you will operate your circuit.
+
+The voltage across the capacitor in the $s$ complex frequency domain in terms of the time constant $\tau$ and input voltage $V_{in}$ is:
+$$
+V_C(s) = \frac{V_{in}(s)}{1 + s \tau}
+$$
+
+The voltage across the resistor in the $s$ complex frequency domain in terms of the time constant $\tau$ and input voltage $V_{in}$ is:
+$$
+V_R(s) = \frac{\tau V_{in}(s)}{1 + s \tau}
+$$
+
+In terms of a complex frequency response, we can also analyse the magnitude of the gain through both components:
+$$
+V_C(s) = \frac{V_{in}(s)}{1 + s \tau}
+$$
+
+
 
 
 ### Driving, Propagation Delay & Fanout
