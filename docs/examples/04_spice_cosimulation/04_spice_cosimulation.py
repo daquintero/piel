@@ -2,10 +2,11 @@
 
 # This example demonstrates the modelling of multi-physical component interconnection and system design.
 
-import sys
 from gdsfactory.components import mzi2x2_2x2_phase_shifter
 import hdl21 as h
+import pandas as pd
 import piel
+import sys
 
 # ## Start from `gdsfactory`
 
@@ -83,7 +84,7 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
 our_short_resistive_mzi_2x2_2x2_phase_shifter.show()
 our_short_resistive_mzi_2x2_2x2_phase_shifter.plot_widget()
 
-# ![our_short_resistive_heater](../_static/img/examples/04_multi_domain_interconnect/our_short_resistive_heater.PNG)
+# ![our_short_resistive_heater](../../_static/img/examples/04_spice_cosimulation/our_short_resistive_heater.PNG)
 
 # You can also find out more information of this component through:
 
@@ -432,10 +433,54 @@ simple_transient_simulation = piel.configure_transient_simulation(
 simple_transient_simulation
 
 # ```python
-# Tran(tstop=0.1*UNIT, tstep=0.0001*UNIT, name='simple_transient_simulation')
-#
+# Sim(tb=Module(name=TransientTb), attrs=[Tran(tstop=0.1*UNIT, tstep=0.0001*UNIT, name='transient_tb')], name='Simulation')
 # ```
 
-piel.run_simulation(simple_transient_simulation)
+piel.run_simulation(simple_transient_simulation, to_csv=True)
+
+# When you run the simulation using the `piel` `run_simulation` command, there is a `to_csv` flag that allows us to save the data and access it afterwards. We access the transient simulation in Pandas accordingly:
+
+transient_simulation_results = pd.read_csv("TransientTb.csv")
+transient_simulation_results.iloc[120:140]
+
+# |     | Unnamed: 0 |    time | v(xtop.vdc_p) | i(v.xtop.vvdc) |
+# |----:|-----------:|--------:|--------------:|--------------:|
+# | 120 |        120 | 0.01075 |            1  |            0  |
+# | 121 |        121 | 0.01085 |            1  |            0  |
+# | 122 |        122 | 0.01095 |            1  |            0  |
+# | 123 |        123 | 0.01105 |         0.05  |            0  |
+# | 124 |        124 | 0.01115 |         0.15  |            0  |
+# | 125 |        125 | 0.01125 |         0.25  |            0  |
+# | 126 |        126 | 0.01135 |         0.35  |            0  |
+# | 127 |        127 | 0.01145 |         0.45  |            0  |
+# | 128 |        128 | 0.01155 |         0.55  |            0  |
+# | 129 |        129 | 0.01165 |         0.65  |            0  |
+# | 130 |        130 | 0.01175 |         0.75  |            0  |
+# | 131 |        131 | 0.01185 |         0.85  |            0  |
+# | 132 |        132 | 0.01195 |         0.95  |            0  |
+# | 133 |        133 | 0.012   |            1  |            0  |
+# | 134 |        134 | 0.01201 |            1  |            0  |
+# | 135 |        135 | 0.01203 |            1  |            0  |
+# | 136 |        136 | 0.01207 |            1  |            0  |
+# | 137 |        137 | 0.01215 |            1  |            0  |
+# | 138 |        138 | 0.01225 |            1  |            0  |
+# | 139 |        139 | 0.01235 |            1  |            0  |
+
+# We can plot our simulation data accordingly:
+
+simple_transient_plot = piel.visual.plot_simple_multi_row(
+    data=transient_simulation_results,
+    x_axis_column_name="time",
+    row_list=[
+        "v(xtop.vdc_p)",
+        "i(v.xtop.vvdc)",
+    ],
+    y_axis_title_list=["v(xtop.vdc_p)", "i(v.xtop.vvdc)", "o4 Phase"],
+)
+# simple_transient_plot.savefig("simple_transient_plot.png")
+
+# ![simple_transient_plot](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot.PNG)
+
+# #### Automation
 
 # Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example:
