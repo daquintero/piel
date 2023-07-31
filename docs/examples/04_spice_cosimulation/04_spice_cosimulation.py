@@ -407,12 +407,12 @@ class TransientTb:
     VSS = h.Port()  # The testbench interface: sole port VSS - GROUND
     VDC = h.Vpulse(
         delay=1 * h.prefix.m,
-        v1=0 * h.prefix.m,
+        v1=-1000 * h.prefix.m,
         v2=1000 * h.prefix.m,
-        period=10 * h.prefix.m,
-        rise=1 * h.prefix.m,
-        fall=1 * h.prefix.m,
-        width=10 * h.prefix.m,
+        period=100 * h.prefix.m,
+        rise=10 * h.prefix.m,
+        fall=10 * h.prefix.m,
+        width=75 * h.prefix.m,
     )(
         n=VSS
     )  # A configured voltage pulse source
@@ -426,7 +426,7 @@ class TransientTb:
 
 simple_transient_simulation = piel.configure_transient_simulation(
     testbench=TransientTb,
-    stop_time_s=100e-3,
+    stop_time_s=200e-3,
     step_time_s=1e-4,
     name="simple_transient_simulation",
 )
