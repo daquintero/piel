@@ -100,25 +100,28 @@ TODO ADD IMAGE
 
 In a low-pass series RC circuit filter common in P/EIC layout, the following transfer function relationships are also important. This is the equivalent circuit formed in between a signal routing wire, eg. DC wire to a heater, and the return path capacitive coupled signal. This relationship is also significant when deriving transmission line design parameters, but we will discuss this later.
 
-This *low-pass* filter passes lower frequencies and blocks higher frequencies depending on the time constant of the circuit. Note that the capacitor has a decreasing reactance (the complex impedance component $X_C$) with an increasing frequency. Unless it is specifically designed for higher RF frequencies you must take care of what bandwidths you will operate your circuit.
+This *low-pass* filter passes lower frequencies and blocks higher frequencies depending on the time constant of the circuit. Note that the capacitor has a decreasing reactance (the complex impedance component $X_C$) with an increasing frequency. Unless it is specifically designed for higher RF frequencies you must take care of what bandwidths you will operate your circuit. A common scenario of this would simply be the bandwidth of the wiring of the chip.
 
-The voltage across the capacitor in the $s$ complex frequency domain in terms of the time constant $\tau$ and input voltage $V_{in}$ is:
+The transfer function of the output voltage node $V_{out,RC}$ in between the $RC$ elements in the frequency $\omega$ domain:
 $$
-V_C(s) = \frac{V_{in}(s)}{1 + s \tau}
-$$
-
-The voltage across the resistor in the $s$ complex frequency domain in terms of the time constant $\tau$ and input voltage $V_{in}$ is:
-$$
-V_R(s) = \frac{\tau V_{in}(s)}{1 + s \tau}
+\frac{V_{out,RC}}{V_{in}} = \frac{X_C}{R + X_C} = \frac{1}{1 + \omega \tau}
 $$
 
-In terms of a complex frequency response, we can also analyse the magnitude of the gain through both components:
+##### $RC$ Time-Constant Derivation
+
+The time constant relationship $\tau$ is derived from this relationship. Note that at lower frequencies the capacitors reactance $X_C$ is very high, which means that the output node is like a voltage divider with a small resistance on top of a very high one. However, at higher frequencies, this becomes less valid as $X_C \approx \frac{1}{\omega C}$. This means that there will be a frequency $\omega_0 = \frac{1}{RC}$
+
+#### High-Pass RC Filter
+
+TODO ADD IMAGE
+
+In this case, the capacitor is connected directly to the input voltage $V_{in}$ which provides an inverse relationship to the low-pass filter. The transfer function can be defined as:
+
 $$
-V_C(s) = \frac{V_{in}(s)}{1 + s \tau}
+\frac{V_{out,RC}}{V_{in}} = \frac{R}{R + X_C} = \frac{\omega \tau}{1 + \omega \tau}
 $$
 
-
-
+Depending on your wiring, a common case of this type of filter might involve driving a capacitive load such as electro-optic modulator in the frequency domain. Note, it is possible to drive them in DC.
 
 ### Driving, Propagation Delay & Fanout
 

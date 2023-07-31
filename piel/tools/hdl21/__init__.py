@@ -1,2 +1,2 @@
-from .circuit import *
+from .simulator import *
 from .units import *

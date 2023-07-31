@@ -348,12 +348,12 @@ h.netlist(example_straight_resistor, sys.stdout, fmt="spice")
 
 # ### Creating our Stimulus
 
-# Let's first look into how to map a numpy data into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing:
+# Let's first look into how to map a numpy data into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing.
 
 
 @h.module
-class Tb:
-    """# Basic Mos Testbench"""
+class OperatingPointTb:
+    """# Basic Extracted Device DC Operating Point Testbench"""
 
     VSS = h.Port()  # The testbench interface: sole port VSS - GROUND
     VDC = h.Vdc(dc=1)(n=VSS)  # A DC voltage source
@@ -363,6 +363,67 @@ class Tb:
     example_straight_resistor.e2 = VSS
 
 
-# $$
-# \tau / \text{r}
-# $$
+# In this basic test, we can analyse the DC operating point relationship for this circuit. Now, in order to make these type of simulations more automated to run at scale, `piel` provides some wrapper functions that can be parameterised with most common simulation parameters:
+
+# #### A Simple DC Operating Point Simulation
+
+simple_operating_point_simulation = piel.configure_operating_point_simulation(
+    testbench=OperatingPointTb, name="simple_operating_point_simulation"
+)
+simple_operating_point_simulation.operating_point_tb
+
+# ```python
+# Op(name='simple_operating_point_simulation')
+# ```
+
+# We can now run the simulation using `ngpsice`. Make sure you have it installed, although this will be automatic in the *IIC-OSIC-TOOLS* environment:
+
+results = piel.run_simulation(simulation=simple_operating_point_simulation)
+
+
+# #### A Simple Transient Simulation
+#
+
+# Let's assume we want to simulate in time how a pulse propagates through our circuit. A resistor on its own will have a linear relationship with the pulse, which means we should see how the current changes from the input pulse in time accordingly. For clarity, we will make a new testbench, even if there are ways to combine them.
+
+
+@h.module
+class TransientTb:
+    """# Basic Extracted Device DC Operating Point Testbench"""
+
+    VSS = h.Port()  # The testbench interface: sole port VSS - GROUND
+    VDC = h.Vpulse(
+        delay=1 * h.prefix.m,
+        v1=0 * h.prefix.m,
+        v2=1000 * h.prefix.m,
+        period=10 * h.prefix.m,
+        rise=1 * h.prefix.m,
+        fall=1 * h.prefix.m,
+        width=10 * h.prefix.m,
+    )(
+        n=VSS
+    )  # A configured voltage pulse source
+
+    # Our component under test
+    example_straight_resistor.e1 = VDC.p
+    example_straight_resistor.e2 = VSS
+
+
+# Again we use a simple `piel` wrapper:
+
+simple_transient_simulation = piel.configure_transient_simulation(
+    testbench=TransientTb,
+    stop_time_s=100e-3,
+    step_time_s=1e-4,
+    name="simple_transient_simulation",
+)
+simple_transient_simulation.transient_tb
+
+# ```python
+# Tran(tstop=0.1*UNIT, tstep=0.0001*UNIT, name='simple_transient_simulation')
+#
+# ```
+
+piel.run_simulation(simple_transient_simulation)
+
+# Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example:
