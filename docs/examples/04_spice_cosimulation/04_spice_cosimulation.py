@@ -370,16 +370,16 @@ class OperatingPointTb:
 simple_operating_point_simulation = piel.configure_operating_point_simulation(
     testbench=OperatingPointTb, name="simple_operating_point_simulation"
 )
-simple_operating_point_simulation.operating_point_tb
+simple_operating_point_simulation
 
 # ```python
-# Op(name='simple_operating_point_simulation')
+# Sim(tb=Module(name=OperatingPointTb), attrs=[Op(name='operating_point_tb'), Save(targ=<SaveMode.ALL: 'all'>)], name='Simulation')
 # ```
 
 # We can now run the simulation using `ngpsice`. Make sure you have it installed, although this will be automatic in the *IIC-OSIC-TOOLS* environment:
 
 results = piel.run_simulation(simulation=simple_operating_point_simulation)
-
+results
 
 # #### A Simple Transient Simulation
 #
@@ -417,7 +417,7 @@ simple_transient_simulation = piel.configure_transient_simulation(
     step_time_s=1e-4,
     name="simple_transient_simulation",
 )
-simple_transient_simulation.transient_tb
+simple_transient_simulation
 
 # ```python
 # Tran(tstop=0.1*UNIT, tstep=0.0001*UNIT, name='simple_transient_simulation')

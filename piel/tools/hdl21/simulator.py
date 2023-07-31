@@ -1,5 +1,6 @@
 import hdl21 as h
 import hdl21.sim as hs
+import numpy as np
 import pandas as pd
 from typing import Literal, Optional
 import vlsirtools.spice as vsp
@@ -50,10 +51,10 @@ def configure_operating_point_simulation(
         Simulation: HDL21 simulation class
     """
 
+    @hs.sim
     class Simulation:
         tb = testbench
         operating_point_tb = hs.Op(**kwargs)
-        save_all = hs.Save(hs.SaveMode.ALL)
 
     return Simulation
 
@@ -77,6 +78,7 @@ def configure_transient_simulation(
         Simulation: HDL21 simulation class
     """
 
+    @hs.sim
     class Simulation:
         tb = testbench
         transient_tb = hs.Tran(
@@ -84,9 +86,34 @@ def configure_transient_simulation(
             tstep=step_time_s * h.prefix.UNIT,
             **kwargs,
         )
-        save_all = hs.Save(hs.SaveMode.ALL)
 
     return Simulation
+
+
+def save_results_to_csv(
+        results: hs.SimResult,
+        file_name: str,
+        save_directory : piel_path_types = "."
+    ):
+    """
+    This function converts the simulation results to a pandas dataframe and saves it to a csv file.
+
+    Args:
+        directory (piel_path_types): Directory where the simulation will be run
+    """
+
+    
+    save_directory = return_path(save_directory)
+    # TODO check that there are more than one analysis
+    analysis_results = results.an[0].data 
+    print(type(next(iter(analysis_results.values()))) not in (list, dict, tuple, np.ndarray))
+    if type(next(iter(analysis_results.values()))) not in (list, dict, tuple, np.ndarray):
+        # Check that dict values are scalars
+        analysis_results = pd.DataFrame(analysis_results, index=[0])
+    else:
+        analysis_results = pd.DataFrame(analysis_results)
+
+    analysis_results.to_csv(save_directory / (file_name + ".csv"))
 
 
 def run_simulation(
@@ -102,7 +129,7 @@ def run_simulation(
         simulation (h.sim.Sim): HDL21 simulation class
         simulator_name (Literal["ngspice"]): Name of the simulator
         simulation_options (Optional[vsp.SimOptions]): Simulation options
-        to_csv (bool): Save results to CSV
+        to_csv (bool): Whether to save the results to a csv file
 
     Returns:
         results: Simulation results
@@ -119,10 +146,8 @@ def run_simulation(
     else:
         print("Simulator not supported.")
         return
-
+    
     if to_csv:
-        results = pd.DataFrame(results)
-        run_directory = return_path(simulation_options.rundir)
-        results.to_csv(run_directory / "results.csv")
-    else:
-        return results
+        save_results_to_csv(results, simulation.tb.name)
+    
+    return results
