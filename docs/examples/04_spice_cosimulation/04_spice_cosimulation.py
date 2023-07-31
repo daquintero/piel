@@ -360,8 +360,9 @@ class OperatingPointTb:
     VDC = h.Vdc(dc=1)(n=VSS)  # A DC voltage source
 
     # Our component under test
-    example_straight_resistor.e1 = VDC.p
-    example_straight_resistor.e2 = VSS
+    dut = example_straight_resistor()
+    dut.e1 = VDC.p
+    dut.e2 = VSS
 
 
 # In this basic test, we can analyse the DC operating point relationship for this circuit. Now, in order to make these type of simulations more automated to run at scale, `piel` provides some wrapper functions that can be parameterised with most common simulation parameters:
@@ -405,7 +406,7 @@ class TransientTb:
     """# Basic Extracted Device DC Operating Point Testbench"""
 
     VSS = h.Port()  # The testbench interface: sole port VSS - GROUND
-    VDC = h.Vpulse(
+    VPULSE = h.Vpulse(
         delay=1 * h.prefix.m,
         v1=-1000 * h.prefix.m,
         v2=1000 * h.prefix.m,
@@ -418,8 +419,9 @@ class TransientTb:
     )  # A configured voltage pulse source
 
     # Our component under test
-    example_straight_resistor.e1 = VDC.p
-    example_straight_resistor.e2 = VSS
+    dut = example_straight_resistor()
+    dut.e1 = VPULSE.p
+    dut.e2 = VSS
 
 
 # Again we use a simple `piel` wrapper:
@@ -473,10 +475,10 @@ simple_transient_plot = piel.visual.plot_simple_multi_row(
     data=transient_simulation_results,
     x_axis_column_name="time",
     row_list=[
-        "v(xtop.vdc_p)",
-        "i(v.xtop.vvdc)",
+        "v(xtop.vpulse_p)",
+        "i(v.xtop.vvpulse)",
     ],
-    y_axis_title_list=["v(xtop.vdc_p)", "i(v.xtop.vvdc)", "o4 Phase"],
+    y_axis_title_list=["v(xtop.vpulse_p)", "i(v.xtop.vvpulse)", "o4 Phase"],
 )
 # simple_transient_plot.savefig("simple_transient_plot.png")
 
