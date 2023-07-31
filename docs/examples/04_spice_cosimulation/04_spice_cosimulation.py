@@ -57,7 +57,7 @@ our_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
 our_resistive_mzi_2x2_2x2_phase_shifter
 # -
 
-# ![mzi2x2_2x2_phase_shifter](../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
+# ![mzi2x2_2x2_phase_shifter](../../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
 
 our_resistive_mzi_2x2_2x2_phase_shifter_netlist = (
     our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="optical")
@@ -485,4 +485,4 @@ simple_transient_plot = piel.visual.plot_simple_multi_row(
 
 # #### Automation
 
-# Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example:
+# Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example: WIP
