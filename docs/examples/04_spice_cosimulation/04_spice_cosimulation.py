@@ -384,7 +384,7 @@ results = piel.run_simulation(simulation=simple_operating_point_simulation)
 results
 
 # ```python
-# SimResult(an=[OpResult(analysis_name='operating_point_tb', data={'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': 0.0})])
+# SimResult(an=[OpResult(analysis_name='operating_point_tb', data={'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': -0.001})])
 # ```
 
 # We can access the data as a dictionary too:
@@ -392,7 +392,7 @@ results
 results.an[0].data
 
 # ```python
-# {'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': 0.0}
+# {'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': -0.001}
 # ```
 
 # #### A Simple Transient Simulation
@@ -445,28 +445,28 @@ piel.run_simulation(simple_transient_simulation, to_csv=True)
 transient_simulation_results = pd.read_csv("TransientTb.csv")
 transient_simulation_results.iloc[20:40]
 
-# |    | Unnamed: 0 |    time | v(xtop.vdc_p) | i(v.xtop.vvdc) |
-# |---:|----------:|--------:|--------------:|--------------:|
-# | 20 |        20 | 0.00107 |        -0.986 |            0  |
-# | 21 |        21 | 0.00115 |        -0.97  |            0  |
-# | 22 |        22 | 0.00125 |        -0.95  |            0  |
-# | 23 |        23 | 0.00135 |        -0.93  |            0  |
-# | 24 |        24 | 0.00145 |        -0.91  |            0  |
-# | 25 |        25 | 0.00155 |        -0.89  |            0  |
-# | 26 |        26 | 0.00165 |        -0.87  |            0  |
-# | 27 |        27 | 0.00175 |        -0.85  |            0  |
-# | 28 |        28 | 0.00185 |        -0.83  |            0  |
-# | 29 |        29 | 0.00195 |        -0.81  |            0  |
-# | 30 |        30 | 0.00205 |        -0.79  |            0  |
-# | 31 |        31 | 0.00215 |        -0.77  |            0  |
-# | 32 |        32 | 0.00225 |        -0.75  |            0  |
-# | 33 |        33 | 0.00235 |        -0.73  |            0  |
-# | 34 |        34 | 0.00245 |        -0.71  |            0  |
-# | 35 |        35 | 0.00255 |        -0.69  |            0  |
-# | 36 |        36 | 0.00265 |        -0.67  |            0  |
-# | 37 |        37 | 0.00275 |        -0.65  |            0  |
-# | 38 |        38 | 0.00285 |        -0.63  |            0  |
-# | 39 |        39 | 0.00295 |        -0.61  |            0  |
+# |    | Unnamed: 0 |    time | v(xtop.vpulse_p) | s |
+# |---:|----------:|--------:|-----------------:|------------------:|
+# | 20 |        20 | 0.00107 |           -0.986 |          0.000986 |
+# | 21 |        21 | 0.00115 |           -0.97  |          0.00097  |
+# | 22 |        22 | 0.00125 |           -0.95  |          0.00095  |
+# | 23 |        23 | 0.00135 |           -0.93  |          0.00093  |
+# | 24 |        24 | 0.00145 |           -0.91  |          0.00091  |
+# | 25 |        25 | 0.00155 |           -0.89  |          0.00089  |
+# | 26 |        26 | 0.00165 |           -0.87  |          0.00087  |
+# | 27 |        27 | 0.00175 |           -0.85  |          0.00085  |
+# | 28 |        28 | 0.00185 |           -0.83  |          0.00083  |
+# | 29 |        29 | 0.00195 |           -0.81  |          0.00081  |
+# | 30 |        30 | 0.00205 |           -0.79  |          0.00079  |
+# | 31 |        31 | 0.00215 |           -0.77  |          0.00077  |
+# | 32 |        32 | 0.00225 |           -0.75  |          0.00075  |
+# | 33 |        33 | 0.00235 |           -0.73  |          0.00073  |
+# | 34 |        34 | 0.00245 |           -0.71  |          0.00071  |
+# | 35 |        35 | 0.00255 |           -0.69  |          0.00069  |
+# | 36 |        36 | 0.00265 |           -0.67  |          0.00067  |
+# | 37 |        37 | 0.00275 |           -0.65  |          0.00065  |
+# | 38 |        38 | 0.00285 |           -0.63  |          0.00063  |
+# | 39 |        39 | 0.00295 |           -0.61  |          0.00061  |
 #
 
 # We can plot our simulation data accordingly:
@@ -478,9 +478,8 @@ simple_transient_plot = piel.visual.plot_simple_multi_row(
         "v(xtop.vpulse_p)",
         "i(v.xtop.vvpulse)",
     ],
-    y_axis_title_list=["v(xtop.vpulse_p)", "i(v.xtop.vvpulse)", "o4 Phase"],
+    y_axis_title_list=["v(v.xtop.vvpulse)", "i(v.xtop.vvpulse)", "o4 Phase"],
 )
-# simple_transient_plot.savefig("simple_transient_plot.png")
 
 # ![simple_transient_plot](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot.PNG)
 
