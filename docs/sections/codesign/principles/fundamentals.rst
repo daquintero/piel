@@ -1,3 +1,6 @@
+Fundamental Electronic Definitions
+==================================
+
 Read more in *The Art of Electronics* by Paul Horowitz and Winfield Hill.
 
 There are some important definitions we must account for in terms of analysing the data of our simulations.
@@ -10,7 +13,7 @@ There are some important definitions we must account for in terms of analysing t
      - Definition
      - Unit
    * - Voltage :math:`V`
-     - The work on charges
+     - The work on electric charges.
      - It takes :math:`1J` Joule to move :math:`1C` Coulomb of charge through a potential of :math:`1V` volt.
    * - Current :math:`i`
      - The rate of the flow of electric charge past a point.

@@ -5,5 +5,5 @@ Co-Design Functionality
     :caption: Contents:
 
     parametric
-    power_time_metrics
+    principles/index
     mixed_signal_electronic_photonic
