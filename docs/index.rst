@@ -13,7 +13,6 @@ Contents
    sections/environment/index
    sections/microservices/index
    sections/codesign/index
-   sections/components/index
    sections/models/index
    contributing
    sections/about/index

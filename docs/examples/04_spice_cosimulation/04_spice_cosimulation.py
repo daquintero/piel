@@ -497,8 +497,7 @@ transient_simulation_results["power(xtop.vpulse)"] = (
     * transient_simulation_results["i(v.xtop.vvpulse)"]
 )
 transient_simulation_results["resistance(xtop.vpulse)"] = np.round(
-    0
-    - transient_simulation_results["v(xtop.vpulse_p)"]
+    transient_simulation_results["v(xtop.vpulse_p)"]
     / transient_simulation_results["i(v.xtop.vvpulse)"]
 )
 transient_simulation_results
@@ -546,7 +545,24 @@ simple_transient_plot_power_resistance.savefig(
 
 # ![simple_transient_plot_power_resistance](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_power_resistance.PNG)
 
-# A full visualisation of the signal is:
+# So, we have extracted the power consumption throughout time for pulses we have configured. For the whole period of the simulation, we can extract the energy consumed as the integral of power for a time differential. Note that we expect the energy consumption of this particular circuit, where the resistor is constantly drawing current, to be constantly increasing in time. We can perform a cumulative sum over our `power(xtop.vpulse)` dataframe which is a discrete integral, and we can multiply that term with the time value to determine the total energy consumption at a point in time.
+
+transient_simulation_results["energy_consumed(xtop.vpulse)"] = (
+    transient_simulation_results["power(xtop.vpulse)"].cumsum()
+    * transient_simulation_results["time"]
+)
+transient_simulation_results
+
+simple_energy_consumed_plot = transient_simulation_results.plot(
+    x="time", y="energy_consumed(xtop.vpulse)"
+)
+simple_energy_consumed_plot.get_figure().savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_energy_consumed_plot.PNG"
+)
+
+# ![simple_energy_consumed_plot](../../_static/img/examples/04_spice_cosimulation/simple_energy_consumed_plot.PNG)
+
+# A full visualisation of the signal is including the cumulative energy use:
 
 simple_transient_plot_full = piel.visual.plot_simple_multi_row(
     data=transient_simulation_results,
@@ -556,8 +572,9 @@ simple_transient_plot_full = piel.visual.plot_simple_multi_row(
         "i(v.xtop.vvpulse)",
         "resistance(xtop.vpulse)",
         "power(xtop.vpulse)",
+        "energy_consumed(xtop.vpulse)",
     ],
-    y_axis_title_list=[r"$V$", r"$A$", r"$\Omega$", r"$W$"],
+    y_axis_title_list=[r"$V$", r"$A$", r"$\Omega$", r"$W$", r"$J$"],
 )
 simple_transient_plot_full.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG"
@@ -565,6 +582,6 @@ simple_transient_plot_full.savefig(
 
 # ![simple_transient_plot_full](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG)
 
-# #### Automation
-
-# Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example: WIP
+# ### Driving our Phase Shifter
+#
+# We have demonstrated how we can extract a simple model of a resistor and create different types of `SPICE` simulations. Now, let's consider how would this affect the photonic performance in a phase-shifter context. One important aspect is that we need to create a mapping between our analogue voltage and a phase. Ideally, this should be a functional mapping.
