@@ -13,6 +13,7 @@ requirements = [
     "jupytext",
     "Click>=7.0",
     "cocotb",
+    "femwell",
     "hdl21",
     "jax",
     "gdsfactory",

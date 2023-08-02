@@ -15,7 +15,6 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
-   components/index.rst
    integration/index.rst
    models/index.rst
    tools/index.rst
