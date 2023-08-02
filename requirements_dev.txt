@@ -5,6 +5,7 @@ Click
 cocotb
 coverage
 cython==0.29.21
+femwell
 flake8
 gdsfactory
 hdl21

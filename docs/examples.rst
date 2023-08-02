@@ -14,5 +14,6 @@ Examples
    examples/03_sax_basics
    examples/03a_sax_cocotb_cosimulation
    examples//04_spice_cosimulation/04_spice_cosimulation
-   examples/04a_power_consumption_estimation
+   examples/04a_mixed_signal_photonic_cosimulation
    examples/05_quantum_integration_basics
+   examples/06_component_codesign_basics

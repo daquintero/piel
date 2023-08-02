@@ -15,7 +15,6 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
-   components/index.rst
    integration/index.rst
    models/index.rst
    tools/index.rst
@@ -1451,4 +1450,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.44'
+   :value: '0.0.45'

@@ -5,6 +5,7 @@
 from gdsfactory.components import mzi2x2_2x2_phase_shifter
 import hdl21 as h
 import pandas as pd
+import numpy as np
 import piel
 import sys
 
@@ -396,7 +397,6 @@ results.an[0].data
 # ```
 
 # #### A Simple Transient Simulation
-#
 
 # Let's assume we want to simulate in time how a pulse propagates through our circuit. A resistor on its own will have a linear relationship with the pulse, which means we should see how the current changes from the input pulse in time accordingly. For clarity, we will make a new testbench, even if there are ways to combine them.
 
@@ -480,9 +480,108 @@ simple_transient_plot = piel.visual.plot_simple_multi_row(
     ],
     y_axis_title_list=["v(v.xtop.vvpulse)", "i(v.xtop.vvpulse)", "o4 Phase"],
 )
+simple_transient_plot.savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot.PNG"
+)
 
 # ![simple_transient_plot](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot.PNG)
 
-# #### Automation
+# ##### Extracting Instantaneous Power and Resistance
+#
+# Now, we have the instantaneous current and voltage at a point in time. You can read some of the documentation in the `piel` website (TODO LINK) in order to realise the fundamental relationships of this signals. In this circuit, we know that the node `v(v.xtop.vvpulse)` is at the top of the resistor, and the circuit ground `vss` is at the bottom. We can read the SPICE netlist to determine this (TODO add automatic schematic mapper). The current `i(v.xtop.vvpulse)` flows across this resistor according to standard Ohm's law. So we can extract both the instantaneous power consumption and resistance just from these graphs. Note that this means that these values are subject to insignificant variations from the solver accuracy, so you might want to round to the nearest resistance values for example in some cases.
+#
+# For this simple example, it is trivial, and we will demonstrate it, but for more complex circuit examples, having a generic framework is important:
 
-# Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example: WIP
+transient_simulation_results["power(xtop.vpulse)"] = (
+    transient_simulation_results["v(xtop.vpulse_p)"]
+    * transient_simulation_results["i(v.xtop.vvpulse)"]
+)
+transient_simulation_results["resistance(xtop.vpulse)"] = np.round(
+    transient_simulation_results["v(xtop.vpulse_p)"]
+    / transient_simulation_results["i(v.xtop.vvpulse)"]
+)
+transient_simulation_results
+
+# Note that because the resistance is constant, the power consumption should only vary when there is a change in the signal input. The resistance will always remain constant as the signal voltage and current change, as it is a physical material, and it is easily verified.
+
+transient_simulation_results.iloc[20:40]
+
+# |    | Unnamed: 0 |   time | v(xtop.vpulse_p) | i(v.xtop.vvpulse) | power(xtop.vpulse) | resistance(xtop.vpulse) |
+# |---:|----------:|-------:|-----------------:|------------------:|-------------------:|-----------------------:|
+# | 20 |        20 | 0.00107 |           -0.986 |          0.000986 |        -0.000972196 |                   1000 |
+# | 21 |        21 | 0.00115 |           -0.97  |          0.00097  |        -0.0009409   |                   1000 |
+# | 22 |        22 | 0.00125 |           -0.95  |          0.00095  |        -0.0009025   |                   1000 |
+# | 23 |        23 | 0.00135 |           -0.93  |          0.00093  |        -0.0008649   |                   1000 |
+# | 24 |        24 | 0.00145 |           -0.91  |          0.00091  |        -0.0008281   |                   1000 |
+# | 25 |        25 | 0.00155 |           -0.89  |          0.00089  |        -0.0007921   |                   1000 |
+# | 26 |        26 | 0.00165 |           -0.87  |          0.00087  |        -0.0007569   |                   1000 |
+# | 27 |        27 | 0.00175 |           -0.85  |          0.00085  |        -0.0007225   |                   1000 |
+# | 28 |        28 | 0.00185 |           -0.83  |          0.00083  |        -0.0006889   |                   1000 |
+# | 29 |        29 | 0.00195 |           -0.81  |          0.00081  |        -0.0006561   |                   1000 |
+# | 30 |        30 | 0.00205 |           -0.79  |          0.00079  |        -0.0006241   |                   1000 |
+# | 31 |        31 | 0.00215 |           -0.77  |          0.00077  |        -0.0005929   |                   1000 |
+# | 32 |        32 | 0.00225 |           -0.75  |          0.00075  |        -0.0005625   |                   1000 |
+# | 33 |        33 | 0.00235 |           -0.73  |          0.00073  |        -0.0005329   |                   1000 |
+# | 34 |        34 | 0.00245 |           -0.71  |          0.00071  |        -0.0005041   |                   1000 |
+# | 35 |        35 | 0.00255 |           -0.69  |          0.00069  |        -0.0004761   |                   1000 |
+# | 36 |        36 | 0.00265 |           -0.67  |          0.00067  |        -0.0004489   |                   1000 |
+# | 37 |        37 | 0.00275 |           -0.65  |          0.00065  |        -0.0004225   |                   1000 |
+# | 38 |        38 | 0.00285 |           -0.63  |          0.00063  |        -0.0003969   |                   1000 |
+# | 39 |        39 | 0.00295 |           -0.61  |          0.00061  |        -0.0003721   |                   1000 |
+#
+
+simple_transient_plot_power_resistance = piel.visual.plot_simple_multi_row(
+    data=transient_simulation_results,
+    x_axis_column_name="time",
+    row_list=[
+        "resistance(xtop.vpulse)",
+        "power(xtop.vpulse)",
+    ],
+    y_axis_title_list=[r"resistance ($\Omega$)", r"power ($W$)"],
+)
+simple_transient_plot_power_resistance.savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_power_resistance.PNG"
+)
+
+# ![simple_transient_plot_power_resistance](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_power_resistance.PNG)
+
+# So, we have extracted the power consumption throughout time for pulses we have configured. For the whole period of the simulation, we can extract the energy consumed as the integral of power for a time differential. Note that we expect the energy consumption of this particular circuit, where the resistor is constantly drawing current, to be constantly increasing in time. We can perform a cumulative sum over our `power(xtop.vpulse)` dataframe which is a discrete integral, and we can multiply that term with the time value to determine the total energy consumption at a point in time.
+
+transient_simulation_results["energy_consumed(xtop.vpulse)"] = (
+    transient_simulation_results["power(xtop.vpulse)"].cumsum()
+    * transient_simulation_results["time"]
+)
+transient_simulation_results
+
+simple_energy_consumed_plot = transient_simulation_results.plot(
+    x="time", y="energy_consumed(xtop.vpulse)"
+)
+simple_energy_consumed_plot.get_figure().savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_energy_consumed_plot.PNG"
+)
+
+# ![simple_energy_consumed_plot](../../_static/img/examples/04_spice_cosimulation/simple_energy_consumed_plot.PNG)
+
+# A full visualisation of the signal is including the cumulative energy use:
+
+simple_transient_plot_full = piel.visual.plot_simple_multi_row(
+    data=transient_simulation_results,
+    x_axis_column_name="time",
+    row_list=[
+        "v(xtop.vpulse_p)",
+        "i(v.xtop.vvpulse)",
+        "resistance(xtop.vpulse)",
+        "power(xtop.vpulse)",
+        "energy_consumed(xtop.vpulse)",
+    ],
+    y_axis_title_list=[r"$V$", r"$A$", r"$\Omega$", r"$W$", r"$J$"],
+)
+simple_transient_plot_full.savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG"
+)
+
+# ![simple_transient_plot_full](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG)
+
+# ### Driving our Phase Shifter
+#
+# We have demonstrated how we can extract a simple model of a resistor and create different types of `SPICE` simulations. Now, let's consider how would this affect the photonic performance in a phase-shifter context. One important aspect is that we need to create a mapping between our analogue voltage and a phase. Ideally, this should be a functional mapping.

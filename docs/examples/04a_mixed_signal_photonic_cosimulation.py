@@ -1,4 +1,8 @@
-# # Mixed-Signal & Photonic Power Consumption Calculation
+# # Mixed-Signal & Photonic Cosimulation
+
+# #### Automation
+
+# Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example: WIP
 
 # One desired output of an electrical model simulation is an extraction of the power consumption of the circuit. Fundamentally, this is dependent on the time and the operation performed. Hence, to estimate an average power consumption, it is more effective to define the power consumption of a particular operation, and extract the power consumption for the frequency at which this operation is performed.
 #
