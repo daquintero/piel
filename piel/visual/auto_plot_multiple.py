@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pathlib
 
-matplotlib.style.use(pathlib.Path(__file__) / ".." / pathlib.Path("piel_fast.rcParams"))
+matplotlib.style.use(pathlib.Path(__file__).parent / pathlib.Path("piel_fast.rcParams"))
 
 __all__ = [
     "plot_simple",
