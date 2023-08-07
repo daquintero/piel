@@ -1,5 +1,9 @@
 from typing import Literal
-from .photonic.straight_waveguide import waveguide, lossless_straight
+from .photonic.straight_waveguide import (
+    waveguide,
+    lossless_straight,
+    ideal_active_waveguide,
+)
 from .photonic.mmi2x2 import mmi2x2_50_50
 
 __all__ = [
@@ -11,6 +15,7 @@ __default_models_dictionary__ = {
     "bend_euler": waveguide,
     "mmi2x2": mmi2x2_50_50,
     "straight": waveguide,
+    "straight_heater_metal_simple": ideal_active_waveguide,
 }
 
 __default_quantum_models_dictionary__ = {

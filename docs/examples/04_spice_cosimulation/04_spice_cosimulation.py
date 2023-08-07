@@ -7,6 +7,7 @@ import hdl21 as h
 import pandas as pd
 import numpy as np
 import piel
+import sax
 import sys
 
 # ## Start from `gdsfactory`
@@ -580,10 +581,148 @@ simple_transient_plot_full.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG"
 )
 
+
 # ![simple_transient_plot_full](../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG)
 
 # ### Driving our Phase Shifter
 #
 # We have demonstrated how we can extract a simple model of a resistor and create different types of `SPICE` simulations. Now, let's consider how would this affect the photonic performance in a phase-shifter context. One important aspect is that we need to create a mapping between our analogue voltage and a phase. Ideally, this should be a functional mapping.
 #
-# Let's create an arbitrary phase mapping with a function that bounds the voltage linearly within two boundaries.
+# Let's create an arbitrary phase mapping with a function that bounds the voltage linearly. What we can do is create a function with a particular phase-power slope. This will vary depending on the thermo-optic modulator design so we will choose an arbitrary value.
+
+
+def linear_phase_mapping_relationship(
+    phase_power_slope: float,
+    zero_power_phase: float,
+):
+    """
+    This function returns a function that maps the power applied to a particular heater resistor linearly. For
+    example, we might start with a minimum phase mapping of (0,0) where the units are in (Watts, Phase). If we have a ridiculous arbitrary phase_power_slope of 1rad/1W, then the points in our linear mapping would be (0,0), (1,1), (2,2), (3,3), etc. This is implemented as a lambda function that takes in a power and returns a phase. The units of the power and phase are determined by the phase_power_slope and zero_power_phase. The zero_power_phase is the phase at zero power. The phase_power_slope is the slope of the linear mapping. The units of the phase_power_slope are radians/Watt. The units of the zero_power_phase are radians. The units of the power are Watts. The units of the phase are radians.
+
+    Args:
+        phase_power_slope (float): The slope of the linear mapping. The units of the phase_power_slope are radians/Watt.
+        zero_power_phase (float): The phase at zero power. The units of the zero_power_phase are radians.
+
+    Returns:
+        linear_phase_mapping (function): A function that maps the power applied to a particular heater resistor linearly. The units of the power and phase are determined by the phase_power_slope and zero_power_phase. The zero_power_phase is the phase at zero power. The phase_power_slope is the slope of the linear mapping. The units of the phase_power_slope are radians/Watt. The units of the zero_power_phase are radians. The units of the power are Watts. The units of the phase are radians.
+    """
+
+    def linear_phase_mapping(power_w: float) -> float:
+        """
+        We create a linear interpolation based on the phase_power_slope. This function returns phase in radians.
+        """
+        return phase_power_slope * power_w + zero_power_phase
+
+    return linear_phase_mapping
+
+
+our_phase_power_map = (
+    piel.models.physical.electro_optic.linear_phase_mapping_relationship(
+        phase_power_slope=10, zero_power_phase=1
+    )
+)
+power_w_i = np.linspace(0, 1)
+linear_phase_power_mapping = piel.visual.plot_simple(
+    x_data=power_w_i,
+    y_data=our_phase_power_map(power_w=power_w_i),
+    ylabel=r"Phase ($\phi$)",
+    xlabel=r"Power ($W$)",
+)
+linear_phase_power_mapping.savefig(
+    "../../_static/img/examples/04_spice_cosimulation/linear_phase_power_mapping.png"
+)
+
+# ![linear_phase_power_mapping](../../_static/img/examples/04_spice_cosimulation/linear_phase_power_mapping.PNG)
+
+# This is all very nice and good, but now we need to map our power in time, to the corresponding phase of our phase shifter. We follow the same principles as the previous digitally-driven modulator example.
+
+our_resistive_mzi_2x2_2x2_phase_shifter_optical_netlist = (
+    our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="electrical")
+)
+
+mzi2x2_model, mzi2x2_model_info = sax.circuit(
+    netlist=our_resistive_mzi_2x2_2x2_phase_shifter_optical_netlist,
+    models=piel.models.frequency.get_default_models(),
+)
+
+mzi2x2_analogue_active_unitary_array = list()
+for power_i in transient_simulation_results["power(xtop.vpulse)"]:
+    phase_i = our_phase_power_map(power_w=power_i)
+    mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
+        mzi2x2_model(sxt={"active_phase_rad": phase_i}),
+        input_ports_order=(
+            "o2",
+            "o1",
+        ),
+    )
+    mzi2x2_analogue_active_unitary_array.append(mzi2x2_active_unitary_i)
+transient_simulation_results["unitary"] = mzi2x2_analogue_active_unitary_array
+
+# Note that this operation is very computationally intensive, as we are getting the unitary at every particular point in time within the analog simulation resolution. However, it is reasonable computable within about a minute. We can now see how our optical ports change following the principles in the digital simulation.
+
+optical_port_input = np.array([1, 0])
+output_amplitude_array_0 = np.array([])
+output_amplitude_array_1 = np.array([])
+for unitary_i in transient_simulation_results.unitary:
+    output_amplitude_i = np.dot(unitary_i[0], optical_port_input)
+    output_amplitude_array_0 = np.append(
+        output_amplitude_array_0, output_amplitude_i[0]
+    )
+    output_amplitude_array_1 = np.append(
+        output_amplitude_array_1, output_amplitude_i[1]
+    )
+transient_simulation_results["output_amplitude_array_0"] = output_amplitude_array_0
+transient_simulation_results["output_amplitude_array_1"] = output_amplitude_array_1
+transient_simulation_results["output_amplitude_array_0_abs"] = np.abs(
+    transient_simulation_results.output_amplitude_array_0
+)
+transient_simulation_results["output_amplitude_array_0_phase_rad"] = np.angle(
+    transient_simulation_results.output_amplitude_array_0
+)
+transient_simulation_results["output_amplitude_array_0_phase_deg"] = np.angle(
+    transient_simulation_results.output_amplitude_array_0, deg=True
+)
+transient_simulation_results["output_amplitude_array_1_abs"] = np.abs(
+    transient_simulation_results.output_amplitude_array_1
+)
+transient_simulation_results["output_amplitude_array_1_phase_rad"] = np.angle(
+    transient_simulation_results.output_amplitude_array_1
+)
+transient_simulation_results["output_amplitude_array_1_phase_deg"] = np.angle(
+    transient_simulation_results.output_amplitude_array_1, deg=True
+)
+transient_simulation_results
+
+# Let's plot this now:
+
+simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
+    data=transient_simulation_results,
+    x_axis_column_name="time",
+    row_list=[
+        "power(xtop.vpulse)",
+        "output_amplitude_array_0_abs",
+        "output_amplitude_array_0_phase_deg",
+    ],
+    y_axis_title_list=["e1 Power", "o3 Amplitude", "o3 Phase"],
+)
+simple_ideal_o3_mzi_2x2_plots.savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG"
+)
+
+# ![simple_ideal_o3_mzi_2x2_plots](../../_static/img/examples/04_spice_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG)
+
+simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
+    data=transient_simulation_results,
+    x_axis_column_name="time",
+    row_list=[
+        "power(xtop.vpulse)",
+        "output_amplitude_array_1_abs",
+        "output_amplitude_array_1_phase_deg",
+    ],
+    y_axis_title_list=["e1 Phase", "o4 Amplitude", "o4 Phase"],
+)
+simple_ideal_o4_mzi_2x2_plots.savefig(
+    "../../_static/img/examples/04_spice_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
+)
+
+# ![simple_ideal_o4_mzi_2x2_plots](../../_static/img/examples/04_spice_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG)
