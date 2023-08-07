@@ -585,3 +585,5 @@ simple_transient_plot_full.savefig(
 # ### Driving our Phase Shifter
 #
 # We have demonstrated how we can extract a simple model of a resistor and create different types of `SPICE` simulations. Now, let's consider how would this affect the photonic performance in a phase-shifter context. One important aspect is that we need to create a mapping between our analogue voltage and a phase. Ideally, this should be a functional mapping.
+#
+# Let's create an arbitrary phase mapping with a function that bounds the voltage linearly within two boundaries.

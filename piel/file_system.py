@@ -321,7 +321,7 @@ def return_path(input_path: piel_path_types) -> pathlib.Path:
         output_path = input_path
     elif isinstance(input_path, types.ModuleType):
         # TODO Untested
-        output_path = input_path
+        output_path = pathlib.Path(input_path.__file__) / ".."
     elif isinstance(input_path, os.PathLike):
         output_path = pathlib.Path(input_path)
     else:

@@ -1,7 +1,7 @@
-__all__ = ["basic_heater_spice"]
+__all__ = ["linear_phase_mapping_relationship"]
 
 
-def basic_heater_spice():
+def linear_phase_mapping_relationship():
     """
-    This function returns the most basic SPICE model for a heater, that can be closely integrated with circuit solvers accordingly.
+    This function returns a function that maps the power applied to a particular heater resistor
     """

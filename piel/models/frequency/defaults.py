@@ -1,4 +1,5 @@
-from .photonic.straight_waveguide import waveguide
+from typing import Literal
+from .photonic.straight_waveguide import waveguide, lossless_straight
 from .photonic.mmi2x2 import mmi2x2_50_50
 
 __all__ = [
@@ -12,13 +13,22 @@ __default_models_dictionary__ = {
     "straight": waveguide,
 }
 
+__default_quantum_models_dictionary__ = {
+    "bend_euler": lossless_straight,
+    "mmi2x2": mmi2x2_50_50,
+    "straight": lossless_straight,
+}
 
-def get_default_models(custom_defaults: dict | None = None) -> dict:
+
+def get_default_models(
+    custom_defaults: dict | None = None, type: Literal["default", "quantum"] = "default"
+) -> dict:
     """
     Returns the default models dictionary.
 
     Args:
         custom_defaults (dict): Custom defaults dictionary.
+        type (Literal["default", "quantum"]): Type of default models dictionary to return.
 
     Returns:
         dict: Default models dictionary.
@@ -26,4 +36,9 @@ def get_default_models(custom_defaults: dict | None = None) -> dict:
     if custom_defaults is not None:
         return custom_defaults
     else:
-        return __default_models_dictionary__
+        if type == "default":
+            return __default_models_dictionary__
+        elif type == "quantum":
+            return __default_quantum_models_dictionary__  #
+        else:
+            raise ValueError(f"Type {type} not recognised.")

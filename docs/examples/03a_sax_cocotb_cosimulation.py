@@ -183,18 +183,18 @@ example_simple_simulation_data
 
 sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
 
-# ``['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_undercut']```
+# ```['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_simple']```
 
 # We have some basic models in `piel` we can use to compose our circuit
 
 all_models = piel.models.frequency.get_all_models()
 all_models
 
-straight_heater_metal_undercut = all_models["ideal_active_waveguide"]
-straight_heater_metal_undercut
+straight_heater_metal_simple = all_models["ideal_active_waveguide"]
+straight_heater_metal_simple
 
 our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
-    {"straight_heater_metal_undercut": straight_heater_metal_undercut}
+    {"straight_heater_metal_simple": straight_heater_metal_simple}
 )
 our_custom_library
 
@@ -353,7 +353,7 @@ mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transien
 #
 # For the sake of simplicity, we can plot phase and amplitude over time driven by a digitally-encoded applied phase.
 
-piel.visual.plot_simple_multi_row(
+simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
     data=mzi2x2_simple_simulation_data_lines,
     x_axis_column_name="t",
     row_list=[
@@ -363,10 +363,13 @@ piel.visual.plot_simple_multi_row(
     ],
     y_axis_title_list=["e1 Phase", "o3 Amplitude", "o3 Phase"],
 )
+simple_ideal_o3_mzi_2x2_plots.savefig(
+    "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG"
+)
 
 # ![simple_ideal_o3_mzi_2x2_plots](../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG)
 
-piel.visual.plot_simple_multi_row(
+simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
     data=mzi2x2_simple_simulation_data_lines,
     x_axis_column_name="t",
     row_list=[
@@ -375,6 +378,9 @@ piel.visual.plot_simple_multi_row(
         "output_amplitude_array_1_phase_deg",
     ],
     y_axis_title_list=["e1 Phase", "o4 Amplitude", "o4 Phase"],
+)
+simple_ideal_o4_mzi_2x2_plots.savefig(
+    "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
 )
 
 # ![simple_ideal_o4_mzi_2x2_plots](../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG)

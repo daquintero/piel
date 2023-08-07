@@ -1,5 +1,9 @@
-import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+import pandas as pd
+import pathlib
+
+matplotlib.style.use(pathlib.Path(__file__) / ".." / pathlib.Path("piel_fast.rcParams"))
 
 __all__ = [
     "plot_simple_multi_row",
