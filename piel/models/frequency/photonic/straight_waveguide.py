@@ -4,7 +4,12 @@ Translated from https://github.com/flaport/sax or https://github.com/flaport/pho
 import sax
 import jax.numpy as jnp
 
-__all__ = ["ideal_active_waveguide", "waveguide", "simple_straight"]
+__all__ = [
+    "ideal_active_waveguide",
+    "waveguide",
+    "simple_straight",
+    "lossless_straight",
+]
 
 
 def waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0):
@@ -32,5 +37,10 @@ def ideal_active_waveguide(
 
 
 def simple_straight(length=10.0, width=0.5):
+    S = {("o1", "o2"): 1.0}  # we'll improve this model later!
+    return sax.reciprocal(S)
+
+
+def lossless_straight():
     S = {("o1", "o2"): 1.0}  # we'll improve this model later!
     return sax.reciprocal(S)

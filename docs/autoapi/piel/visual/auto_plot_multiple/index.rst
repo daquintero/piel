@@ -13,9 +13,26 @@ Functions
 
 .. autoapisummary::
 
+   piel.visual.auto_plot_multiple.plot_simple
    piel.visual.auto_plot_multiple.plot_simple_multi_row
-   piel.visual.auto_plot_multiple.plot_multi_row
 
+
+
+.. py:function:: plot_simple(x_data: numpy.array, y_data: numpy.array, ylabel: str, xlabel: str)
+
+   Plot a simple line graph.
+
+   :param x_data: X axis data.
+   :type x_data: np.array
+   :param y_data: Y axis data.
+   :type y_data: np.array
+   :param ylabel: Y axis label.
+   :type ylabel: str
+   :param xlabel: X axis label.
+   :type xlabel: str
+
+   :returns: Matplotlib plot.
+   :rtype: plt
 
 
 .. py:function:: plot_simple_multi_row(data: pandas.DataFrame, x_axis_column_name: str = 't', row_list: list | None = None, y_axis_title_list: list | None = None, x_axis_title: str | None = None)
@@ -36,6 +53,3 @@ Functions
 
    :returns: Matplotlib plot.
    :rtype: plt
-
-
-.. py:function:: plot_multi_row(data: pandas.DataFrame)

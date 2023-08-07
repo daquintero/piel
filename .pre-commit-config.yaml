@@ -22,7 +22,7 @@ repos:
     rev: ad3ff374e97e29ca87c94b5dc7eccdd29adc6296
     hooks:
       - id: codespell
-        args: ["-L TE,TE/TM,te,ba,FPR,fpr_spacing,ro,nd,donot,schem,Synopsys,ket"]
+        args: ["-L TE,TE/TM,te,ba,FPR,fpr_spacing,ro,nd,donot,schem,Synopsys,ket,inout" ]
         additional_dependencies:
           - tomli
 

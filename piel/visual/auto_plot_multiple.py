@@ -1,10 +1,34 @@
-import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import pathlib
+
+matplotlib.style.use(pathlib.Path(__file__) / ".." / pathlib.Path("piel_fast.rcParams"))
 
 __all__ = [
+    "plot_simple",
     "plot_simple_multi_row",
-    "plot_multi_row",
 ]
+
+
+def plot_simple(x_data: np.array, y_data: np.array, ylabel: str, xlabel: str):
+    """
+    Plot a simple line graph.
+
+    Args:
+        x_data (np.array): X axis data.
+        y_data (np.array): Y axis data.
+        ylabel (str): Y axis label.
+        xlabel (str): X axis label.
+
+    Returns:
+        plt: Matplotlib plot.
+    """
+    plt.plot(x_data, y_data)
+    plt.ylabel(ylabel)
+    plt.xlabel(xlabel)
+    return plt
 
 
 def plot_simple_multi_row(
@@ -49,58 +73,3 @@ def plot_simple_multi_row(
     # TODO align all ytitles
 
     return plt
-
-
-def plot_multi_row(
-    data: pd.DataFrame,
-):
-    pass
-    # from bokeh.plotting import figure, show
-    # from bokeh.layouts import column
-    #
-    # p = figure(
-    #     width=800,
-    #     height=300,
-    #     title="",
-    #     tools="",
-    #     toolbar_location=None,
-    #     match_aspect=True,
-    #     y_range=[0, 1],
-    # )
-    # p2 = figure(width=800, height=300, x_range=p.x_range)
-    # p3 = figure(width=800, height=300, x_range=p.x_range)
-    #
-    # p.line(
-    #     mzi2x2_simple_simulation_data.t / 1000,
-    #     mzi2x2_simple_simulation_data.output_amplitude_array_0_abs,
-    # )
-    # # color="navy", alpha=0.4, line_width=4)
-    #
-    # p.line(
-    #     mzi2x2_simple_simulation_data.t / 1000,
-    #     mzi2x2_simple_simulation_data.output_amplitude_array_1_abs,
-    # )
-    # # color="navy", alpha=0.4, line_width=4)
-    #
-    # p2.line(
-    #     mzi2x2_simple_simulation_data.t / 1000,
-    #     mzi2x2_simple_simulation_data.output_amplitude_array_0_phase_deg,
-    # )
-    # # color="navy", alpha=0.4, line_width=4)
-    #
-    # p2.line(
-    #     mzi2x2_simple_simulation_data.t / 1000,
-    #     mzi2x2_simple_simulation_data.output_amplitude_array_1_phase_deg,
-    # )
-    #
-    # p3.line(
-    #     mzi2x2_simple_simulation_data.t / 1000,
-    #     mzi2x2_simple_simulation_data.phase,
-    # )
-    # # color="navy", alpha=0.4, line_width=4)
-    #
-    # # color="navy", alpha=0.4, line_width=4)
-    #
-    # # show(p)
-    # # layout = gridplot([[p], [p2]])
-    # return show(column(p, p2, p3))

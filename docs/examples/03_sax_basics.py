@@ -14,6 +14,8 @@ from gdsfactory.components import mzi2x2_2x2
 import piel
 import sax
 
+gf.components()
+
 # We create a balanced MZI lattice full of the same `mzi2x2_2x2` components to demonstrate `sax` network basics.
 
 # +

@@ -65,12 +65,14 @@ Functions
    :rtype: dict
 
 
-.. py:function:: get_default_models(custom_defaults: dict | None = None) -> dict
+.. py:function:: get_default_models(custom_defaults: dict | None = None, type: Literal[default, quantum] = 'default') -> dict
 
    Returns the default models dictionary.
 
    :param custom_defaults: Custom defaults dictionary.
    :type custom_defaults: dict
+   :param type: Type of default models dictionary to return.
+   :type type: Literal["default", "quantum"]
 
    :returns: Default models dictionary.
    :rtype: dict

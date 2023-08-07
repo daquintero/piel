@@ -10,9 +10,13 @@ import sax
 import piel
 import qutip as qp
 
-# ## Photonics Circuit to Unitary
+# ## Quantum Unitary Representation
 
-# We follow the same process as the previous examples:
+# One of the main complexities of modelling a quantum photonic system is that loss is a killer. It is a killer far more than we understand in classical systems. When we model unitary operations, they are lossless. When loss occurs on quantum photonic operations, it translates into Pauli gate errors, or less efficient resource state generation models. This means that we need to model our phase separate from our target logical operations that implement our quantum circuit or specific components accordingly. So, how we model our circuits, essentially depends on the methodology we compose our circuit models. To model a quantum network, we need to compose our circuit connectivity using unitary models. However, to model loss and optical phase variations, we need to then model our circuit with more realstic physical models. This will allow us to extract different aspects of circuit information accordingly.
+#
+# See docs/microservices/dependencies/qutip for further theory and validation. TODO link.
+
+# ### Starting off from Composed Circuit
 
 switch_circuit = gf.components.component_lattice_generic()
 switch_circuit.show()
@@ -20,17 +24,19 @@ switch_circuit.plot_widget()
 
 # ![default_switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/default_switch_circuit_plot_widget.PNG)
 
+# ### Quantum Models
+
+# We follow the same process as the previous examples, but we use lossless models for the circuit composition.
+
 recursive_netlist = switch_circuit.get_netlist_recursive()
 switch_circuit_model, switch_circuit_model_info = sax.circuit(
     netlist=recursive_netlist,
-    models=piel.models.frequency.get_default_models(),
+    models=piel.models.frequency.get_default_models(type="quantum"),
 )
 default_state_s_parameters = switch_circuit_model()
 
 # We convert from the `sax` unitary to an ideal "unitary" that can be inputted into a `qutip` model. Fortunately, `piel` has got you covered:
 # It is important to note some inherent assumptions and limitations of the translation process.
-
-# Let's first convert to a standard S-Parameter matrix:
 
 (
     s_parameters_standard_matrix,
@@ -39,31 +45,21 @@ default_state_s_parameters = switch_circuit_model()
 s_parameters_standard_matrix
 
 # ```python
-# Array([[ 0.40105772+0.49846345j, -0.45904815-0.197149j  ,
-#          0.00180554+0.17483076j,  0.4000432 +0.38792986j],
-#        [-0.4590482 -0.197149j  , -0.8361797 +0.13278401j,
-#         -0.03938162-0.03818914j, -0.17480364+0.00356933j],
-#        [ 0.00180554+0.17483076j, -0.03938162-0.03818914j,
-#         -0.8536251 +0.11586684j,  0.11507235-0.45943272j],
-#        [ 0.40004322+0.3879298j , -0.17480363+0.00356933j,
-#          0.11507231-0.45943272j, -0.5810837 -0.31133226j]],      dtype=complex64)
+# Array([[ 0.       +0.j       ,  0.       +0.j       ,
+#          0.       +0.j       ,  0.       -0.9999998j],
+#        [ 0.       +0.j       , -0.9999999+0.j       ,
+#          0.       +0.j       ,  0.       +0.j       ],
+#        [ 0.       +0.j       ,  0.       +0.j       ,
+#         -0.9999999+0.j       ,  0.       +0.j       ],
+#        [ 0.       -0.9999998j,  0.       +0.j       ,
+#          0.       +0.j       ,  0.       +0.j       ]], dtype=complex64)
 # ```
 
-import numpy as np
+# ### Translating to Qutip
 
-np.asarray(s_parameters_standard_matrix)
+import qutip
 
-# We can explore some properties of this matrix:
-
-s_parameters_standard_matrix.shape
-
-# ## Quantum Unitary Representation
-
-# + active=""
-# # TODO verify validity, I am a bit unconvinced re loss and identities.
-#
-# See docs/microservices/dependencies/qutip for further theory and validation. TODO link.
-# -
+qutip.cnot()
 
 qutip_qobj = piel.standard_s_parameters_to_qutip_qobj(s_parameters_standard_matrix)
 
@@ -77,37 +73,7 @@ qutip_qobj.dims
 
 qutip_qobj.eigenstates
 
-# ## Sub Circuit Unitary Analysis
-
-# We can also integrated the `piel` toolchain, with another set of packages for quantum photonic system design such as those provided by `XanaduAI`. We will use their `thewalrus` package to calculate the permanent of our matrix. For example, we can do this for our full circuit unitary:
-
-piel.sax_circuit_permanent(default_state_s_parameters)
-
-# We might want to calculate the permanent of subsections of the larger unitary to calculate certain operations probability:
-
-s_parameters_standard_matrix.shape
-
-# For, example, we need to just calculate it for the first submatrix component, or a particular switch unitary within a larger circuit. This would be indexed when starting from the first row and column as `start_index` = (0,0) and `stop_index` = (`unitary_size`, `unitary_size`). Note that an error will be raised if a non-unitary matrix is inputted. Some examples are:
-
-our_subunitary = piel.subunitary_selection_on_range(
-    s_parameters_standard_matrix, stop_index=(1, 1), start_index=(0, 0)
-)
-our_subunitary
-
-# ```python
-# Array([[ 0.40105772+0.49846345j, -0.45904815-0.197149j  ],
-#        [-0.4590482 -0.197149j  , -0.8361797 +0.13278401j]],      dtype=complex64)
-# ```
-
-# We can now calculate the permanent of this submatrix:
-
-piel.unitary_permanent(our_subunitary)
-
-# ```python
-# ((-0.2296868-0.18254918j), 0.0)
-# ```
-
-# ## Fock State Evolution Probability
+# ### Fock State Evolution Probability
 
 # Say, we want to calculate the evolution of a Fock state input through our photonic circuit. The initial Fock state is defined as $\ket{f_1} = \ket{j_1, j_2, ... j_N}$ and transitions to $\ket{f_2} = \ket{j_1^{'}, j_2^{'}, ... j_N^{'}}$. The evolution of this state through our circuit with unitary $U$ is defined by the subunitary $U_{f_1}^{f_2}$.
 
@@ -189,7 +155,7 @@ piel.fock_transition_probability_amplitude(
 #
 # TODO this is not numerically right but the functions are fine because we need to verify the unitary-ness of the model composed matrices.
 
-# ## Fock-State Generation
+# ### Fock-State Generation
 
 # It might be desired to generate a large amount of Fock-states to evaluate how the system behaves when performing a particular operation. `piel` provides a few handy functions. For an determined amount of modes and maximum photon number on each state, we can generate all the possible Fock states in `qutip` notation.
 
@@ -199,3 +165,62 @@ input_fock_states = piel.all_fock_states_from_photon_number(
 input_fock_states[10]
 
 # Quantum object: dims = [[4], [1]], shape = (4, 1), type = ket $\left(\begin{matrix}1.0\\0.0\\1.0\\0.0\\\end{matrix}\right)$
+
+# ### Sub Circuit Unitary Analysis
+
+# We can also integrated the `piel` toolchain, with another set of packages for quantum photonic system design such as those provided by `XanaduAI`. We will use their `thewalrus` package to calculate the permanent of our matrix. For example, we can do this for our full circuit unitary:
+
+piel.sax_circuit_permanent(default_state_s_parameters)
+
+# We might want to calculate the permanent of subsections of the larger unitary to calculate certain operations probability:
+
+s_parameters_standard_matrix.shape
+
+# For, example, we need to just calculate it for the first submatrix component, or a particular switch unitary within a larger circuit. This would be indexed when starting from the first row and column as `start_index` = (0,0) and `stop_index` = (`unitary_size`, `unitary_size`). Note that an error will be raised if a non-unitary matrix is inputted. Some examples are:
+
+our_subunitary = piel.subunitary_selection_on_range(
+    s_parameters_standard_matrix, stop_index=(1, 1), start_index=(0, 0)
+)
+our_subunitary
+
+# ```python
+# Array([[ 0.40105772+0.49846345j, -0.45904815-0.197149j  ],
+#        [-0.4590482 -0.197149j  , -0.8361797 +0.13278401j]],      dtype=complex64)
+# ```
+
+# We can now calculate the permanent of this submatrix:
+
+piel.unitary_permanent(our_subunitary)
+
+# ```python
+# ((-0.2296868-0.18254918j), 0.0)
+# ```
+
+# ## Lossy Models
+
+# Let's first convert to a standard S-Parameter matrix:
+
+(
+    s_parameters_standard_matrix,
+    input_ports_index_tuple_order,
+) = piel.sax_to_s_parameters_standard_matrix(default_state_s_parameters)
+s_parameters_standard_matrix
+
+# ```python
+# Array([[ 0.40105772+0.49846345j, -0.45904815-0.197149j  ,
+#          0.00180554+0.17483076j,  0.4000432 +0.38792986j],
+#        [-0.4590482 -0.197149j  , -0.8361797 +0.13278401j,
+#         -0.03938162-0.03818914j, -0.17480364+0.00356933j],
+#        [ 0.00180554+0.17483076j, -0.03938162-0.03818914j,
+#         -0.8536251 +0.11586684j,  0.11507235-0.45943272j],
+#        [ 0.40004322+0.3879298j , -0.17480363+0.00356933j,
+#          0.11507231-0.45943272j, -0.5810837 -0.31133226j]],      dtype=complex64)
+# ```
+
+import numpy as np
+
+np.asarray(s_parameters_standard_matrix)
+
+# We can explore some properties of this matrix:
+
+s_parameters_standard_matrix.shape
