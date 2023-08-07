@@ -38,6 +38,7 @@ Functions
    piel.models.frequency.photonic.ideal_active_waveguide
    piel.models.frequency.photonic.waveguide
    piel.models.frequency.photonic.simple_straight
+   piel.models.frequency.photonic.lossless_straight
 
 
 
@@ -66,3 +67,6 @@ Functions
 
 
 .. py:function:: simple_straight(length=10.0, width=0.5)
+
+
+.. py:function:: lossless_straight()
