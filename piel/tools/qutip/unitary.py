@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 import numpy as np
 from typing import Optional
-import qutip  # NOQA : F401
+import qutip
 
 __all__ = [
     "standard_s_parameters_to_qutip_qobj",
