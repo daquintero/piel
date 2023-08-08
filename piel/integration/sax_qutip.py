@@ -1,15 +1,17 @@
 import qutip  # NOQA : F401
 import sax
-import numpy as np
 from ..tools.qutip.unitary import matrix_to_qutip_qobj
 from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
 
 __all__ = [
     "sax_to_ideal_qutip_unitary",
+    "verify_sax_model_is_unitary",
 ]
 
 
-def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
+def sax_to_ideal_qutip_unitary(
+    sax_input: sax.SType, input_ports_order: tuple | None = None
+):
     """
     This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
     dimensions of the matrix can be observed.
@@ -42,6 +44,7 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
 
     Args:
         sax_input (sax.SType): A dictionary of S-parameters in the form of a SDict from `sax`.
+        input_ports_order (tuple | None): The order of the input ports. If None, the default order is used.
 
     Returns:
         qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
@@ -50,7 +53,25 @@ def sax_to_ideal_qutip_unitary(sax_input: sax.SType):
     (
         s_parameters_standard_matrix,
         input_ports_index_tuple_order,
-    ) = sax_to_s_parameters_standard_matrix(sax_input)
-    s_parameter_standard_matrix_numpy = np.asarray(s_parameters_standard_matrix)
-    qobj_unitary = matrix_to_qutip_qobj(s_parameter_standard_matrix_numpy)
+    ) = sax_to_s_parameters_standard_matrix(
+        sax_input=sax_input, input_ports_order=input_ports_order
+    )
+    qobj_unitary = matrix_to_qutip_qobj(s_parameters_standard_matrix)
     return qobj_unitary
+
+
+def verify_sax_model_is_unitary(
+    model: sax.SType, input_ports_order: tuple | None = None
+) -> bool:
+    """
+    Verify that the model is unitary.
+
+    Args:
+        model (dict): The model to verify.
+        input_ports_order (tuple | None): The order of the input ports. If None, the default order is used.
+
+    Returns:
+        bool: True if the model is unitary, False otherwise.
+    """
+    qobj = sax_to_ideal_qutip_unitary(model, input_ports_order=input_ports_order)
+    return qobj.check_isunitary()
