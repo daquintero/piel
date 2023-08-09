@@ -14,7 +14,7 @@ from gdsfactory.components import mzi2x2_2x2
 import piel
 import sax
 
-gf.components()
+dir(gf.components)
 
 # We create a balanced MZI lattice full of the same `mzi2x2_2x2` components to demonstrate `sax` network basics.
 
@@ -102,7 +102,7 @@ sax.get_required_circuit_models(mzi2x2_netlist)
 
 # `piel` provides a library with a list of models, that we hope we can extend and improve with your contribution! We create our model dictionary accordingly based on our default photonic frequency library:
 
-piel.models.frequency.photonic.get_default_models()
+piel.models.frequency.get_default_models()
 
 # Let's explore one of our default models. Each model has its source in the documentation.
 
