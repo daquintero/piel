@@ -26,7 +26,8 @@ __default_quantum_models_dictionary__ = {
 
 
 def get_default_models(
-    custom_defaults: dict | None = None, type: Literal["default", "quantum"] = "default"
+    custom_defaults: dict | None = None,
+    type: Literal["classical", "quantum"] = "classical",
 ) -> dict:
     """
     Returns the default models dictionary.
@@ -41,7 +42,7 @@ def get_default_models(
     if custom_defaults is not None:
         return custom_defaults
     else:
-        if type == "default":
+        if type == "classical":
             return __default_models_dictionary__
         elif type == "quantum":
             return __default_quantum_models_dictionary__  #
