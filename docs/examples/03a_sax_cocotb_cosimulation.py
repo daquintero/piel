@@ -25,7 +25,7 @@ mzi2x2_2x2_phase_shifter_netlist["instances"].keys()
 # dict_keys(['bend_euler_1', 'bend_euler_2', 'bend_euler_3', 'bend_euler_4', 'bend_euler_5', 'bend_euler_6', 'bend_euler_7', 'bend_euler_8', 'cp1', 'cp2', 'straight_4', 'straight_5', 'straight_6', 'straight_7', 'straight_8', 'straight_9', 'sxb', 'sxt', 'syl', 'sytl'])
 # ```
 
-# From the `mzi2x2_2x2_phase_shifter` component definition, we know that the `sxt` instance in the netlist corresponds to the `straight_heater_metal_undercut` actively driven phase shifter in our network.
+# From the `mzi2x2_2x2_phase_shifter` component definition, we know that the `sxt` instance in the netlist corresponds to the `straight_heater_metal_simple` actively driven phase shifter in our network.
 
 mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 
@@ -157,11 +157,11 @@ sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
 all_models = piel.models.frequency.get_all_models()
 all_models
 
-straight_heater_metal_undercut = all_models["ideal_active_waveguide"]
-straight_heater_metal_undercut
+straight_heater_metal_simple = all_models["ideal_active_waveguide"]
+straight_heater_metal_simple
 
 our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
-    {"straight_heater_metal_undercut": straight_heater_metal_undercut}
+    {"straight_heater_metal_simple": straight_heater_metal_simple}
 )
 our_custom_library
 
@@ -171,8 +171,8 @@ mzi2x2_model, mzi2x2_model_info = sax.circuit(
 piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
 # ```python
-# (Array([[-0.35184565-0.88689554j, -0.11039409-0.27826965j],
-#         [ 0.11039409+0.27826962j, -0.35184568-0.88689554j]],      dtype=complex64),
+# (Array([[-0.11039409-0.27826965j, -0.35184565-0.88689554j],
+#         [-0.35184568-0.88689554j,  0.11039409+0.27826962j]],      dtype=complex64),
 #  ('o2', 'o1'))
 # ```
 
@@ -187,8 +187,8 @@ piel.sax_to_s_parameters_standard_matrix(
 )
 
 # ```python
-# (Array([[ 0.2782662 -0.11039126j, -0.88689834+0.35184222j],
-#         [ 0.88689834-0.35184222j,  0.2782662 -0.11039126j]],      dtype=complex64),
+# (Array([[-0.88689834+0.35184222j,  0.2782662 -0.11039126j],
+#         [ 0.2782662 -0.11039126j,  0.88689834-0.35184222j]],      dtype=complex64),
 #  ('o2', 'o1'))
 # ```
 
@@ -250,16 +250,12 @@ for unitary_i in mzi2x2_simple_simulation_data.unitary:
 output_amplitude_array_0
 
 # ```python
-# array([ 0.33501235-0.83295667j,  0.41802746-0.70635343j,
-#         0.17302999-0.95249099j,  0.07739913-0.98543143j,
-#        -0.12383613-0.99100912j, -0.22114477-0.96341634j,
-#         0.3669197 -0.79363644j,  0.26007476-0.90097857j,
-#         0.39468631-0.75129062j,  0.21785825-0.92894149j,
-#         0.42709976-0.31207556j])
-#
-#
-#
-#
+# array([-0.16433296+0.40858838j, -0.29093617+0.49160349j,
+#        -0.04479861+0.24660602j, -0.01185814+0.15097517j,
+#        -0.00628051-0.0502601j , -0.03387329-0.14756872j,
+#        -0.20365313+0.4404957j , -0.09631109+0.3336508j ,
+#        -0.24599898+0.46826234j, -0.06834814+0.29143432j,
+#        -0.68521404+0.500675)`
 #
 #
 #
@@ -382,6 +378,8 @@ mixed_switch_lattice_circuit.plot_widget()
 
 # ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
+# ### Model Composition
+
 mixed_switch_lattice_circuit_netlist = (
     mixed_switch_lattice_circuit.get_netlist_recursive(
         exclude_port_types="electrical", allow_multiple=True
@@ -399,63 +397,88 @@ mixed_switch_lattice_circuit_netlist["mzi_214beef3"]["instances"].keys()
 
 # We can check what models we need to provide to compose the circuit. In our case, we want to determine all the instances that implement a particular model. This can be built directly into sax.
 
+recursive_composed_required_models = sax.get_required_circuit_models(
+    mixed_switch_lattice_circuit_netlist["component_lattice_gener_fb8c4da8"],
+    models=piel.models.frequency.get_default_models(),
+)
+recursive_composed_required_models
+
+# ```python
+# ['mzi_214beef3', 'mzi_d46c281f']
+# ```
+#
+# So this tells us all the models that are recursively composed, but not inherently provided by our defaults library. These are the models we can explore.
+
+recursive_composed_required_models_0 = sax.get_required_circuit_models(
+    mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[0]],
+    models=piel.models.frequency.get_default_models(),
+)
+recursive_composed_required_models_0
+
+# ```python
+# ['straight_heater_metal_s_ad3c1693']
+# ```
+
 sax.get_required_circuit_models(
-    mixed_switch_lattice_circuit_netlist["component_lattice_gener_fb8c4da8"]
+    mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[1]],
+    models=piel.models.frequency.get_default_models(),
 )
 
 # ```python
-# ['bend_euler', 'mzi_214beef3', 'mzi_d46c281f', 'straight']
+# []
 # ```
 
-sax.get_required_circuit_models(mixed_switch_lattice_circuit_netlist["mzi_214beef3"])
+# Now, we know from our example above that we can go deeper down the rabbit hole of iterative models until we have provided all models for our device. Let's just look at this in practice:
+
+recursive_composed_required_models_0_0 = sax.get_required_circuit_models(
+    mixed_switch_lattice_circuit_netlist[recursive_composed_required_models_0[0]],
+    models=piel.models.frequency.get_default_models(),
+)
+recursive_composed_required_models_0_0
 
 # ```python
-# ['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_s_ad3c1693']
+# []
 # ```
+#
+# So this means that all the levels of the model can be composed from our default dictionary.
+
+our_recursive_custom_library = (
+    piel.models.frequency.compose_custom_model_library_from_defaults(
+        {"straight_heater_metal_s_ad3c1693": straight_heater_metal_simple}
+    )
+)
+our_recursive_custom_library
+
+# What we can do now is that we can extract what instances use this model.
+
+mixed_switch_lattice_circuit_netlist_sax = sax.netlist(
+    mixed_switch_lattice_circuit_netlist
+)
+active_phase_shifters_dictionary = sax.get_component_instances(
+    mixed_switch_lattice_circuit_netlist_sax,
+    top_level_prefix="component_lattice_gener_fb8c4da8",
+    component_name_prefix=recursive_composed_required_models[0],
+)
+active_phase_shifters_dictionary
+
+# ```python
+# {'mzi_214beef3': ['mzi_1', 'mzi_5']}
+# ```
+
+# So these instances are our active phase shifters in our network.
 
 # What `sax.netlist` does, is to map each instance with each component, and then `sax.circuit` maps each component with each model which is then multiplied together.
 
-netlist = sax.netlist(mixed_switch_lattice_circuit_netlist)
+# ### Extracting our Phase Shifter Instances
 
-
-def get_instances_by_prefix(sax_recursive_netlist, prefix):
-    sax_recursive_netlist = sax_recursive_netlist.dict()["__root__"]
-    result = []
-    for key in sax_recursive_netlist.keys():
-        if key.startswith(prefix):
-            result.append(key)
-    return result
-
-
-def get_component_instances(sax_recursive_netlist, top_level_prefix, component_name):
-    instance_names = []
-    sax_recursive_netlist = sax_recursive_netlist.dict()["__root__"]
-    top_level_prefix = get_instances_by_prefix(netlist, prefix=top_level_prefix)[
-        0
-    ]  # Should only be one.
-    for key in sax_recursive_netlist[top_level_prefix]["instances"]:
-        if (
-            sax_recursive_netlist[top_level_prefix]["instances"][key]["component"]
-            == component_name
-        ):
-            instance_names.append(key)
-    return {component_name: instance_names}
-
-
-get_component_instances(
-    netlist, top_level_prefix="component_lattice_gener", component_name="bend_euler"
-)
-
-netlist.dict()["__root__"]["component_lattice_gener_fb8c4da8"]
-
-# It is important to note that some of the models can be composed from other models, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification.
+# One major complexity we have is that we do not know where our phase shifters are. We can find them in the layout, but we need our algorithm to determine them. There are a few things we know about them for sure. We know that our phase shifter instances begin with `straight_heater_metal_s`. However, we do not yet algorithmically know where they are. We know we can do the following based on our previous analysis. So what we will do now is extract all the active phase shifter components, and their corresponding location within the netlist. Let's remember where we want to end:
 
 (
     mixed_switch_lattice_circuit_s_parameters,
     mixed_switch_lattice_circuit_s_parameters_info,
 ) = sax.circuit(
     netlist=mixed_switch_lattice_circuit_netlist,
-    models=piel.models.frequency.get_default_models(),
+    models=our_recursive_custom_library,
 )
 piel.sax_to_s_parameters_standard_matrix(mixed_switch_lattice_circuit_s_parameters())
 # mzi2x2_model(sxt={"active_phase_rad": phase_i}),
@@ -471,5 +494,23 @@ piel.sax_to_s_parameters_standard_matrix(mixed_switch_lattice_circuit_s_paramete
 #          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
+
+# + active=""
+# mixed_switch_lattice_circuit_s_parameters
+# -
+
+active_phase_shifters_dictionary[recursive_composed_required_models[0]][0]
+
+piel.sax_to_s_parameters_standard_matrix(
+    mixed_switch_lattice_circuit_s_parameters(
+        mzi_1={"sxt": {"active_phase_rad": np.pi}}
+    )
+)
+
+# However, we want to control the phase shifting effect and control the component we are modifying. In our case, we want to modify the phase of the model controlled by our thermo-optic phase shifters which are `straight_heater_metal_s_*` instances. So let's find all the instances and corresponding models where there is one of these models. We know from the `required_models` function that we are have distinct models required for each of these Mach-Zeneder components.
+
+# From this we can tell only of the corresponding instances and submodels.
+
+# It is important to note that some of the models can be composed from other models, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification.
 
 # What we need to do now, is extract a list of our phase shifters that we can then apply our phase to.
