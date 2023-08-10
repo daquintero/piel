@@ -7,9 +7,7 @@ import numpy as np
 import piel
 import sax
 
-# ## Component Models
-#
-# ### Active MZI 2x2 Phase Shifter
+# ## Active MZI 2x2 Phase Shifter
 
 # First, let's look at our actively driven component:
 
@@ -32,37 +30,6 @@ mzi2x2_2x2_phase_shifter_netlist["instances"].keys()
 mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 
 # So what we do is that if we define an active mode for this waveguide, we can model the network system.
-
-# ### Active MZI 2x2 Component Lattice
-
-example_component_lattice = [
-    [mzi2x2_2x2_phase_shifter(), 0, mzi2x2_2x2(delta_length=80.0)],
-    [0, mzi2x2_2x2(delta_length=50.0), 0],
-    [mzi2x2_2x2(delta_length=100.0), 0, mzi2x2_2x2_phase_shifter()],
-]
-
-mixed_switch_circuit = gf.components.component_lattice_generic(
-    network=example_component_lattice
-)
-# mixed_switch_circuit.show()
-mixed_switch_circuit.plot_widget()
-
-# ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
-
-mixed_switch_circuit_netlist = mixed_switch_circuit.get_netlist(
-    exclude_port_types="electrical"
-)
-mixed_switch_circuit_netlist["instances"].keys()
-
-# ```python
-# dict_keys(['bend_euler_1', 'bend_euler_10', 'bend_euler_11', 'bend_euler_12', 'bend_euler_13', 'bend_euler_14', 'bend_euler_15', 'bend_euler_16', 'bend_euler_17', 'bend_euler_18', 'bend_euler_19', 'bend_euler_2', 'bend_euler_20', 'bend_euler_21', 'bend_euler_22', 'bend_euler_23', 'bend_euler_24', 'bend_euler_25', 'bend_euler_26', 'bend_euler_27', 'bend_euler_28', 'bend_euler_29', 'bend_euler_3', 'bend_euler_30', 'bend_euler_31', 'bend_euler_32', 'bend_euler_33', 'bend_euler_34', 'bend_euler_35', 'bend_euler_36', 'bend_euler_37', 'bend_euler_38', 'bend_euler_39', 'bend_euler_4', 'bend_euler_40', 'bend_euler_5', 'bend_euler_6', 'bend_euler_7', 'bend_euler_8', 'bend_euler_9', 'mzi_1', 'mzi_2', 'mzi_3', 'mzi_4', 'mzi_5', 'straight_1', 'straight_10', 'straight_11', 'straight_12', 'straight_13', 'straight_14', 'straight_15', 'straight_16', 'straight_17', 'straight_18', 'straight_19', 'straight_2', 'straight_20', 'straight_21', 'straight_22', 'straight_23', 'straight_24', 'straight_25', 'straight_26', 'straight_27', 'straight_28', 'straight_29', 'straight_3', 'straight_30', 'straight_31', 'straight_32', 'straight_33', 'straight_34', 'straight_35', 'straight_36', 'straight_37', 'straight_38', 'straight_39', 'straight_4', 'straight_40', 'straight_41', 'straight_42', 'straight_43', 'straight_44', 'straight_45', 'straight_46', 'straight_47', 'straight_48', 'straight_49', 'straight_5', 'straight_50', 'straight_51', 'straight_52', 'straight_53', 'straight_54', 'straight_55', 'straight_56', 'straight_57', 'straight_58', 'straight_59', 'straight_6', 'straight_60', 'straight_61', 'straight_62', 'straight_63', 'straight_64', 'straight_65', 'straight_66', 'straight_67', 'straight_68', 'straight_69', 'straight_7', 'straight_70', 'straight_71', 'straight_72', 'straight_73', 'straight_74', 'straight_75', 'straight_76', 'straight_77', 'straight_78', 'straight_8', 'straight_9'])
-# ```
-
-mixed_switch_circuit_netlist["ports"].keys()
-
-# To extract the connectivity data
-
-mixed_switch_circuit_netlist["connections"]
 
 # ## Electronic-to-Phase Mapping
 #
@@ -190,11 +157,11 @@ sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
 all_models = piel.models.frequency.get_all_models()
 all_models
 
-straight_heater_metal_simple = all_models["ideal_active_waveguide"]
-straight_heater_metal_simple
+straight_heater_metal_undercut = all_models["ideal_active_waveguide"]
+straight_heater_metal_undercut
 
 our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
-    {"straight_heater_metal_simple": straight_heater_metal_simple}
+    {"straight_heater_metal_undercut": straight_heater_metal_undercut}
 )
 our_custom_library
 
@@ -204,8 +171,8 @@ mzi2x2_model, mzi2x2_model_info = sax.circuit(
 piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
 # ```python
-# (array([[-0.11042854-0.27825136j, -0.3519612 -0.88685119j],
-#         [-0.3519612 -0.88685119j,  0.11042854+0.27825136j]]),
+# (Array([[-0.35184565-0.88689554j, -0.11039409-0.27826965j],
+#         [ 0.11039409+0.27826962j, -0.35184568-0.88689554j]],      dtype=complex64),
 #  ('o2', 'o1'))
 # ```
 
@@ -220,8 +187,8 @@ piel.sax_to_s_parameters_standard_matrix(
 )
 
 # ```python
-# (array([[-0.88685119+0.3519612j ,  0.27825136-0.11042854j],
-#         [ 0.27825136-0.11042854j,  0.88685119-0.3519612j ]]),
+# (Array([[ 0.2782662 -0.11039126j, -0.88689834+0.35184222j],
+#         [ 0.88689834-0.35184222j,  0.2782662 -0.11039126j]],      dtype=complex64),
 #  ('o2', 'o1'))
 # ```
 
@@ -283,12 +250,19 @@ for unitary_i in mzi2x2_simple_simulation_data.unitary:
 output_amplitude_array_0
 
 # ```python
-# array([-0.16426986+0.4086031j , -0.29089065+0.49165187j,
-#        -0.04476771+0.24661686j, -0.01183396+0.1509602j ,
-#        -0.00628735-0.05025993j, -0.03390155-0.14758559j,
-#        -0.20359414+0.44052313j, -0.09628268+0.33368601j,
-#        -0.24594593+0.46830107j, -0.06831739+0.29145769j,
-#        -0.68513737+0.5007716j ])
+# array([ 0.33501235-0.83295667j,  0.41802746-0.70635343j,
+#         0.17302999-0.95249099j,  0.07739913-0.98543143j,
+#        -0.12383613-0.99100912j, -0.22114477-0.96341634j,
+#         0.3669197 -0.79363644j,  0.26007476-0.90097857j,
+#         0.39468631-0.75129062j,  0.21785825-0.92894149j,
+#         0.42709976-0.31207556j])
+#
+#
+#
+#
+#
+#
+#
 # ```
 
 mzi2x2_simple_simulation_data["output_amplitude_array_0"] = output_amplitude_array_0
@@ -390,10 +364,112 @@ simple_ideal_o4_mzi_2x2_plots.savefig(
 # One thing we might want to do is to consider how the total electronic signals vary according to the electrical load that implements our phase shifter operation. In this case, it is a resistive heater. We might want to explore how the RC and heat dissipation dyanamics of our heater affects our full optical switching performance based on our digital input. This is further exemplified in the next example.
 
 
-# ### Active MZI 2x2 Component Lattice
+# ## Active MZI 2x2 Component Lattice
 
-# Now we can do the same for our larger component lattice, and we will use our composed model accordingly.
+# Say we have a lattice with two different phase shifters this time. We want to see how the unitary changes when we apply phase control over a different set of parameters.
 
-mixed_switch_circuit_netlist["instances"].keys()
+example_component_lattice = [
+    [mzi2x2_2x2_phase_shifter(), 0, mzi2x2_2x2()],
+    [0, mzi2x2_2x2(), 0],
+    [mzi2x2_2x2(), 0, mzi2x2_2x2_phase_shifter()],
+]
 
-sax.get_required_circuit_models(mixed_switch_circuit_netlist)
+mixed_switch_lattice_circuit = gf.components.component_lattice_generic(
+    network=example_component_lattice
+)
+# mixed_switch_circuit.show()
+mixed_switch_lattice_circuit.plot_widget()
+
+# ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
+
+mixed_switch_lattice_circuit_netlist = (
+    mixed_switch_lattice_circuit.get_netlist_recursive(
+        exclude_port_types="electrical", allow_multiple=True
+    )
+)
+mixed_switch_lattice_circuit_netlist.keys()
+
+# ```python
+# dict_keys(['component_lattice_gener_fb8c4da8', 'mzi_214beef3', 'straight_heater_metal_s_ad3c1693', 'via_stack_13a1ac5c', 'mzi_d46c281f'])
+# ```
+#
+# This will exactly vary in your case.
+
+mixed_switch_lattice_circuit_netlist["mzi_214beef3"]["instances"].keys()
+
+# We can check what models we need to provide to compose the circuit. In our case, we want to determine all the instances that implement a particular model. This can be built directly into sax.
+
+sax.get_required_circuit_models(
+    mixed_switch_lattice_circuit_netlist["component_lattice_gener_fb8c4da8"]
+)
+
+# ```python
+# ['bend_euler', 'mzi_214beef3', 'mzi_d46c281f', 'straight']
+# ```
+
+sax.get_required_circuit_models(mixed_switch_lattice_circuit_netlist["mzi_214beef3"])
+
+# ```python
+# ['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_s_ad3c1693']
+# ```
+
+# What `sax.netlist` does, is to map each instance with each component, and then `sax.circuit` maps each component with each model which is then multiplied together.
+
+netlist = sax.netlist(mixed_switch_lattice_circuit_netlist)
+
+
+def get_instances_by_prefix(sax_recursive_netlist, prefix):
+    sax_recursive_netlist = sax_recursive_netlist.dict()["__root__"]
+    result = []
+    for key in sax_recursive_netlist.keys():
+        if key.startswith(prefix):
+            result.append(key)
+    return result
+
+
+def get_component_instances(sax_recursive_netlist, top_level_prefix, component_name):
+    instance_names = []
+    sax_recursive_netlist = sax_recursive_netlist.dict()["__root__"]
+    top_level_prefix = get_instances_by_prefix(netlist, prefix=top_level_prefix)[
+        0
+    ]  # Should only be one.
+    for key in sax_recursive_netlist[top_level_prefix]["instances"]:
+        if (
+            sax_recursive_netlist[top_level_prefix]["instances"][key]["component"]
+            == component_name
+        ):
+            instance_names.append(key)
+    return {component_name: instance_names}
+
+
+get_component_instances(
+    netlist, top_level_prefix="component_lattice_gener", component_name="bend_euler"
+)
+
+netlist.dict()["__root__"]["component_lattice_gener_fb8c4da8"]
+
+# It is important to note that some of the models can be composed from other models, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification.
+
+(
+    mixed_switch_lattice_circuit_s_parameters,
+    mixed_switch_lattice_circuit_s_parameters_info,
+) = sax.circuit(
+    netlist=mixed_switch_lattice_circuit_netlist,
+    models=piel.models.frequency.get_default_models(),
+)
+piel.sax_to_s_parameters_standard_matrix(mixed_switch_lattice_circuit_s_parameters())
+# mzi2x2_model(sxt={"active_phase_rad": phase_i}),
+
+# ```python
+# (Array([[ 0.23089845+0.23322447j, -0.13939448-0.2099313j ,
+#           0.23096855+0.1446734j ,  0.5804817 -0.6461842j ],
+#         [-0.03015644-0.250185j  , -0.92044485+0.087694j  ,
+#          -0.05714459+0.06361263j,  0.16851723+0.21419339j],
+#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
+#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
+#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
+#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+#  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
+# ```
+
+# What we need to do now, is extract a list of our phase shifters that we can then apply our phase to.

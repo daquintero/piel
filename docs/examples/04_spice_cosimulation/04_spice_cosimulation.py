@@ -56,7 +56,7 @@ our_resistive_heater = functools.partial(
 our_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
     straight_x_top=our_resistive_heater,
 )
-our_resistive_mzi_2x2_2x2_phase_shifter
+our_resistive_mzi_2x2_2x2_phase_shifter.plot_widget()
 # -
 
 # ![mzi2x2_2x2_phase_shifter](../../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
