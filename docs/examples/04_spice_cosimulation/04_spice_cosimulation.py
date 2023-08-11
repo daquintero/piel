@@ -549,9 +549,9 @@ simple_transient_plot_power_resistance.savefig(
 # So, we have extracted the power consumption throughout time for pulses we have configured. For the whole period of the simulation, we can extract the energy consumed as the integral of power for a time differential. Note that we expect the energy consumption of this particular circuit, where the resistor is constantly drawing current, to be constantly increasing in time. We can perform a cumulative sum over our `power(xtop.vpulse)` dataframe which is a discrete integral, and we can multiply that term with the time value to determine the total energy consumption at a point in time.
 
 transient_simulation_results["energy_consumed(xtop.vpulse)"] = (
-    transient_simulation_results["power(xtop.vpulse)"].cumsum()
-    * transient_simulation_results["time"]
-)
+    transient_simulation_results["power(xtop.vpulse)"]
+    * transient_simulation_results["time"].diff()
+).cumsum()
 transient_simulation_results
 
 simple_energy_consumed_plot = transient_simulation_results.plot(
