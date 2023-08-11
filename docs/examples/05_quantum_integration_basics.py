@@ -24,6 +24,8 @@ switch_circuit.plot_widget()
 
 # ![default_switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/default_switch_circuit_plot_widget.PNG)
 
+switch_circuit.get_netlist_recursive().keys()
+
 # ### Quantum Models
 
 # Let's first check that the quantum models in which we will compose our circuit are actually unitary, otherwise the composed circuit will not be unitary. Note that a circuit being unitary means: $U^\dagger U = 1$ where $U^\dagger$ is the conjugate transpose of the unitary $U$. This is inherently checked in `qutip`. Basically, what it means is that a unitary operation is reversible in time, and that energy is not lost.
@@ -117,6 +119,8 @@ piel.fock_state_to_photon_number_factorial(initial_fock_state)
 example_multiphoton_fock_state = (
     qp.fock(4, 1) + qp.fock(4, 2) + qp.fock(4, 2) + qp.fock(4, 2) + qp.fock(4, 2)
 )
+example_multiphoton_fock_state
+
 piel.fock_state_to_photon_number_factorial(example_multiphoton_fock_state)
 
 # In order to implement the algorithm above, we need to determine the indexes we need to extract for the particular Fock state that we are implementing too.
