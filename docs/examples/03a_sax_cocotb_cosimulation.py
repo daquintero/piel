@@ -4,8 +4,11 @@
 import gdsfactory as gf
 from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
 import numpy as np
+import jax.numpy as jnp
 import piel
 import sax
+import re
+from typing import Callable
 
 # ## Active MZI 2x2 Phase Shifter
 
@@ -530,8 +533,10 @@ piel.sax_to_s_parameters_standard_matrix(
 
 piel.sax_to_s_parameters_standard_matrix(
     mixed_switch_lattice_circuit_s_parameters(
-        mzi_1={"sxt": {"active_phase_rad": np.pi}},
-        mzi_5={"sxt": {"active_phase_rad": np.pi}},
+        **{
+            "mzi_1": {"sxt": {"active_phase_rad": np.pi}},
+            "mzi_5": {"sxt": {"active_phase_rad": np.pi}},
+        }
     )
 )
 
@@ -562,199 +567,242 @@ piel.sax_to_s_parameters_standard_matrix(
 # \left[ \phi \right] = \left[ \phi_0, \phi_1, \phi_2 ... \phi_N \right]
 # \end{equation}
 #
-# However, then we need to determine the index. Let's determine the
+# However, then we need to determine the index. Let's determine the location of our phase shifter elements in the recursive netlist.
 
 
-def compose_recursive_instance_location(
-    recursive_netlist: dict,
-    top_level_instance_name: str,
-    required_models: list,
-    target_component_prefix: str,
-    models: dict,
-):
-    """
-       This function returns the recursive location of any matching ``target_component_prefix`` instances within the ``recursive_netlist``. A function that returns the mapping of the ``matched_component`` in the corresponding netlist at any particular level of recursion. This function iterates over a particular level of recursion of a netlist. It returns a list of the missing required components, and updates a dictionary of models that contains a particular matching component. It returns the corresponding list of instances of a particular component at that level of recursion, so that it can be appended upon in order to construct the location of the corresponding matching elements.
-
-       If ``required_models`` is an empty list, it means no recursion is required and the function is complete. If a ``required_model_i`` in ``required_models`` matches ``target_component_prefix``, then no more recursion is required down the component function.
-
-       The ``recursive_netlist`` should contain all the missing composed models that are not provided in the main models dictionary. If not, then we need to require the user to input the missing model that cannot be extracted from the composed netlist.
-    We know when a model is composed, and when it is already provided at every level of recursion based on the ``models`` dictionary that gets updated at each level of recursion with the corresponding models of that level, and the ``required_models`` down itself.
-
-       However, a main question appears on how to do the recursion. There needs to be a flag that determines that the recursion is complete. However, this is only valid for every particular component in the ``required_models`` list. Every component might have missing component. This means that this recursion begins component by component, updating the ``required_models`` list until all of them have been composed from the recursion or it is determined that is it missing fully.
-
-       It would be ideal to access the particular component that needs to be implemented.
-
-       Returns a tuple of ``model_composition_mapping, instance_composition_mapping, target_component_mapping`` in the form of
-
-           ({'mzi_214beef3': ['straight_heater_metal_s_ad3c1693']},
-            {'mzi_214beef3': ['mzi_1', 'mzi_5'],
-             'mzi_d46c281f': ['mzi_2', 'mzi_3', 'mzi_4']})
-    """
-    model_composition_mapping = dict()
-    instance_composition_mapping = dict()
-    target_component_mapping = dict()
-    i = 0
-    while len(required_models) != 0:
-        # if len(required_models) == 0:
-        #     pass
-        #     # Return the results as the recursive iteration is now complete.
-        # else:
-        # TODO Break if required_models cannot be composed and needs to be provided by the user.
-        # This means that the model inside the top_level required model also has a required model that should be inside the recursive netlist and we need to find it.
-        # We iterate over each of the required model names to see if they match our active component name.
-        for required_model_name_i in required_models:
-            # Appends required_models_i from subcomponent to the required_models input based on the models provided.
-            required_models_i = sax.get_required_circuit_models(
-                recursive_netlist[
-                    required_model_name_i
-                ],  # TODO make this recursive so it can search inside? This will never have to be 2D as all models outside.
-                models={**models, **model_composition_mapping},
-            )  # eg. ["straight_heater_metal_s_ad3c1693"]
-
-            # Check if required_model_name_i already composed.
-
-            # Check that the model composition mapping has not already fulfilled this model.
-            if len(required_models_i) != 0:
-                if required_model_name_i in model_composition_mapping:
-                    required_models.remove(required_model_name_i)
-                else:
-                    required_models.extend(required_models_i)
-                    model_composition_mapping[required_model_name_i] = required_models_i
-            elif len(required_models_i) == 0:
-                # Remove from ``required_models`` to complete the recursion
-                required_models.remove(required_model_name_i)
-
-            # Get the corresponding instances of this model at this level of recursion.
-            # Implement a function that matches all the potential corresponding matched instances on the top_level
-            instance_composition_mapping_i = piel.get_component_instances(
-                recursive_netlist=recursive_netlist,
-                top_level_prefix=top_level_instance_name,
-                component_name_prefix=required_model_name_i,
-            )  # {'mzi_214beef3': ['mzi_1', 'mzi_5']}
-            instance_composition_mapping.update(instance_composition_mapping_i)
-
-            # This model is now at a particular level of recursion, let's check if this is the model we want in the required composed models.
-            for required_model_name_i_i in required_models_i:
-                if required_model_name_i_i.startswith(target_component_prefix):
-                    # Yes, this is the model we want. Can we compose the instance location?
-                    target_component_mapping.update(
-                        {required_model_name_i_i: required_model_name_i}
-                    )
-                    # This means we need to check whether the components is our matched component, and if not, then we need to check if this other required component recursively also requires our active component. Implement the search again recursively from the unmatched components.
-
-            # If the target_component has the corresponding mapping in the recursive_netlist then we can access the lowest component element
-            if required_model_name_i.startswith(target_component_prefix):
-                if required_model_name_i in target_component_mapping:
-                    instance_composition_mapping_i = piel.get_component_instances(
-                        recursive_netlist=recursive_netlist,
-                        top_level_prefix=target_component_mapping[
-                            required_model_name_i
-                        ],
-                        component_name_prefix=required_model_name_i,
-                    )  # {'mzi_214beef3': ['mzi_1', 'mzi_5']}
-                    instance_composition_mapping.update(instance_composition_mapping_i)
-
-        i += 1
-
-    return (
-        model_composition_mapping,
-        instance_composition_mapping,
-        target_component_mapping,
-    )
-
-
-from typing import Optional
-
-
-def get_matched_model_recursive_netlist_instances(
-    recursive_netlist: dict,
-    top_level_instance_prefix: str,
-    target_component_prefix: str,
-    models: Optional[dict] = None,
-) -> list[tuple]:
-    """
-    This function returns an active component list with a tuple mapping of the location of the active component within the recursive netlist and corresponding model. It will recursively look within a netlist to locate what models use a particular component model. At each stage of recursion, it will compose a list of the elements that implement this matching model in order to relate the model to the instance, and hence the netlist address of the component that needs to be updated in order to functionally implement the model.
-
-    It takes in as a set of parameters the recursive_netlist generated by a ``gdsfactory`` netlist implementation.
-
-    Returns a list of tuples, that correspond to the phases applied with the corresponding component paths at multiple levels of recursion.
-    eg. [("component_lattice_gener_fb8c4da8", "mzi_1", "sxt"), ("component_lattice_gener_fb8c4da8", "mzi_5", "sxt")] and these are our keys to our sax circuit decomposition.
-    """
-    matched_instance_list = []
-    if models is None:
-        models = piel.models.frequency.get_default_models()
-
-    # We need to input the top-level instance.
-    top_level_instance_name = piel.get_netlist_instances_by_prefix(
-        recursive_netlist=mixed_switch_lattice_circuit_netlist,
-        instance_prefix=top_level_instance_prefix,
-    )
-
-    # We need to input the prefix of the component of the straight metal heater.
-    top_level_required_models = sax.get_required_circuit_models(
-        recursive_netlist[top_level_instance_name],
-        models=models,
-    )
-
-    (
-        model_composition_mapping,
-        instance_composition_mapping,
-        target_component_mapping,
-    ) = compose_recursive_instance_location(
-        recursive_netlist=recursive_netlist,
-        top_level_instance_name=top_level_instance_name,
-        required_models=top_level_required_models.copy(),
-        target_component_prefix=target_component_prefix,
-        models=models,
-    )
-
-    # Now we have the raw data that creates the mapping of the components-to-instances, in order to create the corresponding instance address indexes that we can use to control our matching element parameters.
-    if len(target_component_mapping.keys()) != 0:
-        # This means that the target_component has been mapped to a parent recursive_netlist cell.
-        for target_component_name_i in target_component_mapping.keys():
-            # Tells us the name of our component
-            recursive_parent_component_i = target_component_mapping[
-                target_component_name_i
-            ]  # Get the parent cell.
-            for parent_instances_i in instance_composition_mapping[
-                recursive_parent_component_i
-            ]:
-                # TODO check parent_instances_i not in target_component_mapping to increase hierarchy.
-                # TODO implement as another recursive problem. NMP right now.
-                for target_instances_i in instance_composition_mapping[
-                    target_component_name_i
-                ]:
-                    matched_instance_list.append(
-                        (
-                            top_level_instance_name,
-                            parent_instances_i,
-                            target_instances_i,
-                        )
-                    )
-    return matched_instance_list
-
-
-get_matched_model_recursive_netlist_instances(
+switch_lattice_address = piel.get_matched_model_recursive_netlist_instances(
     recursive_netlist=mixed_switch_lattice_circuit_netlist,
     top_level_instance_prefix="component_lattice_gener",
     target_component_prefix="straight_heater_metal_s",
+    models=piel.models.frequency.get_default_models(),
+)
+switch_lattice_address
+
+# ```
+# [('component_lattice_gener_fb8c4da8', 'mzi_1', 'sxt'),
+#  ('component_lattice_gener_fb8c4da8', 'mzi_5', 'sxt')]
+# ```
+
+# These keys tell us the location of our phase shifter elements as we have defined in the composition of our component `straight_heater_metal_s` mapping to our `"straight_heater_metal_simple": ideal_active_waveguide` definition in the `piel.models.frequency.get_default_models()`. We can use them to compose our phases accordingly as these are hashable elements.
+
+switch_lattice_state_phase = dict()
+for switch_lattice_address_i in switch_lattice_address:
+    switch_lattice_state_phase.update({switch_lattice_address_i: 0})
+switch_lattice_state_phase
+
+# ```python
+# {('component_lattice_gener_fb8c4da8', 'mzi_1', 'sxt'): 0,
+#  ('component_lattice_gener_fb8c4da8', 'mzi_5', 'sxt'): 0}
+# ```
+
+# Let's convert this into a function parameter dictionary that you can use to set the `sax.circuit` function:
+
+example_switch_lattice_function_parameter_dictionary = (
+    piel.address_value_dictionary_to_function_parameter_dictionary(
+        address_value_dictionary=switch_lattice_state_phase,
+        parameter_key="active_phase_rad",
+    )
+)
+example_switch_lattice_function_parameter_dictionary
+
+# ```python
+# {'mzi_1': {'active_phase_rad': 0}, 'mzi_5': {'active_phase_rad': 0}}
+# ```
+
+# Let's compose our circuit.
+
+(
+    mixed_switch_lattice_circuit_s_parameters,
+    mixed_switch_lattice_circuit_s_parameters_info,
+) = sax.circuit(
+    netlist=mixed_switch_lattice_circuit_netlist,
+    models=our_recursive_custom_library,
+)
+
+# We can now do everything we did previously as a function:
+
+piel.sax_to_s_parameters_standard_matrix(
+    mixed_switch_lattice_circuit_s_parameters(
+        **example_switch_lattice_function_parameter_dictionary
+    )
 )
 
 
-def b():
-    # Get a netlist, and provide our models accordingly.
-    (
-        mixed_switch_lattice_circuit_s_parameters,
-        mixed_switch_lattice_circuit_s_parameters_info,
-    ) = sax.circuit(
-        netlist=mixed_switch_lattice_circuit_netlist,
-        models=our_recursive_custom_library,
-    )
+# ```python
+# (Array([[ 0.23089845+0.23322447j, -0.13939448-0.2099313j ,
+#           0.23096855+0.1446734j ,  0.5804817 -0.6461842j ],
+#         [-0.03015644-0.250185j  , -0.92044485+0.087694j  ,
+#          -0.05714459+0.06361263j,  0.16851723+0.21419339j],
+#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
+#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
+#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
+#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+#  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
+# ```
+
+# Which matches the values above.
+
+# This is the function we can now use to implement our phase array to phase mapping function.
+
+
+def switch_lattice_phase_array_to_state(
+    circuit: Callable,
+    switch_address_list: list,
+    phase_array: jnp.ndarray,
+    parameter_key: str,
+    to_s_parameters_standard_matrix: bool = True,
+):
+    # Note that the ordered indexing in this case is just done based on the dict.values() iterative decomposition but any specifically ordered implemnetation can be done in this function accordingly for the user.
+    # TODO surely there's a faster way to do this. Maybe a Lambda function.
+    i = 0
+    phase_address_dictionary = dict()
+
+    for switch_address_i in switch_address_list:
+        phase_address_dictionary.update({switch_address_i: phase_array[i]})
+
     # Create a tuple of the corresponding phase shifter positions we can input into other functions.
+    phase_address_function_parameter_dictionary = (
+        piel.address_value_dictionary_to_function_parameter_dictionary(
+            address_value_dictionary=phase_address_dictionary,
+            parameter_key=parameter_key,
+        )
+    )
 
     # Return the phase shifter controller accordingly
     # Find a way to transform this information into corresponding phases, or maybe map a set of inputs accordingly.
-    mixed_switch_lattice_circuit_s_parameters(
-        mzi_1={"sxt": {"active_phase_rad": np.pi}},
-        mzi_5={"sxt": {"active_phase_rad": np.pi}},
+    if to_s_parameters_standard_matrix:
+        return piel.sax_to_s_parameters_standard_matrix(
+            circuit(**phase_address_function_parameter_dictionary)
+        )
+    else:
+        return circuit(**phase_address_function_parameter_dictionary)
+
+
+switch_lattice_phase_array_to_state(
+    circuit=mixed_switch_lattice_circuit_s_parameters,
+    switch_address_list=switch_lattice_address,
+    phase_array=jnp.array([0, 0]),
+    parameter_key="active_phase_rad",
+)
+
+# ```python
+# (Array([[ 0.23089845+0.23322447j, -0.13939448-0.2099313j ,
+#           0.23096855+0.1446734j ,  0.5804817 -0.6461842j ],
+#         [-0.03015644-0.250185j  , -0.92044485+0.087694j  ,
+#          -0.05714459+0.06361263j,  0.16851723+0.21419339j],
+#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
+#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
+#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
+#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+#  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
+# ```
+
+# Verify against previous values:
+
+switch_lattice_phase_array_to_state(
+    circuit=mixed_switch_lattice_circuit_s_parameters,
+    switch_address_list=switch_lattice_address,
+    phase_array=jnp.array([jnp.pi, jnp.pi]),
+    parameter_key="active_phase_rad",
+)
+
+# ```python
+# (Array([[-0.07260128-0.2413117j , -0.8917833 +0.2441996j ,
+#           0.23096433+0.14467366j, -0.05714355+0.06361032j],
+#         [ 0.18749169+0.26935905j, -0.10133702-0.23071809j,
+#           0.58048916-0.646181j  ,  0.16851316+0.21419221j],
+#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
+#          -0.07952578-0.21112217j, -0.92908216-0.06572803j],
+#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
+#           0.34503105+0.03555341j, -0.10454827-0.19992213j]],      dtype=complex64),
+#  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
+# ```
+
+# ### Connecting this to our digital simulation
+
+# Follow the flow above:
+
+switch_lattice_simulation_data = example_simple_simulation_data.copy()
+switch_lattice_active_unitary_array = list()
+for phase_i in switch_lattice_simulation_data.phase:
+    switch_lattice_active_unitary_i = switch_lattice_phase_array_to_state(
+        circuit=mixed_switch_lattice_circuit_s_parameters,
+        switch_address_list=switch_lattice_address,
+        phase_array=jnp.array([phase_i, phase_i]),
+        parameter_key="active_phase_rad",
     )
+    switch_lattice_active_unitary_array.append(switch_lattice_active_unitary_i)
+switch_lattice_simulation_data["unitary"] = switch_lattice_active_unitary_array
+
+switch_lattice_simulation_data["unitary"][0]
+
+# Let's check what happens with our simple output.
+
+optical_port_input = np.array([1, 0, 1, 0])
+optical_port_output = dict()
+i = 0
+for unitary_i in switch_lattice_simulation_data.unitary:
+    output_amplitude_i = np.dot(unitary_i[0], optical_port_input)
+    for input_port in unitary_i[1]:
+        port_id = int(re.search(r"\d+", input_port).group())
+        switch_lattice_simulation_data.at[
+            i, "out_o_" + str(port_id)
+        ] = output_amplitude_i[port_id]
+        switch_lattice_simulation_data.at[
+            i, "out_o_" + str(port_id) + "_abs"
+        ] = jnp.abs(output_amplitude_i[port_id])
+        switch_lattice_simulation_data.at[
+            i, "out_o_" + str(port_id) + "_phase_rad"
+        ] = jnp.angle(output_amplitude_i[port_id])
+        switch_lattice_simulation_data.at[
+            i, "out_o_" + str(port_id) + "_phase_deg"
+        ] = jnp.angle(output_amplitude_i[port_id], deg=True)
+    i += 1
+switch_lattice_simulation_data.head()
+
+# |    |   Unnamed: 0 |    a |    b |     x |     t |    phase | unitary                                                                                                                                              | out_o_0                                      | out_o_1                                      | out_o_2                                      | out_o_3                                      |   out_o_0_abs |   output_amplitude_array_0_phase_rad |   output_amplitude_array_0_phase_deg |   out_o_1_abs |   out_o_2_abs |   out_o_3_abs |   out_o_0_phase_rad |   out_o_0_phase_deg |   out_o_1_phase_rad |   out_o_1_phase_deg |   out_o_2_phase_rad |   out_o_2_phase_deg |   out_o_3_phase_rad |   out_o_3_phase_deg |
+# |---:|-------------:|-----:|-----:|------:|------:|---------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------|:--------------------------------------------|:--------------------------------------------|:--------------------------------------------|--------------:|------------------------------------:|------------------------------------:|--------------:|--------------:|--------------:|--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|--------------------:|
+# |  0 |            0 |  101 | 1010 |  1111 |  2001 | 1.52011  | (Array([[-0.15013191+0.15952691j, -0.26976418+0.38134953j,  0.18381716-0.32944468j,  0.5974215 +0.4843307j],   ...   | (0.03368525207042694-0.1699177622795105j) | (0.1888469010591507-0.22879064828157425j) | (-0.5358759462833405-0.24047677218914032j) | (0.7793771773576736-0.9641381502151489j) |     0.173225  |                            -0.663832 |                             -38.0348 |      0.296662 |      0.58736  |       1.23975 |            -1.37509 |            -78.7868 |           -0.88075  |            -50.4633 |            -2.71977 |            -155.832 |           -0.890975 |            -51.0491 |
+# |  1 |            1 | 1001 | 1001 | 10010 |  4001 | 1.82413  | (Array([[-0.18857768+0.08340642j, -0.3900405 +0.43822825j,  0.3249085 -0.3075179j ,  0.355272  +0.53568196j], ...   | (0.13633081316947937-0.22411146759986877j) | (0.18533635139465332-0.2901407852768898j)  | (-0.40361288189888-0.2735434025526047j)   | (0.8487350046634674-0.924432098865509j)  |     0.262321  |                            -0.663832 |                             -38.0348 |      0.344284 |      0.487575 |       1.25496 |            -1.02428 |            -58.6871 |           -1.00235  |            -57.4303 |            -2.54596 |            -145.873 |           -0.828063 |            -47.4445 |
+# |  2 |            2 |    0 | 1011 |  1011 |  6001 | 1.11475  | (Array([[-0.06703898+0.23669276j, -0.14604962+0.25488028j,  0.02392788-0.23027363j,  0.86039466+0.24353698j],   ...   | (-0.043111104518175125+0.006419122219085693j) | (0.20628974959254265-0.21884635649621487j) | (-0.6855338513851166-0.13816504180431366j) | (0.6745539307594299-0.9816211760044098j) |     0.0435864 |                            -0.663832 |                             -38.0348 |      0.300748 |      0.699318 |       1.19105 |             2.99378 |            171.531  |           -0.814925 |            -46.6918 |            -2.94271 |            -168.605 |           -0.968724 |            -55.5038 |
+# |  3 |            3 |  100 |  101 |  1001 |  8001 | 0.912066 | (Array([[-0.01559916+0.2611876j , -0.10576385+0.17564523j,  0.04111886-0.32811826j,  0.13251364+0.21046963j],   ...   | (-0.029729951173067093+0.11906009912490845j)  | (0.19566189497709274-0.23707316990476102j) | (-0.7418899238109589-0.06660886108875275j) | (0.6216734051704407-0.9742364883422852j) |     0.122716  |                            -0.663832 |                             -38.0348 |      0.307388 |      0.744874 |       1.15569 |             1.8155  |            104.02   |           -0.880804 |            -50.4664 |            -3.05205 |            -174.87  |           -1.00282  |            -57.4575 |
+# |  4 |            4 |  101 |    0 |   101 | 10001 | 0.506703 | (Array([[ 0.09668259+0.27705616j, -0.07646824+0.00117019j,  0.02333007+0.04225298j,  0.8996601 -0.31036413j],   ...   | (0.12001265957951546+0.31930914148688316j)    | (0.10727294208481908-0.2695584475295618j)  | (-0.8062792718410492+0.10285860300064087j) | (0.5256499610841274-0.9287054538726807j) |     0.341118  |                            -0.663832 |                             -38.0348 |      0.290119 |      0.812814 |       1.06715 |             1.21128 |             69.4012 |           -1.19205  |            -68.2995 |             3.01471 |             172.73  |           -1.05575  |            -60.49   |
+#
+
+# ### Plotting Multi-Port Multi-Switch Lattice Data
+
+# Convert to digital equivalent
+
+switch_lattice_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
+    data=switch_lattice_simulation_data,
+    time_index_name="t",
+    fixed_transient_time=1,
+)
+
+for port_i in range(4):
+    switch_lattice_simulation_plots = piel.visual.plot_simple_multi_row(
+        data=switch_lattice_simulation_data_lines,
+        x_axis_column_name="t",
+        row_list=[
+            "phase",
+            "out_o_" + str(port_i) + "_abs",
+            "out_o_" + str(port_i) + "_phase_deg",
+        ],
+        y_axis_title_list=[
+            "e1,5 Phase",
+            "o" + str(port_i) + "Amplitude",
+            "o" + str(port_i) + "Phase",
+        ],
+    )
+    simple_ideal_o4_mzi_2x2_plots.savefig(
+        "../_static/img/examples/03a_sax_active_cosimulation/switch_lattice_simulation_plot_"
+        + str(port_i)
+        + ".PNG"
+    )
+
+# ![switch_lattice_simulation_plot_0](../_static/img/examples/03a_sax_active_cosimulation/switch_lattice_simulation_plot_0.PNG)
+# ![switch_lattice_simulation_plot_1](../_static/img/examples/03a_sax_active_cosimulation/switch_lattice_simulation_plot_1.PNG)
+# ![switch_lattice_simulation_plot_2](../_static/img/examples/03a_sax_active_cosimulation/switch_lattice_simulation_plot_2.PNG)
+# ![switch_lattice_simulation_plot_3](../_static/img/examples/03a_sax_active_cosimulation/switch_lattice_simulation_plot_3.PNG)
+
+# You have the power now.
