@@ -451,11 +451,8 @@ our_recursive_custom_library
 
 # What we can do now is that we can extract what instances use this model.
 
-mixed_switch_lattice_circuit_netlist_sax = sax.netlist(
-    mixed_switch_lattice_circuit_netlist
-)
-active_phase_shifters_dictionary = sax.get_component_instances(
-    mixed_switch_lattice_circuit_netlist_sax,
+active_phase_shifters_dictionary = piel.get_component_instances(
+    mixed_switch_lattice_circuit_netlist,
     top_level_prefix="component_lattice_gener_fb8c4da8",
     component_name_prefix=recursive_composed_required_models[0],
 )
@@ -469,7 +466,7 @@ active_phase_shifters_dictionary
 
 # What `sax.netlist` does, is to map each instance with each component, and then `sax.circuit` maps each component with each model which is then multiplied together.
 
-# ### Extracting our Phase Shifter Instances
+# ### Controlling our Phase Shifter Instances
 
 # One major complexity we have is that we do not know where our phase shifters are. We can find them in the layout, but we need our algorithm to determine them. There are a few things we know about them for sure. We know that our phase shifter instances begin with `straight_heater_metal_s`. However, we do not yet algorithmically know where they are. We know we can do the following based on our previous analysis. So what we will do now is extract all the active phase shifter components, and their corresponding location within the netlist. Let's remember where we want to end:
 
@@ -507,10 +504,171 @@ piel.sax_to_s_parameters_standard_matrix(
     )
 )
 
+# ```python
+# (Array([[-0.07260128-0.2413117j , -0.8917833 +0.2441996j ,
+#          -0.04539197+0.07246678j,  0.20274116+0.1821285j ],
+#         [ 0.18749169+0.26935905j, -0.10133702-0.23071809j,
+#           0.20274433+0.18213132j,  0.6826765 -0.5370923j ],
+#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
+#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
+#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
+#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+#  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
+# ```
+
+# You can clearly see the position and change of the s-parameter matrix accordingly. 
+
+piel.sax_to_s_parameters_standard_matrix(
+    mixed_switch_lattice_circuit_s_parameters(
+        mzi_1={"sxt": {"active_phase_rad": np.pi}},
+        mzi_5={"sxt": {"active_phase_rad": np.pi}}
+    )
+)
+
+# ```python
+# (Array([[-0.07260128-0.2413117j , -0.8917833 +0.2441996j ,
+#           0.23096433+0.14467366j, -0.05714355+0.06361032j],
+#         [ 0.18749169+0.26935905j, -0.10133702-0.23071809j,
+#           0.58048916-0.646181j  ,  0.16851316+0.21419221j],
+#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
+#          -0.07952578-0.21112217j, -0.92908216-0.06572803j],
+#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
+#           0.34503105+0.03555341j, -0.10454827-0.19992213j]],      dtype=complex64),
+#  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
+# ```
+
 # However, we want to control the phase shifting effect and control the component we are modifying. In our case, we want to modify the phase of the model controlled by our thermo-optic phase shifters which are `straight_heater_metal_s_*` instances. So let's find all the instances and corresponding models where there is one of these models. We know from the `required_models` function that we are have distinct models required for each of these Mach-Zeneder components.
 
-# From this we can tell only of the corresponding instances and submodels.
+# From this we can tell only of the corresponding instances and submodels. It is important to note that some of the models can be composed from other models, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification. What we need to do now, is extract a list of our phase shifters that we can then apply our phase to.
 
-# It is important to note that some of the models can be composed from other models, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification.
+# ### Algorithmically Extracted Phase-Shifter Instances
 
-# What we need to do now, is extract a list of our phase shifters that we can then apply our phase to.
+# So in this example, we're controlling the `sxt: {"active_phase_rad": ourphase}` but this is composed of the `ideal_active_waveguide` model and the corresponding `active_phase_rad` parameter but this is determined from the `straight_heater_metal_s_ad3c1693` definition of the `straight_heater_metal_simple` phase shifter component. You can see the complexity of the system construction. We can extract all instances that contain this component which are `mzi_1` and `mzi_5`.
+#
+# However, we want to create a map that returns a phase list in this form:
+#
+# \begin{equation}
+# \left[ \phi \right] = \left[ \phi_0, \phi_1, \phi_2 ... \phi_N \right]
+# \end{equation}
+#
+# However, then we need to determine the index. Let's determine the 
+
+len(['component_lattice_gener_fb8c4da8']) == 1
+
+top_level_instance_name
+
+
+def compose_recursive_instance_location(
+    recursive_netlist: dict,
+    required_models: list,
+    target_component_prefix: str,
+    models: dict,
+):
+    """
+    This function returns the recursive location of any matching ``target_component_prefix`` instances within the ``recursive_netlist``. A function that returns the mapping of the ``matched_component`` in the corresponding netlist at any particular level of recursion.
+
+    required_models 
+    component_model_matches = [("ourtoplevelfunc", "mzi_214beef3", "ideal_active_waveguide"),
+    ("ourtoplevelfunc", "mzi_214beef3", "ideal_active_waveguide")]
+    recursion_level 2
+    
+    This function iterates over a particular level of recursion of a netlist. It returns a list of the missing required components, and updates a dictionary of models that contains a particular matching component. It returns the corresponding list of instances of a particular component at that level of recursion, so that it can be appended upon in order to construct the location of the corresponding matching elements.
+    
+    If ``required_models`` is an empty list, it means no recursion is required and the function is complete. If a ``required_model_i`` in ``required_models`` matches ``target_component_prefix``, then no more recursion is required down the component function.
+
+    The ``recursive_netlist`` should contain all the missing composed models that are not provided in the main models dictionary. If not, then we need to require the user to input the missing model that cannot be extracted from the composed netlist.
+
+    This function will also construct the ``recursive_instance_location`` in the form: ``[("component_lattice_gener_fb8c4da8", "mzi_1", "sxt"),
+    ("component_lattice_gener_fb8c4da8", "mzi_5", "sxt")]``. We know when a model is composed, and when it is already provided at every level of recursion based on the ``models`` dictionary that gets updated at each level of recursion with the corresponding models of that level, and the ``required_models`` down itself.
+
+    However, a main question appears on how to do the recursion. There needs to be a flag that determines that the recursion is complete. However, this is only valid for every particular component in the ``required_models`` list. Every component might have missing component. This means that this recursion begins component by component, updating the ``required_models`` list until all of them have been composed from the recursion or it is determined that is it missing fully.
+    """
+    if len(required_models) == 0:
+        pass
+        # Return the results as the recursive iteration is now complete.
+    else:
+        for required_model_name_i in required_models:
+            print(required_model_name_i)
+            # Appends required_models_i from subcomponent to the required_models input based on the models provided.
+            required_models_i = sax.get_required_circuit_models(
+                recursive_netlist[required_model_name], # TODO make this recursive so it can search inside? This will never have to be 2D as all models outside.
+                models=models,
+            ) # eg. ["straight_heater_metal_s_ad3c1693"] 
+    
+            if len(required_models_i) != 0:
+                required_models.extend(required_models_i)
+
+        
+
+        if len(required_models_i) != 0:
+            # This means that the model inside the top_level required model also has a required model that should be inside the recursive netlist and we need to find it.
+            # We iterate over each of the required model names to see if they match our active component name.
+            for recursive_required_model_name_i in required_models_i:
+                # This means we need to check whether the components matched are our active component, and if not, then we need to check if this other required component recursively also requires our active component.
+                if recursive_required_model_name_i.startswith(target_component_prefix):
+                     # This needs to be generic enough so that it can recursively search for the component declaration wherever it needs to be implemented.
+                    # Implement a function that matches all the potential corresponding active phase shifter instances
+                    active_component_list = piel.get_component_instances(
+                        recursive_netlist,
+                        top_level_prefix="component_lattice_gener_fb8c4da8",
+                        component_name_prefix=recursive_composed_required_models[0],
+                    ) # {'mzi_214beef3': ['mzi_1', 'mzi_5']}
+                    pass
+                else:
+                    # Implement the search again recursively from the unmatched components.
+                    pass
+
+from typing import Optional
+def get_matched_model_recursive_netlist_instances(
+    recursive_netlist: dict,
+    top_level_instance_prefix: str,
+    target_component_prefix: str,
+    models: Optional[dict] = None
+) -> list[tuple]:
+    """
+    This function returns an active component list with a tuple mapping of the location of the active component within the recursive netlist and corresponding model. It will recursively look within a netlist to locate what models use a particular component model. At each stage of recursion, it will compose a list of the elements that implement this matching model in order to relate the model to the instance, and hence the netlist address of the component that needs to be updated in order to functionally implement the model.
+
+    It takes in as a set of parameters the recursive_netlist generated by a ``gdsfactory`` netlist implementation.
+
+    Returns a list of tuples, that correspond to the phases applied with the corresponding component paths at multiple levels of recursion.
+    eg. [("component_lattice_gener_fb8c4da8", "mzi_1", "sxt"), ("component_lattice_gener_fb8c4da8", "mzi_5", "sxt")] and these are our keys to our sax circuit decomposition.
+    """
+    active_component_list = []
+    if models is None:
+        models = piel.models.frequency.get_default_models()
+    
+    # We need to input the top-level instance.
+    top_level_instance_name = piel.get_netlist_instances_by_prefix(
+        recursive_netlist=mixed_switch_lattice_circuit_netlist,
+        instance_prefix=top_level_instance_prefix
+    )
+    
+    # We need to input the prefix of the component of the straight metal heater.
+    top_level_required_models = sax.get_required_circuit_models(
+        recursive_netlist[top_level_instance_name],
+        models=models,
+    )
+
+   
+    return
+  
+a(recursive_netlist=mixed_switch_lattice_circuit_netlist, top_level_instance_prefix="component_lattice_gener", target_component_prefix="straight_heater_metal_s")
+
+
+def b():
+      # Get a netlist, and provide our models accordingly.
+    (
+        mixed_switch_lattice_circuit_s_parameters,
+        mixed_switch_lattice_circuit_s_parameters_info,
+    ) = sax.circuit(
+        netlist=mixed_switch_lattice_circuit_netlist,
+        models=our_recursive_custom_library,
+    )
+    # Create a tuple of the corresponding phase shifter positions we can input into other functions.
+
+    # Return the phase shifter controller accordingly
+    # Find a way to transform this information into corresponding phases, or maybe map a set of inputs accordingly.
+    mixed_switch_lattice_circuit_s_parameters(
+        mzi_1={"sxt": {"active_phase_rad": np.pi}},
+        mzi_5={"sxt": {"active_phase_rad": np.pi}}
+    )
