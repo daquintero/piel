@@ -10,6 +10,7 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   config/index.rst
    fock/index.rst
    unitary/index.rst
 

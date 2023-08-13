@@ -21,14 +21,10 @@ def address_value_dictionary_to_function_parameter_dictionary(
     """
     This function converts an address of an instance with particular parameter values in the form:
 
-    .. include_code::
-
         {('component_lattice_gener_fb8c4da8', 'mzi_1', 'sxt'): 0,
         ('component_lattice_gener_fb8c4da8', 'mzi_5', 'sxt'): 0}
 
     to
-
-     .. include_code::
 
         {'mzi_1': {'sxt': {parameter_key: 0}},
         ('mzi_5', {'sxt': {parameter_key: 0}}}
