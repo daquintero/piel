@@ -9,20 +9,22 @@ with open("README.md") as readme_file:
 
 requirements = [
     "bokeh",
+    "cython==0.29.21",
     "jupyter_bokeh",
     "jupytext",
     "Click>=7.0",
     "cocotb",
     "femwell",
-    "hdl21",
+    "hdl21>=4",
     "jax",
-    "gdsfactory",
+    "jaxlib",
+    "gdsfactory>=7",
     "networkx",
     "openlane",
     "pandas",
-    "sax",
+    "sax>=0.8.8",
     "thewalrus",
-    "vlsir",
+    "vlsir>=4",
     "qutip",
 ]
 

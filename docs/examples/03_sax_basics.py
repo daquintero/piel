@@ -14,7 +14,7 @@ from gdsfactory.components import mzi2x2_2x2
 import piel
 import sax
 
-gf.components()
+dir(gf.components)
 
 # We create a balanced MZI lattice full of the same `mzi2x2_2x2` components to demonstrate `sax` network basics.
 
@@ -36,6 +36,7 @@ switch_circuit.plot_widget()
 # There are several ways to extract and model a photonic circuit such as this one using `gdsfactory`
 
 top_level_netlist = switch_circuit.get_netlist()
+# top_level_netlist
 
 # ```python
 # dict_keys(['bend_euler_1', 'bend_euler_2', 'bend_euler_3', 'bend_euler_4', 'bend_euler_5', 'bend_euler_6', 'bend_euler_7', 'bend_euler_8', 'cp1', 'cp2', 'straight_10', 'straight_5', 'straight_6', 'straight_7', 'straight_8', 'straight_9', 'sxb', 'sxt', 'syl', 'sytl'])
@@ -56,7 +57,7 @@ top_level_netlist["ports"].keys()
 # This is equivalent to extract a netlist recursively to the lower element levels on our component, just that with the recursive netlist we have a multi-component netlist list down to the deepest level, and allows us to model very thoroughly our circuit. It is this
 
 recursive_netlist = switch_circuit.get_netlist_recursive()
-recursive_netlist.keys()
+# recursive_netlist
 
 recursive_netlist[list(recursive_netlist.keys())[0]]["instances"].keys()
 
@@ -102,11 +103,18 @@ sax.get_required_circuit_models(mzi2x2_netlist)
 
 # `piel` provides a library with a list of models, that we hope we can extend and improve with your contribution! We create our model dictionary accordingly based on our default photonic frequency library:
 
-piel.models.frequency.photonic.get_default_models()
+piel.models.frequency.get_default_models()
 
 # Let's explore one of our default models. Each model has its source in the documentation.
 
 piel.models.frequency.get_default_models()["straight"]()
+
+sax_netlist = sax.netlist(mzi2x2_netlist)
+sax.get_component_instances(
+    recursive_netlist=sax_netlist,
+    top_level_prefix="",
+    component_name_prefix="bend_euler",
+)
 
 mzi2x2_model, mzi2x2_model_info = sax.circuit(
     netlist=mzi2x2_netlist, models=piel.models.frequency.get_default_models()

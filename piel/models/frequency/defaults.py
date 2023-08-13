@@ -22,6 +22,7 @@ __default_quantum_models_dictionary__ = {
     "bend_euler": lossless_straight,
     "mmi2x2": mmi2x2_50_50,
     "straight": lossless_straight,
+    "straight_heater_metal_simple": ideal_active_waveguide,
 }
 
 

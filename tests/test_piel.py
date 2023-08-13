@@ -6,7 +6,7 @@ import pytest
 
 from click.testing import CliRunner
 
-from piel import piel
+import piel  # NOQA: F401
 from piel import cli
 
 

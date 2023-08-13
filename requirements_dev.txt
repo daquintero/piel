@@ -7,8 +7,8 @@ coverage
 cython==0.29.21
 femwell
 flake8
-gdsfactory
-hdl21
+gdsfactory>=7
+hdl21>=4
 ipyevents
 ipytree
 ipywidgets>=7.6.0,<9
@@ -27,7 +27,7 @@ pip>=19.2.3
 pydata-sphinx-theme>=0.13.3
 pytest
 qutip
-sax
+sax>=0.8.8
 setuptools>=40.8.0
 sphinx>=4,<7
 sphinx-autoapi
@@ -40,5 +40,6 @@ sphinx_rtd_theme
 thewalrus
 tox
 twine
+vlsir>=4
 watchdog
 wheel

@@ -5,7 +5,7 @@ test_data = {"t": np.array([3000, 4000, 5000, 6000]), "x": np.array([2, 3, 4, 5]
 
 print(test_data)
 
-piel.append_row_to_dict(data=test_data, copy_index=1, set_value={"t": 10})
+piel.visual.append_row_to_dict(data=test_data, copy_index=1, set_value={"t": 10})
 print(test_data)
 
 """
@@ -20,7 +20,7 @@ Now we test that it creates a copy of the data with corresponding changed data p
 
 test_data = {"t": np.array([3000, 4000, 5000, 6000]), "x": np.array([2, 3, 4, 5])}
 
-out_data = piel.points_to_lines_fixed_transient(
+out_data = piel.visual.points_to_lines_fixed_transient(
     data=test_data,
     time_index_name="t",
     fixed_transient_time=1,
@@ -316,7 +316,7 @@ test_data = {
 
 print(test_data["t"])
 
-piel.points_to_lines_fixed_transient(
+piel.visual.points_to_lines_fixed_transient(
     data=test_data,
     time_index_name="t",
     fixed_transient_time=1,
