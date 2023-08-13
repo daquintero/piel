@@ -9,6 +9,7 @@ with open("README.md") as readme_file:
 
 requirements = [
     "bokeh",
+    "cython==0.29.21",
     "jupyter_bokeh",
     "jupytext",
     "Click>=7.0",
@@ -16,6 +17,7 @@ requirements = [
     "femwell",
     "hdl21>=4",
     "jax",
+    "jaxlib",
     "gdsfactory>=7",
     "networkx",
     "openlane",
@@ -76,6 +78,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/daquintero/piel",
-    version="0.0.46",
+    version="0.0.47",
     zip_safe=False,
 )
