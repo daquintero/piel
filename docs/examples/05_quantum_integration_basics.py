@@ -80,8 +80,6 @@ switch_circuit_qobj.check_isunitary()
 
 switch_circuit_qobj.dims
 
-switch_circuit_qobj.eigenstates
-
 # ### Fock State Evolution Probability
 
 # Say, we want to calculate the evolution of a Fock state input through our photonic circuit. The initial Fock state is defined as $\ket{f_1} = \ket{j_1, j_2, ... j_N}$ and transitions to $\ket{f_2} = \ket{j_1^{'}, j_2^{'}, ... j_N^{'}}$. The evolution of this state through our circuit with unitary $U$ is defined by the subunitary $U_{f_1}^{f_2}$.
@@ -174,6 +172,10 @@ input_fock_states = piel.all_fock_states_from_photon_number(
 input_fock_states[10]
 
 # Quantum object: dims = [[4], [1]], shape = (4, 1), type = ket $\left(\begin{matrix}1.0\\0.0\\1.0\\0.0\\\end{matrix}\right)$
+
+piel.all_fock_states_from_photon_number(
+    mode_amount=4, photon_amount=1, output_type="jax"
+)
 
 # ### Sub Circuit Unitary Analysis
 

@@ -606,7 +606,8 @@ example_switch_lattice_function_parameter_dictionary = (
 example_switch_lattice_function_parameter_dictionary
 
 # ```python
-# {'mzi_1': {'active_phase_rad': 0}, 'mzi_5': {'active_phase_rad': 0}}
+# {'mzi_1': {'sxt': {'active_phase_rad': 0}},
+#  'mzi_5': {'sxt': {'active_phase_rad': 0}}}
 # ```
 
 # Let's compose our circuit.

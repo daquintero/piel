@@ -62,10 +62,29 @@ software. The way this is implemented also follows microservices
 architectures as to minimise the computational architecture required for
 these systems.
 
-Potential Integration Schemes Discussion
+However, one main aspect of complexity is the event-driven nature of multi-physical simulations. For example, a photonic pulse detection event creates an analog stimuli in time which triggers a digital simulation event. As such, simulating accurately, multi-physical triggers is a tricky implementation problem due to the linking events between the domain solvers.
+
+**Why is this analysis important?** Photonic operations and electronic
+operations may not be occurring at the same rate. The optical signals
+may be changing when the electronics is steady, the electronic signals
+may be changing when the photonics is steady, or the electronics and the
+photonics are changing both at the same time. These are the potential
+scenarios that time-dependent simulations must account for.
+
+Integration Schemes Discussion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TODO WIP
+To try to build a monolithic simulator that can solve for all of these
+domains at the same time limits the potential further multi-physical
+modelling of more complex systems, such as quantum states. As such, we
+want to be as open and as modular as possible in order to make this
+simulation tool as useful as possible.
+
+Considered Potential Implementation Schemes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Assuming Independent Solvers
+''''''''''''''''''''''''''''''''
 
 One potential implementation of operation specific electronic transient
 modelling is fundamental. Say, an electronic circuit is idle. This means
@@ -79,19 +98,6 @@ DC, or similar are controlled by signals that may be external to the
 circuit in question. Now, this is valid whenever there is no remaining
 transient memory effects on the initial condition of the circuit, in
 this case you need to model full transient effects as in normal SPICE.
-
-**Why is this analysis important?** Photonic operations and electronic
-operations may not be occurring at the same rate. The optical signals
-may be changing when the electronics is steady, the electronic signals
-may be changing when the photonics is steady, or the electronics and the
-photonics are changing both at the same time. These are the potential
-scenarios that time-dependent simulations must account for.
-
-To try to build a monolithic simulator that can solve for all of these
-domains at the same time limits the potential further multi-physical
-modelling of more complex systems, such as quantum states. As such, we
-want to be as open and as modular as possible in order to make this
-simulation tool as useful as possible.
 
 Say, our electronic circuit is initially in idle state (which we control
 the external parameters that affect this state), and we can control
@@ -123,6 +129,10 @@ Flow <https://www.cadence.com/content/dam/cadence-www/global/en_US/documents/ser
 \* `cocotb examples - Mixed-signal
 (analog/digital) <https://docs.cocotb.org/en/stable/examples.html#mixed-signal-analog-digital>`__
 
+
+Motivation for Integrated Solvers
+''''''''''''''''''''''''''''''''''''''''
+
 At the digital time-step, there is a possibility that an analogue signal
 contains memory or previous states from the transitions. This creates an
 aspect of complexity in modelling these systems. It means that the
@@ -130,6 +140,10 @@ time-synchronisation between the digital and analogue system must be
 possible. The aspect of complexity is the multi-domain interaction
 between the solvers, for example, if the digital solver is triggered by
 a photonic-analogue signal or related.
+
+
+Co-Routine Dominant Solver Limits Feedback
+''''''''''''''''''''''''''''''''''''''''''''''''
 
 However, this is possible by implementing subroutines. In ``cocotb``,
 the simulations are run as asynchronous coroutines. We can follow this
@@ -159,8 +173,9 @@ pulses accordingly. The other way to do so, is to perform the SPICE
 simulation, and discretize at particular points in time as is the way
 with AMS.
 
+
 Photonic Time Delay Synchronisation
------------------------------------
+''''''''''''''''''''''''''''''''''''''''
 
 Another complexity of simulating these systems is that photonic pulses
 might also be propagating in time alongside the electronic signals.
