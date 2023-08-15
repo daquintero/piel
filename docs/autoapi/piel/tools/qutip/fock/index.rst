@@ -14,13 +14,15 @@ Functions
 .. autoapisummary::
 
    piel.tools.qutip.fock.all_fock_states_from_photon_number
+   piel.tools.qutip.fock.convert_qobj_to_jax
+   piel.tools.qutip.fock.convert_output_type
    piel.tools.qutip.fock.fock_state_to_photon_number_factorial
    piel.tools.qutip.fock.fock_state_nonzero_indexes
    piel.tools.qutip.fock.fock_states_at_mode_index
 
 
 
-.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1) -> list[qutip.Qobj]
+.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    For a specific amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire. This returns a list of all corresponding Fock states.
 
@@ -28,12 +30,20 @@ Functions
    :type mode_amount: int
    :param photon_amount: The amount of photons in the system. Defaults to 1.
    :type photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list
 
 
-.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj) -> float
+.. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
+
+
+.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+
+
+.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj | jax.numpy.ndarray) -> float
 
        This function converts a Fock state defined as:
 
@@ -58,7 +68,7 @@ Functions
 
 
 
-.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj) -> tuple[int]
+.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
    This function returns the indexes of the nonzero elements of a Fock state.
 
@@ -69,7 +79,7 @@ Functions
    :rtype: tuple
 
 
-.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1) -> list[qutip.Qobj]
+.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    This function returns a list of valid Fock states that fulfill a condition of having a maximum photon number at a specific mode index.
 
@@ -79,6 +89,8 @@ Functions
    :type target_mode_index: int
    :param maximum_photon_amount: The amount of photons in the system. Defaults to 1.
    :type maximum_photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list

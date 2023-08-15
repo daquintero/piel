@@ -1,8 +1,3 @@
-A Review of Solvers
-=====================
-
-It is important to understand the limitations of multi-physical solvers in order to know exactly how inaccurate our results are, and what we are really simulating.
-
 Optical
 -------------
 

@@ -124,6 +124,8 @@ Functions
    piel.get_sdense_ports_index
    piel.sax_to_s_parameters_standard_matrix
    piel.all_fock_states_from_photon_number
+   piel.convert_qobj_to_jax
+   piel.convert_output_type
    piel.fock_state_nonzero_indexes
    piel.fock_state_to_photon_number_factorial
    piel.fock_states_at_mode_index
@@ -510,7 +512,7 @@ Attributes
    :rtype: bool
 
 
-.. py:function:: fock_transition_probability_amplitude(initial_fock_state: qutip.Qobj, final_fock_state: qutip.Qobj, unitary_matrix: jax.numpy.ndarray)
+.. py:function:: fock_transition_probability_amplitude(initial_fock_state: qutip.Qobj | jax.numpy.ndarray, final_fock_state: qutip.Qobj | jax.numpy.ndarray, unitary_matrix: jax.numpy.ndarray)
 
        This function returns the transition probability amplitude between two Fock states when propagating in between
        the unitary_matrix which represents a quantum state circuit.
@@ -536,9 +538,9 @@ Attributes
    rac{    ext{per}(U_{f_1}^{f_2})}{\sqrt{(j_1! j_2! ... j_N!)(j_1^{'}! j_2^{'}! ... j_N^{'}!)}}
 
        Args:
-           initial_fock_state (qutip.Qobj): A QuTip QObj representation of the initial Fock state.
-           final_fock_state (qutip.Qobj): A QuTip QObj representation of the final Fock state.
-           unitary_matrix (jnp.ndarray): A JAX NumPy array representation of the unitary matrix.
+           initial_fock_state (qutip.Qobj | jnp.ndarray): The initial Fock state.
+           final_fock_state (qutip.Qobj | jnp.ndarray): The final Fock state.
+           unitary_matrix (jnp.ndarray): The unitary matrix that represents the quantum state circuit.
 
        Returns:
            float: The transition probability amplitude between the initial and final Fock states.
@@ -1431,7 +1433,7 @@ Attributes
 
 
 
-.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1) -> list[qutip.Qobj]
+.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    For a specific amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire. This returns a list of all corresponding Fock states.
 
@@ -1439,12 +1441,20 @@ Attributes
    :type mode_amount: int
    :param photon_amount: The amount of photons in the system. Defaults to 1.
    :type photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list
 
 
-.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj) -> tuple[int]
+.. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
+
+
+.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+
+
+.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
    This function returns the indexes of the nonzero elements of a Fock state.
 
@@ -1455,7 +1465,7 @@ Attributes
    :rtype: tuple
 
 
-.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj) -> float
+.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj | jax.numpy.ndarray) -> float
 
        This function converts a Fock state defined as:
 
@@ -1480,7 +1490,7 @@ Attributes
 
 
 
-.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1) -> list[qutip.Qobj]
+.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    This function returns a list of valid Fock states that fulfill a condition of having a maximum photon number at a specific mode index.
 
@@ -1490,6 +1500,8 @@ Attributes
    :type target_mode_index: int
    :param maximum_photon_amount: The amount of photons in the system. Defaults to 1.
    :type maximum_photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list
@@ -1537,4 +1549,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.46'
+   :value: '0.0.47'

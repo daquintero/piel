@@ -15,17 +15,17 @@ TODO add figure
 When electrical field lines are orthogonal, we can account for the width :math:`W`, length :math:`L`, dielectric constant :math:`\epsilon` between the metal plates, and the thickness of the dielectric :math:`t`.
 
 .. math::
-
+    \begin{equation}
     C_{int} = \frac{\epsilon WL }{t_{\text{dielectric}}}
 
 This is coupled to the resistivity :math:`\rho` of the wire with the thickness of the metal :math:`H` and width :math:`W` to determine the its cross sectional area :math:`A`.
 
 .. math::
-
+    \begin{equation}
     R = \frac{\rho L}{A} = \frac{\rho L}{HW}
 
 However, because we know the thickness for any particular metal :math:`H`, we can determine the resistance of a wire just from the geometry. Normally, these material parameters are determined in the form of a :math:`R_{\square}` resistance.
 
 .. math::
-
+    \begin{equation}
     R = R_{\square} \frac{\rho}{H} = \frac{\rho}{H}

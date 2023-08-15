@@ -23,8 +23,9 @@ electronic system. If we have a single supply voltage to our system
 
 .. math::
 
-
-   P_{peak} = i_{peak}V_{supply} = \text{max}\left(p(t)\right)
+    \begin{equation}
+        P_{peak} = i_{peak}V_{supply} = \text{max}\left(p(t)\right)
+    \end{equation}
 
 If we have :math:`N` multiple supply voltages to our system, which is
 more likekly the case in a mixed-signal digital and analogue supplies,
@@ -33,8 +34,9 @@ define the total peak power of the system as:
 
 .. math::
 
-
-   P_{peak,possible} = \sum_0^N i_{peak,N}V_{supply,N} = \sum_0^N \text{max}\left(p_N(t)\right)
+    \begin{equation}
+        P_{peak,possible} = \sum_0^N i_{peak,N}V_{supply,N} = \sum_0^N \text{max}\left(p_N(t)\right)
+    \end{equation}
 
 In reality, we need to think of the maximum power that can be drawn by
 the maximum power consuming operation, which may not involve all
@@ -48,8 +50,9 @@ efficiency parameter :math:`\eta_N` for the highest operation load:
 
 .. math::
 
-
-   P_{peak,operation} = \sum_0^N \eta_N i_{peak,N}V_{supply,N} = \text{max} \left( \sum_0^N \left(p_N(t)\right) \right)
+    \begin{equation}
+        P_{peak,operation} = \sum_0^N \eta_N i_{peak,N}V_{supply,N} = \text{max} \left( \sum_0^N \left(p_N(t)\right) \right)
+    \end{equation}
 
 Average Power
 ''''''''''''''''''''''''
@@ -64,16 +67,19 @@ the whole system over a period of time :math:`T`:
 
 .. math::
 
+    \begin{equation}
+        P_{average} = \int_0^T p(t) dt
+    \end{equation}
 
-   P_{average} = \int_0^T p(t) dt
 
 If we have multiple supplies, as is likely to be the case, then we can
 consider it to be:
 
 .. math::
 
-
-   P_{average} = \sum_0^N \frac{V_{supply,N}}{T} \int_0^T i_{supply,N} (t) dt
+    \begin{equation}
+        P_{average} = \sum_0^N \frac{V_{supply,N}}{T} \int_0^T i_{supply,N} (t) dt
+    \end{equation}
 
 Power Consumption Sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -109,7 +115,11 @@ as some resistive wire and the junction load to be a capacitor. We can
 describe this from first-principles as a basic RC circuit, with the
 following relationship:
 
-.. math::  V_{out,RC}(t) = (1-e^{-t/\tau})
+.. math::
+
+    \begin{equation}
+        V_{out,RC}(t) = (1-e^{-t/\tau})
+    \end{equation}
 
 Our time constant :math:`\tau = RC`. And we know that
 :math:`50\% V_{out,RC} = 0.69\tau` and :math:`90\% V_{out,RC} = 2.2\tau`
@@ -118,11 +128,19 @@ based on Eq. 1.13, page 34 on Rabaey.
 Energy input from signal source to charge a capacitor, independent of
 series resistance R, although this determines rise times.
 
-.. math:: E_{in} =  \int_{0}^{\infty} i_{in}(t) v_{in}(t) dt = V \int_{0}^{\infty} C \frac{dV_{out}}{dt} dt = (CV) \int_{0}^{V} dV_{out} = CV^2
+.. math::
+
+    \begin{equation}
+        E_{in} =  \int_{0}^{\infty} i_{in}(t) v_{in}(t) dt = V \int_{0}^{\infty} C \frac{dV_{out}}{dt} dt = (CV) \int_{0}^{V} dV_{out} = CV^2
+    \end{equation}
 
 During charge-up, the energy stored in resistor is:
 
-.. math:: E_c = \int_{0}^{\infty} i_c (t) V_{out} (t) dt = \int_{0}^{\infty} C \frac{dV_{out}}{dt} dt = C \int_{0}^{V} V_{out} dV_{out} = \frac{CV^2}{2}
+.. math::
+
+    \begin{equation}
+        E_c = \int_{0}^{\infty} i_c (t) V_{out} (t) dt = \int_{0}^{\infty} C \frac{dV_{out}}{dt} dt = C \int_{0}^{V} V_{out} dV_{out} = \frac{CV^2}{2}
+    \end{equation}
 
 The other half of the energy gets dissipated in the resistor during
 rising edge, and the rest of the capacitor energy gets dissipated on the
@@ -203,8 +221,10 @@ between the :math:`RC` elements in the frequency :math:`\omega` domain:
 
 .. math::
 
+    \begin{equation}
+        \frac{V_{out,RC}}{V_{in}} = \frac{X_C}{R + X_C} = \frac{1}{1 + \omega \tau}
+    \end{equation}
 
-   \frac{V_{out,RC}}{V_{in}} = \frac{X_C}{R + X_C} = \frac{1}{1 + \omega \tau}
 
 RC Time-Constant Derivation
 '''''''''''''''''''''''''''
@@ -228,8 +248,9 @@ filter. The transfer function can be defined as:
 
 .. math::
 
-
-   \frac{V_{out,RC}}{V_{in}} = \frac{R}{R + X_C} = \frac{\omega \tau}{1 + \omega \tau}
+    \begin{equation}
+        \frac{V_{out,RC}}{V_{in}} = \frac{R}{R + X_C} = \frac{\omega \tau}{1 + \omega \tau}
+    \end{equation}
 
 Depending on your wiring, a common case of this type of filter might
 involve driving a capacitive load such as electro-optic modulator in the
