@@ -6,10 +6,9 @@ It is important to understand the fundamental physical relationships of consigni
 .. toctree::
     :caption: Contents:
 
-    fundamentals
-    passives
-    power_time_metrics
+Electronic Fundamentals
+=============================
 
-.. include:: fundamentals.rst
-.. include:: passives.rst
-.. include:: power_time_metrics.rst
+.. include:: electronic/fundamentals.rst
+.. include:: electronic/passives.rst
+.. include:: electronic/power_time_metrics.rst

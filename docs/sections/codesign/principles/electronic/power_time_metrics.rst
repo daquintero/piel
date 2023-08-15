@@ -1,8 +1,8 @@
 System Metrics
-==============
+-----------------------
 
 Power Analysis
---------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Let us first begin considering the digital design metrics that are
 important for us to understand the electrical operation characteristics
@@ -11,10 +11,10 @@ include photonic loads based on *Digital Integrated Circuits, A Design
 Perspective* by Jan Rabaey. Page numbers are provided accordingly.
 
 Power Consumption Definitions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^
 
 Peak Power
-^^^^^^^^^^
+'''''''''''''''''''''''''
 
 A design can have a peak power :math:`P_{peak}` which basically involves
 the maximum power consumption possible by the total photonic and
@@ -52,7 +52,7 @@ efficiency parameter :math:`\eta_N` for the highest operation load:
    P_{peak,operation} = \sum_0^N \eta_N i_{peak,N}V_{supply,N} = \text{max} \left( \sum_0^N \left(p_N(t)\right) \right)
 
 Average Power
-^^^^^^^^^^^^^
+''''''''''''''''''''''''
 
 What may be more likely is that you might be operating this integrated
 electronic-photonic system with a set of instructions over a long period
@@ -76,10 +76,10 @@ consider it to be:
    P_{average} = \sum_0^N \frac{V_{supply,N}}{T} \int_0^T i_{supply,N} (t) dt
 
 Power Consumption Sources
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In terms of photonic loads
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 We can decompose this in terms of dynamic and static power. When some
 transistors are switching, they are consuming dynamic power that they do
@@ -141,10 +141,10 @@ drivers, the effect of their fundamental components on the rest of the
 circuit.
 
 Time Analysis
--------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Signal Propagation Definitions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Our signals will change given that we have control over how we affect
 our photonic circuit. Say, we define two boundary conditions of our
@@ -179,7 +179,7 @@ We go back to our basics by remembering some relationships in the *The
 Art of Electronics* by Paul Horowitz and Winfield Hill.
 
 Low-Pass RC Filter
-^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''
 
 TODO ADD IMAGE
 
@@ -218,7 +218,7 @@ However, at higher frequencies, this becomes less valid as
 frequency :math:`\omega_0 = \frac{1}{RC}`
 
 High-Pass RC Filter
-^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''
 
 TODO ADD IMAGE
 
@@ -236,7 +236,7 @@ involve driving a capacitive load such as electro-optic modulator in the
 frequency domain. Note, it is possible to drive them in DC.
 
 Driving, Propagation Delay & Fanout
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If we consider each of our modulators, as a load, we must also consider
 how we are driving them.

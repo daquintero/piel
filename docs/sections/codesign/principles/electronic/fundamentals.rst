@@ -1,5 +1,5 @@
 Fundamental Electronic Definitions
-==================================
+----------------------------------
 
 Read more in *The Art of Electronics* by Paul Horowitz and Winfield Hill.
 

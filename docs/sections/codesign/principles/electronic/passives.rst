@@ -1,5 +1,5 @@
 Passives
-========
+----------
 
 Read further in *Digital Integrated Electronics* by Jan Rabaey.
 
@@ -8,7 +8,7 @@ It is important to understand the relationship between electrical models of phys
 Each wire has parasitic capacitance's, resistances, and inductance. We need to account these differential circuit elements as points within the lab. Note that the wire parasitic capacitance is three-dimensional. Ideally, we can extract this information through RCX of the circuit.
 
 Simple Capacitive Modelling
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 TODO add figure
 
