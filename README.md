@@ -3,8 +3,6 @@
 Name](https://img.shields.io/badge/pypi-piel-blue?style=for-the-badge)](https://pypi.python.org/pypi/piel)
 [![PyPI
 Version](https://img.shields.io/pypi/v/piel.svg?style=for-the-badge)](https://pypi.python.org/pypi/piel)
-[![Build
-Status](https://img.shields.io/travis/daquintero/piel.svg?style=for-the-badge)](https://travis-ci.com/daquintero/piel)
 [![Documentation
 Status](https://readthedocs.org/projects/piel/badge/?style=for-the-badge)](https://piel.readthedocs.io/en/latest/?version=latest)
 [![MIT](https://img.shields.io/github/license/gdsfactory/gdsfactory?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
@@ -22,7 +20,7 @@ quantum, and more.
     electronic chip design.
 -   System interconnection modelling in multiple domains.
 -   Chip and interposer design integration.
--   Component models translation library between simulation tools.
+-   Co-design components to circuits flow.
 -   Quantum models of physical circuitry.
 
 `piel` aims to provide an integrated workflow to co-design photonics and

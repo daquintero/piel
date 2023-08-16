@@ -1,7 +1,7 @@
 **P**\ hotonic **I**\ ntegrated **EL**\ ectronics
 =================================================
 
-|PyPI Name| |PyPI Version| |Build Status| |Documentation Status| |MIT|
+|PyPI Name| |PyPI Version| |Documentation Status| |MIT|
 |Black|
 
 Microservices to codesign photonics, electronics, communications,
@@ -17,7 +17,7 @@ Target functionality
    electronic chip design.
 -  System interconnection modelling in multiple domains.
 -  Chip and interposer design integration.
--  Component models translation library between simulation tools.
+-  Co-design components to circuits flow.
 -  Quantum models of physical circuitry.
 
 ``piel`` aims to provide an integrated workflow to co-design photonics
@@ -75,8 +75,6 @@ want to do a single contribution, let's do this together!
    :target: https://pypi.python.org/pypi/piel
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/piel.svg?style=for-the-badge
    :target: https://pypi.python.org/pypi/piel
-.. |Build Status| image:: https://img.shields.io/travis/daquintero/piel.svg?style=for-the-badge
-   :target: https://travis-ci.com/daquintero/piel
 .. |Documentation Status| image:: https://readthedocs.org/projects/piel/badge/?style=for-the-badge
    :target: https://piel.readthedocs.io/en/latest/?version=latest
 .. |MIT| image:: https://img.shields.io/github/license/gdsfactory/gdsfactory?style=for-the-badge
