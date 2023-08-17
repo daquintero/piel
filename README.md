@@ -44,6 +44,7 @@ photonics via [GDSFactory](https://github.com/gdsfactory/gdsfactory).
 
 Some existing microservice dependency integrations are:
 
+-   [amaranth](https://github.com/amaranth-lang/amaranth) - A modern hardware definition language and toolchain based on Python.
 -   [cocotb](https://github.com/cocotb/cocotb) - a coroutine based
     cosimulation library for writing VHDL and Verilog testbenches in
     Python.

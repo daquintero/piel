@@ -40,12 +40,12 @@ microelectronics through the functionality of the
 photonics via `GDSFactory <https://github.com/gdsfactory/gdsfactory>`__.
 
 .. figure:: _static/img/piel_microservice_structure.png
-   :alt: image
+   :alt: `piel` microservices structure.
 
-   image
 
 Some existing microservice dependency integrations are:
 
+-   `amaranth <https://github.com/amaranth-lang/amaranth>`__ - A modern hardware definition language and toolchain based on Python.
 -  `cocotb <https://github.com/cocotb/cocotb>`__ - a coroutine based
    cosimulation library for writing VHDL and Verilog testbenches in
    Python.

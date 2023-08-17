@@ -8,6 +8,7 @@ with open("README.md") as readme_file:
     readme = readme_file.read()
 
 requirements = [
+    "amaranth[builtin-yosys] @ git+https://github.com/amaranth-lang/amaranth.git",  # Tie this down when they fix pypi.
     "bokeh",
     "cython==0.29.21",
     "jupyter_bokeh",
