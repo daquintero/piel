@@ -48,49 +48,36 @@ piel.generate_verilog_from_amaranth(
     amaranth_module=our_truth_table_module,
     ports_list=ports_list,
     target_file_name="our_truth_table_module.v",
-    target_directory=piel.return_path("."),
+    target_directory=".",
 )
 
-# +
-from amaranth.sim import Simulator
+# Another thing we can do is verify that our implemented logic is valid. Creating a simulation is also useful in the future when we simulate our extracted place-and-route netlist in relation to the expected applied logic.
 
-dut = UpCounter(25)
+piel.verify_truth_table(
+    truth_table_amaranth_module=our_truth_table_module,
+    truth_table_dictionary=detector_phase_truth_table,
+    inputs=input_ports_list,
+    outputs=output_ports_list,
+    vcd_file_name="our_truth_table_module.vcd",
+    target_output_directory=".",
+)
 
+# Another aspect is that as part of the `piel` flow, we have thoroughly thought of how to structure a codesign electronic-photonic project in order to be able to utilise all the range of tools in the process. You might want to save your design and simulation files to their corresponding locations so you can reuse them with another toolset in the future.
+#
+# Say, you want to append them to the `simple_design` project:
 
-def bench():
-    # Disabled counter should not overflow.
-    yield dut.en.eq(0)
-    for _ in range(30):
-        yield
-        assert not (yield dut.ovf)
+design_directory = piel.return_path(simple_design)
+source_output_files_directory = piel.return_path(simple_design) / "src" / "out"
+simulation_output_files_directory = piel.return_path(simple_design) / "tb" / "out"
+simulation_output_files_directory
 
-    # Once enabled, the counter should overflow in 25 cycles.
-    yield dut.en.eq(1)
-    for _ in range(25):
-        yield
-        assert not (yield dut.ovf)
-    yield
-    assert (yield dut.ovf)
-
-    # The overflow should clear in one cycle.
-    yield
-    assert not (yield dut.ovf)
+# Some functions you might want to use to save the designs in these directories are:
 
 
-sim = Simulator(dut)
-sim.add_clock(1e-6)  # 1 MHz
-sim.add_sync_process(bench)
-with sim.write_vcd("up_counter.vcd"):
-    sim.run()
-# -
 
 # ## `cocoTb` Simulation
 
 # Location of our output files
-
-design_directory = piel.return_path(simple_design)
-simulation_output_files_directory = piel.return_path(simple_design) / "tb" / "out"
-simulation_output_files_directory
 
 simulation_output_files_directory.exists()
 

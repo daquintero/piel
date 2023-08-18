@@ -5,13 +5,13 @@
 (* generator = "Amaranth" *)
 module top(\$signal$1 , \$signal );
   reg \$auto$verilog_backend.cc:2083:dump_module$1  = 0;
-  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *)
+  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *)
   wire \$2 ;
-  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *)
+  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *)
   wire \$4 ;
-  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *)
+  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *)
   wire \$6 ;
-  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *)
+  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *)
   wire \$8 ;
   (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:41" *)
   input [1:0] \$signal ;
@@ -19,34 +19,34 @@ module top(\$signal$1 , \$signal );
   (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:41" *)
   output [1:0] \$signal$1 ;
   reg [1:0] \$signal$1 ;
-  assign \$2  = ! (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *) \$signal ;
-  assign \$4  = \$signal  == (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *) 1'h1;
-  assign \$6  = \$signal  == (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *) 2'h2;
-  assign \$8  = \$signal  == (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:51" *) 2'h3;
+  assign \$2  = ! (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *) \$signal ;
+  assign \$4  = \$signal  == (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *) 1'h1;
+  assign \$6  = \$signal  == (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *) 2'h2;
+  assign \$8  = \$signal  == (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:54" *) 2'h3;
   always @* begin
     if (\$auto$verilog_backend.cc:2083:dump_module$1 ) begin end
     \$signal$1  = 2'h0;
-    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" *)
+    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" *)
     casez (\$2 )
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" */
+      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" */
       1'h1:
           \$signal$1  = 2'h0;
     endcase
-    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" *)
+    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" *)
     casez (\$4 )
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" */
+      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" */
       1'h1:
           \$signal$1  = 2'h2;
     endcase
-    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" *)
+    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" *)
     casez (\$6 )
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" */
+      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" */
       1'h1:
           \$signal$1  = 2'h3;
     endcase
-    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" *)
+    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" *)
     casez (\$8 )
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:50" */
+      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:53" */
       1'h1:
           \$signal$1  = 2'h3;
     endcase

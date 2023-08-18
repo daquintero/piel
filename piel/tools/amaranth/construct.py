@@ -40,6 +40,9 @@ def construct_amaranth_module_from_truth_table(
                 # TODO Determine signal type or largest width from the values.
                 setattr(self, key, am.Signal(2))
 
+            self.inputs = inputs
+            self.outputs = outputs
+
         def elaborate(self, platform):
             m = am.Module()
             # We need to iterate over the length of the truth table arrays for the input and output keys.
@@ -48,13 +51,13 @@ def construct_amaranth_module_from_truth_table(
             for i in range(4):
                 # We iterate over the truth table values
                 with m.If(
-                    getattr(self, inputs[0]) == int(truth_table[inputs[0]][i], 2)
+                    getattr(self, inputs[0]) == int(truth_table[self.inputs[0]][i], 2)
                 ):
                     # Implements a particular output.
                     output_value_i = getattr(getattr(self, outputs[0]), "eq")
 
                     if implementation_type == "combinatorial":
-                        m.d.comb += output_value_i(int(truth_table[outputs[0]][i], 2))
+                        m.d.comb += output_value_i(int(truth_table[self.outputs[0]][i], 2))
                     else:
                         raise FutureWarning(
                             "Still need to implement more than combinatorial implementations."
