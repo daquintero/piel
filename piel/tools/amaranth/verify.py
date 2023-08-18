@@ -1,8 +1,10 @@
 import amaranth as am
 from amaranth.sim import Simulator
+import types
 from typing import Literal
 
-import piel
+from ...project_structure import get_module_folder_type_location
+from ...file_system import return_path
 from ...config import piel_path_types
 
 __all__ = ["verify_truth_table"]
@@ -14,7 +16,7 @@ def verify_truth_table(
     inputs: list,
     outputs: list,
     vcd_file_name: str,
-    target_output_directory: piel_path_types,
+    target_directory: piel_path_types,
     implementation_type: Literal[
         "combinatorial", "sequential", "memory"
     ] = "combinatorial",
@@ -41,7 +43,15 @@ def verify_truth_table(
             assert output_port_signal == int(truth_table_dictionary[outputs[0]][i])
             i += 1
 
-    target_output_directory = piel.return_path(target_output_directory)
+    if isinstance(target_directory, types.ModuleType):
+        # If the path follows the structure of a `piel` path.
+        target_directory = get_module_folder_type_location(
+            module=target_directory, folder_type="digital_testbench"
+        )
+    else:
+        # If not then just append the right path.
+        target_directory = return_path(target_directory)
+
     verify_logic()
     simulation = Simulator(truth_table_amaranth_module)
 
@@ -51,7 +61,7 @@ def verify_truth_table(
 
     # Generate vcd outputs to verify?
     # TODO see how to generate a panads table from this accordingly.
-    output_vcd_file = target_output_directory / vcd_file_name
+    output_vcd_file = target_directory / vcd_file_name
     with simulation.write_vcd(str(output_vcd_file)):
         simulation.run()
     # TODO can we access inside here to generate a Pandas version.

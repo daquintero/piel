@@ -51,6 +51,26 @@ piel.generate_verilog_from_amaranth(
     target_directory=".",
 )
 
+# Another aspect is that as part of the `piel` flow, we have thoroughly thought of how to structure a codesign electronic-photonic project in order to be able to utilise all the range of tools in the process. You might want to save your design and simulation files to their corresponding locations so you can reuse them with another toolset in the future.
+#
+# Say, you want to append them to the `simple_design` project:
+
+design_directory = piel.return_path(simple_design)
+
+# Some functions you might want to use to save the designs in these directories are:
+
+simple_design_src_folder = piel.get_module_folder_type_location(
+    module=simple_design, folder_type="digital_source"
+)
+
+ports_list = input_ports_list + output_ports_list
+piel.generate_verilog_from_amaranth(
+    amaranth_module=our_truth_table_module,
+    ports_list=ports_list,
+    target_file_name="our_truth_table_module.v",
+    target_directory=simple_design_src_folder,
+)
+
 # Another thing we can do is verify that our implemented logic is valid. Creating a simulation is also useful in the future when we simulate our extracted place-and-route netlist in relation to the expected applied logic.
 
 piel.verify_truth_table(
@@ -62,22 +82,33 @@ piel.verify_truth_table(
     target_output_directory=".",
 )
 
-# Another aspect is that as part of the `piel` flow, we have thoroughly thought of how to structure a codesign electronic-photonic project in order to be able to utilise all the range of tools in the process. You might want to save your design and simulation files to their corresponding locations so you can reuse them with another toolset in the future.
-#
-# Say, you want to append them to the `simple_design` project:
+# You can also use the module directory to automatically save the testbench in these functions.
 
-design_directory = piel.return_path(simple_design)
-source_output_files_directory = piel.return_path(simple_design) / "src" / "out"
-simulation_output_files_directory = piel.return_path(simple_design) / "tb" / "out"
-simulation_output_files_directory
+piel.verify_truth_table(
+    truth_table_amaranth_module=our_truth_table_module,
+    truth_table_dictionary=detector_phase_truth_table,
+    inputs=input_ports_list,
+    outputs=output_ports_list,
+    vcd_file_name="our_truth_table_module.vcd",
+    target_output_directory=simple_design,
+)
 
-# Some functions you might want to use to save the designs in these directories are:
-
-
+# You can observe the design directory of the provided `simple_design` folder to verify that the files have been included in the other flow.
 
 # ## `cocoTb` Simulation
 
+# It is strongly encouraged to get familiar with the `piel` flow project structure, as this file directory distribution enables the easy use between multiple design tools without conflicts or without structured organisation.
+
 # Location of our output files
+
+source_output_files_directory = simple_design_src_folder / "out"
+simulation_output_files_directory = (
+    piel.get_module_folder_type_location(
+        module=simple_design, folder_type="digital_testbench"
+    )
+    / "out"
+)
+simulation_output_files_directory
 
 simulation_output_files_directory.exists()
 

@@ -2,7 +2,8 @@ import amaranth as am
 from amaranth.back import verilog
 import types
 
-import piel
+from ...project_structure import get_module_folder_type_location
+from ...file_system import return_path
 from ...config import piel_path_types
 
 __all__ = ["generate_verilog_from_amaranth"]
@@ -26,12 +27,13 @@ def generate_verilog_from_amaranth(
     """
     if isinstance(target_directory, types.ModuleType):
         # If the path follows the structure of a `piel` path.
-        target_directory = piel.return_path(target_directory)
-        target_file_path = target_directory / "src" / target_file_name
+        target_directory = get_module_folder_type_location(
+            module=target_directory, folder_type="digital_source"
+        )
     else:
         # If not then just append the right path.
-        target_directory = piel.return_path(target_directory)
-        target_file_path = target_directory / target_file_name
+        target_directory = return_path(target_directory)
+    target_file_path = target_directory / target_file_name
 
     # Iterate over ports list and construct a list of references for the strings provided in `ports_list`
     # TODO maybe compose this as a separate function.

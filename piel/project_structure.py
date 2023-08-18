@@ -1,13 +1,35 @@
 """
 This file allows us to automate several aspects of creating a fully compatible project structure.
 """
+import types
+from typing import Literal
+
 from .config import piel_path_types
 from .file_system import return_path, write_script, read_json, check_path_exists
 
 __all__ = [
+    "get_module_folder_type_location",
     "read_configuration",
     "create_setup_py_from_config_json",
 ]
+
+
+def get_module_folder_type_location(
+    module: types.ModuleType,
+    folder_type: Literal["digital_source", "digital_testbench"],
+):
+    """
+    This is an easy helper function that saves a particular file in the corresponding location of a `piel` project structure.
+
+    TODO DOCS
+    """
+    module_path = return_path(module)
+    folder_path = module_path
+    if folder_type == "digital_source":
+        folder_path = module_path / "src"
+    elif folder_type == "digital_testbench":
+        folder_path = module_path / "tb"
+    return folder_path
 
 
 def read_configuration(design_directory: piel_path_types) -> dict:
