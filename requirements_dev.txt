@@ -1,3 +1,5 @@
+amaranth @ git+https://github.com/amaranth-lang/amaranth.git
+amaranth-yosys
 black
 bokeh
 bump2version

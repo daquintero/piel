@@ -17,7 +17,6 @@ If this design flow is useful for others who use other tools, because this is a 
 
 Another thing `piel` aims to provide is a resolved environment for using all these tools together, which is nontrivial if you have ever dealt with dependency conflicts.
 
-
 ## Why is it called `piel`?
 
 `piel` is an acronym of **P**hotonic **I**ntegrated **EL**ectronics tools. `piel` in Spanish also means skin, and in a funny way of thinking, it aims to compose together a body of electronic and photonic design tool projects.

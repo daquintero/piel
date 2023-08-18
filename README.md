@@ -16,12 +16,13 @@ quantum, and more.
 
 ## Target functionality
 
--   Co-simulation and optimisation between integrated photonic and
+- Co-simulation and optimisation between integrated photonic and
     electronic chip design.
--   System interconnection modelling in multiple domains.
--   Chip and interposer design integration.
--   Co-design components to circuits flow.
--   Quantum models of physical circuitry.
+- System interconnection modelling in multiple domains.
+- Chip and interposer design integration.
+- Co-design components to circuits flow.
+- Quantum models of physical circuitry.
+- Maintain a multi-tool dependency design environment.
 
 `piel` aims to provide an integrated workflow to co-design photonics and
 electronics, classically and quantum. It does not aim to replace the
@@ -63,6 +64,8 @@ Some existing microservice dependency integrations are:
     sampling.
 -   [qutip](https://github.com/qutip/qutip) - QuTiP: Quantum Toolbox in
     Python
+
+Another ``piel`` objective is to provide a common dependency-resolved environment for all these tools, so that you just get started with designing rather than fixing dependencies.
 
 ## Contribution
 
