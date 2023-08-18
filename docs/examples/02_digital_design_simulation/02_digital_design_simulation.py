@@ -6,7 +6,6 @@
 # * `amaranth` aims to be more than just Python-to-HDL design, but a full digital-flow package design tool.
 # * `cocotb` is mainly used for writing testbenches in Python and verification of logic.
 
-import amaranth as am
 import piel
 import simple_design
 
@@ -32,111 +31,25 @@ detector_phase_truth_table = {
     "phase_map_out": ["00", "10", "11", "11"],
 }
 
-
-def construct_amaranth_module_from_truth_table(
-    truth_table: dict,
-    inputs: list[str],
-    outputs: list[str],
-    combinatorial: bool = True,
-):
-    """
-    Note that in some form in amaranth each statement is a form of construction.
-    """
-
-    class TruthTable(am.Elaboratable):
-        def __init__(self, truth_table: dict, inputs: list, outputs: list):
-            # Initialise all the signals accordingly.
-            for key, _ in truth_table.items():
-                # Determine signal type or largest width from the values.
-                setattr(self, key, am.Signal(2))
-
-        def elaborate(self, platform):
-            m = am.Module()
-            # We need to iterate over the length of the truth table arrays for the input and output keys.
-            # TODO implement multiinput.
-            # TODO implement some verification that the arrays are of the same length.
-            for i in range(4):
-                # We iterate over the truth table values
-                with m.If(
-                    getattr(self, inputs[0]) == int(truth_table[inputs[0]][i], 2)
-                ):
-                    # Implements a particular output.
-                    # m.d.comb += getattr(getattr(self, outputs[0]), "eq")
-                    output_value_i = getattr(getattr(self, outputs[0]), "eq")
-                    m.d.comb += output_value_i(
-                        int(truth_table[outputs[0]][i], 2)
-                    )  # NOQA B009
-
-            return m
-            # m.d.comb += setattr(output_attribute_i, "eq", int(truth_table[outputs[0]][i], 2))
-
-    return TruthTable(truth_table, inputs, outputs)
-
-
-our_truth_table_module = construct_amaranth_module_from_truth_table(
+input_ports_list = ["detector_in"]
+output_ports_list = ["phase_map_out"]
+our_truth_table_module = piel.construct_amaranth_module_from_truth_table(
     truth_table=detector_phase_truth_table,
-    inputs=["detector_in"],
-    outputs=["phase_map_out"],
+    inputs=input_ports_list,
+    outputs=output_ports_list,
 )
 
-elaborated_module = our_truth_table_module.elaborate(platform=None)
+# `amaranth` is much easier to use than other design flows like `cocotb` because it can be purely interacted with in `Python`, which means there are fewer complexities of integration. However, if you desire to use this with other digital layout tools, for example, `OpenROAD` as we have previously seen and maintain a coherent project structure with the photonics design flow, `piel` provides some helper functions to achieve this easily.
+#
+# We can save this file directly into our working examples directory.
 
-from amaranth.back import verilog
-
-with open("up_counter.v", "w") as f:
-    f.write(
-        verilog.convert(
-            our_truth_table_module,
-            ports=[
-                our_truth_table_module.detector_in,
-                our_truth_table_module.phase_map_out,
-            ],
-        )
-    )
-
-
-class UpCounter(am.Elaboratable):
-    """
-    A 16-bit up counter with a fixed limit.
-
-    Parameters
-    ----------
-    limit : int
-        The value at which the counter overflows.
-
-    Attributes
-    ----------
-    en : Signal, in
-        The counter is incremented if ``en`` is asserted, and retains
-        its value otherwise.
-    ovf : Signal, out
-        ``ovf`` is asserted when the counter reaches its limit.
-    """
-
-    def __init__(self, limit):
-        self.limit = limit
-
-        # Ports
-        self.en = am.Signal()
-        self.ovf = am.Signal()
-
-        # State
-        self.count = am.Signal(16)
-
-    def elaborate(self, platform):
-        m = am.Module()
-
-        m.d.comb += self.ovf.eq(self.count == self.limit)
-
-        with m.If(self.en):
-            with m.If(self.ovf):
-                m.d.sync += self.count.eq(0)
-            with m.Else():
-                m.d.sync += self.count.eq(self.count + 1)
-        return m
-
-
-# `amaranth` is much easier to use than other design flows like `cocotb` because it can be purely interacted with in `Python`, which means there are fewer complexities of integration. However, if you desire to use this with other digital layout tools, for example, OpenROAD as we have previously seen and maintain a coherent project structure with the photonics design flow, `piel` provides some helper functions to achieve this easily.
+ports_list = input_ports_list + output_ports_list
+piel.generate_verilog_from_amaranth(
+    amaranth_module=our_truth_table_module,
+    ports_list=ports_list,
+    target_file_name="our_truth_table_module.v",
+    target_directory=piel.return_path("."),
+)
 
 # +
 from amaranth.sim import Simulator
@@ -234,4 +147,4 @@ piel.simple_plot_simulation_data(example_simple_simulation_data)
 
 # This looks like this:
 
-# ![example_simple_design_outputs](../_static/img/examples/02_cocotb_simulation/example_simple_design_outputs.PNG)
+# ![example_simple_design_outputs](../../_static/img/examples/02_cocotb_simulation/example_simple_design_outputs.PNG)
