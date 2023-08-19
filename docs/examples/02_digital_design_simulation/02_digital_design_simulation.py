@@ -11,13 +11,25 @@ import simple_design
 
 # In this example, we will use `amaranth` to perform some design and then simulations, so let's create a suitable project structure based on our initial `simple_design`, where we will output our files.
 
-piel.copy_example_design(
-    project_source="piel",  # From `piel` project examples
-    example_name="simple_design",
-    target_directory="../designs/simple_automated_design",
+piel.create_empty_piel_project(
+    project_name="amaranth_driven_flow", parent_directory="../designs/"
 )
 
-# ## `amaranth` Design FLow
+# We can also automate the `pip` installation of our local module:
+
+piel.pip_install_local_module("../designs/amaranth_driven_flow")
+
+# We can check that this has been installed. You might need to restart your `jupyter` kernel.
+
+import amaranth_driven_flow
+
+amaranth_driven_flow
+
+# ```python
+# <module 'amaranth_driven_flow' from 'c:\\users\\dario\\documents\\phd\\piel\\docs\\examples\\designs\\amaranth_driven_flow\\amaranth_driven_flow\\__init__.py'>
+# ```
+
+# ## `amaranth` Design Flow
 
 # Let's design a basic digital module from their example which we can use later. `amaranth` is one of the great Python digital design flows. I encourage you to check out their documentation for basic examples. We will explore a particular `codesign` use case: creating bespoke logic for detector optical signals.
 #
@@ -61,14 +73,14 @@ piel.generate_verilog_from_amaranth(
 
 # Another aspect is that as part of the `piel` flow, we have thoroughly thought of how to structure a codesign electronic-photonic project in order to be able to utilise all the range of tools in the process. You might want to save your design and simulation files to their corresponding locations so you can reuse them with another toolset in the future.
 #
-# Say, you want to append them to the `simple_design` project:
+# Say, you want to append them to the `amaranth_driven_flow` project:
 
-design_directory = piel.return_path(simple_design)
+design_directory = piel.return_path(amaranth_driven_flow)
 
 # Some functions you might want to use to save the designs in these directories are:
 
-simple_design_src_folder = piel.get_module_folder_type_location(
-    module=simple_design, folder_type="digital_source"
+amaranth_driven_flow_src_folder = piel.get_module_folder_type_location(
+    module=amaranth_driven_flow, folder_type="digital_source"
 )
 
 ports_list = input_ports_list + output_ports_list
@@ -76,7 +88,7 @@ piel.generate_verilog_from_amaranth(
     amaranth_module=our_truth_table_module,
     ports_list=ports_list,
     target_file_name="our_truth_table_module.v",
-    target_directory=simple_design_src_folder,
+    target_directory=amaranth_driven_flow_src_folder,
 )
 
 # Another thing we can do is verify that our implemented logic is valid. Creating a simulation is also useful in the future when we simulate our extracted place-and-route netlist in relation to the expected applied logic.
@@ -98,10 +110,10 @@ piel.verify_truth_table(
     inputs=input_ports_list,
     outputs=output_ports_list,
     vcd_file_name="our_truth_table_module.vcd",
-    target_directory=simple_design,
+    target_directory=amaranth_driven_flow,
 )
 
-# You can observe the design directory of the provided `simple_design` folder to verify that the files have been included in the other flow.
+# You can observe the design directory of the provided `amaranth_driven_flow` folder to verify that the files have been included in the other flow.
 
 # ## `cocoTb` Simulation
 
@@ -109,7 +121,12 @@ piel.verify_truth_table(
 
 # Location of our output files
 
-source_output_files_directory = simple_design_src_folder / "out"
+source_output_files_directory = (
+    piel.get_module_folder_type_location(
+        module=simple_design, folder_type="digital_source"
+    )
+    / "out"
+)
 simulation_output_files_directory = (
     piel.get_module_folder_type_location(
         module=simple_design, folder_type="digital_testbench"

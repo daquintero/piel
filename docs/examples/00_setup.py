@@ -66,6 +66,25 @@ piel.return_path(simple_design)
 
 # This means that in any corresponding `piel` functionality, wherever a path is required, you can just use your project module import, and the operations will be performed on that directory.
 
+# ### Starting from a default example
+
+# You can copy an example `piel` project structure to play around with using the following command. In this case, we are copying the `simple_design` example from our `designs` directory.
+
+piel.copy_example_design(
+    project_source="piel",  # From `piel` project examples
+    example_name="simple_design",
+    target_directory="designs/",
+    target_project_name="simple_copied_design",
+)
+
+# ### Create an empty `piel` project
+
+# In the future we will have a `cookiecutter` that sets up the design folder structure so that you can just get cracking on a multi-physical design. For now, we have this function:
+
+piel.create_empty_piel_project(
+    project_name="example_empty_project", parent_directory="designs/"
+)
+
 # ## Interacting with the Environment
 
 # ### OpenLane v1 Environment

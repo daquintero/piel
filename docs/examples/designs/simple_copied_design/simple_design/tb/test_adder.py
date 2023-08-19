@@ -8,7 +8,7 @@ from cocotb.utils import get_sim_time
 import pandas as pd
 
 if cocotb.simulator.is_running():
-    from simple_design.models import adder_model
+    from simple_copied_design.models import adder_model
 
 
 @cocotb.test()

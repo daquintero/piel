@@ -12,7 +12,7 @@ from piel.file_system import (
     read_json,
     return_path,
     run_script,
-    write_script,
+    write_file,
 )
 
 __all__ = [
@@ -151,10 +151,10 @@ def configure_flow_script_openlane_v1(
             "./flow.tcl -design " + design_name,
         ]
         script = " \n".join(commands_list)
-        write_script(
+        write_file(
             directory_path=design_directory / "scripts",
-            script=script,
-            script_name="openlane_flow.sh",
+            file_text=script,
+            file_name="openlane_flow.sh",
         )
     else:
         raise ValueError(

@@ -14,7 +14,7 @@ import functools
 import pathlib
 import subprocess
 from typing import Literal
-from piel.file_system import return_path, write_script, delete_path_list_in_directory
+from piel.file_system import return_path, write_file, delete_path_list_in_directory
 
 __all__ = [
     "check_cocotb_testbench_exists",
@@ -140,8 +140,8 @@ def configure_cocotb_simulation(
     commands_list.extend(bottom_commands_list)
 
     script = " \n".join(commands_list)
-    write_script(
-        directory_path=design_directory / "tb", script=script, script_name="Makefile"
+    write_file(
+        directory_path=design_directory / "tb", file_text=script, file_name="Makefile"
     )
 
 
@@ -171,10 +171,10 @@ def run_cocotb_simulation(
     commands_list = ["cd " + str(test_directory.resolve()), "make"]
     script = "; \n".join(commands_list)
     # Save script if desired to run directly
-    write_script(
+    write_file(
         directory_path=test_directory,
-        script=script,
-        script_name="run_cocotb_simulation.sh",
+        file_text=script,
+        file_name="run_cocotb_simulation.sh",
     )
     run = subprocess.run(script, capture_output=True, shell=True, check=True)
     return run
