@@ -13,6 +13,7 @@ from .defaults import *
 from .file_system import *
 from .integration import *
 from .parametric import *
+from .project_structure import *
 from .tools import *
 
 

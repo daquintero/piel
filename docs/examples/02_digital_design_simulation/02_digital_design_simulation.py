@@ -9,6 +9,14 @@
 import piel
 import simple_design
 
+# In this example, we will use `amaranth` to perform some design and then simulations, so let's create a suitable project structure based on our initial `simple_design`, where we will output our files.
+
+piel.copy_example_design(
+    project_source="piel",  # From `piel` project examples
+    example_name="simple_design",
+    target_directory="../designs/simple_automated_design",
+)
+
 # ## `amaranth` Design FLow
 
 # Let's design a basic digital module from their example which we can use later. `amaranth` is one of the great Python digital design flows. I encourage you to check out their documentation for basic examples. We will explore a particular `codesign` use case: creating bespoke logic for detector optical signals.
@@ -79,7 +87,7 @@ piel.verify_truth_table(
     inputs=input_ports_list,
     outputs=output_ports_list,
     vcd_file_name="our_truth_table_module.vcd",
-    target_output_directory=".",
+    target_directory=".",
 )
 
 # You can also use the module directory to automatically save the testbench in these functions.
@@ -90,7 +98,7 @@ piel.verify_truth_table(
     inputs=input_ports_list,
     outputs=output_ports_list,
     vcd_file_name="our_truth_table_module.vcd",
-    target_output_directory=simple_design,
+    target_directory=simple_design,
 )
 
 # You can observe the design directory of the provided `simple_design` folder to verify that the files have been included in the other flow.

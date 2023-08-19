@@ -39,7 +39,7 @@ piel.__version__
 #
 # `piel` provides a convenient function so that you can automatically set this up under the `iic-osic-tools` environment.
 
-piel.setup_example_design()
+piel.copy_example_design()
 
 # You can check that the design has been copied appropriately by running:
 

@@ -24,7 +24,7 @@ requirements = [
     "networkx",
     "openlane",
     "pandas",
-    "sax>=0.8.8",
+    "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
     "thewalrus",
     "vlsir>=4",
     "qutip",

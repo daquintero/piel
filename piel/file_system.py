@@ -15,13 +15,13 @@ __all__ = [
     "check_path_exists",
     "check_example_design",
     "copy_source_folder",
+    "copy_example_design",
     "create_new_directory",
     "delete_path",
     "delete_path_list_in_directory",
     "get_files_recursively_in_directory",
     "permit_directory_all",
     "permit_script_execution",
-    "setup_example_design",
     "read_json",
     "return_path",
     "run_script",
@@ -112,6 +112,43 @@ def copy_source_folder(
         copy_function=shutil.copy2,
         ignore_dangling_symlinks=False,
         dirs_exist_ok=False,
+    )
+
+
+def copy_example_design(
+    project_source: Literal["piel", "openlane"] = "piel",
+    example_name: str = "simple_design",
+    target_directory: piel_path_types = None,
+) -> None:
+    """
+    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
+
+    Args:
+        project_source(str): Source of the project.
+        example_name(str): Name of the example design.
+        target_directory(piel_path_types): Target directory.
+
+    Returns:
+        None
+    """
+    if project_source == "piel":
+        example_design_folder = (
+            os.environ["PIEL_PACKAGE_DIRECTORY"]
+            + "/docs/examples/designs/"
+            + example_name
+        )
+    elif project_source == "openlane":
+        example_design_folder = (
+            pathlib.Path(openlane.__file__).parent.resolve() / example_name
+        )
+        design_folder = os.environ["DESIGNS"] + "/" + example_name
+
+    if target_directory is not None:
+        target_directory = return_path(target_directory)
+        design_folder = target_directory
+
+    copy_source_folder(
+        source_directory=example_design_folder, target_directory=design_folder
     )
 
 
@@ -352,36 +389,6 @@ def run_script(script_path: piel_path_types) -> None:
     """
     script = return_path(script_path)
     subprocess.run(str(script.resolve()), check=True, capture_output=True)
-
-
-def setup_example_design(
-    project_source: Literal["piel", "openlane"] = "piel",
-    example_name: str = "simple_design",
-) -> None:
-    """
-    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
-
-    Args:
-        project_source(str): Source of the project.
-        example_name(str): Name of the example design.
-
-    Returns:
-        None
-    """
-    if project_source == "piel":
-        example_design_folder = (
-            os.environ["PIEL_PACKAGE_DIRECTORY"]
-            + "/docs/examples/designs/"
-            + example_name
-        )
-    elif project_source == "openlane":
-        example_design_folder = (
-            pathlib.Path(openlane.__file__).parent.resolve() / example_name
-        )
-    design_folder = os.environ["DESIGNS"] + "/" + example_name
-    copy_source_folder(
-        source_directory=example_design_folder, target_directory=design_folder
-    )
 
 
 def write_script(
