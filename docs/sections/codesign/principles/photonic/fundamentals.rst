@@ -19,6 +19,25 @@ A Scottish man named James Clark Maxwell knew, and because of him so do we:
     \end{align}
 
 
+Note the units:
+
+-  :math:`\mathcal{E}` electric field in volts per meter :math:`V/m`
+-  :math:`\mathcal{H}` magnetic field in amperes per meter :math:`A/m`
+-  :math:`\mathcal{D}` electric flux density in Coulombs per meter squared :math:`C/m^2`
+-  :math:`\mathcal{B}` magnetic flux density in Webers per meter :math:`Wb/m`
+-  :math:`\mathcal{J}` electric current density in amperes per meter squared :math:`A/m^2`
+-  :math:`\mathcal{\rho}` electric charge density in Couloms per meter cubed :math:`C/m^3`
+
+
+A sinusodial electric field polarised in the :math:`x` direction can be generically written as:
+
+.. math::
+
+    \mathcal{E}(x,y,z,t) = \hat{x} A(x,y,z) cos(\omega t + \phi)
+
+where :math:`A(x,y,z)` is the amplitude function dependent on spatial dimensions, :math:`\omega` radian frequency, and :math:`\phi` phase reference shift from the wave at time :math:`t=0`. The wave is polarised because only the :math:`\hat{x}` component of the amplitude function is relevant.
+
+
 Can we simplify this for our applications?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -27,8 +46,8 @@ For an isotropic, homogeneous medium where the signal wavelengths do not interac
 .. math::
 
     \begin{align}
-        \nabla \times E = - jw \mu E \\
-        \nabla \times H = - jw \epsilon E
+        \nabla \times E = - j \omega \mu E \\
+        \nabla \times H = - j \omega\epsilon E
     \end{align}
 
 These equations can be thought of as simultaneous equations. With some vector calculus, they can be solved into:
@@ -36,13 +55,33 @@ These equations can be thought of as simultaneous equations. With some vector ca
 .. math::
 
     \begin{align}
-        \nabla^2 E + w^2 \mu \epsilon E = 0  \\
-        \nabla^2 H + w^2 \mu \epsilon H = 0
+        \nabla^2 E + \omega^2 \mu \epsilon E = 0  \\
+        \nabla^2 H + \omega^2 \mu \epsilon H = 0
     \end{align}
 
 
 The wavenumber constant :math:`k = \omega \sqrt{\mu\epsilon}` relates the material dielectric constant :math:`\epsilon` and magnetic permeability :math:`\mu` to a travelling plane electromagnetic wave in any medium. This is also called the propagation constnat to describe how the wave changes with distance :math:`z`.
 
+A general solution
+'''''''''''''''''''
+
+.. math::
+
+    \begin{equation}
+    \nabla^2 E + k^2 E = \frac{d^2 E}{d^2 x^2} + \frac{d^2 E}{d^2 y^2} + \frac{d^2 E}{d^2 z^2} + k^2E = 0
+    \end{equation}
+
+We can say that this definition is valid for every spatial component of the field.
+
+Solving the above equation as a partial-differential-equation with separation of variables as done by *Microwave Engineering* by Pozar we can derive that the total wave propagation constant is directionally composed:
+
+.. math::
+
+    \begin{equation}
+    k_x^2 + k_y^2 + k_z^2 = k^2
+    \end{equation}
+
+We can write the electric field component in the :math:`x`-direction as a function of the electric field in space coordinates (:math:`x`, :math:`y`, :math:`z`) due to the :math:`k(x,y,z)`
 
 Helmholtz's on a lossless waveguide
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -117,7 +156,8 @@ TODO add picture.
         H = H_0 e^{j(kz \pm \omega t)} \\
     \end{align}
 
-Remember that a sinusodial signal is defined by Euler's formula:
+
+Remember that a sinusodial signal is defined by Euler's formula, so we can work in terms of phasor notation.
 
 .. math::
 
@@ -266,6 +306,54 @@ can be described by Sellmeier equation:
         n^2 (\lambda) =  \eta + \frac{A}{\lambda^2} + + \frac{B \lambda_1^2}{\lambda^2 - \lambda_1^2}
     \end{equation}
 
+
+In a dielectric material like silicon, the applied electric field can align electric charges in atoms and amplifies the total electric flux density in units :math:`C/m^2`. The polarization by an applied electric field can be considered a capacitance variation effect. A real example of this is ceramic derate their capacitance value based on the applied DC electric field.
+
+.. math::
+
+    \begin{equation}
+    \mathcal{D} = \epsilon_0 E + P_e
+    \end{equation}
+
+
+The polarization :math:`P_e` is related to the electric field by the electric susceptibility :math:`\chi_e` which is just a complex form of the dielectric constant :math:`\epsilon`:
+
+.. math::
+
+    \begin{align}
+    P_e = \epsilon_0 \chi_e \\
+    D = \epsilon_0 (1 + \chi_e) E = \epsilon E \\
+    \end{align}
+
+A general relationship (normally simplified for silicon, and instead more valid for other materials) relates the electric flux density to the electric field applied through a spatially variating electric field and dielectric constant:
+
+.. math::
+
+    \begin{equation}
+    \begin{bmatrix}
+        D_x \\
+        D_y \\
+        D_z \\
+    \end{bmatrix} =
+    \begin{bmatrix}
+        \epsilon_{xx} & \epsilon_{xy} & \epsilon_{xz} \\
+        \epsilon_{yx} & \epsilon_{yy} & \epsilon_{yz} \\
+        \epsilon_{zx} & \epsilon_{zy} & \epsilon_{zz} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        E_x \\
+        E_y \\
+        E_z \\
+    \end{bmatrix} =
+    [\epsilon]
+    \begin{bmatrix}
+        E_x \\
+        E_y \\
+        E_z \\
+    \end{bmatrix}
+    \end{equation}
+
+In this sense, we can think of electric fields propagating in a dielectric material such as our silicon waveguides. It is important to note that our electric fields are vectorial, and tensor materials operate on them.
 
 Propagation & Dispersion
 -----------------------------

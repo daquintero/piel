@@ -71,23 +71,35 @@ our_heated_mzi2x2.plot_widget()
 
 # However, we know from the instances list that the heater element in our MZI2x2 is a `straight_heater_simple`
 
-our_heated_mzi2x2.get_component_spec()
+our_heated_mzi2x2.settings.full
 
 # ```python
 # {
-#     'component': 'mzi',
-#     'settings': {
-#         'combiner': {'function': 'mmi2x2'},
-#         'length_x': 200,
-#         'port_e0_combiner': 'o4',
-#         'port_e0_splitter': 'o4',
-#         'port_e1_combiner': 'o3',
-#         'port_e1_splitter': 'o3',
-#         'splitter': {'function': 'mmi2x2'},
-#         'straight_x_top': 'straight_heater_metal_simple'
-#     }
+#     'delta_length': 10.0,
+#     'length_y': 2.0,
+#     'length_x': 200,
+#     'bend': {'function': 'bend_euler'},
+#     'straight': {'function': 'straight'},
+#     'straight_y': None,
+#     'straight_x_top': 'straight_heater_metal_simple',
+#     'straight_x_bot': None,
+#     'splitter': {'function': 'mmi2x2'},
+#     'combiner': {'function': 'mmi2x2'},
+#     'with_splitter': True,
+#     'port_e1_splitter': 'o3',
+#     'port_e0_splitter': 'o4',
+#     'port_e1_combiner': 'o3',
+#     'port_e0_combiner': 'o4',
+#     'nbends': 2,
+#     'cross_section': 'strip',
+#     'cross_section_x_top': None,
+#     'cross_section_x_bot': None,
+#     'mirror_bot': False,
+#     'add_optical_ports_arms': False
 # }
 # ```
+
+our_heated_mzi2x2.settings.full["straight_x_top"]
 
 # So let's see our heater component:
 
@@ -135,17 +147,6 @@ our_heated_waveguide_straight.plot_widget()
 
 # This small cross-sectional view matches much more easily with the infinitessimal component simulation tools.
 
-# + active=""
-# our_heater_mesh = our_heated_waveguide_straight.to_gmsh(
-#     type="uz",
-#     layer_stack=LAYER_STACK,
-#     xsection_bounds=[(4, -4), (4, 4)],
-# )
-# our_heated_waveguide_straight.draw()
-# -
-
-# TODO we should match the mesh between `femwell` and between `Tidy3D` for most accuracy in cosimulation.
-
 # ### Getting Started with FDTD in this flow
 
 # Our heater is implemented on a standard SOI waveguide that has a silicon core with a silica cladding, and the material data is the same as from the `gt.materials.get_index("SiO2")` in `gplugins Tidy3D` functionality. However, this time we will use the cross sectional view specific to our heater implementation including the metal on the top as we want a complete simulation that considers the electrical performance. `
@@ -164,7 +165,7 @@ def change_heater_layer_stack(
     heater_zmin_um: float = 2.2,
     heater_thickness_um: float = 0.13,
     layer_stack=gf.generic_tech.get_generic_pdk().layer_stack,
-):
+) -> tuple:
     """
     This function perturbates the provided layer stack and changes specific heater layer parameters.
     """
@@ -180,10 +181,10 @@ def change_heater_layer_stack(
     layer_stack.layers["heater"].material = heater_material_name
     layer_stack.layers["heater"].thickness = heater_thickness_um
     layer_stack.layers["heater"].zmin = heater_zmin_um
-    return layer_stack
+    return layer_stack, material_name_to_tidy3d
 
 
-LAYER_STACK = change_heater_layer_stack(
+LAYER_STACK, material_name_to_tidy3d = change_heater_layer_stack(
     heater_material_name="TiOx",
     heater_material=td.material_library["TiOx"]["HorbiaStable"],
     heater_zmin_um=0.5,
@@ -222,43 +223,70 @@ our_heater_straight_cross_section_tidy3d_simulation_plot_yz.savefig(
     "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_yz.png"
 )
 
-# So, now we have composed our two `2D Tidy3D` simulations from `gdsfactory` components. Note these are just the simulation inputs, we haven't actually run them yet.
+# `Effective index of computed modes:  [[2.4610755 1.8116093]]`
+# ![our_heater_straight_cross_section_tidy3d_simulation_plot_xz](../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_xz.PNG)
+# ![our_heater_straight_cross_section_tidy3d_simulation_plot_yz](../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_yz.PNG)
 
-strip = gt.modes.Waveguide(
+# You can see the heater structure on the grey layer above the waveguide. Note that the calculated effective index of Mode 0 is near to the `neff = 2.443` from Figure 3.14 of `Silicon Photonics Design` by Chrostowski. In the `yz` plane on the above image, we can see most of the light being confined in the core and cladding by the $E_y$ field amplitude. On the higher order mode index 1, we can see that the top and bottom of the waveguide have a much more important effect of guiding the mode in the $E_z$ direction. We can also see the first-order mode profile on a smaller fraction of the light in the $E_y$ mode.
+
+# Let's also compare this to an ideal standard waveguide of the same dimensions without having a heater on top:
+
+our_simple_strip = gt.modes.Waveguide(
     wavelength=1.55,
-    core_width=0.5,
-    core_thickness=0.22,
+    core_width=our_heated_waveguide_cross_section.width,
+    core_thickness=LAYER_STACK["core"].thickness,
     slab_thickness=0.0,
-    core_material="si",
+    core_material=LAYER_STACK["core"].material,
     clad_material="sio2",
 )
-strip.plot_index()
+our_simple_strip_plot_index = our_simple_strip.plot_index()
+our_simple_strip_plot_index.figure.savefig(
+    "../_static/img/examples/06_component_codesign_basics/our_simple_strip_plot_index.png"
+)
 # strip.plot_grid()
+
+# ![our_simple_strip_plot_index](../_static/img/examples/06_component_codesign_basics/our_simple_strip_plot_index.png)
+
+# We aim to see how the heater effect later will change the grid of the mode index perturbation, and the corresponding effect this has on the mode profiles. For now, let's look at this basic example.
 
 # We can find out more details of how many modes this waveguide supports by:
 
-strip.num_modes
+our_simple_strip.n_eff
 
-# We can model the fundamental TE mode by observing how the mode propagates in the cross-sectional `x`-axis. We can see it is mostly confined to the core.
+# We can model the fundamental TE mode and should observe how the electric field is polarised in a dominant time-invariant cross sectional direction. We can see it is mostly confined to the core on $E_y$.
 
-strip.plot_field(field_name="Ex", mode_index=0, value="dB")
+our_simple_strip_ex0_plot = our_simple_strip.plot_field(
+    field_name="Ex", mode_index=0, value="dB"
+)
+our_simple_strip_ex0_plot.figure.savefig(
+    "../_static/img/examples/06_component_codesign_basics/our_simple_strip_ex0_plot.png"
+)
 
-# You can see a lot more of the mode is radiated out in the higher-order TE1 mode for this waveguide.
+# ![our_simple_strip_ex_plot](../_static/img/examples/06_component_codesign_basics/our_simple_strip_ex_plot.PNG)
 
-strip.plot_field(field_name="Ex", mode_index=1, value="dB")
+# This mode profile is what we expect, with some of the mode travelling as an evanescent field in the cladding. We care about the $E_x$ field because in this simulation this is the direction of propagation of the wave.
 
 # You can see how in this waveguide,
 
-strip.plot_field(field_name="Ey", mode_index=0, value="dB")
+our_simple_strip.plot_field(field_name="", mode_index=0, value="dB")
 
 # We can also model the transverse magnetic mode `TM1` at the mode index `1`:
 
-strip.plot_field(field_name="Hx", mode_index=0, value="dB")
+our_simple_strip.plot_field(field_name="Hx", mode_index=0, value="dB")
 
-strip.plot_field(field_name="Ey", mode_index=1, value="dB")
+our_simple_strip.plot_field(field_name="Ey", mode_index=1, value="dB")
 
 # ## Starting from our heater geometry
 #
-# We will begin by extracting the electrical parameters of the basic `gf.components.straight_heater_metal_simple` which we have been using in our Mach-Zehnder MZI2x2 from the example provided in [`femwell`](https://helgegehring.github.io/femwell/photonics/examples/metal_heater_phase_shifter.html).
-#
-# We will create a function where we change the width of the heater, and we explore the change in resistance, but also in thermo-optic phase modulation efficiency. So, we want to have some easy functions that allow us to easily mesh a component because we plan to do a few variations.
+# We will create a function where we change the properties of the heater such as thickness and width, and we explore the change in resistance, but also in thermo-optic phase modulation efficiency, and the effect it has on the effective index and mode profiles through FDTD. So, we want to have some easy functions that allow us to easily mesh a component because we plan to do a few variations and connect the different simulation tools.
+
+# + active=""
+# our_heater_mesh = our_heated_waveguide_straight.to_gmsh(
+#     type="uz",
+#     layer_stack=LAYER_STACK,
+#     xsection_bounds=[(4, -4), (4, 4)],
+# )
+# our_heated_waveguide_straight.draw()
+# -
+
+# TODO we should match the mesh between `femwell` and between `Tidy3D` for most accuracy in cosimulation.
