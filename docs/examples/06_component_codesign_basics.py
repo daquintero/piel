@@ -148,35 +148,64 @@ our_heated_waveguide_straight.plot_widget()
 
 # ### Getting Started with FDTD in this flow
 
-# Our heater is implemented on a standard SOI waveguide that has a silicon core with a silica cladding, and the material data is the same as from the `gt.materials.get_index("SiO2")` in `gplugins TIdy3D` functionality. However, this time we will use the cross sectional view specific to our heater implementation including the metal on the top as we want a complete simulation that considers the electrical performance. `
+# Our heater is implemented on a standard SOI waveguide that has a silicon core with a silica cladding, and the material data is the same as from the `gt.materials.get_index("SiO2")` in `gplugins Tidy3D` functionality. However, this time we will use the cross sectional view specific to our heater implementation including the metal on the top as we want a complete simulation that considers the electrical performance. `
 
 # Let's assume our heater is not made from `TiN` as in the default PDK, but we want to create it from one of the materials in the `Tidy3D` material library:
 
 td.material_library.keys()
 
+
 # So let's change our layer stack from our `gdsfactory.generic_pdk` to simulate this. We can also change the position of the metal in relation to the waveguide. This, for example, would tell us the effect of optical loss from evanescent field absorption for different materials, and would allow us to extract component properties we can use in `sax` for photonic network analysis accordingly:
 
-# +
-material_name_to_tidy3d = {
-    "Aluminum": td.material_library["Al"]["Rakic1995"],
-    "si": td.material_library["cSi"]["Li1993_293K"],
-    "sio2": td.material_library["SiO2"]["Horiba"],
-    "sin": td.material_library["Si3N4"]["Luke2015PMLStable"],
-    "TiOx": td.material_library["TiOx"]["HorbiaStable"],
-}
 
-LAYER_STACK.layers["heater"].material = "TiOx"
-LAYER_STACK.layers["heater"].thickness = 2
-LAYER_STACK.layers["heater"].zmin = 1
-# -
+def change_heater_layer_stack(
+    heater_material_name: str,
+    heater_material: gt.materials.MaterialSpecTidy3d,
+    heater_zmin_um: float = 2.2,
+    heater_thickness_um: float = 0.13,
+    layer_stack=gf.generic_tech.get_generic_pdk().layer_stack,
+):
+    """
+    This function perturbates the provided layer stack and changes specific heater layer parameters.
+    """
+    material_name_to_tidy3d = {
+        "Aluminum": td.material_library["Al"]["Rakic1995"],
+        "si": td.material_library["cSi"]["Li1993_293K"],
+        "sio2": td.material_library["SiO2"]["Horiba"],
+        "sin": td.material_library["Si3N4"]["Luke2015PMLStable"],
+        # "TiOx": td.material_library["TiOx"]["HorbiaStable"],
+        heater_material_name: heater_material,
+    }
 
-# Let's explore how different our simulation results are between simulating the full component with VIAs and just a cross section. They should match, but this is a demonstration of using a simple straight cross-section component, and a regular composed `gdsfactory` component which may include more metal layers. It would be good to visualise what we are simulating.
+    layer_stack.layers["heater"].material = heater_material_name
+    layer_stack.layers["heater"].thickness = heater_thickness_um
+    layer_stack.layers["heater"].zmin = heater_zmin_um
+    return layer_stack
+
+
+LAYER_STACK = change_heater_layer_stack(
+    heater_material_name="TiOx",
+    heater_material=td.material_library["TiOx"]["HorbiaStable"],
+    heater_zmin_um=0.5,
+    heater_thickness_um=0.13,
+)
+
+# You can explore the properties of the layer stack through some functions:
+
+LAYER_STACK.get_layer_to_thickness()
+
+LAYER_STACK.get_layer_to_material()
+
+LAYER_STACK.get_layer_to_zmin()
+
+LAYER_STACK.get_layer_to_sidewall_angle()
+
+# It is not a great idea to simulate our full heater component with vias and everything, as really there is no need if you understand the fundamental heater-cross section design.
 
 our_heater_straight_cross_section_tidy3d_simulation = gt.get_simulation(
     our_heated_waveguide_straight,
     is_3d=True,
     material_name_to_tidy3d=material_name_to_tidy3d,
-    port_extension=10,
     plot_modes=True,
 )
 our_heater_straight_cross_section_tidy3d_simulation_plot_xz = gt.plot_simulation_xz(
@@ -185,17 +214,12 @@ our_heater_straight_cross_section_tidy3d_simulation_plot_xz = gt.plot_simulation
 our_heater_straight_cross_section_tidy3d_simulation_plot_yz = gt.plot_simulation_yz(
     our_heater_straight_cross_section_tidy3d_simulation
 )
-
-our_heater_tidy3d_simulation = gt.get_simulation(
-    our_heater_component,
-    is_3d=True,
-    material_name_to_tidy3d=material_name_to_tidy3d,
-    port_extension=10,
-    plot_modes=True,
+# Save our figures
+our_heater_straight_cross_section_tidy3d_simulation_plot_xz.savefig(
+    "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_xz.png"
 )
-our_heater_tidy3d_simulation_xz = gt.plot_simulation_xz(our_heater_tidy3d_simulation)
-our_heater_tidy3d_simulation_plot_yz = gt.plot_simulation_yz(
-    our_heater_tidy3d_simulation
+our_heater_straight_cross_section_tidy3d_simulation_plot_yz.savefig(
+    "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_yz.png"
 )
 
 # So, now we have composed our two `2D Tidy3D` simulations from `gdsfactory` components. Note these are just the simulation inputs, we haven't actually run them yet.
