@@ -27,8 +27,6 @@
 
 import gdsfactory as gf
 import gplugins.tidy3d as gt
-import matplotlib.pyplot as plt
-import numpy as np
 import tidy3d as td
 
 # ## Getting Started with Mode Analysis
@@ -164,11 +162,14 @@ def change_heater_layer_stack(
     heater_material: gt.materials.MaterialSpecTidy3d,
     heater_zmin_um: float = 2.2,
     heater_thickness_um: float = 0.13,
-    layer_stack=gf.generic_tech.get_generic_pdk().layer_stack,
+    layer_stack=None,
 ) -> tuple:
     """
-    This function perturbates the provided layer stack and changes specific heater layer parameters.
+    This function perturbs the provided layer stack and changes specific heater layer parameters.
     """
+    if layer_stack is None:
+        layer_stack = gf.generic_tech.get_generic_pdk().layer_stack
+
     material_name_to_tidy3d = {
         "Aluminum": td.material_library["Al"]["Rakic1995"],
         "si": td.material_library["cSi"]["Li1993_293K"],
@@ -228,53 +229,6 @@ our_heater_straight_cross_section_tidy3d_simulation_plot_yz.savefig(
 # ![our_heater_straight_cross_section_tidy3d_simulation_plot_yz](../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_yz.PNG)
 
 # You can see the heater structure on the grey layer above the waveguide. Note that the calculated effective index of Mode 0 is near to the `neff = 2.443` from Figure 3.14 of `Silicon Photonics Design` by Chrostowski. In the `yz` plane on the above image, we can see most of the light being confined in the core and cladding by the $E_y$ field amplitude. On the higher order mode index 1, we can see that the top and bottom of the waveguide have a much more important effect of guiding the mode in the $E_z$ direction. We can also see the first-order mode profile on a smaller fraction of the light in the $E_y$ mode.
-
-# Let's also compare this to an ideal standard waveguide of the same dimensions without having a heater on top:
-
-our_simple_strip = gt.modes.Waveguide(
-    wavelength=1.55,
-    core_width=our_heated_waveguide_cross_section.width,
-    core_thickness=LAYER_STACK["core"].thickness,
-    slab_thickness=0.0,
-    core_material=LAYER_STACK["core"].material,
-    clad_material="sio2",
-)
-our_simple_strip_plot_index = our_simple_strip.plot_index()
-our_simple_strip_plot_index.figure.savefig(
-    "../_static/img/examples/06_component_codesign_basics/our_simple_strip_plot_index.png"
-)
-# strip.plot_grid()
-
-# ![our_simple_strip_plot_index](../_static/img/examples/06_component_codesign_basics/our_simple_strip_plot_index.png)
-
-# We aim to see how the heater effect later will change the grid of the mode index perturbation, and the corresponding effect this has on the mode profiles. For now, let's look at this basic example.
-
-# We can find out more details of how many modes this waveguide supports by:
-
-our_simple_strip.n_eff
-
-# We can model the fundamental TE mode and should observe how the electric field is polarised in a dominant time-invariant cross sectional direction. We can see it is mostly confined to the core on $E_y$.
-
-our_simple_strip_ex0_plot = our_simple_strip.plot_field(
-    field_name="Ex", mode_index=0, value="dB"
-)
-our_simple_strip_ex0_plot.figure.savefig(
-    "../_static/img/examples/06_component_codesign_basics/our_simple_strip_ex0_plot.png"
-)
-
-# ![our_simple_strip_ex_plot](../_static/img/examples/06_component_codesign_basics/our_simple_strip_ex_plot.PNG)
-
-# This mode profile is what we expect, with some of the mode travelling as an evanescent field in the cladding. We care about the $E_x$ field because in this simulation this is the direction of propagation of the wave.
-
-# You can see how in this waveguide,
-
-our_simple_strip.plot_field(field_name="", mode_index=0, value="dB")
-
-# We can also model the transverse magnetic mode `TM1` at the mode index `1`:
-
-our_simple_strip.plot_field(field_name="Hx", mode_index=0, value="dB")
-
-our_simple_strip.plot_field(field_name="Ey", mode_index=1, value="dB")
 
 # ## Starting from our heater geometry
 #
