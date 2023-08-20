@@ -30,3 +30,13 @@ As scientists, not as software developers, sometimes we have a knack for reinven
 So much understanding and information is lost in closed-source modelling systems, in proprietary badly written software that does not enable us to debug them, or even care to sort out our problems when we have a massive chip design deadline. Open-source software frees us from the chains that hold back our innovation of the future. It allows us to make things better, to have good discussions openly, to improve the tools we all use, to work together as a community, and to get different people involved. We can direct our field of research in a meaningful direction towards where we want to go - not where a monopolistic multinational company can get most profit.
 
 This project aims to be a set of easy functions that allow interconnecting and getting the most out of existing tools to design electronics and photonics. It aims to provide as much easy connectivity between amazing open-source projects that have been developed for a very long time. It aims to provide interfaces that could be extended to integrate closed-source design tools to be useful to more than a few existing teams with existing microelectronic, and photonic design flows.
+
+## Support & Collaboration
+
+I hope you find `piel` useful! I am developing it as a tool for some of my PhD research as the existing proprietary options did not enable sufficient large-scale electronic-photonic co-design functionality presently.
+
+If you would like to use `piel` for your own academic research, and want some help to achieve your simulation analysis, some custom development, or a fast-implementation of a feature or workflow that you need, I am happy to explore a closer academic collaboration.
+
+If you are in industry and want some custom features development or consultation on your specific co-design problem, contact me if you would like to discuss these services. I hope this can enable the development of the `piel` flow for the years to come and to make it a useful tool for the community and industry.
+
+My contact details are on [my website](https://daquintero.github.io/).
