@@ -39,7 +39,7 @@ def construct_amaranth_module_from_truth_table(
             # Initialise all the signals accordingly.
             for key, _ in truth_table.items():
                 # TODO Determine signal type or largest width from the values.
-                setattr(self, key, am.Signal(2))
+                setattr(self, key, am.Signal(shape=2, name=key))
 
             self.inputs = inputs
             self.outputs = outputs

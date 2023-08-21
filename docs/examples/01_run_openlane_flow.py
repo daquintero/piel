@@ -256,12 +256,11 @@ piel.return_path(amaranth_driven_flow)
 # WindowsPath('c:/users/dario/documents/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/__init__.py/..')
 # ```
 
-# We can get an example structure of an `openlane` configuration dictionary:
+# We can get an example structure of an `openlane` configuration dictionary that is compatible for `amaranth` generated logic, as specific naming conventions need to be followed to generate the outputs.
 
 our_amaranth_openlane_config = (
     piel.tools.openlane.defaults.test_basic_open_lane_configuration
 )
-our_amaranth_openlane_config["DESIGN_NAME"] = amaranth_driven_flow.__name__
 our_amaranth_openlane_config
 
 piel.write_configuration_openlane_v1(

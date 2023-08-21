@@ -13,7 +13,7 @@ test_spm_open_lane_configuration = {
 }
 
 test_basic_open_lane_configuration = {
-    "DESIGN_NAME": "inverter",
+    "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
     "RUN_CTS": False,
     "CLOCK_PORT": None,
