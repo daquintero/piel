@@ -9,10 +9,10 @@ from piel import visual  # NOQA: F401
 # Functions
 
 from .config import *
-from .defaults import *
 from .file_system import *
 from .integration import *
 from .parametric import *
+from .project_structure import *
 from .tools import *
 
 

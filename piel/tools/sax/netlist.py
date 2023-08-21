@@ -32,16 +32,10 @@ def address_value_dictionary_to_function_parameter_dictionary(
 
     """
     result = {}
-    for address, value in address_value_dictionary.items():
-        components = address[
-            1:-1
-        ]  # Exclude the first and last elements (component_lattice_gener_fb8c4da8 and sxt)
-        current_dict = result
-        for component in components:
-            if component not in current_dict:
-                current_dict[component] = {}
-            current_dict = current_dict[component]
-        current_dict[parameter_key] = value
+    for (_, instance, param), value in address_value_dictionary.items():
+        if instance not in result:
+            result[instance] = {}
+        result[instance][param] = {parameter_key: value}
     return result
 
 

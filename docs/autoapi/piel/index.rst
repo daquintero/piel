@@ -48,17 +48,21 @@ Functions
    piel.check_path_exists
    piel.check_example_design
    piel.copy_source_folder
+   piel.copy_example_design
    piel.create_new_directory
    piel.delete_path
    piel.delete_path_list_in_directory
    piel.get_files_recursively_in_directory
    piel.permit_directory_all
    piel.permit_script_execution
-   piel.setup_example_design
    piel.read_json
+   piel.rename_file
+   piel.rename_files_in_directory
+   piel.replace_string_in_file
+   piel.replace_string_in_directory_files
    piel.return_path
    piel.run_script
-   piel.write_script
+   piel.write_file
    piel.create_gdsfactory_component_from_openlane
    piel.gdsfactory_netlist_to_spice_netlist
    piel.construct_hdl21_module
@@ -71,6 +75,14 @@ Functions
    piel.fock_transition_probability_amplitude
    piel.single_parameter_sweep
    piel.multi_parameter_sweep
+   piel.create_setup_py
+   piel.create_empty_piel_project
+   piel.get_module_folder_type_location
+   piel.pip_install_local_module
+   piel.read_configuration
+   piel.construct_amaranth_module_from_truth_table
+   piel.generate_verilog_from_amaranth
+   piel.verify_truth_table
    piel.check_cocotb_testbench_exists
    piel.configure_cocotb_simulation
    piel.run_cocotb_simulation
@@ -124,6 +136,8 @@ Functions
    piel.get_sdense_ports_index
    piel.sax_to_s_parameters_standard_matrix
    piel.all_fock_states_from_photon_number
+   piel.convert_qobj_to_jax
+   piel.convert_output_type
    piel.fock_state_nonzero_indexes
    piel.fock_state_to_photon_number_factorial
    piel.fock_states_at_mode_index
@@ -198,6 +212,22 @@ Attributes
    :returns: None
 
 
+.. py:function:: copy_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design', target_directory: piel.config.piel_path_types = None, target_project_name: Optional[str] = None) -> None
+
+   We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
+
+   :param project_source: Source of the project.
+   :type project_source: str
+   :param example_name: Name of the example design.
+   :type example_name: str
+   :param target_directory: Target directory.
+   :type target_directory: piel_path_types
+   :param target_project_name: Name of the target project.
+   :type target_project_name: str
+
+   :returns: None
+
+
 .. py:function:: create_new_directory(directory_path: str | pathlib.Path) -> None
 
    Creates a new directory.
@@ -224,6 +254,14 @@ Attributes
 
    Deletes a list of files in a directory.
 
+   Usage:
+
+   ```python
+   delete_path_list_in_directory(
+       directory_path=directory_path, path_list=path_list, ignore_confirmation=True
+   )
+   ```
+
    :param directory_path: Input path.
    :type directory_path: piel_path_types
    :param path_list: List of files.
@@ -240,6 +278,10 @@ Attributes
 
    Returns a list of files in a directory.
 
+   Usage:
+
+       get_files_recursively_in_directory('path/to/directory', 'extension')
+
    :param path: Input path.
    :type path: piel_path_types
    :param extension: File extension.
@@ -253,6 +295,10 @@ Attributes
 
    Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
 
+   Usage:
+
+       permit_directory_all('path/to/directory')
+
    :param directory_path: Input path.
    :type directory_path: piel_path_types
 
@@ -263,20 +309,12 @@ Attributes
 
    Permits the execution of a script.
 
+   Usage:
+
+       permit_script_execution('path/to/script')
+
    :param script_path: Script path.
    :type script_path: piel_path_types
-
-   :returns: None
-
-
-.. py:function:: setup_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design') -> None
-
-   We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
-
-   :param project_source: Source of the project.
-   :type project_source: str
-   :param example_name: Name of the example design.
-   :type example_name: str
 
    :returns: None
 
@@ -285,11 +323,85 @@ Attributes
 
    Reads a JSON file.
 
+   Usage:
+
+       read_json('path/to/file.json')
+
    :param path: Input path.
    :type path: piel_path_types
 
    :returns: JSON data.
    :rtype: json_data(dict)
+
+
+.. py:function:: rename_file(match_file_path: piel.config.piel_path_types, renamed_file_path: piel.config.piel_path_types) -> None
+
+   Renames a file.
+
+   Usage:
+
+       rename_file('path/to/match_file', 'path/to/renamed_file')
+
+   :param match_file_path: Input path.
+   :type match_file_path: piel_path_types
+   :param renamed_file_path: Input path.
+   :type renamed_file_path: piel_path_types
+
+   :returns: None
+
+
+.. py:function:: rename_files_in_directory(target_directory: piel.config.piel_path_types, match_string: str, renamed_string: str) -> None
+
+   Renames all files in a directory.
+
+   Usage:
+
+       rename_files_in_directory('path/to/directory', 'match_string', 'renamed_string')
+
+   :param target_directory: Input path.
+   :type target_directory: piel_path_types
+   :param match_string: String to match.
+   :type match_string: str
+   :param renamed_string: String to replace.
+   :type renamed_string: str
+
+   :returns: None
+
+
+.. py:function:: replace_string_in_file(file_path: piel.config.piel_path_types, match_string: str, replace_string: str)
+
+   Replaces a string in a file.
+
+   Usage:
+
+       replace_string_in_file('path/to/file', 'match_string', 'replace_string')
+
+   :param file_path: Input path.
+   :type file_path: piel_path_types
+   :param match_string: String to match.
+   :type match_string: str
+   :param replace_string: String to replace.
+   :type replace_string: str
+
+   :returns: None
+
+
+.. py:function:: replace_string_in_directory_files(target_directory: piel.config.piel_path_types, match_string: str, replace_string: str)
+
+   Replaces a string in all files in a directory.
+
+   Usage:
+
+       replace_string_in_directory_files('path/to/directory', 'match_string', 'replace_string')
+
+   :param target_directory: Input path.
+   :type target_directory: piel_path_types
+   :param match_string: String to match.
+   :type match_string: str
+   :param replace_string: String to replace.
+   :type replace_string: str
+
+   :returns: None
 
 
 .. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
@@ -315,16 +427,16 @@ Attributes
    :returns: None
 
 
-.. py:function:: write_script(directory_path: piel.config.piel_path_types, script: str, script_name: str) -> None
+.. py:function:: write_file(directory_path: piel.config.piel_path_types, file_text: str, file_name: str) -> None
 
    Records a `script_name` in the `scripts` project directory.
 
    :param directory_path: Design directory.
    :type directory_path: piel_path_types
-   :param script: Script to write.
-   :type script: str
-   :param script_name: Name of the script.
-   :type script_name: str
+   :param file_text: Script to write.
+   :type file_text: str
+   :param file_name: Name of the script.
+   :type file_name: str
 
    :returns: None
 
@@ -510,7 +622,7 @@ Attributes
    :rtype: bool
 
 
-.. py:function:: fock_transition_probability_amplitude(initial_fock_state: qutip.Qobj, final_fock_state: qutip.Qobj, unitary_matrix: jax.numpy.ndarray)
+.. py:function:: fock_transition_probability_amplitude(initial_fock_state: qutip.Qobj | jax.numpy.ndarray, final_fock_state: qutip.Qobj | jax.numpy.ndarray, unitary_matrix: jax.numpy.ndarray)
 
        This function returns the transition probability amplitude between two Fock states when propagating in between
        the unitary_matrix which represents a quantum state circuit.
@@ -536,9 +648,9 @@ Attributes
    rac{    ext{per}(U_{f_1}^{f_2})}{\sqrt{(j_1! j_2! ... j_N!)(j_1^{'}! j_2^{'}! ... j_N^{'}!)}}
 
        Args:
-           initial_fock_state (qutip.Qobj): A QuTip QObj representation of the initial Fock state.
-           final_fock_state (qutip.Qobj): A QuTip QObj representation of the final Fock state.
-           unitary_matrix (jnp.ndarray): A JAX NumPy array representation of the unitary matrix.
+           initial_fock_state (qutip.Qobj | jnp.ndarray): The initial Fock state.
+           final_fock_state (qutip.Qobj | jnp.ndarray): The final Fock state.
+           unitary_matrix (jnp.ndarray): The unitary matrix that represents the quantum state circuit.
 
        Returns:
            float: The transition probability amplitude between the initial and final Fock states.
@@ -591,6 +703,103 @@ Attributes
 
    :returns: List of dictionaries that comprise of all the possible combinations of your parameter sweeps.
    :rtype: parameter_sweep_design_dictionary_array(list)
+
+
+.. py:function:: create_setup_py(design_directory: piel.config.piel_path_types, project_name: Optional[str] = None, from_config_json: bool = True) -> None
+
+   This function creates a setup.py file from the config.json file found in the design directory.
+
+   :param design_directory: Design directory PATH or module name.
+   :type design_directory: piel_path_types
+
+   :returns: None
+
+
+.. py:function:: create_empty_piel_project(project_name: str, parent_directory: piel.config.piel_path_types) -> None
+
+   This function creates an empty piel-structure project in the target directory. Structuring your files in this way
+   enables the co-design and use of the tools supported by piel whilst maintaining the design flow ordered,
+   clean and extensible. You can read more about it in the documentation TODO add link.
+
+   TODO just make this a cookiecutter. TO BE DEPRECATED whenever I get round to that.
+
+   :param project_name: Name of the project.
+   :type project_name: str
+   :param parent_directory: Parent directory of the project.
+   :type parent_directory: piel_path_types
+
+   :returns: None
+
+
+.. py:function:: get_module_folder_type_location(module: types.ModuleType, folder_type: Literal[digital_source, digital_testbench])
+
+   This is an easy helper function that saves a particular file in the corresponding location of a `piel` project structure.
+
+   TODO DOCS
+
+
+.. py:function:: pip_install_local_module(module_path: piel.config.piel_path_types)
+
+   This function installs a local module in editable mode.
+
+   :param module_path: Path to the module to be installed.
+   :type module_path: piel_path_types
+
+   :returns: None
+
+
+.. py:function:: read_configuration(design_directory: piel.config.piel_path_types) -> dict
+
+   This function reads the configuration file found in the design directory.
+
+   :param design_directory: Design directory PATH.
+   :type design_directory: piel_path_types
+
+   :returns: Configuration dictionary.
+   :rtype: config_dictionary(dict)
+
+
+.. py:function:: construct_amaranth_module_from_truth_table(truth_table: dict, inputs: list[str], outputs: list[str], implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
+
+   This function implements a truth table as a module in amaranth,
+   Note that in some form in amaranth each statement is a form of construction.
+
+   The truth table is in the form of:
+
+       detector_phase_truth_table = {
+           "detector_in": ["00", "01", "10", "11"],
+           "phase_map_out": ["00", "10", "11", "11"],
+       }
+
+   :param truth_table: The truth table in the form of a dictionary.
+   :type truth_table: dict
+   :param inputs: The inputs to the truth table.
+   :type inputs: list[str]
+   :param outputs: The outputs to the truth table.
+   :type outputs: list[str]
+   :param implementation_type: The type of implementation. Defaults to "combinatorial".
+   :type implementation_type: Litearal["combinatorial", "sequential", "memory"], optional
+
+   :returns: Generated amaranth module.
+
+
+.. py:function:: generate_verilog_from_amaranth(amaranth_module: amaranth.Elaboratable, ports_list: list[str], target_file_name: str, target_directory: piel.config.piel_path_types, backend=verilog) -> None
+
+   This function exports an amaranth module to either a defined path, or a project structure in the form of an
+   imported multi-design module.
+
+   Iterate over ports list and construct a list of references for the strings provided in ``ports_list``
+
+   TODO DOCS parameters.
+
+
+
+.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
+
+   We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
+
+   TODO Implement a similar function from the openlane netlist too.
+   TODO unclear they can implement verification without it being in a synchronous simulation.
 
 
 .. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
@@ -1431,7 +1640,7 @@ Attributes
 
 
 
-.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1) -> list[qutip.Qobj]
+.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    For a specific amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire. This returns a list of all corresponding Fock states.
 
@@ -1439,12 +1648,20 @@ Attributes
    :type mode_amount: int
    :param photon_amount: The amount of photons in the system. Defaults to 1.
    :type photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list
 
 
-.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj) -> tuple[int]
+.. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
+
+
+.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+
+
+.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
    This function returns the indexes of the nonzero elements of a Fock state.
 
@@ -1455,7 +1672,7 @@ Attributes
    :rtype: tuple
 
 
-.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj) -> float
+.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj | jax.numpy.ndarray) -> float
 
        This function converts a Fock state defined as:
 
@@ -1480,7 +1697,7 @@ Attributes
 
 
 
-.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1) -> list[qutip.Qobj]
+.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    This function returns a list of valid Fock states that fulfill a condition of having a maximum photon number at a specific mode index.
 
@@ -1490,6 +1707,8 @@ Attributes
    :type target_mode_index: int
    :param maximum_photon_amount: The amount of photons in the system. Defaults to 1.
    :type maximum_photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list
@@ -1537,4 +1756,6 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.46'
+   :value: '0.0.47'
+
+

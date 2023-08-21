@@ -3,8 +3,6 @@
 Name](https://img.shields.io/badge/pypi-piel-blue?style=for-the-badge)](https://pypi.python.org/pypi/piel)
 [![PyPI
 Version](https://img.shields.io/pypi/v/piel.svg?style=for-the-badge)](https://pypi.python.org/pypi/piel)
-[![Build
-Status](https://img.shields.io/travis/daquintero/piel.svg?style=for-the-badge)](https://travis-ci.com/daquintero/piel)
 [![Documentation
 Status](https://readthedocs.org/projects/piel/badge/?style=for-the-badge)](https://piel.readthedocs.io/en/latest/?version=latest)
 [![MIT](https://img.shields.io/github/license/gdsfactory/gdsfactory?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
@@ -18,12 +16,12 @@ quantum, and more.
 
 ## Target functionality
 
--   Co-simulation and optimisation between integrated photonic and
+- Co-simulation and optimisation between integrated photonic and
     electronic chip design.
--   System interconnection modelling in multiple domains.
--   Chip and interposer design integration.
--   Component models translation library between simulation tools.
--   Quantum models of physical circuitry.
+- System interconnection modelling in multiple domains.
+- Chip and interposer design integration.
+- Co-design components to circuits flow.
+- Maintain a multi-tool dependency design environment.
 
 `piel` aims to provide an integrated workflow to co-design photonics and
 electronics, classically and quantum. It does not aim to replace the
@@ -46,6 +44,7 @@ photonics via [GDSFactory](https://github.com/gdsfactory/gdsfactory).
 
 Some existing microservice dependency integrations are:
 
+-   [amaranth](https://github.com/amaranth-lang/amaranth) - A modern hardware definition language and toolchain based on Python.
 -   [cocotb](https://github.com/cocotb/cocotb) - a coroutine based
     cosimulation library for writing VHDL and Verilog testbenches in
     Python.
@@ -64,6 +63,8 @@ Some existing microservice dependency integrations are:
     sampling.
 -   [qutip](https://github.com/qutip/qutip) - QuTiP: Quantum Toolbox in
     Python
+
+Another ``piel`` objective is to provide a common dependency-resolved environment for all these tools, so that you just get started with designing rather than fixing dependencies.
 
 ## Contribution
 

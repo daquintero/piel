@@ -12,8 +12,9 @@ from piel.file_system import (
     read_json,
     return_path,
     run_script,
-    write_script,
+    write_file,
 )
+from ...config import piel_path_types
 
 __all__ = [
     "check_config_json_exists_openlane_v1",
@@ -151,10 +152,10 @@ def configure_flow_script_openlane_v1(
             "./flow.tcl -design " + design_name,
         ]
         script = " \n".join(commands_list)
-        write_script(
+        write_file(
             directory_path=design_directory / "scripts",
-            script=script,
-            script_name="openlane_flow.sh",
+            file_text=script,
+            file_name="openlane_flow.sh",
         )
     else:
         raise ValueError(
@@ -313,7 +314,7 @@ def read_configuration_openlane_v1(
 
 def write_configuration_openlane_v1(
     configuration: dict,
-    design_directory: str | pathlib.Path,
+    design_directory: piel_path_types,
 ) -> None:
     """
     Writes a `config.json` onto a `design_directory`
@@ -325,5 +326,6 @@ def write_configuration_openlane_v1(
     Returns:
         None
     """
+    design_directory = return_path(design_directory)
     with open(str((design_directory / "config.json").resolve()), "w") as write_file:
         json.dump(configuration, write_file, indent=4)

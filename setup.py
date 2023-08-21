@@ -8,6 +8,8 @@ with open("README.md") as readme_file:
     readme = readme_file.read()
 
 requirements = [
+    "amaranth @ git+https://github.com/amaranth-lang/amaranth.git",  # Tie this down when they fix pypi.
+    "amaranth-yosys",
     "bokeh",
     "cython==0.29.21",
     "jupyter_bokeh",
@@ -20,12 +22,13 @@ requirements = [
     "jaxlib",
     "gdsfactory>=7",
     "networkx",
+    "numpy",
     "openlane",
     "pandas",
-    "sax>=0.8.8",
+    "qutip",
+    "sax>=0.8.8",  # Pinned for pydantic <v2 compatibility.
     "thewalrus",
     "vlsir>=4",
-    "qutip",
 ]
 
 test_requirements = [
@@ -35,16 +38,14 @@ test_requirements = [
 setup(
     author="Dario Quintero",
     author_email="darioaquintero@gmail.com",
-    python_requires=">=3.6",
+    python_requires=">=3.10",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.10",
     ],
     description="Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more.",
     entry_points={

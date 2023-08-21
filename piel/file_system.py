@@ -7,25 +7,28 @@ import shutil
 import stat
 import subprocess
 import types
-from typing import Literal
+from typing import Literal, Optional
 from .config import piel_path_types
-
 
 __all__ = [
     "check_path_exists",
     "check_example_design",
     "copy_source_folder",
+    "copy_example_design",
     "create_new_directory",
     "delete_path",
     "delete_path_list_in_directory",
     "get_files_recursively_in_directory",
     "permit_directory_all",
     "permit_script_execution",
-    "setup_example_design",
     "read_json",
+    "rename_file",
+    "rename_files_in_directory",
+    "replace_string_in_file",
+    "replace_string_in_directory_files",
     "return_path",
     "run_script",
-    "write_script",
+    "write_file",
 ]
 
 
@@ -115,6 +118,65 @@ def copy_source_folder(
     )
 
 
+def copy_example_design(
+    project_source: Literal["piel", "openlane"] = "piel",
+    example_name: str = "simple_design",
+    target_directory: piel_path_types = None,
+    target_project_name: Optional[str] = None,
+) -> None:
+    """
+    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
+
+    Args:
+        project_source(str): Source of the project.
+        example_name(str): Name of the example design.
+        target_directory(piel_path_types): Target directory.
+        target_project_name(str): Name of the target project.
+
+    Returns:
+        None
+    """
+    if project_source == "piel":
+        example_design_folder = (
+            os.environ["PIEL_PACKAGE_DIRECTORY"]
+            + "/docs/examples/designs/"
+            + example_name
+        )
+    elif project_source == "openlane":
+        example_design_folder = (
+            pathlib.Path(openlane.__file__).parent.resolve() / example_name
+        )
+        design_folder = os.environ["DESIGNS"] + "/" + example_name
+    else:
+        raise ValueError("project_source must be either 'piel' or 'openlane'.")
+
+    if target_directory is not None:
+        target_directory = return_path(target_directory)
+        if target_project_name is not None:
+            design_folder = target_directory / target_project_name
+        else:
+            design_folder = target_directory
+    else:
+        # Copy default openlane example
+        design_folder = os.environ["DESIGNS"] + "/" + example_name
+
+    copy_source_folder(
+        source_directory=example_design_folder, target_directory=design_folder
+    )
+
+    if target_project_name is not None:
+        rename_files_in_directory(
+            target_directory=design_folder,
+            match_string=example_name,
+            renamed_string=target_project_name,
+        )
+        replace_string_in_directory_files(
+            target_directory=design_folder,
+            match_string=example_name,
+            replace_string=target_project_name,
+        )
+
+
 def convert_list_to_path_list(
     input_list: list[piel_path_types],
 ) -> list[pathlib.Path]:
@@ -162,6 +224,15 @@ def create_new_directory(
     directory_path.mkdir(parents=True)
 
 
+def create_piel_project_structure(target_directory_path: piel_path_types):
+    """
+    This function creates a `piel` project structure described in the documentation.
+
+    TODO implement.
+    """
+    pass
+
+
 def delete_path(path: str | pathlib.Path) -> None:
     """
     Deletes a path.
@@ -188,6 +259,14 @@ def delete_path_list_in_directory(
 ) -> None:
     """
     Deletes a list of files in a directory.
+
+    Usage:
+
+    ```python
+    delete_path_list_in_directory(
+        directory_path=directory_path, path_list=path_list, ignore_confirmation=True
+    )
+    ```
 
     Args:
         directory_path(piel_path_types): Input path.
@@ -235,6 +314,10 @@ def get_files_recursively_in_directory(
     """
     Returns a list of files in a directory.
 
+    Usage:
+
+        get_files_recursively_in_directory('path/to/directory', 'extension')
+
     Args:
         path(piel_path_types): Input path.
         extension(str): File extension.
@@ -254,6 +337,10 @@ def permit_script_execution(script_path: piel_path_types) -> None:
     """
     Permits the execution of a script.
 
+    Usage:
+
+        permit_script_execution('path/to/script')
+
     Args:
         script_path(piel_path_types): Script path.
 
@@ -267,6 +354,10 @@ def permit_script_execution(script_path: piel_path_types) -> None:
 def permit_directory_all(directory_path: piel_path_types) -> None:
     """
     Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
+
+    Usage:
+
+        permit_directory_all('path/to/directory')
 
     Args:
         directory_path(piel_path_types): Input path.
@@ -291,6 +382,10 @@ def read_json(path: piel_path_types) -> dict:
     """
     Reads a JSON file.
 
+    Usage:
+
+        read_json('path/to/file.json')
+
     Args:
         path(piel_path_types): Input path.
 
@@ -301,6 +396,117 @@ def read_json(path: piel_path_types) -> dict:
     with open(path, "r") as json_file:
         json_data = json.load(json_file)
     return json_data
+
+
+def rename_file(
+    match_file_path: piel_path_types,
+    renamed_file_path: piel_path_types,
+) -> None:
+    """
+    Renames a file.
+
+    Usage:
+
+        rename_file('path/to/match_file', 'path/to/renamed_file')
+
+    Args:
+        match_file_path(piel_path_types): Input path.
+        renamed_file_path(piel_path_types): Input path.
+
+    Returns:
+        None
+    """
+    match_file_path = return_path(match_file_path)
+    renamed_file_path = return_path(renamed_file_path)
+    match_file_path.rename(renamed_file_path)
+
+
+def rename_files_in_directory(
+    target_directory: piel_path_types,
+    match_string: str,
+    renamed_string: str,
+) -> None:
+    """
+    Renames all files in a directory.
+
+    Usage:
+
+        rename_files_in_directory('path/to/directory', 'match_string', 'renamed_string')
+
+    Args:
+        target_directory(piel_path_types): Input path.
+        match_string(str): String to match.
+        renamed_string(str): String to replace.
+
+    Returns:
+        None
+    """
+    target_directory = return_path(target_directory)
+    for path in target_directory.iterdir():
+        if path.is_file():
+            new_filename = path.name.replace(match_string, renamed_string)
+            new_path = path.with_name(new_filename)
+            rename_file(path, new_path)
+
+
+def replace_string_in_file(
+    file_path: piel_path_types,
+    match_string: str,
+    replace_string: str,
+):
+    """
+    Replaces a string in a file.
+
+    Usage:
+
+        replace_string_in_file('path/to/file', 'match_string', 'replace_string')
+
+    Args:
+        file_path(piel_path_types): Input path.
+        match_string(str): String to match.
+        replace_string(str): String to replace.
+
+    Returns:
+        None
+    """
+    file_path = return_path(file_path)
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
+
+            content = content.replace(match_string, replace_string)
+
+            with file_path.open("w") as file_write:
+                file_write.write(content)
+
+    except (UnicodeDecodeError, OSError):
+        pass
+
+
+def replace_string_in_directory_files(
+    target_directory: piel_path_types,
+    match_string: str,
+    replace_string: str,
+):
+    """
+    Replaces a string in all files in a directory.
+
+    Usage:
+
+        replace_string_in_directory_files('path/to/directory', 'match_string', 'replace_string')
+
+    Args:
+        target_directory(piel_path_types): Input path.
+        match_string(str): String to match.
+        replace_string(str): String to replace.
+
+    Returns:
+        None
+    """
+    target_directory = return_path(target_directory)
+    for path in target_directory.rglob("*"):
+        if path.is_file():
+            replace_string_in_file(path, match_string, replace_string)
 
 
 def return_path(input_path: piel_path_types) -> pathlib.Path:
@@ -345,48 +551,18 @@ def run_script(script_path: piel_path_types) -> None:
     subprocess.run(str(script.resolve()), check=True, capture_output=True)
 
 
-def setup_example_design(
-    project_source: Literal["piel", "openlane"] = "piel",
-    example_name: str = "simple_design",
-) -> None:
-    """
-    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
-
-    Args:
-        project_source(str): Source of the project.
-        example_name(str): Name of the example design.
-
-    Returns:
-        None
-    """
-    if project_source == "piel":
-        example_design_folder = (
-            os.environ["PIEL_PACKAGE_DIRECTORY"]
-            + "/docs/examples/designs/"
-            + example_name
-        )
-    elif project_source == "openlane":
-        example_design_folder = (
-            pathlib.Path(openlane.__file__).parent.resolve() / example_name
-        )
-    design_folder = os.environ["DESIGNS"] + "/" + example_name
-    copy_source_folder(
-        source_directory=example_design_folder, target_directory=design_folder
-    )
-
-
-def write_script(
+def write_file(
     directory_path: piel_path_types,
-    script: str,
-    script_name: str,
+    file_text: str,
+    file_name: str,
 ) -> None:
     """
     Records a `script_name` in the `scripts` project directory.
 
     Args:
         directory_path(piel_path_types): Design directory.
-        script(str): Script to write.
-        script_name(str): Name of the script.
+        file_text(str): Script to write.
+        file_name(str): Name of the script.
 
     Returns:
         None
@@ -409,6 +585,6 @@ def write_script(
                 )
             )
 
-    file = open(str(directory_path / script_name), "w")
-    file.write(script)
+    file = open(str(directory_path / file_name), "w")
+    file.write(file_text)
     file.close()

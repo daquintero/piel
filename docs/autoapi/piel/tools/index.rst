@@ -10,6 +10,7 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
+   amaranth/index.rst
    cocotb/index.rst
    gdsfactory/index.rst
    hdl21/index.rst
@@ -28,6 +29,9 @@ Functions
 
 .. autoapisummary::
 
+   piel.tools.construct_amaranth_module_from_truth_table
+   piel.tools.generate_verilog_from_amaranth
+   piel.tools.verify_truth_table
    piel.tools.check_cocotb_testbench_exists
    piel.tools.configure_cocotb_simulation
    piel.tools.run_cocotb_simulation
@@ -81,6 +85,8 @@ Functions
    piel.tools.get_sdense_ports_index
    piel.tools.sax_to_s_parameters_standard_matrix
    piel.tools.all_fock_states_from_photon_number
+   piel.tools.convert_qobj_to_jax
+   piel.tools.convert_output_type
    piel.tools.fock_state_nonzero_indexes
    piel.tools.fock_state_to_photon_number_factorial
    piel.tools.fock_states_at_mode_index
@@ -99,6 +105,49 @@ Attributes
    piel.tools.get_simulation_output_files
    piel.tools.snet
    piel.tools.standard_s_parameters_to_qutip_qobj
+
+
+.. py:function:: construct_amaranth_module_from_truth_table(truth_table: dict, inputs: list[str], outputs: list[str], implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
+
+   This function implements a truth table as a module in amaranth,
+   Note that in some form in amaranth each statement is a form of construction.
+
+   The truth table is in the form of:
+
+       detector_phase_truth_table = {
+           "detector_in": ["00", "01", "10", "11"],
+           "phase_map_out": ["00", "10", "11", "11"],
+       }
+
+   :param truth_table: The truth table in the form of a dictionary.
+   :type truth_table: dict
+   :param inputs: The inputs to the truth table.
+   :type inputs: list[str]
+   :param outputs: The outputs to the truth table.
+   :type outputs: list[str]
+   :param implementation_type: The type of implementation. Defaults to "combinatorial".
+   :type implementation_type: Litearal["combinatorial", "sequential", "memory"], optional
+
+   :returns: Generated amaranth module.
+
+
+.. py:function:: generate_verilog_from_amaranth(amaranth_module: amaranth.Elaboratable, ports_list: list[str], target_file_name: str, target_directory: piel.config.piel_path_types, backend=verilog) -> None
+
+   This function exports an amaranth module to either a defined path, or a project structure in the form of an
+   imported multi-design module.
+
+   Iterate over ports list and construct a list of references for the strings provided in ``ports_list``
+
+   TODO DOCS parameters.
+
+
+
+.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
+
+   We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
+
+   TODO Implement a similar function from the openlane netlist too.
+   TODO unclear they can implement verification without it being in a synchronous simulation.
 
 
 .. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
@@ -939,7 +988,7 @@ Attributes
 
 
 
-.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1) -> list[qutip.Qobj]
+.. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    For a specific amount of modes, we can generate all the possible Fock states for whatever amount of input photons we desire. This returns a list of all corresponding Fock states.
 
@@ -947,12 +996,20 @@ Attributes
    :type mode_amount: int
    :param photon_amount: The amount of photons in the system. Defaults to 1.
    :type photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list
 
 
-.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj) -> tuple[int]
+.. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
+
+
+.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+
+
+.. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
    This function returns the indexes of the nonzero elements of a Fock state.
 
@@ -963,7 +1020,7 @@ Attributes
    :rtype: tuple
 
 
-.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj) -> float
+.. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj | jax.numpy.ndarray) -> float
 
        This function converts a Fock state defined as:
 
@@ -988,7 +1045,7 @@ Attributes
 
 
 
-.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1) -> list[qutip.Qobj]
+.. py:function:: fock_states_at_mode_index(mode_amount: int, target_mode_index: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
    This function returns a list of valid Fock states that fulfill a condition of having a maximum photon number at a specific mode index.
 
@@ -998,6 +1055,8 @@ Attributes
    :type target_mode_index: int
    :param maximum_photon_amount: The amount of photons in the system. Defaults to 1.
    :type maximum_photon_amount: int, optional
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
 
    :returns: A list of all the Fock states.
    :rtype: list

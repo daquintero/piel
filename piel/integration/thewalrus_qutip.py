@@ -12,8 +12,8 @@ __all__ = ["fock_transition_probability_amplitude"]
 
 
 def fock_transition_probability_amplitude(
-    initial_fock_state: qutip.Qobj,
-    final_fock_state: qutip.Qobj,
+    initial_fock_state: qutip.Qobj | jnp.ndarray,
+    final_fock_state: qutip.Qobj | jnp.ndarray,
     unitary_matrix: jnp.ndarray,
 ):
     """
@@ -37,9 +37,9 @@ def fock_transition_probability_amplitude(
         a(\ket{f_1} \to \ket{f_2}) = \frac{\text{per}(U_{f_1}^{f_2})}{\sqrt{(j_1! j_2! ... j_N!)(j_1^{'}! j_2^{'}! ... j_N^{'}!)}}
 
     Args:
-        initial_fock_state (qutip.Qobj): A QuTip QObj representation of the initial Fock state.
-        final_fock_state (qutip.Qobj): A QuTip QObj representation of the final Fock state.
-        unitary_matrix (jnp.ndarray): A JAX NumPy array representation of the unitary matrix.
+        initial_fock_state (qutip.Qobj | jnp.ndarray): The initial Fock state.
+        final_fock_state (qutip.Qobj | jnp.ndarray): The final Fock state.
+        unitary_matrix (jnp.ndarray): The unitary matrix that represents the quantum state circuit.
 
     Returns:
         float: The transition probability amplitude between the initial and final Fock states.

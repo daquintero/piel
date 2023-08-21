@@ -726,3 +726,7 @@ simple_ideal_o4_mzi_2x2_plots.savefig(
 )
 
 # ![simple_ideal_o4_mzi_2x2_plots](../../_static/img/examples/04_spice_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG)
+
+# # Model Capabilities
+#
+# We are able to arbitrarily create a model of our devices, and simulate their performance when driven by a particular circuit or not. This is useful as long as our analog model accurately represents the analog performance of our device. It is important, also, to consider opto-physical timing effects not accounted for by transient analog electronic simulations such as thermo-optic relaxation times or carrier-mobility effects. In this case, look into our component-codesign basics example.

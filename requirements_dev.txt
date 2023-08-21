@@ -1,3 +1,5 @@
+amaranth @ git+https://github.com/amaranth-lang/amaranth.git
+amaranth-yosys
 black
 bokeh
 bump2version
@@ -21,6 +23,7 @@ jupytext
 myst_parser
 nbsphinx
 networkx
+numpy
 openlane
 pandoc
 pip>=19.2.3
