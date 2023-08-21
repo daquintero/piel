@@ -41,3 +41,7 @@ To use piel in a project you can then do:
 ```python
 import piel
 ```
+
+## Installation Environment Verification
+
+We have verified the `piel`, on the latest Mamba Python 3.10 installation in Windows 10 and Linux. You can then run the above commands and the dependencies should be resolved. In the future, we will provide a Docker environment. Note that because `piel` is a microservice and the flow depends on multiple packages, the first import statement during indexing might take a bit of time.

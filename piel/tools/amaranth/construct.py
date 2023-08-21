@@ -35,6 +35,7 @@ def construct_amaranth_module_from_truth_table(
 
     class TruthTable(am.Elaboratable):
         def __init__(self, truth_table: dict, inputs: list, outputs: list):
+            super(TruthTable, self).__init__()
             # Initialise all the signals accordingly.
             for key, _ in truth_table.items():
                 # TODO Determine signal type or largest width from the values.
@@ -54,10 +55,12 @@ def construct_amaranth_module_from_truth_table(
                     getattr(self, inputs[0]) == int(truth_table[self.inputs[0]][i], 2)
                 ):
                     # Implements a particular output.
-                    output_value_i = getattr(getattr(self, outputs[0]), "eq")
+                    output_value_i = getattr(self, outputs[0]).eq
 
                     if implementation_type == "combinatorial":
-                        m.d.comb += output_value_i(int(truth_table[self.outputs[0]][i], 2))
+                        m.d.comb += output_value_i(
+                            int(truth_table[self.outputs[0]][i], 2)
+                        )
                     else:
                         raise FutureWarning(
                             "Still need to implement more than combinatorial implementations."

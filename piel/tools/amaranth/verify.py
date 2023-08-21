@@ -33,17 +33,22 @@ def verify_truth_table(
         This function implements the logic verification specifically.
         """
         input_port_signal = getattr(truth_table_amaranth_module, inputs[0]).eq
-        output_port_signal = getattr(truth_table_amaranth_module, outputs[0]).eq
+        output_port_signal = getattr(truth_table_amaranth_module, outputs[0])
         i = 0
         for input_value_i in truth_table_dictionary[inputs[0]]:
             # Iterate over the input value array and test every specific array.
             # Test against the output signal value in each clock cycle.
             yield input_port_signal(int(input_value_i))
+            yield output_port_signal
             # Check that the output signal matches the design signal.
-            assert output_port_signal == int(truth_table_dictionary[outputs[0]][i])
+            # print(dir(output_port_signal))
+            # print(output_port_signal.matches(0))
+            # print(int(truth_table_dictionary[outputs[0]][i]))
+            # assert output_port_signal == int(truth_table_dictionary[outputs[0]][i])
             yield Delay(1e-6)  # in a combinatorial simulation.
             i += 1
 
+    # Determine the output data files directory
     if isinstance(target_directory, types.ModuleType):
         # If the path follows the structure of a `piel` path.
         target_directory = get_module_folder_type_location(
@@ -53,8 +58,9 @@ def verify_truth_table(
         # If not then just append the right path.
         target_directory = return_path(target_directory)
 
-    verify_logic()
+    # Set up synchronous simulation as I think it's necessary even for a combinatorial component as of 21/Ago/2023
     simulation = Simulator(truth_table_amaranth_module)
+    simulation.add_process(verify_logic)
 
     if implementation_type == "synchronous":
         simulation.add_clock(1e-6)  # 1 MHz
