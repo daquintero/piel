@@ -1,9 +1,32 @@
+__all__ = [
+    "test_basic_open_lane_configuration",
+    "test_spm_open_lane_configuration",
+    "example_open_lane_configuration",
+]
+
 test_spm_open_lane_configuration = {
     "PDK": "sky130A",
     "DESIGN_NAME": "spm",
     "VERILOG_FILES": ["./src/spm.v"],
     "CLOCK_PORT": "clk",
     "CLOCK_PERIOD": 10,
+}
+
+test_basic_open_lane_configuration = {
+    "DESIGN_NAME": "inverter",
+    "VERILOG_FILES": "dir::src/*.v",
+    "RUN_CTS": False,
+    "CLOCK_PORT": None,
+    "PL_RANDOM_GLB_PLACEMENT": True,
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 34.5 57.12",
+    "PL_TARGET_DENSITY": 0.75,
+    "FP_PDN_AUTO_ADJUST": False,
+    "FP_PDN_VPITCH": 25,
+    "FP_PDN_HPITCH": 25,
+    "FP_PDN_VOFFSET": 5,
+    "FP_PDN_HOFFSET": 5,
+    "DIODE_INSERTION_STRATEGY": 3,
 }
 
 example_open_lane_configuration = {

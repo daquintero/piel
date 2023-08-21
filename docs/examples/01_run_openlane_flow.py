@@ -248,8 +248,40 @@ piel.calculate_propagation_delay_from_file(file_path=run_output_sta_file_list[0]
 
 import amaranth_driven_flow
 
-# Let's first copy this design into the `Openlane v1` root directory:
+# Let's find the directory path of our module:
 
+piel.return_path(amaranth_driven_flow)
+
+# ```python
+# WindowsPath('c:/users/dario/documents/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/__init__.py/..')
+# ```
+
+# We can get an example structure of an `openlane` configuration dictionary:
+
+our_amaranth_openlane_config = (
+    piel.tools.openlane.defaults.test_basic_open_lane_configuration
+)
+our_amaranth_openlane_config["DESIGN_NAME"] = amaranth_driven_flow.__name__
+our_amaranth_openlane_config
+
+piel.write_configuration_openlane_v1(
+    configuration=our_amaranth_openlane_config,
+    design_directory=amaranth_driven_flow,
+)
+
+# Let's first copy this design into the `Openlane v1` root directory so we can run the flow as normal:
+
+
+piel.copy_source_folder(
+    source_directory=amaranth_driven_flow,
+    target_directory=openlane_v1_designs_directory,
+)
+
+# We can read it has been written properly easily as described before:
+
+base_configuration = piel.read_configuration_openlane_v1(
+    design_name=amaranth_driven_flow.__name__
+)
 
 # ## OpenLane V2 Flow
 
