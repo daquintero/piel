@@ -1,0 +1,19 @@
+Design Name: top
+Run Directory: /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09
+----------------------------------------
+
+Magic DRC Summary:
+Source: /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09/reports/signoff/drc.rpt
+Total Magic DRC violations is 0
+----------------------------------------
+
+LVS Summary:
+Source: /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09/logs/signoff/36-top.lef.lvs.log
+Number of nets: 12                         |Number of nets: 12                         
+Design is LVS clean.
+----------------------------------------
+
+Antenna Summary:
+Source: /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09/logs/signoff/38-antenna.log
+Pin violations: 0
+Net violations: 0
