@@ -49,22 +49,20 @@ def construct_amaranth_module_from_truth_table(
             # We need to iterate over the length of the truth table arrays for the input and output keys.
             # TODO implement multiinput.
             # TODO implement some verification that the arrays are of the same length.
-            for i in range(4):
-                # We iterate over the truth table values
-                with m.If(
-                    getattr(self, inputs[0]) == int(truth_table[self.inputs[0]][i], 2)
-                ):
-                    # Implements a particular output.
-                    output_value_i = getattr(self, outputs[0]).eq
 
-                    if implementation_type == "combinatorial":
+            # Implements a particular output.
+            output_value_i = getattr(self, outputs[0]).eq
+
+            with m.Switch(getattr(self, inputs[0])):
+                for i in range(4):
+                    # We iterate over the truth table values
+                    with m.Case(str(truth_table[self.inputs[0]][i])):
                         m.d.comb += output_value_i(
                             int(truth_table[self.outputs[0]][i], 2)
                         )
-                    else:
-                        raise FutureWarning(
-                            "Still need to implement more than combinatorial implementations."
-                        )
+                with m.Case():
+                    m.d.comb += output_value_i(0)
+
             return m
 
     return TruthTable(truth_table, inputs, outputs)
