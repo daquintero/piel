@@ -27,6 +27,7 @@ test_basic_open_lane_configuration = {
     "FP_PDN_VOFFSET": 5,
     "FP_PDN_HOFFSET": 5,
     "DIODE_INSERTION_STRATEGY": 3,
+    "RUN_LINTER": False,
 }
 
 example_open_lane_configuration = {

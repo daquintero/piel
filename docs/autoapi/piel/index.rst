@@ -29,7 +29,6 @@ Submodules
 
    cli/index.rst
    config/index.rst
-   defaults/index.rst
    file_conversion/index.rst
    file_system/index.rst
    parametric/index.rst
@@ -153,8 +152,6 @@ Attributes
 .. autoapisummary::
 
    piel.piel_path_types
-   piel.test_spm_open_lane_configuration
-   piel.example_open_lane_configuration
    piel.delete_simulation_output_files
    piel.get_simulation_output_files
    piel.snet
@@ -165,14 +162,6 @@ Attributes
 
 
 .. py:data:: piel_path_types
-
-
-
-.. py:data:: test_spm_open_lane_configuration
-
-
-
-.. py:data:: example_open_lane_configuration
 
 
 
@@ -1121,7 +1110,7 @@ Attributes
    :rtype: configuration(dict)
 
 
-.. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: str | pathlib.Path) -> None
+.. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: piel.config.piel_path_types) -> None
 
    Writes a `config.json` onto a `design_directory`
 
@@ -1756,6 +1745,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.47'
-
-
+   :value: '0.0.48'
