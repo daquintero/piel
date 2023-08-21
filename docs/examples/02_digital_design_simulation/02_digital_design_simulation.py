@@ -11,13 +11,19 @@ import simple_design
 
 # In this example, we will use `amaranth` to perform some design and then simulations, so let's create a suitable project structure based on our initial `simple_design`, where we will output our files.
 
-piel.create_empty_piel_project(
-    project_name="amaranth_driven_flow", parent_directory="../designs/"
-)
+# +
+# Uncomment this if you want to run it for the first time.
+# piel.create_empty_piel_project(
+#     project_name="amaranth_driven_flow", parent_directory="../designs/"
+# )
+# -
 
 # We can also automate the `pip` installation of our local module:
 
-piel.pip_install_local_module("../designs/amaranth_driven_flow")
+# +
+#  Uncomment this if you want to run it for the first time.
+# piel.pip_install_local_module("../designs/amaranth_driven_flow")
+# -
 
 # We can check that this has been installed. You might need to restart your `jupyter` kernel.
 

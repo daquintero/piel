@@ -1,5 +1,5 @@
 import amaranth as am
-from amaranth.sim import Simulator
+from amaranth.sim import Simulator, Delay
 import types
 from typing import Literal
 
@@ -37,10 +37,11 @@ def verify_truth_table(
         i = 0
         for input_value_i in truth_table_dictionary[inputs[0]]:
             # Iterate over the input value array and test every specific array.
-            # Test against the output signal value.
-            yield input_port_signal(input_value_i)
+            # Test against the output signal value in each clock cycle.
+            yield input_port_signal(int(input_value_i))
             # Check that the output signal matches the design signal.
             assert output_port_signal == int(truth_table_dictionary[outputs[0]][i])
+            yield Delay(1e-6)  # in a combinatorial simulation.
             i += 1
 
     if isinstance(target_directory, types.ModuleType):
@@ -58,6 +59,9 @@ def verify_truth_table(
     if implementation_type == "synchronous":
         simulation.add_clock(1e-6)  # 1 MHz
         simulation.add_sync_process(truth_table_amaranth_module)
+    elif implementation_type == "combinatorial":
+        # TODO
+        pass
 
     # Generate vcd outputs to verify?
     # TODO see how to generate a panads table from this accordingly.

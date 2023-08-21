@@ -22,12 +22,13 @@ requirements = [
     "jaxlib",
     "gdsfactory>=7",
     "networkx",
+    "numpy",
     "openlane",
     "pandas",
-    "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
+    "qutip",
+    "sax>=0.8.8",  # Pinned for pydantic <v2 compatibility.
     "thewalrus",
     "vlsir>=4",
-    "qutip",
 ]
 
 test_requirements = [

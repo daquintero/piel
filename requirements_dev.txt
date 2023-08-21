@@ -23,6 +23,7 @@ jupytext
 myst_parser
 nbsphinx
 networkx
+numpy
 openlane
 pandoc
 pip>=19.2.3
