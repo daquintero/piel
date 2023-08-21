@@ -31,7 +31,17 @@ $ curl -OJL https://github.com/daquintero/piel/tarball/master
 Once you have a copy of the source, you can install it with:
 
 ``` console
-$ python setup.py install
+$ pip install -e .
+```
+
+### Developer's Requirements
+
+You might also need to run the following commands to run the examples, documentation, and full environment:
+
+```
+mamba install pandoc
+mamba install jupyterlab jupytext
+pip install -r requirements_dev.txt
 ```
 
 ## Usage

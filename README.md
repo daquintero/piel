@@ -21,7 +21,6 @@ quantum, and more.
 - System interconnection modelling in multiple domains.
 - Chip and interposer design integration.
 - Co-design components to circuits flow.
-- Quantum models of physical circuitry.
 - Maintain a multi-tool dependency design environment.
 
 `piel` aims to provide an integrated workflow to co-design photonics and

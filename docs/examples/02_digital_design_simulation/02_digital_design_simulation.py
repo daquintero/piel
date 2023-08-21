@@ -120,6 +120,10 @@ piel.verify_truth_table(
 )
 
 # You can observe the design directory of the provided `amaranth_driven_flow` folder to verify that the files have been included in the other flow.
+#
+# We can see that the truth table logic has been accurately implemented in the post `vcd` verification test output generated.
+
+# ![example_simple_design_outputs](../../_static/img/examples/02_cocotb_simulation/example_truth_table_verification.PNG)
 
 # ## `cocoTb` Simulation
 
