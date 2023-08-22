@@ -2,25 +2,27 @@
 
 # When we have photonic components driven by electronic devices, there is a scope that we might want to optimize certain devices to be faster, smaller, or less power-consumptive. It can be complicated to do this just analytically, so we would like to have the capability of integrating our design software for each of our devices with the simulation software of our electronics. There might be multiple software tools to design different devices, and the benefit of integrating these tools via open-source is that co-design becomes much more feasible and meaningful. I have explicitly made this example thorough for electronics engineers transitioning into photonic components engineering.
 #
-# In this example, we will continue exploring the co-design of a thermo-optic phase shifter in continuation of all the previous examples.
+# In this example, we will be exploring the co-design of a thermo-optic phase shifter in continuation of all the previous examples.
 #
 # This example consists of a few things:
-# * Connect a `gdsfactory` component to a `femwell` model, and relate the corresponding metrics.
-# * Extract a `hdl21 SPICE`model from the generated component we can use in circuit simulators.
-# * Simulate the mode profiles via `Tidy3D FDTD` and extract the `S-Parameters` from the layout.
-# * Create a flow where variations on both electronic and photonic parameters can be quantified through this model.
+#
+# -  Connect a `gdsfactory` component to a `femwell` model, and relate the corresponding metrics.
+# -  Extract a `hdl21 SPICE`model from the generated component we can use in circuit simulators.
+# -  Simulate the mode profiles via `Tidy3D FDTD` and extract the `S-Parameters` from the layout.
+# -  Create a flow where variations on both electronic and photonic parameters can be quantified through this model.
 #
 # Good examples of sections of this flow are:
-# * [gplugins-femwell HEAT](https://gdsfactory.github.io/gplugins/notebooks/femwell_02_heater.html)
-# * [gplugins-tidy3d MODE](https://gdsfactory.github.io/gplugins/notebooks/tidy3d_01_tidy3d_modes.html)
-# * [gplugins-tidy3d FDTD](https://gdsfactory.github.io/gplugins/notebooks/tidy3d_00_tidy3d.html)
-# * Some of the previous examples in `piel`
+#
+# -  [gplugins-femwell HEAT](https://gdsfactory.github.io/gplugins/notebooks/femwell_02_heater.html)
+# -  [gplugins-tidy3d MODE](https://gdsfactory.github.io/gplugins/notebooks/tidy3d_01_tidy3d_modes.html)
+# -  [gplugins-tidy3d FDTD](https://gdsfactory.github.io/gplugins/notebooks/tidy3d_00_tidy3d.html)
+# -  Some of the previous examples in `piel`
 #
 #
 # There are some great resources to understand FDTD in the `Tidy3D` website. In particular, in relation to the flow you might use in `piel`, you might want to review:
 #
-# * [Lecture 4: Prelude to Integrated Photonics Simulation: Mode Injection](https://www.flexcompute.com/fdtd101/Lecture-4-Prelude-to-Integrated-Photonics-Simulation-Mode-Injection/)
-# * [The Finite-Difference Frequency-Domain Method,
+# -  [Lecture 4: Prelude to Integrated Photonics Simulation: Mode Injection](https://www.flexcompute.com/fdtd101/Lecture-4-Prelude-to-Integrated-Photonics-Simulation-Mode-Injection/)
+# -  [The Finite-Difference Frequency-Domain Method,
 # Hans-Dieter Lan](https://www.hade.ch/docs/report_FDFD.pdf)
 #
 
@@ -218,10 +220,10 @@ our_heater_straight_cross_section_tidy3d_simulation_plot_yz = gt.plot_simulation
 )
 # Save our figures
 our_heater_straight_cross_section_tidy3d_simulation_plot_xz.savefig(
-    "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_xz.png"
+    "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_xz.PNG"
 )
 our_heater_straight_cross_section_tidy3d_simulation_plot_yz.savefig(
-    "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_yz.png"
+    "../_static/img/examples/06_component_codesign_basics/our_heater_straight_cross_section_tidy3d_simulation_plot_yz.PNG"
 )
 
 # `Effective index of computed modes:  [[2.4610755 1.8116093]]`

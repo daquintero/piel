@@ -123,7 +123,7 @@ piel.verify_truth_table(
 #
 # We can see that the truth table logic has been accurately implemented in the post `vcd` verification test output generated.
 
-# ![example_simple_design_outputs](../../_static/img/examples/02_cocotb_simulation/example_truth_table_verification.PNG)
+# ![example_truth_table_verification](../../_static/img/examples/02_cocotb_simulation/example_truth_table_verification.PNG)
 
 # ## `cocoTb` Simulation
 
