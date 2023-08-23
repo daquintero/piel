@@ -133,6 +133,12 @@ our_heated_waveguide_cross_section = gf.get_cross_section(
 )
 our_heated_waveguide_cross_section
 
+# You can also access this from it's function call:
+
+gf.cross_section.strip_heater_metal(
+    heater_width=2.5,
+)
+
 # Let's make a basic straight waveguide using this cross section for reference:
 
 our_heated_waveguide_straight = gf.components.straight(
@@ -156,18 +162,20 @@ our_heated_waveguide_straight.plot_widget()
 td.material_library.keys()
 
 
-# So let's change our layer stack from our `gdsfactory.generic_pdk` to simulate this. We can also change the position of the metal in relation to the waveguide. This, for example, would tell us the effect of optical loss from evanescent field absorption for different materials, and would allow us to extract component properties we can use in `sax` for photonic network analysis accordingly:
+# So let's change our layer stack from our `gdsfactory.generic_pdk` to simulate this. We can also change the position of the metal in relation to the waveguide. This, for example, would tell us the effect of optical loss from evanescent field absorption for different materials, and would allow us to extract component properties we can use in `sax` for photonic network analysis accordingly. Let's make a function of heater parameters we can use to create a Tidy3D simulation from it's parameterised outputs:
 
 
-def change_heater_layer_stack(
+def change_heater_properties(
     heater_material_name: str,
     heater_material: gt.materials.MaterialSpecTidy3d,
-    heater_zmin_um: float = 2.2,
+    heater_width_um: float = 2.5,
+    heater_zmin_um: float = 0.5,
     heater_thickness_um: float = 0.13,
     layer_stack=None,
 ) -> tuple:
     """
     This function perturbs the provided layer stack and changes specific heater layer parameters.
+    We will also return a cross section of the heater width.
     """
     if layer_stack is None:
         layer_stack = gf.generic_tech.get_generic_pdk().layer_stack
@@ -181,20 +189,46 @@ def change_heater_layer_stack(
         heater_material_name: heater_material,
     }
 
+    # Change default heater cross section properties
+
+    cross_section = gf.cross_section.strip_heater_metal(
+        heater_width=heater_width_um,
+    )
+
+    # Change heater layer stack and material properties in PDK definition
     layer_stack.layers["heater"].material = heater_material_name
     layer_stack.layers["heater"].thickness = heater_thickness_um
     layer_stack.layers["heater"].zmin = heater_zmin_um
-    return layer_stack, material_name_to_tidy3d
+
+    heater_waveguide_straight = gf.components.straight(
+        length=5, cross_section=cross_section
+    )
+    return (
+        layer_stack,
+        material_name_to_tidy3d,
+        cross_section,
+        heater_waveguide_straight,
+    )
 
 
-LAYER_STACK, material_name_to_tidy3d = change_heater_layer_stack(
+(
+    LAYER_STACK,
+    material_name_to_tidy3d,
+    heater_cross_section,
+    heater_waveguide_straight,
+) = change_heater_properties(
     heater_material_name="TiOx",
     heater_material=td.material_library["TiOx"]["HorbiaStable"],
-    heater_zmin_um=0.5,
+    heater_width_um=5,
+    heater_zmin_um=2.5,
     heater_thickness_um=0.13,
 )
 
 # You can explore the properties of the layer stack through some functions:
+
+heater_waveguide_straight.plot_widget()
+
+# ![our_straight_heater](../_static/img/examples/06_component_codesign_basics/our_straight_heater_component_small_parametrised.PNG)
 
 LAYER_STACK.get_layer_to_thickness()
 
@@ -204,10 +238,10 @@ LAYER_STACK.get_layer_to_zmin()
 
 LAYER_STACK.get_layer_to_sidewall_angle()
 
-# It is not a great idea to simulate our full heater component with vias and everything, as really there is no need if you understand the fundamental heater-cross section design.
+# It is not a great idea to simulate our full heater component with vias and everything, as really there is no need if you understand the fundamental heater-cross section design. We can simulate only a small straight cross section of our waveguide.
 
 our_heater_straight_cross_section_tidy3d_simulation = gt.get_simulation(
-    our_heated_waveguide_straight,
+    heater_waveguide_straight,
     is_3d=True,
     material_name_to_tidy3d=material_name_to_tidy3d,
     plot_modes=True,

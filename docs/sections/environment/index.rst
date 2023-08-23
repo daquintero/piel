@@ -1,12 +1,8 @@
 Environment
 ===========
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Environment:
-
-    setup
-    installation
-    project_structure
-    design_files_interaction
-    relevant_python_commands
+.. include:: setup.rst
+.. include:: installation.rst
+.. include:: project_structure.rst
+.. include:: design_files_interaction.rst
+.. include:: relevant_python_commands.rst
