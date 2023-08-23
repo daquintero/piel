@@ -66,8 +66,7 @@ Maybe in the future I will write a mamba recepie.
 Docker Configuration
 --------------------
 
-.. toctree::
-    docker_setup
-    docker_environment_configuration
-    relevant_docker_commands
-    developer_docker_configuration
+.. include:: docker_setup.rst
+.. include:: docker_environment_configuration.rst
+.. include:: relevant_docker_commands.rst
+.. include:: developer_docker_configuration.rst

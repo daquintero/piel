@@ -10,6 +10,13 @@ import piel
 import simple_design
 
 # In this example, we will use `amaranth` to perform some design and then simulations, so let's create a suitable project structure based on our initial `simple_design`, where we will output our files.
+# However, note that the `amaranth<0.4` project has of the 23/Ago/2023 a versioning problem which means that they haven't released a new version for the last two years and this is conflicting with other packages. As such, you have to install the latest `amaranth` on your own. However, when you do, you can then run this:
+
+from piel.tools.amaranth import (
+    construct_amaranth_module_from_truth_table,
+    generate_verilog_from_amaranth,
+    verify_truth_table,
+)
 
 # +
 # Uncomment this if you want to run it for the first time.
@@ -57,9 +64,10 @@ detector_phase_truth_table = {
     "phase_map_out": ["00", "10", "11", "11"],
 }
 
+
 input_ports_list = ["detector_in"]
 output_ports_list = ["phase_map_out"]
-our_truth_table_module = piel.construct_amaranth_module_from_truth_table(
+our_truth_table_module = construct_amaranth_module_from_truth_table(
     truth_table=detector_phase_truth_table,
     inputs=input_ports_list,
     outputs=output_ports_list,
@@ -70,7 +78,7 @@ our_truth_table_module = piel.construct_amaranth_module_from_truth_table(
 # We can save this file directly into our working examples directory.
 
 ports_list = input_ports_list + output_ports_list
-piel.generate_verilog_from_amaranth(
+generate_verilog_from_amaranth(
     amaranth_module=our_truth_table_module,
     ports_list=ports_list,
     target_file_name="our_truth_table_module.v",
@@ -90,7 +98,7 @@ amaranth_driven_flow_src_folder = piel.get_module_folder_type_location(
 )
 
 ports_list = input_ports_list + output_ports_list
-piel.generate_verilog_from_amaranth(
+generate_verilog_from_amaranth(
     amaranth_module=our_truth_table_module,
     ports_list=ports_list,
     target_file_name="our_truth_table_module.v",
@@ -99,7 +107,7 @@ piel.generate_verilog_from_amaranth(
 
 # Another thing we can do is verify that our implemented logic is valid. Creating a simulation is also useful in the future when we simulate our extracted place-and-route netlist in relation to the expected applied logic.
 
-piel.verify_truth_table(
+verify_truth_table(
     truth_table_amaranth_module=our_truth_table_module,
     truth_table_dictionary=detector_phase_truth_table,
     inputs=input_ports_list,
@@ -110,7 +118,7 @@ piel.verify_truth_table(
 
 # You can also use the module directory to automatically save the testbench in these functions.
 
-piel.verify_truth_table(
+verify_truth_table(
     truth_table_amaranth_module=our_truth_table_module,
     truth_table_dictionary=detector_phase_truth_table,
     inputs=input_ports_list,
