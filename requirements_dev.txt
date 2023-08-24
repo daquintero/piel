@@ -27,6 +27,7 @@ numpy
 openlane
 pandoc
 pip>=19.2.3
+pre-commit
 pydata-sphinx-theme>=0.13.3
 pytest
 qutip
