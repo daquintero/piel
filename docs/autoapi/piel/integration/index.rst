@@ -19,11 +19,13 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   amaranth_openlane/index.rst
    cocotb_sax/index.rst
    gdsfactory_openlane/index.rst
    sax_qutip/index.rst
    sax_thewalrus/index.rst
    thewalrus_qutip/index.rst
+   type_conversion/index.rst
 
 
 Package Contents
@@ -45,6 +47,7 @@ Functions
    piel.integration.sax_to_ideal_qutip_unitary
    piel.integration.verify_sax_model_is_unitary
    piel.integration.fock_transition_probability_amplitude
+   piel.integration.convert_2d_array_to_string
 
 
 
@@ -261,3 +264,21 @@ Functions
 
        Returns:
            float: The transition probability amplitude between the initial and final Fock states.
+
+
+
+.. py:function:: convert_2d_array_to_string(list_2D: list[list])
+
+   This function is particularly useful to convert digital data when it is represented as a 2D array into a set of strings.
+
+   :param list_2D: A 2D array of binary data.
+   :type list_2D: list[list]
+
+   :returns: A string of binary data.
+   :rtype: binary_string (str)
+
+   Usage:
+
+       list_2D=[[0], [0], [0], [1]]
+       convert_2d_array_to_string(list_2D)
+       >>> "0001"

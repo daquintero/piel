@@ -29,9 +29,6 @@ Functions
 
 .. autoapisummary::
 
-   piel.tools.construct_amaranth_module_from_truth_table
-   piel.tools.generate_verilog_from_amaranth
-   piel.tools.verify_truth_table
    piel.tools.check_cocotb_testbench_exists
    piel.tools.configure_cocotb_simulation
    piel.tools.run_cocotb_simulation
@@ -105,49 +102,6 @@ Attributes
    piel.tools.get_simulation_output_files
    piel.tools.snet
    piel.tools.standard_s_parameters_to_qutip_qobj
-
-
-.. py:function:: construct_amaranth_module_from_truth_table(truth_table: dict, inputs: list[str], outputs: list[str], implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
-
-   This function implements a truth table as a module in amaranth,
-   Note that in some form in amaranth each statement is a form of construction.
-
-   The truth table is in the form of:
-
-       detector_phase_truth_table = {
-           "detector_in": ["00", "01", "10", "11"],
-           "phase_map_out": ["00", "10", "11", "11"],
-       }
-
-   :param truth_table: The truth table in the form of a dictionary.
-   :type truth_table: dict
-   :param inputs: The inputs to the truth table.
-   :type inputs: list[str]
-   :param outputs: The outputs to the truth table.
-   :type outputs: list[str]
-   :param implementation_type: The type of implementation. Defaults to "combinatorial".
-   :type implementation_type: Litearal["combinatorial", "sequential", "memory"], optional
-
-   :returns: Generated amaranth module.
-
-
-.. py:function:: generate_verilog_from_amaranth(amaranth_module: amaranth.Elaboratable, ports_list: list[str], target_file_name: str, target_directory: piel.config.piel_path_types, backend=verilog) -> None
-
-   This function exports an amaranth module to either a defined path, or a project structure in the form of an
-   imported multi-design module.
-
-   Iterate over ports list and construct a list of references for the strings provided in ``ports_list``
-
-   TODO DOCS parameters.
-
-
-
-.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
-
-   We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
-
-   TODO Implement a similar function from the openlane netlist too.
-   TODO unclear they can implement verification without it being in a synchronous simulation.
 
 
 .. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
@@ -717,7 +671,7 @@ Attributes
 
 .. py:function:: run_openlane_flow(configuration: dict | None = test_spm_open_lane_configuration, design_directory: piel.config.piel_path_types = '/foss/designs/spm') -> None
 
-   Runs the OpenLane flow.
+   Runs the OpenLane v2 flow.
 
    :param configuration: OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.
    :type configuration: dict

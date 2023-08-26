@@ -61,8 +61,18 @@ Functions
 
    Iterate over ports list and construct a list of references for the strings provided in ``ports_list``
 
-   TODO DOCS parameters.
+   :param amaranth_module: Amaranth elaboratable class.
+   :type amaranth_module: amaranth.Elaboratable
+   :param ports_list: List of input names.
+   :type ports_list: list[str]
+   :param target_file_name: Target file name.
+   :type target_file_name: str
+   :param target_directory: Target directory PATH.
+   :type target_directory: piel_path_types
+   :param backend: Backend to use. Defaults to ``verilog``.
+   :type backend: amaranth.back.verilog
 
+   :returns: None
 
 
 .. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')

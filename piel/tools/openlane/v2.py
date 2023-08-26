@@ -11,7 +11,7 @@ def run_openlane_flow(
     design_directory: piel_path_types = "/foss/designs/spm",
 ) -> None:
     """
-    Runs the OpenLane flow.
+    Runs the OpenLane v2 flow.
 
     Args:
         configuration(dict): OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.

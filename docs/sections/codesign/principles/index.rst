@@ -9,7 +9,9 @@ Electronic Fundamentals
 
 .. include:: electronic/fundamentals.rst
 .. include:: electronic/passives.rst
+.. include:: electronic/digital_metrics.rst
 .. include:: electronic/power_time_metrics.rst
+.. include:: electronic/physics.rst
 
 Photonic \& RF Fundamentals
 =============================

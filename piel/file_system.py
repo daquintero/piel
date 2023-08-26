@@ -224,15 +224,6 @@ def create_new_directory(
     directory_path.mkdir(parents=True)
 
 
-def create_piel_project_structure(target_directory_path: piel_path_types):
-    """
-    This function creates a `piel` project structure described in the documentation.
-
-    TODO implement.
-    """
-    pass
-
-
 def delete_path(path: str | pathlib.Path) -> None:
     """
     Deletes a path.

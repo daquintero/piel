@@ -22,8 +22,15 @@ def generate_verilog_from_amaranth(
 
     Iterate over ports list and construct a list of references for the strings provided in ``ports_list``
 
-    TODO DOCS parameters.
+    Args:
+        amaranth_module (amaranth.Elaboratable): Amaranth elaboratable class.
+        ports_list (list[str]): List of input names.
+        target_file_name (str): Target file name.
+        target_directory (piel_path_types): Target directory PATH.
+        backend (amaranth.back.verilog): Backend to use. Defaults to ``verilog``.
 
+    Returns:
+        None
     """
     if isinstance(target_directory, types.ModuleType):
         # If the path follows the structure of a `piel` path.

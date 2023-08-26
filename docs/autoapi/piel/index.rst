@@ -72,6 +72,7 @@ Functions
    piel.sax_to_ideal_qutip_unitary
    piel.verify_sax_model_is_unitary
    piel.fock_transition_probability_amplitude
+   piel.convert_2d_array_to_string
    piel.single_parameter_sweep
    piel.multi_parameter_sweep
    piel.create_setup_py
@@ -79,9 +80,6 @@ Functions
    piel.get_module_folder_type_location
    piel.pip_install_local_module
    piel.read_configuration
-   piel.construct_amaranth_module_from_truth_table
-   piel.generate_verilog_from_amaranth
-   piel.verify_truth_table
    piel.check_cocotb_testbench_exists
    piel.configure_cocotb_simulation
    piel.run_cocotb_simulation
@@ -646,6 +644,23 @@ Attributes
 
 
 
+.. py:function:: convert_2d_array_to_string(list_2D: list[list])
+
+   This function is particularly useful to convert digital data when it is represented as a 2D array into a set of strings.
+
+   :param list_2D: A 2D array of binary data.
+   :type list_2D: list[list]
+
+   :returns: A string of binary data.
+   :rtype: binary_string (str)
+
+   Usage:
+
+       list_2D=[[0], [0], [0], [1]]
+       convert_2d_array_to_string(list_2D)
+       >>> "0001"
+
+
 .. py:function:: single_parameter_sweep(base_design_configuration: dict, parameter_name: str, parameter_sweep_values: list)
 
    This function takes a base_design_configuration dictionary and sweeps a single parameter over a list of values. It returns a list of dictionaries that correspond to the parameter sweep.
@@ -746,49 +761,6 @@ Attributes
 
    :returns: Configuration dictionary.
    :rtype: config_dictionary(dict)
-
-
-.. py:function:: construct_amaranth_module_from_truth_table(truth_table: dict, inputs: list[str], outputs: list[str], implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
-
-   This function implements a truth table as a module in amaranth,
-   Note that in some form in amaranth each statement is a form of construction.
-
-   The truth table is in the form of:
-
-       detector_phase_truth_table = {
-           "detector_in": ["00", "01", "10", "11"],
-           "phase_map_out": ["00", "10", "11", "11"],
-       }
-
-   :param truth_table: The truth table in the form of a dictionary.
-   :type truth_table: dict
-   :param inputs: The inputs to the truth table.
-   :type inputs: list[str]
-   :param outputs: The outputs to the truth table.
-   :type outputs: list[str]
-   :param implementation_type: The type of implementation. Defaults to "combinatorial".
-   :type implementation_type: Litearal["combinatorial", "sequential", "memory"], optional
-
-   :returns: Generated amaranth module.
-
-
-.. py:function:: generate_verilog_from_amaranth(amaranth_module: amaranth.Elaboratable, ports_list: list[str], target_file_name: str, target_directory: piel.config.piel_path_types, backend=verilog) -> None
-
-   This function exports an amaranth module to either a defined path, or a project structure in the form of an
-   imported multi-design module.
-
-   Iterate over ports list and construct a list of references for the strings provided in ``ports_list``
-
-   TODO DOCS parameters.
-
-
-
-.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
-
-   We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
-
-   TODO Implement a similar function from the openlane netlist too.
-   TODO unclear they can implement verification without it being in a synchronous simulation.
 
 
 .. py:function:: check_cocotb_testbench_exists(design_directory: str | pathlib.Path) -> bool
@@ -1358,7 +1330,7 @@ Attributes
 
 .. py:function:: run_openlane_flow(configuration: dict | None = test_spm_open_lane_configuration, design_directory: piel.config.piel_path_types = '/foss/designs/spm') -> None
 
-   Runs the OpenLane flow.
+   Runs the OpenLane v2 flow.
 
    :param configuration: OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.
    :type configuration: dict
@@ -1745,4 +1717,4 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.0.48'
+   :value: '0.0.51'
