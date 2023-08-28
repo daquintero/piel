@@ -17,3 +17,4 @@ Photonic \& RF Fundamentals
 =============================
 
 .. include:: photonic/fundamentals.rst
+.. include:: photonic/network_analysis.rst
