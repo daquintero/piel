@@ -52,7 +52,7 @@ with pkgs; with python3.pkgs; buildPythonPackage rec {
   # version = builtins.head version_list;
   version = "0.0.51";
 
-  src1 = gitignore-src.gitignoreSource ./.;
+  src = gitignore-src.gitignoreSource ./.;
 
   doCheck = false;
 
