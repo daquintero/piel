@@ -17,7 +17,7 @@ Derivation for a two-conductor TEM transmission line
 .. math::
 
     \begin{equation}
-        I = \intc_{C+} H \dot dl
+        I = \oint_{C+} H \dot dl
     \end{equation}
 
 .. math::
@@ -41,6 +41,8 @@ When
     \begin{equation}
         [V] = [Z][I]
     \end{equation}
+
+.. math::
 
     \begin{equation}
         \begin{bmatrix}
@@ -69,6 +71,8 @@ When
     \begin{equation}
         [I] = [Y][V]
     \end{equation}
+
+.. math::
 
     \begin{equation}
         \begin{bmatrix}
@@ -103,9 +107,12 @@ Scattering Matrix
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. math::
+
     \begin{equation}
         [V^-] = [S][V^+]
     \end{equation}
+
+.. math::
 
     \begin{equation}
         \begin{bmatrix}

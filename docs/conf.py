@@ -113,7 +113,7 @@ nbsphinx_execute = "never"
 version = piel.__version__
 
 latex_elements: dict = {
-    "preamble": r"\usepackage{bm}\n\usepackage{amssymb}",
+    "preamble": r"\usepackage{bm}\n\usepackage{amssymb}\n\usepackage{esint}",
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',

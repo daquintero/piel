@@ -42,7 +42,7 @@ Depletion Region vs Voltage Bias
 .. math::
 
     \begin{equation}
-    W_j = W_2 - W_1 = \sqrt{\left( \frac{2 \epsilon_si}{q} \frac{N_A + N_D}{N_A N_D} \right) (\phi_0 - V_D) }
+    W_j = W_2 - W_1 = \sqrt{\left( \frac{2 \epsilon_{si}}{q} \frac{N_A + N_D}{N_A N_D} \right) (\phi_0 - V_D) }
     \end{equation}
 
 
@@ -123,20 +123,20 @@ Static MOS Transistor
 .. math::
 
     \begin{equation}
-    mathcal{v}_n(x) = - \mu_n \zeta(x) = \mu_n \frac{dV}{dx}
+    \mathcal{v}_n(x) = - \mu_n \zeta(x) = \mu_n \frac{dV}{dx}
     \end{equation}
 
 .. math::
 
     \begin{align}
     I_D dx = \mu_n C_{ox} W (V_{GS} - V - V_T) dV \\
-    I_D = k_n^' \frac{W}{L} \left [ (V_{GS} - V_T) V_{DS} - \frac{V_{DS}^2}{2} \right ]
+    I_D = k_n^\' \frac{W}{L} \left [ (V_{GS} - V_T) V_{DS} - \frac{V_{DS}^2}{2} \right ]
     \end{align}
 
 .. math::
 
     \begin{align}
-    k_n^' = \mu_n C_{ox} = \frac{\mu_n \epsilon_{ox}}{t_{ox}}
+    k_n^\' = \mu_n C_{ox} = \frac{\mu_n \epsilon_{ox}}{t_{ox}}
     \end{align}
 
 NMOS Switch Model
