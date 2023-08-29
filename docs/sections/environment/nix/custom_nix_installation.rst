@@ -5,9 +5,10 @@ You might have your own set of tools that you are using alongside ``piel``. One 
 
 We follow some of the principles in the `Setting up the OpenLane Nix Cache page <https://openlane2.readthedocs.io/en/latest/contributors/updating_tools.html#setting-up-the-openlane-nix-cache>`__ .
 
-Relevant tools:
+Relevant tools and commands:
 
 -  `cachix <https://docs.cachix.org/getting-started>`__ Binary Cache platform for open source and business.
+-  `nix-shell <https://nixos.org/manual/nix/stable/command-ref/nix-shell>`__ "Build the dependencies of the specified derivation, but not the derivation itself".
 
 You might want to clone only the maintained ``nix`` configuration of the ``openlane2`` design flow.
 

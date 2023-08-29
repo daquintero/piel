@@ -13,33 +13,25 @@ proprietary ones such as Cadence ``spectre`` and more.
 We list some here for reference, and further development is welcome to
 integrate these in the design flow:
 
-+------------+---------------------+----------------------------------+
-| Name       | Description         | Status                           |
-+============+=====================+==================================+
-| `NGSP      | Open source spice   | Active                           |
-| ICE <https | simulator for       |                                  |
-| ://ngspice | electric and        |                                  |
-| .sourcefor | electronic circuits |                                  |
-| ge.io/>`__ |                     |                                  |
-+------------+---------------------+----------------------------------+
-| `P         | Simulate electronic | Inactive                         |
-| YSPICE <ht | circuit using       |                                  |
-| tps://gith | Python and the      |                                  |
-| ub.com/PyS | Ngspice / Xyce      |                                  |
-| pice-org/P | simulators          |                                  |
-| ySpice>`__ |                     |                                  |
-+------------+---------------------+----------------------------------+
-| `XYCE      | Open source,        | Active                           |
-| <https://x | SPICE-compatible,   |                                  |
-| yce.sandi  | high-performance    |                                  |
-| a.gov>`__  | analog circuit      |                                  |
-|            | simulator           |                                  |
-+------------+---------------------+----------------------------------+
-| `QUCS <htt | Quite Universal     | Inactive Mostly, some `PySPICE   |
-| ps://githu | Circuit Simulator   | Integration <https://py          |
-| b.com/Qucs |                     | spice.fabrice-salvaire.fr/releas |
-| /qucs/>`__ |                     | es/v1.5/simulators.html#qucs>`__ |
-+------------+---------------------+----------------------------------+
+.. list-table:: Electronic Circuit Simulators
+   :header-rows: 1
+
+   * - Name
+     - Description
+     - Status
+   * - `NGSPICE <https://ngspice.sourceforge.io/>`__
+     - Open source spice simulator for electric and electronic circuits
+     - Active
+   * - `PYSPICE <https://github.com/PySpice-org/PySpice>`__
+     - Simulate electronic circuit using Python and the Ngspice / Xyce simulators
+     - Inactive
+   * - `XYCE <https://xyce.sandia.gov>`__
+     - Open source, SPICE-compatible, high-performance analog circuit simulator
+     - Active
+   * - `QUCS <https://github.com/Qucs/qucs/>`__
+     - Quite Universal Circuit Simulator, Inactive Mostly, some `PySPICE Integration <https://pyspice.fabrice-salvaire.fr/releases/v1.5/simulators.html#qucs>`__
+     - Inactive Mostly
+
 
 ``hdl21`` Selection
 -------------------

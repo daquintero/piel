@@ -6,23 +6,20 @@ systems verification. What we aim to do is extend it to interconnect out
 photonic models according to the electronic signals applied. There are a
 few useful commands worth noting:
 
-+-----------------------------------------------------+----------------+
-| Description                                         | Command        |
-+=====================================================+================+
-| Get the ``dut``, the verilog top-module device      | ``dut``        |
-| under test.                                         |                |
-+-----------------------------------------------------+----------------+
-| Get a list of the ``dut`` signals, modules and      | ``dir(dut)``   |
-| user-defined parameters accessible through dot      |                |
-| notation                                            |                |
-+-----------------------------------------------------+----------------+
-| Get a signal value within the top level at a        | ``dut.<"si     |
-| particular subroutine time.                         | gnal">.value`` |
-+-----------------------------------------------------+----------------+
-| Get the current simulation time                     | ``c            |
-|                                                     | ocotb.utils.ge |
-|                                                     | t_sim_time()`` |
-+-----------------------------------------------------+----------------+
+.. list-table:: Verilog Top-Module Device Commands
+   :header-rows: 1
+
+   * - Description
+     - Command
+   * - Get the ``dut``, the Verilog top-module device under test.
+     - ``dut``
+   * - Get a list of the ``dut`` signals, modules and user-defined parameters accessible through dot notation.
+     - ``dir(dut)``
+   * - Get a signal value within the top level at a particular subroutine time.
+     - ``dut.<"signal">.value``
+   * - Get the current simulation time.
+     - ``cocotb.utils.get_sim_time()``
+
 
 One thing we would like to do is directly connect the time-domain
 digital simulation data to the inputs of the photonic network
