@@ -45,13 +45,14 @@
 }:
 
 with pkgs; with python3.pkgs; buildPythonPackage rec {
-  name = "openlane";
+  name = "piel";
 
-  version_file = builtins.readFile ./openlane/__version__.py;
-  version_list = builtins.match ''.+''\n__version__ = "([^"]+)"''\n.+''$'' version_file;
-  version = builtins.head version_list;
+  version_file = builtins.readFile ./piel/__init__.py;
+  # version_list = builtins.match ''.+''\n__version__ = "([^"]+)"''\n.+''$'' version_file;
+  # version = builtins.head version_list;
+  version = "0.0.51";
 
-  src = gitignore-src.gitignoreSource ./.;
+  src1 = gitignore-src.gitignoreSource ./.;
 
   doCheck = false;
 

@@ -14,14 +14,14 @@
 # limitations under the License.
 {
     pkgs ? import ./nix/pkgs.nix,
-    openlane-app ? import ./. {}
+    piel-app ? import ./. {}
 }:
 
 with pkgs; mkShell {
-  name = "openlane";
+  name = "piel";
 
   propagatedBuildInputs = [
-    openlane-app
+    piel-app
 
     # Conveniences
     git
