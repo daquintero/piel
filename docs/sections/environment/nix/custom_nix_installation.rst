@@ -23,10 +23,14 @@ What we would like to do is have a version controlled installation that tracks t
     # TODO We want to track this directory only, how?
 
 
+
+
 .. list-table:: Useful ``nix`` commands
    :header-rows: 1
 
    * - Description
      - Command
-   * - Build with all available CPU cores
+    * - Build production shell with all available CPU cores
+     - ``nix-build --cores 0``
+   * - Build development shell with all available CPU cores
      - ``nix-shell --cores 0``
