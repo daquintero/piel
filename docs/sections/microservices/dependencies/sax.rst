@@ -1,8 +1,8 @@
 ``sax``
-=======
+----------------------
 
 Implementation Principle
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The methodology of interconnection between photonics and electronics
 design can be done in the time and frequency domain. However, one of the
@@ -21,7 +21,7 @@ We want to extend this type of functionality into a co-design between
 electronic and photonic tools.
 
 Pseudo-Static Active Models
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 One of the main principles of ``sax`` is that we can create models that allow us to simulate the frequency-domain response of the input and output. In our case, as we want to simulate the interface of electronics and photonics, we want models that we can see how the input-output varies based on the electrical signal control provided. However, as ``sax`` is a frequency-domain solver, we can not just implement time-dependent active control.
 
 The first implementation proposed in ``piel`` is a pseudo-static implementation of ``sax`` models, whose model evaluation is dependent on a set of controlled-phase parameters for a physical circuit. This can be then interconnected with the asynchronous electrical models in ``cocotb`` through some analog or digital signal-to-phase mapping.
@@ -31,7 +31,7 @@ Another aspect that we want to make sure we are modelling is the variability of 
 GDSFactory is a functional implementation of circuit design and physical parameterised devices can be easily created.
 
 Implementation
-~~~~~~~~~~~~~~~
+''''''''''''''''''''''''''''''''''''''''''
 A ``sax`` circuit is a "component model function" such as the ones we define for our instances. This means that we can functionally evaluate variations in our parameters by just evaluating the ``sax`` circuit function with our component parameters. This evaluation tends to be in the order of `ms` whereas the circuit composition tends to be in a larger order of magnitude depending on complexity. In ``sax`` documentation words:
 
 .. epigraph::
@@ -41,7 +41,7 @@ A ``sax`` circuit is a "component model function" such as the ones we define for
 
 
 API
-------
+^^^^^^^^
 
 .. toctree::
 

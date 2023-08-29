@@ -1,5 +1,5 @@
 Domains
-=======
+-------------
 
 Multiple physical domains need to be understood of a system to create an
 optimal interconnection implementation. We provide a set of component
@@ -8,41 +8,22 @@ corresponding domain simulator.
 
 Models are provided in the following types:
 
-+---+----------------------------------------+-------------------------+
-| T | Description                            | Examples                |
-| y |                                        |                         |
-| p |                                        |                         |
-| e |                                        |                         |
-+===+========================================+=========================+
-| f | Frequency domain relating inputs and   |                         |
-| r | outputs.                               |                         |
-| e |                                        |                         |
-| q |                                        |                         |
-| u |                                        |                         |
-| e |                                        |                         |
-| n |                                        |                         |
-| c |                                        |                         |
-| y |                                        |                         |
-+---+----------------------------------------+-------------------------+
-| l | Deterministic relationships from a     |                         |
-| o | defined input to an output that        |                         |
-| g | implement a logical operation.         |                         |
-| i |                                        |                         |
-| c |                                        |                         |
-| a |                                        |                         |
-| l |                                        |                         |
-+---+----------------------------------------+-------------------------+
-| p | Relationships between physical         | Waveguide width vs      |
-| h | parameters and other physical          | optical attenuation per |
-| y | performance parameters.                | meter vs TE mode.       |
-| s |                                        |                         |
-| i |                                        |                         |
-| c |                                        |                         |
-| a |                                        |                         |
-| l |                                        |                         |
-+---+----------------------------------------+-------------------------+
-| t | Transient domain models of             |                         |
-| i | time-dependent state changes.          |                         |
-| m |                                        |                         |
-| e |                                        |                         |
-+---+----------------------------------------+-------------------------+
+
+.. list-table:: Types of Descriptions and Examples
+   :header-rows: 1
+
+   * - Type
+     - Description
+     - Examples
+   * - Frequency
+     - Frequency domain relating inputs and outputs.
+     -
+   * - Logical
+     - Deterministic relationships from a defined input to an output that implement a logical operation.
+     -
+   * - Physical
+     - Relationships between physical parameters and other physical performance parameters.
+     - Waveguide width vs optical attenuation per meter vs TE mode.
+   * - Time
+     - Transient domain models of time-dependent state changes.
+     -

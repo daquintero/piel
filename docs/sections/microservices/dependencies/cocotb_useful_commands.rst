@@ -1,5 +1,5 @@
 Useful Commands
-===============
+^^^^^^^^^^^^^^^^
 
 ``cocotb`` is an incredible tool for logical time-dependent digital
 systems verification. What we aim to do is extend it to interconnect out

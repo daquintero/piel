@@ -1,5 +1,5 @@
 ``gdsfactory`` - SPICE ``Netlist`` - ``VLSIR``
-==============================================
+------------------------------------------------------------------
 
 There are many ways in which we might desire to integrate ``gdsfactory``
 with ``SPICE``. One particular one is to be able to extract an
@@ -11,7 +11,7 @@ This will allow us to integrate with the ``ngspice`` and ``xyce``
 simulators, and in the future with Cadence and related tools.
 
 Integration Methodology
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 One of the main complexities of integrating the SPICE netlist is
 determining the exact instance connectivity. One of the main
@@ -32,7 +32,7 @@ future compatibility to ``VLSIR`` and so on. We can then perform a LVS
 check with the actual layout using further tools as discussed below.
 
 LVS Tools Integration
-~~~~~~~~~~~~~~~~~~~~~
+'''''''''''''''''''''''''''''''''''''''''
 
 The first step is that all ``GDSFactory`` components need to have
 electrical pins attached to them too, or they can not be extracted

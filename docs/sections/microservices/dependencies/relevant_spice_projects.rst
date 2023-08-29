@@ -1,5 +1,5 @@
 List of Relevant SPICE Projects
-===============================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are a large amount of open-source SPICE solvers currently
 available. In ``piel``, ``hdl21`` has been integrated first because it
@@ -34,7 +34,7 @@ integrate these in the design flow:
 
 
 ``hdl21`` Selection
--------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Note that PYSPICE despite being recently inactive, already has working
 bindings to ``ngspice`` and ``XYCE``, which one would think makes it

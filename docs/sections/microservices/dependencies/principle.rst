@@ -1,8 +1,8 @@
 Methodology
-===========
+----------------------
 
 Integration
------------
+^^^^^^^^^^^^^^^^^
 
 In the case of the tool integration with existing co-simulation design
 flows, it could be desired to have a set of migration functions that

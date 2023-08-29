@@ -1,5 +1,5 @@
-Environment Requirements
-=========================
+Tool Environment Requirements
+===============================
 
 Many of the great tools for microelectronic design are functional only
 through Linux environments. This leads to an inherent barrier-to-entry

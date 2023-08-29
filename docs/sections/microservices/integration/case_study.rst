@@ -22,6 +22,6 @@ GDSFactory environment.
 
 The next level of simulation analysis is to understand the effect of the
 total requirements of a particular system implementation. This is
-already achieved through `TODO link example <>`__. Each individual
+already achieved through TODO LINK EXAMPLE. Each individual
 toolset interconnection mechanism is described on its corresponding
 ``piel/integration/<"tool1-tool2">.py`` source file.

@@ -21,3 +21,12 @@ What we would like to do is have a version controlled installation that tracks t
     git clone https://github.com/efabless/openlane2.git
     cd openlane2/nix/
     # TODO We want to track this directory only, how?
+
+
+.. list-table:: Useful ``nix`` commands
+   :header-rows: 1
+
+   * - Description
+     - Command
+   * - Build with all available CPU cores
+     - ``nix-shell --cores 0``

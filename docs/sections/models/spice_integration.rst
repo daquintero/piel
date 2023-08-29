@@ -1,5 +1,5 @@
 SPICE Integration
-=================
+---------------------
 
 The implementation mechanism is to provide component models that include
 the raw interconnect based on similar ``gdsfactory`` port naming and
@@ -16,7 +16,7 @@ model primitives.
 
 
 Model Composition with ``hdl21``
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 These functions map a particular model, with an instance representation that corresponds to the given netlist
 connectivity, and returns a SPICE representation of the circuit in the form of a ``hdl21`` structure. This function
@@ -43,13 +43,16 @@ The models provided are ``hdl21`` generators based on parameters that are inputt
 defined set of parameters and we use the construct it from the nested dictionary:
 
 .. code-block::
-@h.paramclass
-    class Outer:
-        inner = h.Param(dtype=Inner, desc="Inner fields")
-        f = h.Param(dtype=float, desc="A float", default=3.14159)
 
-    # Create from a (nested) dictionary literal
-    d1 = {"inner": {"i": 11}, "f": 22.2}
-    o = Outer(**d1)
+    @h.paramclass
+        class Outer:
+            inner = h.Param(dtype=Inner, desc="Inner fields")
+            f = h.Param(dtype=float, desc="A float", default=3.14159)
+
+        # Create from a (nested) dictionary literal
+        d1 = {"inner": {"i": 11}, "f": 22.2}
+        o = Outer(**d1)
 
 So this allows us to return instance models that compose our circuit.
+
+TODO REFERENCE EXAMPLES.

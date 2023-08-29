@@ -1,5 +1,5 @@
 Time Domain
-===========
+--------------------
 
 It is important to note that optical time may not be in sync to
 electronic time. This means that optical signals vary and change

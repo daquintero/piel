@@ -1,5 +1,5 @@
 ``cocotb`` - ``sax``
-====================
+------------------------
 
 This integration aims to provide an co-design mechanism for solving
 photonic circuit networking. One common application might be to see how

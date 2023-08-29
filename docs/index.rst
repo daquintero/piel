@@ -2,12 +2,12 @@
 
 .. include:: README.rst
 
-
+************
 Contents
----------
+************
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    examples
    sections/environment/index
@@ -18,8 +18,9 @@ Contents
    sections/about/index
 
 
+************************
 Indices and tables
--------------------
+************************
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

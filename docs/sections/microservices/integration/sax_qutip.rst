@@ -1,5 +1,5 @@
 ``qutip`` - ``sax``
-===================
+----------------------
 
 One interesting relationship to explore is how a particular extracted
 unitary from a photonic network affect the quantum states (such as
@@ -10,12 +10,12 @@ We provide an example of this integration here:
 
 
 Conversion Assumptions
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are a list of assumptions that the user must be aware when converting in between different modelling regimes.
 
 Quantum Information Basics
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Properties of unitary matrices:
 

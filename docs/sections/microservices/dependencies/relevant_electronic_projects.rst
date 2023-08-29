@@ -1,5 +1,5 @@
 Relevant Electronic Projects
-============================
+--------------------------------------------
 
 This contains a list of important open-source software that tackles some
 challenges or individual aspects of electronic or electronic-photonic
@@ -29,7 +29,7 @@ There’s a list of awesome electronics projects `compiled by the CEO of
 RapidSilicon <https://github.com/aolofsson/awesome-opensource-hardware>`__.
 
 Selection of Python-to-HDL Flow
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 I am currently deciding which project to integrate as part of the
 python-to-logic design flow. There are some cases where we might want to

@@ -1,5 +1,6 @@
+**************************
 Co-Design Functionality
-=======================
+**************************
 
 .. toctree::
     :caption: Contents:

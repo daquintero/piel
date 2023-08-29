@@ -1,5 +1,5 @@
 ``cocotb``
-==========
+----------------------
 
 One of the main benefits of integrating well supported open-source EDA
 design tools is the potential tools integration options this enables.

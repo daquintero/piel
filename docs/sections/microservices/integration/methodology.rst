@@ -1,8 +1,8 @@
 Methodology
-===========
+----------------------
 
 Microservice Architecture
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``piel`` is designed to be a microservice architecture. This means that
 each tool is a separate service that can be run independently. This is a

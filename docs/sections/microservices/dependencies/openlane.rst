@@ -1,8 +1,8 @@
 ``openlane``
-============
+----------------------
 
 v1/v2 Migration
----------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Currently, OpenLane v1 is integrated into the project whilst Openlane v2
 is still in development.
