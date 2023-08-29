@@ -18,7 +18,8 @@ can be integrated accordingly are:
 -  `QuestaSim <https://docs.cocotb.org/en/stable/simulator_support.html>`__
 -  `GHDL <https://docs.cocotb.org/en/stable/simulator_support.html>`__
 
+.. include:: cocotb_useful_commands.rst
+
 .. toctree::
 
-    cocotb_useful_commands
     ../../../autoapi/piel/tools/cocotb/index.rst

@@ -12,6 +12,4 @@ enable easy use of the integration from a design flow based on
 A wrapper function to enable this is the ``openlane_migration`` [//]: #
 (TODO include openlane_migration links)
 
-.. toctree::
-
-    relevant_electronic_projects
+.. include:: relevant_electronic_projects.rst

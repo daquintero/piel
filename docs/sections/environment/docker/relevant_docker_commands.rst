@@ -1,12 +1,12 @@
 Docker Useful Commands
-======================
+---------------------
 
 You might want to interact a lot with the filesystem when running OSIC
 EDA tools, so here is a set of useful Docker commands that might make
 the experience easier.
 
 Useful Commands Table
----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +--------------------------------------------+-----------------------------------------+
 | Description                                | Command                                 |

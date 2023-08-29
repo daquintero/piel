@@ -1,13 +1,9 @@
 Dependency Bindings
 ======================
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Contents:
-
-    principle
-    gdsfactory
-    openlane
-    cocotb
-    sax
-    spice
+.. include:: principle.rst
+.. include:: gdsfactory.rst
+.. include:: openlane.rst
+.. include:: cocotb.rst
+.. include:: sax.rst
+.. include:: spice.rst

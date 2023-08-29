@@ -126,3 +126,22 @@ $ git push
 $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.
+
+
+Useful Commands
+----------------
+
+Convert all markdown files in one directory to another.
+
+.. code:: shell
+
+    input_directory_path="/path/to/input_directory"
+    output_directory_path="/path/to/output_directory"
+
+    mkdir -p "$output_directory_path"
+
+    for file in "$input_directory_path"/*.md; do
+        base_name=$(basename "$file")
+        output_file="$output_directory_path/${base_name%.md}.rst"
+        pandoc "$file" -o "$output_file"
+    done

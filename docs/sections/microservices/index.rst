@@ -5,9 +5,7 @@ Tools
 
 
 This package provides interconnection functions to easily co-design
-microelectronics through the functionality of the
-`IIC-OSIC-TOOLS <https://github.com/iic-jku/iic-osic-tools>`__ and
-photonics via `GDSFactory <https://github.com/gdsfactory/gdsfactory>`__.
+microelectronics through the functionality of multiple electronic and photonic design tools.
 
 .. figure:: ../../_static/img/piel_microservice_structure.png
    :alt: `piel` microservices structure.
