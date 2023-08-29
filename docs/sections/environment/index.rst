@@ -11,7 +11,7 @@ Environment
 
 .. include:: nix/nix_install.rst
 .. include:: nix/custom_nix_installation.rst
-
+.. include:: nix/relevant_nix_commands.rst
 
 ``docker`` Configuration (In Passive Development)
 =====================================================

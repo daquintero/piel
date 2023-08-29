@@ -13,7 +13,8 @@ On Linux you can run, in summary:
     sudo apt-get install -y curl
     sh <(curl -L https://nixos.org/nix/install) --no-daemon --yes
     # Restart the terminal or run ``. /home/<yourusername>/.nix-profile/etc/profile.d/nix.sh``
-    nix-env -f "<nixpkgs>" -iA cachix
+    nix-env -f "<nixpkgs>" -iA cachix # Install the package cache manager and installer
 
 
 Now, we install the ``piel`` specific configuration:
+TODO
