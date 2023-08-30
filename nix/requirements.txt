@@ -9,10 +9,7 @@ networkx
 numpy
 openlane
 pandas
-pip>=19.2.3
 qutip
 sax
-setuptools>=40.8.0
 thewalrus
 vlsir
-wheel
