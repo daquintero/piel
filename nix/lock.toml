@@ -4,6 +4,6 @@ rev = "725aab8d52eb2f5b8ff67bea61049011ef31597c"
 sha256 = "1a1p3ldjciiva3m45i3larhxy63bjbda320f902jh8p0lwn2c3sf"
 
 [nixpkgs]
-ref = "2c6ae7132ca558f1052da0eececed3cad191b883"
-rev = "2c6ae7132ca558f1052da0eececed3cad191b883"
-sha256 = "0kxlg848981mymly2na0j5qy8ixnzhw8r9wy9cjfrcy483ikvdyx"
+ref = "554d2d8aa25b6e583575459c297ec23750adb6cb"
+rev = "554d2d8aa25b6e583575459c297ec23750adb6cb"
+sha256 = "01yfqslnkyrfb5yjfablhvw830iw0za3mab4n03a0ldyq5ac6wh1"
