@@ -220,6 +220,29 @@ The reflectance of an incident wave with power :math:`S_i` and reflected to a wa
     \end{equation}
 
 
+Impedance Types
+^^^^^^^^^^^^^^^^
+
+.. math::
+
+    \begin{equation}
+        \eta = \sqrt{\frac{\mu}{\epsilon}}
+    \end{equation}
+
+
+.. math::
+
+    \begin{equation}
+        Z_w = \frac{E_t}{H_t} = \frac{1}{Y_w}
+    \end{equation}
+
+
+.. math::
+
+    \begin{equation}
+        Z_0 = \frac{1}{Y_0} = \frac{V_+}{I_+}
+    \end{equation}
+
 Towards Waveguides
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

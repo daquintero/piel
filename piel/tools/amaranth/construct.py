@@ -51,6 +51,7 @@ def construct_amaranth_module_from_truth_table(
             # TODO implement some verification that the arrays are of the same length.
 
             # Implements a particular output.
+            print(outputs[0])
             output_value_i = getattr(self, outputs[0]).eq
 
             with m.Switch(getattr(self, inputs[0])):

@@ -19,7 +19,7 @@ Functions
 
 .. py:function:: run_openlane_flow(configuration: dict | None = test_spm_open_lane_configuration, design_directory: piel.config.piel_path_types = '/foss/designs/spm') -> None
 
-   Runs the OpenLane flow.
+   Runs the OpenLane v2 flow.
 
    :param configuration: OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.
    :type configuration: dict

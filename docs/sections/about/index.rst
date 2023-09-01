@@ -1,9 +1,7 @@
+**************************
 About
-=====
+**************************
 
-.. toctree::
-    :caption: Contents:
-
-    motivation
-    relevant_projects
-    AUTHORS
+.. include:: motivation
+.. include:: relevant_projects
+.. include:: AUTHORS

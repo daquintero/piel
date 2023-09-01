@@ -1,5 +1,5 @@
 ``cocotb``
-==========
+----------------------
 
 One of the main benefits of integrating well supported open-source EDA
 design tools is the potential tools integration options this enables.
@@ -18,7 +18,8 @@ can be integrated accordingly are:
 -  `QuestaSim <https://docs.cocotb.org/en/stable/simulator_support.html>`__
 -  `GHDL <https://docs.cocotb.org/en/stable/simulator_support.html>`__
 
+.. include:: cocotb_useful_commands.rst
+
 .. toctree::
 
-    cocotb_useful_commands
     ../../../autoapi/piel/tools/cocotb/index.rst

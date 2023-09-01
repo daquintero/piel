@@ -133,6 +133,24 @@ verify_truth_table(
 
 # ![example_truth_table_verification](../../_static/img/examples/02_cocotb_simulation/example_truth_table_verification.PNG)
 
+# ### Integration with the `openlane v2` flow
+
+# You may want, for example, to layout this design as an `openlane` design. There are different flows of how to achieve this. We know, for example, that we have a design directory where we want to save the outputs of the `openlane` runs. It will impelement the design using the `openlane v2` versions:
+
+# +
+from piel.integration.amaranth_openlane import (
+    layout_amaranth_truth_table_through_openlane,
+)
+
+layout_amaranth_truth_table_through_openlane(
+    amaranth_module=our_truth_table_module,
+    inputs_name_list=input_ports_list,
+    outputs_name_list=output_ports_list,
+    parent_directory=amaranth_driven_flow,
+    openlane_version="v1",
+)
+# -
+
 # ## `cocoTb` Simulation
 
 # It is strongly encouraged to get familiar with the `piel` flow project structure, as this file directory distribution enables the easy use between multiple design tools without conflicts or without structured organisation.

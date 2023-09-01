@@ -23,12 +23,14 @@ Functions
 .. autoapisummary::
 
    piel.models.logic.electro_optic.bits_array_from_bits_amount
+   piel.models.logic.electro_optic.convert_phase_array_to_bit_array
+   piel.models.logic.electro_optic.find_nearest_bit_for_phase
    piel.models.logic.electro_optic.linear_bit_phase_map
    piel.models.logic.electro_optic.return_phase_array_from_data_series
 
 
 
-.. py:function:: bits_array_from_bits_amount(bits_amount: int) -> numpy.ndarray
+.. py:function:: bits_array_from_bits_amount(bits_amount: int, bit_format: Literal[int, str] = 'int') -> numpy.ndarray
 
    Returns an array of bits from a given amount of bits.
 
@@ -39,7 +41,47 @@ Functions
    :rtype: bit_array(np.ndarray)
 
 
-.. py:function:: linear_bit_phase_map(bits_amount: int, final_phase_rad: float, initial_phase_rad: float = 0, return_dataframe: bool = True, quantization_error: float = 1e-06) -> dict | pandas.DataFrame
+.. py:function:: convert_phase_array_to_bit_array(phase_array: Iterable, phase_bit_dataframe: pandas.DataFrame, phase_series_name: str = 'phase', bit_series_name: str = 'bit', rounding_function: Optional[Callable] = None) -> tuple
+
+   This function converts a phase array or tuple iterable, into the corresponding mapping of their bitstring required within a particular bit-phase mapping. A ``phase_array`` iterable is provided, and each phase is mapped to a particular bitstring based on the ``phase_bit_dataframe``. A tuple is composed of strings that represent the bitstrings of the phases provided.
+
+   :param phase_array: Iterable of phases to map to bitstrings.
+   :type phase_array: Iterable
+   :param phase_bit_dataframe: Dataframe containing the phase-bit mapping.
+   :type phase_bit_dataframe: pd.DataFrame
+   :param phase_series_name: Name of the phase series in the dataframe.
+   :type phase_series_name: str
+   :param bit_series_name: Name of the bit series in the dataframe.
+   :type bit_series_name: str
+   :param rounding_function: Rounding function to apply to the target phase.
+   :type rounding_function: Callable
+
+   :returns: Tuple of bitstrings corresponding to the phases.
+   :rtype: bit_array(tuple)
+
+
+.. py:function:: find_nearest_bit_for_phase(target_phase: float, phase_bit_dataframe: pandas.DataFrame, phase_series_name: str = 'phase', bit_series_name: str = 'bit', rounding_function: Optional[Callable] = None) -> tuple
+
+   This is a mapping function between a provided target phase that might be more analogous, with the closest
+   bit-value in a `bit-phase` ideal relationship. The error between the target phase and the applied phase is
+   limited to the discretisation error of the phase mapping.
+
+   :param target_phase: Target phase to map to.
+   :type target_phase: float
+   :param phase_bit_dataframe: Dataframe containing the phase-bit mapping.
+   :type phase_bit_dataframe: pd.DataFrame
+   :param phase_series_name: Name of the phase series in the dataframe.
+   :type phase_series_name: str
+   :param bit_series_name: Name of the bit series in the dataframe.
+   :type bit_series_name: str
+   :param rounding_function: Rounding function to apply to the target phase.
+   :type rounding_function: Callable
+
+   :returns: Bitstring corresponding to the nearest phase.
+   :rtype: bitstring(str)
+
+
+.. py:function:: linear_bit_phase_map(bits_amount: int, final_phase_rad: float, initial_phase_rad: float = 0, return_dataframe: bool = True, quantization_error: float = 1e-06, bit_format: Literal[int, str] = 'int') -> dict | pandas.DataFrame
 
    Returns a linear direct mapping of bits to phase.
 

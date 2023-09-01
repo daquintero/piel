@@ -1,8 +1,8 @@
 Linux - Docker Setup Instructions
-=================================
+----------------------------------------------------
 
-``piel`` is automatically installed with all dependencies in the docker environment provided by
-`IIC-OSIC-TOOLS <https://github.com/iic-jku/iic-osic-tools>`__.
+We aim for ``piel`` to be automatically installed with all dependencies in the docker environment provided by
+`IIC-OSIC-TOOLS <https://github.com/iic-jku/iic-osic-tools>`__. This is an `issue in progress <https://github.com/iic-jku/iic-osic-tools/issues/14>`__
 
 Start your docker environment accordingly running, for example:
 

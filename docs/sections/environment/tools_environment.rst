@@ -1,5 +1,5 @@
-Environment Requirements
-=========================
+Tool Environment Requirements
+===============================
 
 Many of the great tools for microelectronic design are functional only
 through Linux environments. This leads to an inherent barrier-to-entry
@@ -57,16 +57,8 @@ In the future, we will have custom installations for different types of users so
 Multi-Platform Dependency Installation Commands
 -----------------------------------------------
 
-Maybe in the future I will write a mamba recepie.
+Maybe in the future I will write a mamba recepie for the piel installation.
 
 .. code-block::
+
     mamba install ngspice -y # For NGPICE in any environment
-
-
-Docker Configuration
---------------------
-
-.. include:: docker_setup.rst
-.. include:: docker_environment_configuration.rst
-.. include:: relevant_docker_commands.rst
-.. include:: developer_docker_configuration.rst

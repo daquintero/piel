@@ -1,10 +1,10 @@
 Extension of IIC-OSIC-TOOLS
-===========================
+----------------------------------------------------
 
 Existing Toolset:
 
 Jupyter Notebook
-----------------
+^^^^^^^^^^^^^^^^^^
 
 From the IIC-OSIC-TOOLS directory run:
 
@@ -13,7 +13,7 @@ From the IIC-OSIC-TOOLS directory run:
    ./start_jupyter.sh
 
 Jupyter Lab
------------
+^^^^^^^^^^^^^^^^^^
 
 Now, there is no direct ``jupyterlab`` running script as of June 2023:
 
@@ -36,7 +36,7 @@ However, to view our ``Jupytext`` notebooks you need to run:
    pip install jupytext
 
 Required Toolset
-----------------
+^^^^^^^^^^^^^^^^^^
 
 As of right now, the openlane flow can only be run in a ``root``
 environment.
