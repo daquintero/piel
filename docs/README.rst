@@ -10,6 +10,7 @@ quantum, and more.
 
 -  Free software: MIT license
 -  Documentation: https://piel.readthedocs.io
+-  Slack Channel: `Join #piel in open-source-silicon.dev <https://join.slack.com/t/open-source-silicon/shared_invite/zt-22rt521qo-C7HUHAXDJ~am33y9ZNOPlg>`__
 
 Target functionality
 --------------------

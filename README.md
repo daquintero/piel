@@ -11,8 +11,9 @@ Status](https://readthedocs.org/projects/piel/badge/?style=for-the-badge)](https
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.
 
--   Free software: MIT license
--   Documentation: <https://piel.readthedocs.io>
+- Free software: MIT license
+- Documentation: <https://piel.readthedocs.io>
+- Slack Channel: [Join `#piel` in open-source-silicon.dev](https://join.slack.com/t/open-source-silicon/shared_invite/zt-22rt521qo-C7HUHAXDJ~am33y9ZNOPlg)
 
 ## Target functionality
 

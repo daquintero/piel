@@ -2,6 +2,6 @@
 About
 **************************
 
-.. include:: motivation
-.. include:: relevant_projects
-.. include:: AUTHORS
+.. include:: relevant_projects.rst
+.. include:: motivation.rst
+.. include:: AUTHORS.rst

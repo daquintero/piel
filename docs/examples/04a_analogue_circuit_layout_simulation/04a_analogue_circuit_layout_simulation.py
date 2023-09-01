@@ -9,19 +9,19 @@
 # There are several open-source PDKs. At the moment some of the most popular ones are:
 #
 # **SKY130nm**
-# * [Main Open-Source Release](https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/tree/ac7fb61f06e6470b94e8afdf7c25268f62fbd7b1)
-# * [`gdsfactory` layout PDK integration](https://github.com/gdsfactory/skywater130)
-# * [`hdl21` integration](https://github.com/dan-fritchman/Hdl21/tree/main/pdks/Sky130)
+# -  [Main Open-Source Release](https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/tree/ac7fb61f06e6470b94e8afdf7c25268f62fbd7b1)
+# -  [`gdsfactory` layout PDK integration](https://github.com/gdsfactory/skywater130)
+# -  [`hdl21` integration](https://github.com/dan-fritchman/Hdl21/tree/main/pdks/Sky130)
 #
 # **GF180nm**
-# * [Main Open-Source Release](https://github.com/google/gf180mcu-pdk)
+# -  [Main Open-Source Release](https://github.com/google/gf180mcu-pdk)
 #
 # **IHP130nm**
-# * [Main Open-Source Release](https://github.com/IHP-GmbH/IHP-Open-PDK)
+# -  [Main Open-Source Release](https://github.com/IHP-GmbH/IHP-Open-PDK)
 #
 # **Any PDK**
-# * [`gdsfactory` import instructions](https://gdsfactory.github.io/gdsfactory/notebooks/09_pdk_import.html)
-# * [`hdl21` instructions](https://github.com/dan-fritchman/Hdl21/tree/main/pdks/PdkTemplate)
+# -  [`gdsfactory` import instructions](https://gdsfactory.github.io/gdsfactory/notebooks/09_pdk_import.html)
+# -  [`hdl21` instructions](https://github.com/dan-fritchman/Hdl21/tree/main/pdks/PdkTemplate)
 #
 # So, as we can see, there currently are many separate relevant projects that solve different aspects of an integration flow. What we would like to do is to have an integrated flow where we could, for example, do some schematic-driven-layout or some layout-driven-schematic extraction. These are some of the objectives of the flow that we would like to demonstrate.
 
