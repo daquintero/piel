@@ -6,6 +6,7 @@ pkgs.mkShell {
     pkgs.which
     pkgs.htop
     pkgs.zlib
+    pkgs.pandoc
     pkgs.ngspice # 41 (latest)
     pkgs.gtkwave # 3.3.117, from Aug 2023 (latest)
     pkgs.xyce # 7.6, from Nov 2022 (7.7 is latest)
