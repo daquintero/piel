@@ -9,7 +9,7 @@ coverage
 cython==0.29.21
 femwell
 flake8
-gdsfactory>=7
+gdsfactory==7.3.0
 hdl21>=4
 ipyevents
 ipytree
@@ -26,12 +26,13 @@ networkx
 numpy
 openlane
 pandoc
-pip>=19.2.3
+pip>=23.2.1
 pre-commit
 pydata-sphinx-theme>=0.13.3
+pydantic<2
 pytest
 qutip
-sax>=0.8.8
+sax==0.8.8
 setuptools>=40.8.0
 sphinx>=4,<7
 sphinx-autoapi

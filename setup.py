@@ -10,9 +10,7 @@ with open("README.md") as readme_file:
 requirements = [
     # "amaranth",  # Until they sort out their packaging issue, this dependency has to be installed separately. .
     "amaranth-yosys",
-    "bokeh",
     "cython==0.29.21",
-    "jupyter_bokeh",
     "jupytext",
     "Click>=7.0",
     "cocotb",
@@ -20,13 +18,14 @@ requirements = [
     "hdl21>=4",
     "jax",
     "jaxlib",
-    "gdsfactory>=7",
+    "gdsfactory==7.3.0",
     "networkx",
     "numpy",
     "openlane",
     "pandas",
+    "pydantic<2",  # Project requirements to maintain compatibility.
     "qutip",
-    "sax>=0.8.8",  # Pinned for pydantic <v2 compatibility.
+    "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
     "thewalrus",
     "vlsir>=4",
 ]
