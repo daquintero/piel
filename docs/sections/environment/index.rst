@@ -4,8 +4,8 @@ Environment
 
 .. include:: tools_environment.rst
 
-``appatainer`` Configuration (In Active Development)
-==============================================
+``apptainer`` Configuration (In Active Development)
+====================================================
 
 ``apptainer`` is a good open-source container management system that aims to be optimised for high performance computation. We want to have a distributed container environment where all the open-source ``piel`` toolchain is pre-installed and ready for custom design. What this distribution aims to provide is both an easy installation script for Ubuntu environments which are common in open-source development and a specific environment configuration that resolves the particular supported versions of the toolchains.
 
