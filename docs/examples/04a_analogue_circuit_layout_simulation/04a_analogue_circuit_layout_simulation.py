@@ -33,6 +33,8 @@ import gdsfactory as gf
 import sky130.components as sc
 import sky130.tech as st
 
+import piel
+
 basic_component = sc.sky130_fd_sc_hd__a2111o_1()
 basic_component.plot_widget()
 
@@ -52,7 +54,7 @@ basic_component.get_netlist()
 #  'name': 'sky130_fd_sc_hd__a2111o_1'}
 # ```
 
-# We know that these cells were imported from the raw gds files provided by skywater, which means they will not store raw geometrical connectivity. This is a feature that we would need to implement into gdsfactory or whatever backend can extact the connectivity in a compatible way to `gdsfactory` from layer geometry.
+# We know that these cells were imported from the raw gds files provided by skywater, which means they will not store raw geometrical connectivity. This is a feature that we would need to implement into gdsfactory or whatever backend can extract, the connectivity in a compatible way to `gdsfactory` from layer geometry.
 #
 # We know that when we do the recursive netlisting, we also do not get anything, as there is little connectivity that we can extract:
 

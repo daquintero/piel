@@ -5,27 +5,27 @@
 (* generator = "Amaranth" *)
 module top(phase_map_out, detector_in);
   reg \$auto$verilog_backend.cc:2083:dump_module$1  = 0;
-  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:42" *)
+  (* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:42" *)
   input [1:0] detector_in;
   wire [1:0] detector_in;
-  (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:42" *)
+  (* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:42" *)
   output [1:0] phase_map_out;
   reg [1:0] phase_map_out;
   always @* begin
     if (\$auto$verilog_backend.cc:2083:dump_module$1 ) begin end
     (* full_case = 32'd1 *)
-    (* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:56" *)
+    (* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:57" *)
     casez (detector_in)
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:59" */
+      /* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:60" */
       2'h0:
           phase_map_out = 2'h0;
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:59" */
+      /* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:60" */
       2'h1:
           phase_map_out = 2'h2;
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:59" */
+      /* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:60" */
       2'h2:
           phase_map_out = 2'h3;
-      /* src = "c:\\users\\dario\\documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:59" */
+      /* src = "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:60" */
       2'h3:
           phase_map_out = 2'h3;
     endcase

@@ -9,25 +9,25 @@ with open("README.md") as readme_file:
 
 requirements = [
     # "amaranth",  # Until they sort out their packaging issue, this dependency has to be installed separately. .
-    "amaranth-yosys",
+    "amaranth-yosys==0.25.0.0.post75",
     "cython==0.29.21",
-    "jupytext",
+    "jupytext==1.15.0",
     "Click>=7.0",
-    "cocotb",
-    "femwell",
-    "hdl21>=4",
-    "jax",
-    "jaxlib",
-    "gdsfactory==7.3.0",
-    "networkx",
+    "cocotb==1.8.0",
+    "femwell==0.1.8",
+    "hdl21==4.0.0",
+    "jax==0.4.14",
+    "jaxlib==0.4.14",
+    "gdsfactory==7.4.3",
+    "networkx==3.1",
     "numpy",
-    "openlane",
+    "openlane==2.0.0b8",
     "pandas",
     "pydantic<2",  # Project requirements to maintain compatibility.
-    "qutip",
-    "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
-    "thewalrus",
-    "vlsir>=4",
+    "qutip==4.7.2",
+    "sax==0.10.1",  # Pinned for pydantic <v2 compatibility.
+    "thewalrus==0.21.0",
+    "vlsir==2.0.dev0",
 ]
 
 test_requirements = [
@@ -40,11 +40,13 @@ setup(
     python_requires=">=3.10",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
-        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Physics",
     ],
     description="Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more.",
     entry_points={
