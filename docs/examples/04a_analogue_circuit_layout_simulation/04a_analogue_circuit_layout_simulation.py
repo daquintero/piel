@@ -60,7 +60,7 @@ basic_component.get_netlist_recursive()
 
 # We need to be able to extract a recursive netlist that allows us to map our cell instance to our component spice element.
 #
-# TODO update sky130nm to latest pydantic, gdsfactory PR this recursive instance extraction, and then work on the mapping.
+# gdsfactory PR this recursive instance extraction, and then work on the mapping.
 
 # ## Schematic-Driven-Layout
 
