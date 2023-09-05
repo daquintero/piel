@@ -12,7 +12,7 @@ Before starting, make sure you system has:
 
 ## `nix` installation
 
-First, [install nix](https://nixos.org/download). The approach below is not the *recommended* install method, as it creates a 'single' user installation, with the `/nix` cache owned by the invoking user, rather than shared between all users. But it doesn't work well on Fedora, so we'll live with it for now.
+First, [install nix](https://nixos.org/download). The approach below is not the *recommended* install method, as it creates a 'single-user' installation, with the `/nix` cache owned by the invoking user, rather than shared between all users. The recommended 'multi-user' method, however, doesn't work well on systems with SELinux, i.e. Fedora, so we'll live with this alternative for now.
 
 ```bash
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
