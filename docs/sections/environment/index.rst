@@ -5,12 +5,13 @@ Environment
 .. include:: tools_environment.rst
 
 
-``nix`` Configuration (In Active Development)
+``nix`` Configuration (Recommended - In Active Development)
 ==============================================
 
 `OpenLane 2 via nix <https://openlane2.readthedocs.io/en/latest/getting_started/index.html#nix-recommended>`__ have recently released another way to package their `python`-driven ``Openlane 2`` digital chip layout flow. We have previously had issues reproducibly building the `docker` configuration, and because most users are likely to use these tools for developing their chips rather than distributing software, `nix <https://nixos.org/>`__ might be well suited for these applications.
 
 .. include:: nix/nix_install.rst
+.. include:: nix/development_installation.rst
 .. include:: nix/custom_nix_installation.rst
 .. include:: nix/relevant_nix_commands.rst
 
