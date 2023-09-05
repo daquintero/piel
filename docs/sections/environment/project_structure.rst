@@ -15,6 +15,7 @@ This treats the selected design directories as parts of a python
 package, whilst still enabling the standard microelectronics design flow
 project structure.
 
+
 Post Full-Flow Structure
 ------------------------
 
@@ -100,4 +101,25 @@ with further tools down the line.
 
 There are several ``piel`` functions that generate this project
 structure for you so you can get cracking from the start. Check out the
-examples. TODO make cookiecutter in the future.
+examples.
+
+Installing the cookiecutter project
+------------------------------------
+
+``piel`` provides a cookiecutter template of this project structure. It is really easy to use and the recommended way of creating a project. Run the following commands from the ``piel`` directory.
+
+You can either install the ``piel`` development requirements to make sure you have the ``cookiecutter`` dependency installed. You can do either:
+
+.. code-block:: shell
+
+    pip install -r requirements_dev.txt --user
+    # or
+    pip install cookiecutter
+
+.. code-block:: shell
+
+    # In piel top directory
+    cd environment
+    cookiecutter piel_cookiecutter_template -o "<output_parent_directory_path>"
+
+Then you just fill in the details.
