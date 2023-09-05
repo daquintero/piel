@@ -11,4 +11,3 @@ apt-get install verilator   # On Ubuntu
 
 # GTKWave
 sudo apt-get -y install gtkwave
-

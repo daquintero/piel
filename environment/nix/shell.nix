@@ -15,7 +15,7 @@ pkgs.mkShell {
 
 
   shellHook = ''
-    nix-shell ../openlane2/shell.nix
+    nix-shell ../../../openlane2/shell.nix
     if [ -e .venv/bin/activate ]; then source .venv/bin/activate; fi
   '';
 

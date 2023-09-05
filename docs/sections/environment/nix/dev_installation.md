@@ -1,6 +1,6 @@
 # Summary
 
-This process sets up a Nix development environment,good for when developing examples.
+This process sets up a Nix development environment, good for when developing examples. Make sure to follow the `nix` installation instructions for your platform. TODO ADD LINK. TODO ADD LINK TO THE UBUNTU INSTALL SCRIPT WE PROVIDE.
 
 ## System requirements
 
@@ -10,7 +10,7 @@ Before starting, make sure you system has:
 - `git`
 - `bash`
 
-## Nix installation
+## `nix` installation
 
 First, [install nix](https://nixos.org/download). The approach below is not the *recommended* install method, as it creates a 'single' user installation, with the `/nix` cache owned by the invoking user, rather than shared between all users. But it doesn't work well on Fedora, so we'll live with it for now.
 
@@ -36,9 +36,9 @@ After verifying this, to update the changes to `$PATH` either close and reopen y
 
 ## OpenLane2 installation
 
-Before installing `piel`, let's first get OpenLane2, as it will automatically also give us OpenROAD, Yosys, Magic, KLayout, and Verilator. The instructions below are [copied from here.](https://openlane2.readthedocs.io/en/latest/getting_started/nix_installation/installation_linux.html)
+Before installing `piel`, let's first get `OpenLane2`, as it will automatically also give us `OpenROAD`, `Yosys`, `Magic`, `KLayout`, and `Verilator`. The instructions below are [copied from here.](https://openlane2.readthedocs.io/en/latest/getting_started/nix_installation/installation_linux.html)
 
-Cachix allows the reproducible Nix builds to be stored on a cloud server so you do not have to build OpenLane’s dependencies from scratch on every computer, which will take a long time.
+`Cachix` allows the reproducible Nix builds to be stored on a cloud server so you do not have to build OpenLane’s dependencies from scratch on every computer, which will take a long time.
 
 First, you want to install Cachix by running the following in your terminal:
 
@@ -92,7 +92,7 @@ We'll similarly use nix to grab all the compiled dependencies for `piel`, includ
 Do do this, simply move inside of the `piel` directory:
 
 ```bash
-cd piel
+cd piel/environment/nix
 ```
 
 And run the command below, which implicitly reads in the local `shell.nix` file:
