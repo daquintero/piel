@@ -25,11 +25,50 @@
 #
 # So, as we can see, there currently are many separate relevant projects that solve different aspects of an integration flow. What we would like to do is to have an integrated flow where we could, for example, do some schematic-driven-layout or some layout-driven-schematic extraction. These are some of the objectives of the flow that we would like to demonstrate.
 
+# ## Going through the Basics
+
+# We will start off by importing the layout elements of the SKY130nm `gdsfactory` PDK process and understanding how we interact and map them to a schematic.
+
+import gdsfactory as gf
+import sky130.components as sc
+import sky130.tech as st
+
+import piel
+
+basic_component = sc.sky130_fd_sc_hd__a2111o_1()
+basic_component.plot_widget()
+
+# ![mzi2x2_2x2_phase_shifter](../../_static/img/examples/04a_analogue_circuit_layout_simulation/basic_sky130_fd_sc_hd__a2111o_1.PNG)
+
+# You can read more about the basics of using this PDK in this [gdsfactory SKY130nm example](https://gdsfactory.github.io/skywater130/notebooks/intro.html).
+
+# What we would like to do is create a mapping that we could extract from a `gdsfactory` layout to the `hdl21` model mapping. Let's extract a netlist in this case:
+
+basic_component.get_netlist()
+
+# ```python
+# {'connections': {},
+#  'instances': {},
+#  'placements': {},
+#  'ports': {},
+#  'name': 'sky130_fd_sc_hd__a2111o_1'}
+# ```
+
+# We know that these cells were imported from the raw gds files provided by skywater, which means they will not store raw geometrical connectivity. This is a feature that we would need to implement into gdsfactory or whatever backend can extract, the connectivity in a compatible way to `gdsfactory` from layer geometry.
+#
+# We know that when we do the recursive netlisting, we also do not get anything, as there is little connectivity that we can extract:
+
+basic_component.get_netlist_recursive()
+
+# We need to be able to extract a recursive netlist that allows us to map our cell instance to our component spice element.
+#
+# gdsfactory PR this recursive instance extraction, and then work on the mapping.
+
 # ## Schematic-Driven-Layout
 
 # A common analogue design flow is called schematic-driven-layout. What this entails, fundamentally, is that we design a circuit through a schematic, and then use that schematic to instruct, extract, constrain, and/or verify our circuit chip layout. This flow uses layout elements that are connected or tied to schematic symbols, and unique names that allow for identification and connectivity relationship.
 #
-# TODO ADD SOME REFERENCES EXPLAINING SCHEMATIC DRIVEN LAYOUT.
+# -  You can read [how this is done in Cadence](https://web.njit.edu/~tyson/cadence%20Layout_Tutorial.pdf)
 #
 # In an open-source flow, this could be, for example, demonstrated by creating a circuit using the `hdl21 schematic` tools. Each symbol would reference a specific `PCell` in the PDK. Now, we would use this individual element cell name to connect and extract to the `SPICE` model and also to the `layout` GDS cell. This allows us to connect to the separate tools for simulation and layout.
 #
