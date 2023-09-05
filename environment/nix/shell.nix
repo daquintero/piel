@@ -15,9 +15,8 @@ pkgs.mkShell {
 
 
   shellHook = ''
+    if [ -e ../../.venv/bin/activate ]; then source ../../.venv/bin/activate; fi
     nix-shell ../../../openlane2/shell.nix
-    if [ -e .venv/bin/activate ]; then source .venv/bin/activate; fi
   '';
-
-  MY_ENVIRONMENT_VARIABLE = "test";
+  LOCALE_ARCHIVE="/usr/lib/locale/locale-archive";  # let's nix read the LOCALE, to silence warning messages
 }
