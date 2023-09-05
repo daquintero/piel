@@ -1,38 +1,18 @@
 List of Relevant Similar Projects
 =================================
 
-+------------------+----------------------------------------------+---+
-| Name             | Description                                  | S |
-|                  |                                              | t |
-|                  |                                              | a |
-|                  |                                              | t |
-|                  |                                              | u |
-|                  |                                              | s |
-+==================+==============================================+===+
-| `Simphon         | A simulator for photonic integrated          | A |
-| y <https://githu | circuits.                                    | c |
-| b.com/BYUCamacho |                                              | t |
-| Lab/simphony>`__ |                                              | i |
-|                  |                                              | v |
-|                  |                                              | e |
-+------------------+----------------------------------------------+---+
-| `PhotonFl        | Photonic circuit network simulator           | U |
-| ux <https://gith |                                              | n |
-| ub.com/alexsludd |                                              | c |
-| s/photonflux>`__ |                                              | l |
-|                  |                                              | e |
-|                  |                                              | a |
-|                  |                                              | r |
-+------------------+----------------------------------------------+---+
-| `Photont         | Highly parallel simulation and optimization  | M |
-| orch <https://gi | of photonic circuits in time and frequency   | a |
-| thub.com/flaport | domain based on the deep-learning framework  | i |
-| /photontorch>`__ | PyTorch                                      | n |
-|                  |                                              | t |
-|                  |                                              | e |
-|                  |                                              | n |
-|                  |                                              | a |
-|                  |                                              | n |
-|                  |                                              | c |
-|                  |                                              | e |
-+------------------+----------------------------------------------+---+
+.. list-table:: Photonic Simulation Tools and Their Status
+   :header-rows: 1
+
+   * - Name
+     - Description
+     - Status
+   * - `Simphony <https://github.com/BYUCamachoLab/simphony>`__
+     - A simulator for photonic integrated circuits.
+     - Active
+   * - `PhotonFlux <https://github.com/alexsludds/photonflux>`__
+     - Photonic circuit network simulator.
+     - Unclear
+   * - `Photontorch <https://github.com/flaport/photontorch>`__
+     - Highly parallel simulation and optimization of photonic circuits in time and frequency domain based on the deep-learning framework PyTorch.
+     - Maintenance
