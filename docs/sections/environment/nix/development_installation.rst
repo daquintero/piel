@@ -1,4 +1,4 @@
-``piel`` Development Installation
+``nix`` Development Installation
 --------------------------------------
 
 This process sets up a ``nix`` development environment, good for when

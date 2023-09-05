@@ -1,5 +1,5 @@
 ``nix`` Useful Commands
----------------------
+------------------------------------------
 
 .. list-table:: Useful ``nix`` commands
    :header-rows: 1
