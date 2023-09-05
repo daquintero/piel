@@ -9,7 +9,7 @@ coverage
 cython==0.29.21
 femwell==0.1.8
 flake8
-gdsfactory==7.3.0  # Pinned for pydantic <v2 compatibility.
+gdsfactory>7.3.0  # Pinned for pydantic <v2 compatibility.
 hdl21==4.0.0
 ipyevents
 ipytree
@@ -32,7 +32,7 @@ pre-commit
 pydata-sphinx-theme>=0.13.3
 pytest
 qutip==4.7.2
-sax==0.8.8  # Pinned for pydantic <v2 compatibility.
+sax>0.8.8  # Pinned for pydantic <v2 compatibility.
 setuptools>=40.8.0
 sphinx>=4,<7
 sphinx-autoapi
