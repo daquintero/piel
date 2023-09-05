@@ -24,9 +24,9 @@ requirements = [
     "openlane==2.0.0b8",
     "pandas",
     "qutip==4.7.2",
+    "sky130==0.7.1",
     "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
-    "thewalrus==0.21.0",
-    "vlsir==2.0.dev0",
+    "thewalrus==0.20.0",
 ]
 
 test_requirements = [

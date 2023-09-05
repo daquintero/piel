@@ -9,7 +9,7 @@ SAX compiled circuit.
 import copy
 import networkx as nx
 from sax.circuit import (
-    _create_dag,
+    create_dag,
     _ensure_recursive_netlist_dict,
     remove_unused_instances,
     _extract_instance_models,
@@ -126,7 +126,7 @@ def gdsfactory_netlist_with_hdl21_generators(
 
     recnet: RecursiveNetlist = _validate_net(netlist)
     dependency_dag: nx.DiGraph = _validate_dag(
-        _create_dag(recnet, generators)
+        create_dag(recnet, generators)
     )  # directed acyclic graph
     generators = _validate_models(
         {**(generators or {}), **instance_models}, dependency_dag
@@ -212,7 +212,7 @@ def gdsfactory_netlist_to_spice_string_connectivity_netlist(
 
     recnet: RecursiveNetlist = _validate_net(netlist)
     dependency_dag: nx.DiGraph = _validate_dag(
-        _create_dag(recnet, models)
+        create_dag(recnet, models)
     )  # directed acyclic graph
     models = _validate_models({**(models or {}), **instance_models}, dependency_dag)
 
