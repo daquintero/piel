@@ -10,7 +10,7 @@ with open("README.md") as readme_file:
 requirements = [
     # "amaranth",  # Until they sort out their packaging issue, this dependency has to be installed separately. .
     "amaranth-yosys==0.25.0.0.post75",
-    "cython==0.29.21",
+    "cython==3.0.2",
     "jupytext==1.15.0",
     "Click>=7.0",
     "cocotb==1.8.0",
