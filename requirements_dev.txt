@@ -1,6 +1,7 @@
 pip>=23.2.1 # Always first
 wheel # Always first
 twine # Always first
+setuptools>=40.8.0 # Always first
 amaranth @ git+https://github.com/amaranth-lang/amaranth.git
 amaranth-yosys==0.25.0.0.post75
 black
@@ -37,7 +38,6 @@ pydata-sphinx-theme>=0.13.3
 pytest
 qutip==4.7.3
 sax==0.8.8  # Pinned for pydantic <v2 compatibility.
-setuptools>=40.8.0
 sphinx>=4,<7
 sphinx-autoapi
 sphinx-autobuild

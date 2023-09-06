@@ -525,6 +525,7 @@ def return_path(input_path: piel_path_types) -> pathlib.Path:
         raise ValueError(
             "input_path: " + str(input_path) + " is of type: " + str(type(input_path))
         )
+    output_path = output_path.resolve()
     return output_path
 
 

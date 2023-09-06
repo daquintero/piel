@@ -132,7 +132,7 @@ piel.create_parametric_designs_openlane_v1(
 
 # We can find which is the latest design run
 
-latest_design_run_directory = piel.find_design_run(
+latest_design_run_directory = piel.find_latest_design_run(
     design_directory="./designs" / piel.return_path("inverter"),
 )
 latest_design_run_directory
@@ -152,7 +152,7 @@ inverter_component.plot_widget()
 
 # First, we get the directory of the latest run:
 
-latest_run_output = piel.find_design_run(
+latest_run_output = piel.find_latest_design_run(
     design_directory="./designs" / piel.return_path("inverter"),
 )
 latest_run_output
@@ -284,6 +284,43 @@ base_configuration = piel.read_configuration_openlane_v1(
 
 # ## OpenLane V2 Flow
 
-piel.run_openlane_flow(
-    design_directory="/foss/designs/spm",
+# It might be desired to easily go from a design directory to an actual silicon chip purely from python. In this section of the example we will use the digital design files in an `amaranth`-generated design flow and use `openlane2` to perform the hardening of the logic.
+#
+# There is further documentation on migrating from the `Openlane v1` flow to `v2` in the following links:
+
+# You need to make sure you have installed `amaranth_driven_flow` as part of the `02_digital_design_simulation` example instructions.
+
+import amaranth_driven_flow
+import piel
+
+# The project directory is found here if you have installed the project
+
+piel.return_path(amaranth_driven_flow)
+
+openlane_2_run_amaranth_flow = piel.run_openlane_flow(
+    design_directory=amaranth_driven_flow,
+    only_generate_flow_setup=True,
+)
+
+# This should generate a `openlane 2` driven layout in the `amaranth_driven_flow` directory if you change the `only_generate_configuration` flag to `True`. Let's list the available runs in this project:
+
+all_amaranth_driven_design_runs = piel.find_all_design_runs(
+    design_directory=amaranth_driven_flow,
+)
+all_amaranth_driven_design_runs
+
+# ```python
+# [PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09'),
+#  PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18')]
+# ```
+
+latest_amaranth_driven_openlane_runs = piel.find_latest_design_run(
+    design_directory=amaranth_driven_flow,
+)
+latest_amaranth_driven_openlane_runs
+
+# It is quite easy to visualise it on the jupyter lab using the `gdsfactory` widget:
+
+amaranth_driven_flow_component = piel.create_gdsfactory_component_from_openlane(
+    design_directory=amaranth_driven_flow,
 )

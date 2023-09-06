@@ -13,7 +13,7 @@ from ..file_system import return_path, create_new_directory
 from ..project_structure import create_empty_piel_project
 from ..tools.openlane.v1 import write_configuration_openlane_v1
 from ..tools.openlane.v2 import run_openlane_flow
-from ..tools.openlane.defaults import test_basic_open_lane_configuration
+from ..tools.openlane.defaults import test_basic_open_lane_configuration_v1
 from ..config import piel_path_types
 
 __all__ = ["layout_amaranth_truth_table_through_openlane"]
@@ -85,7 +85,7 @@ def layout_amaranth_truth_table_through_openlane(
         target_directory=src_folder,
     )
     # Generates the ``openlane`` configuration files for this particular location.
-    our_amaranth_openlane_config = test_basic_open_lane_configuration
+    our_amaranth_openlane_config = test_basic_open_lane_configuration_v1
 
     # Runs the `openlane` flow
     if openlane_version == "v1":

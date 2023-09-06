@@ -3,16 +3,19 @@ from piel.config import piel_path_types
 from piel.file_system import return_path
 
 __all__ = [
-    "find_design_run",
+    "find_all_design_runs",
+    "find_latest_design_run",
 ]
 
 
-def find_design_run(
+def find_all_design_runs(
     design_directory: piel_path_types,
     run_name: str | None = None,
-) -> pathlib.Path:
+) -> list[pathlib.Path]:
     """
-    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
+    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory. This function sorts the runs according to the default notations between both `openlane` and `openlane2` run formats.
+
+    These get
 
     They get sorted based on a reverse `list.sort()` method.
 
@@ -36,11 +39,26 @@ def find_design_run(
         # Take the latest design run if it exists
         if len(all_runs_list) > 0:
             all_runs_list.sort(reverse=True)
-            latest_run = all_runs_list[0]
-            run_path = latest_run
         else:
             # If there are no runs
             raise ValueError(
                 "No OpenLane design runs were found in: " + str(runs_design_directory)
             )
+    return all_runs_list
+
+
+def find_latest_design_run(
+    design_directory: piel_path_types,
+    run_name: str | None = None,
+) -> pathlib.Path:
+    """
+    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
+
+    They get sorted based on a reverse `list.sort()` method.
+
+    # TODO docs
+    """
+    run_path = find_all_design_runs(
+        design_directory=design_directory, run_name=run_name
+    )[0]
     return run_path

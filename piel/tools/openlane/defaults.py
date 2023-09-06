@@ -1,5 +1,5 @@
 __all__ = [
-    "test_basic_open_lane_configuration",
+    "test_basic_open_lane_configuration_v1",
     "test_spm_open_lane_configuration",
     "example_open_lane_configuration",
 ]
@@ -12,7 +12,8 @@ test_spm_open_lane_configuration = {
     "CLOCK_PERIOD": 10,
 }
 
-test_basic_open_lane_configuration = {
+test_basic_open_lane_configuration_v1 = {
+    "PDK": "sky130A",
     "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
     "RUN_CTS": False,

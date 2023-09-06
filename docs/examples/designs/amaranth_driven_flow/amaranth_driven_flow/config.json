@@ -1,4 +1,5 @@
 {
+    "PDK": "sky130A",
     "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
     "RUN_CTS": false,

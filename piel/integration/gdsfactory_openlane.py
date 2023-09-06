@@ -9,7 +9,7 @@ import gdsfactory as gf
 from ..config import piel_path_types
 from ..file_system import check_path_exists
 from piel.tools.openlane.migrate import get_design_from_openlane_migration
-from piel.tools.openlane import find_design_run
+from piel.tools.openlane import find_latest_design_run
 
 __all__ = ["create_gdsfactory_component_from_openlane"]
 
@@ -37,7 +37,9 @@ def create_gdsfactory_component_from_openlane(
     design_name, design_directory = get_design_from_openlane_migration(
         v1=v1, design_name_v1=design_name_v1, design_directory=design_directory
     )
-    latest_design_run_directory = find_design_run(design_directory, run_name=run_name)
+    latest_design_run_directory = find_latest_design_run(
+        design_directory, run_name=run_name
+    )
     final_gds_run = (
         latest_design_run_directory
         / "results"
