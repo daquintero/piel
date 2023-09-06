@@ -3,6 +3,7 @@
 
 pkgs.mkShell {
   buildInputs = [
+    pkgs.jupyter
     pkgs.which
     pkgs.htop
     pkgs.zlib
