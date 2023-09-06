@@ -61,6 +61,7 @@ def fock_state_to_photon_number_factorial(
     This function converts a Fock state defined as:
 
     .. math::
+
         \newcommand{\ket}[1]{\left|{#1}\right\rangle}
         \ket{f_1} = \ket{j_1, j_2, ... j_N}$
 

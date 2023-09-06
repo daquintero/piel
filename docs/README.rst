@@ -59,6 +59,8 @@ Some existing microservice dependency integrations are:
    an automated RTL to GDSII flow based on several components including
    OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for
    design exploration and optimization
+-  `OpenLane v2 <https://github.com/efabless/openlane2>`__ -
+   The next generation of OpenLane, rewritten from scratch in Python with a modular architecture
 -  `sax <https://github.com/flaport/sax>`__ - S-parameter based
    frequency domain circuit simulations and optimizations using JAX.
 -  `thewalrus <https://github.com/XanaduAI/thewalrus>`__ -A library for
@@ -67,7 +69,7 @@ Some existing microservice dependency integrations are:
 -  `qutip <https://github.com/qutip/qutip>`__ - QuTiP: Quantum Toolbox
    in Python
 
-Another ``piel`` objective is to provide a common dependency-resolved environment for all these tools, so that you just get started with designing rather than fixing dependencies.
+``piel`` also provides a common dependency-resolved environment for all these tools, so that you just get started with designing rather than manage dependencies (which is a massive pain). Full flow environment toolsets can use ``nix``, ``docker``, and some ``local`` installations following the existing open-source design flows.
 
 Contribution
 ------------
