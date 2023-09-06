@@ -1,3 +1,6 @@
+pip>=23.2.1 # Always first
+wheel # Always first
+twine # Always first
 amaranth @ git+https://github.com/amaranth-lang/amaranth.git
 amaranth-yosys==0.25.0.0.post75
 black
@@ -5,6 +8,7 @@ bokeh
 bump2version
 Click>=7.0
 cocotb==1.8.0
+cookiecutter
 coverage
 cython==0.29.21
 femwell==0.1.8
@@ -16,22 +20,22 @@ ipytree
 ipywidgets>=7.6.0,<9
 jax==0.4.14
 jaxlib==0.4.14
+jupyter
 jupyter_bokeh
 jupyter_packaging~=0.7.9
 jupyterlab~=3.0
-jupytext==1.15.0
+jupytext==1.15.1
 myst_parser
 nbsphinx
 networkx==3.1
-numpy
+numpy==1.24.4
 openlane==2.0.0b8
-pandoc
-pandas
-pip>=23.2.1
+pandoc==2.3
+pandas==1.5.3
 pre-commit
 pydata-sphinx-theme>=0.13.3
 pytest
-qutip==4.7.2
+qutip==4.7.3
 sax==0.8.8  # Pinned for pydantic <v2 compatibility.
 setuptools>=40.8.0
 sphinx>=4,<7
@@ -44,6 +48,4 @@ sphinx-pydantic
 sphinx_rtd_theme
 thewalrus==0.20.0
 tox
-twine
 watchdog
-wheel

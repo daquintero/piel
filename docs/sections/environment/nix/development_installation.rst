@@ -197,9 +197,17 @@ add to path the packages managed the ``pip`` venv by the OpenLane2
 .. code:: nix
 
        shellHook = ''
-       nix-shell ../openlane2/shell.nix
-       if [ -e .venv/bin/activate ]; then source .venv/bin/activate; fi
-       '';
+         if [ -e ../../.venv/bin/activate ];
+         then source ../../.venv/bin/activate;
+         else
+            pip install --upgrade pip;
+            python -m venv ../../.venv;
+            source ../../.venv/bin/activate;
+            pip install -r ../../requirements_dev.txt;
+            pip install -e ../../;
+         fi
+         nix-shell ../../../openlane2/shell.nix
+      '';
 
 VSCode support for nix
 ^^^^^^^^^^^^^^^^^^^^^^

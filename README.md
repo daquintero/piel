@@ -37,35 +37,35 @@ documentation](https://piel.readthedocs.io/en/latest/examples.html).
 ## Microservices Toolset
 
 This package provides interconnection functions to easily co-design
-microelectronics through the functionality of the
-[IIC-OSIC-TOOLS](https://github.com/iic-jku/iic-osic-tools) and
-photonics via [GDSFactory](https://github.com/gdsfactory/gdsfactory).
+microelectronics through the functionality of the major python-integrated microelectronics projects and
+photonics via the [GDSFactory project](https://github.com/gdsfactory/gdsfactory).
 
 ![image](docs/_static/img/piel_microservice_structure.png)
 
 Some existing microservice dependency integrations are:
 
--   [amaranth](https://github.com/amaranth-lang/amaranth) - A modern hardware definition language and toolchain based on Python.
--   [cocotb](https://github.com/cocotb/cocotb) - a coroutine based
+- [amaranth](https://github.com/amaranth-lang/amaranth) - A modern hardware definition language and toolchain based on Python.
+- [cocotb](https://github.com/cocotb/cocotb) - a coroutine based
     cosimulation library for writing VHDL and Verilog testbenches in
     Python.
--   [hdl21](https://github.com/dan-fritchman/Hdl21) - Analog Hardware
+- [hdl21](https://github.com/dan-fritchman/Hdl21) - Analog Hardware
     Description Library in Python
--   [GDSFactory](https://github.com/gdsfactory/gdsfactory) - An open
+- [GDSFactory](https://github.com/gdsfactory/gdsfactory) - An open
     source platform for end to-end photonic chip design and validation
--   [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - an
+- [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - an
     automated RTL to GDSII flow based on several components including
     OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for
     design exploration and optimization
--   [sax](https://github.com/flaport/sax) - S-parameter based frequency
+- [Openlane v2](https://github.com/efabless/openlane2) - The next generation of OpenLane, rewritten from scratch in Python with a modular architecture
+- [sax](https://github.com/flaport/sax) - S-parameter based frequency
     domain circuit simulations and optimizations using JAX.
--   [thewalrus](https://github.com/XanaduAI/thewalrus) -A library for
+- [thewalrus](https://github.com/XanaduAI/thewalrus) -A library for
     the calculation of hafnians, Hermite polynomials and Gaussian boson
     sampling.
--   [qutip](https://github.com/qutip/qutip) - QuTiP: Quantum Toolbox in
+- [qutip](https://github.com/qutip/qutip) - QuTiP: Quantum Toolbox in
     Python
 
-Another ``piel`` objective is to provide a common dependency-resolved environment for all these tools, so that you just get started with designing rather than fixing dependencies.
+`piel` also provides a common dependency-resolved environment for all these tools, so that you just get started with designing rather than manage dependencies (which is a massive pain). Full flow environment toolsets can use `nix`, `docker`, and `local` installations following the existing open-source design flows.
 
 ## Contribution
 
