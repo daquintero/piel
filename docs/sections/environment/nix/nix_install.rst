@@ -14,6 +14,9 @@ On Linux you can run, in summary:
     sh <(curl -L https://nixos.org/nix/install) --no-daemon --yes
     # Restart the terminal or run ``. /home/<yourusername>/.nix-profile/etc/profile.d/nix.sh``
     nix-env -f "<nixpkgs>" -iA cachix
+    cachix use openlane
 
 
-Now, we install the ``piel`` specific configuration:
+Now, we install the ``piel`` specific configuration and you can follow the instructions in the developer section for now.
+
+If this does not take less than a few seconds to build, then make sure you have the ``cachix`` ``openlane`` installation set up.
