@@ -20,11 +20,10 @@ requirements = [
     "jaxlib==0.4.14",
     "gdsfactory==7.3.0",  # Pinned for pydantic <v2 compatibility.
     "networkx==3.1",
-    "numpy",
+    "numpy==1.24.4",
     "openlane==2.0.0b8",
-    "pandas",
-    "qutip==4.7.2",
-    "sky130==0.7.1",
+    "pandas==1.5.3",
+    "qutip==4.7.3",
     "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
     "thewalrus==0.20.0",
 ]

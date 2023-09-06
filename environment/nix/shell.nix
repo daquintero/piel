@@ -15,7 +15,16 @@ pkgs.mkShell {
 
 
   shellHook = ''
-    if [ -e ../../.venv/bin/activate ]; then source ../../.venv/bin/activate; fi
+    if [ -e ../../.venv/bin/activate ];
+     then source ../../.venv/bin/activate;
+    else
+      pip install --upgrade pip;
+      python -m venv ../../.venv;
+      source ../../.venv/bin/activate;
+      pip install -r ../../requirements_dev.txt;
+      pip install -e ../../;
+      source ../../.venv/bin/activate;
+    fi
     nix-shell ../../../openlane2/shell.nix
   '';
   LOCALE_ARCHIVE="/usr/lib/locale/locale-archive";  # let's nix read the LOCALE, to silence warning messages
