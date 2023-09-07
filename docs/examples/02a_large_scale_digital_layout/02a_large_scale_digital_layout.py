@@ -9,13 +9,47 @@
 import multiprocessing
 import time
 
-# We will go through the whole process of using `amaranth` for digital simulation and design later. For now, let's assume we have a XOR gate truth table we want to implement multiple times with different `id`. We will time both sequential and parallel implementations of this layout flow, and determine which is faster.
+# We will go through the whole process of using `amaranth` for digital simulation and design later. For now, let's assume we have a random truth table we want to implement multiple times with different `id`. We will time both sequential and parallel implementations of this layout flow, and determine which is faster.
 
 from piel.integration.amaranth_openlane import layout_openlane_from_truth_table
 
-xor_truth_table = {
-    "input": ["00", "01", "10", "11"],
-    "output": ["0", "1", "1", "0"],
+truth_table = {
+    "input": [
+        "0000",
+        "0001",
+        "0010",
+        "0011",
+        "0100",
+        "0101",
+        "0110",
+        "0111",
+        "1000",
+        "1001",
+        "1010",
+        "1011",
+        "1100",
+        "1101",
+        "1110",
+        "1111",
+    ],
+    "output": [
+        "0101",
+        "1100",
+        "0101",
+        "0110",
+        "0010",
+        "1101",
+        "0110",
+        "0011",
+        "1001",
+        "1110",
+        "0100",
+        "1000",
+        "0001",
+        "1011",
+        "1111",
+        "1010",
+    ],
 }
 input_ports_list = ["input"]
 output_ports_list = ["output"]
@@ -26,15 +60,16 @@ def sequential_implementations(amount_of_implementations: int):
 
     for i in range(amount_of_implementations):
         implementation_i = layout_openlane_from_truth_table(
-            truth_table=xor_truth_table,
+            truth_table=truth_table,
             inputs=input_ports_list,
             outputs=output_ports_list,
             parent_directory="sequential",
-            target_directory_name="xor_" + str(i),
+            target_directory_name="sequential_" + str(i),
         )
         implementations.append(implementation_i)
 
 
+# +
 def parallel_implementations(amount_of_implementations: int):
     processes = []
 
@@ -43,22 +78,24 @@ def parallel_implementations(amount_of_implementations: int):
         process_i = multiprocessing.Process(
             target=layout_openlane_from_truth_table,
             kwargs={
-                "truth_table": xor_truth_table,
+                "truth_table": truth_table,
                 "inputs": input_ports_list,
                 "outputs": output_ports_list,
                 "parent_directory": "parallel",
-                "target_directory_name": "xor_" + +str(i),
+                "target_directory_name": "parallel_" + str(i),
             },
         )
         processes.append(process_i)
+
+    for p in processes:
+        p.start()
 
     # This starts them in parallel
     for p in processes:
         p.join()
 
-    for p in processes:
-        p.start()
 
+# -
 
 # Let's time this:
 
@@ -72,8 +109,9 @@ print(end_parallel - start_parallel)
 
 # +
 start_sequential = time.time()
-parallel_implementations(amount_of_implementations=4)
+sequential_implementations(amount_of_implementations=4)
 end_sequential = time.time()
 
 print("Sequential")
 print(end_sequential - start_sequential)
+# -
