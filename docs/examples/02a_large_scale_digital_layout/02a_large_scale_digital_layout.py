@@ -69,7 +69,6 @@ def sequential_implementations(amount_of_implementations: int):
         implementations.append(implementation_i)
 
 
-# +
 def parallel_implementations(amount_of_implementations: int):
     processes = []
 
@@ -95,8 +94,6 @@ def parallel_implementations(amount_of_implementations: int):
         p.join()
 
 
-# -
-
 # Let's time this:
 
 # +
@@ -106,6 +103,12 @@ end_parallel = time.time()
 
 print("Parallel")
 print(end_parallel - start_parallel)
+# -
+
+# ```python
+# Parallel
+# 42.47045159339905
+# ```
 
 # +
 start_sequential = time.time()
@@ -115,3 +118,10 @@ end_sequential = time.time()
 print("Sequential")
 print(end_sequential - start_sequential)
 # -
+# ```
+# Sequential
+# 106.13592076301575
+# ```
+
+
+

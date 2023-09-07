@@ -32,21 +32,18 @@ test_basic_open_lane_configuration_v1 = {
     "RUN_LINTER": False,
 }
 
-test_basic_open_lane_configuration_v2 = {
+test_basic_open_lane_configuration_v2 = { # Works for small designs
     "PDK": "sky130A",
     "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
     "RUN_CTS": False,
     "CLOCK_PORT": None,
     "FP_SIZING": "absolute",
-    "DIE_AREA": "0 0 34.5 57.12",
-    "PL_TARGET_DENSITY": 0.75,
-    "FP_PDN_AUTO_ADJUST": False,
-    "FP_PDN_VPITCH": 25,
-    "FP_PDN_HPITCH": 25,
-    "FP_PDN_VOFFSET": 5,
-    "FP_PDN_HOFFSET": 5,
-    "RUN_LINTER": False,
+    "DIE_AREA": "0 0 100.0 100.0",
+    "GRT_REPAIR_ANTENNAS": True,
+    "FP_CORE_UTIL": 80,
+    "RUN_HEURISTIC_DIODE_INSERTION": True,
+    "RUN_MCSTA": False, # Temporary TODO REMOVE
 }
 
 example_open_lane_configuration = {
