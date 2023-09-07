@@ -36,6 +36,6 @@ Functions
    :param outputs: The outputs to the truth table.
    :type outputs: list[str]
    :param implementation_type: The type of implementation. Defaults to "combinatorial".
-   :type implementation_type: Litearal["combinatorial", "sequential", "memory"], optional
+   :type implementation_type: Literal["combinatorial", "sequential", "memory"], optional
 
    :returns: Generated amaranth module.

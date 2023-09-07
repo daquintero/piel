@@ -15,4 +15,8 @@ Module Contents
 
 
 
+.. py:data:: test_basic_open_lane_configuration_v2
+
+
+
 .. py:data:: example_open_lane_configuration
