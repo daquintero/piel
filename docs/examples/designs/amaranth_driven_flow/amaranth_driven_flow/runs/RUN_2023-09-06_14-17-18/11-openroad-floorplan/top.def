@@ -1,0 +1,58 @@
+VERSION 5.8 ;
+DIVIDERCHAR "/" ;
+BUSBITCHARS "[]" ;
+DESIGN top ;
+UNITS DISTANCE MICRONS 1000 ;
+DIEAREA ( 0 0 ) ( 34500 57120 ) ;
+ROW ROW_0 unithd 5520 10880 N DO 51 BY 1 STEP 460 0 ;
+ROW ROW_1 unithd 5520 13600 FS DO 51 BY 1 STEP 460 0 ;
+ROW ROW_2 unithd 5520 16320 N DO 51 BY 1 STEP 460 0 ;
+ROW ROW_3 unithd 5520 19040 FS DO 51 BY 1 STEP 460 0 ;
+ROW ROW_4 unithd 5520 21760 N DO 51 BY 1 STEP 460 0 ;
+ROW ROW_5 unithd 5520 24480 FS DO 51 BY 1 STEP 460 0 ;
+ROW ROW_6 unithd 5520 27200 N DO 51 BY 1 STEP 460 0 ;
+ROW ROW_7 unithd 5520 29920 FS DO 51 BY 1 STEP 460 0 ;
+ROW ROW_8 unithd 5520 32640 N DO 51 BY 1 STEP 460 0 ;
+ROW ROW_9 unithd 5520 35360 FS DO 51 BY 1 STEP 460 0 ;
+ROW ROW_10 unithd 5520 38080 N DO 51 BY 1 STEP 460 0 ;
+ROW ROW_11 unithd 5520 40800 FS DO 51 BY 1 STEP 460 0 ;
+ROW ROW_12 unithd 5520 43520 N DO 51 BY 1 STEP 460 0 ;
+TRACKS X 230 DO 75 STEP 460 LAYER li1 ;
+TRACKS Y 170 DO 168 STEP 340 LAYER li1 ;
+TRACKS X 170 DO 101 STEP 340 LAYER met1 ;
+TRACKS Y 170 DO 168 STEP 340 LAYER met1 ;
+TRACKS X 230 DO 75 STEP 460 LAYER met2 ;
+TRACKS Y 230 DO 124 STEP 460 LAYER met2 ;
+TRACKS X 340 DO 51 STEP 680 LAYER met3 ;
+TRACKS Y 340 DO 84 STEP 680 LAYER met3 ;
+TRACKS X 460 DO 37 STEP 920 LAYER met4 ;
+TRACKS Y 460 DO 62 STEP 920 LAYER met4 ;
+TRACKS X 1700 DO 10 STEP 3400 LAYER met5 ;
+TRACKS Y 1700 DO 17 STEP 3400 LAYER met5 ;
+COMPONENTS 4 ;
+    - _2_ sky130_fd_sc_hd__buf_1 ;
+    - _3_ sky130_fd_sc_hd__buf_1 ;
+    - _4_ sky130_fd_sc_hd__or2_2 ;
+    - _5_ sky130_fd_sc_hd__buf_1 ;
+END COMPONENTS
+PINS 4 ;
+    - detector_in[0] + NET detector_in[0] + DIRECTION INPUT + USE SIGNAL ;
+    - detector_in[1] + NET detector_in[1] + DIRECTION INPUT + USE SIGNAL ;
+    - phase_map_out[0] + NET phase_map_out[0] + DIRECTION OUTPUT + USE SIGNAL ;
+    - phase_map_out[1] + NET phase_map_out[1] + DIRECTION OUTPUT + USE SIGNAL ;
+END PINS
+SPECIALNETS 2 ;
+    - VGND ( _5_ VNB ) ( _4_ VNB ) ( _3_ VNB ) ( _2_ VNB ) ( _5_ VGND ) ( _4_ VGND ) ( _3_ VGND )
+      ( _2_ VGND ) + USE GROUND ;
+    - VPWR ( _5_ VPB ) ( _4_ VPB ) ( _3_ VPB ) ( _2_ VPB ) ( _5_ VPWR ) ( _4_ VPWR ) ( _3_ VPWR )
+      ( _2_ VPWR ) + USE POWER ;
+END SPECIALNETS
+NETS 6 ;
+    - _0_ ( _3_ A ) ( _2_ X ) + USE SIGNAL ;
+    - _1_ ( _5_ A ) ( _4_ X ) + USE SIGNAL ;
+    - detector_in[0] ( PIN detector_in[0] ) ( _4_ A ) + USE SIGNAL ;
+    - detector_in[1] ( PIN detector_in[1] ) ( _4_ B ) ( _2_ A ) + USE SIGNAL ;
+    - phase_map_out[0] ( PIN phase_map_out[0] ) ( _3_ X ) + USE SIGNAL ;
+    - phase_map_out[1] ( PIN phase_map_out[1] ) ( _5_ X ) + USE SIGNAL ;
+END NETS
+END DESIGN

@@ -1,0 +1,127 @@
+library (top) {
+  comment                        : "";
+  delay_model                    : table_lookup;
+  simulation                     : false;
+  capacitive_load_unit (1,pF);
+  leakage_power_unit             : 1pW;
+  current_unit                   : "1A";
+  pulling_resistance_unit        : "1kohm";
+  time_unit                      : "1ns";
+  voltage_unit                   : "1v";
+  library_features(report_delay_calculation);
+
+  input_threshold_pct_rise : 50;
+  input_threshold_pct_fall : 50;
+  output_threshold_pct_rise : 50;
+  output_threshold_pct_fall : 50;
+  slew_lower_threshold_pct_rise : 20;
+  slew_lower_threshold_pct_fall : 20;
+  slew_upper_threshold_pct_rise : 80;
+  slew_upper_threshold_pct_fall : 80;
+  slew_derate_from_library : 1.0;
+
+
+  nom_process                    : 1.0;
+  nom_temperature                : -40.0;
+  nom_voltage                    : 1.95;
+
+  lu_table_template(template_1) {
+    variable_1 : total_output_net_capacitance;
+    index_1 ("0.00050,  0.00153,  0.00471,  0.01445,  0.04434,  0.13605,  0.41749");
+  }
+  type ("detector_in") {
+    base_type : array;
+    data_type : bit;
+    bit_width : 2;
+    bit_from : 1;
+    bit_to : 0;
+  }
+  type ("phase_map_out") {
+    base_type : array;
+    data_type : bit;
+    bit_width : 2;
+    bit_from : 1;
+    bit_to : 0;
+  }
+
+  cell ("top") {
+    bus("detector_in") {
+      bus_type : detector_in;
+      direction : input;
+      capacitance : 0.0000;
+    pin("detector_in[1]") {
+      direction : input;
+      capacitance : 0.0027;
+    }
+    pin("detector_in[0]") {
+      direction : input;
+      capacitance : 0.0037;
+    }
+    }
+    bus("phase_map_out") {
+      bus_type : phase_map_out;
+      direction : output;
+      capacitance : 0.0000;
+    pin("phase_map_out[1]") {
+      direction : output;
+      capacitance : 0.0007;
+      timing() {
+        related_pin : "detector_in[1]";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+	cell_rise(template_1) {
+          values("0.25660,0.26029,0.26963,0.29451,0.36814,0.59341,1.28641");
+	}
+	rise_transition(template_1) {
+          values("0.01210,0.01554,0.02593,0.05933,0.16647,0.49625,1.50773");
+	}
+	cell_fall(template_1) {
+          values("0.29853,0.30191,0.30989,0.32671,0.36489,0.46970,0.78873");
+	}
+	fall_transition(template_1) {
+          values("0.01268,0.01507,0.02089,0.03523,0.07665,0.21240,0.63733");
+	}
+      }
+      timing() {
+        related_pin : "detector_in[0]";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+	cell_rise(template_1) {
+          values("0.22291,0.22660,0.23594,0.26083,0.33445,0.55972,1.25272");
+	}
+	rise_transition(template_1) {
+          values("0.01210,0.01554,0.02593,0.05933,0.16647,0.49625,1.50773");
+	}
+	cell_fall(template_1) {
+          values("0.29086,0.29424,0.30222,0.31904,0.35723,0.46203,0.78106");
+	}
+	fall_transition(template_1) {
+          values("0.01268,0.01507,0.02089,0.03523,0.07665,0.21240,0.63733");
+	}
+      }
+    }
+    pin("phase_map_out[0]") {
+      direction : output;
+      capacitance : 0.0013;
+      timing() {
+        related_pin : "detector_in[1]";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+	cell_rise(template_1) {
+          values("0.26657,0.26980,0.27843,0.30071,0.36637,0.58040,1.29272");
+	}
+	rise_transition(template_1) {
+          values("0.01570,0.01817,0.02599,0.05210,0.14419,0.45849,1.50070");
+	}
+	cell_fall(template_1) {
+          values("0.24575,0.24880,0.25684,0.27553,0.32103,0.45636,0.90353");
+	}
+	fall_transition(template_1) {
+          values("0.01540,0.01755,0.02338,0.03904,0.08873,0.26673,0.86764");
+	}
+      }
+    }
+    }
+  }
+
+}

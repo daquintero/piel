@@ -1,0 +1,1 @@
+openroad -exit -no_splash -metrics /home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/24-openroad-detailedplacement/or_metrics_out.json /nix/store/6bashvprv9zy5nqj9cccwzgsz86y8jli-python3.10-openlane/lib/python3.10/site-packages/openlane/scripts/openroad/dpl.tcl

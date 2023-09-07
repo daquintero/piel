@@ -1,0 +1,6 @@
+
+55. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Warning: Wire top.\phase_map_out [1] is used but has no driver.
+Warning: Wire top.\phase_map_out [0] is used but has no driver.
+Found and reported 2 problems.
