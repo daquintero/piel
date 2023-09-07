@@ -1,0 +1,219 @@
+{
+  "creator": "Yosys 0.30+48 (git sha1 14d50a176d5, clang++ 11.1.0 -fPIC -Os)",
+  "modules": {
+    "top": {
+      "attributes": {
+        "amaranth.hierarchy": "top",
+        "top": "00000000000000000000000000000001",
+        "generator": "Amaranth",
+        "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:6.1-33.10"
+      },
+      "ports": {
+        "phase_map_out": {
+          "direction": "output",
+          "bits": [ 2, 3 ]
+        },
+        "detector_in": {
+          "direction": "input",
+          "bits": [ 4, 5 ]
+        }
+      },
+      "cells": {
+        "$procmux$4": {
+          "hide_name": 1,
+          "type": "$pmux",
+          "parameters": {
+            "S_WIDTH": "00000000000000000000000000000100",
+            "WIDTH": "00000000000000000000000000000010"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:0.0-0.0|C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:57"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "S": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ "x", "x" ],
+            "B": [ "1", "1", "1", "1", "0", "1", "0", "0" ],
+            "S": [ 6, 7, 8, 9 ],
+            "Y": [ 2, 3 ]
+          }
+        },
+        "$procmux$5_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:0.0-0.0|C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:57"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4, 5 ],
+            "B": [ "1", "1" ],
+            "Y": [ 6 ]
+          }
+        },
+        "$procmux$6_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:0.0-0.0|C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:57"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4, 5 ],
+            "B": [ "0", "1" ],
+            "Y": [ 7 ]
+          }
+        },
+        "$procmux$7_CMP0": {
+          "hide_name": 1,
+          "type": "$eq",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "B_SIGNED": "00000000000000000000000000000000",
+            "B_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:0.0-0.0|C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:57"
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4, 5 ],
+            "B": [ "1", "0" ],
+            "Y": [ 8 ]
+          }
+        },
+        "$procmux$8_CMP0": {
+          "hide_name": 1,
+          "type": "$logic_not",
+          "parameters": {
+            "A_SIGNED": "00000000000000000000000000000000",
+            "A_WIDTH": "00000000000000000000000000000010",
+            "Y_WIDTH": "00000000000000000000000000000001"
+          },
+          "attributes": {
+            "full_case": "00000000000000000000000000000001",
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:0.0-0.0|C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:57"
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4, 5 ],
+            "Y": [ 9 ]
+          }
+        }
+      },
+      "netnames": {
+        "$0\\$auto$verilog_backend.cc:2083:dump_module$1[0:0]$3": {
+          "hide_name": 1,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:7.7-7.56"
+          }
+        },
+        "$0\\phase_map_out[1:0]": {
+          "hide_name": 1,
+          "bits": [ 2, 3 ],
+          "attributes": {
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:14.3-32.6"
+          }
+        },
+        "$1\\phase_map_out[1:0]": {
+          "hide_name": 1,
+          "bits": [ 2, 3 ],
+          "attributes": {
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:14.3-32.6"
+          }
+        },
+        "$procmux$4_Y": {
+          "hide_name": 1,
+          "bits": [ 2, 3 ],
+          "attributes": {
+          }
+        },
+        "$procmux$5_CMP": {
+          "hide_name": 1,
+          "bits": [ 6 ],
+          "attributes": {
+          }
+        },
+        "$procmux$6_CMP": {
+          "hide_name": 1,
+          "bits": [ 7 ],
+          "attributes": {
+          }
+        },
+        "$procmux$7_CMP": {
+          "hide_name": 1,
+          "bits": [ 8 ],
+          "attributes": {
+          }
+        },
+        "$procmux$8_CMP": {
+          "hide_name": 1,
+          "bits": [ 9 ],
+          "attributes": {
+          }
+        },
+        "\\$auto$verilog_backend.cc:2083:dump_module$1": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v:7.7-7.51"
+          }
+        },
+        "detector_in": {
+          "hide_name": 0,
+          "bits": [ 4, 5 ],
+          "attributes": {
+            "src": "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:42"
+          }
+        },
+        "phase_map_out": {
+          "hide_name": 0,
+          "bits": [ 2, 3 ],
+          "attributes": {
+            "src": "C:\\Users\\dario\\Documents\\phd\\piel\\piel\\tools\\amaranth\\construct.py:42"
+          }
+        }
+      }
+    }
+  }
+}

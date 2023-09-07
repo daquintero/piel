@@ -1,5 +1,6 @@
 __all__ = [
-    "test_basic_open_lane_configuration",
+    "test_basic_open_lane_configuration_v1",
+    "test_basic_open_lane_configuration_v2",
     "test_spm_open_lane_configuration",
     "example_open_lane_configuration",
 ]
@@ -12,7 +13,8 @@ test_spm_open_lane_configuration = {
     "CLOCK_PERIOD": 10,
 }
 
-test_basic_open_lane_configuration = {
+test_basic_open_lane_configuration_v1 = {
+    "PDK": "sky130A",
     "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
     "RUN_CTS": False,
@@ -27,6 +29,23 @@ test_basic_open_lane_configuration = {
     "FP_PDN_VOFFSET": 5,
     "FP_PDN_HOFFSET": 5,
     "DIODE_INSERTION_STRATEGY": 3,
+    "RUN_LINTER": False,
+}
+
+test_basic_open_lane_configuration_v2 = {
+    "PDK": "sky130A",
+    "DESIGN_NAME": "top",
+    "VERILOG_FILES": "dir::src/*.v",
+    "RUN_CTS": False,
+    "CLOCK_PORT": None,
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 34.5 57.12",
+    "PL_TARGET_DENSITY": 0.75,
+    "FP_PDN_AUTO_ADJUST": False,
+    "FP_PDN_VPITCH": 25,
+    "FP_PDN_HPITCH": 25,
+    "FP_PDN_VOFFSET": 5,
+    "FP_PDN_HOFFSET": 5,
     "RUN_LINTER": False,
 }
 

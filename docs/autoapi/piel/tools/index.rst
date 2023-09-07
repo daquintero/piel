@@ -38,7 +38,7 @@ Functions
    piel.tools.get_input_ports_index
    piel.tools.get_matched_ports_tuple_index
    piel.tools.get_design_from_openlane_migration
-   piel.tools.find_design_run
+   piel.tools.find_latest_design_run
    piel.tools.check_config_json_exists_openlane_v1
    piel.tools.check_design_exists_openlane_v1
    piel.tools.configure_and_run_design_openlane_v1
@@ -300,7 +300,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: find_design_run(design_directory: piel.config.piel_path_types, run_name: str | None = None) -> pathlib.Path
+.. py:function:: find_latest_design_run(design_directory: piel.config.piel_path_types, run_name: str | None = None) -> pathlib.Path
 
    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
 

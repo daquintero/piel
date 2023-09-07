@@ -1,0 +1,47 @@
+Reading library file at '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/tmp/dbd258de15d844078f61a3de7d685d2f.lib'…
+Reading technology LEF file at '/home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef'…
+[INFO ODB-0222] Reading LEF file: /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef
+[INFO ODB-0223]     Created 13 technology layers
+[INFO ODB-0224]     Created 25 technology vias
+[INFO ODB-0226] Finished LEF file:  /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef
+Reading cell LEF file at '/home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef'…
+[INFO ODB-0222] Reading LEF file: /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef
+[WARNING ODB-0220] WARNING (LEFPARS-2008): NOWIREEXTENSIONATPIN statement is obsolete in version 5.6 or later.
+The NOWIREEXTENSIONATPIN statement will be ignored. See file /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef at line 2.
+
+[INFO ODB-0225]     Created 437 library cells
+[INFO ODB-0226] Finished LEF file:  /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef
+Reading cell LEF file at '/home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef'…
+[INFO ODB-0222] Reading LEF file: /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef
+[WARNING ODB-0220] WARNING (LEFPARS-2008): NOWIREEXTENSIONATPIN statement is obsolete in version 5.6 or later.
+The NOWIREEXTENSIONATPIN statement will be ignored. See file /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef at line 2.
+
+[INFO ODB-0225]     Created 5 library cells
+[INFO ODB-0226] Finished LEF file:  /home/daquintero/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lef/sky130_ef_sc_hd.lef
+Reading top-level netlist at '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/06-yosys-synthesis/top.nl.v'…
+Linking design 'top' from netlist…
+Reading design constraints file at '/nix/store/6bashvprv9zy5nqj9cccwzgsz86y8jli-python3.10-openlane/lib/python3.10/site-packages/openlane/scripts/base.sdc'…
+[WARNING STA-0337] port '__VIRTUAL_CLK__' not found.
+[INFO] Using clock __VIRTUAL_CLK__…
+[INFO] Setting output delay to: 2
+[INFO] Setting input delay to: 2
+[WARNING STA-0337] port '__VIRTUAL_CLK__' not found.
+[INFO] Setting load to: 0.033442
+[INFO] Setting clock uncertainty to: 0.25
+[INFO] Setting clock transition to: 0.1499999999999999944488848768742172978818416595458984375
+[WARNING STA-0559] transition time can not be specified for virtual clocks.
+[INFO] Setting timing derate to: 5%
+[INFO IFP-0001] Added 13 rows of 51 site unithd with height 1.
+[INFO IFP-0030] Inserted 0 tiecells using sky130_fd_sc_hd__conb_1/LO.
+[INFO IFP-0030] Inserted 0 tiecells using sky130_fd_sc_hd__conb_1/HI.
+[INFO] Extracting DIE_AREA and CORE_AREA from the floorplan
+[INFO] Floorplanned on a die area of 0.0 0.0 34.5 57.12 (µm).
+[INFO] Floorplanned on a core area of 5.52 10.88 28.98 46.24 (µm).
+Writing metric design__die__bbox: 0.0 0.0 34.5 57.12
+Writing metric design__core__bbox: 5.52 10.88 28.98 46.24
+Setting global connections for newly added cells…
+[INFO] Setting global connections...
+Writing OpenROAD database to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/11-openroad-floorplan/top.odb'…
+Writing netlist to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/11-openroad-floorplan/top.nl.v'…
+Writing powered netlist to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/11-openroad-floorplan/top.pnl.v'…
+Writing layout to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/11-openroad-floorplan/top.def'…

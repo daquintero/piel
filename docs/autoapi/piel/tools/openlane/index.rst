@@ -36,7 +36,7 @@ Functions
 .. autoapisummary::
 
    piel.tools.openlane.get_design_from_openlane_migration
-   piel.tools.openlane.find_design_run
+   piel.tools.openlane.find_latest_design_run
    piel.tools.openlane.check_config_json_exists_openlane_v1
    piel.tools.openlane.check_design_exists_openlane_v1
    piel.tools.openlane.configure_and_run_design_openlane_v1
@@ -88,7 +88,7 @@ Functions
    :returns: None
 
 
-.. py:function:: find_design_run(design_directory: piel.config.piel_path_types, run_name: str | None = None) -> pathlib.Path
+.. py:function:: find_latest_design_run(design_directory: piel.config.piel_path_types, run_name: str | None = None) -> pathlib.Path
 
    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory.
 

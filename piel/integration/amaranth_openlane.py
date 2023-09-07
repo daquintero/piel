@@ -5,15 +5,16 @@ import amaranth as am
 from typing import Optional, Literal
 import types
 from ..tools.amaranth import (
-    construct_amaranth_module_from_truth_table,
     generate_verilog_from_amaranth,
-    verify_truth_table,
 )
 from ..file_system import return_path, create_new_directory
 from ..project_structure import create_empty_piel_project
 from ..tools.openlane.v1 import write_configuration_openlane_v1
 from ..tools.openlane.v2 import run_openlane_flow
-from ..tools.openlane.defaults import test_basic_open_lane_configuration
+from ..tools.openlane.defaults import (
+    test_basic_open_lane_configuration_v1,
+    test_basic_open_lane_configuration_v2,
+)
 from ..config import piel_path_types
 
 __all__ = ["layout_amaranth_truth_table_through_openlane"]
@@ -26,6 +27,7 @@ def layout_amaranth_truth_table_through_openlane(
     parent_directory: piel_path_types,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v1",
+    **kwargs
 ):
     """
     This function implements an amaranth truth-table module through the openlane flow. There are several ways to
@@ -85,10 +87,10 @@ def layout_amaranth_truth_table_through_openlane(
         target_directory=src_folder,
     )
     # Generates the ``openlane`` configuration files for this particular location.
-    our_amaranth_openlane_config = test_basic_open_lane_configuration
 
     # Runs the `openlane` flow
     if openlane_version == "v1":
+        our_amaranth_openlane_config = test_basic_open_lane_configuration_v1
         write_configuration_openlane_v1(
             configuration=our_amaranth_openlane_config,
             design_directory=design_directory,
@@ -96,7 +98,9 @@ def layout_amaranth_truth_table_through_openlane(
         # TODO Copy to the openlane root directory.
 
     elif openlane_version == "v2":
+        our_amaranth_openlane_config = test_basic_open_lane_configuration_v2
         run_openlane_flow(
             configuration=our_amaranth_openlane_config,
             design_directory=design_directory,
+            **kwargs
         )

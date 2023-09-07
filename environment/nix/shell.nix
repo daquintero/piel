@@ -23,6 +23,7 @@ pkgs.mkShell {
       python -m venv ../../.venv;
       source ../../.venv/bin/activate;
       pip install -r ../../requirements_dev.txt;
+      pip install -r ../../../openlane2/requirements_dev.txt;
       pip install -e ../../;
       source ../../.venv/bin/activate;
     fi

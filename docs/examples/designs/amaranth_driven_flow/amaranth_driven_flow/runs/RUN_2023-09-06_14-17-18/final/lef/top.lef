@@ -1,0 +1,94 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO top
+  CLASS BLOCK ;
+  FOREIGN top ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 34.500 BY 57.120 ;
+  PIN VGND
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met4 ;
+        RECT 13.020 10.640 14.620 46.480 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 5.280 18.380 29.220 19.980 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 5.280 43.380 29.220 44.980 ;
+    END
+  END VGND
+  PIN VPWR
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met4 ;
+        RECT 9.720 10.640 11.320 46.480 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 5.280 15.080 29.220 16.680 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 5.280 40.080 29.220 41.680 ;
+    END
+  END VPWR
+  PIN detector_in[0]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.196500 ;
+    PORT
+      LAYER met2 ;
+        RECT 0.090 0.000 0.370 4.000 ;
+    END
+  END detector_in[0]
+  PIN detector_in[1]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.196500 ;
+    PORT
+      LAYER met3 ;
+        RECT 0.000 44.240 4.000 44.840 ;
+    END
+  END detector_in[1]
+  PIN phase_map_out[0]
+    DIRECTION OUTPUT TRISTATE ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.795200 ;
+    PORT
+      LAYER met2 ;
+        RECT 32.290 53.120 32.570 57.120 ;
+    END
+  END phase_map_out[0]
+  PIN phase_map_out[1]
+    DIRECTION OUTPUT TRISTATE ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 30.500 10.240 34.500 10.840 ;
+    END
+  END phase_map_out[1]
+  OBS
+      LAYER li1 ;
+        RECT 5.520 10.795 28.980 46.325 ;
+      LAYER met1 ;
+        RECT 0.070 10.640 32.590 46.480 ;
+      LAYER met2 ;
+        RECT 0.100 52.840 32.010 53.120 ;
+        RECT 0.100 4.280 32.560 52.840 ;
+        RECT 0.650 4.000 32.560 4.280 ;
+      LAYER met3 ;
+        RECT 4.000 45.240 30.500 46.405 ;
+        RECT 4.400 43.840 30.500 45.240 ;
+        RECT 4.000 11.240 30.500 43.840 ;
+        RECT 4.000 10.375 30.100 11.240 ;
+  END
+END top
+END LIBRARY

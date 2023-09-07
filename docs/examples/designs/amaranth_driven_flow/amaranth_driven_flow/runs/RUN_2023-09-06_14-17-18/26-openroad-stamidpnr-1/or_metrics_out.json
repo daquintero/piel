@@ -1,0 +1,17 @@
+{
+	"design__max_slew_violation__count__corner:nom_tt_025C_1v80": 0,
+	"design__max_fanout_violation__count__corner:nom_tt_025C_1v80": 0,
+	"design__max_cap_violation__count__corner:nom_tt_025C_1v80": 0,
+	"clock__skew__worst_hold__corner:nom_tt_025C_1v80": 0,
+	"clock__skew__worst_setup__corner:nom_tt_025C_1v80": 0,
+	"timing__hold__ws__corner:nom_tt_025C_1v80": 4.14978,
+	"timing__setup__ws__corner:nom_tt_025C_1v80": 5.22815,
+	"timing__hold__tns__corner:nom_tt_025C_1v80": 0,
+	"timing__setup__tns__corner:nom_tt_025C_1v80": 0,
+	"timing__hold__wns__corner:nom_tt_025C_1v80": 0,
+	"timing__setup__wns__corner:nom_tt_025C_1v80": 0,
+	"timing__hold_vio__count__corner:nom_tt_025C_1v80": 0,
+	"timing__hold_r2r_vio__count__corner:nom_tt_025C_1v80": 0,
+	"timing__setup_vio__count__corner:nom_tt_025C_1v80": 0,
+	"timing__setup_r2r_vio__count__corner:nom_tt_025C_1v80": 0
+}

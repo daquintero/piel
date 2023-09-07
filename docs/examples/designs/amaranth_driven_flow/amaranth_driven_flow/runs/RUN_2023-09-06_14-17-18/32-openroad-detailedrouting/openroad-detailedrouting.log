@@ -1,0 +1,208 @@
+Reading OpenROAD database at '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/30-openroad-resizertimingpostgrt/top.odb'…
+Reading library file at '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/tmp/dbd258de15d844078f61a3de7d685d2f.lib'…
+Reading design constraints file at '/nix/store/6bashvprv9zy5nqj9cccwzgsz86y8jli-python3.10-openlane/lib/python3.10/site-packages/openlane/scripts/base.sdc'…
+[WARNING STA-0337] port '__VIRTUAL_CLK__' not found.
+[INFO] Using clock __VIRTUAL_CLK__…
+[INFO] Setting output delay to: 2
+[INFO] Setting input delay to: 2
+[WARNING STA-0337] port '__VIRTUAL_CLK__' not found.
+[INFO] Setting load to: 0.033442
+[INFO] Setting clock uncertainty to: 0.25
+[INFO] Setting clock transition to: 0.1499999999999999944488848768742172978818416595458984375
+[WARNING STA-0559] transition time can not be specified for virtual clocks.
+[INFO] Setting timing derate to: 5%
+[INFO ORD-0030] Using 16 thread(s).
+[INFO DRT-0149] Reading tech and libs.
+
+Units:                1000
+Number of layers:     13
+Number of macros:     442
+Number of vias:       25
+Number of viarulegen: 25
+
+[INFO DRT-0150] Reading design.
+
+Design:                   top
+Die area:                 ( 0 0 ) ( 34500 57120 )
+Number of track patterns: 12
+Number of DEF vias:       0
+Number of components:     41
+Number of terminals:      6
+Number of snets:          2
+Number of nets:           10
+
+[INFO DRT-0167] List of default vias:
+  Layer mcon
+    default via: L1M1_PR
+  Layer via
+    default via: M1M2_PR
+  Layer via2
+    default via: M2M3_PR
+  Layer via3
+    default via: M3M4_PR
+  Layer via4
+    default via: M4M5_PR
+[INFO DRT-0162] Library cell analysis.
+[INFO DRT-0163] Instance analysis.
+[INFO DRT-0164] Number of unique instances = 11.
+[INFO DRT-0168] Init region query.
+[INFO DRT-0024]   Complete FR_MASTERSLICE.
+[INFO DRT-0024]   Complete Fr_VIA.
+[INFO DRT-0024]   Complete li1.
+[INFO DRT-0024]   Complete mcon.
+[INFO DRT-0024]   Complete met1.
+[INFO DRT-0024]   Complete via.
+[INFO DRT-0024]   Complete met2.
+[INFO DRT-0024]   Complete via2.
+[INFO DRT-0024]   Complete met3.
+[INFO DRT-0024]   Complete via3.
+[INFO DRT-0024]   Complete met4.
+[INFO DRT-0024]   Complete via4.
+[INFO DRT-0024]   Complete met5.
+[INFO DRT-0033] FR_MASTERSLICE shape region query size = 0.
+[INFO DRT-0033] FR_VIA shape region query size = 0.
+[INFO DRT-0033] li1 shape region query size = 315.
+[INFO DRT-0033] mcon shape region query size = 230.
+[INFO DRT-0033] met1 shape region query size = 110.
+[INFO DRT-0033] via shape region query size = 70.
+[INFO DRT-0033] met2 shape region query size = 44.
+[INFO DRT-0033] via2 shape region query size = 56.
+[INFO DRT-0033] met3 shape region query size = 44.
+[INFO DRT-0033] via3 shape region query size = 56.
+[INFO DRT-0033] met4 shape region query size = 22.
+[INFO DRT-0033] via4 shape region query size = 4.
+[INFO DRT-0033] met5 shape region query size = 12.
+[INFO DRT-0165] Start pin access.
+[INFO DRT-0078]   Complete 13 pins.
+[INFO DRT-0081]   Complete 6 unique inst patterns.
+[INFO DRT-0084]   Complete 8 groups.
+#scanned instances     = 41
+#unique  instances     = 11
+#stdCellGenAp          = 111
+#stdCellValidPlanarAp  = 0
+#stdCellValidViaAp     = 77
+#stdCellPinNoAp        = 0
+#stdCellPinCnt         = 17
+#instTermValidViaApCnt = 0
+#macroGenAp            = 0
+#macroValidPlanarAp    = 0
+#macroValidViaAp       = 0
+#macroNoAp             = 0
+[INFO DRT-0166] Complete pin access.
+[INFO DRT-0267] cpu time = 00:00:01, elapsed time = 00:00:00, memory = 119.47 (MB), peak = 457.21 (MB)
+
+Number of guides:     48
+
+[INFO DRT-0169] Post process guides.
+[INFO DRT-0176] GCELLGRID X 0 DO 5 STEP 6900 ;
+[INFO DRT-0177] GCELLGRID Y 0 DO 8 STEP 6900 ;
+[INFO DRT-0028]   Complete FR_MASTERSLICE.
+[INFO DRT-0028]   Complete Fr_VIA.
+[INFO DRT-0028]   Complete li1.
+[INFO DRT-0028]   Complete mcon.
+[INFO DRT-0028]   Complete met1.
+[INFO DRT-0028]   Complete via.
+[INFO DRT-0028]   Complete met2.
+[INFO DRT-0028]   Complete via2.
+[INFO DRT-0028]   Complete met3.
+[INFO DRT-0028]   Complete via3.
+[INFO DRT-0028]   Complete met4.
+[INFO DRT-0028]   Complete via4.
+[INFO DRT-0028]   Complete met5.
+[INFO DRT-0178] Init guide query.
+[INFO DRT-0035]   Complete FR_MASTERSLICE (guide).
+[INFO DRT-0035]   Complete Fr_VIA (guide).
+[INFO DRT-0035]   Complete li1 (guide).
+[INFO DRT-0035]   Complete mcon (guide).
+[INFO DRT-0035]   Complete met1 (guide).
+[INFO DRT-0035]   Complete via (guide).
+[INFO DRT-0035]   Complete met2 (guide).
+[INFO DRT-0035]   Complete via2 (guide).
+[INFO DRT-0035]   Complete met3 (guide).
+[INFO DRT-0035]   Complete via3 (guide).
+[INFO DRT-0035]   Complete met4 (guide).
+[INFO DRT-0035]   Complete via4 (guide).
+[INFO DRT-0035]   Complete met5 (guide).
+[INFO DRT-0036] FR_MASTERSLICE guide region query size = 0.
+[INFO DRT-0036] FR_VIA guide region query size = 0.
+[INFO DRT-0036] li1 guide region query size = 15.
+[INFO DRT-0036] mcon guide region query size = 0.
+[INFO DRT-0036] met1 guide region query size = 11.
+[INFO DRT-0036] via guide region query size = 0.
+[INFO DRT-0036] met2 guide region query size = 7.
+[INFO DRT-0036] via2 guide region query size = 0.
+[INFO DRT-0036] met3 guide region query size = 2.
+[INFO DRT-0036] via3 guide region query size = 0.
+[INFO DRT-0036] met4 guide region query size = 0.
+[INFO DRT-0036] via4 guide region query size = 0.
+[INFO DRT-0036] met5 guide region query size = 0.
+[INFO DRT-0179] Init gr pin query.
+[INFO DRT-0245] skipped writing guide updates to database.
+[INFO DRT-0185] Post process initialize RPin region query.
+[INFO DRT-0181] Start track assignment.
+[INFO DRT-0184] Done with 22 vertical wires in 1 frboxes and 13 horizontal wires in 1 frboxes.
+[INFO DRT-0186] Done with 1 vertical wires in 1 frboxes and 0 horizontal wires in 1 frboxes.
+[INFO DRT-0182] Complete track assignment.
+[INFO DRT-0267] cpu time = 00:00:00, elapsed time = 00:00:00, memory = 119.47 (MB), peak = 457.21 (MB)
+[INFO DRT-0187] Start routing data preparation.
+[INFO DRT-0267] cpu time = 00:00:00, elapsed time = 00:00:00, memory = 119.47 (MB), peak = 457.21 (MB)
+[INFO DRT-0194] Start detail routing.
+[INFO DRT-0195] Start 0th optimization iteration.
+    Completing 10% with 0 violations.
+    elapsed time = 00:00:00, memory = 122.32 (MB).
+    Completing 20% with 0 violations.
+    elapsed time = 00:00:00, memory = 122.32 (MB).
+[INFO DRT-0199]   Number of violations = 0.
+[INFO DRT-0267] cpu time = 00:00:05, elapsed time = 00:00:00, memory = 440.42 (MB), peak = 482.34 (MB)
+Total wire length = 104 um.
+Total wire length on LAYER li1 = 0 um.
+Total wire length on LAYER met1 = 50 um.
+Total wire length on LAYER met2 = 51 um.
+Total wire length on LAYER met3 = 3 um.
+Total wire length on LAYER met4 = 0 um.
+Total wire length on LAYER met5 = 0 um.
+Total number of vias = 32.
+Up-via summary (total 32):.
+
+---------------------
+ FR_MASTERSLICE     0
+            li1    17
+           met1    13
+           met2     2
+           met3     0
+           met4     0
+---------------------
+                   32
+
+
+[INFO DRT-0198] Complete detail routing.
+Total wire length = 104 um.
+Total wire length on LAYER li1 = 0 um.
+Total wire length on LAYER met1 = 50 um.
+Total wire length on LAYER met2 = 51 um.
+Total wire length on LAYER met3 = 3 um.
+Total wire length on LAYER met4 = 0 um.
+Total wire length on LAYER met5 = 0 um.
+Total number of vias = 32.
+Up-via summary (total 32):.
+
+---------------------
+ FR_MASTERSLICE     0
+            li1    17
+           met1    13
+           met2     2
+           met3     0
+           met4     0
+---------------------
+                   32
+
+
+[INFO DRT-0267] cpu time = 00:00:05, elapsed time = 00:00:00, memory = 440.42 (MB), peak = 482.34 (MB)
+
+[INFO DRT-0180] Post processing.
+Setting global connections for newly added cells…
+[INFO] Setting global connections...
+Writing OpenROAD database to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/32-openroad-detailedrouting/top.odb'…
+Writing netlist to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/32-openroad-detailedrouting/top.nl.v'…
+Writing powered netlist to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/32-openroad-detailedrouting/top.pnl.v'…
+Writing layout to '/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18/32-openroad-detailedrouting/top.def'…

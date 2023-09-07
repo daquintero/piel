@@ -62,3 +62,9 @@ This table of tools compatibility is provided should you use a specific set of t
 This is a preliminary table, I mostly develop on Linux, you need to verify your system configuration or use the recommended Docker environment. TODO I am unsure about the OS X integrations.
 
 In the future, we will have custom installations for different types of users so they can install minimal dependencies for their use case.
+
+
+Upgrading the tools versions
+-------------------------------
+
+TODO add the instructions of how to upgrade the tool versions accordingly. TODO add links to the tests that need to be run in order not to break compatibility between tools.
