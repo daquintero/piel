@@ -82,6 +82,7 @@ Attributes
 
        .. math::
 
+
    ewcommand{\ket}[1]{\left|{#1}
    ight
    angle}
