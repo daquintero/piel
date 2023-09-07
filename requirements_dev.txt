@@ -40,7 +40,7 @@ pydata-sphinx-theme>=0.13.3
 pytest
 qutip==4.7.3
 sax==0.8.8  # Pinned for pydantic <v2 compatibility.
-sphinx>=4,<7
+sphinx>=4,<8
 sphinx-autoapi
 sphinx-autobuild
 sphinx_autodoc_typehints
