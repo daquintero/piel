@@ -138,5 +138,5 @@ Scattering Matrix
 .. math::
 
     \begin{equation}
-        S_{ij} = \frac{V_i^-}{V_j^+} |_
+        S_{ij} = \frac{V_i^-}{V_j^+}
     \end{equation}
