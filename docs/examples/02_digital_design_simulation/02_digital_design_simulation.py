@@ -7,6 +7,7 @@
 # * `cocotb` is mainly used for writing testbenches in Python and verification of logic.
 
 import piel
+
 import simple_design
 
 # In this example, we will use `amaranth` to perform some design and then simulations, so let's create a suitable project structure based on our initial `simple_design`, where we will output our files.
@@ -135,7 +136,7 @@ verify_truth_table(
 
 # ### Integration with the `openlane v2` flow
 
-# You may want, for example, to layout this design as an `openlane` design. There are different flows of how to achieve this. We know, for example, that we have a design directory where we want to save the outputs of the `openlane` runs. It will impelement the design using the `openlane v2` versions:
+# You may want, for example, to layout this design as an `openlane` design. There are different flows of how to achieve this. We know, for example, that we have a design directory where we want to save the outputs of the `openlane` runs. It will implement the design using the `openlane v2` versions:
 
 # +
 from piel.integration.amaranth_openlane import (

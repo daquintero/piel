@@ -27,7 +27,7 @@ def construct_amaranth_module_from_truth_table(
         truth_table (dict): The truth table in the form of a dictionary.
         inputs (list[str]): The inputs to the truth table.
         outputs (list[str]): The outputs to the truth table.
-        implementation_type (Litearal["combinatorial", "sequential", "memory"], optional): The type of implementation. Defaults to "combinatorial".
+        implementation_type (Literal["combinatorial", "sequential", "memory"], optional): The type of implementation. Defaults to "combinatorial".
 
     Returns:
         Generated amaranth module.
@@ -36,13 +36,18 @@ def construct_amaranth_module_from_truth_table(
     class TruthTable(am.Elaboratable):
         def __init__(self, truth_table: dict, inputs: list, outputs: list):
             super(TruthTable, self).__init__()
-            # Initialise all the signals accordingly.
-            for key, _ in truth_table.items():
-                # TODO Determine signal type or largest width from the values.
-                setattr(self, key, am.Signal(shape=2, name=key))
+            # Raise error if no truth table inputs are provided:
+            if len(truth_table[inputs[0]]) == 0:
+                raise ValueError("No truth table inputs provided." + str(inputs))
 
-            self.inputs = inputs
-            self.outputs = outputs
+            # Initialise all the signals accordingly.
+            for key, value in truth_table.items():
+                # TODO Determine signal type or largest width from the values.
+                max_length = max((len(s) for s in value), default=0)
+                setattr(self, key, am.Signal(shape=max_length, name=key))
+
+            self.inputs_names = inputs
+            self.outputs_names = outputs
 
         def elaborate(self, platform):
             m = am.Module()
@@ -51,18 +56,17 @@ def construct_amaranth_module_from_truth_table(
             # TODO implement some verification that the arrays are of the same length.
 
             # Implements a particular output.
-            print(outputs[0])
-            output_value_i = getattr(self, outputs[0]).eq
+            output_signal_value_i = getattr(self, outputs[0]).eq
 
             with m.Switch(getattr(self, inputs[0])):
-                for i in range(4):
+                for i in range(len(truth_table[self.inputs_names[0]])):
                     # We iterate over the truth table values
-                    with m.Case(str(truth_table[self.inputs[0]][i])):
-                        m.d.comb += output_value_i(
-                            int(truth_table[self.outputs[0]][i], 2)
+                    with m.Case(str(truth_table[self.inputs_names[0]][i])):
+                        m.d.comb += output_signal_value_i(
+                            int(truth_table[self.outputs_names[0]][i], 2)
                         )
                 with m.Case():
-                    m.d.comb += output_value_i(0)
+                    m.d.comb += output_signal_value_i(0)
 
             return m
 

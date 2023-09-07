@@ -335,3 +335,7 @@ amaranth_driven_flow_component
 # ![amaranth_driven_flow_klive](../_static/img/examples/01b_gdsfactory_layout_integation/amaranth_driven_flow_klive.PNG)
 
 # Very cool! So now we can interact and generate `openlane 2` designs easily. Let's explore now getting some design metrics out of this design.
+
+# ### Deployment and Timing of Large-Scale `openlane2` designs
+#
+# One common and powerful aspect of this tool is the large-scale deployment of `openlane 2`
