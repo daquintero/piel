@@ -1,8 +1,28 @@
 from openlane.flows import Flow
 from piel.config import piel_path_types
 from piel.file_system import return_path, read_json
+from .utils import find_latest_design_run
 
-__all__ = ["run_openlane_flow"]
+__all__ = ["read_metrics_openlane_v2", "run_openlane_flow"]
+
+
+def read_metrics_openlane_v2(design_directory: piel_path_types) -> dict:
+    """
+    Read design metrics from OpenLane v2 run files.
+
+    Args:
+        design_directory(piel_path_types): Design directory PATH.
+
+    Returns:
+        dict: Metrics dictionary.
+    """
+    design_directory = return_path(design_directory)
+    run_directory, version = find_latest_design_run(
+        design_directory=design_directory, version="v2"
+    )
+    metrics_path = run_directory / "final" / "metrics.json"
+    metrics_dictionary = read_json(metrics_path)
+    return metrics_dictionary
 
 
 def run_openlane_flow(

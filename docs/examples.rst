@@ -9,6 +9,7 @@ Examples
    examples/00_setup
    examples/01_run_openlane_flow
    examples/02_digital_design_simulation/02_digital_design_simulation
+   examples/02a_large_scale_digital_layout/02a_large_scale_digital_layout
    examples/03_sax_basics
    examples/03a_sax_cocotb_cosimulation
    examples/04_spice_cosimulation/04_spice_cosimulation

@@ -5,6 +5,7 @@ import amaranth as am
 from typing import Optional, Literal
 import types
 from ..tools.amaranth import (
+    construct_amaranth_module_from_truth_table,
     generate_verilog_from_amaranth,
 )
 from ..file_system import return_path, create_new_directory
@@ -20,13 +21,36 @@ from ..config import piel_path_types
 __all__ = ["layout_amaranth_truth_table_through_openlane"]
 
 
+def layout_openlane_from_truth_table(
+    truth_table: dict,
+    inputs: list[str],
+    outputs: list[str],
+    parent_directory: piel_path_types,
+    target_directory_name: Optional[str] = None,
+    openlane_version: Literal["v1", "v2"] = "v2",
+    **kwargs
+):
+    our_truth_table_module = construct_amaranth_module_from_truth_table(
+        truth_table=truth_table, inputs=inputs, outputs=outputs, **kwargs
+    )
+    layout_amaranth_truth_table_through_openlane(
+        amaranth_module=our_truth_table_module,
+        inputs_name_list=inputs,
+        outputs_name_list=outputs,
+        parent_directory=parent_directory,
+        target_directory_name=target_directory_name,
+        openlane_version=openlane_version,
+        **kwargs
+    )
+
+
 def layout_amaranth_truth_table_through_openlane(
     amaranth_module: am.Module,
     inputs_name_list: list[str],
     outputs_name_list: list[str],
     parent_directory: piel_path_types,
     target_directory_name: Optional[str] = None,
-    openlane_version: Literal["v1", "v2"] = "v1",
+    openlane_version: Literal["v1", "v2"] = "v2",
     **kwargs
 ):
     """
