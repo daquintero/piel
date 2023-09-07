@@ -310,8 +310,8 @@ all_amaranth_driven_design_runs = piel.find_all_design_runs(
 all_amaranth_driven_design_runs
 
 # ```python
-# [PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09'),
-#  PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18')]
+# {'v2': [PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023-09-06_14-17-18')],
+#  'v1': [PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09')]}
 # ```
 
 latest_amaranth_driven_openlane_runs = piel.find_latest_design_run(
@@ -319,8 +319,19 @@ latest_amaranth_driven_openlane_runs = piel.find_latest_design_run(
 )
 latest_amaranth_driven_openlane_runs
 
-# It is quite easy to visualise it on the jupyter lab using the `gdsfactory` widget:
+# We can check what is the path to our generated `gds` file accordingly:
+
+piel.get_gds_path_from_design_run(
+    design_directory=amaranth_driven_flow,
+)
+
+# It is quite easy to visualise it on the jupyter lab using the `gdsfactory` integration widget:
 
 amaranth_driven_flow_component = piel.create_gdsfactory_component_from_openlane(
     design_directory=amaranth_driven_flow,
 )
+amaranth_driven_flow_component
+
+# ![amaranth_driven_flow_klive](../_static/img/examples/01b_gdsfactory_layout_integation/amaranth_driven_flow_klive.PNG)
+
+# Very cool! So now we can interact and generate `openlane 2` designs easily. Let's explore now getting some design metrics out of this design.
