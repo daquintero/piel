@@ -103,7 +103,9 @@ our_heated_mzi2x2.settings.full["straight_x_top"]
 
 # So let's see our heater component:
 
-our_heater_component = gf.components.straight_heater_metal_simple()
+from piel import straight_heater_metal_simple
+
+our_heater_component = straight_heater_metal_simple()
 our_heater_component.plot_widget()
 
 # ![our_straight_heater](../_static/img/examples/06_component_codesign_basics/our_straight_heater_component.PNG)

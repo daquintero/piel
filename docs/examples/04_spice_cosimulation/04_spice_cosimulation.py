@@ -45,7 +45,7 @@ mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 # So this top heater instance `info` instance definition, it already includes a `resistance` field. However, in the default component definition, it is defined as `None`. Let us give some more details about our circuit, and this would normally be provided by the PDK information of your foundry.
 
 # +
-from gdsfactory.components.straight_heater_metal import straight_heater_metal_simple
+from piel import straight_heater_metal_simple
 import functools
 
 # Defines the resistance parameters

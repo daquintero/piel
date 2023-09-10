@@ -18,7 +18,7 @@ requirements = [
     "hdl21==4.0.0",
     "jax==0.4.14",
     "jaxlib==0.4.14",
-    "gdsfactory==7.3.0",  # Pinned for pydantic <v2 compatibility.
+    "gdsfactory==7.2.0",  # Pinned for pydantic <v2 compatibility, until examples upgrades
     "networkx==3.1",
     "numpy==1.24.4",
     "openlane==2.0.0b8",
