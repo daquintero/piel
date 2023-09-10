@@ -1,11 +1,121 @@
 from __future__ import annotations
 
+
 import gdsfactory as gf
+from gdsfactory.add_padding import get_padding_points
 from gdsfactory.cell import cell
 from gdsfactory.component import Component
+from gdsfactory.port import Port
 from gdsfactory.typings import ComponentSpec, CrossSectionSpec
 
 __all__ = ["straight_heater_metal_simple"]
+
+
+@cell
+def simple_taper(
+    length: float = 10.0,
+    width1: float = 0.5,
+    width2: float | None = None,
+    port: Port | None = None,
+    with_bbox: bool = True,
+    with_two_ports: bool = True,
+    cross_section: CrossSectionSpec = "strip",
+    port_order_name: tuple | None = ("o1", "o2"),
+    port_order_types: tuple | None = ("optical", "optical"),
+    **kwargs,
+) -> Component:
+    """Linear taper.
+
+    Deprecated, use gf.components.taper_cross_section instead
+
+    Args:
+        length: taper length.
+        width1: width of the west port.
+        width2: width of the east port.
+        port: can taper from a port instead of defining width1.
+        with_bbox: box in bbox_layers and bbox_offsets to avoid DRC sharp edges.
+        with_two_ports: includes a second port.
+            False for terminator and edge coupler fiber interface.
+        cross_section: specification (CrossSection, string, CrossSectionFactory dict).
+         port_order_name(tuple): Ordered tuple of port names. First port is default taper port, second name only if with_two_ports flags used.
+        port_order_types(tuple): Ordered tuple of port types. First port is default taper port, second name only if with_two_ports flags used.
+        kwargs: cross_section settings.
+    """
+    x = gf.get_cross_section(cross_section, **kwargs)
+    layer = x.layer
+
+    if isinstance(port, gf.Port) and width1 is None:
+        width1 = port.width
+    if width2 is None:
+        width2 = width1
+
+    c = gf.Component()
+
+    y1 = width1 / 2
+    y2 = width2 / 2
+    x1 = x.copy(width=width1)
+    x2 = x.copy(width=width2)
+    xpts = [0, length, length, 0]
+    ypts = [y1, y2, -y2, -y1]
+    c.add_polygon((xpts, ypts), layer=layer)
+
+    for section in x.sections:
+        layer = section.layer
+        y1 = section.width / 2
+        y2 = y1 + (width2 - width1)
+        ypts = [y1, y2, -y2, -y1]
+        c.add_polygon((xpts, ypts), layer=layer)
+
+    if x.cladding_layers and x.cladding_offsets:
+        for layer, offset in zip(x.cladding_layers, x.cladding_offsets, strict=True):
+            y1 = width1 / 2 + offset
+            y2 = width2 / 2 + offset
+            ypts = [y1, y2, -y2, -y1]
+            c.add_polygon((xpts, ypts), layer=gf.get_layer(layer))
+
+    c.add_port(
+        name=port_order_name[0],
+        center=(0, 0),
+        width=width1,
+        orientation=180,
+        layer=x.layer,
+        cross_section=x1,
+        port_type=port_order_types[0],
+    )
+    if with_two_ports:
+        c.add_port(
+            name=port_order_name[1],
+            center=(length, 0),
+            width=width2,
+            orientation=0,
+            layer=x.layer,
+            cross_section=x2,
+            port_type=port_order_types[1],
+        )
+
+    if with_bbox and length:
+        padding = []
+        for offset in x.bbox_offsets:
+            points = get_padding_points(
+                component=c,
+                default=0,
+                bottom=offset,
+                top=offset,
+            )
+            padding.append(points)
+
+        for layer, points in zip(x.bbox_layers, padding, strict=True):
+            c.add_polygon(points, layer=layer)
+
+    c.info["length"] = length
+    c.info["width1"] = float(width1)
+    c.info["width2"] = float(width2)
+
+    if x.add_bbox:
+        c = x.add_bbox(c)
+    if x.add_pins:
+        c = x.add_pins(c)
+    return c
 
 
 @cell
@@ -81,7 +191,7 @@ def straight_heater_metal_simple(
         # c.add_ports(p2, prefix="r_")
         if heater_taper_length:
             x = gf.get_cross_section(cross_section_heater, width=heater_width)
-            taper = gf.components.taper(
+            taper = simple_taper(
                 width1=via_stackw.ports["e1"].width,
                 width2=heater_width,
                 length=heater_taper_length,

@@ -78,11 +78,14 @@ def compose_recursive_instance_location(
         # We iterate over each of the required model names to see if they match our active component name.
         for required_model_name_i in required_models:
             # Appends required_models_i from subcomponent to the required_models input based on the models provided.
-            required_models_i = sax.get_required_circuit_models(
-                recursive_netlist[required_model_name_i],
-                # TODO make this recursive so it can search inside? This will never have to be 2D as all models outside.
-                models={**models, **model_composition_mapping},
-            )  # eg. ["straight_heater_metal_s_ad3c1693"]
+            try:
+                required_models_i = sax.get_required_circuit_models(
+                    recursive_netlist[required_model_name_i],
+                    # TODO make this recursive so it can search inside? This will never have to be 2D as all models outside.
+                    models={**models, **model_composition_mapping},
+                )  # eg. ["straight_heater_metal_s_ad3c1693"]
+            except:
+                required_models_i = []
 
             # Check if required_model_name_i already composed.
 
