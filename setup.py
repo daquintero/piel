@@ -24,7 +24,7 @@ requirements = [
     "openlane==2.0.0b13",
     "pandas==1.5.3",
     "qutip==4.7.3",
-    "sax==0.8.8",  # Pinned for pydantic <v2 compatibility.
+    "sax==0.10.1",  # Pinned for pydantic <v2 compatibility.
     "thewalrus==0.20.0",
 ]
 
