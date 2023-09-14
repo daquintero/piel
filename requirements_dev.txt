@@ -16,7 +16,7 @@ femwell==0.1.8
 flake8
 kfactory[git,ipy]==0.7.5
 kweb==0.1.1
-gdsfactory==7.2.0 # Pinned for pydantic <v2 compatibility and examples compatibility till porting.
+gdsfactory==7.2.1 # Pinned for pydantic <v2 compatibility and examples compatibility till porting.
 hdl21==4.0.0
 ipyevents
 ipytree
@@ -32,7 +32,7 @@ myst_parser
 nbsphinx
 networkx==3.1
 numpy==1.24.4
-openlane==2.0.0b12
+openlane==2.0.0b13
 pandoc==2.3
 pandas==1.5.3
 pre-commit
