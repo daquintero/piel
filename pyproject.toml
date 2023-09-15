@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "piel"
+version = "0.0.54"
+description = "Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more."
+authors = [{name = "Dario Quintero", email = "darioaquintero@gmail.com"}]
+license = {file = "LICENSE"}
+readme = "README.md"
+keywords = ["piel"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "amaranth-yosys==0.25.0.0.post75",
+    "cython==0.29.21",
+    "jupytext==1.15.0",
+    "Click>=7.0",
+    "cocotb==1.8.0",
+    "femwell==0.1.8",
+    "hdl21==4.0.0",
+    "jax==0.4.14",
+    "jaxlib==0.4.14",
+    "gdsfactory==7.2.1",
+    "networkx==3.1",
+    "numpy==1.24.4",
+    "openlane==2.0.0b13",
+    "pandas==1.5.3",
+    "qutip==4.7.3",
+    "sax==0.8.8",
+    "thewalrus==0.20.0"
+]
+
+requires-python = ">=3.10"
+
+[tool.setuptools_scm]
+write_to = "piel/_version.py"
+
+[tool.flit.scripts]
+piel = "piel.cli:main"
+
+[tool.setuptools.packages]
+find = {}
