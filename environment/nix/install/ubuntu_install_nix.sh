@@ -6,3 +6,4 @@ sh <(curl -L https://nixos.org/nix/install) --no-daemon --yes
 nix-env -f "<nixpkgs>" -iA cachix
 cachix use openlane
 git clone https://github.com/efabless/openlane.git -o ../../../../
+nix-shell ..
