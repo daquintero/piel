@@ -27,8 +27,8 @@ pkgs.mkShell {
      then source ../../.venv/bin/activate;
     else
       pip install --upgrade pip;
-      python -m venv ../../.venv;
-      source ../../.venv/bin/activate;
+      # python -m venv ../../.venv;
+      # source ../../.venv/bin/activate;
       pip install -r ../../requirements_dev.txt;
       pip install -r ../../../openlane2/requirements_dev.txt;
       pip install -e ../../;
