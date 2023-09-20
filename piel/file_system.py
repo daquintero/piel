@@ -19,6 +19,8 @@ __all__ = [
     "delete_path",
     "delete_path_list_in_directory",
     "get_files_recursively_in_directory",
+    "get_id_map_directory_dictionary",
+    "list_prefix_match_directories",
     "permit_directory_all",
     "permit_script_execution",
     "read_json",
@@ -324,6 +326,64 @@ def get_files_recursively_in_directory(
     return file_list
 
 
+def get_id_map_directory_dictionary(
+    path_list: list[piel_path_types], target_prefix: str
+):
+    """
+    Returns a dictionary of ids to directories.
+
+    Usage:
+
+        get_id_to_directory_dictionary(path_list, target_prefix)
+
+    Args:
+        path_list(list[piel_path_types]): List of paths.
+        target_prefix(str): Target prefix.
+
+    Returns:
+        id_dict(dict): Dictionary of ids to directories.
+    """
+    id_dict = {}
+    for path in path_list:
+        basename = os.path.basename(path)
+        # Check if the basename starts with the provided prefix
+        if basename.startswith(target_prefix):
+            # Extract the id after the prefix
+            id_str = basename[len(target_prefix) :]
+            # Convert the id string into an integer and use it as a key for the dictionary
+            id_dict[int(id_str)] = path
+    return id_dict
+
+
+def list_prefix_match_directories(
+    output_directory: piel_path_types,
+    target_prefix: str,
+):
+    """
+    Returns a list of directories that match a prefix.
+
+    Usage:
+
+        list_prefix_match_directories('path/to/directory', 'prefix')
+
+    Args:
+        output_directory(piel_path_types): Output directory.
+        target_prefix(str): Target prefix.
+
+    Returns:
+        matching_dirs(list): List of directories.
+    """
+    output_directory = return_path(output_directory)
+    # Use os.path.join to ensure the path is constructed correctly
+    # irrespective of the operating system
+    search_path = os.path.join(output_directory, target_prefix + "*")
+
+    # Use glob to get all matching directories
+    matching_directories = [d for d in glob.glob(search_path) if os.path.isdir(d)]
+
+    return matching_directories
+
+
 def permit_script_execution(script_path: piel_path_types) -> None:
     """
     Permits the execution of a script.
@@ -500,11 +560,20 @@ def replace_string_in_directory_files(
             replace_string_in_file(path, match_string, replace_string)
 
 
-def return_path(input_path: piel_path_types) -> pathlib.Path:
+def return_path(
+    input_path: piel_path_types,
+    as_piel_module: bool = False,
+) -> pathlib.Path:
     """
     Returns a pathlib.Path to be able to perform operations accordingly internally.
 
-    This allows us to maintain compatibility between POSIX and Windows systems.
+    This allows us to maintain compatibility between POSIX and Windows systems. When the `as_piel_module` flag is
+    enabled, it will analyse whether the input path can be treated as a piel module, and treat the returned path as a
+    module would be treated. This comes useful when analysing data generated in this particular structure accordingly.
+
+    Usage:
+
+        return_path('path/to/file')
 
     Args:
         input_path(str): Input path.
@@ -512,15 +581,51 @@ def return_path(input_path: piel_path_types) -> pathlib.Path:
     Returns:
         pathlib.Path: Pathlib path.
     """
+
+    def treat_as_module(input_path_i: pathlib.Path):
+        """
+        This function is useful after the path has been converted accordingly. It will analyse whether the path can
+        be treated as a module, and return the path to the module accordingly. If it cannot be treated as a piel
+        module, then it will return the original path.
+
+        Args:
+            input_path_i(pathlib.Path): Input path.
+
+        Returns:
+            pathlib.Path: Pathlib path.
+        """
+        setup_py_path = input_path_i / "setup.py"
+        directory_name = input_path_i.name
+        if setup_py_path.exists():
+            if (input_path_i / directory_name).exists():
+                return input_path_i / directory_name
+            else:
+                raise ValueError(
+                    "input_path: "
+                    + str(input_path_i / directory_name)
+                    + " cannot be treated as a piel module."
+                )
+        else:
+            raise ValueError(
+                "input_path: "
+                + str(input_path_i)
+                + " cannot be treated as a piel module."
+            )
+
     if type(input_path) == str:
         output_path = pathlib.Path(input_path)
+        if as_piel_module:
+            output_path = treat_as_module(output_path)
     elif isinstance(input_path, pathlib.Path):
         output_path = input_path
+        if as_piel_module:
+            output_path = treat_as_module(output_path)
     elif isinstance(input_path, types.ModuleType):
-        # TODO Untested
         output_path = pathlib.Path(input_path.__file__) / ".."
     elif isinstance(input_path, os.PathLike):
         output_path = pathlib.Path(input_path)
+        if as_piel_module:
+            output_path = treat_as_module(output_path)
     else:
         raise ValueError(
             "input_path: " + str(input_path) + " is of type: " + str(type(input_path))

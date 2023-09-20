@@ -52,9 +52,6 @@ setup(
             "piel=piel.cli:main",
         ],
     },
-    dependency_links=[
-        "git+https://github.com/fact-project/smart_fact_crawler.git@master#egg=smart_fact_crawler-0"
-    ],
     extras_require={
         "develop": [
             "sphinx",
