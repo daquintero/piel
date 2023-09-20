@@ -38,6 +38,7 @@ def find_all_design_runs(
     Args:
         design_directory (piel_path_types): The path to the design directory
         run_name (str, optional): The name of the run to return. Defaults to None.
+        version (Literal["v1", "v2"], optional): The version of OpenLane to use. Defaults to None.
 
     Raises:
         ValueError: If the run_name is specified but not found in the design_directory
@@ -45,7 +46,7 @@ def find_all_design_runs(
     Returns:
         list[pathlib.Path]: A list of pathlib.Path objects corresponding to the runs
     """
-    design_directory = return_path(design_directory)
+    design_directory = return_path(design_directory, as_piel_module=True)
     runs_design_directory = design_directory / "runs"
     # Convert to path so that it can be found and compared within design_directory
     all_runs_list = list(runs_design_directory.iterdir())

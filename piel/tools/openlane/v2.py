@@ -1,9 +1,62 @@
 from openlane.flows import Flow
 from piel.config import piel_path_types
-from piel.file_system import return_path, read_json
+from piel.file_system import (
+    return_path,
+    read_json,
+    list_prefix_match_directories,
+    get_id_map_directory_dictionary,
+)
 from .utils import find_latest_design_run
 
-__all__ = ["read_metrics_openlane_v2", "run_openlane_flow"]
+__all__ = [
+    "get_all_designs_metrics_openlane_v2",
+    "read_metrics_openlane_v2",
+    "run_openlane_flow",
+]
+
+
+def get_all_designs_metrics_openlane_v2(
+    output_directory: piel_path_types,
+    target_prefix: str,
+):
+    """
+    Returns a dictionary of all the metrics for all the designs in the output directory.
+
+    Usage:
+
+        ```python
+        from piel.tools.openlane import get_all_designs_metrics_v2
+
+        metrics = get_all_designs_metrics_v2(
+            output_directory="output",
+            target_prefix="design",
+        )
+        ```
+
+    Args:
+        output_directory (piel_path_types): The path to the output directory.
+        target_prefix (str): The prefix of the designs to get the metrics for.
+
+    Returns:
+        dict: A dictionary of all the metrics for all the designs in the output directory.
+    """
+    output_directory = return_path(output_directory)
+    designs_directory_list = list_prefix_match_directories(
+        output_directory=output_directory,
+        target_prefix=target_prefix,
+    )
+    id_map_directory = get_id_map_directory_dictionary(
+        path_list=designs_directory_list,
+        target_prefix=target_prefix,
+    )
+    output_dictionary = dict()
+    for id_i, directory_i in id_map_directory.items():
+        metrics_dictionary_i = read_metrics_openlane_v2(design_directory=directory_i)
+        output_dictionary[id_i] = {
+            "directory": directory_i,
+            **metrics_dictionary_i,
+        }
+    return output_dictionary
 
 
 def read_metrics_openlane_v2(design_directory: piel_path_types) -> dict:
