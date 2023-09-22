@@ -14,6 +14,7 @@ pkgs.mkShell {
     pkgs.verilog # 12.0, from Jun 2023 (latest)
     pkgs.nodejs
     pkgs.micromamba
+    pkgs.vtk
   ];
 
   nativeBuildInputs = [
@@ -25,9 +26,9 @@ pkgs.mkShell {
       pkgs.stdenv.cc.cc
     ]}
     if [ -e ../../.venv/bin/activate ];
-     then 
+     then
       # source ../../.venv/bin/activate;
-      echo "Environment configured"; 
+      echo "Environment configured";
     else
       # pip install --upgrade pip;
       set -e
