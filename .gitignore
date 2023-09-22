@@ -196,3 +196,5 @@ waves.shm/
 ivl_vhdl_work/
 RUN_*
 *.raw
+
+*.sif
