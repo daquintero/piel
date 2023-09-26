@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: efabless/openlane
+
+%post
+    yum -y update
+    yum -y install cowsay lolcat
+
+%environment
+    export LC_ALL=C
+    export PATH=/usr/games:$PATH
+
+%runscript
+    date | cowsay | lolcat
