@@ -5,7 +5,8 @@ From: efabless/openlane
     yum -y update
     
     # Install mamba
-    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+    curl -o /tmp/mamba_install.sh -L https://micro.mamba.pm/install.sh 
+    "${SHELL}" /tmp/mamba_install.sh
     
     yum -y install cowsay lolcat
 
