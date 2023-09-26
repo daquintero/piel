@@ -3,10 +3,11 @@ From: efabless/openlane
 
 %post
     yum -y update
+    yum install -y bzip2 wget
     
     # Install mamba
-    curl -o /tmp/mamba_install.sh -L https://micro.mamba.pm/install.sh 
-    "${SHELL}" /tmp/mamba_install.sh
+    curl -o /bin/micromamba -L https://micro.mamba.pm/api/micromamba/linux-64/latest 
+    tar -xvj /bin/micromamba
     
     yum -y install cowsay lolcat
 
