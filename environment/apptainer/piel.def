@@ -6,14 +6,14 @@ From: efabless/openlane
     yum install -y bzip2 wget
     
     # Install mamba
-    curl -o /tmp/micromamba_install.sh -L https://micro.mamba.pm/install.sh
-    "${SHELL}" /tmp/micromamba_install.sh
-    
-    yum -y install cowsay lolcat
+    apt-get update && apt-get install -y wget
+    wget -qO- https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+    mkdir -p /opt/micromamba
+    mv bin/micromamba /opt/micromamba/micromamba
+    chmod +x /opt/micromamba/micromamba
 
 %environment
-    export LC_ALL=C
-    export PATH=/usr/games:$PATH
+    export PATH=/opt/micromamba:$PATH
 
 %runscript
     date | cowsay | lolcat
