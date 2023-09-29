@@ -17,11 +17,34 @@ From: efabless/openlane
     # Create pielenv environment in micromamba
     micromamba shell init -s bash 
     micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9
-    micromamba run -p /opt/envs/pielenv pip install piel 
+    micromamba run -p /opt/envs/pielenv pip install piel
+
+    shell_script = "
+    # >>> mamba initialize >>>
+    # !! Contents within this block are managed by 'mamba init' !!
+    export MAMBA_EXE='/opt/micromamba/micromamba';
+    export MAMBA_ROOT_PREFIX='/home/dq16394/micromamba';
+    __mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__mamba_setup"
+    else
+        alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+    fi
+    unset __mamba_setup
+    # <<< mamba initialize <<<
+    
+    eval "$(micromamba shell hook --shell bash )"
+    micromamba activate /opt/envs/pielenv" 
+    shell_script >> /etc/bash.bashrc 
 
 %environment
     export PATH=/opt/micromamba:$PATH
 
-%startscript
-    eval "$(micromamba shell hook --shell )"
+%runscript
+    eval "$(micromamba shell hook --shell bash )"
     micromamba activate /opt/envs/pielenv
+
+%startscript
+    eval "$(micromamba shell hook --shell bash )"
+    micromamba activate /opt/envs/pielenv
+
