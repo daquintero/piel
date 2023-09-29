@@ -6,8 +6,8 @@ From: efabless/openlane
     yum install -y bzip2 wget
     
     # Install mamba
-    curl -o /bin/micromamba -L https://micro.mamba.pm/api/micromamba/linux-64/latest 
-    tar -xvj /bin/micromamba
+    curl -o /tmp/micromamba_install.sh -L https://micro.mamba.pm/install.sh
+    "${SHELL}" /tmp/micromamba_install.sh
     
     yum -y install cowsay lolcat
 
