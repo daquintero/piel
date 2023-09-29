@@ -5,15 +5,23 @@ From: efabless/openlane
     yum -y update
     yum install -y bzip2 wget
     
-    # Install mamba
+    # Install micromamba
     apt-get update && apt-get install -y wget
     wget -qO- https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
     mkdir -p /opt/micromamba
     mv bin/micromamba /opt/micromamba/micromamba
     chmod +x /opt/micromamba/micromamba
+    export PATH=/opt/micromamba:$PATH
+    
+
+    # Create pielenv environment in micromamba
+    micromamba shell init -s bash 
+    micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9
+    micromamba run -p /opt/envs/pielenv pip install piel 
 
 %environment
     export PATH=/opt/micromamba:$PATH
 
-%runscript
-    date | cowsay | lolcat
+%startscript
+    eval "$(micromamba shell hook --shell )"
+    micromamba activate /opt/envs/pielenv
