@@ -24,7 +24,7 @@ From: efabless/openlane
     export PIEL_DIRECTORY="/opt/piel/"
 
 %files
-    /home/dq16394/piel/ /opt/ # If development
+    /data/projects/piel/ /opt/ # If development
 
 %runscript
     micromamba shell init -s bash
