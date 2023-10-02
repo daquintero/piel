@@ -28,23 +28,13 @@ From: efabless/openlane
 
 %runscript
     micromamba shell init -s bash
-    micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt
-    micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY
+    micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt --break-system-packages
+    micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY --break-system-packages
 
-    # eval "$(micromamba shell hook --shell bash )"
-    # micromamba activate /opt/envs/pielenv
-    # /opt/envs/pielenv run pip install -r $PIEL_DIRECTORY/requirements_dev.txt
-    # /opt/envs/pielenv run pip install -e $PIEL_DIRECTORY
-    echo $PIEL_DIRECTORY
+
 
 %startscript
     micromamba shell init -s bash
-    micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt
-    micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY
-
-    # eval "$(micromamba shell hook --shell bash )"
-    # micromamba activate /opt/envs/pielenv
-    # /opt/envs/pielenv run pip install -r $PIEL_DIRECTORY/requirements_dev.txt
-    # /opt/envs/pielenv run pip install -e $PIEL_DIRECTORY
-    echo $PIEL_DIRECTORY
+    micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt --break-system-packages
+    micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY --break-system-packages
 
