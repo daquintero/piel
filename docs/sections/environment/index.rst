@@ -22,6 +22,7 @@ Environment
 ``apptainer`` is a good open-source container management system that aims to be optimised for high performance computation. We want to have a distributed container environment where all the open-source ``piel`` toolchain is pre-installed and ready for custom design. What this distribution aims to provide is both an easy installation script for Ubuntu environments which are common in open-source development and a specific environment configuration that resolves the particular supported versions of the toolchains.
 
 .. include:: apptainer/apptainer_install.rst
+.. include:: apptainer/relevant_apptainer_commands.rst
 
 
 ``docker`` Configuration (In Passive Development)
@@ -33,7 +34,16 @@ Environment
 .. include:: docker/developer_docker_configuration.rst
 
 
+``mamba`` Recipie Configuration (In Active Development)
+=================================================
+
+.. include:: mamba/relevant_mamba_commands.rst
+
+
 .. include:: installation.rst
 .. include:: project_structure.rst
 .. include:: design_files_interaction.rst
 .. include:: relevant_python_commands.rst
+
+
+
