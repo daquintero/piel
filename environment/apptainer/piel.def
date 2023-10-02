@@ -1,6 +1,7 @@
 Bootstrap: docker
 From: efabless/openlane
 
+
 %post
     yum -y update
     yum install -y bzip2 wget
@@ -16,35 +17,34 @@ From: efabless/openlane
 
     # Create pielenv environment in micromamba
     micromamba shell init -s bash 
-    micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9
-    micromamba run -p /opt/envs/pielenv pip install piel
-
-    shell_script = "
-    # >>> mamba initialize >>>
-    # !! Contents within this block are managed by 'mamba init' !!
-    export MAMBA_EXE='/opt/micromamba/micromamba';
-    export MAMBA_ROOT_PREFIX='/home/dq16394/micromamba';
-    __mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__mamba_setup"
-    else
-        alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-    fi
-    unset __mamba_setup
-    # <<< mamba initialize <<<
-    
-    eval "$(micromamba shell hook --shell bash )"
-    micromamba activate /opt/envs/pielenv" 
-    shell_script >> /etc/bash.bashrc 
+    micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9    
 
 %environment
     export PATH=/opt/micromamba:$PATH
+    export PIEL_DIRECTORY="/opt/piel/"
+
+%files
+    /home/dq16394/piel/ /opt/piel/ # If development
 
 %runscript
-    eval "$(micromamba shell hook --shell bash )"
-    micromamba activate /opt/envs/pielenv
+    micromamba shell init -s bash
+    micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt
+    micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY
+
+    # eval "$(micromamba shell hook --shell bash )"
+    # micromamba activate /opt/envs/pielenv
+    # /opt/envs/pielenv run pip install -r $PIEL_DIRECTORY/requirements_dev.txt
+    # /opt/envs/pielenv run pip install -e $PIEL_DIRECTORY
+    echo $PIEL_DIRECTORY
 
 %startscript
-    eval "$(micromamba shell hook --shell bash )"
-    micromamba activate /opt/envs/pielenv
+    micromamba shell init -s bash
+    micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt
+    micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY
+
+    # eval "$(micromamba shell hook --shell bash )"
+    # micromamba activate /opt/envs/pielenv
+    # /opt/envs/pielenv run pip install -r $PIEL_DIRECTORY/requirements_dev.txt
+    # /opt/envs/pielenv run pip install -e $PIEL_DIRECTORY
+    echo $PIEL_DIRECTORY
 
