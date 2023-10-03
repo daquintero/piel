@@ -24,9 +24,6 @@ From: efabless/openlane
     export PATH=/opt/micromamba:$PATH
     export PIEL_DIRECTORY="/opt/piel/"
 
-%files
-    /data/projects/piel/ /opt/ # If development
-
 %runscript
     micromamba shell init -s bash
     micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt --break-system-packages
