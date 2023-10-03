@@ -27,7 +27,7 @@ jaxlib==0.4.14
 jupyter
 jupyter_core
 jupyter_bokeh
-jupyter_packaging~=0.7.9
+jupyter_packaging~=0.12.3
 jupyterlab~=3.0
 jupytext
 myst_parser
