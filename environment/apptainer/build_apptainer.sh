@@ -1,2 +1,2 @@
 cd ~/piel/environment/apptainer
-apptainer build piel.sif piel.def
+apptainer build --sandbox piel.sif piel.def

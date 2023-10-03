@@ -17,7 +17,8 @@ From: efabless/openlane
 
     # Create pielenv environment in micromamba
     micromamba shell init -s bash 
-    micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9    
+    micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9
+    micromamba run -p /opt/envs/pielenv micromamba install gdstk -c conda-forge   
 
 %environment
     export PATH=/opt/micromamba:$PATH
