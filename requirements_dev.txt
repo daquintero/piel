@@ -11,7 +11,7 @@ Click>=7.0
 cocotb==1.8.0
 cookiecutter
 coverage
-cython==0.29.21
+cython==3.0.3
 femwell==0.1.8
 flake8
 kfactory[git,ipy]==0.7.5
