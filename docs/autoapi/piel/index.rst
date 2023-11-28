@@ -15,6 +15,7 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
+   cli/index.rst
    integration/index.rst
    models/index.rst
    tools/index.rst
@@ -27,7 +28,6 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   cli/index.rst
    config/index.rst
    file_conversion/index.rst
    file_system/index.rst
@@ -49,9 +49,13 @@ Functions
    piel.copy_source_folder
    piel.copy_example_design
    piel.create_new_directory
+   piel.create_piel_home_directory
    piel.delete_path
    piel.delete_path_list_in_directory
    piel.get_files_recursively_in_directory
+   piel.get_top_level_script_directory
+   piel.get_id_map_directory_dictionary
+   piel.list_prefix_match_directories
    piel.permit_directory_all
    piel.permit_script_execution
    piel.read_json
@@ -73,6 +77,7 @@ Functions
    piel.verify_sax_model_is_unitary
    piel.fock_transition_probability_amplitude
    piel.convert_2d_array_to_string
+   piel.convert_array_type
    piel.single_parameter_sweep
    piel.multi_parameter_sweep
    piel.create_setup_py
@@ -88,6 +93,7 @@ Functions
    piel.simple_plot_simulation_data
    piel.get_input_ports_index
    piel.get_matched_ports_tuple_index
+   piel.straight_heater_metal_simple
    piel.get_design_from_openlane_migration
    piel.extract_datetime_from_path
    piel.find_all_design_runs
@@ -124,6 +130,7 @@ Functions
    piel.create_file_lines_dataframe
    piel.get_file_line_by_keyword
    piel.read_file_lines
+   piel.get_all_designs_metrics_openlane_v2
    piel.read_metrics_openlane_v2
    piel.run_openlane_flow
    piel.configure_ngspice_simulation
@@ -140,10 +147,10 @@ Functions
    piel.sax_to_s_parameters_standard_matrix
    piel.all_fock_states_from_photon_number
    piel.convert_qobj_to_jax
-   piel.convert_output_type
    piel.fock_state_nonzero_indexes
    piel.fock_state_to_photon_number_factorial
    piel.fock_states_at_mode_index
+   piel.fock_states_only_individual_modes
    piel.verify_matrix_is_unitary
    piel.subunitary_selection_on_range
    piel.subunitary_selection_on_index
@@ -156,9 +163,11 @@ Attributes
 .. autoapisummary::
 
    piel.piel_path_types
+   piel.array_types
    piel.delete_simulation_output_files
    piel.get_simulation_output_files
    piel.snet
+   piel.convert_output_type
    piel.standard_s_parameters_to_qutip_qobj
    piel.__author__
    piel.__email__
@@ -167,7 +176,7 @@ Attributes
 
 .. py:data:: piel_path_types
 
-
+   
 
 .. py:function:: check_path_exists(path: piel.config.piel_path_types, raise_errors: bool = False) -> bool
 
@@ -221,14 +230,22 @@ Attributes
    :returns: None
 
 
-.. py:function:: create_new_directory(directory_path: str | pathlib.Path) -> None
+.. py:function:: create_new_directory(directory_path: str | pathlib.Path, overwrite: bool = False) -> bool
 
    Creates a new directory.
 
    If the parents of the target_directory do not exist, they will be created too.
 
+   :param overwrite: Overwrite directory if it already exists.
    :param directory_path: Input path.
    :type directory_path: str | pathlib.Path
+
+   :returns: None
+
+
+.. py:function:: create_piel_home_directory() -> None
+
+   Creates the piel home directory.
 
    :returns: None
 
@@ -282,6 +299,50 @@ Attributes
 
    :returns: List of files.
    :rtype: file_list(list)
+
+
+.. py:function:: get_top_level_script_directory() -> pathlib.Path
+
+   Returns the top level script directory whenever this file is run. This is useful when we want to know the
+   location of the script that is being executed at the top level, maybe in order to create relative directories of
+   find relevant files.
+
+   :returns: Top level script directory.
+   :rtype: top_level_script_directory(pathlib.Path)
+
+
+.. py:function:: get_id_map_directory_dictionary(path_list: list[piel.config.piel_path_types], target_prefix: str)
+
+   Returns a dictionary of ids to directories.
+
+   Usage:
+
+       get_id_to_directory_dictionary(path_list, target_prefix)
+
+   :param path_list: List of paths.
+   :type path_list: list[piel_path_types]
+   :param target_prefix: Target prefix.
+   :type target_prefix: str
+
+   :returns: Dictionary of ids to directories.
+   :rtype: id_dict(dict)
+
+
+.. py:function:: list_prefix_match_directories(output_directory: piel.config.piel_path_types, target_prefix: str)
+
+   Returns a list of directories that match a prefix.
+
+   Usage:
+
+       list_prefix_match_directories('path/to/directory', 'prefix')
+
+   :param output_directory: Output directory.
+   :type output_directory: piel_path_types
+   :param target_prefix: Target prefix.
+   :type target_prefix: str
+
+   :returns: List of directories.
+   :rtype: matching_dirs(list)
 
 
 .. py:function:: permit_directory_all(directory_path: piel.config.piel_path_types) -> None
@@ -397,11 +458,17 @@ Attributes
    :returns: None
 
 
-.. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
+.. py:function:: return_path(input_path: piel.config.piel_path_types, as_piel_module: bool = False) -> pathlib.Path
 
    Returns a pathlib.Path to be able to perform operations accordingly internally.
 
-   This allows us to maintain compatibility between POSIX and Windows systems.
+   This allows us to maintain compatibility between POSIX and Windows systems. When the `as_piel_module` flag is
+   enabled, it will analyse whether the input path can be treated as a piel module, and treat the returned path as a
+   module would be treated. This comes useful when analysing data generated in this particular structure accordingly.
+
+   Usage:
+
+       return_path('path/to/file')
 
    :param input_path: Input path.
    :type input_path: str
@@ -650,6 +717,10 @@ Attributes
 
 
 
+.. py:data:: array_types
+
+   
+
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
 
    This function is particularly useful to convert digital data when it is represented as a 2D array into a set of strings.
@@ -665,6 +736,9 @@ Attributes
        list_2D=[[0], [0], [0], [1]]
        convert_2d_array_to_string(list_2D)
        >>> "0001"
+
+
+.. py:function:: convert_array_type(array: array_types, output_type: Literal[qutip, jax, numpy, list, tuple])
 
 
 .. py:function:: single_parameter_sweep(base_design_configuration: dict, parameter_name: str, parameter_sweep_values: list)
@@ -829,7 +903,7 @@ Attributes
 
 .. py:data:: delete_simulation_output_files
 
-
+   
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
@@ -847,7 +921,7 @@ Attributes
 
 .. py:data:: get_simulation_output_files
 
-
+   
 
 .. py:function:: get_simulation_output_files_from_design(design_directory: piel.config.piel_path_types, extension: str = 'csv')
 
@@ -947,6 +1021,28 @@ Attributes
    :rtype: matches_ports_index_tuple_order(tuple)
 
 
+.. py:function:: straight_heater_metal_simple(length: float = 320.0, length_straight_input: float = 15.0, heater_width: float = 2.5, cross_section_heater: gdsfactory.typings.CrossSectionSpec = 'heater_metal', cross_section_waveguide_heater: gdsfactory.typings.CrossSectionSpec = 'strip_heater_metal', via_stack: gdsfactory.typings.ComponentSpec | None = 'via_stack_heater_mtop', port_orientation1: int | None = None, port_orientation2: int | None = None, heater_taper_length: float | None = 5.0, ohms_per_square: float | None = None, **kwargs) -> gdsfactory.component.Component
+
+   Returns a thermal phase shifter that has properly fixed electrical connectivity to extract a suitable electrical netlist and models.
+   dimensions from https://doi.org/10.1364/OE.27.010456
+   :param length: of the waveguide.
+   :param length_undercut_spacing: from undercut regions.
+   :param length_undercut: length of each undercut section.
+   :param length_straight_input: from input port to where trenches start.
+   :param heater_width: in um.
+   :param cross_section_heater: for heated sections. heater metal only.
+   :param cross_section_waveguide_heater: for heated sections.
+   :param cross_section_heater_undercut: for heated sections with undercut.
+   :param with_undercut: isolation trenches for higher efficiency.
+   :param via_stack: via stack.
+   :param port_orientation1: left via stack port orientation.
+   :param port_orientation2: right via stack port orientation.
+   :param heater_taper_length: minimizes current concentrations from heater to via_stack.
+   :param ohms_per_square: to calculate resistance.
+   :param cross_section: for waveguide ports.
+   :param kwargs: cross_section common settings.
+
+
 .. py:function:: get_design_from_openlane_migration(v1: bool = True, design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, root_directory_v1: str | pathlib.Path | None = None) -> (str, pathlib.Path)
 
    This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.
@@ -980,6 +1076,8 @@ Attributes
    :type design_directory: piel_path_types
    :param run_name: The name of the run to return. Defaults to None.
    :type run_name: str, optional
+   :param version: The version of OpenLane to use. Defaults to None.
+   :type version: Literal["v1", "v2"], optional
 
    :raises ValueError: If the run_name is specified but not found in the design_directory
 
@@ -1395,6 +1493,30 @@ Attributes
    :rtype: file_lines_raw (list)
 
 
+.. py:function:: get_all_designs_metrics_openlane_v2(output_directory: piel.config.piel_path_types, target_prefix: str)
+
+   Returns a dictionary of all the metrics for all the designs in the output directory.
+
+   Usage:
+
+       ```python
+       from piel.tools.openlane import get_all_designs_metrics_v2
+
+       metrics = get_all_designs_metrics_v2(
+           output_directory="output",
+           target_prefix="design",
+       )
+       ```
+
+   :param output_directory: The path to the output directory.
+   :type output_directory: piel_path_types
+   :param target_prefix: The prefix of the designs to get the metrics for.
+   :type target_prefix: str
+
+   :returns: A dictionary of all the metrics for all the designs in the output directory.
+   :rtype: dict
+
+
 .. py:function:: read_metrics_openlane_v2(design_directory: piel.config.piel_path_types) -> dict
 
    Read design metrics from OpenLane v2 run files.
@@ -1682,7 +1804,7 @@ Attributes
 
 .. py:data:: snet
 
-
+   
 
 .. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
@@ -1702,8 +1824,9 @@ Attributes
 .. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
 
 
-.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+.. py:data:: convert_output_type
 
+   
 
 .. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
@@ -1759,9 +1882,24 @@ Attributes
    :rtype: list
 
 
+.. py:function:: fock_states_only_individual_modes(mode_amount: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax, numpy, list, tuple] = 'qutip') -> list
+
+   This function returns a list of valid Fock states where each state has a maximum photon number, but only in one mode.
+
+   :param mode_amount: The amount of modes in the system.
+   :type mode_amount: int
+   :param maximum_photon_amount: The maximum amount of photons in a single mode.
+   :type maximum_photon_amount: int
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
+
+   :returns: A list of all the valid Fock states.
+   :rtype: list
+
+
 .. py:data:: standard_s_parameters_to_qutip_qobj
 
-
+   
 
 .. py:function:: verify_matrix_is_unitary(matrix: jax.numpy.ndarray) -> bool
 
@@ -1793,12 +1931,15 @@ Attributes
 .. py:data:: __author__
    :value: 'Dario Quintero'
 
-
+   
 
 .. py:data:: __email__
    :value: 'darioaquintero@gmail.com'
 
-
+   
 
 .. py:data:: __version__
-   :value: '0.0.52'
+   :value: '0.0.56'
+
+   
+

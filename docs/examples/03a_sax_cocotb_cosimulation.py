@@ -90,6 +90,8 @@ basic_ideal_phase_map
 # We have some bit string simulation results from our `simple_design` `cocotb` simulation which is in the form of a simple Pandas dataframe as discussed in example `docs/examples/02_cocotb_simulation`
 #
 
+# !pip install -e designs/simple_design
+# you might have to restart your kernel here
 import simple_design
 
 cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(

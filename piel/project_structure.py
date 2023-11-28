@@ -5,7 +5,7 @@ import subprocess
 import types
 from typing import Literal, Optional
 
-from .config import piel_path_types
+from .types import piel_path_types
 from .file_system import (
     return_path,
     read_json,

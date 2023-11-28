@@ -1,6 +1,6 @@
 from datetime import datetime
 import pathlib
-from piel.config import piel_path_types
+from piel.types import piel_path_types
 from piel.file_system import return_path
 from typing import Literal
 

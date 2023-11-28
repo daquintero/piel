@@ -71,6 +71,7 @@ Functions
    piel.tools.openlane.create_file_lines_dataframe
    piel.tools.openlane.get_file_line_by_keyword
    piel.tools.openlane.read_file_lines
+   piel.tools.openlane.get_all_designs_metrics_openlane_v2
    piel.tools.openlane.read_metrics_openlane_v2
    piel.tools.openlane.run_openlane_flow
 
@@ -109,6 +110,8 @@ Functions
    :type design_directory: piel_path_types
    :param run_name: The name of the run to return. Defaults to None.
    :type run_name: str, optional
+   :param version: The version of OpenLane to use. Defaults to None.
+   :type version: Literal["v1", "v2"], optional
 
    :raises ValueError: If the run_name is specified but not found in the design_directory
 
@@ -524,6 +527,30 @@ Functions
    :rtype: file_lines_raw (list)
 
 
+.. py:function:: get_all_designs_metrics_openlane_v2(output_directory: piel.config.piel_path_types, target_prefix: str)
+
+   Returns a dictionary of all the metrics for all the designs in the output directory.
+
+   Usage:
+
+       ```python
+       from piel.tools.openlane import get_all_designs_metrics_v2
+
+       metrics = get_all_designs_metrics_v2(
+           output_directory="output",
+           target_prefix="design",
+       )
+       ```
+
+   :param output_directory: The path to the output directory.
+   :type output_directory: piel_path_types
+   :param target_prefix: The prefix of the designs to get the metrics for.
+   :type target_prefix: str
+
+   :returns: A dictionary of all the metrics for all the designs in the output directory.
+   :rtype: dict
+
+
 .. py:function:: read_metrics_openlane_v2(design_directory: piel.config.piel_path_types) -> dict
 
    Read design metrics from OpenLane v2 run files.
@@ -549,3 +576,6 @@ Functions
    :type only_generate_flow_setup: bool
 
    Returns:
+
+
+

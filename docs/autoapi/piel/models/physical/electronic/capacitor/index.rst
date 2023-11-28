@@ -49,3 +49,6 @@ Functions
        N- = the negative terminal
        VALUE = capacitance in farads
        <IC=INCOND> = starting voltage in a simulation
+
+
+

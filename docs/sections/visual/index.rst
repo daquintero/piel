@@ -1,0 +1,1 @@
+One of the most complicated aspects of a cosimulation tool is visualising the interaction between electronic and photonic systems in order to verify that it's working in terms of the system simulation coupling. This is because we require visualising electronic signals alongside photonic signals. The domains of such systems are fundamentally different.

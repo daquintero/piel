@@ -48,7 +48,16 @@ Functions
    piel.integration.verify_sax_model_is_unitary
    piel.integration.fock_transition_probability_amplitude
    piel.integration.convert_2d_array_to_string
+   piel.integration.convert_array_type
 
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.integration.array_types
 
 
 .. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.config.piel_path_types | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
@@ -267,6 +276,10 @@ Functions
 
 
 
+.. py:data:: array_types
+
+   
+
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
 
    This function is particularly useful to convert digital data when it is represented as a 2D array into a set of strings.
@@ -282,3 +295,8 @@ Functions
        list_2D=[[0], [0], [0], [1]]
        convert_2d_array_to_string(list_2D)
        >>> "0001"
+
+
+.. py:function:: convert_array_type(array: array_types, output_type: Literal[qutip, jax, numpy, list, tuple])
+
+

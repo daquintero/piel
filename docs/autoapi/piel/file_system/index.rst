@@ -18,9 +18,13 @@ Functions
    piel.file_system.copy_source_folder
    piel.file_system.copy_example_design
    piel.file_system.create_new_directory
+   piel.file_system.create_piel_home_directory
    piel.file_system.delete_path
    piel.file_system.delete_path_list_in_directory
    piel.file_system.get_files_recursively_in_directory
+   piel.file_system.get_id_map_directory_dictionary
+   piel.file_system.get_top_level_script_directory
+   piel.file_system.list_prefix_match_directories
    piel.file_system.permit_script_execution
    piel.file_system.permit_directory_all
    piel.file_system.read_json
@@ -86,14 +90,22 @@ Functions
    :returns: None
 
 
-.. py:function:: create_new_directory(directory_path: str | pathlib.Path) -> None
+.. py:function:: create_new_directory(directory_path: str | pathlib.Path, overwrite: bool = False) -> bool
 
    Creates a new directory.
 
    If the parents of the target_directory do not exist, they will be created too.
 
+   :param overwrite: Overwrite directory if it already exists.
    :param directory_path: Input path.
    :type directory_path: str | pathlib.Path
+
+   :returns: None
+
+
+.. py:function:: create_piel_home_directory() -> None
+
+   Creates the piel home directory.
 
    :returns: None
 
@@ -147,6 +159,50 @@ Functions
 
    :returns: List of files.
    :rtype: file_list(list)
+
+
+.. py:function:: get_id_map_directory_dictionary(path_list: list[piel.config.piel_path_types], target_prefix: str)
+
+   Returns a dictionary of ids to directories.
+
+   Usage:
+
+       get_id_to_directory_dictionary(path_list, target_prefix)
+
+   :param path_list: List of paths.
+   :type path_list: list[piel_path_types]
+   :param target_prefix: Target prefix.
+   :type target_prefix: str
+
+   :returns: Dictionary of ids to directories.
+   :rtype: id_dict(dict)
+
+
+.. py:function:: get_top_level_script_directory() -> pathlib.Path
+
+   Returns the top level script directory whenever this file is run. This is useful when we want to know the
+   location of the script that is being executed at the top level, maybe in order to create relative directories of
+   find relevant files.
+
+   :returns: Top level script directory.
+   :rtype: top_level_script_directory(pathlib.Path)
+
+
+.. py:function:: list_prefix_match_directories(output_directory: piel.config.piel_path_types, target_prefix: str)
+
+   Returns a list of directories that match a prefix.
+
+   Usage:
+
+       list_prefix_match_directories('path/to/directory', 'prefix')
+
+   :param output_directory: Output directory.
+   :type output_directory: piel_path_types
+   :param target_prefix: Target prefix.
+   :type target_prefix: str
+
+   :returns: List of directories.
+   :rtype: matching_dirs(list)
 
 
 .. py:function:: permit_script_execution(script_path: piel.config.piel_path_types) -> None
@@ -262,11 +318,17 @@ Functions
    :returns: None
 
 
-.. py:function:: return_path(input_path: piel.config.piel_path_types) -> pathlib.Path
+.. py:function:: return_path(input_path: piel.config.piel_path_types, as_piel_module: bool = False) -> pathlib.Path
 
    Returns a pathlib.Path to be able to perform operations accordingly internally.
 
-   This allows us to maintain compatibility between POSIX and Windows systems.
+   This allows us to maintain compatibility between POSIX and Windows systems. When the `as_piel_module` flag is
+   enabled, it will analyse whether the input path can be treated as a piel module, and treat the returned path as a
+   module would be treated. This comes useful when analysing data generated in this particular structure accordingly.
+
+   Usage:
+
+       return_path('path/to/file')
 
    :param input_path: Input path.
    :type input_path: str
@@ -297,3 +359,5 @@ Functions
    :type file_name: str
 
    :returns: None
+
+

@@ -1,5 +1,5 @@
 from openlane.flows import Flow
-from piel.config import piel_path_types
+from piel.types import piel_path_types
 from piel.file_system import (
     return_path,
     read_json,

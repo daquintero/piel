@@ -3,6 +3,7 @@ import math
 import numpy as np
 import jax.numpy as jnp
 from typing import Optional, Literal
+from piel.integration.type_conversion import convert_array_type
 import qutip
 
 __all__ = [
@@ -12,6 +13,7 @@ __all__ = [
     "fock_state_nonzero_indexes",
     "fock_state_to_photon_number_factorial",
     "fock_states_at_mode_index",
+    "fock_states_only_individual_modes",
 ]
 
 
@@ -44,14 +46,7 @@ def convert_qobj_to_jax(qobj: qutip.Qobj) -> jnp.ndarray:
     return jnp.array(qobj.data.todense())
 
 
-def convert_output_type(array: np.ndarray, output_type: Literal["qutip", "jax"]):
-    if output_type == "qutip":
-        array = qutip.Qobj(array)
-    elif output_type == "jax":
-        array = jnp.array(array)
-    else:
-        raise ValueError("The output type must be either 'qutip' or 'jax'.")
-    return array
+convert_output_type = convert_array_type
 
 
 def fock_state_to_photon_number_factorial(
@@ -148,4 +143,33 @@ def fock_states_at_mode_index(
         if check_photon_number_at_mode(state_values):
             state = convert_output_type(state_values, output_type)
             states.append(state)
+    return states
+
+
+def fock_states_only_individual_modes(
+    mode_amount: int,
+    maximum_photon_amount: Optional[int] = 1,
+    output_type: Literal["qutip", "jax", "numpy", "list", "tuple"] = "qutip",
+) -> list:
+    """
+    This function returns a list of valid Fock states where each state has a maximum photon number, but only in one mode.
+
+    Args:
+        mode_amount (int): The amount of modes in the system.
+        maximum_photon_amount (int): The maximum amount of photons in a single mode.
+        output_type (str, optional): The type of output. Defaults to "qutip".
+
+    Returns:
+        list: A list of all the valid Fock states.
+    """
+
+    states = []
+
+    for mode_index in range(mode_amount):
+        for photon_count in range(1, maximum_photon_amount + 1):
+            state = np.zeros((mode_amount, 1), dtype=int)
+            state[mode_index][0] = photon_count
+            state = convert_output_type(state, output_type)
+            states.append(state)
+
     return states

@@ -102,7 +102,7 @@ Attributes
 
 .. py:data:: delete_simulation_output_files
 
-
+   
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
@@ -116,3 +116,5 @@ Attributes
 
    :returns: The subprocess.CompletedProcess object.
    :rtype: subprocess.CompletedProcess
+
+

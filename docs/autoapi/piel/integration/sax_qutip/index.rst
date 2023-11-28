@@ -69,3 +69,5 @@ Functions
 
    :returns: True if the model is unitary, False otherwise.
    :rtype: bool
+
+

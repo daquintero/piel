@@ -37,6 +37,7 @@ Functions
    piel.tools.simple_plot_simulation_data
    piel.tools.get_input_ports_index
    piel.tools.get_matched_ports_tuple_index
+   piel.tools.straight_heater_metal_simple
    piel.tools.get_design_from_openlane_migration
    piel.tools.extract_datetime_from_path
    piel.tools.find_all_design_runs
@@ -73,6 +74,7 @@ Functions
    piel.tools.create_file_lines_dataframe
    piel.tools.get_file_line_by_keyword
    piel.tools.read_file_lines
+   piel.tools.get_all_designs_metrics_openlane_v2
    piel.tools.read_metrics_openlane_v2
    piel.tools.run_openlane_flow
    piel.tools.configure_ngspice_simulation
@@ -89,10 +91,10 @@ Functions
    piel.tools.sax_to_s_parameters_standard_matrix
    piel.tools.all_fock_states_from_photon_number
    piel.tools.convert_qobj_to_jax
-   piel.tools.convert_output_type
    piel.tools.fock_state_nonzero_indexes
    piel.tools.fock_state_to_photon_number_factorial
    piel.tools.fock_states_at_mode_index
+   piel.tools.fock_states_only_individual_modes
    piel.tools.verify_matrix_is_unitary
    piel.tools.subunitary_selection_on_range
    piel.tools.subunitary_selection_on_index
@@ -107,6 +109,7 @@ Attributes
    piel.tools.delete_simulation_output_files
    piel.tools.get_simulation_output_files
    piel.tools.snet
+   piel.tools.convert_output_type
    piel.tools.standard_s_parameters_to_qutip_qobj
 
 
@@ -170,7 +173,7 @@ Attributes
 
 .. py:data:: delete_simulation_output_files
 
-
+   
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
@@ -188,7 +191,7 @@ Attributes
 
 .. py:data:: get_simulation_output_files
 
-
+   
 
 .. py:function:: get_simulation_output_files_from_design(design_directory: piel.config.piel_path_types, extension: str = 'csv')
 
@@ -288,6 +291,28 @@ Attributes
    :rtype: matches_ports_index_tuple_order(tuple)
 
 
+.. py:function:: straight_heater_metal_simple(length: float = 320.0, length_straight_input: float = 15.0, heater_width: float = 2.5, cross_section_heater: gdsfactory.typings.CrossSectionSpec = 'heater_metal', cross_section_waveguide_heater: gdsfactory.typings.CrossSectionSpec = 'strip_heater_metal', via_stack: gdsfactory.typings.ComponentSpec | None = 'via_stack_heater_mtop', port_orientation1: int | None = None, port_orientation2: int | None = None, heater_taper_length: float | None = 5.0, ohms_per_square: float | None = None, **kwargs) -> gdsfactory.component.Component
+
+   Returns a thermal phase shifter that has properly fixed electrical connectivity to extract a suitable electrical netlist and models.
+   dimensions from https://doi.org/10.1364/OE.27.010456
+   :param length: of the waveguide.
+   :param length_undercut_spacing: from undercut regions.
+   :param length_undercut: length of each undercut section.
+   :param length_straight_input: from input port to where trenches start.
+   :param heater_width: in um.
+   :param cross_section_heater: for heated sections. heater metal only.
+   :param cross_section_waveguide_heater: for heated sections.
+   :param cross_section_heater_undercut: for heated sections with undercut.
+   :param with_undercut: isolation trenches for higher efficiency.
+   :param via_stack: via stack.
+   :param port_orientation1: left via stack port orientation.
+   :param port_orientation2: right via stack port orientation.
+   :param heater_taper_length: minimizes current concentrations from heater to via_stack.
+   :param ohms_per_square: to calculate resistance.
+   :param cross_section: for waveguide ports.
+   :param kwargs: cross_section common settings.
+
+
 .. py:function:: get_design_from_openlane_migration(v1: bool = True, design_name_v1: str | None = None, design_directory: str | pathlib.Path | None = None, root_directory_v1: str | pathlib.Path | None = None) -> (str, pathlib.Path)
 
    This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.
@@ -321,6 +346,8 @@ Attributes
    :type design_directory: piel_path_types
    :param run_name: The name of the run to return. Defaults to None.
    :type run_name: str, optional
+   :param version: The version of OpenLane to use. Defaults to None.
+   :type version: Literal["v1", "v2"], optional
 
    :raises ValueError: If the run_name is specified but not found in the design_directory
 
@@ -736,6 +763,30 @@ Attributes
    :rtype: file_lines_raw (list)
 
 
+.. py:function:: get_all_designs_metrics_openlane_v2(output_directory: piel.config.piel_path_types, target_prefix: str)
+
+   Returns a dictionary of all the metrics for all the designs in the output directory.
+
+   Usage:
+
+       ```python
+       from piel.tools.openlane import get_all_designs_metrics_v2
+
+       metrics = get_all_designs_metrics_v2(
+           output_directory="output",
+           target_prefix="design",
+       )
+       ```
+
+   :param output_directory: The path to the output directory.
+   :type output_directory: piel_path_types
+   :param target_prefix: The prefix of the designs to get the metrics for.
+   :type target_prefix: str
+
+   :returns: A dictionary of all the metrics for all the designs in the output directory.
+   :rtype: dict
+
+
 .. py:function:: read_metrics_openlane_v2(design_directory: piel.config.piel_path_types) -> dict
 
    Read design metrics from OpenLane v2 run files.
@@ -1023,7 +1074,7 @@ Attributes
 
 .. py:data:: snet
 
-
+   
 
 .. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
@@ -1043,8 +1094,9 @@ Attributes
 .. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
 
 
-.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+.. py:data:: convert_output_type
 
+   
 
 .. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
@@ -1100,9 +1152,24 @@ Attributes
    :rtype: list
 
 
+.. py:function:: fock_states_only_individual_modes(mode_amount: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax, numpy, list, tuple] = 'qutip') -> list
+
+   This function returns a list of valid Fock states where each state has a maximum photon number, but only in one mode.
+
+   :param mode_amount: The amount of modes in the system.
+   :type mode_amount: int
+   :param maximum_photon_amount: The maximum amount of photons in a single mode.
+   :type maximum_photon_amount: int
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
+
+   :returns: A list of all the valid Fock states.
+   :rtype: list
+
+
 .. py:data:: standard_s_parameters_to_qutip_qobj
 
-
+   
 
 .. py:function:: verify_matrix_is_unitary(matrix: jax.numpy.ndarray) -> bool
 
@@ -1129,3 +1196,5 @@ Attributes
    the output matrix is also a unitary.
 
    TODO implement validation of a 2D matrix.
+
+

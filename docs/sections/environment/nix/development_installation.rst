@@ -3,8 +3,25 @@
 
 This process sets up a ``nix`` development environment, good for when
 developing examples. Make sure to follow the ``nix`` installation
-instructions for your platform. TODO ADD LINK. TODO ADD LINK TO THE
-UBUNTU INSTALL SCRIPT WE PROVIDE.
+instructions for your platform.
+
+**The Fast Lane**
+
+Assuming you already have ``piel`` installed in a local environment, you can simply run the commands to perform the installation.
+
+.. code:: bash
+
+    piel environment # To see all commands
+    piel environment install-nix # To install nix
+    piel environment install-openlane # To install openlane
+
+To enter the nix environment, run:
+
+.. code:: bash
+
+    piel environment activate-piel-nix
+    # piel environment activate-openlane-nix # if you want to enter the openlane one instead
+
 
 System requirements
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -17,6 +34,17 @@ Before starting, make sure you system has:
 
 ``nix`` installation
 ^^^^^^^^^^^^^^^^^^^^^^
+
+**The Fast Lane**
+
+Assuming you already have ``piel`` installed in a local environment, you can simply run:
+
+.. code:: bash
+
+    piel environment install-nix
+
+
+**The Detailed Lane**
 
 First, `install nix <https://nixos.org/download>`__. The approach below
 is not the *recommended* install method, as it creates a ‘single-user’
@@ -36,7 +64,7 @@ The following line should have been added to both your
 
 .. code:: bash
 
-   if [ -e /users/kcaisley/.nix-profile/etc/profile.d/nix.sh ]; then . /users/kcaisley/.nix-profile/etc/profile.d/nix.sh; fi
+   if [ -e /users/<youruser>/.nix-profile/etc/profile.d/nix.sh ]; then . /users/<youruser>/.nix-profile/etc/profile.d/nix.sh; fi
 
 This ensures that ``nix-shell`` will be available in ``$PATH`` whether
 you’re starting a shell in “login” mode or in “non-login” mode. More
@@ -52,6 +80,17 @@ and reopen your terminal, or run:
 
 OpenLane2 installation
 ^^^^^^^^^^^^^^^^^^^^^^
+
+**The Fast Lane**
+
+Assuming you already have ``piel`` installed in a local environment, you can simply run:
+
+.. code:: bash
+
+    piel environment install-openlane
+
+
+**The Detailed Lane**
 
 Before installing ``piel``, let’s first get ``OpenLane2``, as it will
 automatically also give us ``OpenROAD``, ``Yosys``, ``Magic``,
@@ -82,7 +121,21 @@ Then set up the OpenLane binary cache as follows:
    git clone https://github.com/efabless/openlane2
 
 OpenLane Nix environment
-''''''''''''''''''''''''''''''''''''
+'''''''''''''''''''''''''
+
+**The Fast Lane**
+
+Assuming you already have ``piel`` installed in a local environment, you can simply run:
+
+.. code:: bash
+
+    piel environment activate-openlane-nix
+
+
+
+
+**The Detailed Lane - (Depreciated) Pre-Flakes Migration **
+
 
 Now move inside the folder:
 
@@ -97,18 +150,39 @@ cache the dependencies.
 
    nix-shell
 
-Piel installation
-^^^^^^^^^^^^^^^^^^^^^^
-
-Next, ``cd ..`` back up one level, and clone ``piel`` itself, next to
-the ``openlane2`` directory:
-
-.. code:: bash
-
-   git@github.com:daquintero/piel.git
 
 Piel Nix environment
 ''''''''''''''''''''
+
+**The Fast Lane**
+
+Assuming you already have ``piel`` installed in a local environment and have followed the previous installation process, you can simply run:
+
+.. code:: bash
+
+    piel environment activate-piel-nix
+
+**The Detailed Lane**
+
+We are now using ``nix-flakes`` to manage the nix environment.
+This is an experimental nix feature, but far more powerful than the previous ``nix-shell`` approach.
+To learn more about ``nix-flakes``, see `here <https://nixos.wiki/wiki/Flakes>`__.
+
+To run our ``nix`` flakes environment run the following:
+
+.. code::
+
+    cd environment/nix
+    nix develop --extra-experimental-features nix-command --extra-experimental-features flakes
+
+This will take some time as it is both installing the openlane2 nix dependencies and the piel ones,
+and building them into a specific environment.
+The total installation size is approximately 4 Gb.
+All the python packages that are dependencies of pip are installed from the wheels in PyPi from the versions defined by the ``poetry.lock`` file.
+
+In my computer, running this command for the first time took about 20 minutes. Eventually we will distribute this in a binary.
+
+**The Detailed Lane - (Depreciated) Pre-Flakes Migration **
 
 We’ll similarly use nix to grab all the compiled dependencies for
 ``piel``, including:
@@ -134,6 +208,15 @@ And run the command below, which implicitly reads in the local
 Piel Python environment
 '''''''''''''''''''''''
 
+**The Fast Lane**
+
+.. code:: bash
+
+    piel environment # TODO
+
+
+**The Detailed Lane - Depreciated**
+
 For the time being, PyPI and pip isn’t easily compatible with Nix. See
 the `complexity here. <https://nixos.wiki/wiki/Python>`__. ``machnix``
 used to `solve this problem <https://github.com/DavHau/mach-nix>`__, but
@@ -154,30 +237,29 @@ While still inside of the nix-shell, check you’re using
 
 This is essential because we want all of our ``piel`` Python virtual
 environment to be on the same version as Openlane. Create and activate
-this ``venv``:
+this ``venv`` on the top level of the ``.piel`` directory:
 
 .. code:: bash
 
-   python -m venv .venv
+   python -m venv ~/.piel/.venv
 
 .. code:: bash
 
-   source .venv/bin/activate
+   source ~/.piel/.venv/bin/activate
 
 And fetch the dependencies via:
 
 .. code:: bash
 
-   pip install -r requirements_dev.txt
+   pip install -e .[develop]
 
 The ``.venv`` folder should be created inside the top level of the
-``piel`` directory. The ``.gitignore`` file will prevent it from being
-committed to the remote repo.
+``.piel`` in your home directory.
 
 You’re now done!
 
-Subsequent usage
-^^^^^^^^^^^^^^^^^^^^^^
+Subsequent usage - Depreciated
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: bash
 
@@ -196,18 +278,32 @@ add to path the packages managed the ``pip`` venv by the OpenLane2
 
 .. code:: nix
 
-       shellHook = ''
-         if [ -e ../../.venv/bin/activate ];
-         then source ../../.venv/bin/activate;
-         else
-            pip install --upgrade pip;
-            python -m venv ../../.venv;
-            source ../../.venv/bin/activate;
-            pip install -r ../../requirements_dev.txt;
-            pip install -e ../../;
-         fi
-         nix-shell ../../../openlane2/shell.nix
+      shellHook = ''
+        export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+          pkgs.stdenv.cc.cc
+        ]}
+          # Reinstalling the pacakges should guarantee a reproducible build every time
+          set -e
+          echo "Running: micromamba shell hook --shell=bash"
+          eval "$(micromamba shell hook --shell=bash)"
+          echo "Running: micromamba shell init --shell=bash --prefix=~/micromamba"
+          micromamba shell init --shell=bash --prefix=~/micromamba
+          echo "Running: micromamba create --yes -q -n pielenv -c conda-forge python=3.10"
+          micromamba create --yes -q -n pielenv -c conda-forge python=3.10
+          echo "Running: micromamba activate pielenv --yes"
+          micromamba activate pielenv --yes
+          set +e
+          export PATH="$PATH:$HOME/.local/bin/"
+          echo "Running: micromamba run -n pielenv pip install -r $HOME/.piel/openlane2/requirements_dev.txt --user --break-system-packages;"
+          micromamba run -n pielenv pip install -r $HOME/.piel/openlane2/requirements_dev.txt --user --break-system-packages;
+          echo "Running: micromamba run -n pielenv pip install ../../[develop] --user --break-system-packages;"
+          micromamba run -n pielenv pip install -e "../../[develop]" --user --break-system-packages;
+          source $HOME/.piel/.venv/bin/activate;
+        fi
+        nix-shell ~/.piel/openlane2/shell.nix
       '';
+      LOCALE_ARCHIVE="/usr/lib/locale/locale-archive";  # let's nix read the LOCALE, to silence warning messages
+    }
 
 VSCode support for nix
 ^^^^^^^^^^^^^^^^^^^^^^

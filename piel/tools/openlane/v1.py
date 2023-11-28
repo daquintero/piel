@@ -14,7 +14,7 @@ from piel.file_system import (
     run_script,
     write_file,
 )
-from ...config import piel_path_types
+from ...types import piel_path_types
 
 __all__ = [
     "check_config_json_exists_openlane_v1",

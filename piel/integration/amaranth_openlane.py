@@ -16,7 +16,7 @@ from ..tools.openlane.defaults import (
     test_basic_open_lane_configuration_v1,
     test_basic_open_lane_configuration_v2,
 )
-from ..config import piel_path_types
+from ..types import piel_path_types
 
 __all__ = ["layout_amaranth_truth_table_through_openlane"]
 

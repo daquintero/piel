@@ -1,0 +1,133 @@
+[tool.poetry]
+name = "piel"
+version = "0.0.56"
+description = "Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more."
+authors = ["Dario Quintero <darioaquintero@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/daquintero/piel"
+repository = "https://github.com/daquintero/piel"
+keywords = ["piel"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+packages = [
+    { include = "piel/*" },
+#    { include = "environment/*" },
+]
+
+[tool.poetry.dependencies]
+python =  ">=3.10,<3.12"
+amaranth = "0.4.0"
+amaranth-yosys = "0.35.0.0.post81"
+cython = "0.29.21"
+jupytext = "1.15.0"
+Click = ">=7.0"
+cocotb = "1.8.0"
+# femwell = "0.1.8"
+hdl21 = "4.0.0"
+jax = "^0.4.14"
+jaxlib = "^0.4.14"
+gdsfactory = { version="7.2.1", extras=["kfactory"] } # Pinned for pydantic <v2 compatibility, until examples upgrades
+networkx = "3.1"
+numpy = "1.24.4"
+matplotlib = {version="*"}
+openlane = "2.0.0b13"
+pandas = "1.5.3"
+xarray = "2023.12.0"
+qutip = "4.7.3"
+sax = "0.8.8" # Pinned for pydantic <v2 compatibility.
+scipy = "1.11.4"
+thewalrus = "0.20.0"
+
+black = {version="*", optional = true}
+bokeh = {version="*", optional = true}
+bump2version = {version="*", optional = true}
+cookiecutter = {version="*", optional = true}
+coverage = {version="*", optional = true}
+flake8 = {version="*", optional = true}
+ipyevents = {version="*", optional = true}
+ipytree = {version="*", optional = true}
+ipywidgets = {version=">=7.6.0,<9", optional = true}
+jupyter = {version="*", optional = true}
+jupyter-bokeh = {version="*", optional = true}
+jupyter-core = {version="*", optional = true}
+jupyter-packaging = {version=">=0.7.9", optional = true}
+jupyterlab = {version=">=4", optional = true}
+kfactory = {version="*", extras=["git", "ipy"], optional = true}
+kweb = {version="0.1.1", optional = true}
+myst-parser = {version="*", optional = true}
+nbsphinx = {version="*", optional = true}
+pandoc = {version="*", optional = true}
+pre-commit = {version="*", optional = true}
+pytest = {version=">=3", optional = true}
+pydata-sphinx-theme = {version=">=0.13.3", optional = true}
+sphinx = {version=">=4, <7", optional = true}
+sphinx-autoapi = {version="*", optional = true}
+sphinx-autobuild = {version="*", optional = true}
+sphinx-autodoc-typehints = {version="*", optional = true}
+sphinx_book_theme = {version="*", optional = true}
+sphinx-copybutton = {version=">=0.5.2", optional = true}
+sphinx-gallery = {version="*", optional = true}
+sphinx-pydantic = {version="*", optional = true}
+sphinx-rtd-theme = {version="*", optional = true}
+tox = {version="*", optional = true}
+watchdog = {version="*", optional = true}
+
+[tool.poetry.extras]
+develop = [
+    "pytest",
+    "sphinx",
+    "sphinx-autodoc-typehints",
+    "sphinx-pydantic",
+    "sphinx-autoapi",
+    "sphinx-autobuild",
+    "sphinx_book_theme",
+    "sphinx-copybutton",
+    "sphinx-rtd-theme",
+    "sphinx-gallery",
+    "nbsphinx",
+    "myst-parser",
+    "pandoc",
+    "flake8",
+    "black",
+    "bokeh",
+    "bump2version",
+    "cookiecutter",
+    "coverage",
+    "kfactory",
+    "kweb",
+    "ipyevents",
+    "ipytree",
+    "ipywidgets",
+    "jupyter",
+    "jupyter-core",
+    "jupyter-bokeh",
+    "jupyter-packaging",
+    "jupyterlab",
+    "pre-commit",
+    "pydata-sphinx-theme",
+    "tox",
+    "watchdog"
+]
+
+[tool.poetry.scripts]
+piel = "piel.cli:main"
+poetry = "poetry.console.application:main"
+
+[bdist_wheel]
+universal = 1
+
+[flake8]
+exclude = "docs"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
