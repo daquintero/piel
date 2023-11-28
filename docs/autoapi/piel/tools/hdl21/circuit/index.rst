@@ -20,3 +20,6 @@
    Let's assume that we can get an extracted SPICE netlist of our circuit, that includes all nodes, and component
    circuit definitions. This could then be simulated accordingly for the whole circuit between inputs and outputs. This
    would have to be constructed out of component models and a provided netlist in a similar fashion to ``SAX``.
+
+
+

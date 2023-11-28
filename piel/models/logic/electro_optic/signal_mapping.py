@@ -1,4 +1,5 @@
 """
+TODO implement this function.
 In this function we implement different methods of mapping electronic signals to phase.
 
 One particular implementation of phase mapping would be:
@@ -15,16 +16,19 @@ One particular implementation of phase mapping would be:
 
 We can define the two corresponding angles that this would be.
 
-A more complex implementation of phase mapping can be similar to a DAC mapping: a bitstring within a converter bit-size can map directly to a particular phase space within a particular mapping.
-"""
+A more complex implementation of phase mapping can be similar to a DAC mapping: a bitstring within a converter
+bit-size can map directly to a particular phase space within a particular mapping."""
 import numpy as np
 import pandas as pd
 from typing import Callable, Optional, Iterable, Literal
+from ....integration.type_conversion import array_types, convert_array_type, absolute_to_threshold, tuple_int_type
+from .types import electro_optic_fock_state_type
 
 __all__ = [
     "bits_array_from_bits_amount",
     "convert_phase_array_to_bit_array",
     "find_nearest_bit_for_phase",
+    "format_electro_optic_fock_transition",
     "linear_bit_phase_map",
     "return_phase_array_from_data_series",
 ]
@@ -165,8 +169,8 @@ def linear_bit_phase_map(
     bits_array = bits_array_from_bits_amount(bits_amount)
     phase_division_amount = len(bits_array) - 1
     phase_division_step = (
-        final_phase_rad - initial_phase_rad
-    ) / phase_division_amount - quantization_error
+                              final_phase_rad - initial_phase_rad
+                          ) / phase_division_amount - quantization_error
     linear_phase_array = np.arange(
         initial_phase_rad, final_phase_rad, phase_division_step
     )
@@ -207,3 +211,31 @@ def return_phase_array_from_data_series(
         phase = phase_map[phase_map.bits == str(code_i)].phase.values[0]
         phase_array.append(phase)
     return phase_array
+
+
+def format_electro_optic_fock_transition(
+    switch_state_array: array_types,
+    input_fock_state_array: array_types,
+    raw_output_state: array_types,
+) -> electro_optic_fock_state_type:
+    """
+    Formats the electro-optic state into a standard electro_optic_fock_state_type format. This is useful for the
+    electro-optic model to ensure that the output state is in the correct format. The output state is a dictionary
+    that contains the phase, input fock state, and output fock state. The idea is that this will allow us to
+    standardise and compare the output states of the electro-optic model across multiple formats.
+
+    Args:
+        switch_state_array(array_types): Array of switch states.
+        input_fock_state_array(array_types): Array of valid input fock states.
+        raw_output_state(array_types): Array of raw output state.
+
+    Returns:
+        electro_optic_state(electro_optic_fock_state_type): Electro-optic state.
+    """
+    electro_optic_state = {
+        "phase": convert_array_type(switch_state_array, "tuple"),
+        "input_fock_state": convert_array_type(input_fock_state_array, tuple_int_type),
+        "output_fock_state": absolute_to_threshold(raw_output_state, output_array_type=tuple_int_type),
+    }
+    # assert type(electro_optic_state) == electro_optic_fock_state_type # TODO fix this
+    return electro_optic_state

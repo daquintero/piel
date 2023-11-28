@@ -1,6 +1,6 @@
 import pandas as pd
 from .file_system import return_path
-from .config import piel_path_types
+from .types import piel_path_types
 
 __all__ = [
     "read_csv_to_pandas",

@@ -5,7 +5,7 @@ from typing import Literal
 
 from ...project_structure import get_module_folder_type_location
 from ...file_system import return_path
-from ...config import piel_path_types
+from ...types import piel_path_types
 
 __all__ = ["verify_truth_table"]
 

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from typing import Literal, Optional
 import vlsirtools.spice as vsp
-from ...config import piel_path_types
+from ...types import piel_path_types
 from ...file_system import return_path
 
 __all__ = [

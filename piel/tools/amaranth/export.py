@@ -4,7 +4,7 @@ import types
 
 from ...project_structure import get_module_folder_type_location
 from ...file_system import return_path
-from ...config import piel_path_types
+from ...types import piel_path_types
 
 __all__ = ["generate_verilog_from_amaranth"]
 

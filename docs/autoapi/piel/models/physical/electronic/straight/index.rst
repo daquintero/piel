@@ -34,3 +34,5 @@ Functions
 .. py:function:: straight(params: StraightParameters) -> hdl21.Module
 
    Implements a `hdl21` taper resistor class.
+
+

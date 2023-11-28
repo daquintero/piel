@@ -3,7 +3,7 @@ This file contains a range of functions used to read, plot and analyse cocotb si
 """
 import functools
 import pandas as pd
-from piel.config import piel_path_types
+from piel.types import piel_path_types
 from piel.file_system import return_path, get_files_recursively_in_directory
 
 __all__ = [

@@ -23,3 +23,5 @@ Functions
 
 
 .. py:function:: grating_coupler_simple(R=0.0, R_in=0.0, Tmax=1.0, bandwidth=6e-08, wl0=1.55e-06)
+
+

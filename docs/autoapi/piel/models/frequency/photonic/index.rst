@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    coupler_simple/index.rst
+   crossing_simple/index.rst
    directional_coupler_length/index.rst
    directional_coupler_real/index.rst
    directional_coupler_simple/index.rst
@@ -70,3 +71,5 @@ Functions
 
 
 .. py:function:: lossless_straight()
+
+

@@ -37,6 +37,8 @@ Functions
    :type design_directory: piel_path_types
    :param run_name: The name of the run to return. Defaults to None.
    :type run_name: str, optional
+   :param version: The version of OpenLane to use. Defaults to None.
+   :type version: Literal["v1", "v2"], optional
 
    :raises ValueError: If the run_name is specified but not found in the design_directory
 
@@ -90,3 +92,5 @@ Functions
 
    :returns: A dictionary of sorted runs
    :rtype: dict[str, list[pathlib.Path]]
+
+

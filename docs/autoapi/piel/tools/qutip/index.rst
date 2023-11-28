@@ -26,10 +26,10 @@ Functions
 
    piel.tools.qutip.all_fock_states_from_photon_number
    piel.tools.qutip.convert_qobj_to_jax
-   piel.tools.qutip.convert_output_type
    piel.tools.qutip.fock_state_nonzero_indexes
    piel.tools.qutip.fock_state_to_photon_number_factorial
    piel.tools.qutip.fock_states_at_mode_index
+   piel.tools.qutip.fock_states_only_individual_modes
    piel.tools.qutip.verify_matrix_is_unitary
    piel.tools.qutip.subunitary_selection_on_range
    piel.tools.qutip.subunitary_selection_on_index
@@ -41,6 +41,7 @@ Attributes
 
 .. autoapisummary::
 
+   piel.tools.qutip.convert_output_type
    piel.tools.qutip.standard_s_parameters_to_qutip_qobj
 
 
@@ -62,8 +63,9 @@ Attributes
 .. py:function:: convert_qobj_to_jax(qobj: qutip.Qobj) -> jax.numpy.ndarray
 
 
-.. py:function:: convert_output_type(array: numpy.ndarray, output_type: Literal[qutip, jax])
+.. py:data:: convert_output_type
 
+   
 
 .. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
@@ -119,9 +121,24 @@ Attributes
    :rtype: list
 
 
+.. py:function:: fock_states_only_individual_modes(mode_amount: int, maximum_photon_amount: Optional[int] = 1, output_type: Literal[qutip, jax, numpy, list, tuple] = 'qutip') -> list
+
+   This function returns a list of valid Fock states where each state has a maximum photon number, but only in one mode.
+
+   :param mode_amount: The amount of modes in the system.
+   :type mode_amount: int
+   :param maximum_photon_amount: The maximum amount of photons in a single mode.
+   :type maximum_photon_amount: int
+   :param output_type: The type of output. Defaults to "qutip".
+   :type output_type: str, optional
+
+   :returns: A list of all the valid Fock states.
+   :rtype: list
+
+
 .. py:data:: standard_s_parameters_to_qutip_qobj
 
-
+   
 
 .. py:function:: verify_matrix_is_unitary(matrix: jax.numpy.ndarray) -> bool
 
@@ -148,3 +165,5 @@ Attributes
    the output matrix is also a unitary.
 
    TODO implement validation of a 2D matrix.
+
+

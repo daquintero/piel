@@ -8,7 +8,7 @@ from piel import visual  # NOQA: F401
 
 # Functions
 
-from .config import *
+from .types import *
 from .file_system import *
 from .integration import *
 from .parametric import *
@@ -20,6 +20,8 @@ os.environ["PIEL_PACKAGE_DIRECTORY"] = str(
     pathlib.Path(__file__).parent.parent.resolve()
 )
 
+create_piel_home_directory()
+
 __author__ = """Dario Quintero"""
 __email__ = "darioaquintero@gmail.com"
-__version__ = "0.0.55"
+__version__ = "0.0.56"

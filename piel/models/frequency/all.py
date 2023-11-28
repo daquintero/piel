@@ -13,7 +13,7 @@ __default_models_dictionary__ = {
     "coupler": coupler_simple,
     "mmi1x2_50_50": mmi1x2.mmi1x2_50_50,
     "mmi2x2_50_50": mmi2x2.mmi2x2_50_50,
-    "ideal_active_waveguide": straight_waveguide.ideal_active_waveguide,
+    "ideal_active_waveguide": straight_waveguide.active_waveguide,
     "simple_straight": straight_waveguide.simple_straight,
     "waveguide": straight_waveguide.waveguide,
 }

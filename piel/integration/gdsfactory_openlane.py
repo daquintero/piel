@@ -6,7 +6,7 @@ It is worth noting that GDSFactory has already the following PDKs installed:
 * GF180nm https://gdsfactory.github.io/gf180/
 """
 import gdsfactory as gf
-from ..config import piel_path_types
+from ..types import piel_path_types
 from ..file_system import check_path_exists
 from piel.tools.openlane.migrate import get_design_from_openlane_migration
 from piel.tools.openlane import find_latest_design_run, get_gds_path_from_design_run

@@ -67,9 +67,12 @@ To use piel in a project you can then do:
 Installation Environment Verification
 -------------------------------------
 
-We have verified the ``piel``, on the latest Mamba Python 3.10
-installation in Windows 10 and Linux. You can then run the above
+We have verified the ``piel``, on the latest Ubuntu LTS. You can then run the above
 commands and the dependencies should be resolved. In the future, we will
 provide a Docker environment. Note that because ``piel`` is a
 microservice and the flow depends on multiple packages, the first import
 statement during indexing might take a bit of time.
+
+On the first import, the package will create a folder in your home directory called
+``.piel``. This folder is used to manage installation requirements and guarantee
+reproducible behaviours of the project interactions with the filesystem with the necessary tools.

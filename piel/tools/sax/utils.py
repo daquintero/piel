@@ -183,9 +183,15 @@ def sax_to_s_parameters_standard_matrix(
     output_ports_index_tuple_order_jax = jnp.asarray(output_ports_index_tuple_order)
     input_ports_index_tuple_order_jax = jnp.asarray(input_ports_index_tuple_order)
     # We now select the SDense columns that we care about.
-    s_parameters_standard_matrix = dense_s_parameter_matrix.at[
-        output_ports_index_tuple_order_jax
-    ].get()
+    try:
+        s_parameters_standard_matrix = dense_s_parameter_matrix.at[
+            output_ports_index_tuple_order_jax
+        ].get()
+    except TypeError:
+        print("sax_input: " + str(sax_input))
+        print("all_ports_list: " + str(all_ports_list))
+        print("output_ports_index_tuple_order: " + str(output_ports_index_tuple_order))
+        raise TypeError("Verify your network composition contains `out` keywords. This can be caused by the network topology.")
     s_parameters_standard_matrix = s_parameters_standard_matrix.at[
         :, input_ports_index_tuple_order_jax
     ].get()

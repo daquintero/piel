@@ -18,8 +18,24 @@ Functions
 
 .. autoapisummary::
 
+   piel.integration.type_conversion.convert_array_type
    piel.integration.type_conversion.convert_2d_array_to_string
 
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.integration.type_conversion.array_types
+
+
+.. py:data:: array_types
+
+   
+
+.. py:function:: convert_array_type(array: array_types, output_type: Literal[qutip, jax, numpy, list, tuple])
 
 
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
@@ -37,3 +53,5 @@ Functions
        list_2D=[[0], [0], [0], [1]]
        convert_2d_array_to_string(list_2D)
        >>> "0001"
+
+

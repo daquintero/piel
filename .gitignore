@@ -64,6 +64,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+_docs/
 
 # PyBuilder
 target/
@@ -198,3 +199,4 @@ RUN_*
 *.raw
 
 *.sif
+.idea/

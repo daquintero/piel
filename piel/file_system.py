@@ -1,14 +1,16 @@
 import glob
+import inspect
 import json
 import openlane
 import os
+import sys
 import pathlib
 import shutil
 import stat
 import subprocess
 import types
 from typing import Literal, Optional
-from .config import piel_path_types
+from .types import piel_path_types
 
 __all__ = [
     "check_path_exists",
@@ -16,9 +18,11 @@ __all__ = [
     "copy_source_folder",
     "copy_example_design",
     "create_new_directory",
+    "create_piel_home_directory",
     "delete_path",
     "delete_path_list_in_directory",
     "get_files_recursively_in_directory",
+    "get_top_level_script_directory",
     "get_id_map_directory_dictionary",
     "list_prefix_match_directories",
     "permit_directory_all",
@@ -200,19 +204,27 @@ def convert_list_to_path_list(
 
 def create_new_directory(
     directory_path: str | pathlib.Path,
-) -> None:
+    overwrite: bool = False,
+) -> bool:
     """
     Creates a new directory.
 
     If the parents of the target_directory do not exist, they will be created too.
 
     Args:
+        overwrite: Overwrite directory if it already exists.
         directory_path(str | pathlib.Path): Input path.
 
     Returns:
         None
     """
     directory_path = return_path(directory_path)
+
+    if directory_path.exists():
+        if overwrite:
+            delete_path(directory_path)
+        else:
+            return False
 
     # Check permissions of the parent to be able to create the directory
     parent_directory = directory_path.parent
@@ -224,6 +236,19 @@ def create_new_directory(
 
     # Create the directory
     directory_path.mkdir(parents=True)
+    return True
+
+
+def create_piel_home_directory() -> None:
+    """
+    Creates the piel home directory.
+
+    Returns:
+        None
+    """
+    # TODO implement check so it does not overwrite.
+    piel_home_directory = pathlib.Path.home() / ".piel"
+    create_new_directory(piel_home_directory)
 
 
 def delete_path(path: str | pathlib.Path) -> None:
@@ -349,10 +374,48 @@ def get_id_map_directory_dictionary(
         # Check if the basename starts with the provided prefix
         if basename.startswith(target_prefix):
             # Extract the id after the prefix
-            id_str = basename[len(target_prefix) :]
+            id_str = basename[len(target_prefix):]
             # Convert the id string into an integer and use it as a key for the dictionary
             id_dict[int(id_str)] = path
     return id_dict
+
+
+def get_top_level_script_directory() -> pathlib.Path:
+    """
+    Attempts to return the top-level script directory when this file is run,
+    compatible with various execution environments like Jupyter Lab, pytest, PDM, etc.
+    TODO run full verification.
+
+    Returns:
+        top_level_script_directory(pathlib.Path): Top level script directory.
+    """
+
+    # For Jupyter notebooks and IPython environments
+    if 'ipykernel' in sys.modules or 'IPython' in sys.modules:
+        try:
+            from IPython.core.getipython import get_ipython
+            # IPython's get_ipython function provides access to the IPython interactive environment
+            ipython = get_ipython()
+            if ipython and hasattr(ipython, 'starting_dir'):
+                return pathlib.Path(ipython.starting_dir).resolve()
+        except Exception as e:
+            # Log or print the error as needed
+            print(f"Could not determine the notebook directory due to: {e}")
+
+    # For pytest, PDM, and similar environments where sys.argv might be manipulated
+    # or __main__.__file__ is not set as expected.
+    if 'pytest' in sys.modules or '_pytest' in sys.modules or 'pdm' in sys.modules:
+        return pathlib.Path.cwd()
+
+    # For standard script executions and other environments
+    # This checks if __main__ module has __file__ attribute and uses it
+    main_module = sys.modules.get('__main__', None)
+    if main_module and hasattr(main_module, '__file__'):
+        main_file = main_module.__file__
+        return pathlib.Path(main_file).resolve().parent
+
+    # As a general fallback, use the current working directory
+    return pathlib.Path.cwd()
 
 
 def list_prefix_match_directories(
