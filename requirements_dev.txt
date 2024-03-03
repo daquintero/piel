@@ -15,7 +15,7 @@ cython==0.29.21
 femwell==0.1.8
 flake8
 kfactory[git,ipy]==0.7.5
-kweb==0.1.1
+kweb==1.2.1
 gplugins
 gdsfactory==7.2.1 # Pinned for pydantic <v2 compatibility and examples compatibility till porting.
 hdl21==4.0.0
