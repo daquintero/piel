@@ -28,5 +28,11 @@ sphinx:
 # to build your documentation
 # See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 python:
+  # Install our python package before building the docs
   install:
-    - requirements: requirements_dev.txt
+    - method: pip
+      path: .
+      extra_requirements:
+        - develop
+
+formats: []
