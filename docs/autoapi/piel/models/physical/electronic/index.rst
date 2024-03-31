@@ -12,9 +12,12 @@ Submodules
 
    capacitor/index.rst
    defaults/index.rst
+   hva/index.rst
+   lna/index.rst
    resistor/index.rst
    straight/index.rst
    taper/index.rst
+   types/index.rst
    via_stack/index.rst
 
 

@@ -18,11 +18,11 @@ Functions
 
 
 
-.. py:function:: read_csv_to_pandas(file_path: piel.config.piel_path_types)
+.. py:function:: read_csv_to_pandas(file_path: piel.types.PathTypes)
 
    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
 
 
-.. py:function:: read_vcd_to_json(file_path: piel.config.piel_path_types)
+.. py:function:: read_vcd_to_json(file_path: piel.types.PathTypes)
 
 

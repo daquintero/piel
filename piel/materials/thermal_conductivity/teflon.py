@@ -1,9 +1,17 @@
 import jax.numpy as jnp
+from .types import MaterialReferenceType, MaterialReferencesTypes
+from ...models.physical.types import TemperatureRangeTypes
+
+__all__ = ["teflon", "material_references"]
+
+material_references: MaterialReferencesTypes = [("teflon", None), ]
 
 
-__all__ = ["teflon"]
-
-def teflon(temperature_range_K):
+def teflon(
+    temperature_range_K: TemperatureRangeTypes,
+    *args,
+    **kwargs
+):
     """
     Trade Names for FEP resins include DuPont Teflon™, Daikin Neoflon™, Dyneon Hostaflon™, NiFlon, Sinoflon.
     Source: https://trc.nist.gov/cryogenics/materials/Teflon/Teflon_rev.htm

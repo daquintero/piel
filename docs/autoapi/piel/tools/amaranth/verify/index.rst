@@ -17,7 +17,7 @@ Functions
 
 
 
-.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
+.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.types.PathTypes, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
 
    We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
 

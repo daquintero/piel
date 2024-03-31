@@ -86,7 +86,7 @@ Attributes
    Gets the piel installation directory.
 
 
-.. py:function:: return_path(input_path: piel.config.piel_path_types, as_piel_module: bool = False) -> pathlib.Path
+.. py:function:: return_path(input_path: piel.types.PathTypes, as_piel_module: bool = False) -> pathlib.Path
 
    Returns a pathlib.Path to be able to perform operations accordingly internally.
 

@@ -17,3 +17,4 @@ Examples
    examples/05_quantum_integration_basics
    examples/06_component_codesign_basics
    examples/07_mixed_signal_photonic_cosimulation
+   examples/08_basic_interconnection_modelling

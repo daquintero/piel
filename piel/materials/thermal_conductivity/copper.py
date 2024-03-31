@@ -3,20 +3,29 @@ import pandas as pd
 from typing import Literal
 
 import piel
-from piel.types import ArrayTypes, PathTypes
+from ...types import ArrayTypes
+from .types import MaterialReferencesTypes, MaterialReferenceType
+from ...models.physical.types import TemperatureRangeTypes
 
 # CURRENT TODO: finish migrating this, add material sub names, add proper export, put into __init__
 
-__all__ = ["copper"]
+__all__ = ["copper", "material_references"]
 
-supported_specifications = Literal["rrr50", "rrr100", "rrr150", "rrr300", "rrr500"]
+supported_specifications = ["rrr50", "rrr100", "rrr150", "rrr300", "rrr500"]
+material_references: MaterialReferencesTypes = [
+    ("copper", specification_i) for specification_i in supported_specifications
+]
 
 
 def copper(
-    temperature_range_K: ArrayTypes,
-    specification: supported_specifications,
-) -> jnp.ndarray:
-    copper_thermal_conductivity_file = piel.return_path(__file__).parent / "data" / "ofhc_copper_thermal_conductivity.csv"
+    temperature_range_K: TemperatureRangeTypes,
+    material_reference: MaterialReferenceType,
+    *args,
+    **kwargs
+) -> ArrayTypes:
+    specification = material_reference[1]
+    copper_thermal_conductivity_file = piel.return_path(
+        __file__).parent / "data" / "ofhc_copper_thermal_conductivity.csv"
     assert copper_thermal_conductivity_file.exists()
     thermal_conductivity_material_dataset = pd.read_csv(
         copper_thermal_conductivity_file

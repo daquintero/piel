@@ -20,12 +20,12 @@ Functions
 
 
 
-.. py:function:: configure_ngspice_simulation(run_directory: piel.config.piel_path_types = '.')
+.. py:function:: configure_ngspice_simulation(run_directory: piel.types.PathTypes = '.')
 
    This function configures the NGSPICE simulation for the circuit and returns a simulation class.
 
    :param run_directory: Directory where the simulation will be run
-   :type run_directory: piel_path_types
+   :type run_directory: PathTypes
 
    :returns: Configured NGSPICE simulation options
    :rtype: simulation_options

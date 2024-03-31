@@ -17,6 +17,7 @@ Subpackages
 
    cli/index.rst
    integration/index.rst
+   materials/index.rst
    models/index.rst
    tools/index.rst
    visual/index.rst
@@ -28,15 +29,23 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   config/index.rst
    file_conversion/index.rst
    file_system/index.rst
    parametric/index.rst
    project_structure/index.rst
+   types/index.rst
 
 
 Package Contents
 ----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   piel.PielBaseModel
+
 
 
 Functions
@@ -78,6 +87,7 @@ Functions
    piel.fock_transition_probability_amplitude
    piel.convert_2d_array_to_string
    piel.convert_array_type
+   piel.absolute_to_threshold
    piel.single_parameter_sweep
    piel.multi_parameter_sweep
    piel.create_setup_py
@@ -162,8 +172,11 @@ Attributes
 
 .. autoapisummary::
 
-   piel.piel_path_types
+   piel.ArrayTypes
+   piel.PathTypes
    piel.array_types
+   piel.tuple_int_type
+   piel.package_array_types
    piel.delete_simulation_output_files
    piel.get_simulation_output_files
    piel.snet
@@ -174,47 +187,69 @@ Attributes
    piel.__version__
 
 
-.. py:data:: piel_path_types
+.. py:data:: ArrayTypes
 
    
 
-.. py:function:: check_path_exists(path: piel.config.piel_path_types, raise_errors: bool = False) -> bool
+.. py:data:: PathTypes
+
+   
+
+.. py:class:: PielBaseModel
+
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+   .. py:class:: Config
+
+
+      .. py:attribute:: arbitrary_types_allowed
+         :value: True
+
+         
+
+
+   .. py:method:: supplied_parameters()
+
+
+
+.. py:function:: check_path_exists(path: piel.types.PathTypes, raise_errors: bool = False) -> bool
 
    Checks if a directory exists.
 
    :param path: Input path.
-   :type path: piel_path_types
+   :type path: PathTypes
 
    :returns: True if directory exists.
    :rtype: directory_exists(bool)
 
 
-.. py:function:: check_example_design(design_name: str = 'simple_design', designs_directory: piel.config.piel_path_types | None = None) -> bool
+.. py:function:: check_example_design(design_name: str = 'simple_design', designs_directory: piel.types.PathTypes | None = None) -> bool
 
    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
    :param design_name: Name of the design to check.
    :type design_name: str
    :param designs_directory: Directory that contains the DESIGNS environment flag.
-   :type designs_directory: piel_path_types
+   :type designs_directory: PathTypes
    :param # TODO:
 
    :returns: None
 
 
-.. py:function:: copy_source_folder(source_directory: piel.config.piel_path_types, target_directory: piel.config.piel_path_types) -> None
+.. py:function:: copy_source_folder(source_directory: piel.types.PathTypes, target_directory: piel.types.PathTypes) -> None
 
    Copies the files from a source_directory to a target_directory
 
    :param source_directory: Source directory.
-   :type source_directory: piel_path_types
+   :type source_directory: PathTypes
    :param target_directory: Target directory.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
 
    :returns: None
 
 
-.. py:function:: copy_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design', target_directory: piel.config.piel_path_types = None, target_project_name: Optional[str] = None) -> None
+.. py:function:: copy_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design', target_directory: piel.types.PathTypes = None, target_project_name: Optional[str] = None) -> None
 
    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
@@ -223,7 +258,7 @@ Attributes
    :param example_name: Name of the example design.
    :type example_name: str
    :param target_directory: Target directory.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param target_project_name: Name of the target project.
    :type target_project_name: str
 
@@ -260,7 +295,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: delete_path_list_in_directory(directory_path: piel.config.piel_path_types, path_list: list, ignore_confirmation: bool = False, validate_individual: bool = False) -> None
+.. py:function:: delete_path_list_in_directory(directory_path: piel.types.PathTypes, path_list: list, ignore_confirmation: bool = False, validate_individual: bool = False) -> None
 
    Deletes a list of files in a directory.
 
@@ -273,7 +308,7 @@ Attributes
    ```
 
    :param directory_path: Input path.
-   :type directory_path: piel_path_types
+   :type directory_path: PathTypes
    :param path_list: List of files.
    :type path_list: list
    :param ignore_confirmation: Ignore confirmation. Default: False.
@@ -284,7 +319,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: get_files_recursively_in_directory(path: piel.config.piel_path_types, extension: str = '*')
+.. py:function:: get_files_recursively_in_directory(path: piel.types.PathTypes, extension: str = '*')
 
    Returns a list of files in a directory.
 
@@ -293,7 +328,7 @@ Attributes
        get_files_recursively_in_directory('path/to/directory', 'extension')
 
    :param path: Input path.
-   :type path: piel_path_types
+   :type path: PathTypes
    :param extension: File extension.
    :type extension: str
 
@@ -303,15 +338,15 @@ Attributes
 
 .. py:function:: get_top_level_script_directory() -> pathlib.Path
 
-   Returns the top level script directory whenever this file is run. This is useful when we want to know the
-   location of the script that is being executed at the top level, maybe in order to create relative directories of
-   find relevant files.
+   Attempts to return the top-level script directory when this file is run,
+   compatible with various execution environments like Jupyter Lab, pytest, PDM, etc.
+   TODO run full verification.
 
    :returns: Top level script directory.
    :rtype: top_level_script_directory(pathlib.Path)
 
 
-.. py:function:: get_id_map_directory_dictionary(path_list: list[piel.config.piel_path_types], target_prefix: str)
+.. py:function:: get_id_map_directory_dictionary(path_list: list[piel.types.PathTypes], target_prefix: str)
 
    Returns a dictionary of ids to directories.
 
@@ -320,7 +355,7 @@ Attributes
        get_id_to_directory_dictionary(path_list, target_prefix)
 
    :param path_list: List of paths.
-   :type path_list: list[piel_path_types]
+   :type path_list: list[PathTypes]
    :param target_prefix: Target prefix.
    :type target_prefix: str
 
@@ -328,7 +363,7 @@ Attributes
    :rtype: id_dict(dict)
 
 
-.. py:function:: list_prefix_match_directories(output_directory: piel.config.piel_path_types, target_prefix: str)
+.. py:function:: list_prefix_match_directories(output_directory: piel.types.PathTypes, target_prefix: str)
 
    Returns a list of directories that match a prefix.
 
@@ -337,7 +372,7 @@ Attributes
        list_prefix_match_directories('path/to/directory', 'prefix')
 
    :param output_directory: Output directory.
-   :type output_directory: piel_path_types
+   :type output_directory: PathTypes
    :param target_prefix: Target prefix.
    :type target_prefix: str
 
@@ -345,7 +380,7 @@ Attributes
    :rtype: matching_dirs(list)
 
 
-.. py:function:: permit_directory_all(directory_path: piel.config.piel_path_types) -> None
+.. py:function:: permit_directory_all(directory_path: piel.types.PathTypes) -> None
 
    Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
 
@@ -354,12 +389,12 @@ Attributes
        permit_directory_all('path/to/directory')
 
    :param directory_path: Input path.
-   :type directory_path: piel_path_types
+   :type directory_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: permit_script_execution(script_path: piel.config.piel_path_types) -> None
+.. py:function:: permit_script_execution(script_path: piel.types.PathTypes) -> None
 
    Permits the execution of a script.
 
@@ -368,12 +403,12 @@ Attributes
        permit_script_execution('path/to/script')
 
    :param script_path: Script path.
-   :type script_path: piel_path_types
+   :type script_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: read_json(path: piel.config.piel_path_types) -> dict
+.. py:function:: read_json(path: piel.types.PathTypes) -> dict
 
    Reads a JSON file.
 
@@ -382,13 +417,13 @@ Attributes
        read_json('path/to/file.json')
 
    :param path: Input path.
-   :type path: piel_path_types
+   :type path: PathTypes
 
    :returns: JSON data.
    :rtype: json_data(dict)
 
 
-.. py:function:: rename_file(match_file_path: piel.config.piel_path_types, renamed_file_path: piel.config.piel_path_types) -> None
+.. py:function:: rename_file(match_file_path: piel.types.PathTypes, renamed_file_path: piel.types.PathTypes) -> None
 
    Renames a file.
 
@@ -397,14 +432,14 @@ Attributes
        rename_file('path/to/match_file', 'path/to/renamed_file')
 
    :param match_file_path: Input path.
-   :type match_file_path: piel_path_types
+   :type match_file_path: PathTypes
    :param renamed_file_path: Input path.
-   :type renamed_file_path: piel_path_types
+   :type renamed_file_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: rename_files_in_directory(target_directory: piel.config.piel_path_types, match_string: str, renamed_string: str) -> None
+.. py:function:: rename_files_in_directory(target_directory: piel.types.PathTypes, match_string: str, renamed_string: str) -> None
 
    Renames all files in a directory.
 
@@ -413,7 +448,7 @@ Attributes
        rename_files_in_directory('path/to/directory', 'match_string', 'renamed_string')
 
    :param target_directory: Input path.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param match_string: String to match.
    :type match_string: str
    :param renamed_string: String to replace.
@@ -422,7 +457,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: replace_string_in_file(file_path: piel.config.piel_path_types, match_string: str, replace_string: str)
+.. py:function:: replace_string_in_file(file_path: piel.types.PathTypes, match_string: str, replace_string: str)
 
    Replaces a string in a file.
 
@@ -431,7 +466,7 @@ Attributes
        replace_string_in_file('path/to/file', 'match_string', 'replace_string')
 
    :param file_path: Input path.
-   :type file_path: piel_path_types
+   :type file_path: PathTypes
    :param match_string: String to match.
    :type match_string: str
    :param replace_string: String to replace.
@@ -440,7 +475,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: replace_string_in_directory_files(target_directory: piel.config.piel_path_types, match_string: str, replace_string: str)
+.. py:function:: replace_string_in_directory_files(target_directory: piel.types.PathTypes, match_string: str, replace_string: str)
 
    Replaces a string in all files in a directory.
 
@@ -449,7 +484,7 @@ Attributes
        replace_string_in_directory_files('path/to/directory', 'match_string', 'replace_string')
 
    :param target_directory: Input path.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param match_string: String to match.
    :type match_string: str
    :param replace_string: String to replace.
@@ -458,7 +493,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: return_path(input_path: piel.config.piel_path_types, as_piel_module: bool = False) -> pathlib.Path
+.. py:function:: return_path(input_path: piel.types.PathTypes, as_piel_module: bool = False) -> pathlib.Path
 
    Returns a pathlib.Path to be able to perform operations accordingly internally.
 
@@ -477,22 +512,22 @@ Attributes
    :rtype: pathlib.Path
 
 
-.. py:function:: run_script(script_path: piel.config.piel_path_types) -> None
+.. py:function:: run_script(script_path: piel.types.PathTypes) -> None
 
    Runs a script on the filesystem `script_path`.
 
    :param script_path: Script path.
-   :type script_path: piel_path_types
+   :type script_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: write_file(directory_path: piel.config.piel_path_types, file_text: str, file_name: str) -> None
+.. py:function:: write_file(directory_path: piel.types.PathTypes, file_text: str, file_name: str) -> None
 
    Records a `script_name` in the `scripts` project directory.
 
    :param directory_path: Design directory.
-   :type directory_path: piel_path_types
+   :type directory_path: PathTypes
    :param file_text: Script to write.
    :type file_text: str
    :param file_name: Name of the script.
@@ -501,7 +536,7 @@ Attributes
    :returns: None
 
 
-.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.config.piel_path_types | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
+.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.types.PathTypes | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
 
    This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
 
@@ -510,7 +545,7 @@ Attributes
    :param design_name_v1: Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
    :type design_name_v1: str
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param run_name: Name of the run to extract the GDS from. If None, it will look at the latest run.
    :type run_name: str
    :param v1: If True, it will import the design from the OpenLane v1 configuration.
@@ -721,6 +756,14 @@ Attributes
 
    
 
+.. py:data:: tuple_int_type
+
+   
+
+.. py:data:: package_array_types
+
+   
+
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
 
    This function is particularly useful to convert digital data when it is represented as a 2D array into a set of strings.
@@ -738,7 +781,24 @@ Attributes
        >>> "0001"
 
 
-.. py:function:: convert_array_type(array: array_types, output_type: Literal[qutip, jax, numpy, list, tuple])
+.. py:function:: convert_array_type(array: array_types, output_type: package_array_types)
+
+
+.. py:function:: absolute_to_threshold(array: array_types, threshold: float = 1e-06, dtype_output: int | float | bool = int, output_array_type: package_array_types = 'jax') -> package_array_types
+
+   This function converts the computed optical transmission arrays to single bit digital signals.
+   The function takes the absolute value of the array and compares it to a threshold to determine the digital signal.
+
+   :param array: The optical transmission array of any dimension.
+   :type array: array_types
+   :param dtype_output: The output type. Defaults to int.
+   :type dtype_output: int | float | bool, optional
+   :param threshold: The threshold to compare the array to. Defaults to 1e-6.
+   :type threshold: float, optional
+   :param output_array_type: The output type. Defaults to "jax".
+   :type output_array_type: array_types, optional
+
+   Returns:
 
 
 .. py:function:: single_parameter_sweep(base_design_configuration: dict, parameter_name: str, parameter_sweep_values: list)
@@ -789,17 +849,17 @@ Attributes
    :rtype: parameter_sweep_design_dictionary_array(list)
 
 
-.. py:function:: create_setup_py(design_directory: piel.config.piel_path_types, project_name: Optional[str] = None, from_config_json: bool = True) -> None
+.. py:function:: create_setup_py(design_directory: piel.types.PathTypes, project_name: Optional[str] = None, from_config_json: bool = True) -> None
 
    This function creates a setup.py file from the config.json file found in the design directory.
 
    :param design_directory: Design directory PATH or module name.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: None
 
 
-.. py:function:: create_empty_piel_project(project_name: str, parent_directory: piel.config.piel_path_types) -> None
+.. py:function:: create_empty_piel_project(project_name: str, parent_directory: piel.types.PathTypes) -> None
 
    This function creates an empty piel-structure project in the target directory. Structuring your files in this way
    enables the co-design and use of the tools supported by piel whilst maintaining the design flow ordered,
@@ -810,7 +870,7 @@ Attributes
    :param project_name: Name of the project.
    :type project_name: str
    :param parent_directory: Parent directory of the project.
-   :type parent_directory: piel_path_types
+   :type parent_directory: PathTypes
 
    :returns: None
 
@@ -822,22 +882,22 @@ Attributes
    TODO DOCS
 
 
-.. py:function:: pip_install_local_module(module_path: piel.config.piel_path_types)
+.. py:function:: pip_install_local_module(module_path: piel.types.PathTypes)
 
    This function installs a local module in editable mode.
 
    :param module_path: Path to the module to be installed.
-   :type module_path: piel_path_types
+   :type module_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: read_configuration(design_directory: piel.config.piel_path_types) -> dict
+.. py:function:: read_configuration(design_directory: piel.types.PathTypes) -> dict
 
    This function reads the configuration file found in the design directory.
 
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: Configuration dictionary.
    :rtype: config_dictionary(dict)
@@ -923,23 +983,23 @@ Attributes
 
    
 
-.. py:function:: get_simulation_output_files_from_design(design_directory: piel.config.piel_path_types, extension: str = 'csv')
+.. py:function:: get_simulation_output_files_from_design(design_directory: piel.types.PathTypes, extension: str = 'csv')
 
    This function returns a list of all the simulation output files in the design directory.
 
    :param design_directory: The path to the design directory.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: List of all the simulation output files in the design directory.
    :rtype: output_files (list)
 
 
-.. py:function:: read_simulation_data(file_path: piel.config.piel_path_types)
+.. py:function:: read_simulation_data(file_path: piel.types.PathTypes)
 
    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
 
    :param file_path: The path to the simulation data file.
-   :type file_path: piel_path_types
+   :type file_path: PathTypes
 
    :returns: The simulation data in a Pandas dataframe.
    :rtype: simulation_data (pd.DataFrame)
@@ -1066,14 +1126,14 @@ Attributes
    Extracts the datetime from a given `run_path` and returns it as a string.
 
 
-.. py:function:: find_all_design_runs(design_directory: piel.config.piel_path_types, run_name: str | None = None) -> list[pathlib.Path]
+.. py:function:: find_all_design_runs(design_directory: piel.types.PathTypes, run_name: str | None = None) -> list[pathlib.Path]
 
    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory. This function sorts the runs according to the default notations between both `openlane` and `openlane2` run formats.
 
    If a `run_name` is specified, then the function will return the exact run if it exists. Otherwise, it will return the latest run
 
    :param design_directory: The path to the design directory
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param run_name: The name of the run to return. Defaults to None.
    :type run_name: str, optional
    :param version: The version of OpenLane to use. Defaults to None.
@@ -1085,14 +1145,14 @@ Attributes
    :rtype: list[pathlib.Path]
 
 
-.. py:function:: find_latest_design_run(design_directory: piel.config.piel_path_types, run_name: str | None = None, version: Literal[v1, v2] | None = None) -> (pathlib.Path, str)
+.. py:function:: find_latest_design_run(design_directory: piel.types.PathTypes, run_name: str | None = None, version: Literal[v1, v2] | None = None) -> (pathlib.Path, str)
 
    For a given `design_directory`, the `openlane` output can be found in the `runs` subdirectory. This function sorts the runs according to the default notations between both `openlane` and `openlane2` run formats.
 
    If a `run_name` is specified, then the function will return the exact run if it exists. Otherwise, it will return the latest run.
 
    :param design_directory: The path to the design directory
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param run_name: The name of the run to return. Defaults to None.
    :type run_name: str, optional
    :param version: The version of the run to return. Defaults to None.
@@ -1104,20 +1164,20 @@ Attributes
    :rtype: (pathlib.Path, str)
 
 
-.. py:function:: get_gds_path_from_design_run(design_directory: piel.config.piel_path_types, run_directory: piel.config.piel_path_types | None = None) -> pathlib.Path
+.. py:function:: get_gds_path_from_design_run(design_directory: piel.types.PathTypes, run_directory: piel.types.PathTypes | None = None) -> pathlib.Path
 
    Returns the path to the final GDS generated by OpenLane.
 
    :param design_directory: The path to the design directory
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param run_directory: The path to the run directory. Defaults to None. Otherwise gets the latest run.
-   :type run_directory: piel_path_types, optional
+   :type run_directory: PathTypes, optional
 
    :returns: The path to the final GDS
    :rtype: pathlib.Path
 
 
-.. py:function:: get_design_run_version(run_directory: piel.config.piel_path_types) -> Literal[v1, v2]
+.. py:function:: get_design_run_version(run_directory: piel.types.PathTypes) -> Literal[v1, v2]
 
    Returns the version of the design run.
 
@@ -1247,7 +1307,7 @@ Attributes
    :rtype: configuration(dict)
 
 
-.. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: piel.config.piel_path_types) -> None
+.. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: piel.types.PathTypes) -> None
 
    Writes a `config.json` onto a `design_directory`
 
@@ -1493,7 +1553,7 @@ Attributes
    :rtype: file_lines_raw (list)
 
 
-.. py:function:: get_all_designs_metrics_openlane_v2(output_directory: piel.config.piel_path_types, target_prefix: str)
+.. py:function:: get_all_designs_metrics_openlane_v2(output_directory: piel.types.PathTypes, target_prefix: str)
 
    Returns a dictionary of all the metrics for all the designs in the output directory.
 
@@ -1509,7 +1569,7 @@ Attributes
        ```
 
    :param output_directory: The path to the output directory.
-   :type output_directory: piel_path_types
+   :type output_directory: PathTypes
    :param target_prefix: The prefix of the designs to get the metrics for.
    :type target_prefix: str
 
@@ -1517,25 +1577,25 @@ Attributes
    :rtype: dict
 
 
-.. py:function:: read_metrics_openlane_v2(design_directory: piel.config.piel_path_types) -> dict
+.. py:function:: read_metrics_openlane_v2(design_directory: piel.types.PathTypes) -> dict
 
    Read design metrics from OpenLane v2 run files.
 
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: Metrics dictionary.
    :rtype: dict
 
 
-.. py:function:: run_openlane_flow(configuration: dict | None = None, design_directory: piel.config.piel_path_types = '.', parallel_asynchronous_run: bool = False, only_generate_flow_setup: bool = False)
+.. py:function:: run_openlane_flow(configuration: dict | None = None, design_directory: piel.types.PathTypes = '.', parallel_asynchronous_run: bool = False, only_generate_flow_setup: bool = False)
 
    Runs the OpenLane v2 flow.
 
    :param configuration: OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.
    :type configuration: dict
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param parallel_asynchronous_run: Run the flow in parallel.
    :type parallel_asynchronous_run: bool
    :param only_generate_flow_setup: Only generate the flow setup.
@@ -1545,12 +1605,12 @@ Attributes
 
 
 
-.. py:function:: configure_ngspice_simulation(run_directory: piel.config.piel_path_types = '.')
+.. py:function:: configure_ngspice_simulation(run_directory: piel.types.PathTypes = '.')
 
    This function configures the NGSPICE simulation for the circuit and returns a simulation class.
 
    :param run_directory: Directory where the simulation will be run
-   :type run_directory: piel_path_types
+   :type run_directory: PathTypes
 
    :returns: Configured NGSPICE simulation options
    :rtype: simulation_options

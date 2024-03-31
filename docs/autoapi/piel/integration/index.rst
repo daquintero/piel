@@ -49,6 +49,7 @@ Functions
    piel.integration.fock_transition_probability_amplitude
    piel.integration.convert_2d_array_to_string
    piel.integration.convert_array_type
+   piel.integration.absolute_to_threshold
 
 
 
@@ -58,9 +59,11 @@ Attributes
 .. autoapisummary::
 
    piel.integration.array_types
+   piel.integration.tuple_int_type
+   piel.integration.package_array_types
 
 
-.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.config.piel_path_types | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
+.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.types.PathTypes | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
 
    This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
 
@@ -69,7 +72,7 @@ Attributes
    :param design_name_v1: Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
    :type design_name_v1: str
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param run_name: Name of the run to extract the GDS from. If None, it will look at the latest run.
    :type run_name: str
    :param v1: If True, it will import the design from the OpenLane v1 configuration.
@@ -280,6 +283,14 @@ Attributes
 
    
 
+.. py:data:: tuple_int_type
+
+   
+
+.. py:data:: package_array_types
+
+   
+
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
 
    This function is particularly useful to convert digital data when it is represented as a 2D array into a set of strings.
@@ -297,6 +308,23 @@ Attributes
        >>> "0001"
 
 
-.. py:function:: convert_array_type(array: array_types, output_type: Literal[qutip, jax, numpy, list, tuple])
+.. py:function:: convert_array_type(array: array_types, output_type: package_array_types)
+
+
+.. py:function:: absolute_to_threshold(array: array_types, threshold: float = 1e-06, dtype_output: int | float | bool = int, output_array_type: package_array_types = 'jax') -> package_array_types
+
+   This function converts the computed optical transmission arrays to single bit digital signals.
+   The function takes the absolute value of the array and compares it to a threshold to determine the digital signal.
+
+   :param array: The optical transmission array of any dimension.
+   :type array: array_types
+   :param dtype_output: The output type. Defaults to int.
+   :type dtype_output: int | float | bool, optional
+   :param threshold: The threshold to compare the array to. Defaults to 1e-6.
+   :type threshold: float, optional
+   :param output_array_type: The output type. Defaults to "jax".
+   :type output_array_type: array_types, optional
+
+   Returns:
 
 

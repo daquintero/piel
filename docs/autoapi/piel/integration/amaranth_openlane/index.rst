@@ -22,7 +22,7 @@ Functions
 
 
 
-.. py:function:: layout_amaranth_truth_table_through_openlane(amaranth_module: amaranth.Module, inputs_name_list: list[str], outputs_name_list: list[str], parent_directory: piel.config.piel_path_types, target_directory_name: Optional[str] = None, openlane_version: Literal[v1, v2] = 'v2', **kwargs)
+.. py:function:: layout_amaranth_truth_table_through_openlane(amaranth_module: amaranth.Module, inputs_name_list: list[str], outputs_name_list: list[str], parent_directory: piel.types.PathTypes, target_directory_name: Optional[str] = None, openlane_version: Literal[v1, v2] = 'v2', **kwargs)
 
    This function implements an amaranth truth-table module through the openlane flow. There are several ways to
    implement a module. Fundamentally, this requires the verilog files to be generated from the openlane-module in a
@@ -44,7 +44,7 @@ Functions
    :param outputs_name_list: List of output names.
    :type outputs_name_list: list[str]
    :param parent_directory: Parent directory PATH.
-   :type parent_directory: piel_path_types
+   :type parent_directory: PathTypes
    :param target_directory_name: Target directory name. If none is provided, it will default to the name of the amaranth elaboratable class.
    :type target_directory_name: Optional[str]
    :param openlane_version: OpenLane version. Defaults to ``v1``.

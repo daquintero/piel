@@ -25,6 +25,7 @@ Submodules
 
    geometry/index.rst
    thermal/index.rst
+   types/index.rst
    units/index.rst
 
 
@@ -37,14 +38,26 @@ Functions
 
 .. autoapisummary::
 
+   piel.models.physical.awg_to_cross_sectional_area_m2
    piel.models.physical.calculate_cross_sectional_area_m2
    piel.models.physical.convert_awg_to_m2
 
 
 
+.. py:function:: awg_to_cross_sectional_area_m2(awg: int) -> float
+
+   Converts an AWG value to the cross-sectional area in meters squared.
+
+   :param awg: The AWG value to convert.
+   :type awg: int
+
+   :returns: The cross-sectional area in meters squared.
+   :rtype: float
+
+
 .. py:function:: calculate_cross_sectional_area_m2(diameter_m: float) -> float
 
-   Calculates the cross sectional area of a circle in meters squared.
+   Calculates the cross-sectional area of a circle in meters squared.
 
    :param diameter_m: Diameter of the circle in meters.
    :type diameter_m: float

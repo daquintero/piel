@@ -11,5 +11,6 @@ Submodules
    :maxdepth: 1
 
    cable/index.rst
+   types/index.rst
 
 

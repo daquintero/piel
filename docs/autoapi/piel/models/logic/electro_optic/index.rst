@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    signal_mapping/index.rst
+   types/index.rst
 
 
 Package Contents
@@ -25,9 +26,18 @@ Functions
    piel.models.logic.electro_optic.bits_array_from_bits_amount
    piel.models.logic.electro_optic.convert_phase_array_to_bit_array
    piel.models.logic.electro_optic.find_nearest_bit_for_phase
+   piel.models.logic.electro_optic.format_electro_optic_fock_transition
    piel.models.logic.electro_optic.linear_bit_phase_map
    piel.models.logic.electro_optic.return_phase_array_from_data_series
 
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   piel.models.logic.electro_optic.electro_optic_fock_state_type
 
 
 .. py:function:: bits_array_from_bits_amount(bits_amount: int, bit_format: Literal[int, str] = 'int') -> numpy.ndarray
@@ -81,6 +91,24 @@ Functions
    :rtype: bitstring(str)
 
 
+.. py:function:: format_electro_optic_fock_transition(switch_state_array: piel.integration.type_conversion.array_types, input_fock_state_array: piel.integration.type_conversion.array_types, raw_output_state: piel.integration.type_conversion.array_types) -> piel.models.logic.electro_optic.types.electro_optic_fock_state_type
+
+   Formats the electro-optic state into a standard electro_optic_fock_state_type format. This is useful for the
+   electro-optic model to ensure that the output state is in the correct format. The output state is a dictionary
+   that contains the phase, input fock state, and output fock state. The idea is that this will allow us to
+   standardise and compare the output states of the electro-optic model across multiple formats.
+
+   :param switch_state_array: Array of switch states.
+   :type switch_state_array: array_types
+   :param input_fock_state_array: Array of valid input fock states.
+   :type input_fock_state_array: array_types
+   :param raw_output_state: Array of raw output state.
+   :type raw_output_state: array_types
+
+   :returns: Electro-optic state.
+   :rtype: electro_optic_state(electro_optic_fock_state_type)
+
+
 .. py:function:: linear_bit_phase_map(bits_amount: int, final_phase_rad: float, initial_phase_rad: float = 0, return_dataframe: bool = True, quantization_error: float = 1e-06, bit_format: Literal[int, str] = 'int') -> dict | pandas.DataFrame
 
    Returns a linear direct mapping of bits to phase.
@@ -109,4 +137,8 @@ Functions
    :returns: List of phases.
    :rtype: phase_array(list)
 
+
+.. py:data:: electro_optic_fock_state_type
+
+   
 

@@ -1,16 +1,24 @@
 from typing import Literal
 import jax.numpy as jnp
 from piel.types import ArrayTypes
+from .types import MaterialReferenceType, MaterialReferencesTypes
+from ...models.physical.types import TemperatureRangeTypes
 
-supported_specifications = Literal["1100"]
+__all__ = ["aluminum", "material_references"]
 
-__all__ = ["aluminum"]
+supported_specifications = ["1100",]
+material_references: MaterialReferencesTypes = [
+    ("aluminum", specification_i) for specification_i in supported_specifications
+]
 
 
 def aluminum(
-    temperature_range_K: ArrayTypes,
-    specification: supported_specifications = "1100"
+    temperature_range_K: TemperatureRangeTypes,
+    material_reference: MaterialReferenceType,
+    *args,
+    **kwargs
 ) -> float:
+    specification = material_reference[1]
     if specification == "1100":
         thermal_conductivity_fit = jnp.power(10,
                                              23.39172

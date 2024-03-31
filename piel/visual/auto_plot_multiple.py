@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pathlib
 
-matplotlib.style.use(pathlib.Path(__file__).parent / pathlib.Path("piel_fast.rcParams"))
+
 
 __all__ = [
     "plot_simple",
@@ -12,23 +12,50 @@ __all__ = [
 ]
 
 
-def plot_simple(x_data: np.array, y_data: np.array, ylabel: str, xlabel: str):
+def plot_simple(
+    x_data: np.array,
+    y_data: np.array,
+    label: str | None = None,
+    ylabel: str | None = None,
+    xlabel: str | None = None,
+    fig: plt.Figure | None = None,
+    ax: plt.Axes | None = None,
+    *args,
+    **kwargs
+):
     """
-    Plot a simple line graph.
+    Plot a simple line graph. The desire of this function is just to abstract the most basic data representation whilst
+    keeping the flexibility of the matplotlib library. The goal would be as well that more complex data plots can be
+    constructed from a set of these methods.
 
     Args:
         x_data (np.array): X axis data.
         y_data (np.array): Y axis data.
-        ylabel (str): Y axis label.
-        xlabel (str): X axis label.
+        label (str, optional): Label for the plot. Defaults to None.
+        ylabel (str, optional): Y axis label. Defaults to None.
+        xlabel (str, optional): X axis label. Defaults to None.
+        fig (plt.Figure, optional): Matplotlib figure. Defaults to None.
+        ax (plt.Axes, optional): Matplotlib axes. Defaults to None.
 
     Returns:
         plt: Matplotlib plot.
     """
-    plt.plot(x_data, y_data)
-    plt.ylabel(ylabel)
-    plt.xlabel(xlabel)
-    return plt
+    if (ax is None) and (fig is None):
+        fig, ax = plt.subplots()
+
+    ax.plot(x_data, y_data, label=label, *args, **kwargs)
+
+    if ylabel is not None:
+        ax.set_ylabel(ylabel)
+
+    if xlabel is not None:
+        ax.set_xlabel(xlabel)
+
+    if label is not None:
+        # This function appends to the existing plt legend
+        ax.legend()
+
+    return fig, ax
 
 
 def plot_simple_multi_row(

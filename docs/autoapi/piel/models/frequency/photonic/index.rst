@@ -36,10 +36,11 @@ Functions
    piel.models.frequency.photonic.grating_coupler_simple
    piel.models.frequency.photonic.mmi1x2_50_50
    piel.models.frequency.photonic.mmi2x2_50_50
-   piel.models.frequency.photonic.ideal_active_waveguide
+   piel.models.frequency.photonic.active_waveguide
    piel.models.frequency.photonic.waveguide
    piel.models.frequency.photonic.simple_straight
    piel.models.frequency.photonic.lossless_straight
+   piel.models.frequency.photonic.ideal_lossless_active_waveguide
 
 
 
@@ -61,7 +62,7 @@ Functions
 .. py:function:: mmi2x2_50_50()
 
 
-.. py:function:: ideal_active_waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0, active_phase_rad=0.0)
+.. py:function:: active_waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0, active_phase_rad=0.0)
 
 
 .. py:function:: waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0)
@@ -71,5 +72,8 @@ Functions
 
 
 .. py:function:: lossless_straight()
+
+
+.. py:function:: ideal_lossless_active_waveguide(active_phase_rad=0.0)
 
 
