@@ -4,7 +4,7 @@ import types
 
 from ...project_structure import get_module_folder_type_location
 from ...file_system import return_path
-from ...types import piel_path_types
+from ...types import PathTypes
 
 __all__ = ["generate_verilog_from_amaranth"]
 
@@ -13,7 +13,7 @@ def generate_verilog_from_amaranth(
     amaranth_module: am.Elaboratable,
     ports_list: list[str],
     target_file_name: str,
-    target_directory: piel_path_types,
+    target_directory: PathTypes,
     backend=verilog,
 ) -> None:
     """
@@ -26,7 +26,7 @@ def generate_verilog_from_amaranth(
         amaranth_module (amaranth.Elaboratable): Amaranth elaboratable class.
         ports_list (list[str]): List of input names.
         target_file_name (str): Target file name.
-        target_directory (piel_path_types): Target directory PATH.
+        target_directory (PathTypes): Target directory PATH.
         backend (amaranth.back.verilog): Backend to use. Defaults to ``verilog``.
 
     Returns:

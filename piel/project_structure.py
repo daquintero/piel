@@ -5,7 +5,7 @@ import subprocess
 import types
 from typing import Literal, Optional
 
-from .types import piel_path_types
+from .types import PathTypes
 from .file_system import (
     return_path,
     read_json,
@@ -24,7 +24,7 @@ __all__ = [
 
 
 def create_setup_py(
-    design_directory: piel_path_types,
+    design_directory: PathTypes,
     project_name: Optional[str] = None,
     from_config_json: bool = True,
 ) -> None:
@@ -32,7 +32,7 @@ def create_setup_py(
     This function creates a setup.py file from the config.json file found in the design directory.
 
     Args:
-        design_directory(piel_path_types): Design directory PATH or module name.
+        design_directory(PathTypes): Design directory PATH or module name.
 
     Returns:
         None
@@ -70,7 +70,7 @@ def create_setup_py(
 
 
 def create_empty_piel_project(
-    project_name: str, parent_directory: piel_path_types
+    project_name: str, parent_directory: PathTypes
 ) -> None:
     """
     This function creates an empty piel-structure project in the target directory. Structuring your files in this way
@@ -81,7 +81,7 @@ def create_empty_piel_project(
 
     Args:
         project_name(str): Name of the project.
-        parent_directory(piel_path_types): Parent directory of the project.
+        parent_directory(PathTypes): Parent directory of the project.
 
     Returns:
         None
@@ -236,12 +236,12 @@ def get_module_folder_type_location(
     return folder_path
 
 
-def pip_install_local_module(module_path: piel_path_types):
+def pip_install_local_module(module_path: PathTypes):
     """
     This function installs a local module in editable mode.
 
     Args:
-        module_path(piel_path_types): Path to the module to be installed.
+        module_path(PathTypes): Path to the module to be installed.
 
     Returns:
         None
@@ -254,12 +254,12 @@ def pip_install_local_module(module_path: piel_path_types):
         print(f"Failed to install local module at '{module_path}'.")
 
 
-def read_configuration(design_directory: piel_path_types) -> dict:
+def read_configuration(design_directory: PathTypes) -> dict:
     """
     This function reads the configuration file found in the design directory.
 
     Args:
-        design_directory(piel_path_types): Design directory PATH.
+        design_directory(PathTypes): Design directory PATH.
 
     Returns:
         config_dictionary(dict): Configuration dictionary.

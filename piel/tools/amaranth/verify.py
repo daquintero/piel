@@ -5,7 +5,7 @@ from typing import Literal
 
 from ...project_structure import get_module_folder_type_location
 from ...file_system import return_path
-from ...types import piel_path_types
+from ...types import PathTypes
 
 __all__ = ["verify_truth_table"]
 
@@ -16,7 +16,7 @@ def verify_truth_table(
     inputs: list,
     outputs: list,
     vcd_file_name: str,
-    target_directory: piel_path_types,
+    target_directory: PathTypes,
     implementation_type: Literal[
         "combinatorial", "sequential", "memory"
     ] = "combinatorial",

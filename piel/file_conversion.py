@@ -1,6 +1,6 @@
 import pandas as pd
 from .file_system import return_path
-from .types import piel_path_types
+from .types import PathTypes
 
 __all__ = [
     "read_csv_to_pandas",
@@ -8,7 +8,7 @@ __all__ = [
 ]
 
 
-def read_csv_to_pandas(file_path: piel_path_types):
+def read_csv_to_pandas(file_path: PathTypes):
     """
     This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
     """
@@ -17,7 +17,7 @@ def read_csv_to_pandas(file_path: piel_path_types):
     return simulation_data
 
 
-def read_vcd_to_json(file_path: piel_path_types):
+def read_vcd_to_json(file_path: PathTypes):
     from pyDigitalWaveTools.vcd.parser import VcdParser
 
     file_path = return_path(file_path)

@@ -1,5 +1,5 @@
 from openlane.flows import Flow
-from piel.types import piel_path_types
+from piel.types import PathTypes
 from piel.file_system import (
     return_path,
     read_json,
@@ -16,7 +16,7 @@ __all__ = [
 
 
 def get_all_designs_metrics_openlane_v2(
-    output_directory: piel_path_types,
+    output_directory: PathTypes,
     target_prefix: str,
 ):
     """
@@ -34,7 +34,7 @@ def get_all_designs_metrics_openlane_v2(
         ```
 
     Args:
-        output_directory (piel_path_types): The path to the output directory.
+        output_directory (PathTypes): The path to the output directory.
         target_prefix (str): The prefix of the designs to get the metrics for.
 
     Returns:
@@ -59,12 +59,12 @@ def get_all_designs_metrics_openlane_v2(
     return output_dictionary
 
 
-def read_metrics_openlane_v2(design_directory: piel_path_types) -> dict:
+def read_metrics_openlane_v2(design_directory: PathTypes) -> dict:
     """
     Read design metrics from OpenLane v2 run files.
 
     Args:
-        design_directory(piel_path_types): Design directory PATH.
+        design_directory(PathTypes): Design directory PATH.
 
     Returns:
         dict: Metrics dictionary.
@@ -80,7 +80,7 @@ def read_metrics_openlane_v2(design_directory: piel_path_types) -> dict:
 
 def run_openlane_flow(
     configuration: dict | None = None,
-    design_directory: piel_path_types = ".",
+    design_directory: PathTypes = ".",
     parallel_asynchronous_run: bool = False,
     only_generate_flow_setup: bool = False,
 ):
@@ -89,7 +89,7 @@ def run_openlane_flow(
 
     Args:
         configuration(dict): OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.
-        design_directory(piel_path_types): Design directory PATH.
+        design_directory(PathTypes): Design directory PATH.
         parallel_asynchronous_run(bool): Run the flow in parallel.
         only_generate_flow_setup(bool): Only generate the flow setup.
 
