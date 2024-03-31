@@ -121,23 +121,23 @@ Attributes
 
    
 
-.. py:function:: get_simulation_output_files_from_design(design_directory: piel.config.piel_path_types, extension: str = 'csv')
+.. py:function:: get_simulation_output_files_from_design(design_directory: piel.types.PathTypes, extension: str = 'csv')
 
    This function returns a list of all the simulation output files in the design directory.
 
    :param design_directory: The path to the design directory.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: List of all the simulation output files in the design directory.
    :rtype: output_files (list)
 
 
-.. py:function:: read_simulation_data(file_path: piel.config.piel_path_types)
+.. py:function:: read_simulation_data(file_path: piel.types.PathTypes)
 
    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
 
    :param file_path: The path to the simulation data file.
-   :type file_path: piel_path_types
+   :type file_path: PathTypes
 
    :returns: The simulation data in a Pandas dataframe.
    :rtype: simulation_data (pd.DataFrame)

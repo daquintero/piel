@@ -26,7 +26,7 @@ Functions
 
 
 
-.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.config.piel_path_types | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
+.. py:function:: create_gdsfactory_component_from_openlane(design_name_v1: str | None = None, design_directory: piel.types.PathTypes | None = None, run_name: str | None = None, v1: bool = True) -> gdsfactory.Component
 
    This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
 
@@ -35,7 +35,7 @@ Functions
    :param design_name_v1: Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
    :type design_name_v1: str
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
    :param run_name: Name of the run to extract the GDS from. If None, it will look at the latest run.
    :type run_name: str
    :param v1: If True, it will import the design from the OpenLane v1 configuration.

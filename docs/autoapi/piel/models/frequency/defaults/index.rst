@@ -17,7 +17,7 @@ Functions
 
 
 
-.. py:function:: get_default_models(custom_defaults: dict | None = None, type: Literal[classical, quantum] = 'classical') -> dict
+.. py:function:: get_default_models(custom_defaults: dict | None = None, type: Literal[classical, quantum, optical_logic_verification] = 'classical') -> dict
 
    Returns the default models dictionary.
 

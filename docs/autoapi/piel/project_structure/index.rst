@@ -26,17 +26,17 @@ Functions
 
 
 
-.. py:function:: create_setup_py(design_directory: piel.config.piel_path_types, project_name: Optional[str] = None, from_config_json: bool = True) -> None
+.. py:function:: create_setup_py(design_directory: piel.types.PathTypes, project_name: Optional[str] = None, from_config_json: bool = True) -> None
 
    This function creates a setup.py file from the config.json file found in the design directory.
 
    :param design_directory: Design directory PATH or module name.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: None
 
 
-.. py:function:: create_empty_piel_project(project_name: str, parent_directory: piel.config.piel_path_types) -> None
+.. py:function:: create_empty_piel_project(project_name: str, parent_directory: piel.types.PathTypes) -> None
 
    This function creates an empty piel-structure project in the target directory. Structuring your files in this way
    enables the co-design and use of the tools supported by piel whilst maintaining the design flow ordered,
@@ -47,7 +47,7 @@ Functions
    :param project_name: Name of the project.
    :type project_name: str
    :param parent_directory: Parent directory of the project.
-   :type parent_directory: piel_path_types
+   :type parent_directory: PathTypes
 
    :returns: None
 
@@ -59,22 +59,22 @@ Functions
    TODO DOCS
 
 
-.. py:function:: pip_install_local_module(module_path: piel.config.piel_path_types)
+.. py:function:: pip_install_local_module(module_path: piel.types.PathTypes)
 
    This function installs a local module in editable mode.
 
    :param module_path: Path to the module to be installed.
-   :type module_path: piel_path_types
+   :type module_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: read_configuration(design_directory: piel.config.piel_path_types) -> dict
+.. py:function:: read_configuration(design_directory: piel.types.PathTypes) -> dict
 
    This function reads the configuration file found in the design directory.
 
    :param design_directory: Design directory PATH.
-   :type design_directory: piel_path_types
+   :type design_directory: PathTypes
 
    :returns: Configuration dictionary.
    :rtype: config_dictionary(dict)

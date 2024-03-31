@@ -5,6 +5,7 @@
 
 .. autoapi-nested-parse::
 
+   TODO implement this function.
    In this function we implement different methods of mapping electronic signals to phase.
 
    One particular implementation of phase mapping would be:
@@ -21,7 +22,8 @@
 
    We can define the two corresponding angles that this would be.
 
-   A more complex implementation of phase mapping can be similar to a DAC mapping: a bitstring within a converter bit-size can map directly to a particular phase space within a particular mapping.
+   A more complex implementation of phase mapping can be similar to a DAC mapping: a bitstring within a converter
+   bit-size can map directly to a particular phase space within a particular mapping.
 
 
 
@@ -39,6 +41,7 @@ Functions
    piel.models.logic.electro_optic.signal_mapping.find_nearest_bit_for_phase
    piel.models.logic.electro_optic.signal_mapping.linear_bit_phase_map
    piel.models.logic.electro_optic.signal_mapping.return_phase_array_from_data_series
+   piel.models.logic.electro_optic.signal_mapping.format_electro_optic_fock_transition
 
 
 
@@ -120,5 +123,23 @@ Functions
 
    :returns: List of phases.
    :rtype: phase_array(list)
+
+
+.. py:function:: format_electro_optic_fock_transition(switch_state_array: piel.integration.type_conversion.array_types, input_fock_state_array: piel.integration.type_conversion.array_types, raw_output_state: piel.integration.type_conversion.array_types) -> piel.models.logic.electro_optic.types.electro_optic_fock_state_type
+
+   Formats the electro-optic state into a standard electro_optic_fock_state_type format. This is useful for the
+   electro-optic model to ensure that the output state is in the correct format. The output state is a dictionary
+   that contains the phase, input fock state, and output fock state. The idea is that this will allow us to
+   standardise and compare the output states of the electro-optic model across multiple formats.
+
+   :param switch_state_array: Array of switch states.
+   :type switch_state_array: array_types
+   :param input_fock_state_array: Array of valid input fock states.
+   :type input_fock_state_array: array_types
+   :param raw_output_state: Array of raw output state.
+   :type raw_output_state: array_types
+
+   :returns: Electro-optic state.
+   :rtype: electro_optic_state(electro_optic_fock_state_type)
 
 

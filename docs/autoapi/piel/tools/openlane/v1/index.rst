@@ -145,7 +145,7 @@ Functions
    :rtype: configuration(dict)
 
 
-.. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: piel.config.piel_path_types) -> None
+.. py:function:: write_configuration_openlane_v1(configuration: dict, design_directory: piel.types.PathTypes) -> None
 
    Writes a `config.json` onto a `design_directory`
 

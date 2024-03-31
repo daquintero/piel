@@ -38,43 +38,43 @@ Functions
 
 
 
-.. py:function:: check_path_exists(path: piel.config.piel_path_types, raise_errors: bool = False) -> bool
+.. py:function:: check_path_exists(path: piel.types.PathTypes, raise_errors: bool = False) -> bool
 
    Checks if a directory exists.
 
    :param path: Input path.
-   :type path: piel_path_types
+   :type path: PathTypes
 
    :returns: True if directory exists.
    :rtype: directory_exists(bool)
 
 
-.. py:function:: check_example_design(design_name: str = 'simple_design', designs_directory: piel.config.piel_path_types | None = None) -> bool
+.. py:function:: check_example_design(design_name: str = 'simple_design', designs_directory: piel.types.PathTypes | None = None) -> bool
 
    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
    :param design_name: Name of the design to check.
    :type design_name: str
    :param designs_directory: Directory that contains the DESIGNS environment flag.
-   :type designs_directory: piel_path_types
+   :type designs_directory: PathTypes
    :param # TODO:
 
    :returns: None
 
 
-.. py:function:: copy_source_folder(source_directory: piel.config.piel_path_types, target_directory: piel.config.piel_path_types) -> None
+.. py:function:: copy_source_folder(source_directory: piel.types.PathTypes, target_directory: piel.types.PathTypes) -> None
 
    Copies the files from a source_directory to a target_directory
 
    :param source_directory: Source directory.
-   :type source_directory: piel_path_types
+   :type source_directory: PathTypes
    :param target_directory: Target directory.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
 
    :returns: None
 
 
-.. py:function:: copy_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design', target_directory: piel.config.piel_path_types = None, target_project_name: Optional[str] = None) -> None
+.. py:function:: copy_example_design(project_source: Literal[piel, openlane] = 'piel', example_name: str = 'simple_design', target_directory: piel.types.PathTypes = None, target_project_name: Optional[str] = None) -> None
 
    We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
@@ -83,7 +83,7 @@ Functions
    :param example_name: Name of the example design.
    :type example_name: str
    :param target_directory: Target directory.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param target_project_name: Name of the target project.
    :type target_project_name: str
 
@@ -120,7 +120,7 @@ Functions
    :returns: None
 
 
-.. py:function:: delete_path_list_in_directory(directory_path: piel.config.piel_path_types, path_list: list, ignore_confirmation: bool = False, validate_individual: bool = False) -> None
+.. py:function:: delete_path_list_in_directory(directory_path: piel.types.PathTypes, path_list: list, ignore_confirmation: bool = False, validate_individual: bool = False) -> None
 
    Deletes a list of files in a directory.
 
@@ -133,7 +133,7 @@ Functions
    ```
 
    :param directory_path: Input path.
-   :type directory_path: piel_path_types
+   :type directory_path: PathTypes
    :param path_list: List of files.
    :type path_list: list
    :param ignore_confirmation: Ignore confirmation. Default: False.
@@ -144,7 +144,7 @@ Functions
    :returns: None
 
 
-.. py:function:: get_files_recursively_in_directory(path: piel.config.piel_path_types, extension: str = '*')
+.. py:function:: get_files_recursively_in_directory(path: piel.types.PathTypes, extension: str = '*')
 
    Returns a list of files in a directory.
 
@@ -153,7 +153,7 @@ Functions
        get_files_recursively_in_directory('path/to/directory', 'extension')
 
    :param path: Input path.
-   :type path: piel_path_types
+   :type path: PathTypes
    :param extension: File extension.
    :type extension: str
 
@@ -161,7 +161,7 @@ Functions
    :rtype: file_list(list)
 
 
-.. py:function:: get_id_map_directory_dictionary(path_list: list[piel.config.piel_path_types], target_prefix: str)
+.. py:function:: get_id_map_directory_dictionary(path_list: list[piel.types.PathTypes], target_prefix: str)
 
    Returns a dictionary of ids to directories.
 
@@ -170,7 +170,7 @@ Functions
        get_id_to_directory_dictionary(path_list, target_prefix)
 
    :param path_list: List of paths.
-   :type path_list: list[piel_path_types]
+   :type path_list: list[PathTypes]
    :param target_prefix: Target prefix.
    :type target_prefix: str
 
@@ -180,15 +180,15 @@ Functions
 
 .. py:function:: get_top_level_script_directory() -> pathlib.Path
 
-   Returns the top level script directory whenever this file is run. This is useful when we want to know the
-   location of the script that is being executed at the top level, maybe in order to create relative directories of
-   find relevant files.
+   Attempts to return the top-level script directory when this file is run,
+   compatible with various execution environments like Jupyter Lab, pytest, PDM, etc.
+   TODO run full verification.
 
    :returns: Top level script directory.
    :rtype: top_level_script_directory(pathlib.Path)
 
 
-.. py:function:: list_prefix_match_directories(output_directory: piel.config.piel_path_types, target_prefix: str)
+.. py:function:: list_prefix_match_directories(output_directory: piel.types.PathTypes, target_prefix: str)
 
    Returns a list of directories that match a prefix.
 
@@ -197,7 +197,7 @@ Functions
        list_prefix_match_directories('path/to/directory', 'prefix')
 
    :param output_directory: Output directory.
-   :type output_directory: piel_path_types
+   :type output_directory: PathTypes
    :param target_prefix: Target prefix.
    :type target_prefix: str
 
@@ -205,7 +205,7 @@ Functions
    :rtype: matching_dirs(list)
 
 
-.. py:function:: permit_script_execution(script_path: piel.config.piel_path_types) -> None
+.. py:function:: permit_script_execution(script_path: piel.types.PathTypes) -> None
 
    Permits the execution of a script.
 
@@ -214,12 +214,12 @@ Functions
        permit_script_execution('path/to/script')
 
    :param script_path: Script path.
-   :type script_path: piel_path_types
+   :type script_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: permit_directory_all(directory_path: piel.config.piel_path_types) -> None
+.. py:function:: permit_directory_all(directory_path: piel.types.PathTypes) -> None
 
    Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
 
@@ -228,12 +228,12 @@ Functions
        permit_directory_all('path/to/directory')
 
    :param directory_path: Input path.
-   :type directory_path: piel_path_types
+   :type directory_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: read_json(path: piel.config.piel_path_types) -> dict
+.. py:function:: read_json(path: piel.types.PathTypes) -> dict
 
    Reads a JSON file.
 
@@ -242,13 +242,13 @@ Functions
        read_json('path/to/file.json')
 
    :param path: Input path.
-   :type path: piel_path_types
+   :type path: PathTypes
 
    :returns: JSON data.
    :rtype: json_data(dict)
 
 
-.. py:function:: rename_file(match_file_path: piel.config.piel_path_types, renamed_file_path: piel.config.piel_path_types) -> None
+.. py:function:: rename_file(match_file_path: piel.types.PathTypes, renamed_file_path: piel.types.PathTypes) -> None
 
    Renames a file.
 
@@ -257,14 +257,14 @@ Functions
        rename_file('path/to/match_file', 'path/to/renamed_file')
 
    :param match_file_path: Input path.
-   :type match_file_path: piel_path_types
+   :type match_file_path: PathTypes
    :param renamed_file_path: Input path.
-   :type renamed_file_path: piel_path_types
+   :type renamed_file_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: rename_files_in_directory(target_directory: piel.config.piel_path_types, match_string: str, renamed_string: str) -> None
+.. py:function:: rename_files_in_directory(target_directory: piel.types.PathTypes, match_string: str, renamed_string: str) -> None
 
    Renames all files in a directory.
 
@@ -273,7 +273,7 @@ Functions
        rename_files_in_directory('path/to/directory', 'match_string', 'renamed_string')
 
    :param target_directory: Input path.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param match_string: String to match.
    :type match_string: str
    :param renamed_string: String to replace.
@@ -282,7 +282,7 @@ Functions
    :returns: None
 
 
-.. py:function:: replace_string_in_file(file_path: piel.config.piel_path_types, match_string: str, replace_string: str)
+.. py:function:: replace_string_in_file(file_path: piel.types.PathTypes, match_string: str, replace_string: str)
 
    Replaces a string in a file.
 
@@ -291,7 +291,7 @@ Functions
        replace_string_in_file('path/to/file', 'match_string', 'replace_string')
 
    :param file_path: Input path.
-   :type file_path: piel_path_types
+   :type file_path: PathTypes
    :param match_string: String to match.
    :type match_string: str
    :param replace_string: String to replace.
@@ -300,7 +300,7 @@ Functions
    :returns: None
 
 
-.. py:function:: replace_string_in_directory_files(target_directory: piel.config.piel_path_types, match_string: str, replace_string: str)
+.. py:function:: replace_string_in_directory_files(target_directory: piel.types.PathTypes, match_string: str, replace_string: str)
 
    Replaces a string in all files in a directory.
 
@@ -309,7 +309,7 @@ Functions
        replace_string_in_directory_files('path/to/directory', 'match_string', 'replace_string')
 
    :param target_directory: Input path.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param match_string: String to match.
    :type match_string: str
    :param replace_string: String to replace.
@@ -318,7 +318,7 @@ Functions
    :returns: None
 
 
-.. py:function:: return_path(input_path: piel.config.piel_path_types, as_piel_module: bool = False) -> pathlib.Path
+.. py:function:: return_path(input_path: piel.types.PathTypes, as_piel_module: bool = False) -> pathlib.Path
 
    Returns a pathlib.Path to be able to perform operations accordingly internally.
 
@@ -337,22 +337,22 @@ Functions
    :rtype: pathlib.Path
 
 
-.. py:function:: run_script(script_path: piel.config.piel_path_types) -> None
+.. py:function:: run_script(script_path: piel.types.PathTypes) -> None
 
    Runs a script on the filesystem `script_path`.
 
    :param script_path: Script path.
-   :type script_path: piel_path_types
+   :type script_path: PathTypes
 
    :returns: None
 
 
-.. py:function:: write_file(directory_path: piel.config.piel_path_types, file_text: str, file_name: str) -> None
+.. py:function:: write_file(directory_path: piel.types.PathTypes, file_text: str, file_name: str) -> None
 
    Records a `script_name` in the `scripts` project directory.
 
    :param directory_path: Design directory.
-   :type directory_path: piel_path_types
+   :type directory_path: PathTypes
    :param file_text: Script to write.
    :type file_text: str
    :param file_name: Name of the script.

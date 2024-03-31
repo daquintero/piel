@@ -25,6 +25,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python =  ">=3.10,<3.12"
+pydantic = "^1"
 amaranth = "0.4.0"
 amaranth-yosys = "0.35.0.0.post81"
 cython = "0.29.21"

@@ -54,7 +54,7 @@ Functions
    :returns: Generated amaranth module.
 
 
-.. py:function:: generate_verilog_from_amaranth(amaranth_module: amaranth.Elaboratable, ports_list: list[str], target_file_name: str, target_directory: piel.config.piel_path_types, backend=verilog) -> None
+.. py:function:: generate_verilog_from_amaranth(amaranth_module: amaranth.Elaboratable, ports_list: list[str], target_file_name: str, target_directory: piel.types.PathTypes, backend=verilog) -> None
 
    This function exports an amaranth module to either a defined path, or a project structure in the form of an
    imported multi-design module.
@@ -68,14 +68,14 @@ Functions
    :param target_file_name: Target file name.
    :type target_file_name: str
    :param target_directory: Target directory PATH.
-   :type target_directory: piel_path_types
+   :type target_directory: PathTypes
    :param backend: Backend to use. Defaults to ``verilog``.
    :type backend: amaranth.back.verilog
 
    :returns: None
 
 
-.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.config.piel_path_types, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
+.. py:function:: verify_truth_table(truth_table_amaranth_module: amaranth.Elaboratable, truth_table_dictionary: dict, inputs: list, outputs: list, vcd_file_name: str, target_directory: piel.types.PathTypes, implementation_type: Literal[combinatorial, sequential, memory] = 'combinatorial')
 
    We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
 
