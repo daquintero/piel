@@ -16,7 +16,7 @@ from ..tools.openlane.defaults import (
     test_basic_open_lane_configuration_v1,
     test_basic_open_lane_configuration_v2,
 )
-from ..types import piel_path_types
+from ..types import PathTypes
 
 __all__ = ["layout_amaranth_truth_table_through_openlane"]
 
@@ -25,7 +25,7 @@ def layout_openlane_from_truth_table(
     truth_table: dict,
     inputs: list[str],
     outputs: list[str],
-    parent_directory: piel_path_types,
+    parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v2",
     **kwargs
@@ -48,7 +48,7 @@ def layout_amaranth_truth_table_through_openlane(
     amaranth_module: am.Module,
     inputs_name_list: list[str],
     outputs_name_list: list[str],
-    parent_directory: piel_path_types,
+    parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v2",
     **kwargs
@@ -71,7 +71,7 @@ def layout_amaranth_truth_table_through_openlane(
         amaranth_module (amaranth.Module): Amaranth module class.
         inputs_name_list (list[str]): List of input names.
         outputs_name_list (list[str]): List of output names.
-        parent_directory (piel_path_types): Parent directory PATH.
+        parent_directory (PathTypes): Parent directory PATH.
         target_directory_name (Optional[str]): Target directory name. If none is provided, it will default to the name of the amaranth elaboratable class.
         openlane_version (Literal["v1", "v2"]): OpenLane version. Defaults to ``v1``.
 

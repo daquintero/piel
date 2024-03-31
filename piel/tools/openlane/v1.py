@@ -14,7 +14,7 @@ from piel.file_system import (
     run_script,
     write_file,
 )
-from ...types import piel_path_types
+from ...types import PathTypes
 
 __all__ = [
     "check_config_json_exists_openlane_v1",
@@ -314,7 +314,7 @@ def read_configuration_openlane_v1(
 
 def write_configuration_openlane_v1(
     configuration: dict,
-    design_directory: piel_path_types,
+    design_directory: PathTypes,
 ) -> None:
     """
     Writes a `config.json` onto a `design_directory`

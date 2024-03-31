@@ -6,7 +6,7 @@ It is worth noting that GDSFactory has already the following PDKs installed:
 * GF180nm https://gdsfactory.github.io/gf180/
 """
 import gdsfactory as gf
-from ..types import piel_path_types
+from ..types import PathTypes
 from ..file_system import check_path_exists
 from piel.tools.openlane.migrate import get_design_from_openlane_migration
 from piel.tools.openlane import find_latest_design_run, get_gds_path_from_design_run
@@ -16,7 +16,7 @@ __all__ = ["create_gdsfactory_component_from_openlane"]
 
 def create_gdsfactory_component_from_openlane(
     design_name_v1: str | None = None,
-    design_directory: piel_path_types | None = None,
+    design_directory: PathTypes | None = None,
     run_name: str | None = None,
     v1: bool = True,
 ) -> gf.Component:
@@ -27,7 +27,7 @@ def create_gdsfactory_component_from_openlane(
 
     Args:
         design_name_v1(str): Design name of the v1 design that can be found within `$OPENLANE_ROOT/"<latest>"/designs`.
-        design_directory(piel_path_types): Design directory PATH.
+        design_directory(PathTypes): Design directory PATH.
         run_name(str): Name of the run to extract the GDS from. If None, it will look at the latest run.
         v1(bool): If True, it will import the design from the OpenLane v1 configuration.
 

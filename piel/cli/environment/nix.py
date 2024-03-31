@@ -74,7 +74,7 @@ def install_and_configure_nix():
 
 
 def update_openlane_directory(
-    directory: piel.piel_path_types = default_openlane2_directory,
+    directory: piel.PathTypes = default_openlane2_directory,
     branch: str = "main",
 ):
     """

@@ -3,7 +3,7 @@ This file contains a range of functions used to read, plot and analyse cocotb si
 """
 import functools
 import pandas as pd
-from piel.types import piel_path_types
+from piel.types import PathTypes
 from piel.file_system import return_path, get_files_recursively_in_directory
 
 __all__ = [
@@ -19,14 +19,14 @@ get_simulation_output_files = functools.partial(
 
 
 def get_simulation_output_files_from_design(
-    design_directory: piel_path_types,
+    design_directory: PathTypes,
     extension: str = "csv",
 ):
     """
     This function returns a list of all the simulation output files in the design directory.
 
     Args:
-        design_directory (piel_path_types): The path to the design directory.
+        design_directory (PathTypes): The path to the design directory.
 
     Returns:
         output_files (list): List of all the simulation output files in the design directory.
@@ -38,12 +38,12 @@ def get_simulation_output_files_from_design(
     return output_files
 
 
-def read_simulation_data(file_path: piel_path_types):
+def read_simulation_data(file_path: PathTypes):
     """
     This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
 
     Args:
-        file_path (piel_path_types): The path to the simulation data file.
+        file_path (PathTypes): The path to the simulation data file.
 
     Returns:
         simulation_data (pd.DataFrame): The simulation data in a Pandas dataframe.

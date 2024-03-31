@@ -118,6 +118,15 @@ develop = [
     "watchdog"
 ]
 
+[[tool.poetry.source]]
+name = "pypi"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "jaxsource"
+url = "https://storage.googleapis.com/jax-releases/jax_releases.html"
+priority = "supplemental"
+
 [tool.poetry.scripts]
 piel = "piel.cli:main"
 poetry = "poetry.console.application:main"

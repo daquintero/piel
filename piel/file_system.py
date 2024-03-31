@@ -10,7 +10,7 @@ import stat
 import subprocess
 import types
 from typing import Literal, Optional
-from .types import piel_path_types
+from .types import PathTypes
 
 __all__ = [
     "check_path_exists",
@@ -39,14 +39,14 @@ __all__ = [
 
 
 def check_path_exists(
-    path: piel_path_types,
+    path: PathTypes,
     raise_errors: bool = False,
 ) -> bool:
     """
     Checks if a directory exists.
 
     Args:
-        path(piel_path_types): Input path.
+        path(PathTypes): Input path.
 
     Returns:
         directory_exists(bool): True if directory exists.
@@ -63,14 +63,14 @@ def check_path_exists(
 
 def check_example_design(
     design_name: str = "simple_design",
-    designs_directory: piel_path_types | None = None,
+    designs_directory: PathTypes | None = None,
 ) -> bool:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
     Args:
         design_name(str): Name of the design to check.
-        designs_directory(piel_path_types): Directory that contains the DESIGNS environment flag.
+        designs_directory(PathTypes): Directory that contains the DESIGNS environment flag.
         # TODO
 
     Returns:
@@ -86,15 +86,15 @@ def check_example_design(
 
 
 def copy_source_folder(
-    source_directory: piel_path_types,
-    target_directory: piel_path_types,
+    source_directory: PathTypes,
+    target_directory: PathTypes,
 ) -> None:
     """
     Copies the files from a source_directory to a target_directory
 
     Args:
-        source_directory(piel_path_types): Source directory.
-        target_directory(piel_path_types): Target directory.
+        source_directory(PathTypes): Source directory.
+        target_directory(PathTypes): Target directory.
 
     Returns:
         None
@@ -127,7 +127,7 @@ def copy_source_folder(
 def copy_example_design(
     project_source: Literal["piel", "openlane"] = "piel",
     example_name: str = "simple_design",
-    target_directory: piel_path_types = None,
+    target_directory: PathTypes = None,
     target_project_name: Optional[str] = None,
 ) -> None:
     """
@@ -136,7 +136,7 @@ def copy_example_design(
     Args:
         project_source(str): Source of the project.
         example_name(str): Name of the example design.
-        target_directory(piel_path_types): Target directory.
+        target_directory(PathTypes): Target directory.
         target_project_name(str): Name of the target project.
 
     Returns:
@@ -184,13 +184,13 @@ def copy_example_design(
 
 
 def convert_list_to_path_list(
-    input_list: list[piel_path_types],
+    input_list: list[PathTypes],
 ) -> list[pathlib.Path]:
     """
     Converts a list of strings or pathlib.Path to a list of pathlib.Path.
 
     Args:
-        input_list(list[piel_path_types]): Input list.
+        input_list(list[PathTypes]): Input list.
 
     Returns:
         output_list(list[pathlib.Path]): Output list.
@@ -270,7 +270,7 @@ def delete_path(path: str | pathlib.Path) -> None:
 
 
 def delete_path_list_in_directory(
-    directory_path: piel_path_types,
+    directory_path: PathTypes,
     path_list: list,
     ignore_confirmation: bool = False,
     validate_individual: bool = False,
@@ -287,7 +287,7 @@ def delete_path_list_in_directory(
     ```
 
     Args:
-        directory_path(piel_path_types): Input path.
+        directory_path(PathTypes): Input path.
         path_list(list): List of files.
         ignore_confirmation(bool): Ignore confirmation. Default: False.
         validate_individual(bool): Validate individual files. Default: False.
@@ -326,7 +326,7 @@ def delete_path_list_in_directory(
 
 
 def get_files_recursively_in_directory(
-    path: piel_path_types,
+    path: PathTypes,
     extension: str = "*",
 ):
     """
@@ -337,7 +337,7 @@ def get_files_recursively_in_directory(
         get_files_recursively_in_directory('path/to/directory', 'extension')
 
     Args:
-        path(piel_path_types): Input path.
+        path(PathTypes): Input path.
         extension(str): File extension.
 
     Returns:
@@ -352,7 +352,7 @@ def get_files_recursively_in_directory(
 
 
 def get_id_map_directory_dictionary(
-    path_list: list[piel_path_types], target_prefix: str
+    path_list: list[PathTypes], target_prefix: str
 ):
     """
     Returns a dictionary of ids to directories.
@@ -362,7 +362,7 @@ def get_id_map_directory_dictionary(
         get_id_to_directory_dictionary(path_list, target_prefix)
 
     Args:
-        path_list(list[piel_path_types]): List of paths.
+        path_list(list[PathTypes]): List of paths.
         target_prefix(str): Target prefix.
 
     Returns:
@@ -419,7 +419,7 @@ def get_top_level_script_directory() -> pathlib.Path:
 
 
 def list_prefix_match_directories(
-    output_directory: piel_path_types,
+    output_directory: PathTypes,
     target_prefix: str,
 ):
     """
@@ -430,7 +430,7 @@ def list_prefix_match_directories(
         list_prefix_match_directories('path/to/directory', 'prefix')
 
     Args:
-        output_directory(piel_path_types): Output directory.
+        output_directory(PathTypes): Output directory.
         target_prefix(str): Target prefix.
 
     Returns:
@@ -447,7 +447,7 @@ def list_prefix_match_directories(
     return matching_directories
 
 
-def permit_script_execution(script_path: piel_path_types) -> None:
+def permit_script_execution(script_path: PathTypes) -> None:
     """
     Permits the execution of a script.
 
@@ -456,7 +456,7 @@ def permit_script_execution(script_path: piel_path_types) -> None:
         permit_script_execution('path/to/script')
 
     Args:
-        script_path(piel_path_types): Script path.
+        script_path(PathTypes): Script path.
 
     Returns:
         None
@@ -465,7 +465,7 @@ def permit_script_execution(script_path: piel_path_types) -> None:
     script.chmod(script.stat().st_mode | stat.S_IEXEC)
 
 
-def permit_directory_all(directory_path: piel_path_types) -> None:
+def permit_directory_all(directory_path: PathTypes) -> None:
     """
     Permits a directory to be read, written and executed. Use with care as it can be a source for security issues.
 
@@ -474,7 +474,7 @@ def permit_directory_all(directory_path: piel_path_types) -> None:
         permit_directory_all('path/to/directory')
 
     Args:
-        directory_path(piel_path_types): Input path.
+        directory_path(PathTypes): Input path.
 
     Returns:
         None
@@ -492,7 +492,7 @@ def permit_directory_all(directory_path: piel_path_types) -> None:
         )
 
 
-def read_json(path: piel_path_types) -> dict:
+def read_json(path: PathTypes) -> dict:
     """
     Reads a JSON file.
 
@@ -501,7 +501,7 @@ def read_json(path: piel_path_types) -> dict:
         read_json('path/to/file.json')
 
     Args:
-        path(piel_path_types): Input path.
+        path(PathTypes): Input path.
 
     Returns:
         json_data(dict): JSON data.
@@ -513,8 +513,8 @@ def read_json(path: piel_path_types) -> dict:
 
 
 def rename_file(
-    match_file_path: piel_path_types,
-    renamed_file_path: piel_path_types,
+    match_file_path: PathTypes,
+    renamed_file_path: PathTypes,
 ) -> None:
     """
     Renames a file.
@@ -524,8 +524,8 @@ def rename_file(
         rename_file('path/to/match_file', 'path/to/renamed_file')
 
     Args:
-        match_file_path(piel_path_types): Input path.
-        renamed_file_path(piel_path_types): Input path.
+        match_file_path(PathTypes): Input path.
+        renamed_file_path(PathTypes): Input path.
 
     Returns:
         None
@@ -536,7 +536,7 @@ def rename_file(
 
 
 def rename_files_in_directory(
-    target_directory: piel_path_types,
+    target_directory: PathTypes,
     match_string: str,
     renamed_string: str,
 ) -> None:
@@ -548,7 +548,7 @@ def rename_files_in_directory(
         rename_files_in_directory('path/to/directory', 'match_string', 'renamed_string')
 
     Args:
-        target_directory(piel_path_types): Input path.
+        target_directory(PathTypes): Input path.
         match_string(str): String to match.
         renamed_string(str): String to replace.
 
@@ -564,7 +564,7 @@ def rename_files_in_directory(
 
 
 def replace_string_in_file(
-    file_path: piel_path_types,
+    file_path: PathTypes,
     match_string: str,
     replace_string: str,
 ):
@@ -576,7 +576,7 @@ def replace_string_in_file(
         replace_string_in_file('path/to/file', 'match_string', 'replace_string')
 
     Args:
-        file_path(piel_path_types): Input path.
+        file_path(PathTypes): Input path.
         match_string(str): String to match.
         replace_string(str): String to replace.
 
@@ -598,7 +598,7 @@ def replace_string_in_file(
 
 
 def replace_string_in_directory_files(
-    target_directory: piel_path_types,
+    target_directory: PathTypes,
     match_string: str,
     replace_string: str,
 ):
@@ -610,7 +610,7 @@ def replace_string_in_directory_files(
         replace_string_in_directory_files('path/to/directory', 'match_string', 'replace_string')
 
     Args:
-        target_directory(piel_path_types): Input path.
+        target_directory(PathTypes): Input path.
         match_string(str): String to match.
         replace_string(str): String to replace.
 
@@ -624,7 +624,7 @@ def replace_string_in_directory_files(
 
 
 def return_path(
-    input_path: piel_path_types,
+    input_path: PathTypes,
     as_piel_module: bool = False,
 ) -> pathlib.Path:
     """
@@ -697,12 +697,12 @@ def return_path(
     return output_path
 
 
-def run_script(script_path: piel_path_types) -> None:
+def run_script(script_path: PathTypes) -> None:
     """
     Runs a script on the filesystem `script_path`.
 
     Args:
-        script_path(piel_path_types): Script path.
+        script_path(PathTypes): Script path.
 
     Returns:
         None
@@ -712,7 +712,7 @@ def run_script(script_path: piel_path_types) -> None:
 
 
 def write_file(
-    directory_path: piel_path_types,
+    directory_path: PathTypes,
     file_text: str,
     file_name: str,
 ) -> None:
@@ -720,7 +720,7 @@ def write_file(
     Records a `script_name` in the `scripts` project directory.
 
     Args:
-        directory_path(piel_path_types): Design directory.
+        directory_path(PathTypes): Design directory.
         file_text(str): Script to write.
         file_name(str): Name of the script.
 

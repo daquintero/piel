@@ -5,6 +5,7 @@ import pathlib
 # Libraries
 from piel import models  # NOQA: F401
 from piel import visual  # NOQA: F401
+from piel import materials # NOQA: F401
 
 # Functions
 

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from typing import Literal, Optional
 import vlsirtools.spice as vsp
-from ...types import piel_path_types
+from ...types import PathTypes
 from ...file_system import return_path
 
 __all__ = [
@@ -16,13 +16,13 @@ __all__ = [
 
 
 def configure_ngspice_simulation(
-    run_directory: piel_path_types = ".",
+    run_directory: PathTypes = ".",
 ):
     """
     This function configures the NGSPICE simulation for the circuit and returns a simulation class.
 
     Args:
-        run_directory (piel_path_types): Directory where the simulation will be run
+        run_directory (PathTypes): Directory where the simulation will be run
 
     Returns:
         simulation_options: Configured NGSPICE simulation options
@@ -91,13 +91,13 @@ def configure_transient_simulation(
 
 
 def save_results_to_csv(
-    results: hs.SimResult, file_name: str, save_directory: piel_path_types = "."
+    results: hs.SimResult, file_name: str, save_directory: PathTypes = "."
 ):
     """
     This function converts the simulation results to a pandas dataframe and saves it to a csv file.
 
     Args:
-        directory (piel_path_types): Directory where the simulation will be run
+        directory (PathTypes): Directory where the simulation will be run
     """
 
     save_directory = return_path(save_directory)

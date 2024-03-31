@@ -6,9 +6,13 @@ The numerical solver is jax and is imported throughout the module.
 import os
 import pathlib
 import types
+import numpy as np
+import jax.numpy as jnp
 
 __all__ = [
-    "piel_path_types",
+    "ArrayTypes",
+    "PathTypes",
 ]
 
-piel_path_types = str | pathlib.Path | os.PathLike | types.ModuleType
+PathTypes = str | pathlib.Path | os.PathLike | types.ModuleType
+ArrayTypes = np.ndarray | jnp.ndarray
