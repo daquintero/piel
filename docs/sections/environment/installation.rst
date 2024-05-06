@@ -43,6 +43,12 @@ Once you have a copy of the source, you can install it with:
 
    $ pip install -e .
 
+You can install our exact supported dependencies in a poetry-managed environment by:
+
+.. code:: console
+
+   $ poetry instal
+
 Developer’s Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -53,7 +59,7 @@ documentation, and full environment:
 
    mamba install pandoc
    mamba install jupyterlab jupytext
-   pip install -r requirements_dev.txt
+   poetry install -E dev
 
 Usage
 -----

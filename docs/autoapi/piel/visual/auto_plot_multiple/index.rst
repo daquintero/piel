@@ -18,18 +18,26 @@ Functions
 
 
 
-.. py:function:: plot_simple(x_data: numpy.array, y_data: numpy.array, ylabel: str, xlabel: str)
+.. py:function:: plot_simple(x_data: numpy.array, y_data: numpy.array, label: str | None = None, ylabel: str | None = None, xlabel: str | None = None, fig: matplotlib.pyplot.Figure | None = None, ax: matplotlib.pyplot.Axes | None = None, *args, **kwargs)
 
-   Plot a simple line graph.
+   Plot a simple line graph. The desire of this function is just to abstract the most basic data representation whilst
+   keeping the flexibility of the matplotlib library. The goal would be as well that more complex data plots can be
+   constructed from a set of these methods.
 
    :param x_data: X axis data.
    :type x_data: np.array
    :param y_data: Y axis data.
    :type y_data: np.array
-   :param ylabel: Y axis label.
-   :type ylabel: str
-   :param xlabel: X axis label.
-   :type xlabel: str
+   :param label: Label for the plot. Defaults to None.
+   :type label: str, optional
+   :param ylabel: Y axis label. Defaults to None.
+   :type ylabel: str, optional
+   :param xlabel: X axis label. Defaults to None.
+   :type xlabel: str, optional
+   :param fig: Matplotlib figure. Defaults to None.
+   :type fig: plt.Figure, optional
+   :param ax: Matplotlib axes. Defaults to None.
+   :type ax: plt.Axes, optional
 
    :returns: Matplotlib plot.
    :rtype: plt

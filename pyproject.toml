@@ -83,7 +83,7 @@ tox = {version="*", optional = true}
 watchdog = {version="*", optional = true}
 
 [tool.poetry.extras]
-develop = [
+dev = [
     "pytest",
     "sphinx",
     "sphinx-autodoc-typehints",

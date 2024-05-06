@@ -16,7 +16,8 @@ def develop():
 def build_documentation(args=None):
     """Verifies and builds the documentation."""
     # Runs the documentation build from the poetry environment
-    echo_and_check_subprocess(["poetry", "run", "python", "-m", "sphinx", "docs/", "_docs/"])
+    # TODO fix this so it runs from poetry.
+    echo_and_check_subprocess(["python", "-m", "sphinx", "docs/", "_docs/"])
     return 0
 
 
