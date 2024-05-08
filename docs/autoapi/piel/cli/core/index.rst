@@ -20,5 +20,3 @@ Functions
 .. py:function:: get_piel_install_directory()
 
    Gets the piel installation directory.
-
-

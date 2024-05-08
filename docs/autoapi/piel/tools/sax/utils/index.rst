@@ -162,6 +162,3 @@ Attributes
 
 
 .. py:data:: snet
-
-   
-

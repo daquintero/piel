@@ -2,5 +2,3 @@
 ==============================================
 
 .. py:module:: piel.models.physical.opto_electronic
-
-

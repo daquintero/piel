@@ -43,5 +43,3 @@ Functions
 
    :returns: GDSFactory component.
    :rtype: component(gf.Component)
-
-

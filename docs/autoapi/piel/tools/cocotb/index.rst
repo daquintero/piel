@@ -101,7 +101,7 @@ Attributes
 
 .. py:data:: delete_simulation_output_files
 
-   
+
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
@@ -119,7 +119,7 @@ Attributes
 
 .. py:data:: get_simulation_output_files
 
-   
+
 
 .. py:function:: get_simulation_output_files_from_design(design_directory: piel.types.PathTypes, extension: str = 'csv')
 
@@ -144,5 +144,3 @@ Attributes
 
 
 .. py:function:: simple_plot_simulation_data(simulation_data: pandas.DataFrame)
-
-

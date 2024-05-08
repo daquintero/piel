@@ -21,5 +21,3 @@ Submodules
    :maxdepth: 1
 
    silicon/index.rst
-
-

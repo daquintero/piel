@@ -23,5 +23,3 @@ Functions
 
 
 .. py:function:: coupler(coupling=0.5)
-
-

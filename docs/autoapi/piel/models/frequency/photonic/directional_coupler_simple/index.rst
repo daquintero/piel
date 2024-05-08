@@ -23,5 +23,3 @@ Functions
 
 
 .. py:function:: directional_coupler(coupling=0.5)
-
-

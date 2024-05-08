@@ -281,15 +281,15 @@ Attributes
 
 .. py:data:: array_types
 
-   
+
 
 .. py:data:: tuple_int_type
 
-   
+
 
 .. py:data:: package_array_types
 
-   
+
 
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
 
@@ -326,5 +326,3 @@ Attributes
    :type output_array_type: array_types, optional
 
    Returns:
-
-

@@ -9,7 +9,7 @@ SAX compiled circuit.
 import copy
 import networkx as nx
 from sax.circuit import (
-    create_dag,
+    # create_dag, # TODO upgrade
     _ensure_recursive_netlist_dict,
     remove_unused_instances,
     _extract_instance_models,

@@ -244,5 +244,3 @@ Functions
    instance including connectivity except for the ID.
 
    # TODO implement validators
-
-

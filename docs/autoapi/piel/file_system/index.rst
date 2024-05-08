@@ -359,5 +359,3 @@ Functions
    :type file_name: str
 
    :returns: None
-
-

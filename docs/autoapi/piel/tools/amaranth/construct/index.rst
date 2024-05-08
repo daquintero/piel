@@ -39,5 +39,3 @@ Functions
    :type implementation_type: Literal["combinatorial", "sequential", "memory"], optional
 
    :returns: Generated amaranth module.
-
-

@@ -36,15 +36,15 @@ Attributes
 
 .. py:data:: array_types
 
-   
+
 
 .. py:data:: tuple_int_type
 
-   
+
 
 .. py:data:: package_array_types
 
-   
+
 
 .. py:function:: convert_array_type(array: array_types, output_type: package_array_types)
 
@@ -81,5 +81,3 @@ Attributes
    :type output_array_type: array_types, optional
 
    Returns:
-
-

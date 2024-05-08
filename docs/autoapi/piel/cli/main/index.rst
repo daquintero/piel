@@ -21,5 +21,3 @@ Functions
 
    CLI Interface for piel There are available many helper commands to help you set up your
    environment and design your projects.
-
-

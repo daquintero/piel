@@ -59,5 +59,3 @@ Functions
 
    :returns: None.
    :rtype: None
-
-

@@ -28,8 +28,6 @@ Attributes
 .. py:data:: material_references
    :type: piel.materials.thermal_conductivity.types.MaterialReferencesTypes
 
-   
+
 
 .. py:function:: stainless_steel(temperature_range_K: piel.models.physical.types.TemperatureRangeTypes, material_reference: piel.materials.thermal_conductivity.types.MaterialReferenceType, *args, **kwargs)
-
-

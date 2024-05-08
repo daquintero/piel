@@ -33,5 +33,3 @@ Functions
 
    :returns: The heat transfer in watts for a 1D system.
    :rtype: float
-
-

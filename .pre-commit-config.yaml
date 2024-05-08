@@ -27,7 +27,7 @@ repos:
           - tomli
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "7c149cf0b9d2c4f7558de1ea5d2c137ca074d9d0"
+    rev: v0.4.4
     hooks:
       - id: ruff
 

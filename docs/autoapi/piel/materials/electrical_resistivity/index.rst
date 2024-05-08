@@ -2,5 +2,3 @@
 ===============================================
 
 .. py:module:: piel.materials.electrical_resistivity
-
-

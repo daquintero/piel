@@ -254,5 +254,3 @@ Functions
 .. py:function:: mu_psii_h(T, N_I_h)
 
    Calculate the phonon scattering and ionized impurity hole scattering mobility.
-
-

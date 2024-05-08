@@ -44,5 +44,3 @@ Functions
              - Transition energy.
              - Transition power consumption.
    :rtype: A tuple containing
-
-

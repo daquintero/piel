@@ -36,5 +36,3 @@ Functions
    :type backend: amaranth.back.verilog
 
    :returns: None
-
-

@@ -28,5 +28,3 @@ Functions
 
    :returns: Cross sectional area in meters squared.
    :rtype: float
-
-

@@ -132,4 +132,3 @@ module top (detector_in,
  sky130_fd_sc_hd__clkbuf_4 output4 (.A(net4),
     .X(phase_map_out[1]));
 endmodule
-

@@ -31,7 +31,7 @@ Attributes
 
 .. py:data:: default_openlane2_directory
 
-   
+
 
 .. py:function:: append_to_bashrc_if_does_not_exist(line: str)
 
@@ -79,5 +79,3 @@ Attributes
 
    :returns: The piel home directory.
    :rtype: pathlib.Path
-
-

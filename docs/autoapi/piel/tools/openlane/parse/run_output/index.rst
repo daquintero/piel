@@ -62,5 +62,3 @@ Functions
 
    :returns: List of all the .rpt files in the run directory.
    :rtype: power_sta_files_list (list)
-
-

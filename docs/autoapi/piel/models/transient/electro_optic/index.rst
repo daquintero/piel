@@ -2,5 +2,3 @@
 =============================================
 
 .. py:module:: piel.models.transient.electro_optic
-
-

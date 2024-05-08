@@ -20,5 +20,3 @@ Functions
 .. py:function:: environment()
 
    Environment related commands.
-
-

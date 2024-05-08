@@ -4,14 +4,12 @@ from ...models.physical.types import TemperatureRangeTypes
 
 __all__ = ["teflon", "material_references"]
 
-material_references: MaterialReferencesTypes = [("teflon", None), ]
+material_references: MaterialReferencesTypes = [
+    ("teflon", None),
+]
 
 
-def teflon(
-    temperature_range_K: TemperatureRangeTypes,
-    *args,
-    **kwargs
-):
+def teflon(temperature_range_K: TemperatureRangeTypes, *args, **kwargs):
     """
     Trade Names for FEP resins include DuPont Teflon™, Daikin Neoflon™, Dyneon Hostaflon™, NiFlon, Sinoflon.
     Source: https://trc.nist.gov/cryogenics/materials/Teflon/Teflon_rev.htm
@@ -23,7 +21,7 @@ def teflon(
 
     """
     thermal_conductivity_fit = 10 ** (
-        + 2.7380
+        +2.7380
         - 30.677 * jnp.log10(temperature_range_K)
         + 89.430 * (jnp.log10(temperature_range_K) ** 2)
         - 136.99 * (jnp.log10(temperature_range_K) ** 3)

@@ -71,38 +71,35 @@ Attributes
 
 .. py:data:: MaterialReferenceType
 
-   
+
 
 .. py:data:: MaterialReferencesTypes
 
-   
+
 
 .. py:data:: SpecificationType
 
-   
+
 
 .. py:data:: stainless_steel_material_references
    :type: piel.materials.thermal_conductivity.types.MaterialReferencesTypes
 
-   
+
 
 .. py:data:: aluminum_material_references
    :type: piel.materials.thermal_conductivity.types.MaterialReferencesTypes
 
-   
+
 
 .. py:data:: copper_material_references
    :type: piel.materials.thermal_conductivity.types.MaterialReferencesTypes
 
-   
+
 
 .. py:data:: teflon_material_references
    :type: piel.materials.thermal_conductivity.types.MaterialReferencesTypes
    :value: [('teflon', None)]
 
-   
+
 
 .. py:data:: material_references
-
-   
-
