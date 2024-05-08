@@ -25,7 +25,7 @@ def waveguide(wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0):
 
 
 def active_waveguide(
-        wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0, active_phase_rad=0.0
+    wl=1.55, wl0=1.55, neff=2.34, ng=3.4, length=10.0, loss=0.0, active_phase_rad=0.0
 ):
     dwl = wl - wl0
     dneff_dwl = (ng - neff) / wl0

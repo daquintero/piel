@@ -69,9 +69,7 @@ def create_setup_py(
     write_file(directory_path=design_directory, file_text=script, file_name="setup.py")
 
 
-def create_empty_piel_project(
-    project_name: str, parent_directory: PathTypes
-) -> None:
+def create_empty_piel_project(project_name: str, parent_directory: PathTypes) -> None:
     """
     This function creates an empty piel-structure project in the target directory. Structuring your files in this way
     enables the co-design and use of the tools supported by piel whilst maintaining the design flow ordered,

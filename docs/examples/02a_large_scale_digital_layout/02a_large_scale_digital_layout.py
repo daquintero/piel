@@ -122,6 +122,3 @@ print(end_sequential - start_sequential)
 # Sequential
 # 106.13592076301575
 # ```
-
-
-

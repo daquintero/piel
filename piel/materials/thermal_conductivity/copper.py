@@ -24,8 +24,11 @@ def copper(
     **kwargs
 ) -> ArrayTypes:
     specification = material_reference[1]
-    copper_thermal_conductivity_file = piel.return_path(
-        __file__).parent / "data" / "ofhc_copper_thermal_conductivity.csv"
+    copper_thermal_conductivity_file = (
+        piel.return_path(__file__).parent
+        / "data"
+        / "ofhc_copper_thermal_conductivity.csv"
+    )
     assert copper_thermal_conductivity_file.exists()
     thermal_conductivity_material_dataset = pd.read_csv(
         copper_thermal_conductivity_file
@@ -35,24 +38,30 @@ def copper(
     coefficients = {}
     for coeff in ["a", "b", "c", "d", "e", "f", "g", "h", "i"]:
         coefficients[coeff] = thermal_conductivity_material_dataset.loc[
-            thermal_conductivity_material_dataset["coefficient"] == coeff, specification].values[0]
+            thermal_conductivity_material_dataset["coefficient"] == coeff, specification
+        ].values[0]
 
     # Calculating thermal conductivity
-    numerator = (coefficients['a'] +
-                 coefficients['c'] * temperature_range_K ** 0.5 +
-                 coefficients['e'] * temperature_range_K +
-                 coefficients['g'] * temperature_range_K ** 1.5 +
-                 coefficients['i'] * temperature_range_K ** 2)
+    numerator = (
+        coefficients["a"]
+        + coefficients["c"] * temperature_range_K**0.5
+        + coefficients["e"] * temperature_range_K
+        + coefficients["g"] * temperature_range_K**1.5
+        + coefficients["i"] * temperature_range_K**2
+    )
 
-    denominator = (1 +
-                   coefficients['b'] * temperature_range_K ** 0.5 +
-                   coefficients['d'] * temperature_range_K +
-                   coefficients['f'] * temperature_range_K ** 1.5 +
-                   coefficients['h'] * temperature_range_K ** 2)
+    denominator = (
+        1
+        + coefficients["b"] * temperature_range_K**0.5
+        + coefficients["d"] * temperature_range_K
+        + coefficients["f"] * temperature_range_K**1.5
+        + coefficients["h"] * temperature_range_K**2
+    )
 
     thermal_conductivity_fit = numerator / denominator
 
     return thermal_conductivity_fit
+
 
 # if self.material_name == "copper":
 #     thermal_conductivity_material_dataset = pd.read_csv(
