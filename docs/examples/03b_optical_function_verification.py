@@ -25,7 +25,9 @@
 import functools
 from itertools import product
 import gdsfactory as gf
+import jax
 import jax.numpy as jnp
+import numpy as np
 import pandas as pd
 from piel import straight_heater_metal_simple
 import piel
@@ -33,7 +35,8 @@ import pprint as pp
 import sax
 import random
 
-random.seed(0)
+jax.random.key(0)
+np.random.seed(0)
 # -
 
 # ## Circuit Construction
@@ -251,6 +254,32 @@ target_verification_dataframe.equals(computed_verification_dataframe)
 # True
 # ```
 
-# One thing I have noticed is that depending on the random configuration of the runner, sometimes the cross and bar states invert on which phase they map. I need to see how to fix that within the computation, if it is even possible.
+# WARNING: One thing I have noticed is that depending on the random configuration of the runner, sometimes the cross and bar states invert on which phase they map. I need to see how to fix that within the computation, if it is even possible.
+
+# ## Further Analytical Modelling
+#
+# Let's consider how a switching network behaves symbolically. Say we have two switches in a chain, illustrated by this format:
+
+chain_mode_3 = np.array([['X', 0,],
+                         [0, 'X']])
+chain_mode_3_switch_position_list = piel.models.logic.photonic.compose_switch_position_list(
+    network=chain_mode_3
+)
+chain_mode_3, chain_mode_3_switch_position_list
+
+
+# Let's consider the "X" state can only have two possible states, cross and bar which are represented by the angle applied, (0 -> 0, bar) and (1 -> $\pi$, cross). 
+#
+# If we have a fock state `[[1], [0], [0]]` inputted onto the switch lattice, we want it to route out the photon accordingly at the bottom mode index 2, third waveguide. Accordingly, the top-most switch needs to cross and the bottom most needs to bar in order to achieve this function.
+#
+#
+# We can try a little analytical simulator accordingly. Each "switch" state gets replaced by a 2x2 transmission matrix for each specific state, and concatenated to build the correponding state of the system. 
+
+def a(
+    switch_network: list[list]
+    states: tuple = (0,1)
+):
+
+
 
 

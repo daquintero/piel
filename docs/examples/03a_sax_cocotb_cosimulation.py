@@ -414,7 +414,7 @@ recursive_composed_required_models
 #
 # So this tells us all the models that are recursively composed, but not inherently provided by our defaults library. These are the models we can explore.
 
-recursive_composed_required_models_0 = sax.get_required_circuit_models(
+recursive_composed_required_models_0 = piel.tools.sax.get_required_circuit_models(
     mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[0]],
     models=piel.models.frequency.get_default_models(),
 )
