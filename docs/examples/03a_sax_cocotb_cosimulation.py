@@ -9,6 +9,7 @@ import piel
 import sax
 import re
 from typing import Callable
+piel.visual.activate_piel_styles()
 
 # ## Active MZI 2x2 Phase Shifter
 
@@ -384,6 +385,10 @@ mixed_switch_lattice_circuit.plot_widget()
 # ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
 # ### Model Composition
+
+mixed_switch_lattice_circuit.get_netlist(
+    exclude_port_types="optical", allow_multiple=True
+)["ports"]
 
 mixed_switch_lattice_circuit_netlist = (
     mixed_switch_lattice_circuit.get_netlist_recursive(

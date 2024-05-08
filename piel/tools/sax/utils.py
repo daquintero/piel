@@ -4,6 +4,7 @@ This file provides a set of utilities that allow much easier integration between
 import jax.numpy as jnp
 import sax
 from ..gdsfactory.netlist import get_matched_ports_tuple_index
+from ...utils import round_complex_array
 from typing import Optional  # NOQA : F401
 
 __all__ = ["get_sdense_ports_index", "sax_to_s_parameters_standard_matrix", "snet"]
@@ -50,7 +51,10 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
 
 def sax_to_s_parameters_standard_matrix(
     sax_input: sax.SType,
-    input_ports_order: tuple | None = None,
+    input_ports_order: tuple[str] | None = None,
+    round_int: bool | None = None,
+    *args,
+    **kwargs
 ) -> tuple:
     """
     A ``sax`` S-parameter SDict is provided as a dictionary of tuples with (port0, port1) as the key. This
@@ -135,10 +139,12 @@ def sax_to_s_parameters_standard_matrix(
         \\end{bmatrix}
 
     TODO check with Floris, does this mean we need to transpose the matrix?
+    TODO document round_int
 
     Args:
         sax_input (sax.SType): The sax S-parameter dictionary.
         input_ports_order (tuple): The ports order tuple containing the names and order of the input ports.
+        round_int (bool): Whether to round the complex numbers to integers.
 
     Returns:
         tuple: The S-parameter matrix and the input ports index tuple in the standard S-parameter notation.
@@ -196,8 +202,15 @@ def sax_to_s_parameters_standard_matrix(
         :, input_ports_index_tuple_order_jax
     ].get()
     # Now we select the SDense rows that we care about after transposing the matrix.
-    # TODO verify matrix transpose for unitary match. I think it is right.
-    return s_parameters_standard_matrix.T, input_matched_ports_name_tuple_order
+
+    # TODO REMOVE: No need to transpose this was wrong before
+    # s_parameters_standard_matrix = s_parameters_standard_matrix.T
+
+    if round_int:
+        s_parameters_standard_matrix = round_complex_array(s_parameters_standard_matrix, **kwargs)
+
+    value = s_parameters_standard_matrix, input_matched_ports_name_tuple_order
+    return value
 
 
 snet = sax_to_s_parameters_standard_matrix

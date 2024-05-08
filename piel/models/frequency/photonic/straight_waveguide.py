@@ -43,13 +43,19 @@ def simple_straight(length=10.0, width=0.5):
 
 
 def lossless_straight():
+    """
+    See the 06a_analytical_mzm_model notebook for verification
+    """
     S = {("o1", "o2"): 1.0}  # we'll improve this model later!
     return sax.reciprocal(S)
 
 
 def ideal_lossless_active_waveguide(active_phase_rad=0.0):
+    """
+    See the 06a_analytical_mzm_model notebook for verification
+    """
     phase = active_phase_rad
-    amplitude = 1.0
-    transmission = amplitude * jnp.exp(1j * phase)
+    amplitude = 1
+    transmission = amplitude * jnp.exp(-1j * phase)
     S = sax.reciprocal({("o1", "o2"): transmission})
     return S
