@@ -2,7 +2,7 @@
 
 # We begin by importing a parametric circuit from `gdsfactory`:
 import gdsfactory as gf
-from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
+from piel.models.physical.photonic import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
 import numpy as np
 import jax.numpy as jnp
 import piel
@@ -15,8 +15,7 @@ piel.visual.activate_piel_styles()
 
 # First, let's look at our actively driven component:
 
-mzi2x2_2x2_phase_shifter().show()
-mzi2x2_2x2_phase_shifter().plot_widget()
+mzi2x2_2x2_phase_shifter()
 
 # ![mzi2x2_2x2_phase_shifter](../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
 
@@ -156,7 +155,7 @@ example_simple_simulation_data
 
 sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
 
-# ```['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_simple']```
+# ```['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_undercut']```
 
 # We have some basic models in `piel` we can use to compose our circuit
 
@@ -167,7 +166,7 @@ straight_heater_metal_simple = all_models["ideal_active_waveguide"]
 straight_heater_metal_simple
 
 our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
-    {"straight_heater_metal_simple": straight_heater_metal_simple}
+    {"straight_heater_metal_undercut": straight_heater_metal_simple}
 )
 our_custom_library
 
@@ -380,19 +379,20 @@ mixed_switch_lattice_circuit = gf.components.component_lattice_generic(
     network=example_component_lattice
 )
 # mixed_switch_circuit.show()
-mixed_switch_lattice_circuit.plot_widget()
+mixed_switch_lattice_circuit
 
 # ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
 # ### Model Composition
 
-mixed_switch_lattice_circuit.get_netlist(
+mixed_switch_lattice_circuit_netlist = mixed_switch_lattice_circuit.get_netlist(
     exclude_port_types="optical", allow_multiple=True
-)["ports"]
+)
+mixed_switch_lattice_circuit_netlist["ports"]
 
 mixed_switch_lattice_circuit_netlist = (
     mixed_switch_lattice_circuit.get_netlist_recursive(
-        exclude_port_types="electrical", allow_multiple=True
+        exclude_port_types="optical", allow_multiple=True
     )
 )
 mixed_switch_lattice_circuit_netlist.keys()
@@ -419,7 +419,7 @@ recursive_composed_required_models
 #
 # So this tells us all the models that are recursively composed, but not inherently provided by our defaults library. These are the models we can explore.
 
-recursive_composed_required_models_0 = sax.get_required_circuit_models(
+recursive_composed_required_models_0 = piel.tools.sax.get_required_circuit_models(
     mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[0]],
     models=piel.models.frequency.get_default_models(),
 )

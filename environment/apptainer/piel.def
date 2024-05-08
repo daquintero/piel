@@ -5,7 +5,7 @@ From: efabless/openlane
 %post
     yum -y update
     yum install -y bzip2 wget
-    
+
     # Install micromamba
     apt-get update && apt-get install -y wget
     wget -qO- https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
@@ -13,12 +13,12 @@ From: efabless/openlane
     mv bin/micromamba /opt/micromamba/micromamba
     chmod +x /opt/micromamba/micromamba
     export PATH=/opt/micromamba:$PATH
-    
+
 
     # Create pielenv environment in micromamba
-    micromamba shell init -s bash 
+    micromamba shell init -s bash
     micromamba create -p /opt/envs/pielenv -c conda-forge python=3.10.9
-    micromamba run -p /opt/envs/pielenv micromamba install gdstk -c conda-forge   
+    micromamba run -p /opt/envs/pielenv micromamba install gdstk -c conda-forge
 
 %environment
     export PATH=/opt/micromamba:$PATH
@@ -35,4 +35,3 @@ From: efabless/openlane
     micromamba shell init -s bash
     micromamba run -p /opt/envs/pielenv pip install -r $PIEL_DIRECTORY/requirements_dev.txt --break-system-packages
     micromamba run -p /opt/envs/pielenv pip install -e $PIEL_DIRECTORY --break-system-packages
-

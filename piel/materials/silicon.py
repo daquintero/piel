@@ -28,29 +28,33 @@ def epsilon_si():
 
 def E_g_si_bardin(T):
     """Calculate the bandgap energy of silicon as a function of temperature."""
-    return 1.17 + 5.65e-6 * T - 5.11e-7 * T ** 2 - 8.03e-10 * T ** 3 + 2.50e-12 * T ** 4
+    return 1.17 + 5.65e-6 * T - 5.11e-7 * T**2 - 8.03e-10 * T**3 + 2.50e-12 * T**4
 
 
 def m_dh_green_h(T):
     """Calculate the density of states effective mass for holes (Green) as a function of temperature."""
-    numerator = 0.444 + 0.361e-2 * T + 0.117e-3 * T ** 2 + 0.126e-5 * T ** 3 + 0.303e-8 * T ** 4
-    denominator = 1 + 0.468e-2 * T + 0.229e-3 * T ** 2 + 0.747e-6 * T ** 3 + 0.173e-8 * T ** 4
+    numerator = (
+        0.444 + 0.361e-2 * T + 0.117e-3 * T**2 + 0.126e-5 * T**3 + 0.303e-8 * T**4
+    )
+    denominator = (
+        1 + 0.468e-2 * T + 0.229e-3 * T**2 + 0.747e-6 * T**3 + 0.173e-8 * T**4
+    )
     return (numerator / denominator) ** (2 / 3)
 
 
 def m_l_askt_h(T):
     """Calculate the normalized light hole effective mass as a function of temperature."""
-    return 0.14615 + 3.7414e-4 * T - 1.8809e-7 * T ** 2
+    return 0.14615 + 3.7414e-4 * T - 1.8809e-7 * T**2
 
 
 def m_h_askt_h(T):
     """Calculate the normalized heavy hole effective mass as a function of temperature."""
-    return 0.51741 + 2.5139e-3 * T - 4.4117e-6 * T ** 2 + 2.6974e-3
+    return 0.51741 + 2.5139e-3 * T - 4.4117e-6 * T**2 + 2.6974e-3
 
 
 def m_so_askt_h(T):
     """Calculate the normalized split-off hole effective mass as a function of temperature."""
-    return 0.22775 + 2.963e-4 * T + 2.3872e-7 * T ** 2
+    return 0.22775 + 2.963e-4 * T + 2.3872e-7 * T**2
 
 
 def m_dh_askt_h(T):
@@ -58,12 +62,18 @@ def m_dh_askt_h(T):
     m_h = m_h_askt_h(T)
     m_l = m_l_askt_h(T)
     m_so = m_so_askt_h(T)
-    return ((m_h ** (3 / 2) + m_l ** (3 / 2) + m_so ** (3 / 2)) ** (2 / 3))
+    return (m_h ** (3 / 2) + m_l ** (3 / 2) + m_so ** (3 / 2)) ** (2 / 3)
 
 
 def m_t_askt_e(T):
     """Calculate the transversal effective mass for electrons as a function of temperature."""
-    return 0.19049 - 2.0905e-6 * T + 9.8985e-7 * T ** 2 - 2.6798e-9 * T ** 3 + 2.0270e-12 * T ** 4
+    return (
+        0.19049
+        - 2.0905e-6 * T
+        + 9.8985e-7 * T**2
+        - 2.6798e-9 * T**3
+        + 2.0270e-12 * T**4
+    )
 
 
 def m_ce_askt_e(T):
@@ -77,7 +87,7 @@ def m_de_askt_e(T):
     """Calculate the electron density-of-states effective mass as a function of temperature."""
     m_t = m_t_askt_e(T)
     m_l = 0.9163
-    return (6 * np.sqrt(m_l * (m_t ** 2))) ** (2 / 3)
+    return (6 * np.sqrt(m_l * (m_t**2))) ** (2 / 3)
 
 
 def N_c(T):
@@ -125,7 +135,12 @@ def n_io(T):
     """Calculate the intrinsic carrier concentration for a given temperature using an alternative method."""
     m_t = m_t_askt_e(T)
     m_l = 0.9163
-    return 4.82e15 * T ** (3 / 2) * np.sqrt(6 * m_t * np.sqrt(m_l)) * np.exp(-E_g_si_bardin(T) / (2 * k() * T))
+    return (
+        4.82e15
+        * T ** (3 / 2)
+        * np.sqrt(6 * m_t * np.sqrt(m_l))
+        * np.exp(-E_g_si_bardin(T) / (2 * k() * T))
+    )
 
 
 def mu_0a_e():
@@ -170,12 +185,16 @@ def kappa_b_h():
 
 def mu_ps_e(T):
     """Calculate the electron mobility due to phonon scattering as a function of temperature."""
-    return 1 / ((mu_0a_e() ** -1) * (T / 300) ** kappa_a_e()) + 1 / ((mu_0b_e() ** -1) * (T / 300) ** kappa_b_e())
+    return 1 / ((mu_0a_e() ** -1) * (T / 300) ** kappa_a_e()) + 1 / (
+        (mu_0b_e() ** -1) * (T / 300) ** kappa_b_e()
+    )
 
 
 def mu_ps_h(T):
     """Calculate the hole mobility due to phonon scattering as a function of temperature."""
-    return 1 / ((mu_0a_h() ** -1) * (T / 300) ** kappa_a_h()) + 1 / ((mu_0b_h() ** -1) * (T / 300) ** kappa_b_h())
+    return 1 / ((mu_0a_h() ** -1) * (T / 300) ** kappa_a_h()) + 1 / (
+        (mu_0b_h() ** -1) * (T / 300) ** kappa_b_h()
+    )
 
 
 def mu_min_e(T):

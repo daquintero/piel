@@ -17,7 +17,10 @@ def create_and_activate_venv() -> None:
     echo_and_check_subprocess(["bash", str(activate_script_path)])
 
 
-@environment.command(name="create-piel-venv", help="Creates the piel virtual environment shared by all the tools.")
+@environment.command(
+    name="create-piel-venv",
+    help="Creates the piel virtual environment shared by all the tools.",
+)
 def create_and_activate_venv_command():
     """Installs the nix package manager."""
     return create_and_activate_venv()

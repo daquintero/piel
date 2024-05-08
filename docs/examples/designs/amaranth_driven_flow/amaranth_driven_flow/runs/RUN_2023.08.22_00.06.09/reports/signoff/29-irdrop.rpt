@@ -1,4 +1,4 @@
-Instance name,  X location,  Y location,  Voltage 
+Instance name,  X location,  Y location,  Voltage
 FILLER_0_12_18, 10.52, 40.8, 1.8
 _2_, 10.52, 29.92, 1.8
 _5_, 10.52, 24.48, 1.8
@@ -49,4 +49,3 @@ PHY_1, 28.98, 13.6, 1.8
 PHY_3, 28.98, 13.6, 1.8
 output4, 28.98, 13.6, 1.8
 FILLER_0_1_39, 19.75, 13.6, 1.8
-

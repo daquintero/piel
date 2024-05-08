@@ -349,8 +349,8 @@ def linear_bit_phase_map(
     bits_array = bits_array_from_bits_amount(bits_amount)
     phase_division_amount = len(bits_array) - 1
     phase_division_step = (
-                              final_phase_rad - initial_phase_rad
-                          ) / phase_division_amount - quantization_error
+        final_phase_rad - initial_phase_rad
+    ) / phase_division_amount - quantization_error
     linear_phase_array = np.arange(
         initial_phase_rad, final_phase_rad, phase_division_step
     )
