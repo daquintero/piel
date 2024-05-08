@@ -36,14 +36,14 @@ def heat_transfer_1d_W(
     if type(temperature_range_K) is tuple:
         # TODO how to compare this with the TemperatureRangeLimitType?
         temperature_range_K = np.linspace(
-            temperature_range_K[0], temperature_range_K[1], num=1000,
-            *args,
-            **kwargs
+            temperature_range_K[0], temperature_range_K[1], num=1000, *args, **kwargs
         )
     elif isinstance(temperature_range_K, ArrayTypes):
         pass
     else:
-        raise ValueError("Invalid temperature_range_K type. Must be a TemperatureRangeType.")
+        raise ValueError(
+            "Invalid temperature_range_K type. Must be a TemperatureRangeType."
+        )
 
     thermal_conductivity_integral_area = np.trapz(
         thermal_conductivity_fit, temperature_range_K

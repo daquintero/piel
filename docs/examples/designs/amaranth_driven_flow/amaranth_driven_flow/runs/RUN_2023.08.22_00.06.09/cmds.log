@@ -151,4 +151,3 @@ Tue Aug 22 00:06:38 CEST 2023 - Executing "awk -v vdd=VPWR -v gnd=VGND -f /foss/
 Tue Aug 22 00:06:38 CEST 2023 - Executing "awk -f /foss/pdks/sky130A/libs.tech/openlane/cvc/cdl.awk /foss/pdks/sky130A/libs.ref/sky130_fd_sc_hd/cdl/sky130_fd_sc_hd.cdl /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09/results/signoff/top.lef.spice > /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09/tmp/signoff/top.cdl"
 
 Tue Aug 22 00:06:38 CEST 2023 - Executing "cvc_rv /foss/pdks/sky130A/libs.tech/openlane/cvc/cvcrc |& tee /dev/null /foss/tools/openlane/2023.05/designs/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09/logs/signoff/39-erc_screen.log"
-

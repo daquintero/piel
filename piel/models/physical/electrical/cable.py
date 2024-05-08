@@ -36,17 +36,22 @@ def calculate_coaxial_cable_geometry(
     if core_diameter_dimension == "awg":
         core_diameter_m = awg_to_cross_sectional_area_m2(core_diameter_awg)
 
-    core_cross_sectional_area_m2 = calculate_cross_sectional_area_m2(diameter_m=core_diameter_m)
+    core_cross_sectional_area_m2 = calculate_cross_sectional_area_m2(
+        diameter_m=core_diameter_m
+    )
     sheath_cross_sectional_area_m2 = calculate_cross_sectional_area_m2(
-        diameter_m=sheath_top_diameter_m) - calculate_cross_sectional_area_m2(diameter_m=sheath_bottom_diameter_m)
-    total_cross_sectional_area_m2 = core_cross_sectional_area_m2 + sheath_cross_sectional_area_m2  # TODO dielectric
+        diameter_m=sheath_top_diameter_m
+    ) - calculate_cross_sectional_area_m2(diameter_m=sheath_bottom_diameter_m)
+    total_cross_sectional_area_m2 = (
+        core_cross_sectional_area_m2 + sheath_cross_sectional_area_m2
+    )  # TODO dielectric
 
     return CoaxialCableGeometryType(
         length_m=length_m,
         core_cross_sectional_area_m2=core_cross_sectional_area_m2,
         sheath_cross_sectional_area_m2=sheath_cross_sectional_area_m2,
         total_cross_sectional_area_m2=total_cross_sectional_area_m2,
-        **kwargs
+        **kwargs,
     )
 
 
@@ -67,9 +72,7 @@ def define_coaxial_cable_materials(
         CoaxialCableMaterialSpecificationType: The material specification of the coaxial cable.
     """
     return CoaxialCableMaterialSpecificationType(
-        core=core_material,
-        sheath=sheath_material,
-        dielectric=dielectric_material
+        core=core_material, sheath=sheath_material, dielectric=dielectric_material
     )
 
 
@@ -99,9 +102,7 @@ def calculate_coaxial_cable_heat_transfer(
         provided_materials = material_class.supplied_parameters()
     elif material_class is None:
         material_class = CoaxialCableMaterialSpecificationType(
-            core=core_material,
-            sheath=sheath_material,
-            dielectric=dielectric_material
+            core=core_material, sheath=sheath_material, dielectric=dielectric_material
         )
         provided_materials = material_class.supplied_parameters()
     else:
@@ -112,7 +113,7 @@ def calculate_coaxial_cable_heat_transfer(
     for material_i in provided_materials:
         thermal_conductivity_fit_i = get_thermal_conductivity_fit(
             temperature_range_K=temperature_range_K,
-            material=getattr(material_class, material_i)
+            material=getattr(material_class, material_i),
         )
         # CURRENT TODO compute the thermal conductivity fit accordingly. Implement a material reference to thermal conductivtiy data mapping.
 
@@ -120,7 +121,7 @@ def calculate_coaxial_cable_heat_transfer(
             thermal_conductivity_fit=thermal_conductivity_fit_i,
             temperature_range_K=temperature_range_K,
             cross_sectional_area_m2=geometry_class.total_cross_sectional_area_m2,
-            length_m=geometry_class.length_m
+            length_m=geometry_class.length_m,
         )
         heat_transfer_parameters[material_i] = heat_transfer_i
         total_heat_transfer_W += heat_transfer_i
@@ -156,7 +157,9 @@ def calculate_dc_cable_geometry(
     if core_diameter_dimension == "awg":
         core_diameter_m = awg_to_cross_sectional_area_m2(core_diameter_awg)
 
-    core_cross_sectional_area_m2 = calculate_cross_sectional_area_m2(diameter_m=core_diameter_m)
+    core_cross_sectional_area_m2 = calculate_cross_sectional_area_m2(
+        diameter_m=core_diameter_m
+    )
     total_cross_sectional_area_m2 = core_cross_sectional_area_m2
 
     return DCCableGeometryType(
@@ -219,7 +222,7 @@ def calculate_dc_cable_heat_transfer(
     for material_i in provided_materials:
         thermal_conductivity_fit_i = get_thermal_conductivity_fit(
             temperature_range_K=temperature_range_K,
-            material=getattr(material_class, material_i)
+            material=getattr(material_class, material_i),
         )
         # CURRENT TODO compute the thermal conductivity fit accordingly. Implement a material reference to thermal conductivtiy data mapping.
 
@@ -227,7 +230,7 @@ def calculate_dc_cable_heat_transfer(
             thermal_conductivity_fit=thermal_conductivity_fit_i,
             temperature_range_K=temperature_range_K,
             cross_sectional_area_m2=geometry_class.total_cross_sectional_area_m2,
-            length_m=geometry_class.length_m
+            length_m=geometry_class.length_m,
         )
         heat_transfer_parameters[material_i] = heat_transfer_i
         total_heat_transfer_W += heat_transfer_i

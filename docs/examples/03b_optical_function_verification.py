@@ -31,7 +31,9 @@
 
 import functools
 import gdsfactory as gf
+import jax
 import jax.numpy as jnp
+import numpy as np
 import pandas as pd
 from piel import straight_heater_metal_simple
 import piel

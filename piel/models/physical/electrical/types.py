@@ -122,4 +122,6 @@ class DCCableMaterialSpecificationType(QuantityType):
 
 CableHeatTransferTypes = Union[CoaxialCableHeatTransferType, DCCableHeatTransferType]
 CableGeometryTypes = Union[CoaxialCableGeometryType, DCCableGeometryType]
-CableMaterialSpecificationTypes = Union[CoaxialCableMaterialSpecificationType, DCCableMaterialSpecificationType]
+CableMaterialSpecificationTypes = Union[
+    CoaxialCableMaterialSpecificationType, DCCableMaterialSpecificationType
+]

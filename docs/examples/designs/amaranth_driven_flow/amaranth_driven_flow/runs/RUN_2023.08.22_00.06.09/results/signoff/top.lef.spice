@@ -157,4 +157,3 @@ XFILLER_0_3_27 VGND VGND VPWR VPWR sky130_ef_sc_hd__decap_12
 XFILLER_0_11_3 VGND VGND VPWR VPWR sky130_ef_sc_hd__decap_12
 XFILLER_0_9_15 VGND VGND VPWR VPWR sky130_ef_sc_hd__decap_12
 .ends
-

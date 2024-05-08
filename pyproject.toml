@@ -30,23 +30,26 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/daquintero/piel"
-version = "0.0.56"
+version = "0.1.0"
 
 [tool.poetry.dependencies]
 Click = ">=7.0"
-amaranth = "0.4.0"
-amaranth-yosys = "0.35.0.0.post81"
-black = {version = "*", optional = true}
+amaranth = "^0.4.0"
+amaranth-yosys = "^0.40.0.0.post94"
+# Local Examples for Testing
+amaranth_driven_flow = {path = "docs/examples/designs/amaranth_driven_flow", develop = true, optional = true}
+black = {version = "24.3.0", optional = true}
 bokeh = {version = "*", optional = true}
 bump2version = {version = "*", optional = true}
 cocotb = "1.8.0"
 cookiecutter = {version = "*", optional = true}
 coverage = {version = "*", optional = true}
 cython = "0.29.21"
+example_empty_project = {path = "docs/examples/designs/example_empty_project", develop = true, optional = true}
 flake8 = {version = "*", optional = true}
-gdsfactory = {version = "7.2.1", extras = ["kfactory"]}  # Pinned for pydantic <v2 compatibility, until examples upgrades
+gdsfactory = {version = "7.27.0"}
 # femwell = "0.1.8"
-hdl21 = "4.0.0"
+hdl21 = {git = "https://github.com/daquintero/Hdl21.git"}  # TODO fix when released
 ipyevents = {version = "*", optional = true}
 ipytree = {version = "*", optional = true}
 ipywidgets = {version = ">=7.6.0,<9", optional = true}
@@ -56,27 +59,31 @@ jupyter = {version = "*", optional = true}
 jupyter-bokeh = {version = "*", optional = true}
 jupyter-core = {version = "*", optional = true}
 jupyter-packaging = {version = ">=0.7.9", optional = true}
-jupyterlab = {version = ">=4", optional = true}
+jupyterlab = {version = "^4.0.0", optional = true}
 jupytext = "1.15.0"
 kfactory = {version = "*", extras = ["git", "ipy"], optional = true}
-kweb = {version = "0.1.1", optional = true}
+kweb = {version = "^2.0.1", optional = true}
 matplotlib = {version = "*"}
 myst-parser = {version = "*", optional = true}
 nbsphinx = {version = "*", optional = true}
-networkx = "3.1"
-numpy = "1.24.4"
+networkx = "^3.1"
+numpy = "^1.24.4"
 openlane = "2.0.0b13"
-pandas = "1.5.3"
+pandas = "^1.5.3"
 pandoc = {version = "*", optional = true}
+poetry = {version = "1.8.2", optional = true}  # I am not happy with this being here
 pre-commit = {version = "*", optional = true}
-pydantic = "^1"
+pydantic = "^2.0"
 pydata-sphinx-theme = {version = ">=0.13.3", optional = true}
-pytest = {version = ">=3", optional = true}
+pytest = {version = ">=3.0", optional = true}
+# ## START CORE ###
 python = ">=3.10,<3.12"
-qutip = "4.7.3"
+qutip = "^4.7.3"
 sax = "0.12.2"  # Pinned for pydantic <v2 compatibility.
-scipy = "1.11.4"
-sphinx = {version = ">=4, <7", optional = true}
+scipy = "^1.11.4"
+simple_copied_design = {path = "docs/examples/designs/simple_copied_design", develop = true, optional = true}
+simple_design = {path = "docs/examples/designs/simple_design", develop = true, optional = true}
+sphinx = {version = "^7.2.1", optional = true}
 sphinx-autoapi = {version = "*", optional = true}
 sphinx-autobuild = {version = "*", optional = true}
 sphinx-autodoc-typehints = {version = "*", optional = true}
@@ -85,44 +92,49 @@ sphinx-gallery = {version = "*", optional = true}
 sphinx-pydantic = {version = "*", optional = true}
 sphinx-rtd-theme = {version = "*", optional = true}
 sphinx_book_theme = {version = "*", optional = true}
-thewalrus = "0.20.0"
+thewalrus = "^0.20.0"
 tox = {version = "*", optional = true}
 watchdog = {version = "*", optional = true}
-xarray = "2023.12.0"
+xarray = "^2023.12.0"
 
 [tool.poetry.extras]
 dev = [
-  "pytest",
-  "sphinx",
-  "sphinx-autodoc-typehints",
-  "sphinx-pydantic",
-  "sphinx-autoapi",
-  "sphinx-autobuild",
-  "sphinx_book_theme",
-  "sphinx-copybutton",
-  "sphinx-rtd-theme",
-  "sphinx-gallery",
-  "nbsphinx",
-  "myst-parser",
-  "pandoc",
-  "flake8",
+  "amaranth_driven_flow",
   "black",
   "bokeh",
   "bump2version",
   "cookiecutter",
   "coverage",
-  "kfactory",
-  "kweb",
+  "example_empty_project",
+  "flake8",
   "ipyevents",
   "ipytree",
   "ipywidgets",
   "jupyter",
-  "jupyter-core",
   "jupyter-bokeh",
+  "jupyter-core",
   "jupyter-packaging",
   "jupyterlab",
+  "kfactory",
+  "kweb",
+  "myst-parser",
+  "nbsphinx",
+  "pandoc",
+  "poetry",
   "pre-commit",
+  "pytest",
   "pydata-sphinx-theme",
+  "simple_copied_design",
+  "simple_design",
+  "sphinx",
+  "sphinx-autoapi",
+  "sphinx-autobuild",
+  "sphinx-autodoc-typehints",
+  "sphinx-book_theme",
+  "sphinx-copybutton",
+  "sphinx-gallery",
+  "sphinx-pydantic",
+  "sphinx-rtd-theme",
   "tox",
   "watchdog"
 ]
@@ -139,3 +151,11 @@ priority = "primary"
 name = "jaxsource"
 priority = "supplemental"
 url = "https://storage.googleapis.com/jax-releases/jax_releases.html"
+
+
+[tool.pytest.ini_options]
+addopts = "-rav"
+minversion = "6.0"
+testpaths = [
+  "tests"
+]
