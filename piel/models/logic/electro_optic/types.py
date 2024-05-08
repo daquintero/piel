@@ -7,7 +7,7 @@ output_state_0 = {
     "output_fock_state": piel.absolute_to_threshold(raw_output_state_0, output_array_type="tuple"),
 }
 """
-electro_optic_fock_state_type = {
+FockStatePhaseTransitionType = {
     "phase": tuple[float, ...],
     "input_fock_state": tuple[int, ...],
     "output_fock_state": tuple[int, ...],

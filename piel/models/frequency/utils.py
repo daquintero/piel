@@ -5,7 +5,7 @@ __all__ = [
 ]
 
 
-def compose_custom_model_library_from_defaults(custom_models: dict) -> dict:
+def compose_custom_model_library_from_defaults(custom_models: dict, *args, **kwargs) -> dict:
     """
     Compose the default models with the custom models.
 
@@ -15,7 +15,7 @@ def compose_custom_model_library_from_defaults(custom_models: dict) -> dict:
     Returns:
         dict: Composed models dictionary.
     """
-    return {**get_default_models(), **custom_models}
+    return {**get_default_models(*args, **kwargs), **custom_models}
 
 
 def check_is_unitary(model: dict) -> bool:

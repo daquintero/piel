@@ -1,5 +1,15 @@
 # # Mixed-Signal & Photonic Cosimulation
 
+# ## Logical Electronic-Photonic Co-Design
+#
+# In this example, we will demonstrate how we can take a logical optical function and implement the electronic logic required to control it. 
+
+# ### Extracting Cross-Bar Optical Switch States
+
+# One of the main complexities of electronic-photonic codesign is determining the required control interface between the designs. Let's consider we have a specific instantiation of a 2x2 Mach-Zehnder interferometer switch, let's extract the corresponding cross and bar phase state implementation. We need to know what phase to apply within a larger switch lattice accordingly in order to model the switch logic operation.
+
+
+
 # #### Automation
 
 # Now, these transient simulations are something you might want to very configure depending on the type of signals that you might want to verify. However, we can provide some basic parameterised simple functions such as step responses and so on. So instead of having to write everything above, you can also just run the following, for example: WIP

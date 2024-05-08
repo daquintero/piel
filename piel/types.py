@@ -18,7 +18,7 @@ __all__ = [
 
 PathTypes = str | pathlib.Path | os.PathLike | types.ModuleType
 ArrayTypes = np.ndarray | jnp.ndarray
-
+NumericalTypes = int | float | np.dtype | jnp.dtype
 
 class PielBaseModel(pydantic.BaseModel):
     class Config:

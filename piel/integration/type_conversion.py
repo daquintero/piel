@@ -115,9 +115,7 @@ def absolute_to_threshold(array: array_types,
     else:
         raise ValueError("The array must be either a jax or numpy array.")
     array = array.astype(dtype_output)
-    print(array)
     array = convert_array_type(array, output_array_type)
-    print(array)
     return array
 
 
