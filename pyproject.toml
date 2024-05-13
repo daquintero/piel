@@ -44,7 +44,7 @@ openlane = "2.0.0b13"
 pandas = "1.5.3"
 xarray = "2023.12.0"
 qutip = "4.7.3"
-sax = "0.8.8" # Pinned for pydantic <v2 compatibility.
+sax = "0.12.2" # Pinned for pydantic <v2 compatibility.
 scipy = "1.11.4"
 thewalrus = "0.20.0"
 
