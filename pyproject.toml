@@ -70,7 +70,7 @@ pandoc = {version="*", optional = true}
 pre-commit = {version="*", optional = true}
 pytest = {version=">=3", optional = true}
 pydata-sphinx-theme = {version=">=0.13.3", optional = true}
-sphinx = {version=">=4, <7", optional = true}
+sphinx = {version=">=4,<8", optional = true}
 sphinx-autoapi = {version="*", optional = true}
 sphinx-autobuild = {version="*", optional = true}
 sphinx-autodoc-typehints = {version="*", optional = true}

@@ -1474,6 +1474,8 @@ files = [
     {file = "gdstk-0.9.51-cp311-cp311-musllinux_1_1_i686.whl", hash = "sha256:8ec45b81d1997149fce0cc06ff8da12a11b835f701b36fffb4267ab0674f3b02"},
     {file = "gdstk-0.9.51-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:2be4705e85ed692a62139fca89bd467dcdac4bd872bdae592bf7be6d67fde299"},
     {file = "gdstk-0.9.51-cp311-cp311-win_amd64.whl", hash = "sha256:74cfb8a036c87bba99498ce105bdb346f09c59bbc8efaea1b571f5b726b94506"},
+    {file = "gdstk-0.9.51-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:984c4667bc2e7b8423f3d4bf8156a1bc2f04fde3a12d76e84d8c2c4b8712a0e9"},
+    {file = "gdstk-0.9.51-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:fafbaefa618b8a1fd697415ba4d095b33b7181f5055127746b7effacfd60f27b"},
     {file = "gdstk-0.9.51-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:981197b7a836bea81d19398ede9ade7bf4038d08c426d3eeaa5954bc8b6fefa9"},
     {file = "gdstk-0.9.51-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0f163a2bd106ce8a94748c27ad1f70e7d8f1cc585c076b4691177916e4b06a40"},
     {file = "gdstk-0.9.51-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:ced619db65125c29b1791cc9cd945f5f1d235e0f6efd920ceb53d12fdc9d248f"},
@@ -5178,24 +5180,24 @@ files = [
 
 [[package]]
 name = "sphinx"
-version = "6.2.1"
+version = "7.3.7"
 description = "Python documentation generator"
 optional = true
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "Sphinx-6.2.1.tar.gz", hash = "sha256:6d56a34697bb749ffa0152feafc4b19836c755d90a7c59b72bc7dfd371b9cc6b"},
-    {file = "sphinx-6.2.1-py3-none-any.whl", hash = "sha256:97787ff1fa3256a3eef9eda523a63dbf299f7b47e053cfcf684a1c2a8380c912"},
+    {file = "sphinx-7.3.7-py3-none-any.whl", hash = "sha256:413f75440be4cacf328f580b4274ada4565fb2187d696a84970c23f77b64d8c3"},
+    {file = "sphinx-7.3.7.tar.gz", hash = "sha256:a4a7db75ed37531c05002d56ed6948d4c42f473a36f46e1382b0bd76ca9627bc"},
 ]
 
 [package.dependencies]
-alabaster = ">=0.7,<0.8"
+alabaster = ">=0.7.14,<0.8.0"
 babel = ">=2.9"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
-docutils = ">=0.18.1,<0.20"
+docutils = ">=0.18.1,<0.22"
 imagesize = ">=1.3"
 Jinja2 = ">=3.0"
 packaging = ">=21.0"
-Pygments = ">=2.13"
+Pygments = ">=2.14"
 requests = ">=2.25.0"
 snowballstemmer = ">=2.0"
 sphinxcontrib-applehelp = "*"
@@ -5203,12 +5205,13 @@ sphinxcontrib-devhelp = "*"
 sphinxcontrib-htmlhelp = ">=2.0.0"
 sphinxcontrib-jsmath = "*"
 sphinxcontrib-qthelp = "*"
-sphinxcontrib-serializinghtml = ">=1.1.5"
+sphinxcontrib-serializinghtml = ">=1.1.9"
+tomli = {version = ">=2", markers = "python_version < \"3.11\""}
 
 [package.extras]
 docs = ["sphinxcontrib-websupport"]
-lint = ["docutils-stubs", "flake8 (>=3.5.0)", "flake8-simplify", "isort", "mypy (>=0.990)", "ruff", "sphinx-lint", "types-requests"]
-test = ["cython", "filelock", "html5lib", "pytest (>=4.6)"]
+lint = ["flake8 (>=3.5.0)", "importlib_metadata", "mypy (==1.9.0)", "pytest (>=6.0)", "ruff (==0.3.7)", "sphinx-lint", "tomli", "types-docutils", "types-requests"]
+test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=6.0)", "setuptools (>=67.0)"]
 
 [[package]]
 name = "sphinx-autoapi"
@@ -6580,4 +6583,4 @@ dev = ["black", "bokeh", "bump2version", "cookiecutter", "coverage", "flake8", "
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "64b365cacf6e4d446bb71b5a6c87a4805828abf1166bcadb8c05c81d2105c3f8"
+content-hash = "c112ae4a5a7d0f5c678c40d8901e2262802db130dcb7f9aa672e95a602823839"
