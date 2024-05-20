@@ -9,8 +9,7 @@
 # I actually designed this component so let me know what you would like to find in it!
 
 # We begin by importing a parametric circuit from `gdsfactory`:
-import gdsfactory as gf
-from gdsfactory.components import mzi2x2_2x2
+from piel.models.physical.photonic import component_lattice_generic, mzi2x2_2x2
 import piel
 import sax
 
@@ -27,7 +26,7 @@ balanced_mzi_lattice = [
     [mzi2x2_2x2(), 0, mzi2x2_2x2()],
 ]
 
-switch_circuit = gf.components.component_lattice_generic(network=balanced_mzi_lattice)
+switch_circuit = component_lattice_generic(network=balanced_mzi_lattice)
 switch_circuit
 # -
 

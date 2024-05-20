@@ -1,8 +1,7 @@
 # # Digital & Photonic Cosimulation with `sax` and `cocotb`
 
 # We begin by importing a parametric circuit from `gdsfactory`:
-import gdsfactory as gf
-from gdsfactory.components import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
+from piel.models.physical.photonic import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
 import numpy as np
 import jax.numpy as jnp
 import piel
@@ -155,7 +154,7 @@ example_simple_simulation_data
 
 sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
 
-# ```['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_simple']```
+# ```['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_undercut']```
 
 # We have some basic models in `piel` we can use to compose our circuit
 
@@ -375,7 +374,7 @@ example_component_lattice = [
     [mzi2x2_2x2(), 0, mzi2x2_2x2_phase_shifter()],
 ]
 
-mixed_switch_lattice_circuit = gf.components.component_lattice_generic(
+mixed_switch_lattice_circuit = piel.models.physical.photonic.component_lattice_generic(
     network=example_component_lattice
 )
 # mixed_switch_circuit.show()
@@ -384,6 +383,10 @@ mixed_switch_lattice_circuit
 # ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
 # ### Model Composition
+
+mixed_switch_lattice_circuit.get_netlist(
+    exclude_port_types="optical", allow_multiple=True
+)["ports"]
 
 mixed_switch_lattice_circuit_netlist = (
     mixed_switch_lattice_circuit.get_netlist_recursive(
