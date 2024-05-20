@@ -2,6 +2,8 @@ import pytest
 import os
 from subprocess import run, CalledProcessError
 
+import piel.cli
+
 
 @pytest.fixture(scope="module")
 def script_directory():
@@ -9,6 +11,8 @@ def script_directory():
 
 
 def test_script_execution(script_directory):
+    piel.develop.configure_development_environment()
+
     scripts = [
         "00_setup.py",
         "01_run_openlane_flow.py",

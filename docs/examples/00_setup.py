@@ -33,6 +33,8 @@ import piel
 
 piel.__version__
 
+piel.develop.configure_development_environment()
+
 # ## Example Setup
 
 # We will start by first setting up the design folder. You can get your own design folder, or you can use the `docs/examples/simple_design` folder as a reference for our project. In the future, you might want to have your project as a git clonable repository you can just add to a designs folder. You can also use the example OpenLanes ones.
