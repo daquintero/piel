@@ -34,10 +34,10 @@ jupytext = "1.15.0"
 Click = ">=7.0"
 cocotb = "1.8.0"
 # femwell = "0.1.8"
-hdl21 = { git = "git@github.com:dan-fritchman/Hdl21.git" }
+hdl21 = { git = "git@github.com:dan-fritchman/Hdl21.git" } # TODO fix when released
 jax = "^0.4.14"
 jaxlib = "^0.4.14"
-gdsfactory = { version="7.27.0", extras=["kfactory"] } # Pinned for pydantic <v2 compatibility, until examples upgrades
+gdsfactory = { git = "git@github.com:gdsfactory/gdsfactory.git"} # TODO fix when released
 networkx = "^3.1"
 numpy = "^1.24.4"
 matplotlib = {version="*"}
@@ -50,7 +50,7 @@ scipy = "^1.11.4"
 thewalrus = "^0.20.0"
 ### END CORE ###
 
-black = {version="*", optional = true}
+black = {version="24.3.0", optional = true}
 bokeh = {version="*", optional = true}
 bump2version = {version="*", optional = true}
 cookiecutter = {version="*", optional = true}
@@ -63,17 +63,17 @@ jupyter = {version="*", optional = true}
 jupyter-bokeh = {version="*", optional = true}
 jupyter-core = {version="*", optional = true}
 jupyter-packaging = {version=">=0.7.9", optional = true}
-jupyterlab = {version=">=4", optional = true}
+jupyterlab = {version="^4.0.0", optional = true}
 kfactory = {version="*", extras=["git", "ipy"], optional = true}
-kweb = {version="0.1.1", optional = true}
+kweb = {version="^2.0.1", optional = true}
 myst-parser = {version="*", optional = true}
 nbsphinx = {version="*", optional = true}
 pandoc = {version="*", optional = true}
 poetry = {version="1.8.2", optional = true} # I am not happy with this being here
 pre-commit = {version="*", optional = true}
-pytest = {version=">=3", optional = true}
+pytest = {version=">=3.0", optional = true}
 pydata-sphinx-theme = {version=">=0.13.3", optional = true}
-sphinx = {version=">=4, <7", optional = true}
+sphinx = {version="^7.2.1", optional = true}
 sphinx-autoapi = {version="*", optional = true}
 sphinx-autobuild = {version="*", optional = true}
 sphinx-autodoc-typehints = {version="*", optional = true}
