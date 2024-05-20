@@ -15,7 +15,7 @@ from typing import Callable
 # First, let's look at our actively driven component:
 
 mzi2x2_2x2_phase_shifter().show()
-mzi2x2_2x2_phase_shifter().plot_widget()
+mzi2x2_2x2_phase_shifter()
 
 # ![mzi2x2_2x2_phase_shifter](../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
 
@@ -166,7 +166,7 @@ straight_heater_metal_simple = all_models["ideal_active_waveguide"]
 straight_heater_metal_simple
 
 our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
-    {"straight_heater_metal_simple": straight_heater_metal_simple}
+    {"straight_heater_metal_undercut": straight_heater_metal_simple}
 )
 our_custom_library
 
@@ -379,7 +379,7 @@ mixed_switch_lattice_circuit = gf.components.component_lattice_generic(
     network=example_component_lattice
 )
 # mixed_switch_circuit.show()
-mixed_switch_lattice_circuit.plot_widget()
+mixed_switch_lattice_circuit
 
 # ![switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/switch_circuit_plot_widget.PNG)
 
