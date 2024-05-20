@@ -167,13 +167,10 @@ Attributes
 
 .. py:data:: CableHeatTransferTypes
 
-   
+
 
 .. py:data:: CableGeometryTypes
 
-   
+
 
 .. py:data:: CableMaterialSpecificationTypes
-
-   
-

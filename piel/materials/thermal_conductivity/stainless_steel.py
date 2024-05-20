@@ -21,11 +21,12 @@ def stainless_steel(
         specification = material_reference[1]
         material_sub_name = specification[1]
     except IndexError:
-        raise ValueError("Invalid specification for stainless steel: "
-                         + specification
-                         + ". Valid options are: "
-                         + str(supported_specifications)
-                         )
+        raise ValueError(
+            "Invalid specification for stainless steel: "
+            + specification
+            + ". Valid options are: "
+            + str(supported_specifications)
+        )
 
     if material_sub_name == "304":
         # https://trc.nist.gov/cryogenics/materials/304Stainless/304Stainless_rev.htm

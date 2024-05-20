@@ -122,5 +122,3 @@ Functions
    :param ohms_per_square: to calculate resistance.
    :param cross_section: for waveguide ports.
    :param kwargs: cross_section common settings.
-
-

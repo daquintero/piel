@@ -38,5 +38,3 @@ Functions
 
    :returns: A function that maps the power applied to a particular heater resistor linearly. The units of the power and phase are determined by the phase_power_slope and zero_power_phase. The zero_power_phase is the phase at zero power. The phase_power_slope is the slope of the linear mapping. The units of the phase_power_slope are radians/Watt. The units of the zero_power_phase are radians. The units of the power are Watts. The units of the phase are radians.
    :rtype: linear_phase_mapping (function)
-
-

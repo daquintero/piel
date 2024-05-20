@@ -9,13 +9,10 @@ Module Contents
 
 .. py:data:: SpecificationType
 
-   
+
 
 .. py:data:: MaterialReferenceType
 
-   
+
 
 .. py:data:: MaterialReferencesTypes
-
-   
-

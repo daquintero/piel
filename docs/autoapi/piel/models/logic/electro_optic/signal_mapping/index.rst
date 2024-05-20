@@ -141,5 +141,3 @@ Functions
 
    :returns: Electro-optic state.
    :rtype: electro_optic_state(electro_optic_fock_state_type)
-
-

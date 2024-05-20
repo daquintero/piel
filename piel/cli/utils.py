@@ -12,7 +12,7 @@ __all__ = [
     "get_piel_home_directory",
 ]
 
-default_openlane2_directory = (pathlib.Path.home() / ".piel" / "openlane2")
+default_openlane2_directory = pathlib.Path.home() / ".piel" / "openlane2"
 
 
 def append_to_bashrc_if_does_not_exist(line: str):
@@ -25,16 +25,16 @@ def append_to_bashrc_if_does_not_exist(line: str):
     Returns:
 
     """
-    bashrc_path = os.path.join(os.path.expanduser('~'), '.bashrc')
+    bashrc_path = os.path.join(os.path.expanduser("~"), ".bashrc")
 
     # Check if the line already exists in .bashrc
-    with open(bashrc_path, 'r') as file:
+    with open(bashrc_path, "r") as file:
         if line in file.read():
             print("Line: `" + line + "` already exists in .bashrc")
             return
 
     # Append the line to .bashrc
-    with open(bashrc_path, 'a') as file:
+    with open(bashrc_path, "a") as file:
         file.write("\n" + line)
         print("Line: " + line + " appended to .bashrc")
 

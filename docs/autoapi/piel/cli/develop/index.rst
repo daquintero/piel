@@ -42,5 +42,3 @@ Functions
 
    Enters the custom piel nix environment with all the supported tools installed and configured packages.
    Runs the nix-shell command on the piel/environment/nix/ directory.
-
-

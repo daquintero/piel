@@ -39,5 +39,3 @@ Functions
 
 
 .. py:function:: active_lossless_straight(active_phase_rad=0.0)
-
-

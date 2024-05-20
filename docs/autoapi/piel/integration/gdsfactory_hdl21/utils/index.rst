@@ -27,5 +27,3 @@ Functions
 
 
 .. py:function:: convert_tuples_to_strings(tuple_list)
-
-

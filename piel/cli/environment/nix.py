@@ -6,11 +6,20 @@ import piel
 
 from .environment import environment
 from .venv import create_and_activate_venv
-from ..utils import echo_and_check_subprocess, append_to_bashrc_if_does_not_exist, default_openlane2_directory, \
-    get_python_install_directory
+from ..utils import (
+    echo_and_check_subprocess,
+    append_to_bashrc_if_does_not_exist,
+    default_openlane2_directory,
+    get_python_install_directory,
+)
 from ...file_system import create_new_directory
 
-__all__ = ["install_nix", "install_openlane", "activate_openlane_nix", "activate_piel_nix"]
+__all__ = [
+    "install_nix",
+    "install_openlane",
+    "activate_openlane_nix",
+    "activate_piel_nix",
+]
 
 
 def install_and_configure_nix():
@@ -22,10 +31,14 @@ def install_and_configure_nix():
     """
     if platform.system() == "Windows":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Darwin":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Linux":
         # TODO sort this out for non Debian
         try:
@@ -38,8 +51,10 @@ def install_and_configure_nix():
                     "install",
                     "-d",
                     "-m755",
-                    "-o", str(os.getuid()),  # Equivalent to $(id -u) in shell
-                    "-g", str(os.getgid()),  # Equivalent to $(id -g) in shel
+                    "-o",
+                    str(os.getuid()),  # Equivalent to $(id -u) in shell
+                    "-g",
+                    str(os.getgid()),  # Equivalent to $(id -g) in shel
                     "/nix",
                 ]
             )
@@ -68,7 +83,9 @@ def install_and_configure_nix():
                 )
 
         except:  # NOQA: E722
-            raise Exception("Failed to install nix. Read the instructions in the corresponding nix function.")
+            raise Exception(
+                "Failed to install nix. Read the instructions in the corresponding nix function."
+            )
 
     return 0
 
@@ -86,18 +103,29 @@ def update_openlane_directory(
     openlane2_directory = piel.return_path(directory)
     if openlane2_directory.exists():
         echo_and_check_subprocess(["git", "checkout", branch], cwd=openlane2_directory)
-        echo_and_check_subprocess(["git", "pull", "origin", "main"], cwd=openlane2_directory)
+        echo_and_check_subprocess(
+            ["git", "pull", "origin", "main"], cwd=openlane2_directory
+        )
 
 
-@environment.command(name="activate-openlane-nix", help="Activates the specific openlane nix environment.")
-def activate_openlane_nix(openlane2_directory: pathlib.Path = default_openlane2_directory):
+@environment.command(
+    name="activate-openlane-nix",
+    help="Activates the specific openlane nix environment.",
+)
+def activate_openlane_nix(
+    openlane2_directory: pathlib.Path = default_openlane2_directory,
+):
     """CLI that installs both the openlane2 python interface and the OpenROAD binaries."""
     if platform.system() == "Windows":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Darwin":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Linux":
         # TODO verify that openlane is installed in the corresponding directory
         # cachix use openlane
@@ -107,7 +135,9 @@ def activate_openlane_nix(openlane2_directory: pathlib.Path = default_openlane2_
         pass
 
 
-@environment.command(name="activate-piel-nix", help="Activates the specific piel nix environment.")
+@environment.command(
+    name="activate-piel-nix", help="Activates the specific piel nix environment."
+)
 def activate_piel_nix(openlane2_directory: pathlib.Path = default_openlane2_directory):
     """
     Enters the custom piel nix environment with all the supported tools installed and configured packages.
@@ -115,19 +145,32 @@ def activate_piel_nix(openlane2_directory: pathlib.Path = default_openlane2_dire
     """
     if platform.system() == "Windows":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Darwin":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Linux":
         # cachix use openlane
         # create_and_activate_venv()  # Currently unused, TODO future poetry integration
         nix_shell_directory = get_python_install_directory() / "environment" / "nix"
         # nix develop --extra-experimental-features nix-command --extra-experimental-features flakes
         echo_and_check_subprocess(
-            ["nix", "develop", "--debugger", "--extra-experimental-features", "nix-command",
-             "--extra-experimental-features", "flakes", "--show-trace", "--impure"],
-            cwd=nix_shell_directory
+            [
+                "nix",
+                "develop",
+                "--debugger",
+                "--extra-experimental-features",
+                "nix-command",
+                "--extra-experimental-features",
+                "flakes",
+                "--show-trace",
+                "--impure",
+            ],
+            cwd=nix_shell_directory,
         )
         pass
 
@@ -138,15 +181,22 @@ def install_nix():
     return install_and_configure_nix()
 
 
-@environment.command(name="install-openlane", help="Installs all the openlane configuration and packages reproducibly.")
+@environment.command(
+    name="install-openlane",
+    help="Installs all the openlane configuration and packages reproducibly.",
+)
 def install_openlane(openlane2_directory: pathlib.Path = default_openlane2_directory):
     """CLI that installs both the openlane2 python interface and the OpenROAD binaries."""
     if platform.system() == "Windows":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Darwin":
         """Not Supported"""
-        raise NotImplementedError("This installation method is not supported on Windows.")
+        raise NotImplementedError(
+            "This installation method is not supported on Windows."
+        )
     elif platform.system() == "Linux":
         # cachix use openlane
         echo_and_check_subprocess(["cachix", "use", "openlane"])
@@ -155,14 +205,24 @@ def install_openlane(openlane2_directory: pathlib.Path = default_openlane2_direc
         if not directory_exists:
             try:
                 update_openlane_directory(openlane2_directory)
-                print(Warning("The openlane2 directory already exists. Updating it instead from the main branch."))
+                print(
+                    Warning(
+                        "The openlane2 directory already exists. Updating it instead from the main branch."
+                    )
+                )
                 return 0
             except:  # NOQA: E722
                 raise FileExistsError(
                     "The openlane2 directory already exists. Please delete it and try again."
                 )
         echo_and_check_subprocess(
-            ["git", "clone", "https://github.com/efabless/openlane2.git", str(openlane2_directory)])
+            [
+                "git",
+                "clone",
+                "https://github.com/efabless/openlane2.git",
+                str(openlane2_directory),
+            ]
+        )
         return 0
 
 
@@ -192,8 +252,5 @@ def update_openlane_directory_command(
     if directory is None:
         directory = default_openlane2_directory
     directory = piel.return_path(directory)
-    update_openlane_directory(
-        directory=directory,
-        branch=branch
-    )
+    update_openlane_directory(directory=directory, branch=branch)
     return 0

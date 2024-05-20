@@ -1,7 +1,9 @@
 import jax.numpy as jnp
 
-__all__ = ["awg_to_cross_sectional_area_m2",
-           "calculate_cross_sectional_area_m2", ]
+__all__ = [
+    "awg_to_cross_sectional_area_m2",
+    "calculate_cross_sectional_area_m2",
+]
 
 
 def calculate_cross_sectional_area_m2(
@@ -16,7 +18,7 @@ def calculate_cross_sectional_area_m2(
     Returns:
         float: Cross sectional area in meters squared.
     """
-    return jnp.pi * (diameter_m ** 2) / 4
+    return jnp.pi * (diameter_m**2) / 4
 
 
 def awg_to_cross_sectional_area_m2(
@@ -32,5 +34,6 @@ def awg_to_cross_sectional_area_m2(
         float: The cross-sectional area in meters squared.
     """
     return jnp.pi * (0.127 * 92 ** ((36 - awg) / 39) ** 2) / 4
+
 
 # old ((0.127) * (92 ** ((36 - self.core_diameter_awg) / 39))) * 1e-3

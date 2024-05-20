@@ -1,6 +1,6 @@
 # # Basic Interconnection Modelling
 #
-# It is very difficult to design an electronic-photonic system without actually *connecting* them together. As it turns out, interconnection modelling is crucial in understanding the scaling of these systems. 
+# It is very difficult to design an electronic-photonic system without actually *connecting* them together. As it turns out, interconnection modelling is crucial in understanding the scaling of these systems.
 #
 # We might want to model:
 #
@@ -15,8 +15,15 @@
 
 import numpy as np
 import piel
-from piel.models.physical.electrical.cable import calculate_coaxial_cable_geometry, calculate_coaxial_cable_heat_transfer, calculate_dc_cable_geometry
-from piel.models.physical.electrical.types import CoaxialCableGeometryType, CoaxialCableMaterialSpecificationType
+from piel.models.physical.electrical.cable import (
+    calculate_coaxial_cable_geometry,
+    calculate_coaxial_cable_heat_transfer,
+    calculate_dc_cable_geometry,
+)
+from piel.models.physical.electrical.types import (
+    CoaxialCableGeometryType,
+    CoaxialCableMaterialSpecificationType,
+)
 
 # ## Starting from the Basics
 
@@ -25,8 +32,8 @@ from piel.models.physical.electrical.types import CoaxialCableGeometryType, Coax
 # Let's take the most basic example to physically verify that the numerical functional implementation gives accurate results in terms of calculating the corresponding heat transfer. We will also do some analytical comparisons:
 
 basic_dc_cable = calculate_dc_cable_geometry(
-    length_m = 1,
-    core_diameter_m = 1e-3,
+    length_m=1,
+    core_diameter_m=1e-3,
 )
 basic_dc_cable
 
@@ -37,10 +44,10 @@ basic_dc_cable
 # Note that we have strongly-typed classes in order to manage the data containers across multiple functions. This enables flexibly extending the corresponding implementations.
 
 basic_coaxial_cable = calculate_coaxial_cable_geometry(
-    length_m = 1,
-    sheath_top_diameter_m = 1.651e-3,
-    sheath_bottom_diameter_m = 1.468e-3,
-    core_diameter_m = 2e-3,
+    length_m=1,
+    sheath_top_diameter_m=1.651e-3,
+    sheath_bottom_diameter_m=1.468e-3,
+    core_diameter_m=2e-3,
 )
 basic_coaxial_cable
 
@@ -56,7 +63,9 @@ basic_coaxial_cable
 
 # Now, let's apply each section with materials. First, let's work out what are all the current supported materials specifications (feel free to contribute!). Note that this is always specific to the corresponding property.
 
-from piel.materials.thermal_conductivity import material_references as thermal_conductivity_material_references
+from piel.materials.thermal_conductivity import (
+    material_references as thermal_conductivity_material_references,
+)
 
 thermal_conductivity_material_references
 
@@ -76,9 +85,7 @@ thermal_conductivity_material_references
 # It is pretty straightforward to define a corresponding coaxial-cable material specification accordingly with the static `CoaxialCableMaterialSpecificationType` container:
 
 basic_coaxial_cable_materials = CoaxialCableMaterialSpecificationType(
-    core=('copper', 'rrr50'),
-    sheath=('copper', 'rrr50'),
-    dielectric=('teflon', None)
+    core=("copper", "rrr50"), sheath=("copper", "rrr50"), dielectric=("teflon", None)
 )
 basic_coaxial_cable_materials
 
@@ -116,10 +123,10 @@ parallel_cables_amount = 4
 
 # +
 basic_coaxial_cable_4_in_series = calculate_coaxial_cable_geometry(
-    length_m = 1 * 4,
-    sheath_top_diameter_m = 1.651e-3,
-    sheath_bottom_diameter_m = 1.468e-3,
-    core_diameter_m = 2e-3,
+    length_m=1 * 4,
+    sheath_top_diameter_m=1.651e-3,
+    sheath_bottom_diameter_m=1.468e-3,
+    core_diameter_m=2e-3,
 )
 
 basic_coaxial_cable_heat_transfer_4_in_series = calculate_coaxial_cable_heat_transfer(
@@ -133,5 +140,3 @@ basic_coaxial_cable_heat_transfer_4_in_series
 # ```
 # CoaxialCableHeatTransferType(core=0.0004772902711454241, sheath=0.0004772902711454241, dielectric=4.7169196020181784e-05, total=0.00100174973831103)
 # ```
-
-

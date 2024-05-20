@@ -78,5 +78,3 @@ Functions
 
    :returns: Configuration dictionary.
    :rtype: config_dictionary(dict)
-
-

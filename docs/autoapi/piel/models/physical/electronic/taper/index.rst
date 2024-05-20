@@ -32,5 +32,3 @@ Functions
 .. py:function:: taper(params: TaperParameters) -> hdl21.Module
 
    Implements a `hdl21` taper resistor class. We need to include the mapping ports as we expect our gdsfactory component to be with the instance of the model.
-
-

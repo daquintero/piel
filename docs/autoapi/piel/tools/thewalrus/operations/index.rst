@@ -34,5 +34,3 @@ Functions
 
    :returns: The circuit permanent and the time it took to compute it.
    :rtype: tuple
-
-

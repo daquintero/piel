@@ -32,6 +32,3 @@ Functions
    :param cross_transmission: TODO
 
    Returns:
-
-
-

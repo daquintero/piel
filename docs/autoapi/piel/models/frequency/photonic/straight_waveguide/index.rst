@@ -39,5 +39,3 @@ Functions
 
 
 .. py:function:: ideal_lossless_active_waveguide(active_phase_rad=0.0)
-
-

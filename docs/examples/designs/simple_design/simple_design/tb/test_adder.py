@@ -38,7 +38,7 @@ async def adder_randomised_test(dut):
     time_data = list()
 
     print("Example dut.X.value Print")
-    
+
     a_signal_data.append(dut.A.value)
     b_signal_data.append(dut.B.value)
     x_signal_data.append(dut.X.value)
@@ -55,7 +55,6 @@ async def adder_randomised_test(dut):
 
         print(dut.X.value)
 
-        
         a_signal_data.append(dut.A.value)
         b_signal_data.append(dut.B.value)
         x_signal_data.append(dut.X.value)
@@ -66,7 +65,7 @@ async def adder_randomised_test(dut):
         ), "Randomised test failed with: {A} + {B} = {X}".format(
             A=dut.A.value, B=dut.B.value, X=dut.X.value
         )
-    
+
     simulation_data = {
         "a": a_signal_data,
         "b": b_signal_data,

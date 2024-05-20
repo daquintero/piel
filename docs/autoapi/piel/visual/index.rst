@@ -134,5 +134,3 @@ Functions
    Activates the piel fast rc params.
 
    :returns: None
-
-

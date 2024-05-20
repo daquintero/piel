@@ -2,5 +2,3 @@
 =================================
 
 .. py:module:: piel.tools.qutip.config
-
-

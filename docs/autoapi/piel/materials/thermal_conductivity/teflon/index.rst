@@ -29,7 +29,7 @@ Attributes
    :type: piel.materials.thermal_conductivity.types.MaterialReferencesTypes
    :value: [('teflon', None)]
 
-   
+
 
 .. py:function:: teflon(temperature_range_K: piel.models.physical.types.TemperatureRangeTypes, *args, **kwargs)
 
@@ -39,6 +39,3 @@ Attributes
    :param temperature_range_K:
 
    Returns:
-
-
-

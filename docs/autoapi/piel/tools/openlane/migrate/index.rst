@@ -38,5 +38,3 @@ Functions
    :type root_directory_v1: str
 
    :returns: None
-
-

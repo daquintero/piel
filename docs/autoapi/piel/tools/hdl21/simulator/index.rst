@@ -74,5 +74,3 @@ Functions
 
    :returns: Simulation results
    :rtype: results
-
-

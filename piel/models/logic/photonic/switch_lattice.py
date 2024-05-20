@@ -6,11 +6,11 @@ from typing import Optional, Callable
 
 
 def compose_switch_position_list(
-        network: np.array,
-        gap_elements: list = None,
-        cross_elements: list = None,
-        *args,
-        **kwargs
+    network: np.array,
+    gap_elements: list = None,
+    cross_elements: list = None,
+    *args,
+    **kwargs
 ):
     """
     This function returns a list of the switch positions in the network, the corresponding instance, and the 2D position in the network.

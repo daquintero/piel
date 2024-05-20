@@ -124,7 +124,7 @@ pi_phase_circuit = piel.sax_to_s_parameters_standard_matrix(
 )
 pi_phase_circuit
 
-# Identify states: 
+# Identify states:
 # * You can see it's the cross state because the outputs invert/cross the inputs.
 # * You can see it's the bar state because the outputs map the inputs.
 
@@ -139,7 +139,7 @@ output_state_0 = {
 output_state_0
 
 # ```python
-# {'phase': (0,), 
+# {'phase': (0,),
 #  'input_fock_state': (1, 0),
 #  'output_fock_state': (1, 0)}
 # ```
@@ -155,7 +155,7 @@ output_state_1 = piel.models.logic.electro_optic.format_electro_optic_fock_trans
 output_state_1
 
 # ```python
-# {'phase': (0,), 
+# {'phase': (0,),
 #  'input_fock_state': (0, 1),
 #  'output_fock_state': (0, 1)}
 # ```
@@ -216,7 +216,7 @@ verification_states = [
         "phase": (jnp.pi,),
         "input_fock_state": (0, 1),
         "output_fock_state": (1, 0),
-    },  
+    },
 ]
 target_verification_dataframe = pd.DataFrame(verification_states)
 target_verification_dataframe
@@ -268,18 +268,14 @@ chain_mode_3_switch_position_list = piel.models.logic.photonic.compose_switch_po
 chain_mode_3, chain_mode_3_switch_position_list
 
 
-# Let's consider the "X" state can only have two possible states, cross and bar which are represented by the angle applied, (0 -> 0, bar) and (1 -> $\pi$, cross). 
+# Let's consider the "X" state can only have two possible states, cross and bar which are represented by the angle applied, (0 -> 0, bar) and (1 -> $\pi$, cross).
 #
 # If we have a fock state `[[1], [0], [0]]` inputted onto the switch lattice, we want it to route out the photon accordingly at the bottom mode index 2, third waveguide. Accordingly, the top-most switch needs to cross and the bottom most needs to bar in order to achieve this function.
 #
 #
-# We can try a little analytical simulator accordingly. Each "switch" state gets replaced by a 2x2 transmission matrix for each specific state, and concatenated to build the correponding state of the system. 
+# We can try a little analytical simulator accordingly. Each "switch" state gets replaced by a 2x2 transmission matrix for each specific state, and concatenated to build the correponding state of the system.
 
 def a(
     switch_network: list[list]
     states: tuple = (0,1)
 ):
-
-
-
-

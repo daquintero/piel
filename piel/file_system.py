@@ -351,9 +351,7 @@ def get_files_recursively_in_directory(
     return file_list
 
 
-def get_id_map_directory_dictionary(
-    path_list: list[PathTypes], target_prefix: str
-):
+def get_id_map_directory_dictionary(path_list: list[PathTypes], target_prefix: str):
     """
     Returns a dictionary of ids to directories.
 
@@ -374,7 +372,7 @@ def get_id_map_directory_dictionary(
         # Check if the basename starts with the provided prefix
         if basename.startswith(target_prefix):
             # Extract the id after the prefix
-            id_str = basename[len(target_prefix):]
+            id_str = basename[len(target_prefix) :]
             # Convert the id string into an integer and use it as a key for the dictionary
             id_dict[int(id_str)] = path
     return id_dict
@@ -391,12 +389,13 @@ def get_top_level_script_directory() -> pathlib.Path:
     """
 
     # For Jupyter notebooks and IPython environments
-    if 'ipykernel' in sys.modules or 'IPython' in sys.modules:
+    if "ipykernel" in sys.modules or "IPython" in sys.modules:
         try:
             from IPython.core.getipython import get_ipython
+
             # IPython's get_ipython function provides access to the IPython interactive environment
             ipython = get_ipython()
-            if ipython and hasattr(ipython, 'starting_dir'):
+            if ipython and hasattr(ipython, "starting_dir"):
                 return pathlib.Path(ipython.starting_dir).resolve()
         except Exception as e:
             # Log or print the error as needed
@@ -404,13 +403,13 @@ def get_top_level_script_directory() -> pathlib.Path:
 
     # For pytest, PDM, and similar environments where sys.argv might be manipulated
     # or __main__.__file__ is not set as expected.
-    if 'pytest' in sys.modules or '_pytest' in sys.modules or 'pdm' in sys.modules:
+    if "pytest" in sys.modules or "_pytest" in sys.modules or "pdm" in sys.modules:
         return pathlib.Path.cwd()
 
     # For standard script executions and other environments
     # This checks if __main__ module has __file__ attribute and uses it
-    main_module = sys.modules.get('__main__', None)
-    if main_module and hasattr(main_module, '__file__'):
+    main_module = sys.modules.get("__main__", None)
+    if main_module and hasattr(main_module, "__file__"):
         main_file = main_module.__file__
         return pathlib.Path(main_file).resolve().parent
 

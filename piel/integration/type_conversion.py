@@ -22,10 +22,7 @@ tuple_int_type = tuple[int, ...]
 package_array_types = Literal["qutip", "jax", "numpy", "list", "tuple"] | tuple_int_type
 
 
-def convert_array_type(
-    array: array_types,
-    output_type: package_array_types
-):
+def convert_array_type(array: array_types, output_type: package_array_types):
     if output_type == "qutip":
         if type(array) is qutip.Qobj:
             pass
@@ -89,10 +86,12 @@ def convert_2d_array_to_string(list_2D: list[list]):
     return binary_string
 
 
-def absolute_to_threshold(array: array_types,
-                          threshold: float = 1e-6,
-                          dtype_output: int | float | bool = int,
-                          output_array_type: package_array_types = "jax") -> package_array_types:
+def absolute_to_threshold(
+    array: array_types,
+    threshold: float = 1e-6,
+    dtype_output: int | float | bool = int,
+    output_array_type: package_array_types = "jax",
+) -> package_array_types:
     """
     This function converts the computed optical transmission arrays to single bit digital signals.
     The function takes the absolute value of the array and compares it to a threshold to determine the digital signal.

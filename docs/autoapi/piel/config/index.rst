@@ -15,6 +15,3 @@ Module Contents
 ---------------
 
 .. py:data:: piel_path_types
-
-   
-

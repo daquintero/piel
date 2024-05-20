@@ -24,5 +24,3 @@ Functions
 
 
 .. py:function:: read_vcd_to_json(file_path: piel.types.PathTypes)
-
-
