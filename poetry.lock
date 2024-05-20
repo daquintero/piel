@@ -72,6 +72,19 @@ builtin-yosys = ["amaranth-yosys (>=0.38)"]
 remote-build = ["paramiko (>=2.7,<3.0)"]
 
 [[package]]
+name = "amaranth_driven_flow"
+version = "0.0.1"
+description = "Example empty piel project."
+optional = true
+python-versions = "*"
+files = []
+develop = true
+
+[package.source]
+type = "directory"
+url = "docs/examples/designs/amaranth_driven_flow"
+
+[[package]]
 name = "amaranth-yosys"
 version = "0.40.0.0.post94"
 description = "Specialized WebAssembly build of Yosys used by Amaranth HDL"
@@ -1415,6 +1428,19 @@ etree-dm = ["dm-tree", "etils[etree]"]
 etree-jax = ["etils[etree]", "jax[cpu]"]
 etree-tf = ["etils[etree]", "tensorflow"]
 lazy-imports = ["etils[ecolab]"]
+
+[[package]]
+name = "example_empty_project"
+version = "0.0.1"
+description = "Example empty piel project."
+optional = true
+python-versions = "*"
+files = []
+develop = true
+
+[package.source]
+type = "directory"
+url = "docs/examples/designs/example_empty_project"
 
 [[package]]
 name = "exceptiongroup"
@@ -6175,6 +6201,32 @@ files = [
 ]
 
 [[package]]
+name = "simple_copied_design"
+version = "0.0.2"
+description = "Simple piel project example"
+optional = true
+python-versions = "*"
+files = []
+develop = true
+
+[package.source]
+type = "directory"
+url = "docs/examples/designs/simple_copied_design"
+
+[[package]]
+name = "simple_design"
+version = "0.0.2"
+description = "Simple piel project example"
+optional = true
+python-versions = "*"
+files = []
+develop = true
+
+[package.source]
+type = "directory"
+url = "docs/examples/designs/simple_design"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -7785,9 +7837,9 @@ cffi = {version = ">=1.11", markers = "platform_python_implementation == \"PyPy\
 cffi = ["cffi (>=1.11)"]
 
 [extras]
-dev = ["black", "bokeh", "bump2version", "cookiecutter", "coverage", "flake8", "ipyevents", "ipytree", "ipywidgets", "jupyter", "jupyter-bokeh", "jupyter-core", "jupyter-packaging", "jupyterlab", "kfactory", "kweb", "myst-parser", "nbsphinx", "pandoc", "poetry", "pre-commit", "pydata-sphinx-theme", "pytest", "sphinx", "sphinx-autoapi", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-gallery", "sphinx-pydantic", "sphinx-rtd-theme", "sphinx_book_theme", "tox", "watchdog"]
+dev = ["amaranth_driven_flow", "black", "bokeh", "bump2version", "cookiecutter", "coverage", "example_empty_project", "flake8", "ipyevents", "ipytree", "ipywidgets", "jupyter", "jupyter-bokeh", "jupyter-core", "jupyter-packaging", "jupyterlab", "kfactory", "kweb", "myst-parser", "nbsphinx", "pandoc", "poetry", "pre-commit", "pydata-sphinx-theme", "pytest", "simple_copied_design", "simple_design", "sphinx", "sphinx-autoapi", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-gallery", "sphinx-pydantic", "sphinx-rtd-theme", "sphinx_book_theme", "tox", "watchdog"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "fdfd970533eea6903038ba7740fd1490ccf5b5457303ebcd7348337aeae07143"
+content-hash = "8d0d6b17ddcaa93aa55aefebc9a45a8f8517db7f7a3d92b76dd3f1440dfbb8b6"

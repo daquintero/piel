@@ -24,6 +24,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
+### START CORE ###
 python =  ">=3.10,<3.12"
 pydantic = "^2.0"
 amaranth = "^0.4.0"
@@ -47,6 +48,7 @@ qutip = "^4.7.3"
 sax = "0.12.2" # Pinned for pydantic <v2 compatibility.
 scipy = "^1.11.4"
 thewalrus = "^0.20.0"
+### END CORE ###
 
 black = {version="*", optional = true}
 bokeh = {version="*", optional = true}
@@ -83,40 +85,50 @@ sphinx-rtd-theme = {version="*", optional = true}
 tox = {version="*", optional = true}
 watchdog = {version="*", optional = true}
 
+# Local Examples for Testing
+amaranth_driven_flow = {path = "docs/examples/designs/amaranth_driven_flow", develop = true, optional=true}
+example_empty_project = {path = "docs/examples/designs/example_empty_project", develop = true, optional=true}
+simple_copied_design = {path = "docs/examples/designs/simple_copied_design", develop = true, optional=true}
+simple_design = {path = "docs/examples/designs/simple_design", develop = true, optional=true}
+
 [tool.poetry.extras]
 dev = [
-    "pytest",
-    "sphinx",
-    "sphinx-autodoc-typehints",
-    "sphinx-pydantic",
-    "sphinx-autoapi",
-    "sphinx-autobuild",
-    "sphinx_book_theme",
-    "sphinx-copybutton",
-    "sphinx-rtd-theme",
-    "sphinx-gallery",
-    "nbsphinx",
-    "myst-parser",
-    "pandoc",
-    "flake8",
+    "amaranth_driven_flow",
     "black",
     "bokeh",
     "bump2version",
     "cookiecutter",
     "coverage",
-    "kfactory",
-    "kweb",
+    "example_empty_project",
+    "flake8",
     "ipyevents",
     "ipytree",
     "ipywidgets",
     "jupyter",
-    "jupyter-core",
     "jupyter-bokeh",
+    "jupyter-core",
     "jupyter-packaging",
     "jupyterlab",
+    "kfactory",
+    "kweb",
+    "myst-parser",
+    "nbsphinx",
+    "pandoc",
     "poetry",
     "pre-commit",
+    "pytest",
     "pydata-sphinx-theme",
+    "simple_copied_design",
+    "simple_design",
+    "sphinx",
+    "sphinx-autoapi",
+    "sphinx-autobuild",
+    "sphinx-autodoc-typehints",
+    "sphinx-book_theme",
+    "sphinx-copybutton",
+    "sphinx-gallery",
+    "sphinx-pydantic",
+    "sphinx-rtd-theme",
     "tox",
     "watchdog"
 ]
