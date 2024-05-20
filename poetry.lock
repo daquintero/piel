@@ -73,16 +73,16 @@ remote-build = ["paramiko (>=2.7,<3.0)"]
 
 [[package]]
 name = "amaranth-yosys"
-version = "0.35.0.0.post81"
+version = "0.40.0.0.post94"
 description = "Specialized WebAssembly build of Yosys used by Amaranth HDL"
 optional = false
-python-versions = "*"
+python-versions = "~=3.8"
 files = [
-    {file = "amaranth_yosys-0.35.0.0.post81-py3-none-any.whl", hash = "sha256:9860d3a24d62f84cc65de3e33f6cb7b2aba19ab9203d7c80c084372a17fbbf6b"},
+    {file = "amaranth_yosys-0.40.0.0.post94-py3-none-any.whl", hash = "sha256:6a2e539d84d1dce8848ae6daf4f66c57547321682e6b57aaa3b988af388e61c9"},
 ]
 
 [package.dependencies]
-wasmtime = ">=1,<16"
+wasmtime = ">=1,<21"
 
 [[package]]
 name = "annotated-types"
@@ -6668,18 +6668,21 @@ zstandard = ">=0.19.0,<1"
 
 [[package]]
 name = "wasmtime"
-version = "15.0.0"
+version = "20.0.0"
 description = "A WebAssembly runtime powered by Wasmtime"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wasmtime-15.0.0-py3-none-any.whl", hash = "sha256:24de208dccea948e924b6af23c2b659f08bdd58e4ef5b549e2913a022cef2e50"},
-    {file = "wasmtime-15.0.0-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:137f6880a2a7eeec89ac98b46ef5e7e6082154cbd509926ec80d45a558432a24"},
-    {file = "wasmtime-15.0.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:4bfd230624b3972b869b3fae57c605556c00b1acdb18f3d60b5a21dcac5f1670"},
-    {file = "wasmtime-15.0.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:79a416bd65468027842a15d21b78b4aa94ecca8281ae9a8d299a7860710882df"},
-    {file = "wasmtime-15.0.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f74bd2af9dc7af37efae6efd1153377de6f9c43e88728448334eb6b5950718f5"},
-    {file = "wasmtime-15.0.0-py3-none-win_amd64.whl", hash = "sha256:fcad612253877a432c8f3c31c35adb521c59315fe6df0a7d7eb9b26a95f588b2"},
+    {file = "wasmtime-20.0.0-py3-none-any.whl", hash = "sha256:6d9806e34c7cebe3d2ff4ba58a0c7db3648d4d952a0b6821aed4c4d966a4b312"},
+    {file = "wasmtime-20.0.0-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:2ae53f5d84f071f42bf7c05da3bfe4a18e0b5ad801931188bff2e5092137213e"},
+    {file = "wasmtime-20.0.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:3f9ea16cf19039c5dc11d1f9a8f024ebb0d4c6cd1cbb2d0889797326f8ba5c06"},
+    {file = "wasmtime-20.0.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:137c92cfde23b9ed18a85d5d1a1bfa844f1322c3bd80bc36c3b5adc3322f4a6e"},
+    {file = "wasmtime-20.0.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:69505f8c1f42815c3784f77df5b3be9f4742ede56299a0f2d7d71083893e855d"},
+    {file = "wasmtime-20.0.0-py3-none-win_amd64.whl", hash = "sha256:8ddb958a1b6eed88e56ec4aaae9478c273bed2e4fcd3331f29fda8d9d12def3d"},
 ]
+
+[package.dependencies]
+importlib-resources = ">=5.10"
 
 [package.extras]
 testing = ["coverage", "pycparser", "pytest", "pytest-mypy"]
@@ -7180,4 +7183,4 @@ dev = ["black", "bokeh", "bump2version", "cookiecutter", "coverage", "flake8", "
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "34dbb3b284fe96471dd11919c09c36ff84834a870ff0f8d0e895be59ddc5fc90"
+content-hash = "8092a7e5c9742e9b1162e2db1fc1e236734cbbbb95a5a1f3463884d2ada7a429"

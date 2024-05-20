@@ -27,7 +27,7 @@ packages = [
 python =  ">=3.10,<3.12"
 pydantic = "^2.0"
 amaranth = "^0.4.0"
-amaranth-yosys = "0.35.0.0.post81"
+amaranth-yosys = "^0.40.0.0.post94"
 cython = "0.29.21"
 jupytext = "1.15.0"
 Click = ">=7.0"
