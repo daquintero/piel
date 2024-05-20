@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "piel"
-version = "0.0.56"
+version = "0.1.0"
 description = "Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more."
 authors = ["Dario Quintero <darioaquintero@gmail.com>"]
 license = "MIT"
@@ -67,6 +67,7 @@ kweb = {version="0.1.1", optional = true}
 myst-parser = {version="*", optional = true}
 nbsphinx = {version="*", optional = true}
 pandoc = {version="*", optional = true}
+poetry = {version="1.8.2", optional = true} # I am not happy with this being here
 pre-commit = {version="*", optional = true}
 pytest = {version=">=3", optional = true}
 pydata-sphinx-theme = {version=">=0.13.3", optional = true}
@@ -113,6 +114,7 @@ dev = [
     "jupyter-bokeh",
     "jupyter-packaging",
     "jupyterlab",
+    "poetry",
     "pre-commit",
     "pydata-sphinx-theme",
     "tox",
