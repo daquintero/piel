@@ -25,28 +25,28 @@ packages = [
 
 [tool.poetry.dependencies]
 python =  ">=3.10,<3.12"
-pydantic = "^1"
-amaranth = "0.4.0"
+pydantic = "^2.0"
+amaranth = "^0.4.0"
 amaranth-yosys = "0.35.0.0.post81"
 cython = "0.29.21"
 jupytext = "1.15.0"
 Click = ">=7.0"
 cocotb = "1.8.0"
 # femwell = "0.1.8"
-hdl21 = "4.0.0"
+hdl21 = { git = "git@github.com:dan-fritchman/Hdl21.git" }
 jax = "^0.4.14"
 jaxlib = "^0.4.14"
-gdsfactory = { version="7.2.1", extras=["kfactory"] } # Pinned for pydantic <v2 compatibility, until examples upgrades
-networkx = "3.1"
-numpy = "1.24.4"
+gdsfactory = { version="7.27.0", extras=["kfactory"] } # Pinned for pydantic <v2 compatibility, until examples upgrades
+networkx = "^3.1"
+numpy = "^1.24.4"
 matplotlib = {version="*"}
 openlane = "2.0.0b13"
-pandas = "1.5.3"
-xarray = "2023.12.0"
-qutip = "4.7.3"
-sax = "0.8.8" # Pinned for pydantic <v2 compatibility.
-scipy = "1.11.4"
-thewalrus = "0.20.0"
+pandas = "^1.5.3"
+xarray = "^2023.12.0"
+qutip = "^4.7.3"
+sax = "0.12.2" # Pinned for pydantic <v2 compatibility.
+scipy = "^1.11.4"
+thewalrus = "^0.20.0"
 
 black = {version="*", optional = true}
 bokeh = {version="*", optional = true}
