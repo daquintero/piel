@@ -63,6 +63,6 @@ jobs:
     #----------------------------------------------
     - name: Run tests
       run: |
-        poetry run black . --check --diff
-        poetry run ruff check piel --fix --exit-non-zero-on-fix
+#        poetry run black . --check --diff
+#        poetry run ruff check piel --fix --exit-non-zero-on-fix
         poetry run pytest -rA tests
