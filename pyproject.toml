@@ -151,3 +151,10 @@ priority = "primary"
 name = "jaxsource"
 priority = "supplemental"
 url = "https://storage.googleapis.com/jax-releases/jax_releases.html"
+
+[tool.pytest.ini_options]
+addopts = "-rav"
+minversion = "6.0"
+testpaths = [
+  "tests"
+]
