@@ -5,7 +5,6 @@ import pandas as pd
 import pathlib
 
 
-
 __all__ = [
     "plot_simple",
     "plot_simple_multi_row",

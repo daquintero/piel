@@ -65,7 +65,7 @@ Attributes
 
 .. py:data:: convert_output_type
 
-   
+
 
 .. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
@@ -138,7 +138,7 @@ Attributes
 
 .. py:data:: standard_s_parameters_to_qutip_qobj
 
-   
+
 
 .. py:function:: verify_matrix_is_unitary(matrix: jax.numpy.ndarray) -> bool
 
@@ -165,5 +165,3 @@ Attributes
    the output matrix is also a unitary.
 
    TODO implement validation of a 2D matrix.
-
-

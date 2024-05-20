@@ -92,5 +92,3 @@ Functions
 
    :returns: A dictionary of sorted runs
    :rtype: dict[str, list[pathlib.Path]]
-
-

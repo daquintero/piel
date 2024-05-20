@@ -26,5 +26,3 @@ Functions
 
    :returns: Composed models dictionary.
    :rtype: dict
-
-

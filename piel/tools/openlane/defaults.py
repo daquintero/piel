@@ -32,7 +32,7 @@ test_basic_open_lane_configuration_v1 = {
     "RUN_LINTER": False,
 }
 
-test_basic_open_lane_configuration_v2 = { # Works for small designs
+test_basic_open_lane_configuration_v2 = {  # Works for small designs
     "PDK": "sky130A",
     "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
@@ -43,7 +43,7 @@ test_basic_open_lane_configuration_v2 = { # Works for small designs
     "GRT_REPAIR_ANTENNAS": True,
     "FP_CORE_UTIL": 80,
     "RUN_HEURISTIC_DIODE_INSERTION": True,
-    "RUN_MCSTA": False, # Temporary TODO REMOVE
+    "RUN_MCSTA": False,  # Temporary TODO REMOVE
 }
 
 example_open_lane_configuration = {

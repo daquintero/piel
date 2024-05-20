@@ -50,7 +50,7 @@ Attributes
 
 .. py:data:: convert_output_type
 
-   
+
 
 .. py:function:: fock_state_to_photon_number_factorial(fock_state: qutip.Qobj | jax.numpy.ndarray) -> float
 
@@ -119,5 +119,3 @@ Attributes
 
    :returns: A list of all the valid Fock states.
    :rtype: list
-
-

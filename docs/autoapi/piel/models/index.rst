@@ -23,5 +23,3 @@ Submodules
    :maxdepth: 1
 
    utils/index.rst
-
-

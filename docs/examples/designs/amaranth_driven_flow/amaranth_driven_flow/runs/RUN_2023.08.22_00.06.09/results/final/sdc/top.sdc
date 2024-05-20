@@ -6,7 +6,7 @@ current_design top
 ###############################################################################
 # Timing Constraints
 ###############################################################################
-create_clock -name __VIRTUAL_CLK__ -period 10.0000 
+create_clock -name __VIRTUAL_CLK__ -period 10.0000
 set_clock_uncertainty 0.2500 __VIRTUAL_CLK__
 set_input_delay 2.0000 -clock [get_clocks {__VIRTUAL_CLK__}] -add_delay [get_ports {detector_in[0]}]
 set_input_delay 2.0000 -clock [get_clocks {__VIRTUAL_CLK__}] -add_delay [get_ports {detector_in[1]}]

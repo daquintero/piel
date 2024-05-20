@@ -8,6 +8,3 @@ Module Contents
 ---------------
 
 .. py:data:: RCMultiStageConfigurationType
-
-   
-

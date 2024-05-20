@@ -12,5 +12,3 @@ Submodules
 
    cable/index.rst
    types/index.rst
-
-

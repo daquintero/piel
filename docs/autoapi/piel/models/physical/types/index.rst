@@ -9,13 +9,10 @@ Module Contents
 
 .. py:data:: TemperatureRangeLimitType
 
-   
+
 
 .. py:data:: TemperatureRangeArrayType
 
-   
+
 
 .. py:data:: TemperatureRangeTypes
-
-   
-

@@ -25,5 +25,3 @@ Functions
    :param material:
 
    Returns:
-
-

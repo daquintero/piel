@@ -61,5 +61,3 @@ Functions
 
    :returns: Matplotlib plot.
    :rtype: plt
-
-

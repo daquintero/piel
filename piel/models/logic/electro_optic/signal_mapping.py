@@ -21,7 +21,12 @@ bit-size can map directly to a particular phase space within a particular mappin
 import numpy as np
 import pandas as pd
 from typing import Callable, Optional, Iterable, Literal
-from ....integration.type_conversion import array_types, convert_array_type, absolute_to_threshold, tuple_int_type
+from ....integration.type_conversion import (
+    array_types,
+    convert_array_type,
+    absolute_to_threshold,
+    tuple_int_type,
+)
 from .types import electro_optic_fock_state_type
 
 __all__ = [
@@ -169,8 +174,8 @@ def linear_bit_phase_map(
     bits_array = bits_array_from_bits_amount(bits_amount)
     phase_division_amount = len(bits_array) - 1
     phase_division_step = (
-                              final_phase_rad - initial_phase_rad
-                          ) / phase_division_amount - quantization_error
+        final_phase_rad - initial_phase_rad
+    ) / phase_division_amount - quantization_error
     linear_phase_array = np.arange(
         initial_phase_rad, final_phase_rad, phase_division_step
     )
@@ -235,7 +240,9 @@ def format_electro_optic_fock_transition(
     electro_optic_state = {
         "phase": convert_array_type(switch_state_array, "tuple"),
         "input_fock_state": convert_array_type(input_fock_state_array, tuple_int_type),
-        "output_fock_state": absolute_to_threshold(raw_output_state, output_array_type=tuple_int_type),
+        "output_fock_state": absolute_to_threshold(
+            raw_output_state, output_array_type=tuple_int_type
+        ),
     }
     # assert type(electro_optic_state) == electro_optic_fock_state_type # TODO fix this
     return electro_optic_state

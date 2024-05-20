@@ -55,6 +55,3 @@ Attributes
 
 
 .. py:data:: standard_s_parameters_to_qutip_qobj
-
-   
-

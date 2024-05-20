@@ -165,5 +165,3 @@ Functions
 
    :returns: DataFrame containing the file data
    :rtype: file_data (pd.DataFrame)
-
-

@@ -15,5 +15,3 @@ Subpackages
    electronic/index.rst
    opto_electronic/index.rst
    photonic/index.rst
-
-

@@ -100,5 +100,3 @@ Functions
 
    :returns: The heat transfer of the cable.
    :rtype: DCCableHeatTransferType
-
-

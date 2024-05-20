@@ -51,5 +51,3 @@ Functions
    :type openlane_version: Literal["v1", "v2"]
 
    :returns: None
-
-

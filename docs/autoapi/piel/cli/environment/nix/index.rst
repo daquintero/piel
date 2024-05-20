@@ -39,5 +39,3 @@ Functions
 .. py:function:: install_openlane(openlane2_directory: pathlib.Path = default_openlane2_directory)
 
    CLI that installs both the openlane2 python interface and the OpenROAD binaries.
-
-

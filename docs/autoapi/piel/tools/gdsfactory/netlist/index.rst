@@ -89,5 +89,3 @@ Functions
 
    :returns: The ordered input ports index tuple.
    :rtype: tuple
-
-

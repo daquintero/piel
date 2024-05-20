@@ -172,7 +172,7 @@ Attributes
 
 .. py:data:: default_openlane2_directory
 
-   
+
 
 .. py:function:: echo_and_run_subprocess(command: list, **kwargs)
 
@@ -239,5 +239,3 @@ Attributes
 
    :returns: None.
    :rtype: None
-
-

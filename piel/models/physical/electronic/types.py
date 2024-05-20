@@ -12,6 +12,7 @@ class LNAMetricsType(PielBaseModel):
     """
     Low-noise amplifier metrics.
     """
+
     footprint_mm2: Optional[float]
     bandwidth_Hz: Optional[MinimumMaximumType]
     noise_figure: Optional[MinimumMaximumType]
@@ -26,6 +27,7 @@ class HVAMetricsType(PielBaseModel):
     """
     High-voltage amplifier metrics.
     """
+
     footprint_mm2: Optional[float]
     bandwidth_Hz: Optional[MinimumMaximumType]
     power_added_efficiency: Optional[MinimumMaximumType]

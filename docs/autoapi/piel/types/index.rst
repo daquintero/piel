@@ -35,11 +35,11 @@ Attributes
 
 .. py:data:: PathTypes
 
-   
+
 
 .. py:data:: ArrayTypes
 
-   
+
 
 .. py:class:: PielBaseModel
 
@@ -52,10 +52,7 @@ Attributes
       .. py:attribute:: arbitrary_types_allowed
          :value: True
 
-         
+
 
 
    .. py:method:: supplied_parameters()
-
-
-

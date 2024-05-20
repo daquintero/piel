@@ -81,5 +81,3 @@ Functions
 
    TODO Implement a similar function from the openlane netlist too.
    TODO unclear they can implement verification without it being in a synchronous simulation.
-
-

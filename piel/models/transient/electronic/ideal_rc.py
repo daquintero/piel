@@ -43,11 +43,15 @@ def calculate_multistage_rc_performance(
 
     # Create JAX arrays from the multistage_configuration
     voltage_array = jnp.array([stage["voltage"] for stage in multistage_configuration])
-    capacitance_array = jnp.array([stage["capacitance"] for stage in multistage_configuration])
+    capacitance_array = jnp.array(
+        [stage["capacitance"] for stage in multistage_configuration]
+    )
 
     # Calculate total charge discharge energy
-    total_charge_discharge_energy = jnp.sum(voltage_array ** 2 * capacitance_array)
-    total_charge_discharge_power_consumption = total_charge_discharge_energy * switching_frequency_Hz
+    total_charge_discharge_energy = jnp.sum(voltage_array**2 * capacitance_array)
+    total_charge_discharge_power_consumption = (
+        total_charge_discharge_energy * switching_frequency_Hz
+    )
     transition_energy = total_charge_discharge_power_consumption / 2
     transition_power_consumption = total_charge_discharge_power_consumption / 2
 

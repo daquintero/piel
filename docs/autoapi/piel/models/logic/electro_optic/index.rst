@@ -139,6 +139,3 @@ Attributes
 
 
 .. py:data:: electro_optic_fock_state_type
-
-   
-

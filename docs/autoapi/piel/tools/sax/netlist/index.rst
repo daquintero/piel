@@ -90,5 +90,3 @@ Functions
 
    Returns a list of tuples, that correspond to the phases applied with the corresponding component paths at multiple levels of recursion.
    eg. [("component_lattice_gener_fb8c4da8", "mzi_1", "sxt"), ("component_lattice_gener_fb8c4da8", "mzi_5", "sxt")] and these are our keys to our sax circuit decomposition.
-
-

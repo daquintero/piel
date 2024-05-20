@@ -189,11 +189,11 @@ Attributes
 
 .. py:data:: ArrayTypes
 
-   
+
 
 .. py:data:: PathTypes
 
-   
+
 
 .. py:class:: PielBaseModel
 
@@ -206,7 +206,7 @@ Attributes
       .. py:attribute:: arbitrary_types_allowed
          :value: True
 
-         
+
 
 
    .. py:method:: supplied_parameters()
@@ -754,15 +754,15 @@ Attributes
 
 .. py:data:: array_types
 
-   
+
 
 .. py:data:: tuple_int_type
 
-   
+
 
 .. py:data:: package_array_types
 
-   
+
 
 .. py:function:: convert_2d_array_to_string(list_2D: list[list])
 
@@ -963,7 +963,7 @@ Attributes
 
 .. py:data:: delete_simulation_output_files
 
-   
+
 
 .. py:function:: run_cocotb_simulation(design_directory: str) -> subprocess.CompletedProcess
 
@@ -981,7 +981,7 @@ Attributes
 
 .. py:data:: get_simulation_output_files
 
-   
+
 
 .. py:function:: get_simulation_output_files_from_design(design_directory: piel.types.PathTypes, extension: str = 'csv')
 
@@ -1864,7 +1864,7 @@ Attributes
 
 .. py:data:: snet
 
-   
+
 
 .. py:function:: all_fock_states_from_photon_number(mode_amount: int, photon_amount: int = 1, output_type: Literal[qutip, jax] = 'qutip') -> list
 
@@ -1886,7 +1886,7 @@ Attributes
 
 .. py:data:: convert_output_type
 
-   
+
 
 .. py:function:: fock_state_nonzero_indexes(fock_state: qutip.Qobj | jax.numpy.ndarray) -> tuple[int]
 
@@ -1959,7 +1959,7 @@ Attributes
 
 .. py:data:: standard_s_parameters_to_qutip_qobj
 
-   
+
 
 .. py:function:: verify_matrix_is_unitary(matrix: jax.numpy.ndarray) -> bool
 
@@ -1991,15 +1991,12 @@ Attributes
 .. py:data:: __author__
    :value: 'Dario Quintero'
 
-   
+
 
 .. py:data:: __email__
    :value: 'darioaquintero@gmail.com'
 
-   
+
 
 .. py:data:: __version__
    :value: '0.0.56'
-
-   
-

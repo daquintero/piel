@@ -1,5 +1,4 @@
 import glob
-import inspect
 import json
 import openlane
 import os
@@ -88,6 +87,7 @@ def check_example_design(
 def copy_source_folder(
     source_directory: PathTypes,
     target_directory: PathTypes,
+    delete: bool = None,
 ) -> None:
     """
     Copies the files from a source_directory to a target_directory
@@ -95,23 +95,36 @@ def copy_source_folder(
     Args:
         source_directory(PathTypes): Source directory.
         target_directory(PathTypes): Target directory.
+        delete(bool): Delete target directory. Default: False.
 
     Returns:
         None
     """
     source_directory = return_path(source_directory)
     target_directory = return_path(target_directory)
-    if target_directory.exists():
-        answer = input("Confirm deletion of: " + str(target_directory.resolve()))
-        if answer.upper() in ["Y", "YES"]:
-            shutil.rmtree(target_directory)
-        elif answer.upper() in ["N", "NO"]:
-            print(
-                "Copying files now from: "
-                + str(source_directory.resolve())
-                + " to "
-                + str(target_directory.resolve())
+
+    if source_directory == target_directory:
+        print(
+            Warning(
+                f"source_directory: {source_directory} and target_directory: {target_directory} cannot be the same."
             )
+        )
+        return
+
+    if delete is True:
+        shutil.rmtree(target_directory)
+    else:
+        if target_directory.exists():
+            answer = input("Confirm deletion of: " + str(target_directory.resolve()))
+            if answer.upper() in ["Y", "YES"]:
+                shutil.rmtree(target_directory)
+            elif answer.upper() in ["N", "NO"]:
+                print(
+                    "Copying files now from: "
+                    + str(source_directory.resolve())
+                    + " to "
+                    + str(target_directory.resolve())
+                )
 
     shutil.copytree(
         source_directory,
@@ -129,6 +142,7 @@ def copy_example_design(
     example_name: str = "simple_design",
     target_directory: PathTypes = None,
     target_project_name: Optional[str] = None,
+    **kwargs,
 ) -> None:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
@@ -167,7 +181,7 @@ def copy_example_design(
         design_folder = os.environ["DESIGNS"] + "/" + example_name
 
     copy_source_folder(
-        source_directory=example_design_folder, target_directory=design_folder
+        source_directory=example_design_folder, target_directory=design_folder, **kwargs
     )
 
     if target_project_name is not None:
@@ -351,9 +365,7 @@ def get_files_recursively_in_directory(
     return file_list
 
 
-def get_id_map_directory_dictionary(
-    path_list: list[PathTypes], target_prefix: str
-):
+def get_id_map_directory_dictionary(path_list: list[PathTypes], target_prefix: str):
     """
     Returns a dictionary of ids to directories.
 
@@ -374,7 +386,7 @@ def get_id_map_directory_dictionary(
         # Check if the basename starts with the provided prefix
         if basename.startswith(target_prefix):
             # Extract the id after the prefix
-            id_str = basename[len(target_prefix):]
+            id_str = basename[len(target_prefix) :]
             # Convert the id string into an integer and use it as a key for the dictionary
             id_dict[int(id_str)] = path
     return id_dict
@@ -391,12 +403,13 @@ def get_top_level_script_directory() -> pathlib.Path:
     """
 
     # For Jupyter notebooks and IPython environments
-    if 'ipykernel' in sys.modules or 'IPython' in sys.modules:
+    if "ipykernel" in sys.modules or "IPython" in sys.modules:
         try:
             from IPython.core.getipython import get_ipython
+
             # IPython's get_ipython function provides access to the IPython interactive environment
             ipython = get_ipython()
-            if ipython and hasattr(ipython, 'starting_dir'):
+            if ipython and hasattr(ipython, "starting_dir"):
                 return pathlib.Path(ipython.starting_dir).resolve()
         except Exception as e:
             # Log or print the error as needed
@@ -404,13 +417,13 @@ def get_top_level_script_directory() -> pathlib.Path:
 
     # For pytest, PDM, and similar environments where sys.argv might be manipulated
     # or __main__.__file__ is not set as expected.
-    if 'pytest' in sys.modules or '_pytest' in sys.modules or 'pdm' in sys.modules:
+    if "pytest" in sys.modules or "_pytest" in sys.modules or "pdm" in sys.modules:
         return pathlib.Path.cwd()
 
     # For standard script executions and other environments
     # This checks if __main__ module has __file__ attribute and uses it
-    main_module = sys.modules.get('__main__', None)
-    if main_module and hasattr(main_module, '__file__'):
+    main_module = sys.modules.get("__main__", None)
+    if main_module and hasattr(main_module, "__file__"):
         main_file = main_module.__file__
         return pathlib.Path(main_file).resolve().parent
 
@@ -675,7 +688,7 @@ def return_path(
                 + " cannot be treated as a piel module."
             )
 
-    if type(input_path) == str:
+    if isinstance(input_path, str):
         output_path = pathlib.Path(input_path)
         if as_piel_module:
             output_path = treat_as_module(output_path)
