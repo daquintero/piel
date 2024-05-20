@@ -1812,7 +1812,7 @@ maintainer = ["autotyping", "doc8", "mypy", "ruff", "tbump", "towncrier", "xdoct
 
 [package.source]
 type = "git"
-url = "git@github.com:gdsfactory/gdsfactory.git"
+url = "https://github.com/daquintero/gdsfactory.git"
 reference = "HEAD"
 resolved_reference = "7f1cda384ecbee7469055334c4b6e60b97185493"
 
@@ -1933,7 +1933,7 @@ dev = ["black (==22.6)", "build", "coverage", "pre-commit (==2.20)", "pytest (==
 
 [package.source]
 type = "git"
-url = "git@github.com:dan-fritchman/Hdl21.git"
+url = "https://github.com/daquintero/Hdl21.git"
 reference = "HEAD"
 resolved_reference = "4f9a709b147454c6364d115311d8419cec0578af"
 
@@ -7848,4 +7848,4 @@ dev = ["amaranth_driven_flow", "black", "bokeh", "bump2version", "cookiecutter",
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "cde0e5ba6a925e8a74b3b790de5792b94986255135fca6102336af6da749d1bc"
+content-hash = "61f39f346087815e7b0f58b145358293e16758694c185f6c05dce422b732e3f0"

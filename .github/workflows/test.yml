@@ -38,8 +38,6 @@ jobs:
       MPLBACKEND: agg
     steps:
     - uses: actions/checkout@v4
-      with:
-          token: ${{ secrets.GH_PAT }}
 
     #----------------------------------------------
     #  -----  install & configure poetry  -----

@@ -34,10 +34,10 @@ jupytext = "1.15.0"
 Click = ">=7.0"
 cocotb = "1.8.0"
 # femwell = "0.1.8"
-hdl21 = { git = "git@github.com:daquintero/Hdl21.git" } # TODO fix when released
+hdl21 = { git = "https://github.com/daquintero/Hdl21.git" } # TODO fix when released
 jax = "^0.4.14"
 jaxlib = "^0.4.14"
-gdsfactory = { git = "git@github.com:daquintero/gdsfactory.git"} # TODO fix when released
+gdsfactory = { git = "https://github.com/daquintero/gdsfactory.git"} # TODO fix when released
 networkx = "^3.1"
 numpy = "^1.24.4"
 matplotlib = {version="*"}
