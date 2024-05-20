@@ -1,5 +1,4 @@
 import glob
-import inspect
 import json
 import openlane
 import os
@@ -88,6 +87,7 @@ def check_example_design(
 def copy_source_folder(
     source_directory: PathTypes,
     target_directory: PathTypes,
+    delete: bool = None,
 ) -> None:
     """
     Copies the files from a source_directory to a target_directory
@@ -95,23 +95,36 @@ def copy_source_folder(
     Args:
         source_directory(PathTypes): Source directory.
         target_directory(PathTypes): Target directory.
+        delete(bool): Delete target directory. Default: False.
 
     Returns:
         None
     """
     source_directory = return_path(source_directory)
     target_directory = return_path(target_directory)
-    if target_directory.exists():
-        answer = input("Confirm deletion of: " + str(target_directory.resolve()))
-        if answer.upper() in ["Y", "YES"]:
-            shutil.rmtree(target_directory)
-        elif answer.upper() in ["N", "NO"]:
-            print(
-                "Copying files now from: "
-                + str(source_directory.resolve())
-                + " to "
-                + str(target_directory.resolve())
+
+    if source_directory == target_directory:
+        print(
+            Warning(
+                f"source_directory: {source_directory} and target_directory: {target_directory} cannot be the same."
             )
+        )
+        return
+
+    if delete is True:
+        shutil.rmtree(target_directory)
+    else:
+        if target_directory.exists():
+            answer = input("Confirm deletion of: " + str(target_directory.resolve()))
+            if answer.upper() in ["Y", "YES"]:
+                shutil.rmtree(target_directory)
+            elif answer.upper() in ["N", "NO"]:
+                print(
+                    "Copying files now from: "
+                    + str(source_directory.resolve())
+                    + " to "
+                    + str(target_directory.resolve())
+                )
 
     shutil.copytree(
         source_directory,
@@ -129,6 +142,7 @@ def copy_example_design(
     example_name: str = "simple_design",
     target_directory: PathTypes = None,
     target_project_name: Optional[str] = None,
+    **kwargs,
 ) -> None:
     """
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
@@ -167,7 +181,7 @@ def copy_example_design(
         design_folder = os.environ["DESIGNS"] + "/" + example_name
 
     copy_source_folder(
-        source_directory=example_design_folder, target_directory=design_folder
+        source_directory=example_design_folder, target_directory=design_folder, **kwargs
     )
 
     if target_project_name is not None:
@@ -674,7 +688,7 @@ def return_path(
                 + " cannot be treated as a piel module."
             )
 
-    if type(input_path) == str:
+    if isinstance(input_path, str):
         output_path = pathlib.Path(input_path)
         if as_piel_module:
             output_path = treat_as_module(output_path)

@@ -77,6 +77,7 @@ piel.copy_example_design(
     example_name="simple_design",
     target_directory="designs/",
     target_project_name="simple_copied_design",
+    delete=True,  # TODO update for more robust tests
 )
 
 # ### Create an empty `piel` project

@@ -14,9 +14,9 @@ def test_script_execution(script_directory):
     piel.develop.configure_development_environment()
 
     scripts = [
-        "00_setup.py",
-        "01_run_openlane_flow.py",
-        "02a_large_scale_digital_layout.py",
+        # "00_setup.py", # TODO test in distributed machine when we have a way to install openlane
+        # "01_run_openlane_flow.py", # TODO test in distributed machine when we have a way to install openlane
+        # "02a_large_scale_digital_layout.py",  # TODO test in machine when we have a way to install openlane
         "03_sax_basics.py",
         "03a_sax_cocotb_cosimulation.py",
         "03b_optical_function_verification.py",
