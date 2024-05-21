@@ -1474,6 +1474,8 @@ files = [
     {file = "gdstk-0.9.51-cp311-cp311-musllinux_1_1_i686.whl", hash = "sha256:8ec45b81d1997149fce0cc06ff8da12a11b835f701b36fffb4267ab0674f3b02"},
     {file = "gdstk-0.9.51-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:2be4705e85ed692a62139fca89bd467dcdac4bd872bdae592bf7be6d67fde299"},
     {file = "gdstk-0.9.51-cp311-cp311-win_amd64.whl", hash = "sha256:74cfb8a036c87bba99498ce105bdb346f09c59bbc8efaea1b571f5b726b94506"},
+    {file = "gdstk-0.9.51-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:984c4667bc2e7b8423f3d4bf8156a1bc2f04fde3a12d76e84d8c2c4b8712a0e9"},
+    {file = "gdstk-0.9.51-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:fafbaefa618b8a1fd697415ba4d095b33b7181f5055127746b7effacfd60f27b"},
     {file = "gdstk-0.9.51-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:981197b7a836bea81d19398ede9ade7bf4038d08c426d3eeaa5954bc8b6fefa9"},
     {file = "gdstk-0.9.51-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0f163a2bd106ce8a94748c27ad1f70e7d8f1cc585c076b4691177916e4b06a40"},
     {file = "gdstk-0.9.51-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:ced619db65125c29b1791cc9cd945f5f1d235e0f6efd920ceb53d12fdc9d248f"},
@@ -4701,13 +4703,13 @@ rpds-py = ">=0.7.0"
 
 [[package]]
 name = "requests"
-version = "2.31.0"
+version = "2.32.0"
 description = "Python HTTP for Humans."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "requests-2.31.0-py3-none-any.whl", hash = "sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f"},
-    {file = "requests-2.31.0.tar.gz", hash = "sha256:942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1"},
+    {file = "requests-2.32.0-py3-none-any.whl", hash = "sha256:f2c3881dddb70d056c5bd7600a4fae312b2a300e39be6a118d30b90bd27262b5"},
+    {file = "requests-2.32.0.tar.gz", hash = "sha256:fa5490319474c82ef1d2c9bc459d3652e3ae4ef4c4ebdd18a21145a47ca4b6b8"},
 ]
 
 [package.dependencies]
