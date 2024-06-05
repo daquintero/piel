@@ -1,0 +1,59 @@
+
+connections:
+  ns,d: ps,d
+  ns,g: ps,g
+  ps,d: ns,d
+  ps,g: ns,g
+instances:
+  ns:
+    component: sky130_fd_pr__nfet_01v8
+    info: {}
+    settings:
+      As: int((nf+2)/2) * w/nf * 0.29
+      ad: int((nf+1)/2) * w/nf * 0.29
+      l: UNIT_1
+      m: UNIT_1
+      mult: UNIT_1
+      nf: UNIT_1
+      nrd: 0.29 / w
+      nrs: 0.29 / w
+      pd: 2*int((nf+1)/2) * (w/nf + 0.29)
+      ports:
+        b: VSS
+        d: o
+        g: i
+        s: VSS
+      ps: 2*int((nf+2)/2) * (w/nf + 0.29)
+      sa: UNIT_0
+      sb: UNIT_0
+      sd: UNIT_0
+      w: UNIT_1
+  ps:
+    component: sky130_fd_pr__pfet_01v8
+    info: {}
+    settings:
+      As: int((nf+2)/2) * w/nf * 0.29
+      ad: int((nf+1)/2) * w/nf * 0.29
+      l: UNIT_1
+      m: UNIT_1
+      mult: UNIT_1
+      nf: UNIT_1
+      nrd: 0.29 / w
+      nrs: 0.29 / w
+      pd: 2*int((nf+1)/2) * (w/nf + 0.29)
+      ports:
+        b: VDD
+        d: o
+        g: i
+        s: VDD
+      ps: 2*int((nf+2)/2) * (w/nf + 0.29)
+      sa: UNIT_0
+      sb: UNIT_0
+      sd: UNIT_0
+      w: UNIT_1
+name: SkyInv
+ports:
+  VDD: ps,s
+  VSS: ns,s
+  i: ps,g
+  o: ps,d

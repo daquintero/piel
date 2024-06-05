@@ -1,0 +1,14 @@
+schema: null
+instances:
+  PSW:
+    component: sky130_fd_pr__rf_pfet_01v8_mcM04W3p00L0p15
+    settings: {}
+  NSW:
+    component: sky130_fd_pr__rf_nfet_01v8_aM02W1p65L0p15
+    settings: {}
+schematic_placements:
+  PSW: {x: null, y: null, port: null, rotation: 0.0, dx: null, dy: null, mirror: null}
+  NSW: {x: null, y: null, port: null, rotation: 0.0, dx: null, dy: null, mirror: null}
+nets: []
+ports: {}
+schema_version: 1
