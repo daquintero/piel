@@ -64,7 +64,7 @@ matplotlib = {version = "*"}
 myst-parser = {version = "*", optional = true}
 nbsphinx = {version = "*", optional = true}
 networkx = "3.1"
-numpy = "1.24.4"
+numpy = "1.26.4"
 openlane = "2.0.0b13"
 pandas = "1.5.3"
 pandoc = {version = "*", optional = true}
