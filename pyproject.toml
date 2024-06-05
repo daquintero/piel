@@ -30,7 +30,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/daquintero/piel"
-version = "0.0.56"
+version = "0.0.55"
 
 [tool.poetry.dependencies]
 Click = ">=7.0"
