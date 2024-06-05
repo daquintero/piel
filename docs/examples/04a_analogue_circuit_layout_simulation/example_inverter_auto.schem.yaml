@@ -1,0 +1,16 @@
+schema: null
+instances:
+  ps:
+    component: sky130_fd_pr__rf_pfet_01v8_mcM04W3p00L0p15
+    settings: {}
+  ns:
+    component: sky130_fd_pr__rf_nfet_01v8_aM02W1p65L0p15
+    settings: {}
+schematic_placements:
+  ps: {x: null, y: null, port: null, rotation: 0.0, dx: null, dy: null, mirror: null}
+  ns: {x: null, y: null, port: null, rotation: 0.0, dx: null, dy: null, mirror: null}
+nets:
+- ['ps,DRAIN', 'ns,SOURCE']
+- ['ps,GATE', 'ns,GATE']
+ports: {}
+schema_version: 1

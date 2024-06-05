@@ -1,0 +1,3 @@
+[submodule "environment/nix/nix-eda"]
+	path = environment/nix/nix-eda
+	url = git@github.com:daquintero/nix-eda.git

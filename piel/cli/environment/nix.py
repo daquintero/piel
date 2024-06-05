@@ -25,6 +25,7 @@ __all__ = [
 def install_and_configure_nix():
     """
     Downloads and installs the nix package manager. Instructions taken from https://nixos.wiki/wiki/Nix_Installation_Guide
+    TODO update with nix-eda instructions
 
     Returns:
 
@@ -96,6 +97,7 @@ def update_openlane_directory(
 ):
     """
     Updates the openlane directory.
+    TODO update with nix-eda instructions
 
     Returns:
 
@@ -115,7 +117,10 @@ def update_openlane_directory(
 def activate_openlane_nix(
     openlane2_directory: pathlib.Path = default_openlane2_directory,
 ):
-    """CLI that installs both the openlane2 python interface and the OpenROAD binaries."""
+    """
+    CLI that installs both the openlane2 python interface and the OpenROAD binaries.
+    TODO update with nix-eda instructions
+    """
     if platform.system() == "Windows":
         """Not Supported"""
         raise NotImplementedError(
@@ -142,6 +147,7 @@ def activate_piel_nix(openlane2_directory: pathlib.Path = default_openlane2_dire
     """
     Enters the custom piel nix environment with all the supported tools installed and configured packages.
     Runs the nix-shell command on the piel/environment/nix/ directory.
+    TODO update with nix-eda instructions
     """
     if platform.system() == "Windows":
         """Not Supported"""

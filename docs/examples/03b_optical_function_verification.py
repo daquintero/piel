@@ -136,6 +136,7 @@ pi_phase_circuit = piel.sax_to_s_parameters_standard_matrix(
 print(pi_phase_circuit)
 print(piel.round_complex_array(pi_phase_circuit[0]))
 
+
 # ```python
 # (Array([[ 1.000000e+00+6.123234e-17j,  6.123234e-17+0.000000e+00j],
 #        [ 6.123234e-17+0.000000e+00j, -1.000000e+00-6.123234e-17j]],      dtype=complex128), ('o2', 'o1'))
@@ -574,11 +575,13 @@ chain_mode_3_switch_position_list = (
 )
 chain_mode_3, chain_mode_3_switch_position_list
 
+
 # Let's consider the "X" state can only have two possible states, cross and bar which are represented by the angle applied, (0 -> 0, bar) and (1 -> $\pi$, cross).
 #
 # If we have a fock state `[[1], [0], [0]]` inputted onto the switch lattice, we want it to route out the photon accordingly at the bottom mode index 2, third waveguide. Accordingly, the top-most switch needs to cross and the bottom most needs to bar in order to achieve this function.
 #
 #
+
 # We can try a little analytical simulator accordingly. Each "switch" state gets replaced by a 2x2 transmission matrix for each specific state, and concatenated to build the corresponding state of the system.
 
 piel.models.logic.electro_optic.get_state_phase_transitions(

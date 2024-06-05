@@ -1,0 +1,14 @@
+instances:
+  nfet1:
+    component: sky130_fd_pr__rf_nfet_01v8_aM04W5p00L0p25
+    settings: {}
+  pfet1:
+    component: sky130_fd_pr__rf_pfet_01v8_aM04W5p00L0p25
+    settings: {}
+schematic_placements:
+  nfet1: {rotation: 0, dx: -3.9659723998412693, dy: 0.8336120330876557}
+  pfet1: {rotation: 0, dx: 5.38058675902032, dy: 0.23576905986317565}
+nets:
+- ['nfet1,SOURCE', 'pfet1,DRAIN']
+ports: {}
+schema_version: 1

@@ -9,6 +9,9 @@ import numpy as np
 import piel
 import sax
 import sys
+from gdsfactory.generic_tech import get_generic_pdk
+
+get_generic_pdk().activate()
 
 # ## Start from `gdsfactory`
 
@@ -36,16 +39,26 @@ mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 
 # ```python
 # {'component': 'straight_heater_metal_undercut',
-#  'info': {'resistance': None},
-#  'settings': {'cross_section': 'strip',
-#   'length': 200.0,
-#   'with_undercut': False}}
+#  'info': {'resistance': 0},
+#  'settings': {'length': 200,
+#   'length_undercut_spacing': 0,
+#   'length_undercut': 5,
+#   'length_straight': 0.1,
+#   'length_straight_input': 0.1,
+#   'cross_section': 'xs_sc',
+#   'cross_section_heater': 'xs_heater_metal',
+#   'cross_section_waveguide_heater': 'xs_sc_heater_metal',
+#   'cross_section_heater_undercut': 'xs_sc_heater_metal_undercut',
+#   'with_undercut': False,
+#   'via_stack': 'via_stack_heater_mtop',
+#   'heater_taper_length': 5.0,
+#   'straight': {'function': 'straight'}}}
 # ```
 
 # So this top heater instance `info` instance definition, it already includes a `resistance` field. However, in the default component definition, it is defined as `None`. Let us give some more details about our circuit, and this would normally be provided by the PDK information of your foundry.
 
 # +
-from piel import straight_heater_metal_simple
+from gdsfactory.components import straight_heater_metal_simple
 import functools
 
 # Defines the resistance parameters
