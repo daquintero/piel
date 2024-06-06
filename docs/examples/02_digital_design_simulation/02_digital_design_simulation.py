@@ -152,12 +152,13 @@ layout_amaranth_truth_table_through_openlane(
 )
 # -
 
-# ## `cocoTb` Simulation
+# ## `cocotb` Simulation
 
 # It is strongly encouraged to get familiar with the `piel` flow project structure, as this file directory distribution enables the easy use between multiple design tools without conflicts or without structured organisation.
 
 # Location of our output files
 
+design_directory = piel.return_path(simple_design)
 source_output_files_directory = (
     piel.get_module_folder_type_location(
         module=simple_design, folder_type="digital_source"
@@ -188,6 +189,19 @@ piel.configure_cocotb_simulation(
     test_python_module="test_adder",
     design_sources_list=list((design_directory / "src").iterdir()),
 )
+
+# ```shell
+# # #!/bin/bash
+# # Makefile
+# SIM ?= icarus
+# TOPLEVEL_LANG ?= verilog
+# VERILOG_SOURCES += /home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/src/adder.vhdl
+# VERILOG_SOURCES += /home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/src/adder.sv
+# TOPLEVEL := adder
+# MODULE := test_adder
+# include $(shell cocotb-config --makefiles)/Makefile.sim
+# PosixPath('/home/daquintero/phd/piel_private/docs/examples/designs/simple_design/simple_design/tb/Makefile')
+# ```
 
 # Now we can create the simulation output files from the `makefile`. Note this will only work in our configured Linux environment.
 
@@ -224,6 +238,7 @@ example_simple_simulation_data
 # Now we can plot the corresponding data using the built-in interactive `bokeh` signal analyser function:
 
 piel.simple_plot_simulation_data(example_simple_simulation_data)
+# TODO fix this properly.
 
 # This looks like this:
 

@@ -670,23 +670,28 @@ def return_path(
         Returns:
             pathlib.Path: Pathlib path.
         """
-        setup_py_path = input_path_i / "setup.py"
-        directory_name = input_path_i.name
-        if setup_py_path.exists():
-            if (input_path_i / directory_name).exists():
-                return input_path_i / directory_name
+
+        def verify_install_file(install_file_path: pathlib.Path):
+            if install_file_path.exists():
+                if (input_path_i / directory_name).exists():
+                    return input_path_i / directory_name
+                else:
+                    return input_path_i
             else:
                 raise ValueError(
                     "input_path: "
-                    + str(input_path_i / directory_name)
+                    + str(input_path_i)
                     + " cannot be treated as a piel module."
                 )
-        else:
-            raise ValueError(
-                "input_path: "
-                + str(input_path_i)
-                + " cannot be treated as a piel module."
-            )
+
+        directory_name = input_path_i.name
+        try:
+            setup_py_path = input_path_i / "setup.py"
+            module_directory = verify_install_file(setup_py_path)
+        except ValueError:
+            input_path_parent_setup_py_path = input_path_i.parent / "setup.py"
+            module_directory = verify_install_file(input_path_parent_setup_py_path)
+        return module_directory
 
     if isinstance(input_path, str):
         output_path = pathlib.Path(input_path)
@@ -728,7 +733,7 @@ def write_file(
     directory_path: PathTypes,
     file_text: str,
     file_name: str,
-) -> None:
+) -> bool:
     """
     Records a `script_name` in the `scripts` project directory.
 
@@ -741,7 +746,6 @@ def write_file(
         None
     """
     directory_path = return_path(directory_path)
-
     directory_exists = check_path_exists(directory_path)
 
     if directory_exists:
@@ -761,3 +765,4 @@ def write_file(
     file = open(str(directory_path / file_name), "w")
     file.write(file_text)
     file.close()
+    return True

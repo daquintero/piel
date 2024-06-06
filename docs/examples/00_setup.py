@@ -1,6 +1,6 @@
 # # Project Setup Example
 
-# ## Enter Docker Environment
+# ## Within [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS)
 #
 # We first enter the Docker environment by running:
 # ```

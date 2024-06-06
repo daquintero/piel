@@ -2,7 +2,10 @@
 
 # This example demonstrates the modelling of multi-physical component interconnection and system design.
 
-from gdsfactory.components import mzi2x2_2x2_phase_shifter
+from piel.models.physical.photonic import (
+    mzi2x2_2x2_phase_shifter,
+    straight_heater_metal_simple,
+)
 import hdl21 as h
 import pandas as pd
 import numpy as np
@@ -58,18 +61,10 @@ mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 # So this top heater instance `info` instance definition, it already includes a `resistance` field. However, in the default component definition, it is defined as `None`. Let us give some more details about our circuit, and this would normally be provided by the PDK information of your foundry.
 
 # +
-from gdsfactory.components import straight_heater_metal_simple
-import functools
+# from gdsfactory.components import straight_heater_metal_simple
 
-# Defines the resistance parameters
-our_resistive_heater = functools.partial(
-    straight_heater_metal_simple, ohms_per_square=2
-)
-
-our_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
-    straight_x_top=our_resistive_heater,
-)
-our_resistive_mzi_2x2_2x2_phase_shifter.plot_widget()
+our_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter()
+our_resistive_mzi_2x2_2x2_phase_shifter.plot()
 # -
 
 # ![mzi2x2_2x2_phase_shifter](../../_static/img/examples/03a_sax_active_cosimulation/mzi2x2_phase_shifter.PNG)
@@ -93,11 +88,10 @@ our_resistive_mzi_2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 # We can make another variation of our phase shifter to explore physical differences.
 
 our_short_resistive_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter(
-    straight_x_top=our_resistive_heater,
     length_x=100,
 )
 our_short_resistive_mzi_2x2_2x2_phase_shifter.show()
-our_short_resistive_mzi_2x2_2x2_phase_shifter.plot_widget()
+our_short_resistive_mzi_2x2_2x2_phase_shifter.plot()
 
 # ![our_short_resistive_heater](../../_static/img/examples/04_spice_cosimulation/our_short_resistive_heater.PNG)
 
@@ -105,7 +99,9 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.plot_widget()
 
 our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 
-# {'resistance': 500.0}
+# ```
+# Info(resistance=0)
+# ```
 
 # So this is very cool, we have our device model giving us electrical data when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
 
@@ -115,7 +111,7 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 #
 # The way this is achieved is by extracting all the `instances`, `connections`, `ports`, `models` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
 
-our_resistive_heater_netlist = our_resistive_heater().get_netlist(
+our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
     allow_multiple=True, exclude_port_types="optical"
 )
 # our_resistive_mzi_2x2_2x2_phase_shifter_netlist = our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="optical")
@@ -145,16 +141,14 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 # {'component': 'straight',
 #  'info': {'length': 320.0,
 #   'width': 0.5,
-#   'cross_section': 'strip_heater_metal',
-#   'settings': {'width': 0.5,
-#    'layer': 'WG',
-#    'heater_width': 2.5,
-#    'layer_heater': 'HEATER'},
-#   'function_name': 'strip_heater_metal'},
-#  'settings': {'cross_section': 'strip_heater_metal',
-#   'heater_width': 2.5,
-#   'length': 320.0},
-#  'hdl21_model': Generator(name=Straight)}
+#   'route_info_type': 'xs_sc_heater_metal',
+#   'route_info_length': 320.0,
+#   'route_info_weight': 320.0,
+#   'route_info_xs_sc_heater_metal_length': 320.0},
+#  'settings': {'length': 320.0,
+#   'npoints': 2,
+#   'cross_section': 'xs_sc_heater_metal'},
+#  'hdl21_model': Generator(name=straight)}
 # ```
 
 # We can compose our SPICE using ``hdl21`` using the models we have provided. The final circuit can be extracted accordingly:
@@ -165,11 +159,11 @@ our_resistive_heater_circuit = piel.construct_hdl21_module(
 our_resistive_heater_circuit.instances
 
 # ```python
-# {'straight_1': Instance(name=straight_1 of=GeneratorCall(gen=straight)),
-#  'taper_1': Instance(name=taper_1 of=GeneratorCall(gen=taper)),
-#  'taper_2': Instance(name=taper_2 of=GeneratorCall(gen=taper)),
-#  'via_stack_1': Instance(name=via_stack_1 of=GeneratorCall(gen=via_stack)),
-#  'via_stack_2': Instance(name=via_stack_2 of=GeneratorCall(gen=via_stack))}
+# {'straight_1': Instance(name=straight_1 of=Module(name=Straight)),
+#  'taper_1': Instance(name=taper_1 of=Module(name=Taper)),
+#  'taper_2': Instance(name=taper_2 of=Module(name=Taper)),
+#  'via_stack_1': Instance(name=via_stack_1 of=Module(name=ViaStack)),
+#  'via_stack_2': Instance(name=via_stack_2 of=Module(name=ViaStack))}
 # ```
 
 # Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly. Note that the unconnected ports need to be exposed for proper SPICE composition.
@@ -209,7 +203,7 @@ h.netlist(
 # * Generated by `vlsirtools.SpiceNetlister`
 # *
 #
-# .SUBCKT Straight__
+# .SUBCKT Straight
 # + e1 e2
 # * No parameters
 #
@@ -233,7 +227,7 @@ h.netlist(our_resistive_heater_circuit, sys.stdout, fmt="spice")
 # * Generated by `vlsirtools.SpiceNetlister`
 # *
 #
-# .SUBCKT Straight__
+# .SUBCKT Straight
 # + e1 e2
 # * No parameters
 #
@@ -245,7 +239,7 @@ h.netlist(our_resistive_heater_circuit, sys.stdout, fmt="spice")
 #
 # .ENDS
 #
-# .SUBCKT Taper__
+# .SUBCKT Taper
 # + e1 e2
 # * No parameters
 #
@@ -257,7 +251,7 @@ h.netlist(our_resistive_heater_circuit, sys.stdout, fmt="spice")
 #
 # .ENDS
 #
-# .SUBCKT ViaStack__
+# .SUBCKT ViaStack
 # + e1 e2 e3 e4
 # * No parameters
 #
@@ -287,42 +281,41 @@ h.netlist(our_resistive_heater_circuit, sys.stdout, fmt="spice")
 #
 # .ENDS
 #
-# .SUBCKT straight_heater_metal_s_b8a2a400
+# .SUBCKT straight_heater_metal_simple_ohms_per_square2
 # + e1 e2 via_stack_1__e1 via_stack_1__e2 via_stack_1__e4 via_stack_2__e2 via_stack_2__e3 via_stack_2__e4
 # * No parameters
 #
 # xstraight_1
 # + e1 e2
-# + Straight__
+# + Straight
 # * No parameters
 #
 #
 # xtaper_1
 # + via_stack_1_e3 e1
-# + Taper__
+# + Taper
 # * No parameters
 #
 #
 # xtaper_2
 # + via_stack_2_e1 e2
-# + Taper__
+# + Taper
 # * No parameters
 #
 #
 # xvia_stack_1
 # + via_stack_1__e1 via_stack_1__e2 via_stack_1_e3 via_stack_1__e4
-# + ViaStack__
+# + ViaStack
 # * No parameters
 #
 #
 # xvia_stack_2
 # + via_stack_2_e1 via_stack_2__e2 via_stack_2__e3 via_stack_2__e4
-# + ViaStack__
+# + ViaStack
 # * No parameters
 #
 #
 # .ENDS
-#
 # ```
 
 # So this seems equivalent to the gdsfactory component representation. We can now continue to implement our SPICE simulation.
@@ -349,7 +342,7 @@ h.netlist(example_straight_resistor, sys.stdout, fmt="spice")
 # * Generated by `vlsirtools.SpiceNetlister`
 # *
 #
-# .SUBCKT Straight__
+# .SUBCKT Straight
 # + e1 e2
 # * No parameters
 #
@@ -390,7 +383,7 @@ simple_operating_point_simulation = piel.configure_operating_point_simulation(
 simple_operating_point_simulation
 
 # ```python
-# Sim(tb=Module(name=OperatingPointTb), attrs=[Op(name='operating_point_tb'), Save(targ=<SaveMode.ALL: 'all'>)], name='Simulation')
+# Sim(tb=Module(name=OperatingPointTb), attrs=[Op(name='operating_point_tb')], name='Simulation')
 # ```
 
 # We can now run the simulation using `ngpsice`. Make sure you have it installed, although this will be automatic in the *IIC-OSIC-TOOLS* environment:
@@ -449,7 +442,7 @@ simple_transient_simulation = piel.configure_transient_simulation(
 simple_transient_simulation
 
 # ```python
-# Sim(tb=Module(name=TransientTb), attrs=[Tran(tstop=0.1*UNIT, tstep=0.0001*UNIT, name='transient_tb')], name='Simulation')
+# Sim(tb=Module(name=TransientTb), attrs=[Tran(tstop=0.2*UNIT, tstep=0.0001*UNIT, name='transient_tb')], name='Simulation')
 # ```
 
 piel.run_simulation(simple_transient_simulation, to_csv=True)
@@ -641,7 +634,7 @@ linear_phase_power_mapping = piel.visual.plot_simple(
     ylabel=r"Phase ($\phi$)",
     xlabel=r"Power ($W$)",
 )
-linear_phase_power_mapping.savefig(
+linear_phase_power_mapping[0].savefig(
     "../../_static/img/examples/04_spice_cosimulation/linear_phase_power_mapping.png"
 )
 
