@@ -1,14 +1,21 @@
 # # Digital & Photonic Cosimulation with `sax` and `cocotb`
 
 # We begin by importing a parametric circuit from `gdsfactory`:
-import gdsfactory as gf
-from piel.models.physical.photonic import mzi2x2_2x2_phase_shifter, mzi2x2_2x2
+from piel.models.physical.photonic import (
+    mzi2x2_2x2_phase_shifter,
+    mzi2x2_2x2,
+    component_lattice_generic,
+)
 import numpy as np
 import jax.numpy as jnp
 import piel
 import sax
 import re
 from typing import Callable
+from gdsfactory.generic_tech import get_generic_pdk
+
+PDK = get_generic_pdk()
+PDK.activate()
 piel.visual.activate_piel_styles()
 
 # ## Active MZI 2x2 Phase Shifter
@@ -176,8 +183,8 @@ mzi2x2_model, mzi2x2_model_info = sax.circuit(
 piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
 # ```python
-# (Array([[-0.11039409-0.27826965j, -0.35184565-0.88689554j],
-#         [-0.35184568-0.88689554j,  0.11039409+0.27826962j]],      dtype=complex64),
+# (Array([[-0.3519612 -0.88685119j,  0.11042854+0.27825136j],
+#         [-0.11042854-0.27825136j, -0.3519612 -0.88685119j]],      dtype=complex128),
 #  ('o2', 'o1'))
 # ```
 
@@ -192,8 +199,8 @@ piel.sax_to_s_parameters_standard_matrix(
 )
 
 # ```python
-# (Array([[-0.88689834+0.35184222j,  0.2782662 -0.11039126j],
-#         [ 0.2782662 -0.11039126j,  0.88689834-0.35184222j]],      dtype=complex64),
+# (Array([[ 0.27825136-0.11042854j,  0.88685119-0.3519612j ],
+#         [-0.88685119+0.3519612j ,  0.27825136-0.11042854j]],      dtype=complex128),
 #  ('o2', 'o1'))
 # ```
 
@@ -375,7 +382,7 @@ example_component_lattice = [
     [mzi2x2_2x2(), 0, mzi2x2_2x2_phase_shifter()],
 ]
 
-mixed_switch_lattice_circuit = gf.components.component_lattice_generic(
+mixed_switch_lattice_circuit = component_lattice_generic(
     network=example_component_lattice
 )
 # mixed_switch_circuit.show()
@@ -385,67 +392,55 @@ mixed_switch_lattice_circuit
 
 # ### Model Composition
 
-mixed_switch_lattice_circuit_netlist = mixed_switch_lattice_circuit.get_netlist(
-    exclude_port_types="optical", allow_multiple=True
-)
-mixed_switch_lattice_circuit_netlist["ports"]
-
+# +
 mixed_switch_lattice_circuit_netlist = (
-    mixed_switch_lattice_circuit.get_netlist_recursive(
-        exclude_port_types="optical", allow_multiple=True
-    )
+    mixed_switch_lattice_circuit.get_netlist_recursive(allow_multiple=True)
 )
+top_level_name = (mixed_switch_lattice_circuit.get_netlist())["name"]
+
 mixed_switch_lattice_circuit_netlist.keys()
+# -
 
 # ```python
-# dict_keys(['component_lattice_gener_fb8c4da8', 'mzi_214beef3', 'straight_heater_metal_s_ad3c1693', 'via_stack_13a1ac5c', 'mzi_d46c281f'])
+# dict_keys(['component_lattice_generic_6555a796', 'mzi_d3794663', 'straight_heater_metal_undercut_length200', 'component_sequence_57aef139', 'via_stack_f7a70c8a', 'mzi_d46c281f'])
 # ```
 #
 # This will exactly vary in your case.
 
-mixed_switch_lattice_circuit_netlist["mzi_214beef3"]["instances"].keys()
+mixed_switch_lattice_circuit_netlist["mzi_d3794663"]["instances"].keys()
 
 # We can check what models we need to provide to compose the circuit. In our case, we want to determine all the instances that implement a particular model. This can be built directly into sax.
 
 recursive_composed_required_models = sax.get_required_circuit_models(
-    mixed_switch_lattice_circuit_netlist["component_lattice_gener_fb8c4da8"],
+    mixed_switch_lattice_circuit_netlist[top_level_name],
     models=piel.models.frequency.get_default_models(),
 )
 recursive_composed_required_models
 
 # ```python
-# ['mzi_214beef3', 'mzi_d46c281f']
+# ['mzi_d3794663', 'mzi_d46c281f']
 # ```
 #
 # So this tells us all the models that are recursively composed, but not inherently provided by our defaults library. These are the models we can explore.
 
-recursive_composed_required_models_0 = piel.tools.sax.get_required_circuit_models(
+recursive_composed_required_models_0 = sax.get_required_circuit_models(
     mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[0]],
     models=piel.models.frequency.get_default_models(),
 )
 recursive_composed_required_models_0
 
 # ```python
-# ['straight_heater_metal_s_ad3c1693']
+# ['straight_heater_metal_undercut_length200']
 # ```
 
 piel.get_component_instances(
     mixed_switch_lattice_circuit_netlist,
-    top_level_prefix="mzi_214beef3",
+    top_level_prefix="mzi_d3794663",
     component_name_prefix=recursive_composed_required_models_0[0],
 )
 
 # ```python
-# {'straight_heater_metal_s_ad3c1693': ['sxt']}
-# ```
-
-sax.get_required_circuit_models(
-    mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[1]],
-    models=piel.models.frequency.get_default_models(),
-)
-
-# ```python
-# []
+# {'straight_heater_metal_undercut_length200': ['sxt']}
 # ```
 
 # Now, we know from our example above that we can go deeper down the rabbit hole of iterative models until we have provided all models for our device. Let's just look at this in practice:
@@ -457,14 +452,14 @@ recursive_composed_required_models_0_0 = sax.get_required_circuit_models(
 recursive_composed_required_models_0_0
 
 # ```python
-# []
+# ['component_sequence_57aef139', 'taper', 'via_stack_f7a70c8a']
 # ```
 #
 # So this means that all the levels of the model can be composed from our default dictionary.
 
 our_recursive_custom_library = (
     piel.models.frequency.compose_custom_model_library_from_defaults(
-        {"straight_heater_metal_s_ad3c1693": straight_heater_metal_simple}
+        {"straight_heater_metal_undercut_length200": straight_heater_metal_simple}
     )
 )
 our_recursive_custom_library
@@ -473,13 +468,13 @@ our_recursive_custom_library
 
 active_phase_shifters_dictionary = piel.get_component_instances(
     mixed_switch_lattice_circuit_netlist,
-    top_level_prefix="component_lattice_gener_fb8c4da8",
+    top_level_prefix=top_level_name,
     component_name_prefix=recursive_composed_required_models[0],
 )
 active_phase_shifters_dictionary
 
 # ```python
-# {'mzi_214beef3': ['mzi_1', 'mzi_5']}
+# {'mzi_d3794663': ['mzi_1', 'mzi_5']}
 # ```
 
 # So these instances are our active phase shifters in our network.
@@ -488,7 +483,7 @@ active_phase_shifters_dictionary
 
 # ### Controlling our Phase Shifter Instances
 
-# One major complexity we have is that we do not know where our phase shifters are. We can find them in the layout, but we need our algorithm to determine them. There are a few things we know about them for sure. We know that our phase shifter instances begin with `straight_heater_metal_s`. However, we do not yet algorithmically know where they are. We know we can do the following based on our previous analysis. So what we will do now is extract all the active phase shifter components, and their corresponding location within the netlist. Let's remember where we want to end:
+# One major complexity we have is that we do not know where our phase shifters are. We can find them in the layout, but we need our algorithm to determine them. There are a few things we know about them for sure. We know that our phase shifter instances begin with `straight_heater_metal_u`. However, we do not yet algorithmically know where they are. We know we can do the following based on our previous analysis. So what we will do now is extract all the active phase shifter components, and their corresponding location within the netlist. Let's remember where we want to end:
 
 (
     mixed_switch_lattice_circuit_s_parameters,
@@ -496,19 +491,20 @@ active_phase_shifters_dictionary
 ) = sax.circuit(
     netlist=mixed_switch_lattice_circuit_netlist,
     models=our_recursive_custom_library,
+    ignore_missing_ports=True,
 )
 piel.sax_to_s_parameters_standard_matrix(mixed_switch_lattice_circuit_s_parameters())
 # mzi2x2_model(sxt={"active_phase_rad": phase_i}),
 
 # ```python
-# (Array([[ 0.23089845+0.23322447j, -0.13939448-0.2099313j ,
-#           0.23096855+0.1446734j ,  0.5804817 -0.6461842j ],
-#         [-0.03015644-0.250185j  , -0.92044485+0.087694j  ,
-#          -0.05714459+0.06361263j,  0.16851723+0.21419339j],
-#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
-#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
-#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
-#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+# (Array([[ 0.34411686-0.09040629j, -0.11674345-0.17602948j,
+#           0.2694585 -0.04083246j, -0.74559777-0.44564972j],
+#         [-0.21072449+0.01451205j, -0.26493346+0.89644186j,
+#           0.07339689+0.04386991j, -0.09164188-0.25666503j],
+#         [ 0.09765052-0.25443967j,  0.07339689+0.04386991j,
+#          -0.25703794+0.90116107j, -0.16029436+0.12066105j],
+#         [-0.74559777-0.44564972j,  0.17785668-0.20649981j,
+#          -0.18410823-0.07973412j, -0.12933868-0.33796931j]],      dtype=complex128),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 
@@ -525,14 +521,14 @@ piel.sax_to_s_parameters_standard_matrix(
 )
 
 # ```python
-# (Array([[-0.07260128-0.2413117j , -0.8917833 +0.2441996j ,
-#          -0.04539197+0.07246678j,  0.20274116+0.1821285j ],
-#         [ 0.18749169+0.26935905j, -0.10133702-0.23071809j,
-#           0.20274433+0.18213132j,  0.6826765 -0.5370923j ],
-#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
-#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
-#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
-#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+# (Array([[-0.14519193-0.15341027j,  0.35452101-0.03007602j,
+#           0.2694585 -0.04083246j, -0.74559777-0.44564972j],
+#         [-0.10733452+0.92858874j, -0.21009279-0.02182726j,
+#           0.07339689+0.04386991j, -0.09164188-0.25666503j],
+#         [ 0.07983096+0.03063805j,  0.1398235 -0.23393281j,
+#          -0.25703794+0.90116107j, -0.16029436+0.12066105j],
+#         [ 0.1398235 -0.23393281j, -0.65816248-0.56687022j,
+#          -0.18410823-0.07973412j, -0.12933868-0.33796931j]],      dtype=complex128),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 
@@ -549,14 +545,14 @@ piel.sax_to_s_parameters_standard_matrix(
 
 
 # ```python
-# (Array([[-0.07260128-0.2413117j , -0.8917833 +0.2441996j ,
-#           0.23096433+0.14467366j, -0.05714355+0.06361032j],
-#         [ 0.18749169+0.26935905j, -0.10133702-0.23071809j,
-#           0.58048916-0.646181j  ,  0.16851316+0.21419221j],
-#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
-#          -0.07952578-0.21112217j, -0.92908216-0.06572803j],
-#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
-#           0.34503105+0.03555341j, -0.10454827-0.19992213j]],      dtype=complex64),
+# (Array([[-0.14519193-0.15341027j,  0.35452101-0.03007602j,
+#           0.2694585 -0.04083246j, -0.74559777-0.44564972j],
+#         [-0.10733452+0.92858874j, -0.21009279-0.02182726j,
+#           0.07339689+0.04386991j, -0.09164188-0.25666503j],
+#         [ 0.09765052-0.25443967j, -0.74559777-0.44564972j,
+#          -0.19505156-0.04699211j, -0.18536205-0.3107936j ],
+#         [ 0.07339689+0.04386991j,  0.17785668-0.20649981j,
+#          -0.4077188 +0.84375658j, -0.17860632+0.09139558j]],      dtype=complex128),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 
@@ -580,14 +576,14 @@ piel.sax_to_s_parameters_standard_matrix(
 switch_lattice_address = piel.get_matched_model_recursive_netlist_instances(
     recursive_netlist=mixed_switch_lattice_circuit_netlist,
     top_level_instance_prefix="component_lattice_gener",
-    target_component_prefix="straight_heater_metal_s",
+    target_component_prefix="straight_heater_metal_u",
     models=piel.models.frequency.get_default_models(),
 )
 switch_lattice_address
 
 # ```
-# [('component_lattice_gener_fb8c4da8', 'mzi_1', 'sxt'),
-#  ('component_lattice_gener_fb8c4da8', 'mzi_5', 'sxt')]
+# [('component_lattice_generic_6555a796', 'mzi_1', 'sxt'),
+#  ('component_lattice_generic_6555a796', 'mzi_5', 'sxt')]
 # ```
 
 # These keys tell us the location of our phase shifter elements as we have defined in the composition of our component `straight_heater_metal_s` mapping to our `"straight_heater_metal_simple": ideal_active_waveguide` definition in the `piel.models.frequency.get_default_models()`. We can use them to compose our phases accordingly as these are hashable elements.
@@ -598,8 +594,8 @@ for switch_lattice_address_i in switch_lattice_address:
 switch_lattice_state_phase
 
 # ```python
-# {('component_lattice_gener_fb8c4da8', 'mzi_1', 'sxt'): 0,
-#  ('component_lattice_gener_fb8c4da8', 'mzi_5', 'sxt'): 0}
+# {('component_lattice_generic_6555a796', 'mzi_1', 'sxt'): 0,
+#  ('component_lattice_generic_6555a796', 'mzi_5', 'sxt'): 0}
 # ```
 
 # Let's convert this into a function parameter dictionary that you can use to set the `sax.circuit` function:
@@ -625,6 +621,7 @@ example_switch_lattice_function_parameter_dictionary
 ) = sax.circuit(
     netlist=mixed_switch_lattice_circuit_netlist,
     models=our_recursive_custom_library,
+    ignore_missing_ports=True,
 )
 
 # We can now do everything we did previously as a function:
@@ -637,14 +634,14 @@ piel.sax_to_s_parameters_standard_matrix(
 
 
 # ```python
-# (Array([[ 0.23089845+0.23322447j, -0.13939448-0.2099313j ,
-#           0.23096855+0.1446734j ,  0.5804817 -0.6461842j ],
-#         [-0.03015644-0.250185j  , -0.92044485+0.087694j  ,
-#          -0.05714459+0.06361263j,  0.16851723+0.21419339j],
-#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
-#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
-#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
-#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+# (Array([[ 0.34411686-0.09040629j, -0.11674345-0.17602948j,
+#           0.2694585 -0.04083246j, -0.74559777-0.44564972j],
+#         [-0.21072449+0.01451205j, -0.26493346+0.89644186j,
+#           0.07339689+0.04386991j, -0.09164188-0.25666503j],
+#         [ 0.09765052-0.25443967j,  0.07339689+0.04386991j,
+#          -0.25703794+0.90116107j, -0.16029436+0.12066105j],
+#         [-0.74559777-0.44564972j,  0.17785668-0.20649981j,
+#          -0.18410823-0.07973412j, -0.12933868-0.33796931j]],      dtype=complex128),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 
@@ -694,14 +691,14 @@ switch_lattice_phase_array_to_state(
 )
 
 # ```python
-# (Array([[ 0.23089845+0.23322447j, -0.13939448-0.2099313j ,
-#           0.23096855+0.1446734j ,  0.5804817 -0.6461842j ],
-#         [-0.03015644-0.250185j  , -0.92044485+0.087694j  ,
-#          -0.05714459+0.06361263j,  0.16851723+0.21419339j],
-#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
-#          -0.9265932 +0.09453729j, -0.04215275-0.2216345j ],
-#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
-#          -0.13727726-0.17903534j,  0.3338281 +0.09417956j]],      dtype=complex64),
+# (Array([[ 0.34411686-0.09040629j, -0.11674345-0.17602948j,
+#           0.2694585 -0.04083246j, -0.74559777-0.44564972j],
+#         [-0.21072449+0.01451205j, -0.26493346+0.89644186j,
+#           0.07339689+0.04386991j, -0.09164188-0.25666503j],
+#         [ 0.09765052-0.25443967j,  0.07339689+0.04386991j,
+#          -0.25703794+0.90116107j, -0.16029436+0.12066105j],
+#         [-0.74559777-0.44564972j,  0.17785668-0.20649981j,
+#          -0.18410823-0.07973412j, -0.12933868-0.33796931j]],      dtype=complex128),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 
@@ -715,14 +712,14 @@ switch_lattice_phase_array_to_state(
 )
 
 # ```python
-# (Array([[-0.07260128-0.2413117j , -0.8917833 +0.2441996j ,
-#           0.23096433+0.14467366j, -0.05714355+0.06361032j],
-#         [ 0.18749169+0.26935905j, -0.10133702-0.23071809j,
-#           0.58048916-0.646181j  ,  0.16851316+0.21419221j],
-#         [ 0.14126453+0.2330689j , -0.05715179+0.0636061j ,
-#          -0.07952578-0.21112217j, -0.92908216-0.06572803j],
-#         [ 0.58055454-0.6461182j ,  0.2467988 +0.1156164j ,
-#           0.34503105+0.03555341j, -0.10454827-0.19992213j]],      dtype=complex64),
+# (Array([[-0.14519193-0.15341027j,  0.35452101-0.03007602j,
+#           0.2694585 -0.04083246j, -0.74559777-0.44564972j],
+#         [-0.10733452+0.92858874j, -0.21009279-0.02182726j,
+#           0.07339689+0.04386991j, -0.09164188-0.25666503j],
+#         [ 0.09765052-0.25443967j, -0.74559777-0.44564972j,
+#          -0.19505156-0.04699211j, -0.18536205-0.3107936j ],
+#         [ 0.07339689+0.04386991j,  0.17785668-0.20649981j,
+#          -0.4077188 +0.84375658j, -0.17860632+0.09139558j]],      dtype=complex128),
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 

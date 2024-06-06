@@ -51,12 +51,9 @@
 import hdl21 as h
 import gdsfactory as gf
 import piel
-import sky130
 import sky130_hdl21
 
 from bokeh.io import output_notebook
-from gdsfactory.config import rich_output
-from gplugins.schematic_editor import SchematicEditor
 
 gf.config.rich_output()
 
@@ -209,10 +206,9 @@ in a parametric resistive DAC generator.
 """
 
 import sys
-from typing import Dict, Optional
+from typing import Optional
 
 import hdl21 as h
-from hdl21.prefix import µ, n
 
 PdkResistor = sky130_hdl21.ress["GEN_PO"]
 Nch = sky130_hdl21.primitives.NMOS_1p8V_STD
@@ -420,4 +416,3 @@ duts = [rladder(rparams), mux_tree(mparams)]
 # h.netlist(duts, sys.stdout, fmt="spectre")
 h.netlist(duts, sys.stdout, fmt="spice")
 # h.netlist(duts, sys.stdout, fmt="xyce")
-# -

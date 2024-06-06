@@ -21,7 +21,7 @@ def verify_truth_table(
         "combinatorial", "sequential", "memory"
     ] = "combinatorial",
 ):
-    """
+    """construct_amaranth_module_from_truth_table
     We will implement a function that tests the module to verify that the outputs generates match the truth table provided.
 
     TODO Implement a similar function from the openlane netlist too.

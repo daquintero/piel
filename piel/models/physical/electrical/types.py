@@ -15,6 +15,7 @@ __all__ = [
 ]
 
 
+# TODO This shouldn't be a quantity
 class CoaxialCableGeometryType(QuantityType):
     core_cross_sectional_area_m2: Optional[float]
     """
@@ -61,6 +62,8 @@ class CoaxialCableHeatTransferType(QuantityType):
     """
     The total computed heat transfer in watts for the cable.
     """
+
+    units: str = "W"
 
 
 class CoaxialCableMaterialSpecificationType(QuantityType):
@@ -111,6 +114,8 @@ class DCCableHeatTransferType(QuantityType):
     """
     The total computed heat transfer in watts for the cable.
     """
+
+    units: str = "W"
 
 
 class DCCableMaterialSpecificationType(QuantityType):
