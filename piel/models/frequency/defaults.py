@@ -19,6 +19,7 @@ __default_models_dictionary__ = {
     "mmi2x2": mmi2x2_50_50,
     "straight": waveguide,
     "straight_heater_metal_simple": active_waveguide,
+    "straight_heater_metal_undercut": active_waveguide,
 }
 
 __default_quantum_models_dictionary__ = {
@@ -27,6 +28,7 @@ __default_quantum_models_dictionary__ = {
     "mmi2x2": mmi2x2_50_50,
     "straight": lossless_straight,
     "straight_heater_metal_simple": active_waveguide,
+    "straight_heater_metal_undercut": active_waveguide,
 }
 
 __default_classical_optical_function_verification_dictionary = {
@@ -35,6 +37,7 @@ __default_classical_optical_function_verification_dictionary = {
     "mmi2x2": mmi2x2_50_50,
     "straight": lossless_straight,
     "straight_heater_metal_simple": ideal_lossless_active_waveguide,
+    "straight_heater_metal_undercut": ideal_lossless_active_waveguide,
 }
 
 

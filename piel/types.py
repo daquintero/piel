@@ -9,6 +9,7 @@ import pydantic
 import types
 import numpy as np
 import jax.numpy as jnp
+from typing import Optional
 
 __all__ = [
     "ArrayTypes",
@@ -19,6 +20,7 @@ __all__ = [
 PathTypes = str | pathlib.Path | os.PathLike | types.ModuleType
 ArrayTypes = np.ndarray | jnp.ndarray
 NumericalTypes = int | float | np.dtype | jnp.dtype
+
 
 class PielBaseModel(pydantic.BaseModel):
     class Config:
@@ -34,7 +36,7 @@ class QuantityType(PielBaseModel):
     The base class for all cable types.
     """
 
-    units: str
+    units: Optional[str] = None
     """
     The units of the type.
     """

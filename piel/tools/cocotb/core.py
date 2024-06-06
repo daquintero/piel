@@ -143,6 +143,8 @@ def configure_cocotb_simulation(
     write_file(
         directory_path=design_directory / "tb", file_text=script, file_name="Makefile"
     )
+    print(script)
+    return return_path(design_directory) / "tb" / "Makefile"
 
 
 delete_simulation_output_files = functools.partial(

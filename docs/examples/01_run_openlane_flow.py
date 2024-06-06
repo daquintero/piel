@@ -301,6 +301,7 @@ openlane_2_run_amaranth_flow = piel.run_openlane_flow(
     design_directory=amaranth_driven_flow,
     only_generate_flow_setup=True,
 )
+# TODO fix warnings
 
 # This should generate a `openlane 2` driven layout in the `amaranth_driven_flow` directory if you change the `only_generate_configuration` flag to `True`. Let's list the available runs in this project:
 

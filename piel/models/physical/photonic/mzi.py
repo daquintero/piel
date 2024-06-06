@@ -12,7 +12,7 @@ from gdsfactory.components.mmi2x2 import mmi2x2
 from gdsfactory.components.straight import straight as straight_function
 from gdsfactory.routing.get_route import get_route
 from gdsfactory.typings import ComponentSpec, CrossSectionSpec
-from .straight_heater_metal import straight_heater_metal_simple
+from .straight_heater_metal import straight_heater_metal_undercut
 
 
 @cell
@@ -226,52 +226,6 @@ mzi2x2_2x2 = partial(
     port_e0_combiner="o4",
 )
 
-mzi1x2_2x2 = partial(
-    mzi,
-    combiner=mmi2x2,
-    port_e1_combiner="o3",
-    port_e0_combiner="o4",
-)
-
-mzi_coupler = partial(
-    mzi2x2_2x2,
-    splitter=coupler,
-    combiner=coupler,
-)
-
-mzi_phase_shifter = partial(
-    mzi, straight_x_top=straight_heater_metal_simple, length_x=200
-)
-
 mzi2x2_2x2_phase_shifter = partial(
-    mzi2x2_2x2,
-    straight_x_top=straight_heater_metal_simple,
-    length_x=200,
+    mzi2x2_2x2, straight_x_top=straight_heater_metal_undercut, length_x=200
 )
-
-
-if __name__ == "__main__":
-    c = mzi()
-    # print(sorted([i.name for i in c.get_dependencies()]))
-    # from gdsfactory import get_generic_pdk
-
-    # pdk = get_generic_pdk()
-    # pdk.activate()
-
-    # c = mzi(cross_section="xs_sc")
-    # c = gf.components.mzi2x2_2x2(straight_x_top="straight_heater_metal")
-    # c.show(show_ports=True)
-
-    # c = gf.components.mzi2x2_2x2(straight_x_top="straight_heater_metal")
-    # c = gf.routing.add_fiber_array(c)
-    # gdspath = c.write_gds(flatten_offgrid_references=True)
-    # gf.show(gdspath)
-    c.show(show_ports=True)
-
-    # c1.write_gds("a.gds")
-
-    # c2 = gf.read.import_gds("a.gds")
-    # c2 = c2.flatten()
-
-    # c3 = gf.grid([c2, c1])
-    # c3.show(show_ports=False)
