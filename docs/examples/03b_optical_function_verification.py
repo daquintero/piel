@@ -31,29 +31,24 @@
 
 import functools
 import gdsfactory as gf
-import jax
 import jax.numpy as jnp
-import numpy as np
 import pandas as pd
-from piel import straight_heater_metal_simple
 import piel
 import sax
+from gdsfactory.generic_tech import get_generic_pdk
+
+PDK = get_generic_pdk()
+PDK.activate()
+piel.visual.activate_piel_styles()
 
 # ## Circuit Construction
 
 # We will explore and compose our switch as we have done in some of the previous examples.
 
-# +
-# Parameters directly parametrized from this function call
-ideal_resistive_heater = functools.partial(
-    straight_heater_metal_simple, ohms_per_square=1
+ideal_mzi_2x2_2x2_phase_shifter = (
+    piel.models.physical.photonic.mzi2x2_2x2_phase_shifter()
 )
-
-ideal_mzi_2x2_2x2_phase_shifter = gf.components.mzi2x2_2x2_phase_shifter(
-    straight_x_top=ideal_resistive_heater,
-)
-ideal_mzi_2x2_2x2_phase_shifter.plot_widget()
-# -
+ideal_mzi_2x2_2x2_phase_shifter.plot()
 
 # We can extract the optical netlist accordingly.
 
@@ -357,7 +352,10 @@ assert output_transition_mzi_2x2 == target_output_transition_mzi_2x2
 
 # We begin by importing a parametric circuit from `gdsfactory`:
 import gdsfactory as gf
-from gdsfactory.components import mzi2x2_2x2_phase_shifter
+from piel.models.physical.photonic import (
+    mzi2x2_2x2_phase_shifter,
+    component_lattice_generic,
+)
 import numpy as np
 import jax.numpy as jnp
 import piel
@@ -377,11 +375,9 @@ chain_3_mode_lattice = [
     [0, mzi2x2_2x2_phase_shifter()],
 ]
 
-chain_3_mode_lattice_circuit = gf.components.component_lattice_generic(
-    network=chain_3_mode_lattice
-)
+chain_3_mode_lattice_circuit = component_lattice_generic(network=chain_3_mode_lattice)
 # mixed_switch_circuit.show()
-chain_3_mode_lattice_circuit.plot_widget()
+chain_3_mode_lattice_circuit.plot()
 # CURRENT TODO: Create a basic chain fabric and verify the logic is implemented properly with binary inputs.
 
 chain_3_mode_lattice = [
@@ -389,19 +385,19 @@ chain_3_mode_lattice = [
     [0, mzi2x2_2x2_phase_shifter()],
 ]
 
-chain_3_mode_lattice_circuit = gf.components.component_lattice_generic(
-    network=chain_3_mode_lattice
+chain_3_mode_lattice_circuit = component_lattice_generic(
+    network=chain_3_mode_lattice,
 )
 
 # +
 chain_3_mode_lattice_circuit_netlist = (
-    chain_3_mode_lattice_circuit.get_netlist_recursive(
-        exclude_port_types="electrical", allow_multiple=True
-    )
+    chain_3_mode_lattice_circuit.get_netlist_recursive(allow_multiple=True)
 )
+top_level_name = (chain_3_mode_lattice_circuit.get_netlist())["name"]
+
 
 recursive_composed_required_models = sax.get_required_circuit_models(
-    chain_3_mode_lattice_circuit_netlist["component_lattice_gener_3e0da86b"],
+    chain_3_mode_lattice_circuit_netlist[top_level_name],
     models=piel.models.frequency.get_default_models(),
 )
 
@@ -419,15 +415,15 @@ recursive_composed_required_models_0 = sax.get_required_circuit_models(
 
 recursive_composed_required_models_0
 
-straight_heater_metal_simple = verification_models["straight_heater_metal_simple"]
+straight_heater_metal_undercut_length200 = verification_models[
+    "straight_heater_metal_undercut"
+]
 
-our_recursive_custom_library = (
-    piel.models.frequency.compose_custom_model_library_from_defaults(
-        custom_defaults=verification_models,
-        custom_models={
-            "straight_heater_metal_s_ad3c1693": straight_heater_metal_simple
-        },
-    )
+our_recursive_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
+    custom_defaults=verification_models,
+    custom_models={
+        "straight_heater_metal_undercut_length200": straight_heater_metal_undercut_length200
+    },
 )
 our_recursive_custom_library
 # -
@@ -438,6 +434,7 @@ our_recursive_custom_library
 ) = sax.circuit(
     netlist=chain_3_mode_lattice_circuit_netlist,
     models=our_recursive_custom_library,
+    ignore_missing_ports=True,
 )
 
 # Let's explore the four states of our switch lattice in an explicit form:

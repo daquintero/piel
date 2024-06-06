@@ -5,7 +5,6 @@ import platform
 import piel
 
 from .environment import environment
-from .venv import create_and_activate_venv
 from ..utils import (
     echo_and_check_subprocess,
     append_to_bashrc_if_does_not_exist,
@@ -17,7 +16,6 @@ from ...file_system import create_new_directory
 __all__ = [
     "install_nix",
     "install_openlane",
-    "activate_openlane_nix",
     "activate_piel_nix",
 ]
 
@@ -111,36 +109,6 @@ def update_openlane_directory(
 
 
 @environment.command(
-    name="activate-openlane-nix",
-    help="Activates the specific openlane nix environment.",
-)
-def activate_openlane_nix(
-    openlane2_directory: pathlib.Path = default_openlane2_directory,
-):
-    """
-    CLI that installs both the openlane2 python interface and the OpenROAD binaries.
-    TODO update with nix-eda instructions
-    """
-    if platform.system() == "Windows":
-        """Not Supported"""
-        raise NotImplementedError(
-            "This installation method is not supported on Windows."
-        )
-    elif platform.system() == "Darwin":
-        """Not Supported"""
-        raise NotImplementedError(
-            "This installation method is not supported on Windows."
-        )
-    elif platform.system() == "Linux":
-        # TODO verify that openlane is installed in the corresponding directory
-        # cachix use openlane
-        echo_and_check_subprocess(["cachix", "use", "openlane"])
-        # Enter nix shell
-        echo_and_check_subprocess(["nix-shell"], cwd=openlane2_directory)
-        pass
-
-
-@environment.command(
     name="activate-piel-nix", help="Activates the specific piel nix environment."
 )
 def activate_piel_nix(openlane2_directory: pathlib.Path = default_openlane2_directory):
@@ -162,19 +130,15 @@ def activate_piel_nix(openlane2_directory: pathlib.Path = default_openlane2_dire
     elif platform.system() == "Linux":
         # cachix use openlane
         # create_and_activate_venv()  # Currently unused, TODO future poetry integration
-        nix_shell_directory = get_python_install_directory() / "environment" / "nix"
-        # nix develop --extra-experimental-features nix-command --extra-experimental-features flakes
+        nix_shell_directory = (
+            get_python_install_directory() / "environment" / "nix" / "nix-eda"
+        )
+        # nix shell .#{ngspice,xschem,verilator,yosys}
         echo_and_check_subprocess(
             [
                 "nix",
-                "develop",
-                "--debugger",
-                "--extra-experimental-features",
-                "nix-command",
-                "--extra-experimental-features",
-                "flakes",
-                "--show-trace",
-                "--impure",
+                "shell",
+                ".#{ngspice,xschem,verilator,yosys}",
             ],
             cwd=nix_shell_directory,
         )

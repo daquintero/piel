@@ -4,7 +4,14 @@ from ..geometry import calculate_cross_sectional_area_m2, awg_to_cross_sectional
 from ..thermal import heat_transfer_1d_W
 from ....materials.thermal_conductivity.types import MaterialReferenceType
 from piel.materials.thermal_conductivity.utils import get_thermal_conductivity_fit
-from .types import *
+from .types import (
+    CoaxialCableGeometryType,
+    CoaxialCableHeatTransferType,
+    CoaxialCableMaterialSpecificationType,
+    DCCableGeometryType,
+    DCCableHeatTransferType,
+    DCCableMaterialSpecificationType,
+)
 from ..types import TemperatureRangeTypes
 
 
@@ -166,8 +173,6 @@ def calculate_dc_cable_geometry(
         length_m=length_m,
         core_cross_sectional_area_m2=core_cross_sectional_area_m2,
         total_cross_sectional_area_m2=total_cross_sectional_area_m2,
-        *args,
-        **kwargs,
     )
 
 

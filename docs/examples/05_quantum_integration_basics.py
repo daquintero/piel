@@ -5,10 +5,15 @@
 #
 # One interesting thing to explore would be quantum state evolution through a unitary matrix composed from a physical photonic network that we could model. We will explore in this example how to integrate `sax` and `qutip`.
 
-import gdsfactory as gf
+from piel.models.physical.photonic import (
+    component_lattice_generic,
+)
 import sax
 import piel
 import qutip as qp
+from gdsfactory.generic_tech import get_generic_pdk
+
+get_generic_pdk().activate()
 
 # ## Quantum Unitary Representation
 
@@ -18,9 +23,8 @@ import qutip as qp
 
 # ### Starting off from Composed Circuit
 
-switch_circuit = gf.components.component_lattice_generic()
-switch_circuit.show()
-switch_circuit.plot_widget()
+switch_circuit = component_lattice_generic()
+switch_circuit.plot()
 
 # ![default_switch_circuit_plot_widget](../_static/img/examples/03_sax_basics/default_switch_circuit_plot_widget.PNG)
 
@@ -68,8 +72,6 @@ unitary_matrix
 # ```
 
 # ### Translating to Qutip
-
-import qutip
 
 switch_circuit_qobj = piel.standard_s_parameters_to_qutip_qobj(unitary_matrix)
 switch_circuit_qobj

@@ -1214,4 +1214,3 @@ ax1.set_title(
 )
 fig.tight_layout()  # otherwise the right y-label is slightly clipped
 fig.savefig("nedeljkovic_dopant_concentration_variations.png")
-# -
