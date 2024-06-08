@@ -44,7 +44,16 @@ autoclass_content = "both"  # Add __init__ doc (ie. params) to class summaries
 autodoc_inherit_docstrings = True  # If no docstring, inherit from base class
 author = "Dario Quintero"
 copyright = "2023, Dario Quintero"
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "examples/designs"]
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    "**.ipynb_checkpoints",
+    "**.verify_checkpoint.py",
+    "*/examples/02a_large_scale_digital_layout/parallel/*",
+    "*/examples/02a_large_scale_digital_layout/serial/*",
+    "examples/designs",
+]
 extensions = [
     "autoapi.extension",
     "IPython.sphinxext.ipython_console_highlighting",
