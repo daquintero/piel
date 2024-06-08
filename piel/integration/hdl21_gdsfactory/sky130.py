@@ -13,6 +13,7 @@ from .netlist import (
 custom_mapping_dict = {
     "sky130_fd_pr__nfet_01v8": "sky130_fd_pr__rf_nfet_01v8_aM02W1p65L0p15",
     "sky130_fd_pr__pfet_01v8": "sky130_fd_pr__rf_pfet_01v8_mcM04W3p00L0p15",
+    "sky130_fd_pr__res_generic_po": "",
 }
 
 

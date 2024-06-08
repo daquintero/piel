@@ -3,6 +3,10 @@ Fundamental Co-Design Principles Theory
 
 It is important to understand the fundamental physical relationships of consigning photonics and electronics systems. Really, we are combining two engineering fields: photonics engineering and electronics engineering. The overlap between the fields, and interconnected relationships, are essential to optimise the system design between them.
 
+.. include:: interactions/introduction.rst
+.. include:: interactions/applications.rst
+.. include:: interactions/flows.rst
+
 
 Electronic Fundamentals
 =============================
