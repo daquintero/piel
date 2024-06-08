@@ -11,7 +11,7 @@ include photonic loads based on *Digital Integrated Circuits, A Design
 Perspective* by Jan Rabaey. Page numbers are provided accordingly.
 
 Power Consumption Definitions
-^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Peak Power
 '''''''''''''''''''''''''
