@@ -1,8 +1,8 @@
 **************************
-Resources & Presentations
+Resources
 **************************
 
-This page contains a collection of resources related to `piel` in some form.
+This page contains a collection of resources related to ``piel`` in some form.
 
 .. toctree::
    :maxdepth: 2

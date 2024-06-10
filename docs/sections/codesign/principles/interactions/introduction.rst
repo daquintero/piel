@@ -3,7 +3,7 @@ A primer on common photonic-electronic systems
 
 We will explore some common photonic-electronic systems and discuss the design flows involved afterwards.
 
-An Opto-electronic System
+An Opto-Electronic System
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A relatively-common system is one where an electronic signal is generated from a photonic device. This involves the readout of photodetectors such as silicon photodiodes, photoresistors, or more-quantum-focused single-photon detectors such as superconducting nanowires. TODO ref.
