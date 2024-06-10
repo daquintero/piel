@@ -1,5 +1,5 @@
-Outline
--------
+FSIC 2024 Talk Outline
+-----------------------
 
 This page involves the outline and resources related to of the presentation: *Integrating Mixed-Signal Microelectronics and Photonics: A Co-Design Approach with piel* for the `2024 Free Silicon Conference (FSiC) <https://wiki.f-si.org/index.php/FSiC2024>`_.
 

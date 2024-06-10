@@ -7,13 +7,14 @@ Contents
 ************
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    examples
    sections/environment/index
    sections/microservices/index
    sections/codesign/index
    sections/models/index
+   resources/index
    contributing
    sections/about/index
 
