@@ -46,7 +46,7 @@ cython = "0.29.21"
 flake8 = {version = "*", optional = true}
 gdsfactory = {version = "7.2.1", extras = ["kfactory"]}  # Pinned for pydantic <v2 compatibility, until examples upgrades
 # femwell = "0.1.8"
-hdl21 = "4.0.0"
+hdl21 = "6.0.0"
 ipyevents = {version = "*", optional = true}
 ipytree = {version = "*", optional = true}
 ipywidgets = {version = ">=7.6.0,<9", optional = true}
