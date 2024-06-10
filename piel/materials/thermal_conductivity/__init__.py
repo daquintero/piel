@@ -2,7 +2,6 @@ from .stainless_steel import stainless_steel
 from .aluminum import aluminum
 from .copper import copper
 from .teflon import teflon
-from .types import *
 
 from .stainless_steel import material_references as stainless_steel_material_references
 from .aluminum import material_references as aluminum_material_references

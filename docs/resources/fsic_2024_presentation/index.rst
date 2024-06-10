@@ -24,7 +24,7 @@ Outline
         - Was working on quantum photonic systems and it was a massive pain to simulate how the system behaved.
     - TODO possibly talk about design flows if need be
 - Let's go through an example.
-    - Create a 10_full_flow example.
+    - Finish 07_full_flow_electronic_photonic_demo.
     - Say, we have an optical function we want to demonstrate or implement, extract the logic for that.
     - Go through the flow of implementing that logic via amaranth, syntheziging that logic via openlane, extracting performance parameters accordingly, modelling the analog amplifier accordingly and implementing it via gdsfactory with sky130
     - Model the component with analog, digital circuits simulators accordingly. In the future, add the mixed-signal with full-concurrency for photonic time-domain signals.

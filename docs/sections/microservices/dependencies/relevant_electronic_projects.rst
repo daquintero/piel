@@ -111,4 +111,3 @@ The goal of this page is to provide a list of open-source references and toolset
 Pretty handy references:
 THis book is the answer to our propagation delay measurement questions: https://frank.pocnet.net/other/sos/Philips_DigitalExersises_AppliedMeasurementsInDigitalAndPulseTechnique.pdf
 The testing Chapter 4 of the The RF and Microwave Handbook for microwave stuff https://api.pageplace.de/preview/DT0400.9781439833230_A37606175/preview-9781439833230_A37606175.pdf
-

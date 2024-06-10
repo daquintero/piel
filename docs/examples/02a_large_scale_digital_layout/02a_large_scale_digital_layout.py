@@ -8,12 +8,13 @@
 
 import multiprocessing
 import time
+import piel
 
 # We will go through the whole process of using `amaranth` for digital simulation and design later. For now, let's assume we have a random truth table we want to implement multiple times with different `id`. We will time both sequential and parallel implementations of this layout flow, and determine which is faster.
 
 from piel.integration.amaranth_openlane import layout_openlane_from_truth_table
 
-truth_table = {
+truth_table_dictionary = truth_table = {
     "input": [
         "0000",
         "0001",
@@ -53,6 +54,33 @@ truth_table = {
 }
 input_ports_list = ["input"]
 output_ports_list = ["output"]
+truth_table = piel.types.TruthTable(
+    input_ports=input_ports_list,
+    output_ports=output_ports_list,
+    **truth_table_dictionary
+)
+truth_table.dataframe
+
+
+#
+# |    |   input |   output |
+# |---:|--------:|---------:|
+# |  0 |    0000 |     0101 |
+# |  1 |    0001 |     1100 |
+# |  2 |    0010 |     0101 |
+# |  3 |    0011 |     0110 |
+# |  4 |    0100 |     0010 |
+# |  5 |    0101 |     1101 |
+# |  6 |    0110 |     0110 |
+# |  7 |    0111 |     0011 |
+# |  8 |    1000 |     1001 |
+# |  9 |    1001 |     1110 |
+# | 10 |    1010 |     0100 |
+# | 11 |    1011 |     1000 |
+# | 12 |    1100 |     0001 |
+# | 13 |    1101 |     1011 |
+# | 14 |    1110 |     1111 |
+# | 15 |    1111 |     1010 |
 
 
 def sequential_implementations(amount_of_implementations: int):
@@ -61,8 +89,6 @@ def sequential_implementations(amount_of_implementations: int):
     for i in range(amount_of_implementations):
         implementation_i = layout_openlane_from_truth_table(
             truth_table=truth_table,
-            inputs=input_ports_list,
-            outputs=output_ports_list,
             parent_directory="sequential",
             target_directory_name="sequential_" + str(i),
         )
@@ -78,8 +104,6 @@ def parallel_implementations(amount_of_implementations: int):
             target=layout_openlane_from_truth_table,
             kwargs={
                 "truth_table": truth_table,
-                "inputs": input_ports_list,
-                "outputs": output_ports_list,
                 "parent_directory": "parallel",
                 "target_directory_name": "parallel_" + str(i),
             },

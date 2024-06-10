@@ -1,5 +1,5 @@
 import numpy as np
-from .types import TemperatureRangeTypes, TemperatureRangeLimitType
+from piel.types.physical import TemperatureRangeTypes
 from piel.types import ArrayTypes
 
 __all__ = [

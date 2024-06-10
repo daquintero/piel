@@ -1,12 +1,13 @@
 """
-This file enhances some functions that easily translates between an `amaranth` function to implement a `openlane` flow.
+This file enhances some functions that translate an `amaranth` function to an `openlane` flow implementation.
 """
+
 import amaranth as am
 from typing import Optional, Literal
 import types
 from ..tools.amaranth import (
     construct_amaranth_module_from_truth_table,
-    generate_verilog_from_amaranth,
+    generate_verilog_from_amaranth_truth_table,
 )
 from ..file_system import return_path, create_new_directory
 from ..project_structure import create_empty_piel_project
@@ -16,27 +17,47 @@ from ..tools.openlane.defaults import (
     test_basic_open_lane_configuration_v1,
     test_basic_open_lane_configuration_v2,
 )
-from ..types import PathTypes
+from ..types import PathTypes, TruthTable
 
 __all__ = ["layout_amaranth_truth_table_through_openlane"]
 
 
 def layout_openlane_from_truth_table(
-    truth_table: dict,
-    inputs: list[str],
-    outputs: list[str],
+    truth_table: TruthTable,
     parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v2",
     **kwargs
 ):
+    """
+    Translates a truth table to an OpenLane flow implementation.
+
+    This function takes a truth table and converts it into an OpenLane flow, using the specified OpenLane version.
+    It first constructs an Amaranth module from the truth table, and then passes this module to the
+    `layout_amaranth_truth_table_through_openlane` function for further processing.
+
+    Args:
+        truth_table (TruthTable): The truth table to be converted. It includes input ports, output ports, and the table logic.
+        parent_directory (PathTypes): The directory where the OpenLane project will be created.
+        target_directory_name (Optional[str]): Name of the target directory. If not specified, a default name will be used.
+        openlane_version (Literal["v1", "v2"]): Specifies the OpenLane version to use. Defaults to "v2".
+        **kwargs: Additional keyword arguments passed to the Amaranth module construction.
+
+    Returns:
+        None
+    """
+    # Extract inputs and outputs from the truth table
+    truth_table = truth_table
+
+    # Construct an Amaranth module from the truth table
     our_truth_table_module = construct_amaranth_module_from_truth_table(
-        truth_table=truth_table, inputs=inputs, outputs=outputs, **kwargs
+        truth_table=truth_table, **kwargs
     )
+
+    # Pass the constructed module to the OpenLane flow layout function
     layout_amaranth_truth_table_through_openlane(
         amaranth_module=our_truth_table_module,
-        inputs_name_list=inputs,
-        outputs_name_list=outputs,
+        truth_table=truth_table,
         parent_directory=parent_directory,
         target_directory_name=target_directory_name,
         openlane_version=openlane_version,
@@ -46,14 +67,15 @@ def layout_openlane_from_truth_table(
 
 def layout_amaranth_truth_table_through_openlane(
     amaranth_module: am.Module,
-    inputs_name_list: list[str],
-    outputs_name_list: list[str],
+    truth_table: TruthTable,
     parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v2",
     **kwargs
 ):
     """
+    Implements an Amaranth truth table module through the OpenLane flow.
+
     This function implements an amaranth truth-table module through the openlane flow. There are several ways to
     implement a module. Fundamentally, this requires the verilog files to be generated from the openlane-module in a
     particular directory. For the particular directory provided, this function will generate the verilog files in the
@@ -68,17 +90,17 @@ def layout_amaranth_truth_table_through_openlane(
     5. Implements the ``openlane`` flow for this particular location to generate a chip.
 
     Args:
-        amaranth_module (amaranth.Module): Amaranth module class.
-        inputs_name_list (list[str]): List of input names.
-        outputs_name_list (list[str]): List of output names.
-        parent_directory (PathTypes): Parent directory PATH.
-        target_directory_name (Optional[str]): Target directory name. If none is provided, it will default to the name of the amaranth elaboratable class.
-        openlane_version (Literal["v1", "v2"]): OpenLane version. Defaults to ``v1``.
+        amaranth_module (am.Module): The Amaranth module representing the truth table logic.
+        truth_table (TruthTable): The truth table data structure containing the logic for the module.
+        parent_directory (PathTypes): The directory where the project will be created or found.
+        target_directory_name (Optional[str]): The name for the target directory. Defaults to the name of the Amaranth module's class.
+        openlane_version (Literal["v1", "v2"]): The version of OpenLane to use. Defaults to "v2".
+        **kwargs: Additional keyword arguments for OpenLane configuration.
 
     Returns:
         None
     """
-    # Determines the output directory in which to generate the files, and creates one accordingly if it does not exist.
+    # Determine the design and source directories
     if isinstance(parent_directory, types.ModuleType):
         parent_directory = return_path(parent_directory)
         design_directory = parent_directory
@@ -87,7 +109,7 @@ def layout_amaranth_truth_table_through_openlane(
         parent_directory = return_path(parent_directory)
         if not parent_directory.exists():
             create_new_directory(parent_directory)
-        # Creates a corresponding `piel` project accordingly.
+        # Create a new project structure if the directory does not exist
         target_directory_name = (
             target_directory_name
             if target_directory_name is not None
@@ -102,24 +124,22 @@ def layout_amaranth_truth_table_through_openlane(
         )
         src_folder = design_directory / "src"
 
-    # Generates the verilog files from the ``amaranth`` elaboratable class.
-    ports_list = inputs_name_list + outputs_name_list
-    generate_verilog_from_amaranth(
+    # Generate the Verilog files from the Amaranth module
+    generate_verilog_from_amaranth_truth_table(
         amaranth_module=amaranth_module,
-        ports_list=ports_list,
-        target_file_name="our_truth_table_module.v",
+        truth_table=truth_table,
+        target_file_name="truth_table_module.v",
         target_directory=src_folder,
     )
-    # Generates the ``openlane`` configuration files for this particular location.
 
-    # Runs the `openlane` flow
+    # Configure and run the OpenLane flow based on the specified version
     if openlane_version == "v1":
         our_amaranth_openlane_config = test_basic_open_lane_configuration_v1
         write_configuration_openlane_v1(
             configuration=our_amaranth_openlane_config,
             design_directory=design_directory,
         )
-        # TODO Copy to the openlane root directory.
+        # TODO: Additional steps for OpenLane v1 configuration
 
     elif openlane_version == "v2":
         our_amaranth_openlane_config = test_basic_open_lane_configuration_v2

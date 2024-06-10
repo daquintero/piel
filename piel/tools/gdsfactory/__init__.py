@@ -1,2 +1,1 @@
-from .netlist import *
-from .patch import *
+from .netlist import get_input_ports_index, get_matched_ports_tuple_index

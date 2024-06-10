@@ -1,8 +1,7 @@
 import numpy as np
 from piel.types import ArrayTypes
-from piel.models.physical.types import TemperatureRangeTypes
-from piel.materials.thermal_conductivity.types import MaterialReferenceType
-from piel.models.physical.types import TemperatureRangeLimitType
+from piel.types.physical import TemperatureRangeTypes
+from piel.types.materials import MaterialReferenceType
 from piel.materials import thermal_conductivity
 
 __all__ = ["get_thermal_conductivity_fit"]
@@ -28,7 +27,11 @@ def get_thermal_conductivity_fit(
     if type(temperature_range_K) is tuple:
         # TODO how to compare this with the TemperatureRangeLimitType?
         temperature_range_K = np.linspace(
-            temperature_range_K[0], temperature_range_K[1], num=1000, *args, **kwargs
+            temperature_range_K[0],
+            temperature_range_K[1],
+            *args,
+            **kwargs,
+            num=1000,
         )
     elif isinstance(temperature_range_K, ArrayTypes):
         pass

@@ -1,18 +1,15 @@
 """
-This file contains a range of functions used to read, plot and analyse cocotb simulations in a data-flow standard as suggested
+This module provides functions to read, plot, and analyze Cocotb simulation data. It supports reading simulation
+output files, converting them into Pandas dataframes, and plotting the data using Bokeh for interactive visualization.
+# TODO: Implement the logic for processing different signal types.
 """
+
 import functools
 import pandas as pd
 from piel.types import PathTypes
 from piel.file_system import return_path, get_files_recursively_in_directory
 
-__all__ = [
-    "get_simulation_output_files",
-    "get_simulation_output_files_from_design",
-    "read_simulation_data",
-    "simple_plot_simulation_data",
-]
-
+# Partial function to get all CSV files from the 'tb/out' directory.
 get_simulation_output_files = functools.partial(
     get_files_recursively_in_directory, path="./tb/out/", extension="csv"
 )
@@ -21,15 +18,20 @@ get_simulation_output_files = functools.partial(
 def get_simulation_output_files_from_design(
     design_directory: PathTypes,
     extension: str = "csv",
-):
+) -> list:
     """
-    This function returns a list of all the simulation output files in the design directory.
+    Returns a list of all simulation output files in the specified design directory.
 
     Args:
         design_directory (PathTypes): The path to the design directory.
+        extension (str, optional): The file extension to filter by. Defaults to "csv".
 
     Returns:
-        output_files (list): List of all the simulation output files in the design directory.
+        list: A list of paths to the simulation output files in the design directory.
+
+    Examples:
+        >>> get_simulation_output_files_from_design("/path/to/design")
+        [PosixPath('/path/to/design/tb/out/output1.csv'), PosixPath('/path/to/design/tb/out/output2.csv')]
     """
     design_directory = return_path(design_directory)
     output_files = get_files_recursively_in_directory(
@@ -38,28 +40,48 @@ def get_simulation_output_files_from_design(
     return output_files
 
 
-def read_simulation_data(file_path: PathTypes):
+def read_simulation_data(file_path: PathTypes, *args, **kwargs) -> pd.DataFrame:
     """
-    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
+    Reads simulation data from a specified file into a Pandas dataframe.
 
     Args:
         file_path (PathTypes): The path to the simulation data file.
 
     Returns:
-        simulation_data (pd.DataFrame): The simulation data in a Pandas dataframe.
+        pd.DataFrame: The simulation data as a Pandas dataframe.
+
+    Examples:
+        >>> read_simulation_data("/path/to/simulation/output.csv")
+        # Returns a dataframe with the contents of the CSV file.
     """
     file_path = return_path(file_path)
-    simulation_data = pd.read_csv(file_path)
+    simulation_data = pd.read_csv(
+        file_path, dtype=str, encoding="utf-8", *args, **kwargs
+    )
     return simulation_data
 
 
 def simple_plot_simulation_data(simulation_data: pd.DataFrame):
+    """
+    Plots simulation data using Bokeh for interactive visualization.
+
+    Args:
+        simulation_data (pd.DataFrame): The simulation data to plot, containing columns 't' for time and 'x' for signal values.
+
+    Returns:
+        None: Displays an interactive plot.
+
+    Examples:
+        >>> data = pd.DataFrame({"t": [0, 1, 2, 3], "x": [0, 1, 0, 1]})
+        >>> simple_plot_simulation_data(data)
+        # Displays an interactive Bokeh plot.
+    """
     from bokeh.models import ColumnDataSource
     from bokeh.plotting import figure, show
     from bokeh.layouts import column
 
     source = ColumnDataSource(
-        data=dict(time=simulation_data.t, signal=simulation_data.x)
+        data=dict(time=simulation_data["t"], signal=simulation_data["x"])
     )
 
     p = figure(
@@ -67,32 +89,25 @@ def simple_plot_simulation_data(simulation_data: pd.DataFrame):
         width=800,
         tools="xpan",
         toolbar_location=None,
-        # x_axis_type="datetime",
         x_axis_location="above",
         background_fill_color="#efefef",
+        title="Simulation Signal over Time",
     )
 
-    p.line("time", "signal", source=source)
-    # p.yaxis.axis_label = "Price"
+    p.line("time", "signal", source=source, line_width=2)
+    p.yaxis.axis_label = "Signal"
 
     select = figure(
-        title="Drag the middle and edges of the selection box to change the range above",
+        title="Drag to change the range above",
         height=130,
         width=800,
         y_range=p.y_range,
-        # x_axis_type="datetime",
-        y_axis_type=None,
         tools="",
         toolbar_location=None,
         background_fill_color="#efefef",
     )
 
-    # range_tool = RangeTool(x_range=p.x_range)
-    # range_tool.overlay.fill_color = "navy"
-    # range_tool.overlay.fill_alpha = 0.2
-
-    select.line("time", "signal", source=source)
+    select.line("time", "signal", source=source, line_width=1)
     select.ygrid.grid_line_color = None
-    # select.add_tools(range_tool)
 
-    return show(column(p, select))
+    show(column(p, select))

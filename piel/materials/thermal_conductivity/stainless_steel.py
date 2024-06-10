@@ -1,7 +1,6 @@
 import jax.numpy as jnp
-from typing import Literal
-from .types import MaterialReferencesTypes, MaterialReferenceType
-from ...models.physical.types import TemperatureRangeTypes
+from piel.types.materials import MaterialReferencesTypes, MaterialReferenceType
+from piel.types.physical import TemperatureRangeTypes
 
 __all__ = ["stainless_steel", "material_references"]
 
@@ -20,13 +19,13 @@ def stainless_steel(
     try:
         specification = material_reference[1]
         material_sub_name = specification[1]
-    except IndexError:
+    except IndexError as e:
         raise ValueError(
             "Invalid specification for stainless steel: "
             + specification
             + ". Valid options are: "
             + str(supported_specifications)
-        )
+        ) from e
 
     if material_sub_name == "304":
         # https://trc.nist.gov/cryogenics/materials/304Stainless/304Stainless_rev.htm

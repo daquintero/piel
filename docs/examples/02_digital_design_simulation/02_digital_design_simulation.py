@@ -15,8 +15,8 @@ import simple_design
 
 from piel.tools.amaranth import (
     construct_amaranth_module_from_truth_table,
-    generate_verilog_from_amaranth,
-    verify_truth_table,
+    generate_verilog_from_amaranth_truth_table,
+    verify_amaranth_truth_table,
 )
 
 # +
@@ -60,31 +60,35 @@ amaranth_driven_flow
 #
 # `piel` provides some easy functions to perform this convertibility. Say, we provide this information as a dictionary where the keys are the names of our input and output signals. This is a similar principle if you have a detector-triggered DAC bit configuration too.
 
-detector_phase_truth_table = {
+detector_phase_truth_table_dictionary = {
     "detector_in": ["00", "01", "10", "11"],
     "phase_map_out": ["00", "10", "11", "11"],
 }
+detector_phase_truth_table = piel.types.TruthTable(
+    input_ports=["detector_in"],
+    output_ports=["phase_map_out"],
+    **detector_phase_truth_table_dictionary
+)
 
 
-input_ports_list = ["detector_in"]
-output_ports_list = ["phase_map_out"]
 our_truth_table_module = construct_amaranth_module_from_truth_table(
     truth_table=detector_phase_truth_table,
-    inputs=input_ports_list,
-    outputs=output_ports_list,
 )
 
 # `amaranth` is much easier to use than other design flows like `cocotb` because it can be purely interacted with in `Python`, which means there are fewer complexities of integration. However, if you desire to use this with other digital layout tools, for example, `OpenROAD` as we have previously seen and maintain a coherent project structure with the photonics design flow, `piel` provides some helper functions to achieve this easily.
 #
 # We can save this file directly into our working examples directory.
 
-ports_list = input_ports_list + output_ports_list
-generate_verilog_from_amaranth(
+generate_verilog_from_amaranth_truth_table(
     amaranth_module=our_truth_table_module,
-    ports_list=ports_list,
+    truth_table=detector_phase_truth_table,
     target_file_name="our_truth_table_module.v",
     target_directory=".",
 )
+
+# ```
+# Verilog file generated and written to /home/daquintero/phd/piel/docs/examples/02_digital_design_simulation/our_truth_table_module.v
+# ```
 
 # Another aspect is that as part of the `piel` flow, we have thoroughly thought of how to structure a codesign electronic-photonic project in order to be able to utilise all the range of tools in the process. You might want to save your design and simulation files to their corresponding locations so you can reuse them with another toolset in the future.
 #
@@ -98,35 +102,42 @@ amaranth_driven_flow_src_folder = piel.get_module_folder_type_location(
     module=amaranth_driven_flow, folder_type="digital_source"
 )
 
-ports_list = input_ports_list + output_ports_list
-generate_verilog_from_amaranth(
+generate_verilog_from_amaranth_truth_table(
     amaranth_module=our_truth_table_module,
-    ports_list=ports_list,
+    truth_table=detector_phase_truth_table,
     target_file_name="our_truth_table_module.v",
     target_directory=amaranth_driven_flow_src_folder,
 )
 
+# ```
+# Verilog file generated and written to /home/daquintero/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v
+# ```
+
 # Another thing we can do is verify that our implemented logic is valid. Creating a simulation is also useful in the future when we simulate our extracted place-and-route netlist in relation to the expected applied logic.
 
-verify_truth_table(
+verify_amaranth_truth_table(
     truth_table_amaranth_module=our_truth_table_module,
-    truth_table_dictionary=detector_phase_truth_table,
-    inputs=input_ports_list,
-    outputs=output_ports_list,
+    truth_table=detector_phase_truth_table,
     vcd_file_name="our_truth_table_module.vcd",
     target_directory=".",
 )
 
+# ```
+# VCD file generated and written to /home/daquintero/phd/piel/docs/examples/02_digital_design_simulation/our_truth_table_module.vcd
+# ```
+
 # You can also use the module directory to automatically save the testbench in these functions.
 
-verify_truth_table(
+verify_amaranth_truth_table(
     truth_table_amaranth_module=our_truth_table_module,
-    truth_table_dictionary=detector_phase_truth_table,
-    inputs=input_ports_list,
-    outputs=output_ports_list,
+    truth_table=detector_phase_truth_table,
     vcd_file_name="our_truth_table_module.vcd",
     target_directory=amaranth_driven_flow,
 )
+
+# ```
+# VCD file generated and written to /home/daquintero/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/tb/our_truth_table_module.vcd
+# ```
 
 # You can observe the design directory of the provided `amaranth_driven_flow` folder to verify that the files have been included in the other flow.
 #
@@ -145,8 +156,7 @@ from piel.integration.amaranth_openlane import (
 
 layout_amaranth_truth_table_through_openlane(
     amaranth_module=our_truth_table_module,
-    inputs_name_list=input_ports_list,
-    outputs_name_list=output_ports_list,
+    truth_table=detector_phase_truth_table,
     parent_directory=amaranth_driven_flow,
     openlane_version="v1",
 )
@@ -200,13 +210,64 @@ piel.configure_cocotb_simulation(
 # TOPLEVEL := adder
 # MODULE := test_adder
 # include $(shell cocotb-config --makefiles)/Makefile.sim
-# PosixPath('/home/daquintero/phd/piel_private/docs/examples/designs/simple_design/simple_design/tb/Makefile')
+# PosixPath('/home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/tb/Makefile')
 # ```
 
 # Now we can create the simulation output files from the `makefile`. Note this will only work in our configured Linux environment.
 
 # Run cocotb simulation
 piel.run_cocotb_simulation(design_directory)
+
+# ```bash
+# Standard Output (stdout):
+# # rm -f results.xml
+# make -f Makefile results.xml
+# make[1]: Entering directory '/home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/tb'
+# # mkdir -p sim_build
+# /usr/bin/iverilog -o sim_build/sim.vvp -D COCOTB_SIM=1 -s adder  -f sim_build/cmds.f -g2012   /home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/src/adder.vhdl  /home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/src/adder.sv
+# # rm -f results.xml
+# MODULE=test_adder  TESTCASE= TOPLEVEL=adder  TOPLEVEL_LANG=verilog  \
+#          /usr/bin/vvp -M /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_1_0/lib/python3.10/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build/sim.vvp
+#      -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:105  in set_program_name_in_venv        Using Python virtual environment interpreter at /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_1_0/bin/python
+#      -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:101  in gpi_print_registered_impl       VPI registered
+#      0.00ns INFO     cocotb                             Running on Icarus Verilog version 11.0 (stable)
+#      0.00ns INFO     cocotb                             Running tests with cocotb v1.8.1 from /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_1_0/lib/python3.10/site-packages/cocotb
+#      0.00ns INFO     cocotb                             Seeding Python random module with 1718488626
+#      0.00ns INFO     cocotb.regression                  Found test test_adder.adder_basic_test
+#      0.00ns INFO     cocotb.regression                  Found test test_adder.adder_randomised_test
+#      0.00ns INFO     cocotb.regression                  running adder_basic_test (1/2)
+#                                                           Test for 5 + 10
+#      2.00ns INFO     cocotb.regression                  adder_basic_test passed
+#      2.00ns INFO     cocotb.regression                  running adder_randomised_test (2/2)
+#                                                           Test for adding 2 random numbers multiple times
+# Example dut.X.value Print
+# 10100
+# 01100
+# 10000
+# 10011
+# 10010
+# 10111
+# 01111
+# 00011
+# 01011
+# 01001
+#     22.00ns INFO     cocotb.regression                  adder_randomised_test passed
+#     22.00ns INFO     cocotb.regression                  ******************************************************************************************
+#                                                         ** TEST                              STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+#                                                         ******************************************************************************************
+#                                                         ** test_adder.adder_basic_test        PASS           2.00           0.00       3923.70  **
+#                                                         ** test_adder.adder_randomised_test   PASS          20.00           0.00       6587.90  **
+#                                                         ******************************************************************************************
+#                                                         ** TESTS=2 PASS=2 FAIL=0 SKIP=0                     22.00           0.81         27.25  **
+#                                                         ******************************************************************************************
+#
+# VCD info: dumpfile dump.vcd opened for output.
+# make[1]: Leaving directory '/home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/tb'
+#
+# Standard Error (stderr):
+# /home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/src/adder.vhdl:10: error: Can't find type name `positive'
+# Encountered 1 errors parsing /home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/src/adder.vhdl
+# ```
 
 # However, what we would like to do is extract timing information of the circuit in Python and get corresponding
 # graphs. We would like to have this digital signal information interact with our photonics model. Note that when
@@ -225,7 +286,7 @@ cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(
 cocotb_simulation_output_files
 
 # ```python
-# ['C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\simple_design\\simple_design\\tb\\out\\adder_randomised_test.csv']
+# ['/home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/tb/out/adder_randomised_test.csv']
 # ```
 
 # We can read the simulation output data accordingly:
@@ -234,6 +295,21 @@ example_simple_simulation_data = piel.read_simulation_data(
     cocotb_simulation_output_files[0]
 )
 example_simple_simulation_data
+
+#
+# |    |   Unnamed: 0 |    a |    b |     x |     t |
+# |---:|-------------:|-----:|-----:|------:|------:|
+# |  0 |            0 |  101 | 1010 |  1111 |  2001 |
+# |  1 |            1 |  101 | 1111 | 10100 |  4001 |
+# |  2 |            2 | 1000 |  100 |  1100 |  6001 |
+# |  3 |            3 | 1000 | 1000 | 10000 |  8001 |
+# |  4 |            4 | 1010 | 1001 | 10011 | 10001 |
+# |  5 |            5 | 1011 |  111 | 10010 | 12001 |
+# |  6 |            6 | 1011 | 1100 | 10111 | 14001 |
+# |  7 |            7 |  100 | 1011 |  1111 | 16001 |
+# |  8 |            8 |   11 |    0 |    11 | 18001 |
+# |  9 |            9 |  110 |  101 |  1011 | 20001 |
+# | 10 |           10 |    1 | 1000 |  1001 | 22001 |
 
 # Now we can plot the corresponding data using the built-in interactive `bokeh` signal analyser function:
 

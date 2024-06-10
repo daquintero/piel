@@ -1,0 +1,223 @@
+[
+  {
+    "bw_ghz": 40,
+    "bias_v": -3,
+    "vpi_v": 5.9,
+    "vpiL_v_cm": 2.36,
+    "length_mm": 4,
+    "ps_loss_db_per_mm": 1.15,
+    "references": [
+      {
+        "number": "[48]",
+        "title": "N. H. Zhu, D. W. Wu, S. J. Yu, L. Zhang, Y. Zhang, and Y. L. Yu, “High-responsivity Ge/Si pin photodiodes fabricated by selective epitaxial growth,” Opt. Lett., vol. 33, no. 11, pp. 1212–1214, Jun. 2008",
+        "year": "2008",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 40,
+    "bias_v": -3,
+    "vpi_v": 8.8,
+    "vpiL_v_cm": 2.11,
+    "length_mm": 2.4,
+    "ps_loss_db_per_mm": 1.15,
+    "references": [
+      {
+        "number": "[48]",
+        "title": "N. H. Zhu, D. W. Wu, S. J. Yu, L. Zhang, Y. Zhang, and Y. L. Yu, “High-responsivity Ge/Si pin photodiodes fabricated by selective epitaxial growth,” Opt. Lett., vol. 33, no. 11, pp. 1212–1214, Jun. 2008",
+        "year": "2008",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 42.3,
+    "bias_v": -2,
+    "vpi_v": 7,
+    "vpiL_v_cm": 1.4,
+    "length_mm": 2,
+    "ps_loss_db_per_mm": 2.2,
+    "references": [
+      {
+        "number": "[105]",
+        "title": "M. Li, L. Wang, X. Li, X. Xiao, and S. Yu, “Silicon intensity Mach–Zehnder modulator for single lane 100 Gb/s applications,” Photon. Res., vol. 6, no. 2, pp. 109–116, Feb. 2018",
+        "year": "2018",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 35,
+    "bias_v": -4,
+    "vpi_v": 4.5,
+    "vpiL_v_cm": 1.35,
+    "length_mm": 3,
+    "ps_loss_db_per_mm": 2,
+    "references": [
+      {
+        "number": "[106]",
+        "title": "J. Wang et al., “Silicon high-speed binary phase-shift keying modulator with a single-drive push-pull high-speed traveling wave electrode,” Photon. Res., vol. 3, no. 3, pp. 58–62, Jun. 2015",
+        "year": "2015",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 30,
+    "bias_v": -5,
+    "vpi_v": 7.5,
+    "vpiL_v_cm": 2.25,
+    "length_mm": 3,
+    "ps_loss_db_per_mm": 0.9,
+    "references": [
+      {
+        "number": "[107]",
+        "title": "K. Goi et al., “Low-loss high-speed silicon IQ modulator for QPSK/DQPSK in C and L bands,” Opt. Express, vol. 22, no. 9, pp. 10703–10709, May 2014",
+        "year": "2014",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 35,
+    "bias_v": -5,
+    "vpi_v": 7.3,
+    "vpiL_v_cm": 3.29,
+    "length_mm": 4.5,
+    "ps_loss_db_per_mm": 6.8,
+    "references": [
+      {
+        "number": "[108]",
+        "title": "H. Sepehrian, J. Lin, L. A. Rusch, and W. Shi, “Silicon Photonic IQ Modulators for 400 Gb/s and Beyond,” J. Lightwave Technol., vol. 37, no. 13, pp. 3078–3086, Jul. 2019",
+        "year": "2019",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 30.4,
+    "bias_v": -3,
+    "vpi_v": 3,
+    "vpiL_v_cm": 1.2,
+    "length_mm": 4,
+    "ps_loss_db_per_mm": 2.95,
+    "references": [
+      {
+        "number": "[109]",
+        "title": "J. Zhou, J. Wang, L. Zhu, and Q. Zhang, “High baud rate all-silicon photonics carrier depletion modulators,” J. Lightwave Technol., vol. 38, no. 2, pp. 272–281, Jan. 2020",
+        "year": "2020",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 29.9,
+    "bias_v": -3,
+    "vpi_v": 4,
+    "vpiL_v_cm": 1.6,
+    "length_mm": 4,
+    "ps_loss_db_per_mm": 1.75,
+    "references": [
+      {
+        "number": "[109]",
+        "title": "J. Zhou, J. Wang, L. Zhu, and Q. Zhang, “High baud rate all-silicon photonics carrier depletion modulators,” J. Lightwave Technol., vol. 38, no. 2, pp. 272–281, Jan. 2020",
+        "year": "2020",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 27,
+    "bias_v": -1,
+    "vpi_v": 7.8,
+    "vpiL_v_cm": 2.73,
+    "length_mm": 3.5,
+    "ps_loss_db_per_mm": 1.03,
+    "references": [
+      {
+        "number": "[110]",
+        "title": "R. Ding et al., “High-speed silicon modulator with slow-wave electrodes and fully independent differential drive,” J. Lightwave Technol., vol. 32, no. 12, pp. 2240–2247, Jun. 2014",
+        "year": "2014",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 38,
+    "bias_v": -2,
+    "vpi_v": 8,
+    "vpiL_v_cm": 3.2,
+    "length_mm": 4,
+    "ps_loss_db_per_mm": 0.95,
+    "references": [
+      {
+        "number": "[96]",
+        "title": "Y. Shen et al., “Deep learning with coherent nanophotonic circuits,” Nature Photon., vol. 11, no. 7, pp. 441–446, Jul. 2017",
+        "year": "2017",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 20,
+    "bias_v": -2,
+    "vpi_v": 4.5,
+    "vpiL_v_cm": 2.25,
+    "length_mm": 5,
+    "ps_loss_db_per_mm": 1.5,
+    "references": [
+      {
+        "number": "[111]",
+        "title": "OSA | Coplanar-waveguide-based silicon Mach–Zehnder modulator using a meandering optical waveguide and alternating-side PN junction loading,” Accessed: Apr. 15, 2020. [Online]. Available: https://www.osapublishing.org/ol/abstract.cfm?uri=ol-41-18-4401",
+        "year": "2020",
+        "accessed": "Apr. 15, 2020",
+        "available": "https://www.osapublishing.org/ol/abstract.cfm?uri=ol-41-18-4401"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 24,
+    "bias_v": -5,
+    "vpi_v": 3,
+    "vpiL_v_cm": 2.2,
+    "length_mm": 5.5,
+    "ps_loss_db_per_mm": 0.94,
+    "references": [
+      {
+        "number": "[112]",
+        "title": "X. Tu et al., “Silicon optical modulator with shield coplanar waveguide electrodes,” Opt. Express, vol. 22, no. 19, pp. 23724–23731, Sep. 2014",
+        "year": "2014",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  },
+  {
+    "bw_ghz": 20,
+    "bias_v": -2,
+    "vpi_v": 3.1,
+    "vpiL_v_cm": 1.86,
+    "length_mm": 6,
+    "ps_loss_db_per_mm": 1.2,
+    "references": [
+      {
+        "number": "[113]",
+        "title": "P. Dong, L. Chen, and Y. Chen, “High-speed low-voltage single-drive push-pull silicon Mach-Zehnder modulators,” Opt. Express, vol. 20, no. 6, pp. 6163–6169, Mar. 2012",
+        "year": "2012",
+        "accessed": "-",
+        "available": "-"
+      }
+    ]
+  }
+]

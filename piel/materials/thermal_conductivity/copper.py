@@ -1,11 +1,9 @@
-import jax.numpy as jnp
 import pandas as pd
-from typing import Literal
 
 import piel
 from ...types import ArrayTypes
-from .types import MaterialReferencesTypes, MaterialReferenceType
-from ...models.physical.types import TemperatureRangeTypes
+from piel.types.materials import MaterialReferencesTypes, MaterialReferenceType
+from piel.types.physical import TemperatureRangeTypes
 
 # CURRENT TODO: finish migrating this, add material sub names, add proper export, put into __init__
 

@@ -1,0 +1,172 @@
+[
+  {
+    "institution": "amf_mpw",
+    "mzm_bandwidth_ghz": 40,
+    "mzm_bandwidth_voltage_v": -2,
+    "mzm_insertion_loss_db": 4,
+    "mzm_vpi_v": 6.29,
+    "mzm_length_mm": 4,
+    "detector_bandwidth_ghz": 35,
+    "detector_bandwidth_voltage_v": -2,
+    "detector_responsivity_aw": 0.85,
+    "detector_dark_current_na": 30,
+    "detector_bias_v": -2,
+    "passive_loss_db_per_cm": 1.4,
+    "mmi_loss_db": 0.3,
+    "edge_coupling_db": 1.2,
+    "References": [
+        {
+          "Number": "[48]",
+          "Title": "AMF-QP-RND-011 AMF PDK3.1 User Manual V1",
+          "Year": "2020",
+          "Accessed": "2020",
+          "Available": "http://www.advmf.com/"
+        }
+      ]
+  },
+  {
+    "institution": "aim_mpw",
+    "mzm_speed_gbps": 50,
+    "mzm_insertion_loss_db": 2.7,
+    "mzm_vpiL_v_cm_voltage_v": -1,
+    "mzm_vpiL_v_cm": 0.8,
+    "mzm_length_mm": 1,
+    "detector_bandwidth_ghz": 50,
+    "detector_responsivity_aw": 1,
+    "detector_dark_current_na": 40,
+    "detector_bias_v": 1,
+    "passive_loss_db_per_cm": 0.9,
+    "edge_coupling_db": 1.5,
+    "References": [
+        {
+          "Number": "[47]",
+          "Title": "N. M. Fahrenkopf, C. McDonough, G. L. Leake, Z. Su, E. Timurdogan, and D. D. Coolbaugh, “The AIM photonics MPW: A highly accessible cutting edge technology for rapid prototyping of photonic integrated circuits,” IEEE J. Sel. Topics Quantum Electron., vol. 25, no. 5, pp. 1–6, Sep. 2019",
+          "Year": "2019",
+          "Accessed": "-",
+          "Available": "-"
+        },
+        {
+          "Number": "[49]",
+          "Title": "AIM photonics",
+          "Year": "2020",
+          "Accessed": "May 08, 2020",
+          "Available": "http://www.aimphotonics.com"
+        }
+      ]
+  },
+  {
+    "institution": "cea_leti_si310_phmp2m",
+    "mzm_bandwidth_ghz": 40,
+    "mzm_bandwidth_voltage_v": -2,
+    "mzm_insertion_loss_db": 2.4,
+    "mzm_vpiL_v_cm": 2,
+    "mzm_length_mm": 3,
+    "detector_bandwidth_ghz": 35,
+    "detector_responsivity_aw": 0.75,
+    "detector_dark_current_na": 50,
+    "detector_bias_v": -1,
+    "passive_loss_db_per_cm": 2,
+    "mmi_loss_db": 0.5,
+    "edge_coupling_db": null,
+    "References": [
+        {
+          "Number": "[50]",
+          "Title": "Si-photonics IC Si310-PHMP2M - CMP: Circuits multi-projets",
+          "Year": "2020",
+          "Accessed": "May 08, 2020",
+          "Available": "https://mycmp.fr/datasheet/si-photonics-ic-si310-phmp2m"
+        }
+     ]
+  },
+  {
+    "institution": "gf_90wg",
+    "mzm_bandwidth_ghz": 27,
+    "mzm_bandwidth_voltage_v": -2,
+    "mzm_insertion_loss_db": 3.5,
+    "mzm_vpiL_v_cm": 1.54,
+    "mzm_length_mm": 3,
+    "detector_bandwidth_ghz": 39,
+    "detector_responsivity_aw": 1,
+    "detector_dark_current_na": 70,
+    "detector_bias_v": -1,
+    "passive_loss_db_per_cm": 2.2,
+    "edge_coupling_db": 0.7,
+    "References": [
+        {
+          "Number": "[52]",
+          "Title": "K. Giewont et al., “300-mm monolithic silicon photonics foundry technology,” IEEE J. Sel. Topics Quantum Electron., vol. 25, no. 5, pp. 1–11, Sep. 2019",
+          "Year": "2019",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+  },
+  {
+    "institution": "ihp_sg25h5_epic",
+    "mzm_bandwidth_ghz": null,
+    "mzm_insertion_loss_db": null,
+    "mzm_vpiL_v_cm": 3,
+    "mzm_length_mm": 7,
+    "detector_bandwidth_ghz": 60,
+    "detector_responsivity_aw": 0.8,
+    "detector_dark_current_na": 200,
+    "detector_bias_v": -2,
+    "passive_loss_db_per_cm": 2.5,
+    "edge_coupling_db": null,
+    "References": [
+        {
+          "Number": "[53]",
+          "Title": "IHP - SiGe:C BiCMOS technologies",
+          "Year": "2020",
+          "Accessed": "Dec. 29, 2020",
+          "Available": "https://www.ihp-microelectronics.com/en/services/mpw-prototyping/sige-bicmos-technologies.html"
+        }
+    ]
+  },
+  {
+    "institution": "imec_isipp50",
+    "mzm_bandwidth_ghz": 37,
+    "mzm_bandwidth_voltage_v": -2,
+    "mzm_insertion_loss_db": 2.5,
+    "mzm_vpi_v": 12,
+    "mzm_length_mm": 1.5,
+    "detector_bandwidth_ghz": 50,
+    "detector_responsivity_aw": 0.9,
+    "detector_dark_current_na": 50,
+    "detector_bias_v": -1,
+    "passive_loss_db_per_cm": 1.4,
+    "edge_coupling_db": 2,
+    "References": [
+        {
+          "Number": "[54]",
+          "Title": "Silicon photonic ICs for prototyping - Imec",
+          "Year": "2020",
+          "Accessed": "May 08, 2020",
+          "Available": "https://www.imec-int.com/en/silicon-photonic-ICs-prototyping"
+        }
+    ]
+  },
+  {
+    "institution": "vtt_mpw",
+    "mzm_bandwidth_mhz": 2.5,
+    "mzm_insertion_loss_db": null,
+    "mzm_vpi_v": null,
+    "mzm_length_mm": null,
+    "detector_bandwidth_ghz": 35,
+    "detector_responsivity_aw": 0.8,
+    "detector_dark_current_ua": 1,
+    "detector_bias_v": -1,
+    "passive_loss_db_per_cm": 0.1,
+    "mmi_loss_db": 0.2,
+    "edge_coupling_db_range": "1-1.4",
+    "References": [
+        {
+          "Number": "[55]",
+          "Title": "T. Aalto et al., “Open-access 3-um SOI waveguide platform for dense photonic integrated circuits,” IEEE J. Sel. Topics Quantum Electron., vol. 25, no. 5, pp. 1–9, Sep. 2019",
+          "Year": "2019",
+          "Accessed": "-",
+          "Available": "-"
+        }
+    ]
+  }
+]

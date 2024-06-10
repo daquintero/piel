@@ -3,8 +3,6 @@ import time
 import thewalrus
 import numpy as np
 
-__all__ = ["unitary_permanent"]
-
 
 def unitary_permanent(
     unitary_matrix: jnp.ndarray,
