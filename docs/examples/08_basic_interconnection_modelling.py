@@ -13,15 +13,12 @@
 #
 # As such, understanding interconnection effects turns out to be pretty important in these type of systems.
 
-import numpy as np
-import piel
 from piel.models.physical.electrical.cable import (
     calculate_coaxial_cable_geometry,
     calculate_coaxial_cable_heat_transfer,
     calculate_dc_cable_geometry,
 )
-from piel.models.physical.electrical.types import (
-    CoaxialCableGeometryType,
+from piel.types.electrical import (
     CoaxialCableMaterialSpecificationType,
 )
 

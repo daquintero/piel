@@ -49,45 +49,45 @@ mzi2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 #
 # For example, assume we have a 4-bit DAC. We know that our applied phase shift $\phi=0$ at our digital code $b0000$. Assume we have an ideal linear phase-shifter that maps the code $b1111$ to $\phi=\pi$. `piel` provides a convenient function to extract this code-to-phase mapping:
 
-basic_ideal_phase_map = piel.models.logic.electro_optic.linear_bit_phase_map(
+basic_ideal_bits_phase_map = piel.models.logic.electro_optic.linear_bit_phase_map(
     bits_amount=5, final_phase_rad=np.pi, initial_phase_rad=0
 )
-basic_ideal_phase_map
+basic_ideal_bits_phase_map.dataframe
 
-# |    |   bits |    phase |
-# |---:|-------:|---------:|
-# |  0 |      0 | 0        |
-# |  1 |      1 | 0.101341 |
-# |  2 |     10 | 0.202681 |
-# |  3 |     11 | 0.304022 |
-# |  4 |    100 | 0.405363 |
-# |  5 |    101 | 0.506703 |
-# |  6 |    110 | 0.608044 |
-# |  7 |    111 | 0.709385 |
-# |  8 |   1000 | 0.810726 |
-# |  9 |   1001 | 0.912066 |
-# | 10 |   1010 | 1.01341  |
-# | 11 |   1011 | 1.11475  |
-# | 12 |   1100 | 1.21609  |
-# | 13 |   1101 | 1.31743  |
-# | 14 |   1110 | 1.41877  |
-# | 15 |   1111 | 1.52011  |
-# | 16 |  10000 | 1.62145  |
-# | 17 |  10001 | 1.72279  |
-# | 18 |  10010 | 1.82413  |
-# | 19 |  10011 | 1.92547  |
-# | 20 |  10100 | 2.02681  |
-# | 21 |  10101 | 2.12815  |
-# | 22 |  10110 | 2.2295   |
-# | 23 |  10111 | 2.33084  |
-# | 24 |  11000 | 2.43218  |
-# | 25 |  11001 | 2.53352  |
-# | 26 |  11010 | 2.63486  |
-# | 27 |  11011 | 2.7362   |
-# | 28 |  11100 | 2.83754  |
-# | 29 |  11101 | 2.93888  |
-# | 30 |  11110 | 3.04022  |
-# | 31 |  11111 | 3.14156  |
+# |    |   bits |    phase   |
+# |----|--------|------------|
+# |  0 |  00000 | 0.000000   |
+# |  1 |  00001 | 0.101341   |
+# |  2 |  00010 | 0.202681   |
+# |  3 |  00011 | 0.304022   |
+# |  4 |  00100 | 0.405363   |
+# |  5 |  00101 | 0.506703   |
+# |  6 |  00110 | 0.608044   |
+# |  7 |  00111 | 0.709385   |
+# |  8 |  01000 | 0.810726   |
+# |  9 |  01001 | 0.912066   |
+# | 10 |  01010 | 1.013410   |
+# | 11 |  01011 | 1.114750   |
+# | 12 |  01100 | 1.216090   |
+# | 13 |  01101 | 1.317430   |
+# | 14 |  01110 | 1.418770   |
+# | 15 |  01111 | 1.520110   |
+# | 16 |  10000 | 1.621450   |
+# | 17 |  10001 | 1.722790   |
+# | 18 |  10010 | 1.824130   |
+# | 19 |  10011 | 1.925470   |
+# | 20 |  10100 | 2.026810   |
+# | 21 |  10101 | 2.128150   |
+# | 22 |  10110 | 2.229500   |
+# | 23 |  10111 | 2.330840   |
+# | 24 |  11000 | 2.432180   |
+# | 25 |  11001 | 2.533520   |
+# | 26 |  11010 | 2.634860   |
+# | 27 |  11011 | 2.736200   |
+# | 28 |  11100 | 2.837540   |
+# | 29 |  11101 | 2.938880   |
+# | 30 |  11110 | 3.040220   |
+# | 31 |  11111 | 3.141560   |
 #
 
 # This allows us to create an operational model of our phase shifter. It is also possible, that if we have a phase-voltage curve, we can also map that to the analog signal, and the analog signal to the DAC converter accordingly, when a Pandas dataframe is provided.
@@ -104,51 +104,49 @@ import simple_design
 cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(
     simple_design
 )
-example_simple_simulation_data = piel.read_simulation_data(
-    cocotb_simulation_output_files[0]
+example_simple_truth_table = piel.flows.read_simulation_data_to_truth_table(
+    cocotb_simulation_output_files[0],
+    input_ports=["a", "b"],
+    output_ports=["x"],
 )
-example_simple_simulation_data
+example_simple_truth_table.dataframe
 
 # |    |   Unnamed: 0 |    a |    b |     x |     t |
 # |---:|-------------:|-----:|-----:|------:|------:|
-# |  0 |            0 |  101 | 1010 |  1111 |  2001 |
-# |  1 |            1 | 1001 | 1001 | 10010 |  4001 |
-# |  2 |            2 |    0 | 1011 |  1011 |  6001 |
-# |  3 |            3 |  100 |  101 |  1001 |  8001 |
-# |  4 |            4 |  101 |    0 |   101 | 10001 |
-# |  5 |            5 |   11 |    0 |    11 | 12001 |
-# |  6 |            6 |  101 | 1011 | 10000 | 14001 |
-# |  7 |            7 | 1000 |  101 |  1101 | 16001 |
-# |  8 |            8 | 1101 |  100 | 10001 | 18001 |
-# |  9 |            9 | 1001 |   11 |  1100 | 20001 |
-# | 10 |           10 | 1011 | 1111 | 11010 | 22001 |
+# |  0 |            0 | 0101 | 1010 | 01111 |  2001 |
+# |  1 |            1 | 0101 | 1111 | 10100 |  4001 |
+# |  2 |            2 | 1000 | 0100 | 01100 |  6001 |
+# |  3 |            3 | 1000 | 1000 | 10000 |  8001 |
+# |  4 |            4 | 1010 | 1001 | 10011 | 10001 |
+# |  5 |            5 | 1011 | 0111 | 10010 | 12001 |
+# |  6 |            6 | 1011 | 1100 | 10111 | 14001 |
+# |  7 |            7 | 0100 | 1011 | 01111 | 16001 |
+# |  8 |            8 | 0011 | 0000 | 00011 | 18001 |
+# |  9 |            9 | 0110 | 0101 | 01011 | 20001 |
+# | 10 |           10 | 0001 | 1000 | 01001 | 22001 |
 
-# We can get the phase that is mapped to this electronic data accordingly:
+# We can get the phase that is mapped to this electronic data accordingly. We can append this into our initial time-domain dataframe:
 
-basic_ideal_phase_array = (
-    piel.models.logic.electro_optic.return_phase_array_from_data_series(
-        data_series=example_simple_simulation_data.x, phase_map=basic_ideal_phase_map
-    )
+truth_table = piel.flows.digital_electro_optic.add_truth_table_bit_to_phase_data(
+    truth_table=example_simple_truth_table,
+    bit_phase_map=basic_ideal_bits_phase_map,
+    bit_phase_column_name="x",
 )
+truth_table.dataframe
 
-# We can append this into our initial time-domain dataframe:
-
-example_simple_simulation_data["phase"] = basic_ideal_phase_array
-example_simple_simulation_data
-
-# |    | Unnamed: 0 |   a   |   b   |   x   |   t   |  phase   |
-# |---:|-----------:|------:|------:|------:|------:|---------:|
-# |  0 |          0 |  101  | 1010  | 1111  | 2001  |  1.52011 |
-# |  1 |          1 | 1001  | 1001  | 10010 | 4001  |  1.82413 |
-# |  2 |          2 |   0   | 1011  | 1011  | 6001  |  1.11475 |
-# |  3 |          3 |  100  |  101  | 1001  | 8001  | 0.912066 |
-# |  4 |          4 |  101  |   0   |  101  | 10001 | 0.506703 |
-# |  5 |          5 |  11   |   0   |  11   | 12001 | 0.304022 |
-# |  6 |          6 |  101  | 1011  | 10000 | 14001 |  1.62145 |
-# |  7 |          7 | 1000  |  101  | 1101  | 16001 |  1.31743 |
-# |  8 |          8 | 1101  |  100  | 10001 | 18001 |  1.72279 |
-# |  9 |          9 | 1001  |  11   | 1100  | 20001 |  1.21609 |
-# | 10 |         10 | 1011  | 1111  | 11010 | 22001 |  2.63486 |
+# |    |   Unnamed: 0 |    a |    b |     x |     t |   phase_0 |
+# |---:|-------------:|-----:|-----:|------:|------:|----------:|
+# |  0 |            0 | 0101 | 1010 | 01111 |  2001 |  1.52011  |
+# |  1 |            1 | 0101 | 1111 | 10100 |  4001 |  2.02681  |
+# |  2 |            2 | 1000 | 0100 | 01100 |  6001 |  1.21609  |
+# |  3 |            3 | 1000 | 1000 | 10000 |  8001 |  1.62145  |
+# |  4 |            4 | 1010 | 1001 | 10011 | 10001 |  1.92547  |
+# |  5 |            5 | 1011 | 0111 | 10010 | 12001 |  1.82413  |
+# |  6 |            6 | 1011 | 1100 | 10111 | 14001 |  2.33084  |
+# |  7 |            7 | 0100 | 1011 | 01111 | 16001 |  1.52011  |
+# |  8 |            8 | 0011 | 0000 | 00011 | 18001 |  0.304022 |
+# |  9 |            9 | 0110 | 0101 | 01011 | 20001 |  1.11475  |
+# | 10 |           10 | 0001 | 1000 | 01001 | 22001 |  0.912066 |
 
 # This looks like this in GTKWave:
 
@@ -211,7 +209,7 @@ piel.sax_to_s_parameters_standard_matrix(
 # Now we can compute what the unitary of our photonic circuit would be for each of the phases applied in our `cocotb` `simple_design` simulation outputs:
 
 mzi2x2_active_unitary_array = list()
-for phase_i in example_simple_simulation_data.phase:
+for phase_i in truth_table.dataframe.phase_0:
     mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
         mzi2x2_model(sxt={"active_phase_rad": phase_i}),
         input_ports_order=(
@@ -223,7 +221,7 @@ for phase_i in example_simple_simulation_data.phase:
 
 # We can copy this to a new dataframe and append the data in accordingly:
 
-mzi2x2_simple_simulation_data = example_simple_simulation_data.copy()
+mzi2x2_simple_simulation_data = truth_table.dataframe.copy()
 mzi2x2_simple_simulation_data["unitary"] = mzi2x2_active_unitary_array
 mzi2x2_simple_simulation_data
 
@@ -322,9 +320,7 @@ mzi2x2_simple_simulation_data
 # We will now convert the data into a plottable form, as when VCD or timing data files are parsed, they assume only a steady point and the plotter includes the lines. However, because we need to account for this type of co-simulation formats, we need to transform the data into a plotting form.
 
 mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
-    data=mzi2x2_simple_simulation_data,
-    time_index_name="t",
-    fixed_transient_time=1,
+    data=mzi2x2_simple_simulation_data, time_index_name="t", fixed_transient_time=1
 )
 
 # #### Basic Plots
@@ -339,7 +335,7 @@ simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
     data=mzi2x2_simple_simulation_data_lines,
     x_axis_column_name="t",
     row_list=[
-        "phase",
+        "phase_0",
         "output_amplitude_array_0_abs",
         "output_amplitude_array_0_phase_deg",
     ],
@@ -355,7 +351,7 @@ simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
     data=mzi2x2_simple_simulation_data_lines,
     x_axis_column_name="t",
     row_list=[
-        "phase",
+        "phase_0",
         "output_amplitude_array_1_abs",
         "output_amplitude_array_1_phase_deg",
     ],
@@ -562,7 +558,7 @@ piel.sax_to_s_parameters_standard_matrix(
 
 # ### Algorithmically Extracted Phase-Shifter Instances
 
-# So in this example, we're controlling the `sxt: {"active_phase_rad": ourphase}` but this is composed of the `ideal_active_waveguide` model and the corresponding `active_phase_rad` parameter but this is determined from the `straight_heater_metal_s_ad3c1693` definition of the `straight_heater_metal_simple` phase shifter component. You can see the complexity of the system construction. We can extract all instances that contain this component which are `mzi_1` and `mzi_5`.
+# So in this example, we're controlling the `sxt: {"active_phase_rad": ourphase}` but this is composed of the `ideal_active_waveguide` model and the corresponding `active_phase_rad` parameter but this is determined from the `mzi_d3794663` definition of the `straight_heater_metal_undercut` phase shifter component. You can see the complexity of the system construction. We can extract all instances that contain this component which are `mzi_1` and `mzi_5`.
 #
 # However, we want to create a map that returns a phase list in this form:
 #
@@ -575,8 +571,8 @@ piel.sax_to_s_parameters_standard_matrix(
 
 switch_lattice_address = piel.get_matched_model_recursive_netlist_instances(
     recursive_netlist=mixed_switch_lattice_circuit_netlist,
-    top_level_instance_prefix="component_lattice_gener",
-    target_component_prefix="straight_heater_metal_u",
+    top_level_instance_prefix="component_lattice_generic",
+    target_component_prefix="mzi_d3794663",
     models=piel.models.frequency.get_default_models(),
 )
 switch_lattice_address
@@ -727,9 +723,9 @@ switch_lattice_phase_array_to_state(
 
 # Follow the flow above:
 
-switch_lattice_simulation_data = example_simple_simulation_data.copy()
+switch_lattice_simulation_data = truth_table.dataframe.copy()
 switch_lattice_active_unitary_array = list()
-for phase_i in switch_lattice_simulation_data.phase:
+for phase_i in switch_lattice_simulation_data.phase_0:
     switch_lattice_active_unitary_i = switch_lattice_phase_array_to_state(
         circuit=mixed_switch_lattice_circuit_s_parameters,
         switch_address_list=switch_lattice_address,
@@ -779,9 +775,7 @@ switch_lattice_simulation_data.head()
 # Convert to digital equivalent
 
 switch_lattice_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
-    data=switch_lattice_simulation_data,
-    time_index_name="t",
-    fixed_transient_time=1,
+    data=switch_lattice_simulation_data, time_index_name="t", fixed_transient_time=1
 )
 
 for port_i in range(4):
@@ -789,7 +783,7 @@ for port_i in range(4):
         data=switch_lattice_simulation_data_lines,
         x_axis_column_name="t",
         row_list=[
-            "phase",
+            "phase_0",
             "out_o_" + str(port_i) + "_abs",
             "out_o_" + str(port_i) + "_phase_deg",
         ],

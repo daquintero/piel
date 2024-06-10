@@ -1,0 +1,210 @@
+{
+  "Institutions": [
+    {
+      "Institution": "AMF (MPW)",
+      "Mach-Zehnder Modulators": {
+        "Bandwidth": "> 40 GHz @ -2V",
+        "Insertion Loss": "4 dB",
+        "Vπ": "6.29V",
+        "Length": "4 mm"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "35 GHz @ -2V",
+        "Responsivity": "0.85 A/W",
+        "Dark Current": "30 nA",
+        "Bias": "-2V"
+      },
+      "Passive Devices": {
+        "Loss": "1.4 dB/cm (500 nm x 220 nm Rib)",
+        "MMI": "1×2 MMI: 0.3 dB"
+      },
+      "Edge Coupling": "1.2 dB (SMF)",
+      "References": [
+        {
+          "Number": "[48]",
+          "Title": "AMF-QP-RND-011 AMF PDK3.1 User Manual V1",
+          "Year": "2020",
+          "Accessed": "2020",
+          "Available": "http://www.advmf.com/"
+        }
+      ]
+    },
+    {
+      "Institution": "AIM (MPW)",
+      "Mach-Zehnder Modulators": {
+        "Speed": "50 Gbps",
+        "Insertion Loss": "2.7 dB",
+        "VπL": "0.8 V-cm @ -1V",
+        "Length": "1 mm"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "50 GHz",
+        "Responsivity": "1 A/W",
+        "Dark Current": "40 nA",
+        "Bias": "1V"
+      },
+      "Passive Devices": {
+        "Loss": "0.9 dB/cm (Low Loss Rib)"
+      },
+      "Edge Coupling": "1.5 dB (SMF)",
+      "References": [
+        {
+          "Number": "[47]",
+          "Title": "N. M. Fahrenkopf, C. McDonough, G. L. Leake, Z. Su, E. Timurdogan, and D. D. Coolbaugh, “The AIM photonics MPW: A highly accessible cutting edge technology for rapid prototyping of photonic integrated circuits,” IEEE J. Sel. Topics Quantum Electron., vol. 25, no. 5, pp. 1–6, Sep. 2019",
+          "Year": "2019",
+          "Accessed": "-",
+          "Available": "-"
+        },
+        {
+          "Number": "[49]",
+          "Title": "AIM photonics",
+          "Year": "2020",
+          "Accessed": "May 08, 2020",
+          "Available": "http://www.aimphotonics.com"
+        }
+      ]
+    },
+    {
+      "Institution": "CEA-Leti (Si310-PHMP2M)",
+      "Mach-Zehnder Modulators": {
+        "Bandwidth": "40GHz @ -2V",
+        "Insertion Loss": "2.4 dB",
+        "VπL": "2 V-cm",
+        "Length": "3 mm"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "35 GHz",
+        "Responsivity": "0.75 A/W",
+        "Dark Current": "50 nA",
+        "Bias": "-1V"
+      },
+      "Passive Devices": {
+        "Loss": "2 dB/cm (Rib)",
+        "MMI": "1×2 MMI: 0.5 dB"
+      },
+      "Edge Coupling": "-",
+      "References": [
+        {
+          "Number": "[50]",
+          "Title": "Si-photonics IC Si310-PHMP2M - CMP: Circuits multi-projets",
+          "Year": "2020",
+          "Accessed": "May 08, 2020",
+          "Available": "https://mycmp.fr/datasheet/si-photonics-ic-si310-phmp2m"
+        }
+      ]
+    },
+    {
+      "Institution": "GF (90WG)",
+      "Mach-Zehnder Modulators": {
+        "Bandwidth": "27 GHz @ -2V",
+        "Insertion Loss": "3.5 dB",
+        "VπL": "1.54 V-cm",
+        "Length": "3 mm"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "39 GHz",
+        "Responsivity": "1 A/W",
+        "Dark Current": "70 nA",
+        "Bias": "-1V"
+      },
+      "Passive Devices": {
+        "Loss": "2.2 dB/cm (170 nm x 350 nm Rib) Multimode Rib"
+      },
+      "Edge Coupling": "0.7 dB (Metamaterial waveguide) SMF",
+      "References": [
+        {
+          "Number": "[52]",
+          "Title": "K. Giewont et al., “300-mm monolithic silicon photonics foundry technology,” IEEE J. Sel. Topics Quantum Electron., vol. 25, no. 5, pp. 1–11, Sep. 2019",
+          "Year": "2019",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Institution": "IHP (SG25H5-ePIC)",
+      "Mach-Zehnder Modulators": {
+        "Bandwidth": "-",
+        "Insertion Loss": "-",
+        "VπL": "3.0 V-cm",
+        "Length": "7 mm"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "60 GHz",
+        "Responsivity": "0.8 A/W",
+        "Dark Current": "200 nA",
+        "Bias": "-2V"
+      },
+      "Passive Devices": {
+        "Loss": "2.5 dB/cm (500 nm x 220 nm Rib)"
+      },
+      "Edge Coupling": "-",
+      "References": [
+        {
+          "Number": "[53]",
+          "Title": "IHP - SiGe:C BiCMOS technologies",
+          "Year": "2020",
+          "Accessed": "Dec. 29, 2020",
+          "Available": "https://www.ihp-microelectronics.com/en/services/mpw-prototyping/sige-bicmos-technologies.html"
+        }
+      ]
+    },
+    {
+      "Institution": "IMEC (iSiPP50)",
+      "Mach-Zehnder Modulators": {
+        "Bandwidth": "37 GHz @ -2V",
+        "Insertion Loss": "2.5 dB",
+        "Vπ": "12V",
+        "Length": "1.5 mm"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "50 GHz",
+        "Responsivity": "0.9 A/W",
+        "Dark Current": "50 nA",
+        "Bias": "-1V"
+      },
+      "Passive Devices": {
+        "Loss": "1.4 dB/cm (450 nm x 220 nm Rib)"
+      },
+      "Edge Coupling": "2 dB (Lensed fiber)",
+      "References": [
+        {
+          "Number": "[54]",
+          "Title": "Silicon photonic ICs for prototyping - Imec",
+          "Year": "2020",
+          "Accessed": "May 08, 2020",
+          "Available": "https://www.imec-int.com/en/silicon-photonic-ICs-prototyping"
+        }
+      ]
+    },
+    {
+      "Institution": "VTT (MPW)",
+      "Mach-Zehnder Modulators": {
+        "Bandwidth": "Up to 2.5 MHz",
+        "Insertion Loss": "-",
+        "Vπ": "-",
+        "Length": "-"
+      },
+      "SiGe Detector": {
+        "Bandwidth": "35 GHz",
+        "Responsivity": "0.8 A/W",
+        "Dark Current": "1 uA",
+        "Bias": "-1V"
+      },
+      "Passive Devices": {
+        "Loss": "0.1 dB/cm (3 um x 3 um Strip)",
+        "MMI": "1×2 MMI: 0.2 dB"
+      },
+      "Edge Coupling": "1 - 1.4 dB (SMF)",
+      "References": [
+        {
+          "Number": "[55]",
+          "Title": "T. Aalto et al., “Open-access 3-um SOI waveguide platform for dense photonic integrated circuits,” IEEE J. Sel. Topics Quantum Electron., vol. 25, no. 5, pp. 1–9, Sep. 2019",
+          "Year": "2019",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    }
+  ]
+}

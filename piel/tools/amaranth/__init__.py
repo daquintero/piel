@@ -1,3 +1,3 @@
-from .construct import *
-from .export import *
-from .verify import *
+from .construct import construct_amaranth_module_from_truth_table
+from .export import generate_verilog_from_amaranth_truth_table
+from .verify import verify_amaranth_truth_table

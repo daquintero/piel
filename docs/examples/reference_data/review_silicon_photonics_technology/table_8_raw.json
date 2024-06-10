@@ -1,0 +1,214 @@
+{
+  "Ge PIN Photodetectors": [
+    {
+      "Type": "Lateral",
+      "Dark Current": "<10 nA",
+      "Responsivity (A/W)": "0.83",
+      "Bandwidth (GHz)": "37",
+      "References": [
+        {
+          "Number": "[48]",
+          "Title": "N. H. Zhu, D. W. Wu, S. J. Yu, L. Zhang, Y. Zhang, and Y. L. Yu, “High-responsivity Ge/Si pin photodiodes fabricated by selective epitaxial growth,” Opt. Lett., vol. 33, no. 11, pp. 1212–1214, Jun. 2008",
+          "Year": "2008",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "<120 nA",
+      "Responsivity (A/W)": "<1.14",
+      "Bandwidth (GHz)": "~7",
+      "References": [
+        {
+          "Number": "[120]",
+          "Title": "M. M. Farahani, Y. Su, and N. Keil, “High performance of silicon photonics integrated circuits by using new optical communication devices,” J. Lightwave Technol., vol. 35, no. 15, pp. 3257–3262, Aug. 2017",
+          "Year": "2017",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "10 nA",
+      "Responsivity (A/W)": "0.95",
+      "Bandwidth (GHz)": "9",
+      "References": [
+        {
+          "Number": "[121]",
+          "Title": "H. Chen et al., “High-speed 67 GHz bandwidth Ge/Si avalanche photodiode,” Opt. Lett., vol. 39, no. 21, pp. 6236–6238, Nov. 2014",
+          "Year": "2014",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "~500 nA",
+      "Responsivity (A/W)": "1.06",
+      "Bandwidth (GHz)": ">70",
+      "References": [
+        {
+          "Number": "[122]",
+          "Title": "Q. Li et al., “Improving CMOS-compatible germanium photodetectors,” Opt. Express, vol. 20, no. 24, pp. 26345–26350, Nov. 2012",
+          "Year": "2012",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "8 nA",
+      "Responsivity (A/W)": ">1.0",
+      "Bandwidth (GHz)": "27",
+      "References": [
+        {
+          "Number": "[117]",
+          "Title": "T. H. Chen et al., “High-responsivity low-voltage 28-Gb/s Ge p-i-n photodetector with silicon contacts,” J. Lightwave Technol., vol. 33, no. 4, pp. 820–824, Feb. 2015",
+          "Year": "2015",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "~200 nA",
+      "Responsivity (A/W)": "1.16",
+      "Bandwidth (GHz)": "32.8",
+      "References": [
+        {
+          "Number": "[123]",
+          "Title": "Y. Zhang et al., “A high-responsivity photodetector absent metal, germanium direct contact,” Opt. Express, vol. 22, no. 9, pp. 11367–11375, May 2014",
+          "Year": "2014",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "~50 nA",
+      "Responsivity (A/W)": "0.5",
+      "Bandwidth (GHz)": "~40",
+      "References": [
+        {
+          "Number": "[124]",
+          "Title": "R. G. Xing, T. J. Seok, J. Loo, K. Hsu, and M. C. Wu, “Germanium wrap-around photodetectors on silicon photonics,” Opt. Express, vol. 23, no. 9, pp. 11795–11804, May 2015",
+          "Year": "2015",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Lateral",
+      "Dark Current": "3.6 nA",
+      "Responsivity (A/W)": "0.74 @ -1V",
+      "Bandwidth (GHz)": ">67",
+      "References": [
+        {
+          "Number": "[118]",
+          "Title": "J. Michel et al., “Monolithic integration of high-speed germanium photodetectors on silicon circuits,” Opt. Express, vol. 33, no. 11, pp. 1212–1214, Jun. 2008",
+          "Year": "2008",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Vertical",
+      "Dark Current": "50 nA",
+      "Responsivity (A/W)": ">1",
+      "Bandwidth (GHz)": "25",
+      "References": [
+        {
+          "Number": "[48]",
+          "Title": "N. H. Zhu, D. W. Wu, S. J. Yu, L. Zhang, Y. Zhang, and Y. L. Yu, “High-responsivity Ge/Si pin photodiodes fabricated by selective epitaxial growth,” Opt. Lett., vol. 33, no. 11, pp. 1212–1214, Jun. 2008",
+          "Year": "2008",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Vertical",
+      "Dark Current": "120 nA",
+      "Responsivity (A/W)": "0.88",
+      "Bandwidth (GHz)": "28",
+      "References": [
+        {
+          "Number": "[116]",
+          "Title": "L. Vivien et al., “42 GHz p-i-n Germanium photodetector integrated in a silicon-on-insulator waveguide,” Opt. Express, vol. 17, no. 8, pp. 6525–6527, Apr. 2009",
+          "Year": "2009",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Vertical",
+      "Dark Current": "10 nA",
+      "Responsivity (A/W)": "0.95",
+      "Bandwidth (GHz)": "36",
+      "References": [
+        {
+          "Number": "[125]",
+          "Title": "S. Liao et al., “36 GHz submicron silicon waveguide germanium photodetector,” Opt. Express, vol. 19, no. 11, pp. 10697–10702, May 2011",
+          "Year": "2011",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Vertical",
+      "Dark Current": "2 nA",
+      "Responsivity (A/W)": "0.65 @ -1V",
+      "Bandwidth (GHz)": "40 @ -1V",
+      "References": [
+        {
+          "Number": "[126]",
+          "Title": "J. M. Lee et al., “Monolithic integration of high-speed Ge photodiodes on silicon photonics platform,” Opt. Express, vol. 20, no. 6, pp. 6547–6553, Mar. 2012",
+          "Year": "2012",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Vertical",
+      "Dark Current": "3.5 μA",
+      "Responsivity (A/W)": "1.09",
+      "Bandwidth (GHz)": "42.5",
+      "References": [
+        {
+          "Number": "[127]",
+          "Title": "F. Blanchard-Dionne, P. J. Bock, M. Guilloux-Viry, and J. Lapointe, “High-speed evanescently coupled germanium photodetectors on SOI platform,” IEEE J. Sel. Topics Quantum Electron., vol. 17, no. 6, pp. 1461–1467, Nov. 2011",
+          "Year": "2011",
+          "Accessed": "-",
+          "Available": "-"
+        }
+      ]
+    },
+    {
+      "Type": "Vertical",
+      "Dark Current": "<15 nA",
+      "Responsivity (A/W)": "1",
+      "Bandwidth (GHz)": ">45",
+      "References": [
+        {
+          "Number": "[128]",
+          "Title": "Process design kit (PDK),” AIM Photon., [Online]. Available: http://www.aimphotonics.com/process-design-kit, Accessed: May 20, 2020",
+          "Year": "2020",
+          "Accessed": "May 20, 2020",
+          "Available": "http://www.aimphotonics.com/process-design-kit"
+        }
+      ]
+    }
+  ]
+}

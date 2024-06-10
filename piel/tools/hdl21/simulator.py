@@ -1,3 +1,8 @@
+"""
+This module provides functions to configure and run various types of simulations for electronic circuits using HDL21 and NGSPICE.
+It includes utilities to set up NGSPICE simulations, configure operating point and transient simulations, and handle the results.
+"""
+
 import hdl21 as h
 import hdl21.sim as hs
 import numpy as np
@@ -19,13 +24,13 @@ def configure_ngspice_simulation(
     run_directory: PathTypes = ".",
 ):
     """
-    This function configures the NGSPICE simulation for the circuit and returns a simulation class.
+    Configures the NGSPICE simulation for the circuit and returns a simulation options class.
 
     Args:
-        run_directory (PathTypes): Directory where the simulation will be run
+        run_directory (PathTypes): Directory where the simulation will be run.
 
     Returns:
-        simulation_options: Configured NGSPICE simulation options
+        vsp.SimOptions: Configured NGSPICE simulation options.
     """
     run_directory = return_path(run_directory)
     simulation_options = vsp.SimOptions(
@@ -41,14 +46,14 @@ def configure_operating_point_simulation(
     **kwargs,
 ):
     """
-    This function configures the DC operating point simulation for the circuit and returns a simulation class.
+    Configures the DC operating point simulation for the circuit and returns a simulation class.
 
     Args:
-        testbench (Module): HDL21 testbench
-        **kwargs: Additional arguments to be passed to the operating point simulation such as name.
+        testbench (h.Module): HDL21 testbench.
+        **kwargs: Additional arguments to be passed to the operating point simulation, such as the simulation name.
 
     Returns:
-        Simulation: HDL21 simulation class
+        hs.Sim: HDL21 simulation class for the operating point simulation.
     """
 
     @hs.sim
@@ -66,16 +71,16 @@ def configure_transient_simulation(
     **kwargs,
 ):
     """
-    This function configures the transient simulation for the circuit and returns a simulation class.
+    Configures the transient simulation for the circuit and returns a simulation class.
 
     Args:
-        testbench (Module): HDL21 testbench
-        stop_time_s (float): Stop time of the simulation in seconds
-        step_time_s (float): Step time of the simulation in seconds
-        **kwargs: Additional arguments to be passed to the transient simulation
+        testbench (h.Module): HDL21 testbench.
+        stop_time_s (float): Stop time of the simulation in seconds.
+        step_time_s (float): Step time of the simulation in seconds.
+        **kwargs: Additional arguments to be passed to the transient simulation.
 
     Returns:
-        Simulation: HDL21 simulation class
+        hs.Sim: HDL21 simulation class for the transient simulation.
     """
 
     @hs.sim
@@ -94,12 +99,16 @@ def save_results_to_csv(
     results: hs.SimResult, file_name: str, save_directory: PathTypes = "."
 ):
     """
-    This function converts the simulation results to a pandas dataframe and saves it to a csv file.
+    Converts the simulation results to a pandas dataframe and saves it to a CSV file.
 
     Args:
-        directory (PathTypes): Directory where the simulation will be run
-    """
+        results (hs.SimResult): Simulation results to be saved.
+        file_name (str): Name of the CSV file to save the results.
+        save_directory (PathTypes): Directory where the CSV file will be saved.
 
+    Returns:
+        None
+    """
     save_directory = return_path(save_directory)
     # TODO check that there are more than one analysis
     analysis_results = results.an[0].data
@@ -109,7 +118,6 @@ def save_results_to_csv(
         tuple,
         np.ndarray,
     ):
-        # Check that dict values are scalars
         analysis_results = pd.DataFrame(analysis_results, index=[0])
     else:
         analysis_results = pd.DataFrame(analysis_results)
@@ -124,16 +132,16 @@ def run_simulation(
     to_csv: bool = True,
 ):
     """
-    This function runs the transient simulation for the circuit and returns the results.
+    Runs the simulation for the circuit and returns the results.
 
     Args:
-        simulation (h.sim.Sim): HDL21 simulation class
-        simulator_name (Literal["ngspice"]): Name of the simulator
-        simulation_options (Optional[vsp.SimOptions]): Simulation options
-        to_csv (bool): Whether to save the results to a csv file
+        simulation (h.sim.Sim): HDL21 simulation class.
+        simulator_name (Literal["ngspice"]): Name of the simulator to use.
+        simulation_options (Optional[vsp.SimOptions]): Options for the simulation. Defaults to None.
+        to_csv (bool): Whether to save the results to a CSV file. Defaults to True.
 
     Returns:
-        results: Simulation results
+        hs.SimResult: Results of the simulation.
     """
     if simulator_name == "ngspice":
         if simulation_options is None:
@@ -145,7 +153,7 @@ def run_simulation(
             simulation_options = configure_ngspice_simulation()
         results = simulation.run(simulation_options)
     else:
-        print("Simulator not supported.")
+        print("HDLSimulator not supported.")
         return
 
     if to_csv:

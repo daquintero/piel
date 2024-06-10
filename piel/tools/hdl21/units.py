@@ -17,14 +17,13 @@ UNIT = Prefix.UNIT
 import hdl21 as h
 import numpy as np
 
-__all__ = ["convert_numeric_to_prefix"]
-
 
 def convert_numeric_to_prefix(
     value: float,
 ):
     """
-    This function converts a numeric value to a number under a SPICE unit closest to the base prefix. This allows us to connect a particular number real output, into a term that can be used in a SPICE netlist.
+    This function converts a numeric value to a number under a SPICE unit closest to the base prefix. This allows us
+    to connect a particular number real output, into a term that can be used in a SPICE netlist.
     """
     prefixes = [
         (h.Prefix.YOCTO, h.prefix.y),

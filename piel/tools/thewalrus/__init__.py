@@ -1,1 +1,1 @@
-from .operations import *
+from .operations import unitary_permanent

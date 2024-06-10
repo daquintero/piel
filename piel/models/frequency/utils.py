@@ -5,7 +5,9 @@ __all__ = [
 ]
 
 
-def compose_custom_model_library_from_defaults(custom_models: dict, *args, **kwargs) -> dict:
+def compose_custom_model_library_from_defaults(
+    custom_models: dict, *args, **kwargs
+) -> dict:
     """
     Compose the default models with the custom models.
 

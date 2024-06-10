@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from ..types import TruthTable
 
 __all__ = [
     "append_row_to_dict",
@@ -53,13 +54,15 @@ def append_row_to_dict(
 
 
 def points_to_lines_fixed_transient(
-    data: pd.DataFrame | dict,
+    data: pd.DataFrame,
     time_index_name: str,
     fixed_transient_time=1,
     return_dict: bool = False,
+    ignore_rows: list = None,
 ):
     """
-    This function converts specific steady-state point data into steady-state lines with a defined transient time in order to plot digital-style data.
+    This function converts specific steady-state point data into steady-state lines with a defined transient time in
+    order to plot digital-style data.
 
     For example, VCD data tends to be structured in this form:
 
@@ -90,19 +93,22 @@ def points_to_lines_fixed_transient(
     Doesn't append on penultimate row.
 
     Args:
-        data: Dataframe or dictionary of data to be converted.
+        dataframe: Dataframe or dictionary of data to be converted.
         time_index_name: Name of the time index column.
         fixed_transient_time: Time of the transient signal.
         return_dict: Return a dictionary instead of a dataframe.
+        ignore_rows: Rows to ignore when converting to steady-state lines.
 
     Returns:
         Dataframe or dictionary of data with steady-state lines.
     """
-    if type(data) == pd.DataFrame:
-        data = data.to_dict()
-        data = data.copy()
-    else:
-        data = data.copy()
+    # Convert the entire row depending on the time_index_name onto an int from a str
+    data[time_index_name] = data[time_index_name].astype(int)
+    data = data.to_dict()
+    data = data.copy()
+
+    if ignore_rows is None:
+        ignore_rows = []
 
     for i in range(len(data[time_index_name]) - 1):
         # Create a copy of the first row with a i+1 index.

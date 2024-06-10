@@ -4,27 +4,27 @@
 (* generator = "Amaranth" *)
 module top(phase_map_out, detector_in);
   reg \$auto$verilog_backend.cc:2352:dump_module$1  = 0;
-  (* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:47" *)
+  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:83" *)
   input [1:0] detector_in;
   wire [1:0] detector_in;
-  (* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:47" *)
+  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:87" *)
   output [1:0] phase_map_out;
   reg [1:0] phase_map_out;
   always @* begin
     if (\$auto$verilog_backend.cc:2352:dump_module$1 ) begin end
     (* full_case = 32'd1 *)
-    (* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:61" *)
+    (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:113" *)
     casez (detector_in)
-      /* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:64" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:116" */
       2'h0:
           phase_map_out = 2'h0;
-      /* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:64" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:116" */
       2'h1:
           phase_map_out = 2'h2;
-      /* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:64" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:116" */
       2'h2:
           phase_map_out = 2'h3;
-      /* src = "/home/daquintero/phd/piel_private/piel/tools/amaranth/construct.py:64" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:116" */
       2'h3:
           phase_map_out = 2'h3;
     endcase

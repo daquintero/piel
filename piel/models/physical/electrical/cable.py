@@ -2,9 +2,9 @@ from typing import Optional, Literal
 
 from ..geometry import calculate_cross_sectional_area_m2, awg_to_cross_sectional_area_m2
 from ..thermal import heat_transfer_1d_W
-from ....materials.thermal_conductivity.types import MaterialReferenceType
+from piel.types.materials import MaterialReferenceType
 from piel.materials.thermal_conductivity.utils import get_thermal_conductivity_fit
-from .types import (
+from piel.types.electrical import (
     CoaxialCableGeometryType,
     CoaxialCableHeatTransferType,
     CoaxialCableMaterialSpecificationType,
@@ -12,7 +12,7 @@ from .types import (
     DCCableHeatTransferType,
     DCCableMaterialSpecificationType,
 )
-from ..types import TemperatureRangeTypes
+from piel.types.physical import TemperatureRangeTypes
 
 
 def calculate_coaxial_cable_geometry(
