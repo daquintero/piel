@@ -17,7 +17,9 @@ from .digital import (
     HDLSimulator,
     HDLTopLevelLanguage,
     LogicSignalsList,
+    LogicImplementationType,
     TruthTable,
+    TruthTableLogicType,
 )
 from .digital_electro_optic import BitPhaseMap
 
@@ -37,7 +39,8 @@ from .electro_optic import (
     SwitchFunctionParameter,
     SParameterCollection,
 )
-from .electronic import HVAMetricsType, LNAMetricsType
+from .electronic import HVAMetricsType, LNAMetricsType, ElectronicCircuitComponent
+from .integration import CircuitComponent
 from .materials import (
     MaterialReferenceType,
     MaterialReferencesTypes,

@@ -45,6 +45,8 @@ PhaseTransitionTypes: A literal type for phase transition types.
     - "bar": Refers to a bar-type phase transition.
 """
 
+OpticalTransmissionType = FockStatePhaseTransitionType
+
 
 class OpticalStateTransitions(PielBaseModel):
     """
@@ -76,7 +78,7 @@ class OpticalStateTransitions(PielBaseModel):
         The index of the target mode in the system.
     """
 
-    transmission_data: list[FockStatePhaseTransitionType]
+    transmission_data: list[OpticalTransmissionType]
     """
     transmission_data (list[FockStatePhaseTransitionType]):
         A list of dictionaries representing the phase transitions for Fock states.

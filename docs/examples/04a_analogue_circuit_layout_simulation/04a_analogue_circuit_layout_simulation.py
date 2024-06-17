@@ -43,6 +43,8 @@
 #
 # So, as we can see, there currently are many separate relevant projects that solve different aspects of an integration flow. What we would like to do is to have an integrated flow where we could, for example, do some schematic-driven-layout or some layout-driven-schematic extraction. These are some of the objectives of the flow that we would like to demonstrate.
 
+# ## Starting from an Op-Amp Model
+
 # ## Using the `gdsfactory-sky130nm` Repository
 
 # The goal of this notebook is to show that analogue simulation and layout can be performed together within a `gdsfactory` environment.
@@ -64,6 +66,7 @@ output_notebook()
 
 # +
 # sky130.cells
+# sky130.cells["sky130_fd_pr__cap_vpp_02p4x04p6_m1m2_noshield"]()
 # -
 
 
@@ -81,8 +84,8 @@ class SkyInv:
     ns = sky130_hdl21.primitives.NMOS_1p8V_STD(p)(d=VSS, g=i, s=o, b=VSS)
 
 
-# ## Schematic-Driven-Layout
-
+# ### Schematic-Driven-Layout
+#
 # A common analogue design flow is called schematic-driven-layout. What this entails, fundamentally, is that we design a circuit through a schematic, and then use that schematic to instruct, extract, constrain, and/or verify our circuit chip layout. This flow uses layout elements that are connected or tied to schematic symbols, and unique names that allow for identification and connectivity relationship.
 #
 # -  You can read [how this is done in Cadence](https://web.njit.edu/~tyson/cadence%20Layout_Tutorial.pdf)
@@ -90,8 +93,6 @@ class SkyInv:
 # In an open-source flow, this could be, for example, demonstrated by creating a circuit using the `hdl21 schematic` tools. Each symbol would reference a specific `PCell` in the PDK. Now, we would use this individual element cell name to connect and extract to the `SPICE` model and also to the `layout` GDS cell. This allows us to connect to the separate tools for simulation and layout.
 #
 # Say, we can then extract a netlist from the schematic with individual cell names and PDK cells identifiers. We could in `gdsfactory` map these PDK cell identifiers to instantiate the elements in a layout. We can then use this instantated cells to perform some automatic or
-
-# ### Manually editing the `SPICE`-generated `gdsfactory` component YAML
 #
 # It is important to know that with the SPICE-generated YAML, we cannot actually create a layout on its own. This is because the SPICE models do not exactly directly map to layout instances. SPICE models can represent performance corners for the same device, with multiple temperature or yield quality variations. As such, we need to assign the corresponding gds we want to layout for our specific schematic model.
 
@@ -161,7 +162,7 @@ ports:
 with open("example_inverter_manual.schem.yaml", "w") as file:
     file.write(example_inverter_manual_yaml)
 
-# ### Automatically mapping layout instances to the YAML
+# ### Automatically mapping layout instances to the YAML - Inverter
 
 example_inverter_schematic_editor = piel.hdl21_module_to_schematic_editor(
     module=SkyInv,
@@ -178,33 +179,13 @@ example_inverter_schematic_editor.instantiate_layout(
 c = gf.read.from_yaml(example_inverter_layout)
 c.plot()
 
-# ### More Advanced Example
-
-import sky130_hdl21
-
-# +
-# help(sky130_hdl21)
-# help(sky130_hdl21.primitives)
-# sky130_hdl21.primitives.PMOS_1p8V_STD
-# sky130_hdl21.ress
-# -
-
-# We have now extracted our spice elements and our connectivity. Let's explore what we have there:
-
-# + active=""
-# # Current TODOs
+# ### More Advanced Example - R2R DAC
 #
-# 1. Update the extraction function to add xschem compatibility.
-# 2. Create the mapping between the extracted netlist and the corresponding SKY130nm elements.
+#
+# An example of using `hdl21.ExternalModule`s representing an implementation technology/ PDK
+# in a parametric resistive DAC generator mapping to a gdsfactory implementation.
 
 # +
-"""
-# Resistor DAC Example
-
-An example of using `ExternalModule`s representing an implementation technology/ PDK
-in a parametric resistive DAC generator.
-"""
-
 import sys
 from typing import Optional
 
@@ -271,7 +252,7 @@ class PassGateParams:
 
     Both `nmos` and `pmos` parameters are `Optional`, which means they can be set to the Python built-in `None` value.
     If either is `None`, its "half" of the pass gate will be omitted.
-    Setting *both* to `None` will cause a generator exception.
+    Setting *both* to `None` will cause a gPASSenerator exception.
     """
 
     nmos = h.Param(dtype=Optional[h.Instantiable], desc="NMOS. Disabled if None.")
@@ -414,5 +395,21 @@ mparams = MuxTreeParams(
 duts = [rladder(rparams), mux_tree(mparams)]
 # h.netlist(duts, sys.stdout, fmt="verilog")
 # h.netlist(duts, sys.stdout, fmt="spectre")
-h.netlist(duts, sys.stdout, fmt="spice")
+# h.netlist(duts, sys.stdout, fmt="spice")
 # h.netlist(duts, sys.stdout, fmt="xyce")
+# -
+
+example_resistor_ladder_schematic_editor = piel.hdl21_module_to_schematic_editor(
+    module=rladder(rparams),
+    yaml_schematic_file_name="rladder.schem.yaml",
+)
+example_resistor_ladder_schematic_editor.visualize()
+
+example_resistor_ladder_layout_file = "rladder.layout.yaml"
+example_inverter_schematic_editor.instantiate_layout(
+    example_resistor_ladder_layout_file,
+    default_router="get_bundle",
+    default_cross_section="xs_metal1",
+)
+c = gf.read.from_yaml(example_resistor_ladder_layout_file)
+c.plot()

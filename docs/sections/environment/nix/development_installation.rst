@@ -3,7 +3,7 @@
 
 This process sets up a ``nix`` development environment, good for when
 developing examples. Make sure to follow the ``nix`` installation
-instructions for your platform.
+instructions for your platform. Follow the latest `openlane2` instructions if interested.
 
 **The Fast Lane**
 
@@ -15,13 +15,13 @@ Assuming you already have ``piel`` installed in a local environment, you can sim
     piel environment install-nix # To install nix
     piel environment install-openlane # To install openlane
 
-To enter the nix environment, run:
+To enter the nix environment that uses all the tools used within ``piel``, run:
 
 .. code:: bash
 
-    piel environment activate-piel-nix
-    # piel environment activate-openlane-nix # if you want to enter the openlane one instead
+    piel environment activate
 
+An important thing to note is that, for `openlane` to work properly, its `nix` configured binaries need to be untouched. This means we need to make sure that the virtualenviron
 
 System requirements
 ^^^^^^^^^^^^^^^^^^^^^^

@@ -1,24 +1,40 @@
-import click
-import os
-import pathlib
 import platform
-import piel
 
 from .environment import environment
 from ..utils import (
     echo_and_check_subprocess,
     append_to_bashrc_if_does_not_exist,
-    default_openlane2_directory,
-    get_python_install_directory,
 )
-from ...file_system import create_new_directory
 
 __all__ = [
     "install_nix",
-    "install_openlane",
-    "activate_piel_nix",
+    "activate",
 ]
 
+import subprocess
+import os
+
+
+# TODO move to file system utils.
+def echo_and_check_shell_subprocess(command, **kwargs):
+    """
+    Runs a subprocess and prints the command. Raises an exception if the subprocess fails.
+
+    Args:
+        command (list or str): The command and its arguments as a list or a single string.
+        **kwargs: Additional keyword arguments to pass to subprocess.check_call.
+
+    Returns:
+        None
+    """
+    if isinstance(command, list):
+        concatenated_command = " ".join(command)
+    else:
+        concatenated_command = command
+
+    print("Running: " + concatenated_command)
+    # Pass the command as a single string to be interpreted by the shell
+    return subprocess.run(concatenated_command, shell=True, **kwargs)
 
 def install_and_configure_nix():
     """
@@ -89,138 +105,32 @@ def install_and_configure_nix():
     return 0
 
 
-def update_openlane_directory(
-    directory: piel.PathTypes = default_openlane2_directory,
-    branch: str = "main",
-):
-    """
-    Updates the openlane directory.
-    TODO update with nix-eda instructions
-
-    Returns:
-
-    """
-    openlane2_directory = piel.return_path(directory)
-    if openlane2_directory.exists():
-        echo_and_check_subprocess(["git", "checkout", branch], cwd=openlane2_directory)
-        echo_and_check_subprocess(
-            ["git", "pull", "origin", "main"], cwd=openlane2_directory
-        )
-
-
 @environment.command(
-    name="activate-piel-nix", help="Activates the specific piel nix environment."
+    name="activate", help="Activates the specific piel nix environment."
 )
-def activate_piel_nix(openlane2_directory: pathlib.Path = default_openlane2_directory):
+def activate():
     """
     Enters the custom piel nix environment with all the supported tools installed and configured packages.
     Runs the nix-shell command on the piel/environment/nix/ directory.
-    TODO update with nix-eda instructions
     """
     if platform.system() == "Windows":
-        """Not Supported"""
-        raise NotImplementedError(
-            "This installation method is not supported on Windows."
-        )
+        raise NotImplementedError("This installation method is not supported on Windows.")
     elif platform.system() == "Darwin":
-        """Not Supported"""
-        raise NotImplementedError(
-            "This installation method is not supported on Windows."
-        )
+        raise NotImplementedError("This installation method is not supported on macOS.")
     elif platform.system() == "Linux":
-        # cachix use openlane
-        # create_and_activate_venv()  # Currently unused, TODO future poetry integration
-        nix_shell_directory = (
-            get_python_install_directory() / "environment" / "nix" / "nix-eda"
+        # Setup the nix shell environment
+        nix_command = (
+            "nix shell "
+            "github:efabless/nix-eda#{ngspice,xschem,verilator,yosys} "
+            "github:efabless/openlane2 "
+            "nixpkgs#verilog "
+            "nixpkgs#gtkwave"
         )
-        # nix shell .#{ngspice,xschem,verilator,yosys}
-        echo_and_check_subprocess(
-            [
-                "nix",
-                "shell",
-                ".#{ngspice,xschem,verilator,yosys}",
-            ],
-            cwd=nix_shell_directory,
-        )
-        pass
+        print("Please run this in your shell:")
+        print(nix_command)
 
 
 @environment.command(name="install-nix", help="Installs the nix package manager.")
 def install_nix():
     """Installs the nix package manager."""
     return install_and_configure_nix()
-
-
-@environment.command(
-    name="install-openlane",
-    help="Installs all the openlane configuration and packages reproducibly.",
-)
-def install_openlane(openlane2_directory: pathlib.Path = default_openlane2_directory):
-    """CLI that installs both the openlane2 python interface and the OpenROAD binaries."""
-    if platform.system() == "Windows":
-        """Not Supported"""
-        raise NotImplementedError(
-            "This installation method is not supported on Windows."
-        )
-    elif platform.system() == "Darwin":
-        """Not Supported"""
-        raise NotImplementedError(
-            "This installation method is not supported on Windows."
-        )
-    elif platform.system() == "Linux":
-        # cachix use openlane
-        echo_and_check_subprocess(["cachix", "use", "openlane"])
-        # git clone https://github.com/efabless/openlane2.git into ~/.piel
-        directory_exists = create_new_directory(openlane2_directory)
-        if not directory_exists:
-            try:
-                update_openlane_directory(openlane2_directory)
-                print(
-                    Warning(
-                        "The openlane2 directory already exists. Updating it instead from the main branch."
-                    )
-                )
-                return 0
-            except:  # NOQA: E722
-                raise FileExistsError(
-                    "The openlane2 directory already exists. Please delete it and try again."
-                )
-        echo_and_check_subprocess(
-            [
-                "git",
-                "clone",
-                "https://github.com/efabless/openlane2.git",
-                str(openlane2_directory),
-            ]
-        )
-        return 0
-
-
-@environment.command(name="update-openlane", help="Updates the openlane directory.")
-@click.option(
-    "-d",
-    "--directory",
-    default=str(default_openlane2_directory),
-    help="The openlane2 directory.",
-)
-@click.option(
-    "-b",
-    "--branch",
-    default="main",
-    help="The branch to checkout.",
-)
-def update_openlane_directory_command(
-    directory: str = str(default_openlane2_directory),
-    branch: str = "main",
-):
-    """
-    Updates the openlane directory. Checks out the main branch.
-
-    Returns:
-
-    """
-    if directory is None:
-        directory = default_openlane2_directory
-    directory = piel.return_path(directory)
-    update_openlane_directory(directory=directory, branch=branch)
-    return 0

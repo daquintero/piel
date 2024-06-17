@@ -47,3 +47,9 @@ class BitPhaseMap(PielBaseModel):
             pd.DataFrame: A DataFrame containing the bits and their corresponding phases.
         """
         return pd.DataFrame(self.dict())
+
+
+"""
+This class contains a set of unitaries that interest us to model, probably a sequence of unitaries that represent
+a given simulation. It also contains a given input sequence, and a given output sequence.
+"""

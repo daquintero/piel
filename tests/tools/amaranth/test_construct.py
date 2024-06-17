@@ -56,7 +56,7 @@ def test_empty_truth_table():
 
     with pytest.raises(ValueError):
         construct_amaranth_module_from_truth_table(
-            truth_table, implementation_type="combinatorial"
+            truth_table, logic_implementation_type="combinatorial"
         )
 
 
@@ -96,7 +96,7 @@ def test_non_binary_inputs():
     )
 
     am_module = construct_amaranth_module_from_truth_table(
-        truth_table, implementation_type="combinatorial"
+        truth_table, logic_implementation_type="combinatorial"
     )
 
     assert isinstance(am_module, am.Elaboratable)
@@ -116,7 +116,7 @@ def test_sequential_truth_table():
 
     # For now, we simulate only combinatorial. Implementing sequential and memory types would be more complex.
     am_module = construct_amaranth_module_from_truth_table(
-        truth_table, implementation_type="sequential"
+        truth_table, logic_implementation_type="sequential"
     )
 
     assert isinstance(am_module, am.Elaboratable)

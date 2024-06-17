@@ -4,7 +4,7 @@ This file enhances some functions that translate an `amaranth` function to an `o
 
 import amaranth as am
 from typing import Optional, Literal
-import types
+import types as ty
 from ..tools.amaranth import (
     construct_amaranth_module_from_truth_table,
     generate_verilog_from_amaranth_truth_table,
@@ -19,10 +19,8 @@ from ..tools.openlane.defaults import (
 )
 from ..types import PathTypes, TruthTable
 
-__all__ = ["layout_amaranth_truth_table_through_openlane"]
 
-
-def layout_openlane_from_truth_table(
+def layout_truth_table_through_openlane(
     truth_table: TruthTable,
     parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
@@ -101,7 +99,7 @@ def layout_amaranth_truth_table_through_openlane(
         None
     """
     # Determine the design and source directories
-    if isinstance(parent_directory, types.ModuleType):
+    if isinstance(parent_directory, ty.ModuleType):
         parent_directory = return_path(parent_directory)
         design_directory = parent_directory
         src_folder = parent_directory / "src"

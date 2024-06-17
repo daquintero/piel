@@ -105,6 +105,9 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 
 # So this is very cool, we have our device model giving us electrical data when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
 
+from gdsfactory.export import to_svg
+to_svg(our_short_resistive_mzi_2x2_2x2_phase_shifter)
+
 # ## Extracting the SPICE circuit and assigning model parameters
 
 # We will exemplify how `piel` microservices enable the extraction and configuration of the SPICE circuit. This is done by implementing a SPICE netlist construction backend to the circuit composition functions in `sax`, and is composed in a way that is then integrated into `hdl21` or any SPICE-based solver through the `VLSIR` `Netlist`.
@@ -320,6 +323,12 @@ h.netlist(our_resistive_heater_circuit, sys.stdout, fmt="spice")
 
 # So this seems equivalent to the gdsfactory component representation. We can now continue to implement our SPICE simulation.
 
+# ### Flow Automation
+
+piel.flows.extract_component_spice_from_netlist(
+    component=straight_heater_metal_simple(),
+)
+
 # ## `SPICE` Integration
 
 # We have seen in the previous example how to integrate digital-driven data with photonic circuit steady-state simulations. However, this is making a big assumption: whenever digital codes are applied to photonic components, the photonic component responds immediately. We need to account for the electrical load physics in order to perform more accurate simulation models of our systems.
@@ -388,7 +397,7 @@ simple_operating_point_simulation
 
 # We can now run the simulation using `ngpsice`. Make sure you have it installed, although this will be automatic in the *IIC-OSIC-TOOLS* environment:
 
-results = piel.run_simulation(simulation=simple_operating_point_simulation)
+results = piel.run_simulation(sistraight_heater_metal_simple()mulation=simple_operating_point_simulation)
 results
 
 # ```python
@@ -478,15 +487,12 @@ transient_simulation_results.iloc[20:40]
 
 # We can plot our simulation data accordingly:
 
-simple_transient_plot = piel.visual.plot_simple_multi_row(
-    data=transient_simulation_results,
-    x_axis_column_name="time",
-    row_list=[
-        "v(xtop.vpulse_p)",
-        "i(v.xtop.vvpulse)",
-    ],
-    y_axis_title_list=["v(v.xtop.vvpulse)", "i(v.xtop.vvpulse)", "o4 Phase"],
-)
+simple_transient_plot = piel.visual.plot_simple_multi_row(data=transient_simulation_results, x_axis_column_name="time",
+                                                          row_list=[
+                                                              "v(xtop.vpulse_p)",
+                                                              "i(v.xtop.vvpulse)",
+                                                          ], y_label=["v(v.xtop.vvpulse)", "i(v.xtop.vvpulse)",
+                                                                      "o4 Phase"])
 simple_transient_plot.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot.PNG"
 )
@@ -537,15 +543,11 @@ transient_simulation_results.iloc[20:40]
 # | 39 |        39 | 0.00295 |           -0.61  |          0.00061  |        -0.0003721   |                   1000 |
 #
 
-simple_transient_plot_power_resistance = piel.visual.plot_simple_multi_row(
-    data=transient_simulation_results,
-    x_axis_column_name="time",
-    row_list=[
+simple_transient_plot_power_resistance = piel.visual.plot_simple_multi_row(data=transient_simulation_results,
+                                                                           x_axis_column_name="time", row_list=[
         "resistance(xtop.vpulse)",
         "power(xtop.vpulse)",
-    ],
-    y_axis_title_list=[r"resistance ($\Omega$)", r"power ($W$)"],
-)
+    ], y_label=[r"resistance ($\Omega$)", r"power ($W$)"])
 simple_transient_plot_power_resistance.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_power_resistance.PNG"
 )
@@ -571,18 +573,14 @@ simple_energy_consumed_plot.get_figure().savefig(
 
 # A full visualisation of the signal is including the cumulative energy use:
 
-simple_transient_plot_full = piel.visual.plot_simple_multi_row(
-    data=transient_simulation_results,
-    x_axis_column_name="time",
-    row_list=[
+simple_transient_plot_full = piel.visual.plot_simple_multi_row(data=transient_simulation_results,
+                                                               x_axis_column_name="time", row_list=[
         "v(xtop.vpulse_p)",
         "i(v.xtop.vvpulse)",
         "resistance(xtop.vpulse)",
         "power(xtop.vpulse)",
         "energy_consumed(xtop.vpulse)",
-    ],
-    y_axis_title_list=[r"$V$", r"$A$", r"$\Omega$", r"$W$", r"$J$"],
-)
+    ], y_label=[r"$V$", r"$A$", r"$\Omega$", r"$W$", r"$J$"])
 simple_transient_plot_full.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_transient_plot_full.PNG"
 )
@@ -703,13 +701,13 @@ transient_simulation_results
 
 simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
     data=transient_simulation_results,
-    x_axis_column_name="time",
-    row_list=[
+    x_axis_column_name="time", row_list=[
         "power(xtop.vpulse)",
         "output_amplitude_array_0_abs",
         "output_amplitude_array_0_phase_deg",
     ],
-    y_axis_title_list=["e1 Power", "o3 Amplitude", "o3 Phase"],
+    y_label=[r"$|e1|$ (W)", r"$|o3|$ (abs)", r"$deg(o3)$"],
+    x_label="time (s)"
 )
 simple_ideal_o3_mzi_2x2_plots.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG"
@@ -717,16 +715,12 @@ simple_ideal_o3_mzi_2x2_plots.savefig(
 
 # ![simple_ideal_o3_mzi_2x2_plots](../../_static/img/examples/04_spice_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG)
 
-simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
-    data=transient_simulation_results,
-    x_axis_column_name="time",
-    row_list=[
+simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(data=transient_simulation_results,
+                                                                  x_axis_column_name="time", row_list=[
         "power(xtop.vpulse)",
         "output_amplitude_array_1_abs",
         "output_amplitude_array_1_phase_deg",
-    ],
-    y_axis_title_list=["e1 Phase", "o4 Amplitude", "o4 Phase"],
-)
+    ], y_label=["e1 Phase", "o4 Amplitude", "o4 Phase"])
 simple_ideal_o4_mzi_2x2_plots.savefig(
     "../../_static/img/examples/04_spice_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
 )

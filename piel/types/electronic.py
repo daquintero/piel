@@ -2,9 +2,17 @@
 This module defines data models for low-noise amplifier (LNA) and high-voltage amplifier (HVA) metrics.
 It provides structured types using pydantic for validation and includes type aliases for metric ranges.
 """
-
+import gdsfactory as gf
 from typing import Optional
 from .core import PielBaseModel, NumericalTypes
+
+# Type alias for a photonic circuit component in gdsfactory.
+ElectronicCircuitComponent = gf.Component
+"""
+PhotonicCircuitComponent:
+    A type representing a component in a photonic circuit, as defined in the gdsfactory framework.
+    This type is used to handle and manipulate photonic components in circuit designs.
+"""
 
 # Type alias for representing minimum and maximum values as an optional tuple of floats.
 MinimumMaximumType = tuple[Optional[float], Optional[float]]

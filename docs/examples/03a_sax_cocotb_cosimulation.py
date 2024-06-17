@@ -339,7 +339,8 @@ simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
         "output_amplitude_array_0_abs",
         "output_amplitude_array_0_phase_deg",
     ],
-    y_axis_title_list=["e1 Phase", "o3 Amplitude", "o3 Phase"],
+    y_label=[r"$|e1|$ (abs)", r"$|o3|$ (abs)", r"$deg(o3)$"],
+    x_label="time (ns)",
 )
 simple_ideal_o3_mzi_2x2_plots.savefig(
     "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o3_mzi_2x2_plots.PNG"
@@ -355,7 +356,7 @@ simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
         "output_amplitude_array_1_abs",
         "output_amplitude_array_1_phase_deg",
     ],
-    y_axis_title_list=["e1 Phase", "o4 Amplitude", "o4 Phase"],
+    y_label=[r"|e1| (abs)", r"$|o4|$ (abs)", r"$deg(o4)$"],
 )
 simple_ideal_o4_mzi_2x2_plots.savefig(
     "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
@@ -787,7 +788,7 @@ for port_i in range(4):
             "out_o_" + str(port_i) + "_abs",
             "out_o_" + str(port_i) + "_phase_deg",
         ],
-        y_axis_title_list=[
+        y_label=[
             "e1,5 Phase",
             "o" + str(port_i) + "Amplitude",
             "o" + str(port_i) + "Phase",

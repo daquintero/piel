@@ -7,6 +7,7 @@
 # * `cocotb` is mainly used for writing testbenches in Python and verification of logic.
 
 import piel
+from piel.types import TruthTable
 
 import simple_design
 
@@ -19,19 +20,16 @@ from piel.tools.amaranth import (
     verify_amaranth_truth_table,
 )
 
-# +
-# Uncomment this if you want to run it for the first time.
-# piel.create_empty_piel_project(
-#     project_name="amaranth_driven_flow", parent_directory="../designs/"
-# )
-# -
+# # Uncomment this if you want to run it for the first time.
+piel.create_empty_piel_project(
+    project_name="amaranth_driven_flow", parent_directory="../designs/"
+)
 
 # We can also automate the `pip` installation of our local module:
 
-# +
+# ! pip install -e ../designs/amaranth_driven_flow
 #  Uncomment this if you want to run it for the first time.
 # piel.pip_install_local_module("../designs/amaranth_driven_flow")
-# -
 
 # We can check that this has been installed. You might need to restart your `jupyter` kernel.
 
@@ -64,7 +62,7 @@ detector_phase_truth_table_dictionary = {
     "detector_in": ["00", "01", "10", "11"],
     "phase_map_out": ["00", "10", "11", "11"],
 }
-detector_phase_truth_table = piel.types.TruthTable(
+detector_phase_truth_table = TruthTable(
     input_ports=["detector_in"],
     output_ports=["phase_map_out"],
     **detector_phase_truth_table_dictionary
@@ -72,7 +70,7 @@ detector_phase_truth_table = piel.types.TruthTable(
 
 
 our_truth_table_module = construct_amaranth_module_from_truth_table(
-    truth_table=detector_phase_truth_table,
+    truth_table=detector_phase_truth_table
 )
 
 # `amaranth` is much easier to use than other design flows like `cocotb` because it can be purely interacted with in `Python`, which means there are fewer complexities of integration. However, if you desire to use this with other digital layout tools, for example, `OpenROAD` as we have previously seen and maintain a coherent project structure with the photonics design flow, `piel` provides some helper functions to achieve this easily.
@@ -82,7 +80,7 @@ our_truth_table_module = construct_amaranth_module_from_truth_table(
 generate_verilog_from_amaranth_truth_table(
     amaranth_module=our_truth_table_module,
     truth_table=detector_phase_truth_table,
-    target_file_name="our_truth_table_module.v",
+    target_file_name="truth_table_module.v",
     target_directory=".",
 )
 
@@ -105,12 +103,12 @@ amaranth_driven_flow_src_folder = piel.get_module_folder_type_location(
 generate_verilog_from_amaranth_truth_table(
     amaranth_module=our_truth_table_module,
     truth_table=detector_phase_truth_table,
-    target_file_name="our_truth_table_module.v",
+    target_file_name="truth_table_module.v",
     target_directory=amaranth_driven_flow_src_folder,
 )
 
 # ```
-# Verilog file generated and written to /home/daquintero/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/our_truth_table_module.v
+# Verilog file generated and written to /home/daquintero/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/src/truth_table_module.v
 # ```
 
 # Another thing we can do is verify that our implemented logic is valid. Creating a simulation is also useful in the future when we simulate our extracted place-and-route netlist in relation to the expected applied logic.
@@ -118,12 +116,12 @@ generate_verilog_from_amaranth_truth_table(
 verify_amaranth_truth_table(
     truth_table_amaranth_module=our_truth_table_module,
     truth_table=detector_phase_truth_table,
-    vcd_file_name="our_truth_table_module.vcd",
+    vcd_file_name="truth_table_module.vcd",
     target_directory=".",
 )
 
 # ```
-# VCD file generated and written to /home/daquintero/phd/piel/docs/examples/02_digital_design_simulation/our_truth_table_module.vcd
+# VCD file generated and written to /home/daquintero/phd/piel/docs/examples/02_digital_design_simulation/truth_table_module.vcd
 # ```
 
 # You can also use the module directory to automatically save the testbench in these functions.
@@ -131,12 +129,12 @@ verify_amaranth_truth_table(
 verify_amaranth_truth_table(
     truth_table_amaranth_module=our_truth_table_module,
     truth_table=detector_phase_truth_table,
-    vcd_file_name="our_truth_table_module.vcd",
+    vcd_file_name="truth_table_module.vcd",
     target_directory=amaranth_driven_flow,
 )
 
 # ```
-# VCD file generated and written to /home/daquintero/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/tb/our_truth_table_module.vcd
+# VCD file generated and written to /home/daquintero/phd/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/tb/truth_table_module.vcd
 # ```
 
 # You can observe the design directory of the provided `amaranth_driven_flow` folder to verify that the files have been included in the other flow.
@@ -158,7 +156,36 @@ layout_amaranth_truth_table_through_openlane(
     amaranth_module=our_truth_table_module,
     truth_table=detector_phase_truth_table,
     parent_directory=amaranth_driven_flow,
-    openlane_version="v1",
+    openlane_version="v2",
+)
+
+# +
+from piel.types import TruthTable
+import piel
+
+detector_phase_truth_table = {
+    "detector_in": ["00", "01", "10", "11"],
+    "phase_map_out": ["00", "10", "11", "11"],
+}
+truth_table = TruthTable(
+    input_ports=["detector_in"],
+    output_ports=["phase_map_out"],
+    **detector_phase_truth_table
+)
+am_module = piel.amaranth.construct_amaranth_module_from_truth_table(
+    truth_table, logic_implementation_type="sequential"
+)
+am_module
+
+from piel.integration.amaranth_openlane import (
+    layout_amaranth_truth_table_through_openlane,
+)
+
+layout_amaranth_truth_table_through_openlane(
+    amaranth_module=am_module,
+    truth_table=truth_table,
+    parent_directory="openlane_run",
+    openlane_version="v2",
 )
 # -
 
@@ -319,3 +346,42 @@ piel.simple_plot_simulation_data(example_simple_simulation_data)
 # This looks like this:
 
 # ![example_simple_design_outputs](../../_static/img/examples/02_cocotb_simulation/example_simple_design_outputs.PNG)
+
+# ## Sequential Implementation
+
+# +
+from openlane.flows import SequentialFlow
+from openlane.steps import Yosys, Misc, OpenROAD, Magic, Netgen
+
+
+class MyFlow(SequentialFlow):
+    Steps = [
+        Yosys.Synthesis,
+        OpenROAD.Floorplan,
+        OpenROAD.TapEndcapInsertion,
+        OpenROAD.GeneratePDN,
+        OpenROAD.IOPlacement,
+        OpenROAD.GlobalPlacement,
+        OpenROAD.DetailedPlacement,
+        OpenROAD.GlobalRouting,
+        OpenROAD.DetailedRouting,
+        OpenROAD.FillInsertion,
+        Magic.StreamOut,
+        Magic.DRC,
+        Magic.SpiceExtraction,
+        Netgen.LVS,
+    ]
+
+
+flow = MyFlow(
+    {
+        "PDK": "sky130A",
+        "DESIGN_NAME": "spm",
+        "VERILOG_FILES": ["./src/spm.v"],
+        "CLOCK_PORT": "clk",
+        "CLOCK_PERIOD": 10,
+    },
+    design_dir=".",
+)
+flow.start()
+# -

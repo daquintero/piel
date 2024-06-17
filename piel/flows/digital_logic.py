@@ -6,10 +6,11 @@ from ..tools.amaranth import (
     verify_amaranth_truth_table,
 )
 from ..types import (
-    PathTypes,
-    TruthTable,
+    ElectronicCircuitComponent,
     HDLSimulator,
     LogicSignalsList,
+    PathTypes,
+    TruthTable,
     convert_dataframe_to_bits,
 )
 from ..tools.cocotb import (
@@ -18,6 +19,8 @@ from ..tools.cocotb import (
     read_simulation_data,
     get_simulation_output_files_from_design,
 )
+from ..integration.amaranth_openlane import layout_truth_table_through_openlane
+from ..integration.gdsfactory_openlane import create_gdsfactory_component_from_openlane
 
 
 def generate_verilog_and_verification_from_truth_table(
@@ -57,7 +60,7 @@ def generate_verilog_and_verification_from_truth_table(
 
     # Construct Amaranth module from the truth table
     amaranth_module = construct_amaranth_module_from_truth_table(
-        truth_table=truth_table,
+        truth_table=truth_table
     )
 
     # Determine the design directory
@@ -80,6 +83,33 @@ def generate_verilog_and_verification_from_truth_table(
         vcd_file_name=f"{target_file_name}.vcd",
         target_directory=module,
     )
+
+
+def layout_truth_table(
+    truth_table: TruthTable,
+    module: PathTypes,
+) -> ElectronicCircuitComponent:
+    """
+    Layout a truth table through the OpenLane flow and create a GDSFactory component.
+
+    Parameters:
+    - truth_table (TruthTable): The truth table object containing the input and output port data.
+    - module (str): The name or path of the module within the design hierarchy where the generated files
+                    will be placed. This is used to determine the file structure and directory paths.
+                    Example: "full_flow_demo"
+
+    Returns:
+    - digital_component (gf.Component): The GDSFactory component representing the layout of the truth table as implemented by OpenLane
+    """
+    layout_truth_table_through_openlane(
+        truth_table=truth_table,
+        parent_directory=module,
+        openlane_version="v2",
+    )
+    digital_component = create_gdsfactory_component_from_openlane(
+        design_directory=module
+    )
+    return digital_component
 
 
 def read_simulation_data_to_truth_table(

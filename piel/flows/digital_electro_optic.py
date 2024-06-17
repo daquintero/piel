@@ -5,9 +5,11 @@ from typing import Iterable, Optional, Callable
 from ..types import (
     BitPhaseMap,
     BitsType,
+    LogicSignalsList,
     PhaseMapType,
     OpticalStateTransitions,
     TruthTable,
+    TruthTableLogicType,
     convert_tuple_to_string,
     convert_to_bits,
 )
@@ -124,11 +126,18 @@ def add_truth_table_phase_to_bit_data(
 
 
 def convert_optical_transitions_to_truth_table(
-    optical_state_transitions: OpticalStateTransitions, bit_phase_map=BitPhaseMap
+    optical_state_transitions: OpticalStateTransitions,
+    bit_phase_map=BitPhaseMap,
+    logic: TruthTableLogicType = "implementation",
 ) -> TruthTable:
     ports_list = optical_state_transitions.keys_list
     output_ports_list = list()
-    transitions_dataframe = optical_state_transitions.target_output_dataframe
+    if logic == "implementation":
+        transitions_dataframe = optical_state_transitions.target_output_dataframe
+    elif logic == "full":
+        transitions_dataframe = optical_state_transitions.transition_dataframe
+    else:
+        raise ValueError(f"Invalid logic type: {logic}")
 
     phase_bit_array_length = len(transitions_dataframe["phase"][0])
     truth_table_raw = dict()
@@ -144,7 +153,6 @@ def convert_optical_transitions_to_truth_table(
             print(transitions_dataframe.loc[0, port_i])
             continue
 
-        # TODO implement this for binary mode full
         truth_table_raw[f"{port_i}_str"] = transitions_dataframe.loc[:, port_i].apply(
             convert_tuple_to_string
         )
@@ -175,10 +183,16 @@ def convert_optical_transitions_to_truth_table(
     input_ports = ["input_fock_state_str"]
     output_ports = output_ports_list
 
+    truth_table_filtered_dictionary = filter_and_correct_truth_table(
+        truth_table_dictionary=truth_table_raw,
+        input_ports=input_ports,
+        output_ports=output_ports
+    )
+
     return TruthTable(
         input_ports=input_ports,
         output_ports=output_ports,
-        **truth_table_raw,
+        **truth_table_filtered_dictionary,
     )
 
 
@@ -306,3 +320,61 @@ def find_nearest_phase_for_bit(
     except Exception as e:
         print(f"An error occurred: {e}")
         return tuple()
+
+
+def filter_and_correct_truth_table(
+    truth_table_dictionary: dict,
+    input_ports: list,
+    output_ports: list
+):
+    """
+    Ensures each unique value of the specified input ports maps to a unique set of values of the output ports.
+    If conflicts are found (i.e., the same input maps to different outputs), it retains the first unique mapping.
+    It returns a corrected truth table dictionary with only the unique mappings.
+
+    Args:
+        input_ports (list of str): List of input port names.
+        output_ports (list of str): List of output port names.
+        truth_table_dictionary (dict): Dictionary containing input and output data. Keys are port names, and values are lists of values.
+
+    Returns:
+        dict: A corrected truth table dictionary with unique mappings.
+
+    Raises:
+        ValueError: If input_ports or output_ports are not found in truth_table_dictionary.
+    """
+    # Ensure the specified ports are in the truth table dictionary
+    for port in input_ports + output_ports:
+        if port not in truth_table_dictionary:
+            raise ValueError(f"Port '{port}' not found in truth_table_dictionary.")
+
+    # Initialize a dictionary to keep track of mappings
+    mapping_dict = {}
+
+    # Initialize lists to store the corrected inputs and outputs
+    corrected_inputs = {input_port: [] for input_port in input_ports}
+    corrected_outputs = {output_port: [] for output_port in output_ports}
+
+    # Get the length of the data lists
+    num_entries = len(truth_table_dictionary[input_ports[0]])
+
+    for i in range(num_entries):
+        # Extract the current input value
+        input_value = tuple(truth_table_dictionary[input_port][i] for input_port in input_ports)
+
+        # Extract the current set of output values
+        output_values = tuple(truth_table_dictionary[output_port][i] for output_port in output_ports)
+
+        if input_value not in mapping_dict:
+            # Store the unique mapping
+            mapping_dict[input_value] = output_values
+            # Append to the corrected lists
+            for input_port, value in zip(input_ports, input_value):
+                corrected_inputs[input_port].append(value)
+            for output_port, value in zip(output_ports, output_values):
+                corrected_outputs[output_port].append(value)
+
+    # Combine the corrected inputs and outputs into a single dictionary
+    corrected_truth_table = {**corrected_inputs, **corrected_outputs}
+
+    return corrected_truth_table

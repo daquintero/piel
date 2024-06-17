@@ -4,7 +4,7 @@ from difflib import get_close_matches
 import hdl21 as h
 import sky130
 
-from gplugins.schematic_editor import SchematicEditor
+from ...tools.gplugins import SchematicEditor
 from .netlist import (
     _generate_raw_netlist_dict_from_proto_dict,
     _parse_module_to_proto_dict,
@@ -13,7 +13,7 @@ from .netlist import (
 custom_mapping_dict = {
     "sky130_fd_pr__nfet_01v8": "sky130_fd_pr__rf_nfet_01v8_aM02W1p65L0p15",
     "sky130_fd_pr__pfet_01v8": "sky130_fd_pr__rf_pfet_01v8_mcM04W3p00L0p15",
-    "sky130_fd_pr__res_generic_po": "",
+    "sky130_fd_pr__res_generic_po": "p_n_poly",
 }
 
 
@@ -69,7 +69,7 @@ def hdl21_module_to_schematic_editor(
 
     # This just gives us a raw structure of the hdl21 modules.
     se = SchematicEditor(yaml_schematic_file_name)
-    print(raw_netlist_dict["instances"])
+
     for instance_name_i, instance_i in raw_netlist_dict["instances"].items():
         # Maps the spice instance name to the component name.
         # TODO implement setting mapping and custom name mapping
@@ -91,6 +91,12 @@ def hdl21_module_to_schematic_editor(
         target_instance, target_port = connection_target_i.split(",")
         source_port = port_filter_method(source_port)
         target_port = port_filter_method(target_port)
-        se.add_net(source_instance, source_port, target_instance, target_port)
+        se.add_net(
+            source_instance,
+            source_port,
+            target_instance,
+            target_port,
+            allow_multiple=True,
+        )
 
     return se

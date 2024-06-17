@@ -1,12 +1,11 @@
-#!/usr/bin/env python
-from distutils.core import setup
-
-setup(
-    name="amaranth_driven_flow",
-    version="0.0.1",
-    description="Example empty piel project.",
-    author="Dario Quintero",
-    author_email="darioaquintero@gmail.com",
-    url="https://github.com/daquintero/piel",
-    packages=["amaranth_driven_flow"],
+#!/usr/bin/env python 
+from distutils.core import setup 
+ 
+setup(name="amaranth_driven_flow", 
+	version="0.0.1", 
+	description="Example empty piel project."
+,	author="Dario Quintero", 
+	author_email="darioaquintero@gmail.com", 
+	url="https://github.com/daquintero/piel", 
+	packages=['amaranth_driven_flow'], 
 )
