@@ -5,14 +5,11 @@ import os
 
 __all__ = [
     "append_to_bashrc_if_does_not_exist",
-    "default_openlane2_directory",
     "echo_and_run_subprocess",
     "echo_and_check_subprocess",
     "get_python_install_directory",
     "get_piel_home_directory",
 ]
-
-default_openlane2_directory = pathlib.Path.home() / ".piel" / "openlane2"
 
 
 def append_to_bashrc_if_does_not_exist(line: str):

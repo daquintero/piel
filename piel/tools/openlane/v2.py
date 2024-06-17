@@ -1,5 +1,5 @@
 from openlane.flows import Flow
-from piel.types import PathTypes
+from piel.types import PathTypes, LogicImplementationType
 from piel.file_system import (
     return_path,
     read_json,
@@ -78,20 +78,63 @@ def read_metrics_openlane_v2(design_directory: PathTypes) -> dict:
     return metrics_dictionary
 
 
+def generate_flow_setup(
+    configuration: dict | None = None,
+    design_directory: PathTypes = ".",
+    logic_implementation_type: LogicImplementationType = "combinatorial",
+):
+    if logic_implementation_type == "combinatorial":
+        from openlane.flows import SequentialFlow
+        from openlane.steps import Yosys, OpenROAD, Magic, Netgen
+
+        class DigitalCombinatorialFlow(SequentialFlow):
+            Steps = [
+                Yosys.Synthesis,
+                OpenROAD.CheckSDCFiles,
+                OpenROAD.Floorplan,
+                OpenROAD.TapEndcapInsertion,
+                OpenROAD.GeneratePDN,
+                OpenROAD.IOPlacement,
+                OpenROAD.GlobalPlacement,
+                OpenROAD.DetailedPlacement,
+                OpenROAD.GlobalRouting,
+                OpenROAD.DetailedRouting,
+                OpenROAD.FillInsertion,
+                Magic.StreamOut,
+                Magic.DRC,
+                Magic.SpiceExtraction,
+                Netgen.LVS,
+            ]
+
+        flow = DigitalCombinatorialFlow(
+            config=configuration,
+            design_dir=str(design_directory.resolve()),
+        )
+    else:
+        Classic = Flow.factory.get("Classic")
+
+        flow = Classic(
+            config=configuration,
+            design_dir=str(design_directory.resolve()),
+        )
+    return flow
+
+
 def run_openlane_flow(
     configuration: dict | None = None,
     design_directory: PathTypes = ".",
+    logic_implementation_type: LogicImplementationType = "combinatorial",
     parallel_asynchronous_run: bool = False,
-    only_generate_flow_setup: bool = False,
 ):
     """
-    Runs the OpenLane v2 flow.
+    Runs the OpenLane v2 flow, creates a custom configuration according to the type of the digital logic implementation.
 
     Args:
         configuration(dict): OpenLane configuration dictionary. If none is present it will default to the config.json file on the design_directory.
         design_directory(PathTypes): Design directory PATH.
         parallel_asynchronous_run(bool): Run the flow in parallel.
         only_generate_flow_setup(bool): Only generate the flow setup.
+        logic_implementation_type(LogicImplementationType): Type of digtal synthesis to determine the openlane build flow.
 
     Returns:
 
@@ -102,17 +145,14 @@ def run_openlane_flow(
         config_json_filepath = design_directory / "config.json"
         configuration = read_json(str(config_json_filepath.resolve()))
 
-    Classic = Flow.factory.get("Classic")
-
-    flow = Classic(
-        config=configuration,
-        design_dir=str(design_directory.resolve()),
+    flow = generate_flow_setup(
+        configuration=configuration,
+        design_directory=design_directory,
+        logic_implementation_type=logic_implementation_type,
     )
-    if only_generate_flow_setup:
-        return flow
+
+    if parallel_asynchronous_run:
+        # TODO implement
+        flow.start()
     else:
-        if parallel_asynchronous_run:
-            # TODO implement
-            flow.start()
-        else:
-            flow.start()
+        flow.start()

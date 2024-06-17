@@ -8,14 +8,14 @@ All commands are echoed to the terminal before they are executed. This is to hel
 
    * - Description
      - Command
+    * - Prints nix environment command to run:
+     - ``piel environment activate-nix-shell``
    * - Builds the piel project documentation. Assumes correct documentation environment requirements.
      - ``piel develop build-docs``
    * - Gets the install directory for the piel project.
      - ``piel get-install-directory``
-   * - Installs ``nix`` on your system.
+   * - Installs ``nix`` on your system per the openlane instructions.
      - ``piel environment install-nix``
-   * - Installs ``openlane`` on your system.
-     - ``piel environment install-openlane``
    * - List all the piel CLI functions relating to environment configuration.
      - ``piel environment``
    * - List all the piel CLI functions relating to configuring a piel project development environment.

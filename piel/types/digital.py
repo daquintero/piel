@@ -51,6 +51,9 @@ LogicSignalsList = list[str]
 LogicSignalsList: A list of strings representing the names of logic signals.
 """
 
+TruthTableLogicType = Literal["implementation", "full"]
+LogicImplementationType = Literal["combinatorial", "sequential", "memory"]
+
 
 class TruthTable(PielBaseModel):
     """

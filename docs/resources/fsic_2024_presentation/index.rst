@@ -8,10 +8,11 @@ Outline
 ^^^^^^^^
 
 - Motivation
+    - Most people will have an electronics background.
     - Why co-design?
         - Basic applications of photonics and electronics TODO add ref to codesign flows
-            - Opto-electronic control (system diagram with picture referencing Joel's paper)
-            - Electro-optic control (system diagram referencing neuromorphic photonic systems)
+            - Opto-electronic control
+            - Electro-optic control
         - Modelling concurrent photonic-electronic systems
             - Diagram picture here.
             - This is what we want to model.

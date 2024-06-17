@@ -7,10 +7,12 @@ instances:
     component: sky130_fd_pr__rf_nfet_01v8_aM02W1p65L0p15
     settings: {}
 schematic_placements:
-  ps: {x: null, y: null, port: null, rotation: 0.0, dx: null, dy: null, mirror: null}
-  ns: {x: null, y: null, port: null, rotation: 0.0, dx: null, dy: null, mirror: null}
+  ps: {x: null, y: null, port: null, rotation: 0, dx: null, dy: null, mirror: null}
+  ns: {x: null, y: null, port: null, rotation: 0, dx: null, dy: null, mirror: null}
 nets:
 - ['ps,DRAIN', 'ns,SOURCE']
 - ['ps,GATE', 'ns,GATE']
+- ['ns,GATE', 'ps,GATE']
+- ['ns,SOURCE', 'ps,DRAIN']
 ports: {}
 schema_version: 1

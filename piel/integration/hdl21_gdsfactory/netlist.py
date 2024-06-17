@@ -5,6 +5,7 @@ This module provides functions to generate a raw netlist semi-compatible with gd
 import hdl21 as h
 import yaml
 
+
 ParsedProtoVLSIR = dict
 
 
@@ -63,17 +64,27 @@ def _parse_connections(proto_dict: ParsedProtoVLSIR) -> dict:
             instance_name = instance["name"]
             for connection in instance.get("connections", []):
                 portname = connection["portname"]
-                for signal in connection["target"]:
-                    if "sig" in signal.keys():
-                        # TODO verify for more than one case
-                        target_signal = signal["sig"]
-                        connection_key = f"{instance_name},{portname}"
-                        # Find the target instance and port
-                        target_instance_port = _find_target_instance_port(
-                            proto_dict, target_signal, instance_name
-                        )
-                        if target_instance_port:
-                            connections[connection_key] = target_instance_port
+                target = connection["target"][0]
+
+                # Handle different structures of target
+                if "sig" in target:
+                    target_signal = target["sig"]
+                elif "slice" in target:
+                    target_signal = target["slice"][0]["signal"]
+                else:
+                    # Log a warning or provide a default value for unknown structures
+                    target_signal = "unknown_signal"
+                    print(
+                        f"Warning: Unknown target structure in connection for instance '{instance_name}', port '{portname}'"
+                    )
+
+                connection_key = f"{instance_name},{portname}"
+                # Find the target instance and port
+                target_instance_port = _find_target_instance_port(
+                    proto_dict, target_signal, instance_name
+                )
+                if target_instance_port:
+                    connections[connection_key] = target_instance_port
 
     return connections
 
@@ -90,11 +101,22 @@ def _find_target_instance_port(
             if instance["name"] == current_instance_name:
                 continue
             for connection in instance.get("connections", []):
-                for signal in connection["target"]:
-                    # TODO verify
-                    if "sig" in signal.keys():
-                        if signal["sig"] == target_signal:
-                            return f"{instance['name']},{connection['portname']}"
+                target = connection["target"][0]
+
+                # Handle different structures of target
+                if "sig" in target:
+                    signal = target["sig"]
+                elif "slice" in target:
+                    signal = target["slice"][0]["signal"]
+                else:
+                    signal = None
+                    print(
+                        f"Warning: Unknown target structure for instance '{instance['name']}', port '{connection['portname']}'"
+                    )
+
+                if signal == target_signal:
+                    return f"{instance['name']},{connection['portname']}"
+
     # Search in external modules
     for ext_module in proto_dict.get("ext_modules", []):
         for port in ext_module.get("ports", []):
@@ -103,7 +125,19 @@ def _find_target_instance_port(
                     if instance["name"] == current_instance_name:
                         continue
                     for connection in instance.get("connections", []):
-                        if connection["target"][0]["sig"] == target_signal:
+                        target = connection["target"][0]
+
+                        if "sig" in target:
+                            signal = target["sig"]
+                        elif "slice" in target:
+                            signal = target["slice"][0]["signal"]
+                        else:
+                            signal = None
+                            print(
+                                f"Warning: Unknown target structure for instance '{instance['name']}', port '{connection['portname']}'"
+                            )
+
+                        if signal == target_signal:
                             return f"{instance['name']},{connection['portname']}"
 
     return None
@@ -135,11 +169,21 @@ def _find_port_connection(proto_dict: ParsedProtoVLSIR, port_signal):
         for instance in module.get("instances", []):
             instance_name = instance["name"]
             for connection in instance.get("connections", []):
-                for signal in connection["target"]:
-                    # TODO verify this for more than one signal case
-                    if "sig" in signal.keys():
-                        if signal["sig"] == port_signal:
-                            return f"{instance_name},{connection['portname']}"
+                target = connection["target"][0]
+
+                # Handle different structures of target
+                if "sig" in target:
+                    signal = target["sig"]
+                elif "slice" in target:
+                    signal = target["slice"][0]["signal"]
+                else:
+                    signal = None
+                    print(
+                        f"Warning: Unknown target structure in connection for instance '{instance_name}', port '{connection['portname']}'"
+                    )
+
+                if signal == port_signal:
+                    return f"{instance_name},{connection['portname']}"
     return None
 
 
@@ -168,11 +212,17 @@ def _extract_instance_parameters(proto_dict: ParsedProtoVLSIR):
             instance_info["settings"]["ports"] = {}
             for connection in instance.get("connections", []):
                 portname = connection["portname"]
-                for signal in connection["target"]:
-                    # TODO verify if more than one port
-                    if "sig" in signal.keys():
-                        target_signal = signal["sig"]
-                        instance_info["settings"]["ports"][portname] = target_signal
+                target = connection["target"][0]
+
+                if "sig" in target:
+                    target_signal = target["sig"]
+                elif "slice" in target:
+                    target_signal = target["slice"][0]["signal"]
+                else:
+                    # Handle cases where 'target' does not have 'sig' or 'slice'
+                    target_signal = "unknown_signal"
+
+                instance_info["settings"]["ports"][portname] = target_signal
 
             instance_parameters[instance_name] = instance_info
 

@@ -2,7 +2,9 @@
 
 # The goal of this notebook is to demonstrate some of the codesign functionality in a photonics-first electronically-specified system.
 #
-# TODO make a nice diagram of the system we're modelling here.
+#
+# <img src="../../_static/img/examples/07_full_flow_demo_electronic_photonic/demo_schematic.png" alt="schematic" width="50%"/>
+# <img src="../../_static/img/examples/07_full_flow_demo_electronic_photonic/demo_design_flow.png" alt="design_flow" width="100%"/>
 
 # ## 1a. Configuring our `piel` Project
 
@@ -28,7 +30,7 @@ from piel.models.physical.photonic import (
 )
 
 from piel.integration.amaranth_openlane import (
-    layout_amaranth_truth_table_through_openlane,
+    layout_truth_table_through_openlane,
 )
 
 # -
@@ -102,6 +104,10 @@ def create_switch_fabric():
 chain_3_mode_lattice_circuit = create_switch_fabric()
 chain_3_mode_lattice_circuit
 
+from gdsfactory.export import to_svg
+
+to_svg(chain_3_mode_lattice_circuit)
+
 # ## 2. Extracting our optical-to-electronic control logic truth table
 
 
@@ -125,8 +131,10 @@ chain_fock_state_transitions = piel.flows.get_state_phase_transitions(
     mode_amount=3,
     target_mode_index=2,
 )
-# raw_optical_transmission_table = pd.DataFrame(chain_fock_state_transmission_list)
+
 chain_fock_state_transitions.transition_dataframe
+
+# We can plot this to show the electronic-photonic behaviour we want to see:
 
 chain_fock_state_transitions.transmission_data[0].keys()
 
@@ -179,19 +187,43 @@ basic_ideal_phase_map.dataframe
 # | 31 |  11111 | 3.141560   |
 #
 
+# We can technically simulate how our optical pulses map to our electronic pulses:
+
+truth_table_full = (
+    piel.flows.digital_electro_optic.convert_optical_transitions_to_truth_table(
+        optical_state_transitions=chain_fock_state_transitions,
+        bit_phase_map=basic_ideal_phase_map,
+        logic="full",
+    )
+)
+truth_table_full.dataframe
+
 truth_table = (
     piel.flows.digital_electro_optic.convert_optical_transitions_to_truth_table(
         optical_state_transitions=chain_fock_state_transitions,
         bit_phase_map=basic_ideal_phase_map,
+        logic="implementation",
     )
 )
 truth_table.dataframe
+
+# |    |   input_fock_state_str |   bit_phase_0 |   bit_phase_1 |
+# |---:|-----------------------:|--------------:|--------------:|
+# |  0 |                    100 |         00000 |         00000 |
+# |  1 |                    001 |         00000 |         11111 |
+# |  2 |                    010 |         11111 |         00000 |
 
 truth_table.input_ports
 
 truth_table.output_ports
 
 truth_table.implementation_dictionary
+
+# ```
+# {'input_fock_state_str': ['100', '001', '010'],
+#  'bit_phase_0': ['00000', '00000', '11111'],
+#  'bit_phase_1': ['00000', '11111', '00000']}
+# ```
 
 # ## 3. Synthesizing the logic, digtial testing and layout implementation
 
@@ -250,47 +282,67 @@ cocotb_simulation_data
 # # Makefile
 # SIM ?= icarus
 # TOPLEVEL_LANG ?= verilog
-# VERILOG_SOURCES += /home/daquintero/phd/piel/docs/examples/10_demo_full_flow/full_flow_demo/full_flow_demo/src/truth_table_module.v
+# VERILOG_SOURCES += /home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v
 # TOPLEVEL := top
 # MODULE := test_top
 # include $(shell cocotb-config --makefiles)/Makefile.sim
 # Standard Output (stdout):
 # # rm -f results.xml
 # make -f Makefile results.xml
-# make[1]: Entering directory '/home/daquintero/phd/piel/docs/examples/10_demo_full_flow/full_flow_demo/full_flow_demo/tb'
-# /usr/bin/iverilog -o sim_build/sim.vvp -D COCOTB_SIM=1 -s top  -f sim_build/cmds.f -g2012   /home/daquintero/phd/piel/docs/examples/10_demo_full_flow/full_flow_demo/full_flow_demo/src/truth_table_module.v
+# make[1]: Entering directory '/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/tb'
+# /usr/bin/iverilog -o sim_build/sim.vvp -D COCOTB_SIM=1 -s top  -f sim_build/cmds.f -g2012   /home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v
 # # rm -f results.xml
 # MODULE=test_top  TESTCASE= TOPLEVEL=top  TOPLEVEL_LANG=verilog  \
-#          /usr/bin/vvp -M /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_1_0/lib/python3.10/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build/sim.vvp
-#      -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:105  in set_program_name_in_venv        Using Python virtual environment interpreter at /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_1_0/bin/python
+#          /usr/bin/vvp -M /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_57/lib/python3.10/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build/sim.vvp
+#      -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:105  in set_program_name_in_venv        Using Python virtual environment interpreter at /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_57/bin/python
 #      -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:101  in gpi_print_registered_impl       VPI registered
 #      0.00ns INFO     cocotb                             Running on Icarus Verilog version 11.0 (stable)
-#      0.00ns INFO     cocotb                             Running tests with cocotb v1.8.1 from /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_1_0/lib/python3.10/site-packages/cocotb
-#      0.00ns INFO     cocotb                             Seeding Python random module with 1718127153
+#      0.00ns INFO     cocotb                             Running tests with cocotb v1.8.1 from /home/daquintero/.pyenv/versions/3.10.13/envs/piel_0_57/lib/python3.10/site-packages/cocotb
+#      0.00ns INFO     cocotb                             Seeding Python random module with 1718616475
 #      0.00ns INFO     cocotb.regression                  Found test test_top.truth_table_test
 #      0.00ns INFO     cocotb.regression                  running truth_table_test (1/1)
 #                                                           Test for logic defined by the truth table
-#      8.00ns INFO     cocotb.regression                  truth_table_test passed
-#      8.00ns INFO     cocotb.regression                  **************************************************************************************
+#      6.00ns INFO     cocotb.regression                  truth_table_test passed
+#      6.00ns INFO     cocotb.regression                  **************************************************************************************
 #                                                         ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
 #                                                         **************************************************************************************
-#                                                         ** test_top.truth_table_test      PASS           8.00           0.00       2638.05  **
+#                                                         ** test_top.truth_table_test      PASS           6.00           0.01        778.82  **
 #                                                         **************************************************************************************
-#                                                         ** TESTS=1 PASS=1 FAIL=0 SKIP=0                  8.00           0.45         17.76  **
+#                                                         ** TESTS=1 PASS=1 FAIL=0 SKIP=0                  6.00           2.33          2.57  **
 #                                                         **************************************************************************************
 #
-# make[1]: Leaving directory '/home/daquintero/phd/piel/docs/examples/10_demo_full_flow/full_flow_demo/full_flow_demo/tb'
+# make[1]: Leaving directory '/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/tb'
 #
 # Standard Error (stderr):
 # ```
 #
-# |    |   Unnamed: 0 |   detector_in |   phase_map_out |   time |
-# |---:|-------------:|--------------:|----------------:|-------:|
-# |  0 |            0 |             0 |               0 |   2000 |
-# |  1 |            1 |             1 |              10 |   4000 |
-# |  2 |            2 |            10 |              11 |   6000 |
-# |  3 |            3 |            11 |              11 |   8000 |
+# |    |   Unnamed: 0 |   input_fock_state_str |   bit_phase_0 |   bit_phase_1 |   time |
+# |---:|-------------:|-----------------------:|--------------:|--------------:|-------:|
+# |  0 |            0 |                    100 |         00000 |         00000 |   2000 |
+# |  1 |            1 |                    001 |         00000 |         11111 |   4000 |
+# |  2 |            2 |                    010 |         11111 |         00000 |   6000 |
+#
 
+
+# ![example_gtk_wave_signals](../../_static/img/examples/07_full_flow_demo_electronic_photonic/example_gtk_wave_signals.png)
+
+# We could be more ambitious and see how the circuit would progress with a raw set of electronic transitions:
+
+# Now, we could technically also use this simulation to model our optical signal transmission too.
+
+simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
+    data=mzi2x2_simple_simulation_data_lines,
+    x_axis_column_name="t",
+    row_list=[
+        "phase_0",
+        "output_amplitude_array_1_abs",
+        "output_amplitude_array_1_phase_deg",
+    ],
+    y_label=["e1 Phase", "o4 Amplitude", "o4 Phase"],
+)
+simple_ideal_o4_mzi_2x2_plots.savefig(
+    "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
+)
 
 # +
 # # Current work in progress move this out of here.
@@ -469,17 +521,21 @@ cocotb_simulation_data
 
 # ## 3b. Digital Chip Implementation
 
-layout_openlane_from_truth_table(
+component = piel.flows.layout_truth_table(
     truth_table=truth_table,
-    parent_directory=full_flow_demo,
-    openlane_version="v2",
+    module=full_flow_demo,
 )
+
+component
+
+# ### 4a.
 
 # ## 4a. Driver-Amplfier Modelling
 
-# +
+# Now we will create a amplifier model using `sky130` components.
+
 # toddo add here the example of a simulated spice device.
-# -
+
 
 # ## 4b. Composing and Equivalent-Circuit Modelling
 

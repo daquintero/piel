@@ -1,9 +1,7 @@
-import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import pathlib
-
+from typing import List, Union, Tuple, Optional
 
 __all__ = [
     "plot_simple",
@@ -12,34 +10,37 @@ __all__ = [
 
 
 def plot_simple(
-    x_data: np.array,
-    y_data: np.array,
-    label: str | None = None,
-    ylabel: str | None = None,
-    xlabel: str | None = None,
-    fig: plt.Figure | None = None,
-    ax: plt.Axes | None = None,
+    x_data: np.ndarray,
+    y_data: np.ndarray,
+    label: Optional[str] = None,
+    ylabel: Optional[str] = None,
+    xlabel: Optional[str] = None,
+    fig: Optional[plt.Figure] = None,
+    ax: Optional[plt.Axes] = None,
+    title: Optional[str] = None,
     *args,
     **kwargs
-):
+) -> Tuple[plt.Figure, plt.Axes]:
     """
-    Plot a simple line graph. The desire of this function is just to abstract the most basic data representation whilst
-    keeping the flexibility of the matplotlib library. The goal would be as well that more complex data plots can be
-    constructed from a set of these methods.
+    Plot a simple line graph. This function abstracts the basic data representation while
+    keeping the flexibility of the matplotlib library.
 
     Args:
-        x_data (np.array): X axis data.
-        y_data (np.array): Y axis data.
-        label (str, optional): Label for the plot. Defaults to None.
-        ylabel (str, optional): Y axis label. Defaults to None.
-        xlabel (str, optional): X axis label. Defaults to None.
-        fig (plt.Figure, optional): Matplotlib figure. Defaults to None.
-        ax (plt.Axes, optional): Matplotlib axes. Defaults to None.
+        x_data (np.ndarray): X axis data.
+        y_data (np.ndarray): Y axis data.
+        label (Optional[str], optional): Label for the plot. Defaults to None.
+        ylabel (Optional[str], optional): Y axis label. Defaults to None.
+        xlabel (Optional[str], optional): X axis label. Defaults to None.
+        fig (Optional[plt.Figure], optional): Matplotlib figure. Defaults to None.
+        ax (Optional[plt.Axes], optional): Matplotlib axes. Defaults to None.
+        title (Optional[str], optional): Title of the plot. Defaults to None.
+        *args: Additional arguments passed to plt.plot().
+        **kwargs: Additional keyword arguments passed to plt.plot().
 
     Returns:
-        plt: Matplotlib plot.
+        Tuple[plt.Figure, plt.Axes]: The figure and axes of the plot.
     """
-    if (ax is None) and (fig is None):
+    if fig is None and ax is None:
         fig, ax = plt.subplots()
 
     ax.plot(x_data, y_data, label=label, *args, **kwargs)
@@ -50,9 +51,18 @@ def plot_simple(
     if xlabel is not None:
         ax.set_xlabel(xlabel)
 
+    if title is not None:
+        ax.set_title(title)
+
     if label is not None:
-        # This function appends to the existing plt legend
         ax.legend()
+
+    # Rotate x-axis labels for better fit
+    for label in ax.get_xticklabels():
+        label.set_rotation(45)
+        label.set_ha("right")
+
+    fig.tight_layout()
 
     return fig, ax
 
@@ -60,42 +70,62 @@ def plot_simple(
 def plot_simple_multi_row(
     data: pd.DataFrame,
     x_axis_column_name: str = "t",
-    row_list: list | None = None,
-    y_axis_title_list: list | None = None,
-    x_axis_title: str | None = None,
-):
+    row_list: Optional[List[str]] = None,
+    y_label: Optional[List[str]] = None,
+    x_label: Optional[str] = None,
+    titles: Optional[List[str]] = None,
+    subplot_spacing: float = 0.15,
+) -> plt.Figure:
     """
-    Plot multiple rows of data on the same plot. Each row is a different line. Each row is a different y axis. The x
-    axis is the same for all rows. The y axis title is the same for all rows.
+    Plot multiple rows of data on separate subplots, sharing the same x-axis.
 
     Args:
         data (pd.DataFrame): Data to plot.
-        x_axis_column_name (str, optional): Column name of the x axis. Defaults to "t".
-        row_list (list, optional): List of column names to plot. Defaults to None.
-        y_axis_title_list (list, optional): List of y axis titles. Defaults to None.
-        x_axis_title (str, optional): Title of the x axis. Defaults to None.
+        x_axis_column_name (str, optional): Column name of the x-axis. Defaults to "t".
+        row_list (Optional[List[str]], optional): List of column names to plot. Defaults to None.
+        y_label (Optional[List[str]], optional): List of Y-axis titles for each subplot. Defaults to None.
+        x_label (Optional[str], optional): Title of the x-axis. Defaults to None.
+        titles (Optional[List[str]], optional): Titles for each subplot. Defaults to None.
+        subplot_spacing (float, optional): Spacing between subplots. Defaults to 0.3.
 
     Returns:
-        plt: Matplotlib plot.
+        plt.Figure: The matplotlib figure containing the subplots.
     """
-    x = data[x_axis_column_name]
-    y_array = []
+    if row_list is None:
+        raise ValueError("row_list must be provided")
 
-    if y_axis_title_list is None:
-        y_axis_title_list = row_list
+    x_data = data[x_axis_column_name]
+    y_data_list = [data[row] for row in row_list]
+
+    if y_label is None:
+        y_label = row_list
+
+    if titles is None:
+        titles = [""] * len(row_list)
 
     row_amount = len(row_list)
-    for row_name in row_list:
-        y_array.append(data[row_name])
+    fig, axes = plt.subplots(row_amount, 1, sharex=True, figsize=(8, row_amount * 2))
 
-    fig, axes = plt.subplots(row_amount, 1, sharex=True)
+    if row_amount == 1:
+        axes = [axes]
 
-    for i in range(len(row_list)):
-        axes[i].plot(x, y_array[i])
-        axes[i].grid(True)
-        axes[i].set(ylabel=y_axis_title_list[i])
+    for i, (ax, y_data, y_label, title) in enumerate(
+        zip(axes, y_data_list, y_label, titles)
+    ):
+        ax.plot(x_data, y_data)
+        ax.grid(True)
+        ax.set_ylabel(y_label)
+        ax.set_title(title)
 
-    # TODO Xaxis title
-    # TODO align all ytitles
+    if x_label is not None:
+        axes[-1].set_xlabel(x_label)
 
-    return plt
+    # Rotate x-axis labels for better fit
+    for label in axes[-1].get_xticklabels():
+        label.set_rotation(45)
+        label.set_ha("right")
+
+    fig.tight_layout()
+    plt.subplots_adjust(hspace=subplot_spacing)  # Add space between subplots
+
+    return fig

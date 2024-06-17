@@ -14,38 +14,23 @@ Environment
 ``nix`` Configuration (In Passive Development)
 ========================================================================
 
+If you want to enter the corresponding `nix-shell` environment, you can run the following command which will print the updated command you just need to copy paste into your terminal to activate the `nix-shell` environment.
+
+.. code-block:: bash
+
+    $ piel environment activate
+
+It will print:
+
+.. code-block::
+
+    # Please run this in your shell:
+    nix shell github:efabless/nix-eda#{ngspice,xschem,verilator,yosys} github:efabless/openlane2 nixpkgs#verilog nixpkgs#gtkwave
+
+This is because, I believe, for security reasons it is very difficult to automatically enter a nix shell directly from python or a subprocess.
+
 `OpenLane 2 via nix <https://openlane2.readthedocs.io/en/latest/getting_started/index.html#nix-recommended>`__ have recently released another way to package their `python`-driven ``Openlane 2`` digital chip layout flow. We have previously had issues reproducibly building the `docker` configuration, and because most users are likely to use these tools for developing their chips rather than distributing software, `nix <https://nixos.org/>`__ might be well suited for these applications.
 
 .. include:: nix/development_installation.rst
 .. include:: nix/custom_nix_installation.rst
 .. include:: nix/relevant_nix_commands.rst
-
-
-``apptainer`` Configuration (In Passive Development)
-====================================================
-
-``apptainer`` is a good open-source container management system that aims to be optimised for high performance computation. We want to have a distributed container environment where all the open-source ``piel`` toolchain is pre-installed and ready for custom design. What this distribution aims to provide is both an easy installation script for Ubuntu environments which are common in open-source development and a specific environment configuration that resolves the particular supported versions of the toolchains.
-
-.. include:: apptainer/apptainer_install.rst
-.. include:: apptainer/relevant_apptainer_commands.rst
-
-
-``docker`` Configuration (In Passive Development)
-=====================================================
-
-.. include:: docker/docker_setup.rst
-.. include:: docker/docker_environment_configuration.rst
-.. include:: docker/relevant_docker_commands.rst
-.. include:: docker/developer_docker_configuration.rst
-
-
-``mamba`` Recipie Configuration (In Passive Development)
-=================================================
-
-.. include:: mamba/relevant_mamba_commands.rst
-
-
-.. include:: installation.rst
-.. include:: project_structure.rst
-.. include:: design_files_interaction.rst
-.. include:: relevant_python_commands.rst
