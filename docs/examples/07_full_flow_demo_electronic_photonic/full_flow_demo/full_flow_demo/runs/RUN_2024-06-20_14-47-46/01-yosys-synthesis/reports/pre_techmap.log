@@ -1,0 +1,20 @@
+47. Printing statistics.
+
+=== top ===
+
+   Number of wires:                  6
+   Number of wire bits:             16
+   Number of public wires:           3
+   Number of public wire bits:      13
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  5
+     $_ANDNOT_                       2
+     $_NOT_                          1
+     $_ORNOT_                        2
+
+   Area for cell type $_NOT_ is unknown!
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_ORNOT_ is unknown!
+

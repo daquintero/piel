@@ -6,7 +6,7 @@ It leverages pydantic for model validation and pandas for data manipulation.
 import pandas as pd
 from pydantic import ConfigDict
 from typing import Literal, Iterable
-from .core import PielBaseModel
+from .core import PielBaseModel, PathTypes
 
 # Type aliases for different types of digital bits and HDL simulators.
 AbstractBitsType = str | bytes | int
@@ -29,6 +29,8 @@ BitsList = Iterable[BitsType]
 BitsList: An iterable collection of AbstractBitsType elements.
     Represents a sequence of digital bits.
 """
+
+DigitalRunID = tuple[PathTypes, str]
 
 HDLSimulator = Literal["icarus", "verilator"]
 """

@@ -1,6 +1,7 @@
 from .analog_photonic import extract_component_spice_from_netlist
 from .digital_logic import (
     generate_verilog_and_verification_from_truth_table,
+    get_latest_digital_run_component,
     read_simulation_data_to_truth_table,
     run_verification_simulation_for_design,
     layout_truth_table,

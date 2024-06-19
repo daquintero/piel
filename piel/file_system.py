@@ -1,6 +1,5 @@
 import glob
 import json
-import openlane
 import os
 import sys
 import pathlib
@@ -8,8 +7,8 @@ import shutil
 import stat
 import subprocess
 import types
-from typing import Literal, Optional
-from .types import PathTypes
+from typing import Optional
+from piel.types import PathTypes, ProjectType
 
 __all__ = [
     "check_path_exists",
@@ -138,7 +137,7 @@ def copy_source_folder(
 
 
 def copy_example_design(
-    project_source: Literal["piel", "openlane"] = "piel",
+    project_source: ProjectType = "piel",
     example_name: str = "simple_design",
     target_directory: PathTypes = None,
     target_project_name: Optional[str] = None,
@@ -163,6 +162,7 @@ def copy_example_design(
             + example_name
         )
     elif project_source == "openlane":
+        import openlane
         example_design_folder = (
             pathlib.Path(openlane.__file__).parent.resolve() / example_name
         )

@@ -4,8 +4,7 @@
 v1/v2 Migration
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Currently, OpenLane v1 is integrated into the project whilst Openlane v2
-is still in development.
+Currently, OpenLane v1 is integrated into the project in a non-supported form. There are some examples in the ``examples/depreciated`` directory. However, most of the current functionality uses `v2` primarily.
 
 ``OpenLane v2`` designs do not have to be stored in a particular
 ``$OPENLANE_ROOT/design`` directory, and are a lot more flexible in

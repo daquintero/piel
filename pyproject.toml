@@ -16,7 +16,7 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Natural Language :: English",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Topic :: Scientific/Engineering",
   "Topic :: Scientific/Engineering :: Physics"
 ]
@@ -25,9 +25,10 @@ homepage = "https://github.com/daquintero/piel"
 keywords = ["piel"]
 license = "MIT"
 name = "piel"
-packages = [
-  {include = "piel/*"}
-]
+#packages = [
+#  {include = "piel/"},
+#  {include = "docs/"}
+#]
 readme = "README.md"
 repository = "https://github.com/daquintero/piel"
 version = "0.0.56"
@@ -37,26 +38,49 @@ version = "0.0.56"
 Click = ">=7.0"
 amaranth = "^0.4.0"
 amaranth-yosys = "^0.40.0.0.post94"
-# DEVELOPMENT ONLY
-amaranth_driven_flow = {path = "docs/examples/designs/amaranth_driven_flow", develop = true, optional = true}
-black = {version = "24.3.0", optional = true}
-bokeh = {version = "*", optional = true}
-bump2version = {version = "*", optional = true}
 cocotb = "^1.8.1"
-cookiecutter = {version = "*", optional = true}
-coverage = {version = "*", optional = true}
-cython = "0.29.21"
-example_empty_project = {path = "docs/examples/designs/example_empty_project", develop = true, optional = true}
-flake8 = {version = "*", optional = true}
+#cython = "0.29.21"
 gdsfactory = {git = "https://github.com/daquintero/gdsfactory7.git", branch = "dario/fix_recursive_e_netlist"}
 gplugins = {version = "^0.14.0", extras = ["schematic"]}
-# femwell = "0.1.8"
-hdl21 = {version = "^6.0.0"}  # TODO fix when released
+#femwell = "*"
+hdl21 = {version = "^6.0.0"}
+jax = "^0.4.14"
+jaxlib = "^0.4.14"
+matplotlib = {version = "*"}
+networkx = "^3.1"
+numpy = "^1.24.4"
+openlane = {version = "^2.0.0"}
+pandas = "^1.5.3"
+poetry = {version = "1.8.2"}  # I am not happy with this being here
+pydantic = "^2.0"
+python = ">=3.10,<3.12"
+qutip = "^4.7"
+sax = "0.12.2"  # Pinned for pydantic <v2 compatibility.
+scipy = "^1.11.4"
+setuptools = "*"
+sky130 = {git = "https://github.com/daquintero/skywater130.git", branch = "dario/patch_for_rladder_gplugins"}
+sky130-hdl21 = {version = "^6.0.0"}
+thewalrus = "^0.20.0"
+vlsirtools = "^6.0.0"
+xarray = "^2023.12.0"
+
+# Examples
+# TODO FIX  ModuleNotFoundError: No module named 'setuptools' in nix
+#amaranth_driven_flow = {path = "docs/examples/designs/amaranth_driven_flow", develop = true, optional = true}
+#simple_copied_design = {path = "docs/examples/designs/simple_copied_design", develop = true, optional = true}
+#simple_design = {path = "docs/examples/designs/simple_design", develop = true, optional = true}
+#example_empty_project = {path = "docs/examples/designs/example_empty_project", develop = true, optional = true}
+
+# DEVELOPMENT ONLY
+black = {version = "24.3.0", optional = true}
+bokeh = {version = "*", optional = true}
+bump-my-version = {version = "*", optional = true}
+cookiecutter = {version = "*", optional = true}
+coverage = {version = "*", optional = true}
+flake8 = {version = "*", optional = true}
 ipyevents = {version = "*", optional = true}
 ipytree = {version = "*", optional = true}
 ipywidgets = {version = ">=7.6.0,<9", optional = true}
-jax = "^0.4.14"
-jaxlib = "^0.4.14"
 jupyter = {version = "*", optional = true}
 jupyter-bokeh = {version = "*", optional = true}
 jupyter-core = {version = "*", optional = true}
@@ -65,31 +89,12 @@ jupyterlab = {version = "^4.0.0", optional = true}
 jupytext = {version = "1.15.0", optional = true}
 kfactory = {version = "*", extras = ["git", "ipy"], optional = true}
 kweb = {version = "^2.0.1", optional = true}
-matplotlib = {version = "*"}
 myst-parser = {version = "*", optional = true}
 nbsphinx = {version = "*", optional = true}
-networkx = "^3.1"
-numpy = "^1.24.4"
-# NIX-INSTALLED PACKAGES
-# These packages link directly within the nix-environment
-# Only used for development
-# Do not install unless you know what you're doing.
-openlane = {version = "^2.0.0", optional = true}
-pandas = "^1.5.3"
 pandoc = {version = "*", optional = true}
-poetry = {version = "1.8.2", optional = true}  # I am not happy with this being here
 pre-commit = {version = "*", optional = true}
-pydantic = "^2.0"
 pydata-sphinx-theme = {version = ">=0.13.3", optional = true}
 pytest = {version = ">=3.0", optional = true}
-python = ">=3.10,<3.12"
-qutip = "^4.7"
-sax = "0.12.2"  # Pinned for pydantic <v2 compatibility.
-scipy = "^1.11.4"
-simple_copied_design = {path = "docs/examples/designs/simple_copied_design", develop = true, optional = true}
-simple_design = {path = "docs/examples/designs/simple_design", develop = true, optional = true}
-sky130 = {git = "https://github.com/daquintero/skywater130.git", branch = "dario/patch_for_rladder_gplugins"}
-sky130-hdl21 = {version = "^6.0.0"}
 sphinx = {version = "^7.2.1", optional = true}
 sphinx-autoapi = {version = "*", optional = true}
 sphinx-autobuild = {version = "*", optional = true}
@@ -99,18 +104,16 @@ sphinx-gallery = {version = "*", optional = true}
 sphinx-pydantic = {version = "*", optional = true}
 sphinx-rtd-theme = {version = "*", optional = true}
 sphinx_book_theme = {version = "*", optional = true}
-thewalrus = "^0.20.0"
 tox = {version = "*", optional = true}
-vlsirtools = "^6.0.0"
 watchdog = {version = "*", optional = true}
-xarray = "^2023.12.0"
+
 
 [tool.poetry.extras]
 dev = [
   "amaranth_driven_flow",
   "black",
   "bokeh",
-  "bump2version",
+  "bump-my-version",
   "cookiecutter",
   "coverage",
   "example_empty_project",
@@ -123,6 +126,7 @@ dev = [
   "jupyter-core",
   "jupyter-packaging",
   "jupyterlab",
+  "jupytext",
   "kfactory",
   "kweb",
   "myst-parser",

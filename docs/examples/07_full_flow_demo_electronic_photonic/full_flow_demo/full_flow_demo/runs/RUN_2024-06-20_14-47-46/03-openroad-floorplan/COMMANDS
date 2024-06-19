@@ -1,0 +1,1 @@
+openroad -exit -no_splash -metrics /home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/runs/RUN_2024-06-20_14-47-46/03-openroad-floorplan/or_metrics_out.json /nix/store/9jb8wsk32ny2yy5ghcaq3y7mbmmavi2c-python3.11-openlane/lib/python3.11/site-packages/openlane/scripts/openroad/floorplan.tcl

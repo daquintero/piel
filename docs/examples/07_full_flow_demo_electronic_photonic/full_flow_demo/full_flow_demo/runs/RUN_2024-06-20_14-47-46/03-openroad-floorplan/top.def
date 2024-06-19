@@ -1,0 +1,79 @@
+VERSION 5.8 ;
+DIVIDERCHAR "/" ;
+BUSBITCHARS "[]" ;
+DESIGN top ;
+UNITS DISTANCE MICRONS 1000 ;
+DIEAREA ( 0 0 ) ( 50000 50000 ) ;
+ROW ROW_0 unithd 5520 10880 N DO 84 BY 1 STEP 460 0 ;
+ROW ROW_1 unithd 5520 13600 FS DO 84 BY 1 STEP 460 0 ;
+ROW ROW_2 unithd 5520 16320 N DO 84 BY 1 STEP 460 0 ;
+ROW ROW_3 unithd 5520 19040 FS DO 84 BY 1 STEP 460 0 ;
+ROW ROW_4 unithd 5520 21760 N DO 84 BY 1 STEP 460 0 ;
+ROW ROW_5 unithd 5520 24480 FS DO 84 BY 1 STEP 460 0 ;
+ROW ROW_6 unithd 5520 27200 N DO 84 BY 1 STEP 460 0 ;
+ROW ROW_7 unithd 5520 29920 FS DO 84 BY 1 STEP 460 0 ;
+ROW ROW_8 unithd 5520 32640 N DO 84 BY 1 STEP 460 0 ;
+ROW ROW_9 unithd 5520 35360 FS DO 84 BY 1 STEP 460 0 ;
+TRACKS X 230 DO 109 STEP 460 LAYER li1 ;
+TRACKS Y 170 DO 147 STEP 340 LAYER li1 ;
+TRACKS X 170 DO 147 STEP 340 LAYER met1 ;
+TRACKS Y 170 DO 147 STEP 340 LAYER met1 ;
+TRACKS X 230 DO 109 STEP 460 LAYER met2 ;
+TRACKS Y 230 DO 109 STEP 460 LAYER met2 ;
+TRACKS X 340 DO 73 STEP 680 LAYER met3 ;
+TRACKS Y 340 DO 73 STEP 680 LAYER met3 ;
+TRACKS X 460 DO 54 STEP 920 LAYER met4 ;
+TRACKS Y 460 DO 54 STEP 920 LAYER met4 ;
+TRACKS X 1700 DO 14 STEP 3400 LAYER met5 ;
+TRACKS Y 1700 DO 14 STEP 3400 LAYER met5 ;
+COMPONENTS 10 ;
+    - _0_ sky130_fd_sc_hd__nor3b_2 ;
+    - _1_ sky130_fd_sc_hd__nor3b_2 ;
+    - _2_ sky130_fd_sc_hd__buf_2 ;
+    - _3_ sky130_fd_sc_hd__buf_2 ;
+    - _4_ sky130_fd_sc_hd__buf_2 ;
+    - _5_ sky130_fd_sc_hd__buf_2 ;
+    - _6_ sky130_fd_sc_hd__buf_2 ;
+    - _7_ sky130_fd_sc_hd__buf_2 ;
+    - _8_ sky130_fd_sc_hd__buf_2 ;
+    - _9_ sky130_fd_sc_hd__buf_2 ;
+END COMPONENTS
+PINS 13 ;
+    - bit_phase_0[0] + NET bit_phase_0[0] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_0[1] + NET bit_phase_0[1] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_0[2] + NET bit_phase_0[2] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_0[3] + NET bit_phase_0[3] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_0[4] + NET bit_phase_0[4] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_1[0] + NET bit_phase_1[0] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_1[1] + NET bit_phase_1[1] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_1[2] + NET bit_phase_1[2] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_1[3] + NET bit_phase_1[3] + DIRECTION OUTPUT + USE SIGNAL ;
+    - bit_phase_1[4] + NET bit_phase_1[4] + DIRECTION OUTPUT + USE SIGNAL ;
+    - input_fock_state_str[0] + NET input_fock_state_str[0] + DIRECTION INPUT + USE SIGNAL ;
+    - input_fock_state_str[1] + NET input_fock_state_str[1] + DIRECTION INPUT + USE SIGNAL ;
+    - input_fock_state_str[2] + NET input_fock_state_str[2] + DIRECTION INPUT + USE SIGNAL ;
+END PINS
+SPECIALNETS 2 ;
+    - VGND ( _9_ VNB ) ( _8_ VNB ) ( _7_ VNB ) ( _6_ VNB ) ( _5_ VNB ) ( _4_ VNB ) ( _3_ VNB )
+      ( _2_ VNB ) ( _1_ VNB ) ( _0_ VNB ) ( _9_ VGND ) ( _8_ VGND ) ( _7_ VGND ) ( _6_ VGND ) ( _5_ VGND )
+      ( _4_ VGND ) ( _3_ VGND ) ( _2_ VGND ) ( _1_ VGND ) ( _0_ VGND ) + USE GROUND ;
+    - VPWR ( _9_ VPB ) ( _8_ VPB ) ( _7_ VPB ) ( _6_ VPB ) ( _5_ VPB ) ( _4_ VPB ) ( _3_ VPB )
+      ( _2_ VPB ) ( _1_ VPB ) ( _0_ VPB ) ( _9_ VPWR ) ( _8_ VPWR ) ( _7_ VPWR ) ( _6_ VPWR ) ( _5_ VPWR )
+      ( _4_ VPWR ) ( _3_ VPWR ) ( _2_ VPWR ) ( _1_ VPWR ) ( _0_ VPWR ) + USE POWER ;
+END SPECIALNETS
+NETS 13 ;
+    - bit_phase_0[0] ( PIN bit_phase_0[0] ) ( _2_ X ) + USE SIGNAL ;
+    - bit_phase_0[1] ( PIN bit_phase_0[1] ) ( _3_ X ) + USE SIGNAL ;
+    - bit_phase_0[2] ( PIN bit_phase_0[2] ) ( _4_ X ) + USE SIGNAL ;
+    - bit_phase_0[3] ( PIN bit_phase_0[3] ) ( _5_ X ) + USE SIGNAL ;
+    - bit_phase_0[4] ( PIN bit_phase_0[4] ) ( _5_ A ) ( _4_ A ) ( _3_ A ) ( _2_ A ) ( _1_ Y ) + USE SIGNAL ;
+    - bit_phase_1[0] ( PIN bit_phase_1[0] ) ( _6_ X ) + USE SIGNAL ;
+    - bit_phase_1[1] ( PIN bit_phase_1[1] ) ( _7_ X ) + USE SIGNAL ;
+    - bit_phase_1[2] ( PIN bit_phase_1[2] ) ( _8_ X ) + USE SIGNAL ;
+    - bit_phase_1[3] ( PIN bit_phase_1[3] ) ( _9_ X ) + USE SIGNAL ;
+    - bit_phase_1[4] ( PIN bit_phase_1[4] ) ( _9_ A ) ( _8_ A ) ( _7_ A ) ( _6_ A ) ( _0_ Y ) + USE SIGNAL ;
+    - input_fock_state_str[0] ( PIN input_fock_state_str[0] ) ( _1_ B ) ( _0_ C_N ) + USE SIGNAL ;
+    - input_fock_state_str[1] ( PIN input_fock_state_str[1] ) ( _1_ C_N ) ( _0_ B ) + USE SIGNAL ;
+    - input_fock_state_str[2] ( PIN input_fock_state_str[2] ) ( _1_ A ) ( _0_ A ) + USE SIGNAL ;
+END NETS
+END DESIGN

@@ -40,7 +40,6 @@ class PielBaseModel(pydantic.BaseModel):
         extra = "forbid"
         validate_assignment = True
         strict = True
-        allow_mutation = False
 
     def supplied_parameters(self):
         """

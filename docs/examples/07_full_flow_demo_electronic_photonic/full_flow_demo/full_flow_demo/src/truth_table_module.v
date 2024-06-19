@@ -4,30 +4,30 @@
 (* generator = "Amaranth" *)
 module top(bit_phase_0, bit_phase_1, input_fock_state_str);
   reg \$auto$verilog_backend.cc:2352:dump_module$1  = 0;
-  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:88" *)
+  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:86" *)
   output [4:0] bit_phase_0;
   reg [4:0] bit_phase_0;
-  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:88" *)
+  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:86" *)
   output [4:0] bit_phase_1;
   reg [4:0] bit_phase_1;
-  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:84" *)
+  (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:82" *)
   input [2:0] input_fock_state_str;
   wire [2:0] input_fock_state_str;
   always @* begin
     if (\$auto$verilog_backend.cc:2352:dump_module$1 ) begin end
     (* full_case = 32'd1 *)
-    (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:114" *)
+    (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:112" *)
     casez (input_fock_state_str)
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:117" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:115" */
       3'h4:
           bit_phase_0 = 5'h00;
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:117" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:115" */
       3'h1:
           bit_phase_0 = 5'h00;
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:117" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:115" */
       3'h2:
           bit_phase_0 = 5'h1f;
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:126" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:124" */
       default:
           bit_phase_0 = 5'h00;
     endcase
@@ -35,18 +35,18 @@ module top(bit_phase_0, bit_phase_1, input_fock_state_str);
   always @* begin
     if (\$auto$verilog_backend.cc:2352:dump_module$1 ) begin end
     (* full_case = 32'd1 *)
-    (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:114" *)
+    (* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:112" *)
     casez (input_fock_state_str)
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:117" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:115" */
       3'h4:
           bit_phase_1 = 5'h00;
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:117" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:115" */
       3'h1:
           bit_phase_1 = 5'h1f;
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:117" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:115" */
       3'h2:
           bit_phase_1 = 5'h00;
-      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:126" */
+      /* src = "/home/daquintero/phd/piel/piel/tools/amaranth/construct.py:124" */
       default:
           bit_phase_1 = 5'h00;
     endcase
