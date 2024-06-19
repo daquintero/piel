@@ -47,7 +47,7 @@ You can install our exact supported dependencies in a poetry-managed environment
 
 .. code:: console
 
-   $ poetry instal
+   $ poetry install
 
 Developer’s Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~

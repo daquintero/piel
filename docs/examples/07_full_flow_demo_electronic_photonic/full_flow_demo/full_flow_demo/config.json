@@ -24,7 +24,7 @@
     },
     "DESIGN_NAME": "top",
     "VERILOG_FILES": "dir::src/*.v",
-    "CLOCK_PORT": "clk",
+    "CLOCK_PORT": "None",
     "CLOCK_PERIOD": 100,
     "RUN_CTS": "false",
     "DIE_AREA": [

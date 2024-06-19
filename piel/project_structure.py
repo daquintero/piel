@@ -43,7 +43,7 @@ def create_setup_py(
         }
     commands_list = [
         "#!/usr/bin/env python",
-        "from distutils.core import setup \n",
+        "from setuptools import setup \n",
         'setup(name="' + config_dictionary["NAME"] + '",',
         "\tversion=" + str(config_dictionary["VERSION"]) + ",",
         "\tdescription=" + config_dictionary["DESCRIPTION"] + ","

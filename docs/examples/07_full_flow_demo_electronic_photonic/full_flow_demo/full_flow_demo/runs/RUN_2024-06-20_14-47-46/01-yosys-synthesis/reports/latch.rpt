@@ -1,0 +1,5 @@
+
+14. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\top.\$auto$verilog_backend.cc:2352:dump_module$1' from process `\top.$proc$/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v:6$3'.
+No latch inferred for signal `\top.\bit_phase_1' from process `\top.$proc$/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v:35$2'.
+No latch inferred for signal `\top.\bit_phase_0' from process `\top.$proc$/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v:16$1'.

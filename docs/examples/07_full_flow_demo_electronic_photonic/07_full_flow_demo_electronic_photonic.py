@@ -104,10 +104,6 @@ def create_switch_fabric():
 chain_3_mode_lattice_circuit = create_switch_fabric()
 chain_3_mode_lattice_circuit
 
-from gdsfactory.export import to_svg
-
-to_svg(chain_3_mode_lattice_circuit)
-
 # ## 2. Extracting our optical-to-electronic control logic truth table
 
 
@@ -330,19 +326,21 @@ cocotb_simulation_data
 
 # Now, we could technically also use this simulation to model our optical signal transmission too.
 
-simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
-    data=mzi2x2_simple_simulation_data_lines,
-    x_axis_column_name="t",
-    row_list=[
-        "phase_0",
-        "output_amplitude_array_1_abs",
-        "output_amplitude_array_1_phase_deg",
-    ],
-    y_label=["e1 Phase", "o4 Amplitude", "o4 Phase"],
-)
-simple_ideal_o4_mzi_2x2_plots.savefig(
-    "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
-)
+# +
+# # Current work in progress move this out of here.
+# simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
+#     data=mzi2x2_simple_simulation_data_lines,
+#     x_axis_column_name="t",
+#     row_list=[
+#         "phase_0",
+#         "output_amplitude_array_1_abs",
+#         "output_amplitude_array_1_phase_deg",
+#     ],
+#     y_label=["e1 Phase", "o4 Amplitude", "o4 Phase"],
+# )
+# simple_ideal_o4_mzi_2x2_plots.savefig(
+#     "../_static/img/examples/03a_sax_active_cosimulation/simple_ideal_o4_mzi_2x2_plots.PNG"
+# )
 
 # +
 # # Current work in progress move this out of here.
@@ -521,11 +519,17 @@ simple_ideal_o4_mzi_2x2_plots.savefig(
 
 # ## 3b. Digital Chip Implementation
 
+component = piel.flows.get_latest_digital_run_component(
+    module=full_flow_demo,
+)
+component.plot()
+
 component = piel.flows.layout_truth_table(
     truth_table=truth_table,
     module=full_flow_demo,
 )
 
+print("Truth Table Layout")
 component
 
 # ### 4a.

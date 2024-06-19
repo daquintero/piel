@@ -3,6 +3,7 @@ These functions provide easy tools for easily migrating between OpenLane v1 and 
 """
 import pathlib
 from .v1 import get_design_directory_from_root_openlane_v1
+from piel.types import PathTypes
 from piel.file_system import return_path
 
 __all__ = [
@@ -13,8 +14,8 @@ __all__ = [
 def get_design_from_openlane_migration(
     v1: bool = True,
     design_name_v1: str | None = None,
-    design_directory: str | pathlib.Path | None = None,
-    root_directory_v1: str | pathlib.Path | None = None,
+    design_directory: PathTypes | None = None,
+    root_directory_v1: PathTypes | None = None,
 ) -> (str, pathlib.Path):
     """
     This function provides the integration mechanism for easily migrating the interconnection with other toolsets from an OpenLane v1 design to an OpenLane v2 design.

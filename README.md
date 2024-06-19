@@ -52,10 +52,6 @@ Some existing microservice dependency integrations are:
     Description Library in Python
 - [GDSFactory](https://github.com/gdsfactory/gdsfactory) - An open
     source platform for end to-end photonic chip design and validation
-- [OpenLane v1](https://github.com/The-OpenROAD-Project/OpenLane) - an
-    automated RTL to GDSII flow based on several components including
-    OpenROAD, Yosys, Magic, Netgen and custom methodology scripts for
-    design exploration and optimization
 - [Openlane v2](https://github.com/efabless/openlane2) - The next generation of OpenLane, rewritten from scratch in Python with a modular architecture
 - [sax](https://github.com/flaport/sax) - S-parameter based frequency
     domain circuit simulations and optimizations using JAX.

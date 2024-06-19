@@ -1,0 +1,45 @@
+'PNR_SDC_FILE' is not defined. Using generic fallback SDC for OpenROAD PnR steps.
+'SIGNOFF_SDC_FILE' is not defined. Using generic fallback SDC for OpenROAD PnR steps.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0101] object 'out' not found.
+[STA-0101] object 'out' not found.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[STA-0450] virtual clock None can not be propagated.
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer mcon
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer mcon
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via2
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via2
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via3
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via3
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via4
+[DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer via4
+[STA-0366] port 'None' not found.
+[STA-0366] port 'None' not found.
+[STA-0419] transition time can not be specified for virtual clocks.

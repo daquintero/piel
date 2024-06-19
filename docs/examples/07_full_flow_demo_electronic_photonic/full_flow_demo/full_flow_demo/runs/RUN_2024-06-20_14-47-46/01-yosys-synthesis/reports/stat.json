@@ -1,0 +1,37 @@
+{
+   "creator": "Yosys 0.38 (git sha1 543faed9c8c, clang++ 16.0.6 -fPIC -Os)",
+   "invocation": "stat -json -liberty /home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/runs/RUN_2024-06-20_14-47-46/tmp/b84aacab8bfd403cbcfe235e5126e1a1.lib ",
+   "modules": {
+      "\\top": {
+         "num_wires":         3,
+         "num_wire_bits":     13,
+         "num_pub_wires":     3,
+         "num_pub_wire_bits": 13,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         10,
+         "area":              65.062400,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__buf_2": 8,
+            "sky130_fd_sc_hd__nor3b_2": 2
+         }
+      }
+   },
+      "design": {
+         "num_wires":         3,
+         "num_wire_bits":     13,
+         "num_pub_wires":     3,
+         "num_pub_wire_bits": 13,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         10,
+         "area":              65.062400,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__buf_2": 8,
+            "sky130_fd_sc_hd__nor3b_2": 2
+         }
+      }
+}
+

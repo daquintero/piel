@@ -9,5 +9,4 @@ def get_piel_install_directory():
     print(get_python_install_directory())
     return 0
 
-
 main.add_command(get_piel_install_directory)

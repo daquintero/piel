@@ -1,5 +1,4 @@
 import platform
-
 from .environment import environment
 from ..utils import (
     echo_and_check_subprocess,
@@ -8,7 +7,6 @@ from ..utils import (
 
 __all__ = [
     "install_nix",
-    "activate",
 ]
 
 import subprocess
@@ -35,6 +33,7 @@ def echo_and_check_shell_subprocess(command, **kwargs):
     print("Running: " + concatenated_command)
     # Pass the command as a single string to be interpreted by the shell
     return subprocess.run(concatenated_command, shell=True, **kwargs)
+
 
 def install_and_configure_nix():
     """
@@ -103,31 +102,6 @@ def install_and_configure_nix():
             )
 
     return 0
-
-
-@environment.command(
-    name="activate", help="Activates the specific piel nix environment."
-)
-def activate():
-    """
-    Enters the custom piel nix environment with all the supported tools installed and configured packages.
-    Runs the nix-shell command on the piel/environment/nix/ directory.
-    """
-    if platform.system() == "Windows":
-        raise NotImplementedError("This installation method is not supported on Windows.")
-    elif platform.system() == "Darwin":
-        raise NotImplementedError("This installation method is not supported on macOS.")
-    elif platform.system() == "Linux":
-        # Setup the nix shell environment
-        nix_command = (
-            "nix shell "
-            "github:efabless/nix-eda#{ngspice,xschem,verilator,yosys} "
-            "github:efabless/openlane2 "
-            "nixpkgs#verilog "
-            "nixpkgs#gtkwave"
-        )
-        print("Please run this in your shell:")
-        print(nix_command)
 
 
 @environment.command(name="install-nix", help="Installs the nix package manager.")

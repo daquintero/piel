@@ -1,0 +1,17 @@
+61. Printing statistics.
+
+=== top ===
+
+   Number of wires:                  3
+   Number of wire bits:             13
+   Number of public wires:           3
+   Number of public wire bits:      13
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 10
+     sky130_fd_sc_hd__buf_2          8
+     sky130_fd_sc_hd__nor3b_2        2
+
+   Chip area for module '\top': 65.062400
+

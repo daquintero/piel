@@ -1,0 +1,37 @@
+{
+   "creator": "Yosys 0.38 (git sha1 543faed9c8c, clang++ 16.0.6 -fPIC -Os)",
+   "invocation": "stat -json -liberty /home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/runs/RUN_2024-06-20_14-47-46/tmp/b84aacab8bfd403cbcfe235e5126e1a1.lib ",
+   "modules": {
+      "\\top": {
+         "num_wires":         6,
+         "num_wire_bits":     16,
+         "num_pub_wires":     3,
+         "num_pub_wire_bits": 13,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         5,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 2,
+            "$_NOT_": 1,
+            "$_ORNOT_": 2
+         }
+      }
+   },
+      "design": {
+         "num_wires":         6,
+         "num_wire_bits":     16,
+         "num_pub_wires":     3,
+         "num_pub_wire_bits": 13,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         5,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 2,
+            "$_NOT_": 1,
+            "$_ORNOT_": 2
+         }
+      }
+}
+

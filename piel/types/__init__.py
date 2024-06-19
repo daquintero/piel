@@ -14,6 +14,7 @@ from .digital import (
     AbstractBitsType,
     BitsType,
     BitsList,
+    DigitalRunID,
     HDLSimulator,
     HDLTopLevelLanguage,
     LogicSignalsList,
@@ -40,6 +41,7 @@ from .electro_optic import (
     SParameterCollection,
 )
 from .electronic import HVAMetricsType, LNAMetricsType, ElectronicCircuitComponent
+from .file_system import ProjectType
 from .integration import CircuitComponent
 from .materials import (
     MaterialReferenceType,

@@ -1,0 +1,19 @@
+digraph "top" {
+label="top";
+rankdir="LR";
+remincross=true;
+n6 [ shape=octagon, label="input_fock_state_str", color="black", fontcolor="black" ];
+n7 [ shape=octagon, label="bit_phase_1", color="black", fontcolor="black" ];
+n8 [ shape=octagon, label="bit_phase_0", color="black", fontcolor="black" ];
+n9 [ shape=diamond, label="$auto$verilog_backend.cc:2352:dump_module$1", color="black", fontcolor="black" ];
+p0 [shape=box, style=rounded, label="PROC $3\n/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v:6.7-6.56", ];
+p1 [shape=box, style=rounded, label="PROC $2\n/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v:35.3-53.6", ];
+p2 [shape=box, style=rounded, label="PROC $1\n/home/daquintero/phd/piel/docs/examples/07_full_flow_demo_electronic_photonic/full_flow_demo/full_flow_demo/src/truth_table_module.v:16.3-34.6", ];
+n6:e -> p1:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+n6:e -> p2:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+p1:e -> n7:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+p2:e -> n8:w [color="black", fontcolor="black", style="setlinewidth(3)", label=""];
+p0:e -> n9:w [color="black", fontcolor="black", label=""];
+n9:e -> p1:w [color="black", fontcolor="black", label=""];
+n9:e -> p2:w [color="black", fontcolor="black", label=""];
+}

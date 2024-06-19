@@ -18,14 +18,15 @@ If you want to enter the corresponding `nix-shell` environment, you can run the 
 
 .. code-block:: bash
 
-    $ piel environment activate
+    $ piel activate
 
 It will print:
 
 .. code-block::
 
     # Please run this in your shell:
-    nix shell github:efabless/nix-eda#{ngspice,xschem,verilator,yosys} github:efabless/openlane2 nixpkgs#verilog nixpkgs#gtkwave
+    cd ~/<path_to_piel>
+    nix shell . github:efabless/nix-eda#{ngspice,xschem,verilator,yosys} github:efabless/openlane2 nixpkgs#verilog nixpkgs#gtkwave
 
 This is because, I believe, for security reasons it is very difficult to automatically enter a nix shell directly from python or a subprocess.
 
