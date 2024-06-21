@@ -62,7 +62,7 @@ sky130 = {git = "https://github.com/daquintero/skywater130.git", branch = "dario
 sky130-hdl21 = {version = "^6.0.0"}
 thewalrus = "^0.20.0"
 vlsirtools = "^6.0.0"
-xarray = "^2023.12.0"
+xarray = ">=2023.12,<2025.0"
 
 # Examples
 # TODO FIX  ModuleNotFoundError: No module named 'setuptools' in nix
