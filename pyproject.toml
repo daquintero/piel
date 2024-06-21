@@ -86,7 +86,7 @@ jupyter-bokeh = {version = "*", optional = true}
 jupyter-core = {version = "*", optional = true}
 jupyter-packaging = {version = ">=0.7.9", optional = true}
 jupyterlab = {version = "^4.0.0", optional = true}
-jupytext = {version = "1.15.0", optional = true}
+jupytext = {version = "1.16.2", optional = true}
 kfactory = {version = "*", extras = ["git", "ipy"], optional = true}
 kweb = {version = "^2.0.1", optional = true}
 myst-parser = {version = "*", optional = true}
