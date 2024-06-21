@@ -6927,12 +6927,13 @@ files = [
 
 [[package]]
 name = "thewalrus"
-version = "0.20.0"
+version = "0.21.0"
 description = "Open source library for hafnian calculation"
 optional = false
 python-versions = "*"
 files = [
-    {file = "thewalrus-0.20.0.tar.gz", hash = "sha256:adf6ae2976828bf2b8e26d49013d1175f6562c5a36f35f17363b985092c0b4df"},
+    {file = "thewalrus-0.21.0-py3-none-any.whl", hash = "sha256:5f393d17fc8362e7156337faed769e99f15149040ef298d2a1be27f234aa8cb9"},
+    {file = "thewalrus-0.21.0.tar.gz", hash = "sha256:a8e1d6a7dea1e2c70aeb172f2dba1dfc7fabfa6e000c8ace9c5f81c7df422637"},
 ]
 
 [package.dependencies]
@@ -8072,4 +8073,4 @@ nonix = ["openlane"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "91c884e3767565b86da576e4d6d7bf245adc03863cd5e3e98efbcf207bd516ba"
+content-hash = "335ea6e7f9a16b9d07df1581b32559e3f6b941b86ba0b3e7bb68b431ce9a4107"

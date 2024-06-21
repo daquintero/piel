@@ -60,7 +60,7 @@ scipy = "^1.11.4"
 setuptools = "*"
 sky130 = {git = "https://github.com/daquintero/skywater130.git", branch = "dario/patch_for_rladder_gplugins"}
 sky130-hdl21 = {version = "^6.0.0"}
-thewalrus = "^0.20.0"
+thewalrus = ">=0.20,<0.22"
 vlsirtools = "^6.0.0"
 xarray = "^2023.12.0"
 
