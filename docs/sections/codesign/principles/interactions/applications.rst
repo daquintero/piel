@@ -1,5 +1,5 @@
 Reference Applications
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 What are some example applications of electronic-photonic codesign? Let's look at some references and a brief summary of contents. Last updated: 06/2024.
 
