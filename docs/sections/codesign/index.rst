@@ -8,5 +8,6 @@ This section aims to provide some of the theory and background implementation co
     :caption: Contents:
 
     principles/index
+    devices/index
     solvers/index
     parametric

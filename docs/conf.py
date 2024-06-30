@@ -59,6 +59,7 @@ extensions = [
     "IPython.sphinxext.ipython_console_highlighting",
     "nbsphinx",  # Integrate Jupyter Notebooks and Sphinx
     "myst_parser",
+    "sphinxcontrib.pdfembed",
     "sphinx.ext.autodoc",  # Core Sphinx library for auto html doc generation from docstrings
     "sphinx.ext.autosummary",  # Create neat summary tables for modules/classes/methods etc
     "sphinx.ext.coverage",
@@ -123,7 +124,7 @@ nbsphinx_execute = "never"
 version = piel.__version__
 
 latex_elements: dict = {
-    "preamble": r"\usepackage{bm}\n\usepackage{amssymb}\n\usepackage{esint}",
+    "preamble": r"\usepackage{bm}\n\usepackage{amssymb}\n\usepackage{esint}\n\usepackage{circuitikz}\n\usepackage{tikz}",
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
