@@ -186,7 +186,7 @@ def convert_optical_transitions_to_truth_table(
     truth_table_filtered_dictionary = filter_and_correct_truth_table(
         truth_table_dictionary=truth_table_raw,
         input_ports=input_ports,
-        output_ports=output_ports
+        output_ports=output_ports,
     )
 
     return TruthTable(
@@ -323,9 +323,7 @@ def find_nearest_phase_for_bit(
 
 
 def filter_and_correct_truth_table(
-    truth_table_dictionary: dict,
-    input_ports: list,
-    output_ports: list
+    truth_table_dictionary: dict, input_ports: list, output_ports: list
 ):
     """
     Ensures each unique value of the specified input ports maps to a unique set of values of the output ports.
@@ -335,7 +333,7 @@ def filter_and_correct_truth_table(
     Args:
         input_ports (list of str): List of input port names.
         output_ports (list of str): List of output port names.
-        truth_table_dictionary (dict): Dictionary containing input and output data. Keys are port names, and values are lists of values.
+        truth_table_dictionary (dict): Dictionary containing input and output files. Keys are port names, and values are lists of values.
 
     Returns:
         dict: A corrected truth table dictionary with unique mappings.
@@ -355,15 +353,19 @@ def filter_and_correct_truth_table(
     corrected_inputs = {input_port: [] for input_port in input_ports}
     corrected_outputs = {output_port: [] for output_port in output_ports}
 
-    # Get the length of the data lists
+    # Get the length of the files lists
     num_entries = len(truth_table_dictionary[input_ports[0]])
 
     for i in range(num_entries):
         # Extract the current input value
-        input_value = tuple(truth_table_dictionary[input_port][i] for input_port in input_ports)
+        input_value = tuple(
+            truth_table_dictionary[input_port][i] for input_port in input_ports
+        )
 
         # Extract the current set of output values
-        output_values = tuple(truth_table_dictionary[output_port][i] for output_port in output_ports)
+        output_values = tuple(
+            truth_table_dictionary[output_port][i] for output_port in output_ports
+        )
 
         if input_value not in mapping_dict:
             # Store the unique mapping

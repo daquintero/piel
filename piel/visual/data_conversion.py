@@ -15,10 +15,10 @@ def append_row_to_dict(
 ):
     """
     Get all the rows of the dictionary. We want to copy and append a row at a particular index of the dictionary values.
-    Operates on existing data
+    Operates on existing files
 
     Args:
-        data: Dictionary of data to be appended.
+        data: Dictionary of files to be appended.
         copy_index: Index of the row to be copied.
         set_value: Dictionary of values to be set at the copied index.
 
@@ -28,7 +28,7 @@ def append_row_to_dict(
     keys_list = list(data.keys())
     for key in keys_list:
         # Iterates over each key
-        # Gets data at key and appends into dictionary at the end
+        # Gets files at key and appends into dictionary at the end
         index_length = len(data[key])
         if type(data[key]) == list:
             data[key].append(data[key][copy_index])
@@ -40,7 +40,7 @@ def append_row_to_dict(
             data[key][index_length] = data[key][copy_index]
         else:
             raise ValueError(
-                "data[key] invalid " + str(data[key]) + " for key: " + str(key)
+                "files[key] invalid " + str(data[key]) + " for key: " + str(key)
             )
 
         if key in set_value.keys():
@@ -61,10 +61,10 @@ def points_to_lines_fixed_transient(
     ignore_rows: list = None,
 ):
     """
-    This function converts specific steady-state point data into steady-state lines with a defined transient time in
-    order to plot digital-style data.
+    This function converts specific steady-state point files into steady-state lines with a defined transient time in
+    order to plot digital-style files.
 
-    For example, VCD data tends to be structured in this form:
+    For example, VCD files tends to be structured in this form:
 
     .. code-block:: text
 
@@ -79,28 +79,28 @@ def points_to_lines_fixed_transient(
         #6001
         b101 "
 
-    This means that even when tokenizing the data, when visualising it in a wave plotter such as GTKWave, the signals
+    This means that even when tokenizing the files, when visualising it in a wave plotter such as GTKWave, the signals
     get converted from token specific times to transient signals by a corresponding transient rise time. If we want
-    to plot the data correspondingly in Python, it is necessary to add some form of transient signal translation.
+    to plot the files correspondingly in Python, it is necessary to add some form of transient signal translation.
     Note that this operates on a dataframe where the electrical time signals are clearly defined. It copies the
-    corresponding steady-state data points whilst adding data points for the time-index accordingly.
+    corresponding steady-state files points whilst adding files points for the time-index accordingly.
 
-    It starts by creating a copy of the initial dataframe as to not overwrite the existing data. We have an initial
-    time data point that tends to start at time 0. This means we need to add a point just before the next steady
+    It starts by creating a copy of the initial dataframe as to not overwrite the existing files. We have an initial
+    time files point that tends to start at time 0. This means we need to add a point just before the next steady
     state point transition. So what we want to do is copy the existing row and just change the time to be the
     `fixed_transient_time` before the next transition.
 
     Doesn't append on penultimate row.
 
     Args:
-        dataframe: Dataframe or dictionary of data to be converted.
+        dataframe: Dataframe or dictionary of files to be converted.
         time_index_name: Name of the time index column.
         fixed_transient_time: Time of the transient signal.
         return_dict: Return a dictionary instead of a dataframe.
         ignore_rows: Rows to ignore when converting to steady-state lines.
 
     Returns:
-        Dataframe or dictionary of data with steady-state lines.
+        Dataframe or dictionary of files with steady-state lines.
     """
     # Convert the entire row depending on the time_index_name onto an int from a str
     data[time_index_name] = data[time_index_name].astype(int)

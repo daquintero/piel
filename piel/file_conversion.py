@@ -10,7 +10,7 @@ __all__ = [
 
 def read_csv_to_pandas(file_path: PathTypes):
     """
-    This function returns a Pandas dataframe that contains all the simulation data outputted from the simulation run.
+    This function returns a Pandas dataframe that contains all the simulation files outputted from the simulation run.
     """
     file_path = return_path(file_path)
     simulation_data = pd.read_csv(file_path)

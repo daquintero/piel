@@ -37,6 +37,6 @@ def test_bit_phase_map_dataframe_property():
 
 def test_bit_phase_map_invalid_input():
     bits = ["0101", "1100"]
-    phases = ["invalid", "data"]  # Phases should be numerical types
+    phases = ["invalid", "files"]  # Phases should be numerical types
     with pytest.raises(ValueError):
         BitPhaseMap(bits=bits, phase=phases)

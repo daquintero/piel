@@ -125,11 +125,11 @@ def test_convert_to_bits_invalid_type():
 # TODO
 # Test cases for convert_dataframe_to_bits
 # def test_convert_dataframe_to_bits():
-#     data = {
+#     files = {
 #         'A': [0, 1, 2],
 #         'B': [3, 4, 5]
 #     }
-#     df = pd.DataFrame(data)
+#     df = pd.DataFrame(files)
 #     ports_list = ['A', 'B']
 #     result_df = convert_dataframe_to_bits(df, ports_list)
 #

@@ -22,12 +22,12 @@ def plot_simple(
     **kwargs
 ) -> Tuple[plt.Figure, plt.Axes]:
     """
-    Plot a simple line graph. This function abstracts the basic data representation while
+    Plot a simple line graph. This function abstracts the basic files representation while
     keeping the flexibility of the matplotlib library.
 
     Args:
-        x_data (np.ndarray): X axis data.
-        y_data (np.ndarray): Y axis data.
+        x_data (np.ndarray): X axis files.
+        y_data (np.ndarray): Y axis files.
         label (Optional[str], optional): Label for the plot. Defaults to None.
         ylabel (Optional[str], optional): Y axis label. Defaults to None.
         xlabel (Optional[str], optional): X axis label. Defaults to None.
@@ -77,7 +77,7 @@ def plot_simple_multi_row(
     subplot_spacing: float = 0.15,
 ) -> plt.Figure:
     """
-    Plot multiple rows of data on separate subplots, sharing the same x-axis.
+    Plot multiple rows of files on separate subplots, sharing the same x-axis.
 
     Args:
         data (pd.DataFrame): Data to plot.

@@ -303,7 +303,7 @@ piel.run_cocotb_simulation(design_directory)
 
 # ## Data Visualisation
 
-# The user is free to write their own data visualisation structure and toolset. Conveniently, `piel` does provide a standard plotting tool for these type of `cocotb` signal outputs accordingly.
+# The user is free to write their own files visualisation structure and toolset. Conveniently, `piel` does provide a standard plotting tool for these type of `cocotb` signal outputs accordingly.
 #
 # We first list the files for our design directory, which is out `simple_design` local package if you have followed the correct installation instructions, and we can input our module import rather than an actual path unless you desire to customise.
 
@@ -316,7 +316,7 @@ cocotb_simulation_output_files
 # ['/home/daquintero/phd/piel/docs/examples/designs/simple_design/simple_design/tb/out/adder_randomised_test.csv']
 # ```
 
-# We can read the simulation output data accordingly:
+# We can read the simulation output files accordingly:
 
 example_simple_simulation_data = piel.read_simulation_data(
     cocotb_simulation_output_files[0]
@@ -338,7 +338,7 @@ example_simple_simulation_data
 # |  9 |            9 |  110 |  101 |  1011 | 20001 |
 # | 10 |           10 |    1 | 1000 |  1001 | 22001 |
 
-# Now we can plot the corresponding data using the built-in interactive `bokeh` signal analyser function:
+# Now we can plot the corresponding files using the built-in interactive `bokeh` signal analyser function:
 
 piel.simple_plot_simulation_data(example_simple_simulation_data)
 # TODO fix this properly.

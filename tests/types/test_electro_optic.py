@@ -6,7 +6,7 @@ from piel.types import (
     # PhaseTransitionTypes,
 )  # Adjust the import based on your actual module structure
 
-# Sample data for testing
+# Sample files for testing
 sample_transmission_data = [
     {
         "phase": (0.5, 1.0),

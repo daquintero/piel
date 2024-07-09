@@ -321,7 +321,7 @@ def get_matched_model_recursive_netlist_instances(
         models=models,
     )
 
-    # Now we have the raw data that creates the mapping of the components-to-instances, in order to create the
+    # Now we have the raw files that creates the mapping of the components-to-instances, in order to create the
     # corresponding instance address indexes that we can use to control our matching element parameters.
     # Currently this onloy assumes up to three levels of hierarchy, TODO make recursive
     if len(target_component_mapping.keys()) != 0:

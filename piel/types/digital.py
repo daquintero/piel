@@ -1,6 +1,6 @@
 """
-This module defines data models and types for working with digital circuits and logic signals.
-It leverages pydantic for model validation and pandas for data manipulation.
+This module defines files models and types for working with digital circuits and logic signals.
+It leverages pydantic for model validation and pandas for files manipulation.
 """
 
 import pandas as pd
@@ -99,7 +99,7 @@ class TruthTable(PielBaseModel):
         Returns a pandas DataFrame representation of the truth table, excluding the input and output ports.
 
         Returns:
-            pd.DataFrame: A DataFrame with the truth table data, excluding input and output port keys.
+            pd.DataFrame: A DataFrame with the truth table files, excluding input and output port keys.
         """
         data = {
             k: v

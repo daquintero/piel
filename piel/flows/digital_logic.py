@@ -95,7 +95,7 @@ def layout_truth_table(
     Layout a truth table through the OpenLane flow and create a GDSFactory component.
 
     Parameters:
-    - truth_table (TruthTable): The truth table object containing the input and output port data.
+    - truth_table (TruthTable): The truth table object containing the input and output port files.
     - module (str): The name or path of the module within the design hierarchy where the generated files
                     will be placed. This is used to determine the file structure and directory paths.
                     Example: "full_flow_demo"
@@ -122,15 +122,15 @@ def read_simulation_data_to_truth_table(
     **kwargs,
 ) -> TruthTable:
     """
-    The goal of this function is to read an existing simulation data output from cocotb and convert it into a valid Dataframe with proper type validation of bit signals into the corresponding byte formats.
+    The goal of this function is to read an existing simulation files output from cocotb and convert it into a valid Dataframe with proper type validation of bit signals into the corresponding byte formats.
 
     Args:
-    - file_path (PathTypes): The path to the simulation data file.
+    - file_path (PathTypes): The path to the simulation files file.
     - input_ports (LogicSignalsList): The list of input port names.
     - output_ports (LogicSignalsList): The list of output port names.
 
     Returns:
-    - truth_table (TruthTable): The truth table object containing the input and output port data.
+    - truth_table (TruthTable): The truth table object containing the input and output port files.
 
     Examples:
     >>> read_simulation_data_to_truth_table("simulation_data.csv", ["input_port"], ["output_port"])
@@ -138,13 +138,13 @@ def read_simulation_data_to_truth_table(
     """
     # Combine input and output ports into a single list for ports
     ports_list = input_ports + output_ports
-    # Read the simulation data from the file
+    # Read the simulation files from the file
     simulation_dataframe = read_simulation_data(file_path, *args, **kwargs)
     # Convert the integer columns to byte format
     simulation_dataframe = convert_dataframe_to_bits(
         dataframe=simulation_dataframe, ports_list=ports_list
     )
-    # Create a TruthTable object from the simulation data
+    # Create a TruthTable object from the simulation files
     truth_table = TruthTable(
         input_ports=input_ports,
         output_ports=output_ports,
@@ -160,7 +160,7 @@ def run_verification_simulation_for_design(
     simulator: HDLSimulator = "icarus",
 ):
     """
-    Configures and runs a Cocotb simulation for a given design module and retrieves the simulation data.
+    Configures and runs a Cocotb simulation for a given design module and retrieves the simulation files.
     TODO possibly in the future swap the methodology of running the simulation here.
 
     Parameters:
@@ -174,7 +174,7 @@ def run_verification_simulation_for_design(
     - simulator (HDLSimulator): The simulator to use for the Cocotb simulation. Default is "icarus".
 
     Returns:
-    - example_simulation_data: The simulation data read from the output files.
+    - example_simulation_data: The simulation files read from the output files.
     """
 
     # Determine the design directory and output directories
@@ -196,21 +196,16 @@ def run_verification_simulation_for_design(
     # Retrieve the simulation output files
     cocotb_simulation_output_files = get_simulation_output_files_from_design(module)
 
-    # Read the simulation data from the first output file
+    # Read the simulation files from the first output file
     simulation_data = read_simulation_data(cocotb_simulation_output_files[0])
 
     return simulation_data
 
 
 def get_latest_digital_run_component(
-    module: PathTypes,
-    *args,
-    **kwargs
+    module: PathTypes, *args, **kwargs
 ) -> CircuitComponent:
-
     component = create_gdsfactory_component_from_openlane(
-        design_directory=module,
-        *args,
-        **kwargs
+        design_directory=module, *args, **kwargs
     )
     return component

@@ -1,6 +1,6 @@
 """
-This module provides functions to read, plot, and analyze Cocotb simulation data. It supports reading simulation
-output files, converting them into Pandas dataframes, and plotting the data using Bokeh for interactive visualization.
+This module provides functions to read, plot, and analyze Cocotb simulation files. It supports reading simulation
+output files, converting them into Pandas dataframes, and plotting the files using Bokeh for interactive visualization.
 # TODO: Implement the logic for processing different signal types.
 """
 
@@ -42,13 +42,13 @@ def get_simulation_output_files_from_design(
 
 def read_simulation_data(file_path: PathTypes, *args, **kwargs) -> pd.DataFrame:
     """
-    Reads simulation data from a specified file into a Pandas dataframe.
+    Reads simulation files from a specified file into a Pandas dataframe.
 
     Args:
-        file_path (PathTypes): The path to the simulation data file.
+        file_path (PathTypes): The path to the simulation files file.
 
     Returns:
-        pd.DataFrame: The simulation data as a Pandas dataframe.
+        pd.DataFrame: The simulation files as a Pandas dataframe.
 
     Examples:
         >>> read_simulation_data("/path/to/simulation/output.csv")
@@ -63,17 +63,17 @@ def read_simulation_data(file_path: PathTypes, *args, **kwargs) -> pd.DataFrame:
 
 def simple_plot_simulation_data(simulation_data: pd.DataFrame):
     """
-    Plots simulation data using Bokeh for interactive visualization.
+    Plots simulation files using Bokeh for interactive visualization.
 
     Args:
-        simulation_data (pd.DataFrame): The simulation data to plot, containing columns 't' for time and 'x' for signal values.
+        simulation_data (pd.DataFrame): The simulation files to plot, containing columns 't' for time and 'x' for signal values.
 
     Returns:
         None: Displays an interactive plot.
 
     Examples:
-        >>> data = pd.DataFrame({"t": [0, 1, 2, 3], "x": [0, 1, 0, 1]})
-        >>> simple_plot_simulation_data(data)
+        >>> files = pd.DataFrame({"t": [0, 1, 2, 3], "x": [0, 1, 0, 1]})
+        >>> simple_plot_simulation_data(files)
         # Displays an interactive Bokeh plot.
     """
     from bokeh.models import ColumnDataSource

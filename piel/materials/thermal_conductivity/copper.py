@@ -24,7 +24,7 @@ def copper(
     specification = material_reference[1]
     copper_thermal_conductivity_file = (
         piel.return_path(__file__).parent
-        / "data"
+        / "files"
         / "ofhc_copper_thermal_conductivity.csv"
     )
     assert copper_thermal_conductivity_file.exists()
@@ -63,7 +63,7 @@ def copper(
 
 # if self.material_name == "copper":
 #     thermal_conductivity_material_dataset = pd.read_csv(
-#         file_path + "/../materials/data/raw/thermal_conductivity/ofhc_copper_thermal_conductivity.csv")
+#         file_path + "/../materials/files/raw/thermal_conductivity/ofhc_copper_thermal_conductivity.csv")
 #     a = nsy.C(s=thermal_conductivity_material_dataset[
 #         thermal_conductivity_material_dataset["coefficient"] == "a"][self.material_sub_name].values[0],
 #               n=thermal_conductivity_material_dataset[

@@ -49,7 +49,7 @@ def calculate_propagation_delay_from_timing_data(
     Args:
         net_name_in (str): Name of the input net
         net_name_out (str): Name of the output net
-        timing_data (pd.DataFrame): Dataframe containing the timing data
+        timing_data (pd.DataFrame): Dataframe containing the timing files
 
     Returns:
         propagation_delay_dataframe (pd.DataFrame): Dataframe containing the propagation delay
@@ -120,7 +120,7 @@ def configure_timing_data_rows(
     file_lines_data: pd.DataFrame,
 ):
     """
-    Identify the timing data lines for each frame and creates a metadata dictionary for frames.
+    Identify the timing files lines for each frame and creates a metadata dictionary for frames.
 
     Args:
         file_lines_data (pd.DataFrame): Dataframe containing the file lines
@@ -188,15 +188,15 @@ def filter_timing_data_by_net_name_and_type(
     timing_data: pd.DataFrame, net_name: str, net_type: str
 ):
     """
-    Filter the timing data by net name and type
+    Filter the timing files by net name and type
 
     Args:
-        timing_data (pd.DataFrame): DataFrame containing the timing data
+        timing_data (pd.DataFrame): DataFrame containing the timing files
         net_name (str): Net name to be filtered
         net_type (str): Net type to be filtered
 
     Returns:
-        timing_data (pd.DataFrame): DataFrame containing the timing data
+        timing_data (pd.DataFrame): DataFrame containing the timing files
     """
     return timing_data[
         (timing_data.net_name == net_name) & (timing_data.net_type == net_type)
@@ -245,7 +245,7 @@ def get_frame_lines_data(
     file_path: str | pathlib.Path,
 ):
     """
-    Calculate the timing data for each frame in the file
+    Calculate the timing files for each frame in the file
 
     Args:
         file_path (str | pathlib.Path): Path to the file
@@ -265,7 +265,7 @@ def get_frame_timing_data(
     file: str | pathlib.Path, frame_meta_data: dict, frame_id: int = 0
 ):
     """
-    Extract the timing data from the file
+    Extract the timing files from the file
 
     Args:
         file (str | pathlib.Path): Address of the file
@@ -273,7 +273,7 @@ def get_frame_timing_data(
         frame_id (int): Frame ID to be read
 
     Returns:
-        timing_data (pd.DataFrame): DataFrame containing the timing data
+        timing_data (pd.DataFrame): DataFrame containing the timing files
     """
     file = return_path(file)
     timing_data = read_sta_rpt_fwf_file(file, frame_meta_data, frame_id)
@@ -286,13 +286,13 @@ def get_all_timing_data_from_file(
     file_path: str | pathlib.Path,
 ):
     """
-    Calculate the timing data for each frame in the file
+    Calculate the timing files for each frame in the file
 
     Args:
         file_path (str | pathlib.Path): Path to the file
 
     Returns:
-        frame_timing_data (dict): Dictionary containing the timing data for each frame
+        frame_timing_data (dict): Dictionary containing the timing files for each frame
     """
     file_lines_data = get_frame_lines_data(file_path)
     maximum_frame_amount = calculate_max_frame_amount(file_lines_data)
@@ -319,7 +319,7 @@ def read_sta_rpt_fwf_file(
         frame_id (int): Frame ID to be read
 
     Returns:
-        file_data (pd.DataFrame): DataFrame containing the file data
+        file_data (pd.DataFrame): DataFrame containing the file files
     """
     file = return_path(file)
     file_data = pd.read_fwf(

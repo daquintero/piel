@@ -329,7 +329,7 @@ cocotb_simulation_data
 # +
 # # Current work in progress move this out of here.
 # simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
-#     data=mzi2x2_simple_simulation_data_lines,
+#     files=mzi2x2_simple_simulation_data_lines,
 #     x_axis_column_name="t",
 #     row_list=[
 #         "phase_0",
@@ -358,12 +358,12 @@ cocotb_simulation_data
 #     input_ports_order: tuple | None = None,
 # ) -> List[Any]:
 #     """
-#     Processes simulation data to generate a list of unitaries using a digital-to-phase model and a custom library.
+#     Processes simulation files to generate a list of unitaries using a digital-to-phase model and a custom library.
 
 #     Args:
-#         simulation_data (pd.DataFrame): DataFrame containing simulation data.
-#         phase_mapping_function (Callable): Function to map data series to phase array.
-#         data_series_key (str): Key to access the specific data series in the simulation data.
+#         simulation_data (pd.DataFrame): DataFrame containing simulation files.
+#         phase_mapping_function (Callable): Function to map files series to phase array.
+#         data_series_key (str): Key to access the specific files series in the simulation files.
 #         phase_map (Dict[str, Any]): Additional parameters for phase mapping if required by the function.
 #         netlist (Dict[str, Any]): Netlist describing the circuit.
 #         custom_model_function (Callable): Function to create a custom model library.
@@ -395,7 +395,7 @@ cocotb_simulation_data
 # # def compute_simulation_unitaries():
 # # Inputs
 # # digital-to-phase model
-# # simulation data file
+# # simulation files file
 # # sax-circuit-model library
 # # output returns list of unitaries accordingly
 
@@ -434,7 +434,7 @@ cocotb_simulation_data
 # +
 # Inputs
 # digital-to-phase model
-# simulation data file
+# simulation files file
 # sax-circuit-model library
 # output returns list of unitaries accordingly
 
@@ -497,13 +497,13 @@ cocotb_simulation_data
 # mzi2x2_simple_simulation_data
 
 # mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
-#     data=mzi2x2_simple_simulation_data,
+#     files=mzi2x2_simple_simulation_data,
 #     time_index_name="t",
 #     fixed_transient_time=1,
 # )
 
 # simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
-#     data=mzi2x2_simple_simulation_data_lines,
+#     files=mzi2x2_simple_simulation_data_lines,
 #     x_axis_column_name="t",
 #     row_list=[
 #         "phase",

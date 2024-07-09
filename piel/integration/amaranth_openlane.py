@@ -89,7 +89,7 @@ def layout_amaranth_truth_table_through_openlane(
 
     Args:
         amaranth_module (am.Module): The Amaranth module representing the truth table logic.
-        truth_table (TruthTable): The truth table data structure containing the logic for the module.
+        truth_table (TruthTable): The truth table files structure containing the logic for the module.
         parent_directory (PathTypes): The directory where the project will be created or found.
         target_directory_name (Optional[str]): The name for the target directory. Defaults to the name of the Amaranth module's class.
         openlane_version (Literal["v1", "v2"]): The version of OpenLane to use. Defaults to "v2".

@@ -58,7 +58,7 @@ class OpticalStateTransitions(PielBaseModel):
         transmission_data (list[FockStatePhaseTransitionType]): A list of Fock state phase transition mappings.
 
     Properties:
-        transition_dataframe (pd.DataFrame): A DataFrame representation of the transmission data.
+        transition_dataframe (pd.DataFrame): A DataFrame representation of the transmission files.
         target_output_dataframe (pd.DataFrame): A DataFrame filtered to include only the transitions where target_mode_output is 1.
     """
 
@@ -87,20 +87,20 @@ class OpticalStateTransitions(PielBaseModel):
     @property
     def dataframe(self) -> pd.DataFrame:
         """
-        Returns a full pandas DataFrame representation of the transmission data.
+        Returns a full pandas DataFrame representation of the transmission files.
 
         Returns:
-            pd.DataFrame: A DataFrame containing the transmission data for the optical states.
+            pd.DataFrame: A DataFrame containing the transmission files for the optical states.
         """
         return pd.DataFrame(self.transmission_data)
 
     @property
     def keys_list(self) -> list[str]:
         """
-        Returns a list of keys from the first entry in the transmission data, excluding specified keys.
+        Returns a list of keys from the first entry in the transmission files, excluding specified keys.
 
         Returns:
-            List[str]: A list of keys from the first transmission data entry, excluding the keys specified in `_ignore_keys`.
+            List[str]: A list of keys from the first transmission files entry, excluding the keys specified in `_ignore_keys`.
 
         Notes:
             The keys specified in `_ignore_keys` will be excluded from the list of ports.
@@ -108,7 +108,7 @@ class OpticalStateTransitions(PielBaseModel):
         if not self.transmission_data:
             return []
 
-        # Get keys from the first entry in the transmission data and exclude specified keys
+        # Get keys from the first entry in the transmission files and exclude specified keys
         return [
             key
             for key in self.transmission_data[0].keys()
@@ -118,13 +118,13 @@ class OpticalStateTransitions(PielBaseModel):
     @property
     def transition_dataframe(self) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame representation of the transmission data, excluding specific keys.
+        Returns a pandas DataFrame representation of the transmission files, excluding specific keys.
 
         Returns:
-            pd.DataFrame: A DataFrame containing the transmission data for the optical states, with specified keys excluded.
+            pd.DataFrame: A DataFrame containing the transmission files for the optical states, with specified keys excluded.
 
         Notes:
-            The keys 'unitary' and 'raw_output' will be excluded from the transmission data.
+            The keys 'unitary' and 'raw_output' will be excluded from the transmission files.
         """
 
         # Filter out the specified keys from each dictionary in the list
@@ -133,7 +133,7 @@ class OpticalStateTransitions(PielBaseModel):
             for entry in self.transmission_data
         ]
 
-        # Create a DataFrame from the filtered data
+        # Create a DataFrame from the filtered files
         return pd.DataFrame(filtered_data)
 
     @property
