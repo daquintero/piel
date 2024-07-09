@@ -14,19 +14,19 @@
 #
 # ## Constructing our Components Models
 #
-# First, we will understand how to create, or extract realistic electronic models for components that we might use in practice in our system. Let's get some reference data to use:
+# First, we will understand how to create, or extract realistic electronic models for components that we might use in practice in our system. Let's get some reference files to use:
 #
 # **Relevant Data References for this notebook:**
 # 1. Siew, Shawn Yohanes, et al. "Review of silicon photonics technology and platform development." Journal of Lightwave Technology 39.13 (2021): 4374-4389.
 #
-# Note that the raw data extracted from the papers can be accessed in the `docs/examples/reference_data` directory for each corresponding paper - as the data is publicly available online.
+# Note that the raw files extracted from the papers can be accessed in the `docs/examples/reference_data` directory for each corresponding paper - as the files is publicly available online.
 
 import piel
 import pandas as pd
 
 # #### Understanding Silicon Photodetector Performance
 
-# Let's start by quantifying the performance of a silicon photodetector in RF terms. Let's extract the published data we will analyze:
+# Let's start by quantifying the performance of a silicon photodetector in RF terms. Let's extract the published files we will analyze:
 
 foundry_file = piel.return_path(
     "./reference_data/review_silicon_photonics_technology/table_1.json"

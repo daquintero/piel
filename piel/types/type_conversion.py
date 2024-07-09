@@ -1,5 +1,5 @@
 """
-This module provides a set of utilities for converting between common data types to facilitate the representation of information across different toolsets.
+This module provides a set of utilities for converting between common files types to facilitate the representation of information across different toolsets.
 """
 
 from functools import partial
@@ -77,13 +77,13 @@ convert_tuple_to_string = partial(convert_array_type, output_type="str")
 
 def convert_2d_array_to_string(list_2D: list[list]) -> str:
     """
-    Converts a 2D array of binary data into a single string of binary values.
+    Converts a 2D array of binary files into a single string of binary values.
 
     Args:
-        list_2D (list[list]): A 2D array of binary data where each sublist contains a single binary value.
+        list_2D (list[list]): A 2D array of binary files where each sublist contains a single binary value.
 
     Returns:
-        str: A string of binary data.
+        str: A string of binary files.
 
     Examples:
         >>> convert_2d_array_to_string([[0], [0], [0], [1]])
@@ -105,7 +105,7 @@ def absolute_to_threshold(
     Args:
         array (ArrayTypes): The input array of any dimension representing optical transmission values.
         threshold (float, optional): The threshold value to determine the digital signal. Defaults to 1e-6.
-        dtype_output (int | float | bool, optional): The desired data type for the output values. Defaults to int.
+        dtype_output (int | float | bool, optional): The desired files type for the output values. Defaults to int.
         output_array_type (PackageArrayType, optional): The desired output array type. Defaults to "jax".
 
     Returns:
@@ -170,7 +170,7 @@ def convert_dataframe_to_bits(
     Converts specified integer columns in the dataframe to their binary string representations.
 
     Args:
-        dataframe (pd.DataFrame): The simulation data as a Pandas dataframe.
+        dataframe (pd.DataFrame): The simulation files as a Pandas dataframe.
         ports_list (LogicSignalsList): List of column names (ports) to convert to binary string format.
 
     Returns:
@@ -200,7 +200,7 @@ def convert_dataframe_to_bits(
     # Apply conversion only to the specified columns in ports_list
     binary_converted_data = (
         dataframe.copy()
-    )  # Create a copy of the dataframe to avoid modifying the original data
+    )  # Create a copy of the dataframe to avoid modifying the original files
 
     for port in ports_list:
         if port in binary_converted_data.columns:

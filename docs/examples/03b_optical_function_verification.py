@@ -162,7 +162,7 @@ output_state_0
 # {'phase': (0,), 'input_fock_state': (1, 0), 'output_fock_state': (0, 1)}
 # ```
 
-# You can also compose these type of data in a format that `piel` standardizes in order to implement the functional verification with a nicer helper function:
+# You can also compose these type of files in a format that `piel` standardizes in order to implement the functional verification with a nicer helper function:
 
 raw_output_state_1 = jnp.dot(zero_phase_circuit[0], valid_input_fock_states[1])
 output_state_1 = piel.flows.electro_optic.format_electro_optic_fock_transition(

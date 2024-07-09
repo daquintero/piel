@@ -125,7 +125,7 @@ example_simple_truth_table.dataframe
 # |  9 |            9 | 0110 | 0101 | 01011 | 20001 |
 # | 10 |           10 | 0001 | 1000 | 01001 | 22001 |
 
-# We can get the phase that is mapped to this electronic data accordingly. We can append this into our initial time-domain dataframe:
+# We can get the phase that is mapped to this electronic files accordingly. We can append this into our initial time-domain dataframe:
 
 truth_table = piel.flows.digital_electro_optic.add_truth_table_bit_to_phase_data(
     truth_table=example_simple_truth_table,
@@ -219,7 +219,7 @@ for phase_i in truth_table.dataframe.phase_0:
     )
     mzi2x2_active_unitary_array.append(mzi2x2_active_unitary_i)
 
-# We can copy this to a new dataframe and append the data in accordingly:
+# We can copy this to a new dataframe and append the files in accordingly:
 
 mzi2x2_simple_simulation_data = truth_table.dataframe.copy()
 mzi2x2_simple_simulation_data["unitary"] = mzi2x2_active_unitary_array
@@ -293,7 +293,7 @@ mzi2x2_simple_simulation_data
 
 # Note that we are trying to plot our signals amplitude, phase in time so it is a three dimensional visualisation.
 #
-# First, let's transform our complex data into amplitude and phase
+# First, let's transform our complex files into amplitude and phase
 
 
 mzi2x2_simple_simulation_data["output_amplitude_array_0_abs"] = np.abs(
@@ -317,7 +317,7 @@ mzi2x2_simple_simulation_data["output_amplitude_array_1_phase_deg"] = np.angle(
 mzi2x2_simple_simulation_data
 
 
-# We will now convert the data into a plottable form, as when VCD or timing data files are parsed, they assume only a steady point and the plotter includes the lines. However, because we need to account for this type of co-simulation formats, we need to transform the data into a plotting form.
+# We will now convert the files into a plottable form, as when VCD or timing files files are parsed, they assume only a steady point and the plotter includes the lines. However, because we need to account for this type of co-simulation formats, we need to transform the files into a plotting form.
 
 mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
     data=mzi2x2_simple_simulation_data, time_index_name="t", fixed_transient_time=1
@@ -325,7 +325,7 @@ mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transien
 
 # #### Basic Plots
 #
-# Here we are plotting how the electrical phase applied by the testbench 5-bit digital data, maps onto the optical phase applied on the heated waveguide, and we can use `sax` to measure the optical amplitude and phase at both ports of the MZI2x2.
+# Here we are plotting how the electrical phase applied by the testbench 5-bit digital files, maps onto the optical phase applied on the heated waveguide, and we can use `sax` to measure the optical amplitude and phase at both ports of the MZI2x2.
 #
 # Note, that for now, we will assume that our applied optical phase is applied onto an ideal phase shifter, where the bandwidth is infinite, and where the applied operation translates to the optical input perfectly. We will make a more realistic time-dependent model of our circuit later.
 #

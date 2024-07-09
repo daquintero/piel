@@ -45,6 +45,3 @@ Using a Time-Tagger for Propagation Delay Measurements
 -------------------------------------------------------
 
 Using the devices as detailed above, we can understand the electrical characteristics of the `Swabian Time Taggers <https://www.swabianinstruments.com/static/documentation/TimeTagger/sections/hardware.html#electrical-characteristics>`_.
-
-
-

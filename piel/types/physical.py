@@ -18,7 +18,7 @@ TemperatureRangeArrayType = ArrayTypes
 """
 TemperatureRangeArrayType:
     An array type (either numpy or jax array) representing a range of temperatures.
-    This is used for more detailed or discrete temperature data points.
+    This is used for more detailed or discrete temperature files points.
 """
 
 # Type alias for representing temperature ranges, either as a tuple of limits or as an array of values.

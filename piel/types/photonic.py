@@ -1,5 +1,5 @@
 """
-This module defines type aliases for components and data structures used in photonic circuit design and simulation.
+This module defines type aliases for components and files structures used in photonic circuit design and simulation.
 It includes type definitions for ports, S-parameter matrices, and photonic circuit components.
 """
 

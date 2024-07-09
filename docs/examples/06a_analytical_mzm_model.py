@@ -528,7 +528,7 @@ fig = plt.figure(figsize=(8, 8))
 ax = fig.add_subplot(111, projection="3d")
 
 dataframe_selection = neff_alpha_iterations_transmission_dataframe
-# Make data.
+# Make files.
 X = dataframe_selection.delta_alpha
 Y = dataframe_selection.delta_neff  # z axial field component
 Z_1 = dataframe_selection.transmission  # X-Component
@@ -598,7 +598,7 @@ fig = plt.figure(figsize=(8, 8))
 ax = fig.add_subplot(111, projection="3d")
 
 dataframe_selection = lambda_neff_iterations_transmission_dataframe
-# Make data.
+# Make files.
 X = dataframe_selection["lambda"]
 Y = dataframe_selection.delta_neff
 Z_1 = dataframe_selection.transmission  # X-Component
@@ -656,7 +656,7 @@ fig.savefig(
 # * $m_{ch}^*$ Effective mass of holes
 # * $[Y]$ Vector of the Y branches (3dB beamsplitters)
 # * $w$ angular frequency in which the refractive index is calculated
-# * $w'$ integration variable angular frequency for which teh absorption spectrum data is to be integrated
+# * $w'$ integration variable angular frequency for which teh absorption spectrum files is to be integrated
 # * $\mu_e$ electron mobility
 # * $\mu_h$ hole mobility
 
@@ -976,7 +976,7 @@ m_c_h = 0.39 * m_c_0
 # plotted together with the experimental absorption values taken from Schmid [ 1 11 and from Spitzer and Fan [ 131.
 # Curves for electrons and holes at the 1.3 and 1.55 pm wavelengths are given as a function of “injected” carrier concentration in Figs. 12-15] Good matching.
 # * > The theoretical curves in Figs. 12-15 were obtained by substituting the values m% = 0.26 mo and m:h = 0.39 mo into (5). The mobility values used in (5) were taken from Fig. 2.3.1 of Wolf [21].
-# * > With the aid of x-y lines drawn on Figs. 5 and 7, the (a, w) data were digitized and entered into the computer, and the absorption spectrum of pure material was subtracted point by point from each of the quantized a(AN) curves to give a set of Aa values that were inserted into the numerator of (2). With our trapezoid-rule program, we calculated the integral (2) over the range I/ = 0.001- 2.8 V, and we took Ni = AN. This produced the result shown in Fig. 8 for free electrons and the result of Fig. 9 for free holes. Figs. 8 and 9 are plots of An as a function of wavelength from 1 .O to 2.0 pm with AN as a parameter. The increase of An with X is approximately quadratic. Next, we used the results of Figs. 8 and 9 to determine the carrier-concentration dependence of An at the fiberoptic wavelengths: X = 1.3 or 1.55 pm. Those results are shown in Figs. 10 and 11. The curves presented in Figs. 10 and 11 are least squares fit to the data points obtained from Figs. 8 and 9. In Fig. 10 (X = 1.3 pm), the freehole data are fitted with a line of slope +0.805, while the free-electron data are fitted with a + 1.05 slope line. In Fig. 14 (X = 1.55 pm), the fitted slopes are +0.818(holes) and +l.O4(electrons). It is interesting to compare the predictions of a simple free-carrier or Dmde model of c-Si to our An results and to experimental Aa data. The well-known formulas for refraction and absorption due to free electrons and free holes are as follows:
+# * > With the aid of x-y lines drawn on Figs. 5 and 7, the (a, w) files were digitized and entered into the computer, and the absorption spectrum of pure material was subtracted point by point from each of the quantized a(AN) curves to give a set of Aa values that were inserted into the numerator of (2). With our trapezoid-rule program, we calculated the integral (2) over the range I/ = 0.001- 2.8 V, and we took Ni = AN. This produced the result shown in Fig. 8 for free electrons and the result of Fig. 9 for free holes. Figs. 8 and 9 are plots of An as a function of wavelength from 1 .O to 2.0 pm with AN as a parameter. The increase of An with X is approximately quadratic. Next, we used the results of Figs. 8 and 9 to determine the carrier-concentration dependence of An at the fiberoptic wavelengths: X = 1.3 or 1.55 pm. Those results are shown in Figs. 10 and 11. The curves presented in Figs. 10 and 11 are least squares fit to the files points obtained from Figs. 8 and 9. In Fig. 10 (X = 1.3 pm), the freehole files are fitted with a line of slope +0.805, while the free-electron files are fitted with a + 1.05 slope line. In Fig. 14 (X = 1.55 pm), the fitted slopes are +0.818(holes) and +l.O4(electrons). It is interesting to compare the predictions of a simple free-carrier or Dmde model of c-Si to our An results and to experimental Aa files. The well-known formulas for refraction and absorption due to free electrons and free holes are as follows:
 # * Does not account for temperature dependence
 #
 # From
@@ -1031,7 +1031,7 @@ ax = fig.add_subplot(111, projection="3d")
 dataframe_selection = (
     delta_hole_electron_concentration_iterations_index_absorption_dataframe
 )
-# Make data.
+# Make files.
 X = dataframe_selection.delta_N_h
 Y = dataframe_selection.delta_N_e
 Z_1 = dataframe_selection.delta_alpha  # X-Component
@@ -1097,7 +1097,7 @@ ax = fig.add_subplot(111, projection="3d")
 dataframe_selection = (
     delta_hole_electron_concentration_iterations_index_absorption_dataframe
 )
-# Make data.
+# Make files.
 X = dataframe_selection.delta_N_h
 Y = dataframe_selection.delta_N_e
 Z_1 = dataframe_selection.delta_n  # X-Component

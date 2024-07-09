@@ -46,12 +46,12 @@ def get_file_line_by_keyword(
     regex: str,
 ):
     """
-    Extract the data from the file lines using the given keyword and regex
+    Extract the files from the file lines using the given keyword and regex
 
     Args:
         file_lines_data (pd.DataFrame): Dataframe containing the file lines
         keyword (str): Keyword to search for
-        regex (str): Regex to extract the data
+        regex (str): Regex to extract the files
 
     Returns:
         extracted_values (pd.DataFrame): Dataframe containing the extracted values

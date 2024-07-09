@@ -4,6 +4,7 @@
 # Let us first begin by exploring the default `spm` design. Note that this design has to be included in the `OPENLANE_ROOT/<latestversion>/designs` directory for this to be valid, or the `root_directory` parameter has to be setup depending on your environment.
 
 import piel
+
 # Configure our example design name:
 design_name = "spm"
 
@@ -181,7 +182,7 @@ run_output_sta_file_list
 #  'C:\\Users\\dario\\Documents\\phd\\piel\\docs\\examples\\designs\\inverter\\runs\\RUN_2023.06.22_15.40.17\\reports\\synthesis\\2-syn_sta.min.rpt']
 # ```
 
-# Say we want to explore the output of one particular timing file. We can extract all the timing data accordingly:
+# Say we want to explore the output of one particular timing file. We can extract all the timing files accordingly:
 
 file_lines_data = piel.get_frame_lines_data(file_path=run_output_sta_file_list[0])
 timing_data = piel.get_all_timing_data_from_file(file_path=run_output_sta_file_list[0])[
@@ -206,16 +207,16 @@ timing_data
 # | 12 | nan      | nan      | 0.08     | 0.18     | 2.36     | v           | output2/X (sky130_fd_sc_hd__clkbuf_4) | sky130_fd_sc_hd__clkbuf_4 | output2/X             |
 # | 13 | 1        | 0.03     | nan      | nan      | nan      | nan         | out (net)                             | net                       | out                   |
 # | 14 | nan      | nan      | 0.08     | 0.00     | 2.36     | v           | out (out)                             | out                       | out                   |
-# | 15 | nan      | nan      | nan      | nan      | 2.36     | nan         | data arrival time                     | nan                       | nan                   |
+# | 15 | nan      | nan      | nan      | nan      | 2.36     | nan         | files arrival time                     | nan                       | nan                   |
 # | 16 | nan      | nan      | 0.00     | 10.00    | 10.00    | nan         | clock __VIRTUAL_CLK__ (rise edge)     | rise edge                 | clock __VIRTUAL_CLK__ |
 # | 17 | nan      | nan      | nan      | 0.00     | 10.00    | nan         | clock network delay (ideal)           | ideal                     | clock network delay   |
 # | 18 | nan      | nan      | nan      | -0.25    | 9.75     | nan         | clock uncertainty                     | nan                       | nan                   |
 # | 19 | nan      | nan      | nan      | 0.00     | 9.75     | nan         | clock reconvergence pessimism         | nan                       | nan                   |
 # | 20 | nan      | nan      | nan      | -2.00    | 7.75     | nan         | output external delay                 | nan                       | nan                   |
-# | 21 | nan      | nan      | nan      | nan      | 7.75     | nan         | data required time                    | nan                       | nan                   |
+# | 21 | nan      | nan      | nan      | nan      | 7.75     | nan         | files required time                    | nan                       | nan                   |
 # | 22 | ------   | -------- | -------- | -------- | -------- | --          | ------------------------------------- | nan                       | nan                   |
-# | 23 | nan      | nan      | nan      | nan      | 7.75     | nan         | data required time                    | nan                       | nan                   |
-# | 24 | nan      | nan      | nan      | nan      | -2.36    | nan         | data arrival time                     | nan                       | nan                   |
+# | 23 | nan      | nan      | nan      | nan      | 7.75     | nan         | files required time                    | nan                       | nan                   |
+# | 24 | nan      | nan      | nan      | nan      | -2.36    | nan         | files arrival time                     | nan                       | nan                   |
 #
 
 # We can extract the propagation delay from the input and output frame accordingly.
@@ -273,5 +274,3 @@ piel.copy_source_folder(
 base_configuration = piel.read_configuration_openlane_v1(
     design_name=amaranth_driven_flow.__name__
 )
-
-

@@ -1,5 +1,6 @@
 import jax.numpy as jnp
 import numpy as np
+import pandas as pd
 import os
 import pathlib
 import pydantic

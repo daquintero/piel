@@ -163,6 +163,7 @@ def copy_example_design(
         )
     elif project_source == "openlane":
         import openlane
+
         example_design_folder = (
             pathlib.Path(openlane.__file__).parent.resolve() / example_name
         )
@@ -517,7 +518,7 @@ def read_json(path: PathTypes) -> dict:
         path(PathTypes): Input path.
 
     Returns:
-        json_data(dict): JSON data.
+        json_data(dict): JSON files.
     """
     path = return_path(path)
     with open(path, "r") as json_file:
@@ -645,7 +646,7 @@ def return_path(
 
     This allows us to maintain compatibility between POSIX and Windows systems. When the `as_piel_module` flag is
     enabled, it will analyse whether the input path can be treated as a piel module, and treat the returned path as a
-    module would be treated. This comes useful when analysing data generated in this particular structure accordingly.
+    module would be treated. This comes useful when analysing files generated in this particular structure accordingly.
 
     Usage:
 

@@ -83,7 +83,7 @@ our_resistive_mzi_2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 #   'with_undercut': False}}
 # ```
 
-# Now we have a resistance parameter directly connected to the geometry of our phase shifter topology, which is an incredibly powerful tool. In your models, you can compute or extract resisivity and performance data parameters of your components in order to create SPICE models from them. This is related to the way that you perform your component design. `piel` can then enable you to understand how this component affects the total system performance.
+# Now we have a resistance parameter directly connected to the geometry of our phase shifter topology, which is an incredibly powerful tool. In your models, you can compute or extract resisivity and performance files parameters of your components in order to create SPICE models from them. This is related to the way that you perform your component design. `piel` can then enable you to understand how this component affects the total system performance.
 #
 # We can make another variation of our phase shifter to explore physical differences.
 
@@ -103,7 +103,7 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 # Info(resistance=0)
 # ```
 
-# So this is very cool, we have our device model giving us electrical data when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
+# So this is very cool, we have our device model giving us electrical files when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
 
 from gdsfactory.export import to_svg
 to_svg(our_short_resistive_mzi_2x2_2x2_phase_shifter)
@@ -331,7 +331,7 @@ piel.flows.extract_component_spice_from_netlist(
 
 # ## `SPICE` Integration
 
-# We have seen in the previous example how to integrate digital-driven data with photonic circuit steady-state simulations. However, this is making a big assumption: whenever digital codes are applied to photonic components, the photonic component responds immediately. We need to account for the electrical load physics in order to perform more accurate simulation models of our systems.
+# We have seen in the previous example how to integrate digital-driven files with photonic circuit steady-state simulations. However, this is making a big assumption: whenever digital codes are applied to photonic components, the photonic component responds immediately. We need to account for the electrical load physics in order to perform more accurate simulation models of our systems.
 #
 # `piel` provides a set of basic models for common photonic loads that integrates closely with `gdsfactory`. This will enable the multi-domain co-design we like when integrated with all the open-source tools we have previously exemplified. You can find the list and definition of the provided models in:
 #
@@ -366,7 +366,7 @@ h.netlist(example_straight_resistor, sys.stdout, fmt="spice")
 
 # ### Creating our Stimulus
 
-# Let's first look into how to map a numpy data into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing.
+# Let's first look into how to map a numpy files into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing.
 
 
 @h.module
@@ -401,10 +401,10 @@ results = piel.run_simulation(sistraight_heater_metal_simple()mulation=simple_op
 results
 
 # ```python
-# SimResult(an=[OpResult(analysis_name='operating_point_tb', data={'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': -0.001})])
+# SimResult(an=[OpResult(analysis_name='operating_point_tb', files={'v(xtop.vdc_p)': 1.0, 'i(v.xtop.vvdc)': -0.001})])
 # ```
 
-# We can access the data as a dictionary too:
+# We can access the files as a dictionary too:
 
 results.an[0].data
 
@@ -456,7 +456,7 @@ simple_transient_simulation
 
 piel.run_simulation(simple_transient_simulation, to_csv=True)
 
-# When you run the simulation using the `piel` `run_simulation` command, there is a `to_csv` flag that allows us to save the data and access it afterwards. We access the transient simulation in Pandas accordingly:
+# When you run the simulation using the `piel` `run_simulation` command, there is a `to_csv` flag that allows us to save the files and access it afterwards. We access the transient simulation in Pandas accordingly:
 
 transient_simulation_results = pd.read_csv("TransientTb.csv")
 transient_simulation_results.iloc[20:40]
@@ -485,7 +485,7 @@ transient_simulation_results.iloc[20:40]
 # | 39 |        39 | 0.00295 |           -0.61  |          0.00061  |
 #
 
-# We can plot our simulation data accordingly:
+# We can plot our simulation files accordingly:
 
 simple_transient_plot = piel.visual.plot_simple_multi_row(data=transient_simulation_results, x_axis_column_name="time",
                                                           row_list=[

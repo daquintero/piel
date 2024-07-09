@@ -59,7 +59,7 @@ async def truth_table_test(dut):
     signals = list(truth_table_dict.keys())
     num_tests = len(truth_table_dict[signals[0]])
 
-    # Initialize lists to store signal data for logging
+    # Initialize lists to store signal files for logging
     for signal in signals:
         script_content += f"    {signal.lower()}_data = []\n"
 
@@ -80,7 +80,7 @@ async def truth_table_test(dut):
             script_content += f'    assert dut.{output_signal}.value == cocotb.binary.BinaryValue("{expected_value}"), '
             script_content += f'f"Test failed for inputs {input_ports}: expected {expected_value} but got {{dut.{output_signal}.value}}."\n'
 
-        # Append data to lists for logging
+        # Append files to lists for logging
         for signal in signals:
             script_content += f"    {signal.lower()}_data.append(dut.{signal}.value)\n"
 

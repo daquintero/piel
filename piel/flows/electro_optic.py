@@ -154,7 +154,7 @@ def calculate_classical_transition_probability_amplitudes(
     s-parameter transformation.
 
     Note that if no target_mode_index is provided, then the determine_ideal_mode_function will analyse
-    the provided data and return the target mode and append the relevant probability data to the data dictionary. It will
+    the provided files and return the target mode and append the relevant probability files to the files dictionary. It will
     raise an error if no method is implemented.
 
     Args:
@@ -164,7 +164,7 @@ def calculate_classical_transition_probability_amplitudes(
         determine_ideal_mode_function (Callable): The function that determines the ideal mode.
 
     Returns:
-        dict: The dictionary of the circuit transition probability data.
+        dict: The dictionary of the circuit transition probability files.
     """
     circuit_transition_probability_data = {}
 
@@ -190,7 +190,7 @@ def calculate_classical_transition_probability_amplitudes(
                     classical_transition_mode_probability[target_mode_index]
                 )
         elif determine_ideal_mode_function is not None:
-            # Determine the ideal mode function and append the relevant probability data to the data dictionary
+            # Determine the ideal mode function and append the relevant probability files to the files dictionary
             target_mode_index = determine_ideal_mode_function(mode_transformation)
             classical_transition_target_mode_probability = (
                 classical_transition_mode_probability[target_mode_index]

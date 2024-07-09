@@ -157,7 +157,7 @@ our_heated_waveguide_straight.plot_widget()
 
 # ### Getting Started with FDTD in this flow
 
-# Our heater is implemented on a standard SOI waveguide that has a silicon core with a silica cladding, and the material data is the same as from the `gt.materials.get_index("SiO2")` in `gplugins Tidy3D` functionality. However, this time we will use the cross sectional view specific to our heater implementation including the metal on the top as we want a complete simulation that considers the electrical performance. `
+# Our heater is implemented on a standard SOI waveguide that has a silicon core with a silica cladding, and the material files is the same as from the `gt.materials.get_index("SiO2")` in `gplugins Tidy3D` functionality. However, this time we will use the cross sectional view specific to our heater implementation including the metal on the top as we want a complete simulation that considers the electrical performance. `
 
 # Let's assume our heater is not made from `TiN` as in the default PDK, but we want to create it from one of the materials in the `Tidy3D` material library:
 

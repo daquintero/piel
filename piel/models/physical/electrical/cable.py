@@ -122,7 +122,7 @@ def calculate_coaxial_cable_heat_transfer(
             temperature_range_K=temperature_range_K,
             material=getattr(material_class, material_i),
         )
-        # CURRENT TODO compute the thermal conductivity fit accordingly. Implement a material reference to thermal conductivtiy data mapping.
+        # CURRENT TODO compute the thermal conductivity fit accordingly. Implement a material reference to thermal conductivtiy files mapping.
 
         heat_transfer_i = heat_transfer_1d_W(
             thermal_conductivity_fit=thermal_conductivity_fit_i,
@@ -229,7 +229,7 @@ def calculate_dc_cable_heat_transfer(
             temperature_range_K=temperature_range_K,
             material=getattr(material_class, material_i),
         )
-        # CURRENT TODO compute the thermal conductivity fit accordingly. Implement a material reference to thermal conductivtiy data mapping.
+        # CURRENT TODO compute the thermal conductivity fit accordingly. Implement a material reference to thermal conductivtiy files mapping.
 
         heat_transfer_i = heat_transfer_1d_W(
             thermal_conductivity_fit=thermal_conductivity_fit_i,
