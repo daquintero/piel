@@ -10,6 +10,9 @@ from .core import (
     TupleNumericalType,
     PackageArrayType,
 )
+
+from .connectivity.ports import Port, Connection, Component  # TODO move this
+
 from .digital import (
     AbstractBitsType,
     BitsType,
@@ -23,6 +26,8 @@ from .digital import (
     TruthTableLogicType,
 )
 from .digital_electro_optic import BitPhaseMap
+
+from .environment import Environment
 
 from .electrical import (
     CoaxialCableGeometryType,
@@ -55,15 +60,33 @@ from .photonic import (
     RecursiveNetlist,
     SParameterMatrixTuple,
 )
-from .signal import (
-    DataTimeSignal,
-    MultiDataTimeSignal,
-    SignalMeasurementCollection,
-    SignalMeasurement,
-    PropagationDelayData,
-    PropagationDelaySweepData,
+
+from .signal.core import ElectricalSignalDomains
+
+from .signal.dc_data import SignalDC, DCSweepData
+
+from .signal.frequency import (
+    SParameterNetwork,
+    TwoPortCalibrationNetworkCollection,
 )
 
+from .signal.time_data import (
+    SignalPropagationSweepData,
+    SignalPropagationData,
+    SignalMetricsMeasurementCollection,
+    SignalMetricsData,
+    MultiDataTimeSignal,
+    DataTimeSignalData,
+)
+
+
+from .signal.time_sources import (
+    ExponentialSource,
+    PulseSource,
+    PiecewiseLinearSource,
+    SineSource,
+    SignalTimeSources,
+)
 
 # Always last
 from .type_conversion import (

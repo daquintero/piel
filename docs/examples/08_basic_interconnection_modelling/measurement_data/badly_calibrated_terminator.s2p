@@ -1,7 +1,7 @@
 !Agilent Technologies,E8364A,US41440322,A.04.87.01
 !Agilent E8364A: A.04.87.01
 !Date: Tuesday, July 09, 2024 14:24:22
-!Correction: S11(Open Response,1) S21(Off) S12(Off) S22(Off) 
+!Correction: S11(Open Response,1) S21(Off) S12(Off) S22(Off)
 !S2P File: Measurements: S11, S21, S12, S22:
 # Hz S  dB   R 50
 45000000 -3.817853e+001 -1.783212e+002 -2.000000e+002 4.500000e+001 -2.000000e+002 4.500000e+001 -2.000000e+002 4.500000e+001

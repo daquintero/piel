@@ -24,10 +24,14 @@ def copper(
     specification = material_reference[1]
     copper_thermal_conductivity_file = (
         piel.return_path(__file__).parent
-        / "files"
+        / "data"
         / "ofhc_copper_thermal_conductivity.csv"
     )
-    assert copper_thermal_conductivity_file.exists()
+    if copper_thermal_conductivity_file.exists():
+        pass
+    else:
+        print("Dataset is not found: ")
+        print(copper_thermal_conductivity_file)
     thermal_conductivity_material_dataset = pd.read_csv(
         copper_thermal_conductivity_file
     )
