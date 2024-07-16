@@ -1,10 +1,6 @@
 import matplotlib as mpl
 import pathlib
 
-__all__ = [
-    "activate_piel_styles",
-]
-
 
 def activate_piel_styles():
     """
