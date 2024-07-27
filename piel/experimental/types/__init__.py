@@ -1,17 +1,18 @@
-from .frequency import VNA, VNAConfiguration, VNAMeasurementFileCollection
+from .frequency import VNA, VNAConfiguration, VNAMeasurement
 
-from .device import Device, DeviceConfiguration, DeviceMeasurementFileMetadata
+from .device import (
+    Device,
+    DeviceConfiguration,
+    DeviceMeasurement,
+    MeasurementDevice,
+)
 
 from .experiment import ExperimentInstance, Experiment
 
 from .time import (
     Oscilloscope,
     OscilloscopeConfiguration,
+    OscilloscopeMeasurement,
     WaveformGeneratorConfiguration,
     WaveformGenerator,
-)
-
-from .propagation import (
-    PropagationDelayFileCollection,
-    PropagationDelaySweepFileCollection,
 )

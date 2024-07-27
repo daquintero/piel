@@ -56,7 +56,6 @@ ipytree = {version = "*", optional = true}
 ipywidgets = {version = ">=7.6.0,<9", optional = true}
 jax = "^0.4.14"
 jaxlib = "^0.4.14"
-jsonschema2md = {version = "^1.1.0"}
 jupyter = {version = "*", optional = true}
 jupyter-bokeh = {version = "*", optional = true}
 jupyter-core = {version = "*", optional = true}

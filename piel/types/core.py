@@ -17,6 +17,14 @@ TupleNumericalType = tuple[NumericalTypes, ...]
 PackageArrayType = Literal["qutip", "jax", "numpy", "list", "tuple"] | TupleIntType
 ModuleType = types.ModuleType
 
+# Type alias for representing minimum and maximum values as an optional tuple of floats.
+MinimumMaximumType = tuple[Optional[float], Optional[float]]
+"""
+MinimumMaximumType:
+    A tuple representing a range with minimum and maximum values.
+    Each value in the tuple can be a float or None.
+"""
+
 
 class PielBaseModel(pydantic.BaseModel):
     """

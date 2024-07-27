@@ -5,7 +5,26 @@ a direct mapping between an operating setup configuration, or experiment.
 """
 from ..types import PathTypes
 from .types import Experiment
-from ..file_system import create_new_directory, return_path, write_model_to_json
+from ..file_system import (
+    create_new_directory,
+    return_path,
+    write_model_to_json,
+    write_file,
+    read_json,
+)
+
+
+def write_schema_markdown(schema_json_file: PathTypes, target_markdown_file: PathTypes):
+    """
+    This function writes the schema markdown file for the experiment configuration. This schema markdown file should
+    contain all the required information to understand the experiment configuration. This should include all the
+    experiment instances and their corresponding configurations.
+
+    """
+    schema_json_file = return_path(schema_json_file)
+    schema_json_file = read_json(schema_json_file)
+    assert schema_json_file is not None
+    write_file(target_markdown_file.parent, "TODO", target_markdown_file.name)
 
 
 def construct_experiment_directories(
@@ -31,6 +50,10 @@ def construct_experiment_directories(
     The data files are manually generated from the corresponding measurements specified in the instance.json file.
     These will be added after wards from this directory structure creation.
 
+    This schema is used to generate a README file for the experiment configuration. This README file should contain
+    all the information about the experiment configuration. This includes the experiment instances and their
+    corresponding configurations.
+
     Parameters
     ----------
     experiment : Experiment
@@ -48,11 +71,19 @@ def construct_experiment_directories(
     parent_directory = return_path(parent_directory)
     # Create the experiment directory
     experiment_directory = parent_directory / experiment.name
-    create_new_directory(experiment_directory)
+    directory_exists = create_new_directory(experiment_directory)
+
+    if directory_exists:
+        input(
+            "The directory already exists. Press enter to continue and overwrite all the json and configuration "
+            "files."
+        )
 
     # Create the experiment.json file
     experiment_json_path = experiment_directory / "experiment.json"
+    experiment_markdown_path = experiment_directory / "README.md"
     write_model_to_json(experiment, experiment_json_path)
+    write_schema_markdown(experiment_json_path, experiment_markdown_path)
 
     # Create the experiment instances
     for index, experiment_instance in enumerate(experiment.experiment_instances):
@@ -62,7 +93,9 @@ def construct_experiment_directories(
 
         # Create the instance.json file
         instance_json_path = experiment_instance_directory / "instance.json"
+        instance_markdown_path = experiment_instance_directory / "README.md"
         write_model_to_json(experiment_instance, instance_json_path)
+        write_schema_markdown(instance_json_path, instance_markdown_path)
 
     print(f"Experiment directory created at {experiment_directory}")
     return experiment_directory

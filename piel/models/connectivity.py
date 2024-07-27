@@ -71,3 +71,17 @@ def create_all_connections(
                 connections.append(connection_factory([port1, port2]))
 
     return connections
+
+
+def create_connection_list_from_ports_lists(
+    port_connection_list: list[list[Port]],
+) -> list[ConnectionTypes]:
+    """
+    When a list of a list of ports is provided, we construct all the required connections accordingly. TODO more docs.
+    """
+    connection_list = list()
+    for raw_connection_i in port_connection_list:
+        connection_list_i = create_all_connections(raw_connection_i)
+        connection_list.extend(connection_list_i)
+
+    return connection_list

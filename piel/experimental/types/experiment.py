@@ -42,6 +42,11 @@ class ExperimentInstance(Instance):
 
 
 class Experiment(Instance):
+    name: str
+    """
+    Every experiment is required to have a name.
+    """
+
     goal: Optional[str] = None
     """
     The goal of the complete experiment.

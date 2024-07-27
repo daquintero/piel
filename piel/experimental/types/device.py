@@ -6,14 +6,12 @@ from typing import Optional
 from ...types import PielBaseModel, PhysicalComponent
 
 
-class DeviceMeasurementFileMetadata(PielBaseModel):
+class DeviceMeasurement(PielBaseModel):
     """
     Standard definition for a file metadata that is part of a measurement.
     """
 
-    device_name: str
-    measurement_name: str
-    date: Optional[any] = None
+    measurement_name: Optional[str] = None
 
 
 class DeviceConfiguration(PielBaseModel):
@@ -26,3 +24,10 @@ class Device(PhysicalComponent):
     """
 
     configuration: Optional[DeviceConfiguration] = None
+
+
+class MeasurementDevice(Device):
+    measurement: Optional[DeviceMeasurement] = None
+    """
+    Contains the measurement information.
+    """

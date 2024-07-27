@@ -1,5 +1,6 @@
-from ...types import SignalTimeSources
-from .device import DeviceConfiguration, Device
+from typing import Optional
+from ...types import SignalTimeSources, MinimumMaximumType, PathTypes
+from .device import DeviceConfiguration, Device, MeasurementDevice, DeviceMeasurement
 
 
 class WaveformGeneratorConfiguration(DeviceConfiguration):
@@ -31,13 +32,24 @@ class OscilloscopeConfiguration(DeviceConfiguration):
     not the experimental setup connectivity.
     """
 
+    bandwidth_Hz: MinimumMaximumType
 
-class Oscilloscope(Device):
+
+class Oscilloscope(MeasurementDevice):
     """
     Represents an oscilloscope
     """
 
-    configuration: OscilloscopeConfiguration
+    configuration: Optional[OscilloscopeConfiguration] = None
     """
     Just overwrites this section of the device definition.
     """
+
+
+class OscilloscopeMeasurement(DeviceMeasurement):
+    """
+    Standard definition for a collection of files that are part of an oscilloscope measurement.
+    """
+
+    channel_data_time_files: Optional[list[PathTypes]] = None
+    channel_data_measurement_file: Optional[PathTypes] = None

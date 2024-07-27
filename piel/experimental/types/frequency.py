@@ -1,7 +1,7 @@
 from typing import Optional
 from ...types import PathTypes, PhysicalPort
 from .device import (
-    DeviceMeasurementFileMetadata,
+    DeviceMeasurement,
     DeviceConfiguration,
     Device,
 )
@@ -37,10 +37,9 @@ class VNA(Device):
     """
 
 
-class VNAMeasurementFileCollection(DeviceMeasurementFileMetadata):
+class VNAMeasurement(DeviceMeasurement):
     """
     Standard definition for a collection of files that are part of a VNA measurement.
     """
 
     spectrum_file: PathTypes
-    configuration: VNAConfiguration

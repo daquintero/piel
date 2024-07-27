@@ -3,6 +3,7 @@ from .core import (
     PathTypes,
     PielBaseModel,
     NumericalTypes,
+    MinimumMaximumType,
     ArrayTypes,
     QuantityType,
     TupleIntType,
@@ -43,6 +44,10 @@ from .electrical.cables import (
 
 from .electrical.pcb import PCB
 
+from .electrical.rf_passives import (
+    PowerSplitter,
+)
+
 from .electro_optic import (
     FockStatePhaseTransitionType,
     OpticalStateTransitions,
@@ -77,8 +82,6 @@ from .signal.frequency import (
 )
 
 from .signal.time_data import (
-    SignalPropagationSweepData,
-    SignalPropagationData,
     SignalMetricsMeasurementCollection,
     SignalMetricsData,
     MultiDataTimeSignal,

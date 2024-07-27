@@ -1,13 +1,11 @@
 import pandas as pd
-from ..types import PropagationDelaySweepFileCollection
+from ..types import OscilloscopeMeasurement
 from ...types import (
     DataTimeSignalData,
     MultiDataTimeSignal,
     PathTypes,
     SignalMetricsData,
     SignalMetricsMeasurementCollection,
-    SignalPropagationData,
-    SignalPropagationSweepData,
 )
 
 
@@ -139,46 +137,6 @@ def extract_to_signal_measurement(
             count=row["count"],
         )
     return signal_measurement_collection
-
-
-def extract_file_collection_data(
-    propagation_delay_sweep_file_collection: PropagationDelaySweepFileCollection,
-) -> SignalPropagationSweepData:
-    """
-    This function is used to extract the relevant measurement files amd relate them to the sweep parameter. Because
-    this function extracts multi-index files then we use xarray to analyze this files more clearly. It aims to extract all
-    the files in the sweep file collection.
-    """
-    sweep_parameter_name = propagation_delay_sweep_file_collection.sweep_parameter_name
-    sweep_list = list()
-    for file_collection_i in propagation_delay_sweep_file_collection.files:
-        sweep_parameter_value_i = getattr(file_collection_i, sweep_parameter_name)
-        data_i = {sweep_parameter_name: sweep_parameter_value_i}
-
-        if hasattr(file_collection_i, "measurement_file"):
-            data_i["measurements"] = extract_to_signal_measurement(
-                file_collection_i.measurement_file
-            )
-
-        if hasattr(file_collection_i, "reference_waveform"):
-            data_i["reference_waveform"] = extract_to_data_time_signal(
-                file_collection_i.reference_waveform
-            )
-
-        if hasattr(file_collection_i, "device_waveform"):
-            data_i["device_waveform"] = extract_to_data_time_signal(
-                file_collection_i.device_waveform
-            )
-
-        sweep_list.append(
-            SignalPropagationData(
-                **data_i,
-            )
-        )
-
-    return SignalPropagationSweepData(
-        sweep_parameter_name=sweep_parameter_name, data=sweep_list
-    )
 
 
 def combine_channel_data(
