@@ -1,9 +1,8 @@
-from typing import Optional
 from ...types import SignalTimeSources
 from .device import DeviceConfiguration, Device
 
 
-class WaveformGeneratorMeasurementConfiguration(DeviceConfiguration):
+class WaveformGeneratorConfiguration(DeviceConfiguration):
     """
     This class corresponds to the configuration of data which is just inherent to the WaveformGenerator connectivity and configuration,
     not the experimental setup connectivity.
@@ -20,13 +19,13 @@ class WaveformGenerator(Device):
     Represents a vector-network analyser.
     """
 
-    configuration: WaveformGeneratorMeasurementConfiguration
+    configuration: WaveformGeneratorConfiguration
     """
     Just overwrites this section of the device definition.
     """
 
 
-class OscilloscopeMeasurementConfiguration(DeviceConfiguration):
+class OscilloscopeConfiguration(DeviceConfiguration):
     """
     This class corresponds to the configuration of data which is just inherent to the Oscilloscope connectivity and configuration,
     not the experimental setup connectivity.
@@ -38,7 +37,7 @@ class Oscilloscope(Device):
     Represents an oscilloscope
     """
 
-    configuration: OscilloscopeMeasurementConfiguration
+    configuration: OscilloscopeConfiguration
     """
     Just overwrites this section of the device definition.
     """

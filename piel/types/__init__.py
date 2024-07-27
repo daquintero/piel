@@ -9,9 +9,12 @@ from .core import (
     TupleFloatType,
     TupleNumericalType,
     PackageArrayType,
+    ModuleType,
 )
 
-from .connectivity.ports import Port, Connection, Component  # TODO move this
+from .connectivity.abstract import Connection, Component, Port, Instance
+from .connectivity.generic import ConnectionTypes, PortTypes, ComponentTypes
+from .connectivity.physical import PhysicalComponent, PhysicalConnection, PhysicalPort
 
 from .digital import (
     AbstractBitsType,
@@ -29,7 +32,7 @@ from .digital_electro_optic import BitPhaseMap
 
 from .environment import Environment
 
-from .electrical import (
+from .electrical.cables import (
     CoaxialCableGeometryType,
     CoaxialCableHeatTransferType,
     CoaxialCableMaterialSpecificationType,
@@ -37,6 +40,9 @@ from .electrical import (
     DCCableHeatTransferType,
     DCCableMaterialSpecificationType,
 )
+
+from .electrical.pcb import PCB
+
 from .electro_optic import (
     FockStatePhaseTransitionType,
     OpticalStateTransitions,

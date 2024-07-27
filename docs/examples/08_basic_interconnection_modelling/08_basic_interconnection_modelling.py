@@ -18,7 +18,7 @@ from piel.models.physical.electrical.cable import (
     calculate_coaxial_cable_heat_transfer,
     calculate_dc_cable_geometry,
 )
-from piel.types.electrical import (
+from piel.types.electrical.cables import (
     CoaxialCableMaterialSpecificationType,
 )
 
@@ -512,7 +512,6 @@ calvna_20db_attenuator_network.plot_s_db()
 # ![rf_plots_1411MSM](../../_static/img/examples/08_basic_interconnection_modelling/rf_plots_1411MSM.png)
 
 # +
-import pandas as pd
 import matplotlib.pyplot as plt
 
 # 141-1MSM+ cable datasheet model

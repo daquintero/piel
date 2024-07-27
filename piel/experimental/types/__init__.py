@@ -1,15 +1,13 @@
-from .connectivity import PhysicalComponent, PhysicalConnection, PhysicalPort
-
-from .frequency import VNA, VNAMeasurementConfiguration, VNAMeasurementFileCollection
+from .frequency import VNA, VNAConfiguration, VNAMeasurementFileCollection
 
 from .device import Device, DeviceConfiguration, DeviceMeasurementFileMetadata
 
-from .experiment import Experiment, ExperimentalInstance
+from .experiment import ExperimentInstance, Experiment
 
 from .time import (
     Oscilloscope,
-    OscilloscopeMeasurementConfiguration,
-    WaveformGeneratorMeasurementConfiguration,
+    OscilloscopeConfiguration,
+    WaveformGeneratorConfiguration,
     WaveformGenerator,
 )
 

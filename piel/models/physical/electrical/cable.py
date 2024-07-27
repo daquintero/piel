@@ -4,7 +4,7 @@ from ..geometry import calculate_cross_sectional_area_m2, awg_to_cross_sectional
 from ..thermal import heat_transfer_1d_W
 from piel.types.materials import MaterialReferenceType
 from piel.materials.thermal_conductivity.utils import get_thermal_conductivity_fit
-from piel.types.electrical import (
+from piel.types.electrical.cables import (
     CoaxialCableGeometryType,
     CoaxialCableHeatTransferType,
     CoaxialCableMaterialSpecificationType,

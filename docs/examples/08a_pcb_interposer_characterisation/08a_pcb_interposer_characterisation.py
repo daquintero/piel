@@ -2,6 +2,7 @@
 
 import piel
 import piel.experimental as pe
+from datetime import datetime
 
 # In this example, we will compare experimental measurements and simulated measurements to understand the performance of a cryogenic-designed EIC-interposer printed-circuit board.
 #
@@ -18,17 +19,140 @@ import piel.experimental as pe
 # <figcaption align = "center"> YOUR CAPTION </figcaption>
 # </figure>
 
-# ## Creating an `Experiment`
+# ## Creating an `ExperimentInstance`
 #
 # Whenever using an experimental setup, it can be difficult to remember all the configurations that need to be tested with multiple parameters, a set of wiring, and time setups and more. This is especially pressing if the experiment cannot be automated and requires manual input. As such, there is some functionality built into the `piel.experimental` module to help track, manage and compare data with simulated data accordingly.
 #
 # Let's go through some examples as we talk about the type of characterization we want to perform.
 #
-# The way this functionality works, is that we create an `Experiment`. This class, like any other pydantic class, can be serialised into a specific individual data serializable configuration which corresponds to `ExperimentInstances`. These are specific data collection points within a larger `Experiment`. This functionality can also be used to create a data set that describes each of these data collection points, and corresponding directories where the data can be stored and managed properly. Let's run through this circumstance.
-#
+# The way this functionality works, is that we create an `ExperimentInstance`. This class, like any other pydantic class, can be serialised into a specific individual data serializable configuration which corresponds to `ExperimentInstances`. These are specific data collection points within a larger `ExperimentInstance`. This functionality can also be used to create a data set that describes each of these data collection points, and corresponding directories where the data can be stored and managed properly. Let's run through this circumstance.
 
 
+# First, let's create environmental metadata.
 
+room_temperature_environment = piel.types.Environment(temperature_K=273)
+
+
+# Now we can create our custom `PCB` definition.
+
+
+# +
+def pcb_smp_connector(name):
+    """
+    This is our PCB SMP Port definition factory.
+    """
+    return piel.types.PhysicalPort(name=name, connector="smp_plug", domain="RF")
+
+
+cryo_rf_eic_interposer_v1 = piel.models.physical.electrical.create_pcb(
+    port_name_list=[
+        "SIG14",
+        "RES1",
+        "SIG1",
+        "SIG2",
+        "RES2",
+        "SIG3",
+        "OPEN",
+        "SHORT",
+        "SIG5",
+        "RES3",
+        "SIG6",
+        "SIG7",
+        "RES4",
+        "SIG8",
+        "L50",
+    ],
+    port_factory=pcb_smp_connector,
+    name="cryo_rf_eic_interposer_v1",
+    environment=room_temperature_environment,
+)
+
+cryo_rf_eic_interposer_v1
+# -
+
+# ```python
+# PCB(name='cryo_rf_eic_interposer_v1', ports=[PhysicalPort(name='SIG14', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='OPEN', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SHORT', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG5', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES4', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG8', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='L50', domain='RF', connector='smp_plug', manifold=None)], connections=[], environment=Environment(temperature_K=273.0, region=None))
+# ```
+
+# A `Component` might contain subcomponents and there are parameters like `Environment`. In any case, we have all the flexibility of `python` of composing all the `ExperimentInstances` we want. As long as we create an `Experiment` with multiple `ExperimentInstances`, then it is pretty straightforward to just export that to a JSON model file. Using `pydantic`, we can also reinstantiate the model back into `python` which is quite powerful for this type of experiment management.
+
+# For example, we might do multiple measurements with different relevant for example.
+
+
+# Now, let's define an experiment accordingly:
+
+
+def create_vna_measurements(
+    vna_configuration: list[pe.types.VNAConfiguration] = None, **kwargs
+):
+    """
+    This is a function that parametrizes multiple VNA measurement configurations and creates a set of VNA measurements
+     accordingly.
+    """
+    if vna_configuration is None:
+        vna_configuration = [None]
+
+    experiment_instances = list()
+    i = 0
+    for vna_configuration_i in vna_configuration:
+        # Simple two port measurement
+        vna = pe.types.VNA(
+            environment=room_temperature_environment,
+            name="DPO73304",
+            configuration=vna_configuration_i,
+        )
+
+        # List of connections
+        experiment_connections = []
+
+        # Let's assume that we want to measure an open return loss between SIG14 and RES1
+        experiment_connections.extend(
+            piel.models.create_all_connections(
+                [vna.ports[0], cryo_rf_eic_interposer_v1.ports[0]],
+            )
+        )
+
+        experiment_connections.extend(
+            piel.models.create_all_connections(
+                [vna.ports[1], cryo_rf_eic_interposer_v1.ports[1]]
+            )
+        )
+
+        # Define experiment with connections
+        experiment = pe.types.ExperimentInstance(
+            components=[cryo_rf_eic_interposer_v1, vna],
+            connections=experiment_connections,
+            index=i,
+            date_configured=datetime.now(),
+        )
+
+        experiment_instances.append(experiment)
+        i += 1
+
+    return pe.types.Experiment(experiment_instances=experiment_instances, **kwargs)
+
+
+vna_pcb_experiment = create_vna_measurements(name="basic_vna_test")
+vna_pcb_experiment
+
+# Now, let's create an experiment directory in which to save the data accordingly:
+
+test_save_data_directory = piel.return_path("data")
+piel.create_new_directory(test_save_data_directory)
+
+# Now, the beautiful thing that this can do, especially if you are allergic to repettitive experimental tasks like me, is that we can use this to identify all our experimental instances which correspond to specific dials and operating points we need to configure manually.
+
+
+pe.construct_experiment_directories(
+    experiment=vna_pcb_experiment, parent_directory=test_save_data_directory
+)
+
+# ```
+# Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/basic_vna_test
+# PosixPath('/home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/basic_vna_test')
+# ```
+
+# Let's see how the structure of the project looks like:
 
 # ## Frequency-Domain Analysis
 #

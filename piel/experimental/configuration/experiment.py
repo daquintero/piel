@@ -1,7 +1,7 @@
-from ..types import Experiment
+from ..types import ExperimentInstance
 
 
-def generate_experiment_configuration(experiment: Experiment):
+def generate_experiment_configuration(experiment: ExperimentInstance):
     """
     For a given experiment or physical measurement configuration, we want to generate a given metadata configuration
     describing the measurements that need to be performed and enable us to analyse the data generated from the

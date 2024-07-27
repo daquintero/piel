@@ -2,10 +2,9 @@
 This file allows us to automate several aspects of creating a fully compatible project structure.
 """
 import subprocess
-import types
 from typing import Literal, Optional
 
-from .types import PathTypes
+from .types import PathTypes, ModuleType
 from .file_system import (
     return_path,
     read_json,
@@ -209,7 +208,7 @@ def create_empty_piel_project(project_name: str, parent_directory: PathTypes) ->
 
 
 def get_module_folder_type_location(
-    module: types.ModuleType,
+    module: ModuleType,
     folder_type: Literal["digital_source", "digital_testbench"],
 ):
     """
