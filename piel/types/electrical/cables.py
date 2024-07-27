@@ -1,6 +1,6 @@
 from typing import Optional, Union
-from .core import QuantityType
-from .materials import MaterialReferenceType
+from piel.types.core import QuantityType
+from piel.types.materials import MaterialReferenceType
 
 
 # TODO This shouldn't be a quantity

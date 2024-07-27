@@ -8,7 +8,7 @@ import stat
 import subprocess
 import types
 from typing import Optional
-from piel.types import PathTypes, ProjectType
+from piel.types import PathTypes, ProjectType, PielBaseModel
 
 __all__ = [
     "check_path_exists",
@@ -33,6 +33,7 @@ __all__ = [
     "return_path",
     "run_script",
     "write_file",
+    "write_model_to_json",
 ]
 
 
@@ -736,15 +737,15 @@ def write_file(
     file_name: str,
 ) -> bool:
     """
-    Records a `script_name` in the `scripts` project directory.
+    Writes a file to a directory.
 
     Args:
-        directory_path(PathTypes): Design directory.
-        file_text(str): Script to write.
-        file_name(str): Name of the script.
+        directory_path(PathTypes): Directory path.
+        file_text(str): File text.
+        file_name(str): File name.
 
     Returns:
-        None
+        bool: True if successful.
     """
     directory_path = return_path(directory_path)
     directory_exists = check_path_exists(directory_path)
@@ -767,3 +768,16 @@ def write_file(
     file.write(file_text)
     file.close()
     return True
+
+
+def write_model_to_json(
+    model: PielBaseModel,
+    file_path: PathTypes,
+):
+    """
+    Writes a pydantic model to a JSON file.
+    """
+    file_path = return_path(file_path)
+    with open(file_path, "w") as file:
+        json.dump(model.model_dump_json(), file, indent=4)
+    return file_path

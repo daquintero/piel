@@ -20,7 +20,6 @@ from piel.utils import *
 
 import piel.flows as flows  # NOQA: F401
 
-
 os.environ["PIEL_PACKAGE_DIRECTORY"] = str(
     pathlib.Path(__file__).parent.parent.resolve()
 )

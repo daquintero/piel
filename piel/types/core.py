@@ -15,6 +15,7 @@ TupleFloatType = tuple[float, ...]
 TupleIntType = tuple[int, ...]
 TupleNumericalType = tuple[NumericalTypes, ...]
 PackageArrayType = Literal["qutip", "jax", "numpy", "list", "tuple"] | TupleIntType
+ModuleType = types.ModuleType
 
 
 class PielBaseModel(pydantic.BaseModel):

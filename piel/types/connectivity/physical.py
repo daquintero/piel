@@ -1,6 +1,8 @@
 from typing import Optional
-from ...types import Port, Connection, Component, PielBaseModel, ElectricalSignalDomains
-from piel.types.environment import Environment
+from .abstract import Port, Connection, Component
+from ..core import PielBaseModel
+from ..environment import Environment
+from ..signal.core import ElectricalSignalDomains
 
 
 class PhysicalPort(Port):
@@ -15,13 +17,13 @@ class PhysicalPort(Port):
 
 class PhysicalConnection(PielBaseModel):
     """
-    Describes a set of physical ports which are are all connected. Represents a physical connection between interfaces.
+    Describes a set of physical ports which are all connected. Represents a physical connection between interfaces.
 
     The components represent the physical implementation of the connections for the same connection index.
     """
 
     connections: tuple[Connection]
-    components: tuple[Component]
+    components: Optional[tuple[Component]]
 
 
 class PhysicalComponent(Component):
@@ -30,5 +32,5 @@ class PhysicalComponent(Component):
     """
 
     ports: list[PhysicalPort]
-    connections: list[PhysicalConnection]
+    connections: Optional[list[PhysicalConnection]] = None
     environment: Optional[Environment] = None

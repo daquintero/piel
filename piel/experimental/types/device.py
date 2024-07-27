@@ -3,8 +3,7 @@ Note that this section of experimental types is separate from the main piel pack
 specific experimental files that is not yet part of the main package in a flow used as per the devices provided.
 """
 from typing import Optional
-from ...types import PielBaseModel
-from .connectivity import PhysicalComponent
+from ...types import PielBaseModel, PhysicalComponent
 
 
 class DeviceMeasurementFileMetadata(PielBaseModel):
@@ -26,5 +25,4 @@ class Device(PhysicalComponent):
     Corresponds to the abstraction of a given device measurement.
     """
 
-    name: str
-    configuration: DeviceConfiguration
+    configuration: Optional[DeviceConfiguration] = None
