@@ -4,7 +4,7 @@ It provides structured types using pydantic for validation and includes type ali
 """
 import gdsfactory as gf
 from typing import Optional
-from .core import PielBaseModel, NumericalTypes
+from .core import PielBaseModel, NumericalTypes, MinimumMaximumType
 
 # Type alias for a photonic circuit component in gdsfactory.
 ElectronicCircuitComponent = gf.Component
@@ -12,14 +12,6 @@ ElectronicCircuitComponent = gf.Component
 PhotonicCircuitComponent:
     A type representing a component in a photonic circuit, as defined in the gdsfactory framework.
     This type is used to handle and manipulate photonic components in circuit designs.
-"""
-
-# Type alias for representing minimum and maximum values as an optional tuple of floats.
-MinimumMaximumType = tuple[Optional[float], Optional[float]]
-"""
-MinimumMaximumType:
-    A tuple representing a range with minimum and maximum values.
-    Each value in the tuple can be a float or None.
 """
 
 

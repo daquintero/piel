@@ -44,7 +44,7 @@ def pcb_smp_connector(name):
     return piel.types.PhysicalPort(name=name, connector="smp_plug", domain="RF")
 
 
-cryo_rf_eic_interposer_v1 = piel.models.physical.electrical.create_pcb(
+rf_calibration_pcb = piel.models.physical.electrical.create_pcb(
     port_name_list=[
         "SIG14",
         "RES1",
@@ -63,11 +63,11 @@ cryo_rf_eic_interposer_v1 = piel.models.physical.electrical.create_pcb(
         "L50",
     ],
     port_factory=pcb_smp_connector,
-    name="cryo_rf_eic_interposer_v1",
+    name="rf_calibration_pcb",
     environment=room_temperature_environment,
 )
 
-cryo_rf_eic_interposer_v1
+rf_calibration_pcb
 # -
 
 # ```python
@@ -108,19 +108,19 @@ def create_vna_measurements(
         # Let's assume that we want to measure an open return loss between SIG14 and RES1
         experiment_connections.extend(
             piel.models.create_all_connections(
-                [vna.ports[0], cryo_rf_eic_interposer_v1.ports[0]],
+                [vna.ports[0], rf_calibration_pcb.ports[0]],
             )
         )
 
         experiment_connections.extend(
             piel.models.create_all_connections(
-                [vna.ports[1], cryo_rf_eic_interposer_v1.ports[1]]
+                [vna.ports[1], rf_calibration_pcb.ports[1]]
             )
         )
 
         # Define experiment with connections
         experiment = pe.types.ExperimentInstance(
-            components=[cryo_rf_eic_interposer_v1, vna],
+            components=[rf_calibration_pcb, vna],
             connections=experiment_connections,
             index=i,
             date_configured=datetime.now(),
@@ -135,16 +135,16 @@ def create_vna_measurements(
 vna_pcb_experiment = create_vna_measurements(name="basic_vna_test")
 vna_pcb_experiment
 
-# Now, let's create an experiment directory in which to save the data accordingly:
+# Now, let's create an experiment `data` directory in which to save the data accordingly:
 
-test_save_data_directory = piel.return_path("data")
-piel.create_new_directory(test_save_data_directory)
+experiment_data_directory = piel.return_path("data")
+piel.create_new_directory(experiment_data_directory)
 
 # Now, the beautiful thing that this can do, especially if you are allergic to repettitive experimental tasks like me, is that we can use this to identify all our experimental instances which correspond to specific dials and operating points we need to configure manually.
 
 
 pe.construct_experiment_directories(
-    experiment=vna_pcb_experiment, parent_directory=test_save_data_directory
+    experiment=vna_pcb_experiment, parent_directory=experiment_data_directory
 )
 
 # ```
@@ -153,6 +153,7 @@ pe.construct_experiment_directories(
 # ```
 
 # Let's see how the structure of the project looks like:
+
 
 # ## Frequency-Domain Analysis
 #
@@ -170,28 +171,123 @@ pe.construct_experiment_directories(
 #
 # ### Through S-Parameter Measurement
 
-# ## Exploring Software Calibration
-
-# Let's assume we have already applied a calibration onto our hardware. In order to implement the `short` and `open`
-
-
-import skrf as rf
-from skrf.calibration import OpenShort
-
-op = rf.Network("open_ckt.s2p")
-sh = rf.Network("short_ckt.s2p")
-dut = rf.Network("full_ckt.s2p")
-dm = OpenShort(dummy_open=op, dummy_short=sh, name="test_openshort")
-realdut = dm.deembed(dut)
-
 # ## Time-Domain Analysis
 #
 # Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain response is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
 #
+# Let's configure the propagation delay experimental measurement in order to save the files in a reasonable location. We need to define how a specific experiment instance, in this case a measurement looks like. This involves the device configuration and stimulus parameters.
+
+
+# First, we will do the exact test between two identical set of cables.
+
+def calibration_propagation_delay_experiment_instance(
+    square_wave_frequency_Hz: float,
+):
+    experiments = list()
+    oscilloscope = pe.create_two_port_oscilloscope()
+    waveform_generator = pe.create_one_port_square_wave_waveform_generator(
+        peak_to_peak_voltage_V=0.5,
+        rise_time_s=1,
+        fall_time_s=1,
+        frequency_Hz=square_wave_frequency_Hz,
+    )
+    splitter = pe.create_power_splitter_1to2()
+
+    # List of connections
+    experiment_connections = piel.models.create_connection_list_from_ports_lists(
+        [
+            [splitter.ports[1], oscilloscope.ports[0]],
+            [splitter.ports[2], oscilloscope.ports[1]],
+        ]
+    )
+
+    experiment_instance = pe.types.ExperimentInstance(
+        name=f"calibration_{square_wave_frequency_Hz}_Hz"
+        components=[oscilloscope, waveform_generator, splitter],
+        connections=[],
+    )
+    return experiment_instance
+
+
+# Now, we will add a path differnece between the racing signals, with one path going through the PCB shorted through traces.
+
+def pcb_propagation_delay_experiment_instance(
+    square_wave_frequency_Hz: float,
+):
+    experiments = list()
+    oscilloscope = pe.create_two_port_oscilloscope()
+    waveform_generator = pe.create_one_port_square_wave_waveform_generator(
+        peak_to_peak_voltage_V=0.5,
+        rise_time_s=1,
+        fall_time_s=1,
+        frequency_Hz=square_wave_frequency_Hz,
+    )
+    splitter = pe.create_power_splitter_1to2()
+
+    # List of connections
+    experiment_connections = piel.models.create_connection_list_from_ports_lists(
+        [
+            [splitter.ports[1], oscilloscope.ports[0]],
+            [splitter.ports[2], oscilloscope.ports[1]],
+        ]
+    )
+
+    experiment_instance = pe.types.ExperimentInstance(
+        name=f"pcb_{square_wave_frequency_Hz}_Hz"
+        components=[oscilloscope, waveform_generator, splitter],
+        connections=[],
+    )
+    return experiment_instance
+
+
+oscilloscope = pe.create_two_port_oscilloscope()
+oscilloscope
+
+# Now let's actually create our `Experiment`:
+
+
+def propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = None):
+    experiment_instance_list = list()
+    for square_wave_frequency_Hz_i in square_wave_frequency_Hz_list:
+        calibration_experiment_instance_i = calibration_propagation_delay_experiment_instance(
+            square_wave_frequency_Hz=square_wave_frequency_Hz_i
+        )
+        pcb_experiment_instance_i = pcb_propagation_delay_experiment_instance(
+            square_wave_frequency_Hz=square_wave_frequency_Hz_i
+        )
+        experiment_instance_list.append(calibration_experiment_instance_i)
+        experiment_instance_list.append(pcb_experiment_instance_i)
+
+    experiment = pe.types.Experiment(
+        name="multi_frequency_through_propagation_measurement",
+        experiment_instances=experiment_instance_list,
+        goal="Test the propagation reponse at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
+    )
+    return experiment
+
+
+basic_propagation_delay_experiment = propagation_delay_experiment(
+    square_wave_frequency_Hz_list=[1e9, 3e9, 5e9, 10e9]
+)
+
+# Now, let's create the experiment directory structure with the corresponding experiment instances
+
+pe.construct_experiment_directories(
+    experiment=basic_propagation_delay_experiment,
+    parent_directory=experiment_data_directory,
+)
+
+# We can see in each directory the generated directories and files accordingly. Now we can use this directory to save and consolidate all the metadata of our experiments accordingly.
+#
+# I've already done it for the experiment as described in this code, so let's explore the data using `piel` accordingly.
+
+
+
+
 # First, let's consolidate the relevant files in a way we can index and analyse.
 
 pcb_analysis_data = [
-    pe.types.PropagationDelayFileCollection(
+    pe.types.PropagationDelayMeasurement(
         device_name="eic_interposer_pcb",
         measurement_name="through_s1_s2",
         reference_waveform="measurement_data/through_pcb/through_ch1ref_ch2pcb_1GHz_Ch1.csv",
@@ -199,7 +295,7 @@ pcb_analysis_data = [
         measurement_file="measurement_data/through_pcb/mdata_through_ch1ref_ch2pcb_1GHz.csv",
         source_frequency_GHz=1,
     ),
-    pe.types.PropagationDelayFileCollection(
+    pe.types.PropagationDelayMeasurement(
         device_name="eic_interposer_pcb",
         measurement_name="through_s1_s2",
         reference_waveform="measurement_data/through_pcb/through_ch1ref_ch2pcb_3GHz_Ch1.csv",
@@ -207,7 +303,7 @@ pcb_analysis_data = [
         measurement_file="measurement_data/through_pcb/mdata_through_ch1ref_ch2pcb_3GHz.csv",
         source_frequency_GHz=3,
     ),
-    pe.types.PropagationDelayFileCollection(
+    pe.types.PropagationDelayMeasurement(
         device_name="eic_interposer_pcb",
         measurement_name="through_s1_s2",
         reference_waveform="measurement_data/through_pcb/through_ch1ref_ch2pcb_5GHz_Ch1.csv",
@@ -215,7 +311,7 @@ pcb_analysis_data = [
         measurement_file="measurement_data/through_pcb/mdata_through_ch1ref_ch2pcb_5GHz.csv",
         source_frequency_GHz=5,
     ),
-    pe.types.PropagationDelayFileCollection(
+    pe.types.PropagationDelayMeasurement(
         device_name="eic_interposer_pcb",
         measurement_name="through_s1_s2",
         reference_waveform="measurement_data/through_pcb/through_ch1ref_ch2pcb_10GHz_Ch1.csv",
