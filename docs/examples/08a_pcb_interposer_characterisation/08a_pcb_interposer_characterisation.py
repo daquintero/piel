@@ -168,14 +168,14 @@ pe.construct_experiment_directories(
 def calibration_propagation_delay_experiment_instance(
     square_wave_frequency_Hz: float,
 ):
-    oscilloscope = pe.create_two_port_oscilloscope()
-    waveform_generator = pe.create_one_port_square_wave_waveform_generator(
+    oscilloscope = pe.models.create_two_port_oscilloscope()
+    waveform_generator = pe.models.create_one_port_square_wave_waveform_generator(
         peak_to_peak_voltage_V=0.5,
         rise_time_s=1,
         fall_time_s=1,
         frequency_Hz=square_wave_frequency_Hz,
     )
-    splitter = pe.create_power_splitter_1to2()
+    splitter = pe.models.create_power_splitter_1to2()
 
     # List of connections
     experiment_connections = piel.models.create_connection_list_from_ports_lists(
@@ -199,14 +199,14 @@ def calibration_propagation_delay_experiment_instance(
 def pcb_propagation_delay_experiment_instance(
     square_wave_frequency_Hz: float,
 ):
-    oscilloscope = pe.create_two_port_oscilloscope()
-    waveform_generator = pe.create_one_port_square_wave_waveform_generator(
+    oscilloscope = pe.models.create_two_port_oscilloscope()
+    waveform_generator = pe.models.create_one_port_square_wave_waveform_generator(
         peak_to_peak_voltage_V=0.5,
         rise_time_s=1,
         fall_time_s=1,
         frequency_Hz=square_wave_frequency_Hz,
     )
-    splitter = pe.create_power_splitter_1to2()
+    splitter = pe.models.create_power_splitter_1to2()
 
     # List of connections
     experiment_connections = piel.models.create_connection_list_from_ports_lists(
@@ -224,7 +224,7 @@ def pcb_propagation_delay_experiment_instance(
     return experiment_instance
 
 
-oscilloscope = pe.create_two_port_oscilloscope()
+oscilloscope = pe.models.create_two_port_oscilloscope()
 oscilloscope
 
 # Now let's actually create our `Experiment`:

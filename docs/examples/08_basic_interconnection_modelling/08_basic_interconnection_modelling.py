@@ -13,6 +13,7 @@
 #
 # As such, understanding interconnection effects turns out to be pretty important in these type of systems.
 
+# +
 from piel.models.physical.electrical.cable import (
     calculate_coaxial_cable_geometry,
     calculate_coaxial_cable_heat_transfer,
@@ -21,6 +22,11 @@ from piel.models.physical.electrical.cable import (
 from piel.types.electrical.cables import (
     CoaxialCableMaterialSpecificationType,
 )
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# -
 
 # ## Basic Thermal Modelling
 
@@ -146,16 +152,18 @@ basic_coaxial_cable_heat_transfer_4_in_series
 #
 # A very common package to model radio-frequency systems in python is called [`scikit-rf`](https://scikit-rf.readthedocs.io/en/latest/index.html). Particularly, it has a lot of useful functionality to translate IO files directly from common measurement standards in a format that is useful for device characterization and modelling. We will explore some basic situations commonly used throughout modelling `rf-photonic` systems.
 #
-# As far as I can tell from basic usage, the only useful files are one-port `.s1p` and two-port`.s2p` Touchstone files for trace measurments, and `.cti` files for calibration/instrument settings storage. We will use `.s2p` files throughout primarily.
+# As far as I can tell from basic usage, the only useful files are one-port `.s1p` and two-port`.s2p` Touchstone files for trace measurements, and `.cti` files for calibration/instrument settings storage. We will use `.s2p` files throughout primarily.
 
 import skrf
 from skrf.io.touchstone import hfss_touchstone_2_network
+
+# We will also explore how to manage the way the data is being saved with experimental planning and design.
 
 # ### Understanding Hardware and Software Measurements & Calibration
 
 # A very common procedure when doing a measurement with a vector-network-analyser (VNA) is to perform calibration, also called de-embedding. This is to move the measurement plane from the VNA up to the device-under-test (DUT) and is necessary for accurate measurements of our devices.
 #
-# There are multiple ways to implement de-embedding or calibration in practice. Most VNAs will have some protocol encoded in their internal firmware/software to implement this. Other ways to do this are using software packages such as `scikit-rf`. Let's set up a measurement experiement to understand the accuracy of either implmenetation.
+# There are multiple ways to implement de-embedding or calibration in practice. Most VNAs will have some protocol encoded in their internal firmware/software to implement this. Other ways to do this are using software packages such as `scikit-rf`. Let's set up a measurement experiment to understand the accuracy of either implementation.
 #
 # Alongside the equipment calibration manual, some good references about this are:
 #
@@ -169,6 +177,11 @@ from skrf.io.touchstone import hfss_touchstone_2_network
 # Decide the two reference points at which you will connect to your device to test. This is a very common way to start doing de-embedding on a machine. In our setup, we will use the Agilent 82052D 3.5mm calibration kit. We can easily follow the instructions using our E8364A Agilent PNA. Let's assume this has been done correctly.
 #
 # So, we have performed the calibration of our measurement using that calibration kit. In our case, we will perform the first hardware calibration up to the black tongs as shown in the figure below.
+
+import piel.experimental as pe
+
+dir(pe.types)
+
 
 # ## Frequency-Domain Analysis
 #
@@ -196,7 +209,9 @@ from skrf.io.touchstone import hfss_touchstone_2_network
 # </figure>
 
 
-calibrated_open_data_file = "measurement_data/calibration_kit_vna_cal_at_vna_ports/open_port1.s2p"
+calibrated_open_data_file = (
+    "measurement_data/calibration_kit_vna_cal_at_vna_ports/open_port1.s2p"
+)
 calibrated_vna_port1_open_network = hfss_touchstone_2_network(calibrated_open_data_file)
 calibrated_vna_port1_open_network.plot_s_db()
 
@@ -206,7 +221,9 @@ calibrated_vna_port1_open_network.plot_s_db()
 
 # Now, let's connect a short calibration port into one of the VNA ports. You can note that obviously the insertion loss doesn't change as this is just a port to port measurement.
 
-calibrated_short_data_file = "measurement_data/calibration_kit_vna_cal_at_vna_ports/short_port1.s2p"
+calibrated_short_data_file = (
+    "measurement_data/calibration_kit_vna_cal_at_vna_ports/short_port1.s2p"
+)
 calibrated_vna_port1_short_network = hfss_touchstone_2_network(
     calibrated_short_data_file
 )
@@ -214,7 +231,9 @@ calibrated_vna_port1_short_network.plot_s_db()
 
 # #### A HW Calibrated Load Measurement
 
-calibrated_load_data_file = "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
+calibrated_load_data_file = (
+    "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
+)
 calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_data_file)
 calibrated_vna_port1_load_network.plot_s_db()
 
@@ -225,13 +244,15 @@ calibrated_vna_port1_load_network.plot_s_db()
 # <figcaption align = "center"> YOUR CAPTION </figcaption>
 # </figure>
 
-calibrated_through_data_file = "measurement_data/calibration_kit_vna_cal_at_vna_ports/through_port1_port2.s2p"
+calibrated_through_data_file = (
+    "measurement_data/calibration_kit_vna_cal_at_vna_ports/through_port1_port2.s2p"
+)
 calibrated_vna_through_network = hfss_touchstone_2_network(calibrated_through_data_file)
 calibrated_vna_through_network.plot_s_db()
 
 # #### Identifying bad/shifting calibration
 
-# We identfied we had another damaged calibration kit due to the way the refrence plots were generated.
+# We identified we had another damaged calibration kit due to the way the reference plots were generated.
 #
 # <figure>
 # <img src="../../_static/img/examples/08_basic_interconnection_modelling/experimental_bad_cal_terminator.jpg" alt="drawing" width="70%"/>
@@ -250,7 +271,7 @@ badly_calibrated_terminator_network.plot_s_db()
 
 # #### Why inverse-matrix-multipling measurement extraction does not work practically?
 #
-# There are cases in which we might want to de-embed a measurement from another measurement. This has to do with moving the refrence planes between two measurements. Say, with a given calibration, we perform a through measurement of two cables and another through measurements of three cables, two which were the first measurement. It would be nice if we could determine the performance of the third new cable in the two cable network without having to recalibrate to the two-original-cables reference plane. This is the type of sitaution this comes handy.
+# There are cases in which we might want to de-embed a measurement from another measurement. This has to do with moving the reference planes between two measurements. Say, with a given calibration, we perform a through measurement of two cables and another through measurements of three cables, two which were the first measurement. It would be nice if we could determine the performance of the third new cable in the two cable network without having to recalibrate to the two-original-cables reference plane. This is the type of situation this comes handy.
 #
 # This is not exactly "de-embedding" in the hardware-sense of the work, but maybe means more towards software network extraction from measurements.
 #
@@ -309,9 +330,7 @@ import os
 
 
 # +
-def construct_calibration_networks(
-    measurements_directory: piel.PathTypes
-):
+def construct_calibration_networks(measurements_directory: piel.PathTypes):
     """
     This function takes a directory with a collection of ``.s2p`` measurements and constructs the relevant calibration measurements accordingly.
     In this case, this function is meant to filter out files which follow the following directory structure.
@@ -343,46 +362,48 @@ def construct_calibration_networks(
 
     # Now we iterate on this directory to list all the files
     for file in files:
-
         # TODO possibly do the .s1p files here.
-        if file.endswith('.s2p'):
-
+        if file.endswith(".s2p"):
             # Construct the relevant file names
             file_name = directory / file
 
             # Filter for .s2p files according to relevant measrurements
-            if 'through' in file:
-                through_network = hfss_touchstone_2_network(
-                    file_name
-                )
+            if "through" in file:
+                through_network = hfss_touchstone_2_network(file_name)
                 raw_networks["through"] = through_network
                 networks["through"] = through_network
 
             for one_port_reference_name_i in one_port_references:
                 if one_port_reference_name_i in file:
                     if "port1" in file:
-                        raw_networks[one_port_reference_name_i][1] = hfss_touchstone_2_network(
-                            file_name
-                        )
+                        raw_networks[one_port_reference_name_i][
+                            1
+                        ] = hfss_touchstone_2_network(file_name)
                     elif "port2" in file:
-                        raw_networks[one_port_reference_name_i][2] = hfss_touchstone_2_network(
-                            file_name
-                        )
+                        raw_networks[one_port_reference_name_i][
+                            2
+                        ] = hfss_touchstone_2_network(file_name)
 
     # Now we need to construct the relevant reciprocal networks from a collection of two-port networks
     for one_port_reference_name_i in one_port_references:
-        for port_i, two_port_network_i in raw_networks[one_port_reference_name_i].items():
+        for port_i, two_port_network_i in raw_networks[
+            one_port_reference_name_i
+        ].items():
             if port_i == 1:
-                port_1_network = skrf.subnetwork(two_port_network_i, [port_i-1])  # 1 port Network from ports_i
+                port_1_network = skrf.subnetwork(
+                    two_port_network_i, [port_i - 1]
+                )  # 1 port Network from ports_i
             if port_i == 2:
-                port_2_network = skrf.subnetwork(two_port_network_i, [port_i-1])  # 1 port Network from ports_i
+                port_2_network = skrf.subnetwork(
+                    two_port_network_i, [port_i - 1]
+                )  # 1 port Network from ports_i
 
         # Combine them together
-        networks[one_port_reference_name_i] = skrf.two_port_reflect(port_1_network, port_2_network)
+        networks[one_port_reference_name_i] = skrf.two_port_reflect(
+            port_1_network, port_2_network
+        )
 
     return networks
-
-
 
 
 # +
@@ -401,18 +422,18 @@ ideal = [i for i in a.values()]
 measured = [i for i in b.values()]
 
 cal = skrf.calibration.SOLT(
-    ideals = ideal,
-    measured = measured,
+    ideals=ideal,
+    measured=measured,
 )
 
-
-dut.plot_s_db()
 
 # +
 cal.run()
 
 # apply it to a dut
-dut = skrf.Network("/home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/measurement_data/calibration_kit_vna_cal_at_cable_ports/attenuator_20db.s2p")
+dut = skrf.Network(
+    "/home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/measurement_data/calibration_kit_vna_cal_at_cable_ports/attenuator_20db.s2p"
+)
 dut_caled = cal.apply_cal(dut)
 
 # plot results
@@ -426,80 +447,6 @@ hfss_touchstone_2_network(
 hfss_touchstone_2_network(
     "/home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/measurement_data/calibration_kit_vna_cal_at_vna_ports/attenuator_20db.s2p"
 ).plot_s_db()
-
-# +
-import skrf as rf
-from skrf.calibration import SOLT
-rf.stylely()
-
-# ideal 1-port Networks
-short_ideal = media.short()
-open_ideal = media.open()
-load_ideal = media.match()  # could also be: media.load(Gamma0=0)
-thru_ideal = media.thru()
-
-# forge a two-port network from two one-port networks
-short_ideal_2p = rf.two_port_reflect(short_ideal, short_ideal)
-open_ideal_2p = rf.two_port_reflect(open_ideal, open_ideal)
-load_ideal_2p = rf.two_port_reflect(load_ideal, load_ideal)
-
-# a list of Network types, holding 'ideal' responses
-my_ideals = [
-    short_ideal_2p,    short_ideal_2p,
-    open_ideal_2p,
-    load_ideal_2p,
-    thru_ideal,   # Thru should be the last
-]
-    open_ideal_2p,
-    load_ideal_2p,
-    thru_ideal,   # Thru should be the last
-    ]
-
-# a list of Network types, holding 'measured' responses
-my_measured = [
-    short_measured,
-    open_measured,
-    load_measured,
-    thru_measured,   # Thru should be the last
-]
-
-## create a SOLT instance
-cal = rf.calibration.SOLT(
-    ideals = my_ideals,
-    measured = my_measured,
-    )
-
-# +
-
-.
-# a list of Network types, holding 'measured' responses
-my_measured = [
-    rf.Network('measured/short, short.s2p'),
-    rf.Network('measured/open, open.s2p'),
-    rf.Network('measured/load, load.s2p'),
-    rf.Network('measured/thru.s2p'),
-]
-
-## create a SOLT instance
-cal = SOLT(
-    ideals = my_ideals,
-    measured = my_measured,
-# isolation calibration is optional, it can be removed.
-)
-
-## run, and apply calibration to a DUT
-# run calibration algorithm
-cal.run()
-
-# apply it to a dut
-dut = rf.Network('my_dut.s2p')
-dut_caled = cal.apply_cal(dut)
-
-# plot results
-dut_caled.plot_s_db()
-# save results
-dut_caled.write_touchstone()
-# -
 
 # We can now verify this measurement with the hardware-deembedding up to those two cables.
 
@@ -507,9 +454,7 @@ dut_caled.write_touchstone()
 #
 # Say, for the same calibration as the measurements above, we can now measure just the attenuator and compare with the de-embedded reference.
 
-calvna_20db_attenuator_data_file = (
-    "measurement_data/software_deembedding/calvna_20db_attenuator_2082614820.s2p"
-)
+calvna_20db_attenuator_data_file = "measurement_data/software_deembedding/inverse_multiply/calvna_20db_attenuator_2082614820.s2p"
 calvna_20db_attenuator_network = hfss_touchstone_2_network(
     calvna_20db_attenuator_data_file
 )
@@ -517,7 +462,7 @@ calvna_20db_attenuator_network.plot_s_db()
 
 # ### Measurement Verification of a Coaxial-Cable
 
-# A coaxial cable is a transmission line, which means it has a signal transmission associated with it for a range of RF frequencies. We might want to explore how the attentuation and reflection of our high-frequency signals operate. Let's understand some network theory basics in relation to an actual experimental context.
+# A coaxial cable is a transmission line, which means it has a signal transmission associated with it for a range of RF frequencies. We might want to explore how the attenuation and reflection of our high-frequency signals operate. Let's understand some network theory basics in relation to an actual experimental context.
 #
 # In this example, we will consider the experimental PNA network measurement of a [141-1MSM+](https://www.minicircuits.com/WebStore/dashboard.html?model=141-1MSM%2B) cable and compare it to some network theory.
 #
@@ -528,7 +473,6 @@ calvna_20db_attenuator_network.plot_s_db()
 # ![rf_plots_1411MSM](../../_static/img/examples/08_basic_interconnection_modelling/rf_plots_1411MSM.png)
 
 # +
-import matplotlib.pyplot as plt
 
 # 141-1MSM+ cable datasheet model
 data = {

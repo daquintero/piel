@@ -40,9 +40,13 @@ from .electrical.cables import (
     DCCableGeometryType,
     DCCableHeatTransferType,
     DCCableMaterialSpecificationType,
+    DCCable,
+    CoaxialCable,
 )
 
 from .electrical.pcb import PCB
+
+from .electrical.rf_calibration import Short, Open, Load, Through
 
 from .electrical.rf_passives import (
     PowerSplitter,
