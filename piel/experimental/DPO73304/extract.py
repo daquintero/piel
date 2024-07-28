@@ -1,5 +1,9 @@
 import pandas as pd
-from ..types import OscilloscopeMeasurement
+from ..types import (
+    PropagationDelayMeasurementSweep,
+    PropagationDelayMeasurementSweepData,
+    PropagationDelayMeasurementData,
+)
 from ...types import (
     DataTimeSignalData,
     MultiDataTimeSignal,
@@ -103,12 +107,53 @@ def extract_to_data_time_signal(
         The waveform files as a DataTimeSignal.
     """
     dataframe = extract_waveform_to_dataframe(file)
-    data_time_signal = SignalMetricsData(
+    data_time_signal = DataTimeSignalData(
         time_s=dataframe.time_s.values,
         data=dataframe.voltage_V.values,
         data_name="voltage_V",
     )
     return data_time_signal
+
+
+def extract_propagation_delay_measurement_sweep_data(
+    propagation_delay_measurement_sweep: PropagationDelayMeasurementSweep,
+) -> PropagationDelayMeasurementSweepData:
+    """
+    This function is used to extract the relevant measurement files amd relate them to the sweep parameter. Because
+    this function extracts multi-index files then we use xarray to analyze this files more clearly. It aims to extract all
+    the files in the sweep file collection.
+    """
+    measurement_sweep_data = list()
+    for (
+        propagation_delay_measurement_i
+    ) in propagation_delay_measurement_sweep.measurements:
+        data_i = dict()
+        if hasattr(propagation_delay_measurement_i, "measurement_file_prefix"):
+            file = (
+                propagation_delay_measurement_i.parent_directory
+                / propagation_delay_measurement_i.measurement_file_prefix
+            )  # TODO fix this, find prefix file
+            data_i["measurements"] = extract_to_signal_measurement(file)
+
+        if hasattr(propagation_delay_measurement_i, "reference_waveform_prefix"):
+            file = (
+                propagation_delay_measurement_i.parent_directory
+                / propagation_delay_measurement_i.reference_waveform_prefix
+            )  # TODO fix this, find prefix file
+            data_i["reference_waveform"] = extract_to_data_time_signal(file)
+
+        if hasattr(propagation_delay_measurement_i, "dut_waveform_prefix"):
+            file = (
+                propagation_delay_measurement_i.parent_directory
+                / propagation_delay_measurement_i.dut_waveform_prefix
+            )  # TODO fix this, find prefix file
+            data_i["dut_waveform"] = extract_to_data_time_signal(file)
+
+        measurement_sweep_data.append(PropagationDelayMeasurementData(**data_i))
+
+    return PropagationDelayMeasurementSweepData(
+        data=measurement_sweep_data,
+    )
 
 
 def extract_to_signal_measurement(

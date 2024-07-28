@@ -3,15 +3,16 @@ Note that this section of experimental types is separate from the main piel pack
 specific experimental files that is not yet part of the main package in a flow used as per the devices provided.
 """
 from typing import Optional
-from ...types import PielBaseModel, PhysicalComponent
+from ...types import PielBaseModel, PhysicalComponent, PathTypes
 
 
 class DeviceMeasurement(PielBaseModel):
     """
-    Standard definition for a file metadata that is part of a measurement.
+    Standard definition for a measurement.
     """
 
-    measurement_name: Optional[str] = None
+    name: Optional[str] = None
+    parent_directory: Optional[PathTypes] = None
 
 
 class DeviceConfiguration(PielBaseModel):

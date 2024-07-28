@@ -170,6 +170,22 @@ from skrf.io.touchstone import hfss_touchstone_2_network
 #
 # So, we have performed the calibration of our measurement using that calibration kit. In our case, we will perform the first hardware calibration up to the black tongs as shown in the figure below.
 
+# ## Frequency-Domain Analysis
+#
+# ## Performing the VNA/Deembedding Calibration
+#
+# We will use the calibration kit of an Agilent E8364A PNA which is nominally designed for 2.4mm coaxial cables. Using 2.4mm to 3.5mm SMA adapters is probably fine given that we're deembedding up to a given cable. Realistically, I would need to deembed the performance of the adapter between the calibration kit and the open, short, through adapter.
+#
+# I've saved the calibration under `files/vna_calibration/calibation_35mm_calkit.cst` which can be reloaded. Note it's only useful up to 20GHz. Standard amount of points is 6401 between 0-20 GHz exactly in the frequency spectrum which is about 3MHz resolution per point. Only use GHz.
+#
+# * TODO list of equipment
+#
+
+# * S1-S2 Through
+# * S6-S7 Load 50 $\Omega$
+#
+# ### Through S-Parameter Measurement
+
 # #### A HW Calibrated Open-Measurement
 #
 # Our two unconnected ports with the calibration applied at the machine might give a measurement such as this one.

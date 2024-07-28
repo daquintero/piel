@@ -1,4 +1,5 @@
 import piel.experimental.types as types
+import piel.experimental.visual as visual
 
 from . import DPO73304
 

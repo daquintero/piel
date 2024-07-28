@@ -45,11 +45,3 @@ class Oscilloscope(MeasurementDevice):
     Just overwrites this section of the device definition.
     """
 
-
-class OscilloscopeMeasurement(DeviceMeasurement):
-    """
-    Standard definition for a collection of files that are part of an oscilloscope measurement.
-    """
-
-    channel_data_time_files: Optional[list[PathTypes]] = None
-    channel_data_measurement_file: Optional[PathTypes] = None
