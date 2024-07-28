@@ -39,3 +39,7 @@ def create_one_port_square_wave_waveform_generator(
         ports=ports,
         configuration=configuration,
     )
+
+
+def AWG70001A() -> WaveformGenerator:
+    pass

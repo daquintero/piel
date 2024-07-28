@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional
 from piel.types import PielBaseModel
 
@@ -30,4 +32,10 @@ class Component(Instance):
     """
 
     ports: list[Port]
+
     connections: list[Connection]
+
+    components: list[Component] = []
+    """
+    Note the recursive relationship that a component can be composed of multiple components.
+    """

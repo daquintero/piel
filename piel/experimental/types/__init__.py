@@ -7,6 +7,8 @@ from .device import (
     MeasurementDevice,
 )
 
+from .cryostat import Cryostat, TemperatureStage
+
 from .experiment import ExperimentInstance, Experiment
 
 from .measurements.propagation import (

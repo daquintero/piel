@@ -71,13 +71,14 @@ def construct_experiment_directories(
     parent_directory = return_path(parent_directory)
     # Create the experiment directory
     experiment_directory = parent_directory / experiment.name
-    directory_exists = create_new_directory(experiment_directory)
 
-    if directory_exists:
+    if experiment_directory.exists():
         input(
             "The directory already exists. Press enter to continue and overwrite all the json and configuration "
             "files."
         )
+    else:
+        create_new_directory(experiment_directory)
 
     # Create the experiment.json file
     experiment_json_path = experiment_directory / "experiment.json"

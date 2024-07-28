@@ -2,7 +2,7 @@ from ...types import PhysicalPort
 from ..types import Oscilloscope
 
 
-def create_two_port_oscilloscope():
+def create_two_port_oscilloscope() -> Oscilloscope:
     ports = [
         PhysicalPort(
             name="CH1",
@@ -20,3 +20,7 @@ def create_two_port_oscilloscope():
         name="two_port_oscilloscope",
         ports=ports,
     )
+
+
+def DPO73304():
+    pass
