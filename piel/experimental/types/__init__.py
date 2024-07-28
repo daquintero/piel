@@ -9,10 +9,23 @@ from .device import (
 
 from .experiment import ExperimentInstance, Experiment
 
+from .measurements.propagation import (
+    PropagationDelayMeasurement,
+    PropagationDelayMeasurementSweep
+)
+
+from .measurements.data.core import (
+    ExperimentInstance
+)
+
+from .measurements.data.propagation import (
+    PropagationDelayMeasurementData,
+    PropagationDelayMeasurementSweepData
+)
+
 from .time import (
     Oscilloscope,
     OscilloscopeConfiguration,
-    OscilloscopeMeasurement,
     WaveformGeneratorConfiguration,
     WaveformGenerator,
 )

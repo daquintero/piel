@@ -36,3 +36,4 @@ MultiDataTimeSignal = list[DataTimeSignalData, ...]
 """
 Collection of DataTimeSignals that can be used to analyse a set of signals together in a particular files flow.
 """
+
