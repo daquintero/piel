@@ -6728,6 +6728,20 @@ sphinxcontrib-jquery = ">=4,<5"
 dev = ["bump2version", "sphinxcontrib-httpdomain", "transifex-client", "wheel"]
 
 [[package]]
+name = "sphinx-version-warning"
+version = "1.1.2"
+description = "Sphinx extension to add a warning banner"
+optional = true
+python-versions = "*"
+files = [
+    {file = "sphinx-version-warning-1.1.2.tar.gz", hash = "sha256:9924926fd3e739e32eb42ba2db092ecd7657200107146944fb3e440c9651d945"},
+    {file = "sphinx_version_warning-1.1.2-py3-none-any.whl", hash = "sha256:e015947fe7af6c4ba2ce08bb346b1eb822d9dbd797a748757366905f8ce623f1"},
+]
+
+[package.dependencies]
+sphinx = "*"
+
+[[package]]
 name = "sphinxcontrib-applehelp"
 version = "1.0.8"
 description = "sphinxcontrib-applehelp is a Sphinx extension which outputs Apple help books"
@@ -8082,10 +8096,10 @@ cffi = {version = ">=1.11", markers = "platform_python_implementation == \"PyPy\
 cffi = ["cffi (>=1.11)"]
 
 [extras]
-dev = ["black", "bokeh", "bump-my-version", "cookiecutter", "coverage", "flake8", "ipyevents", "ipytree", "ipywidgets", "jupyter", "jupyter-bokeh", "jupyter-core", "jupyter-packaging", "jupyterlab", "jupytext", "kfactory", "kweb", "myst-parser", "nbsphinx", "pandoc", "poetry", "pre-commit", "pydata-sphinx-theme", "pytest", "sphinx", "sphinx-autoapi", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-gallery", "sphinx-pydantic", "sphinx-rtd-theme", "sphinx_book_theme", "sphinxcontrib-pdfembed", "tox", "watchdog"]
+dev = ["black", "bokeh", "bump-my-version", "cookiecutter", "coverage", "flake8", "ipyevents", "ipytree", "ipywidgets", "jupyter", "jupyter-bokeh", "jupyter-core", "jupyter-packaging", "jupyterlab", "jupytext", "kfactory", "kweb", "myst-parser", "nbsphinx", "pandoc", "poetry", "pre-commit", "pydata-sphinx-theme", "pytest", "sphinx", "sphinx-autoapi", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-gallery", "sphinx-pydantic", "sphinx-rtd-theme", "sphinx-version-warning", "sphinx_book_theme", "sphinxcontrib-pdfembed", "tox", "watchdog"]
 nonix = ["openlane"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "95fa6e1b14f6c282d0a0d840dc0a96c564ac0cf1d882e09241372b6cccf31a0d"
+content-hash = "a9e12810619b79470f057c7917b9381ff13e929d8c5555f286d00daf60092827"

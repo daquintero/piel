@@ -11,9 +11,9 @@ Contents
 
    examples
    sections/environment/index
-   sections/microservices/index
    sections/codesign/index
    sections/models/index
+   sections/microservices/index
    resources/index
    contributing
    sections/about/index

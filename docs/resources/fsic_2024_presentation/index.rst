@@ -6,6 +6,15 @@ This page involves the outline and resources related to of the presentation: *In
 Presentation
 ^^^^^^^^^^^^
 
+You can listen to the presentation here:
+
+.. raw:: html
+
+    <iframe title="Integrating Mixed-Signal Microelectronics and Photonics: A Co-Design Approach with Piel, Dario Quintero, PIEL" width="560" height="315" src="https://peertube6.f-si.org/videos/embed/68afd3f0-19d8-47ac-841c-caa9c07d31ce" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+
+
+You can also see the slides here:
+
 :pdfembed:`src:../../_static/resources/fsic_2024_presentation.pdf, height:480px, width:100%, align:middle`
 
 Outline

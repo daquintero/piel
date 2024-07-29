@@ -94,6 +94,7 @@ sphinx-gallery = {version = "*", optional = true}
 sphinx-pydantic = {version = "*", optional = true}
 sphinx-rtd-theme = {version = "*", optional = true}
 sphinx_book_theme = {version = "*", optional = true}
+sphinx-version-warning = {version = "*", optional = true}
 sphinxcontrib-pdfembed = {git = "https://github.com/SuperKogito/sphinxcontrib-pdfembed.git", optional = true}
 thewalrus = "^0.20.0"
 tox = {version = "*", optional = true}
@@ -140,6 +141,7 @@ dev = [
   "sphinx-gallery",
   "sphinx-pydantic",
   "sphinx-rtd-theme",
+  "sphinx-version-warning",
   "sphinxcontrib-pdfembed",
   "tox",
   "watchdog"

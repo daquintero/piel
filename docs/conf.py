@@ -72,6 +72,7 @@ extensions = [
     "sphinx_autodoc_typehints",  # Automatically document param types (less noise in class signature)
     "sphinx_gallery.load_style",
     "sphinx-pydantic",
+    "versionwarning.extension",
 ]
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -138,3 +139,12 @@ latex_elements: dict = {
     #
     # 'figure_align': 'htbp',
 }
+
+versionwarning_admonition_type = "tip"
+versionwarning_messages = {
+    'latest': 'You are reading the "latest" pip-unreleased version of this documentation.'
+              ' See the stable branch for the latest release.',
+}
+versionwarning_admonition_type = 'tip'
+versionwarning_banner_title = 'Tip'
+versionwarning_body_selector = 'div[itemprop="articleBody"]'
