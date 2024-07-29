@@ -2,7 +2,7 @@ from ...types import PhysicalPort
 from ..types import Multimeter
 
 
-def DMM6500() -> Multimeter:
+def DMM6500(**kwargs) -> Multimeter:
     ports = [
         PhysicalPort(
             name="INPUTHI",
@@ -31,8 +31,4 @@ def DMM6500() -> Multimeter:
         ),
     ]
 
-    return Multimeter(
-        name="DMM6500",
-        ports=ports,
-        manufacturer="Keithley",
-    )
+    return Multimeter(name="DMM6500", ports=ports, manufacturer="Keithley", **kwargs)

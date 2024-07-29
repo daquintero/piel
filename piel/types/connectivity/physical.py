@@ -34,3 +34,8 @@ class PhysicalComponent(Component):
     ports: list[PhysicalPort]
     connections: Optional[list[PhysicalConnection]] = None
     environment: Optional[Environment] = None
+
+    manufacturer: Optional[str] = None
+    """
+    The manufacturer of the device.
+    """

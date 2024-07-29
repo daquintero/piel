@@ -1,0 +1,76 @@
+{
+    "name": null,
+    "components": [
+        {
+            "name": "through_82052D",
+            "ports": [
+                {
+                    "name": "IN",
+                    "domain": null,
+                    "connector": "SMA_3.5mm",
+                    "manifold": "82052D"
+                },
+                {
+                    "name": "OUT",
+                    "domain": null,
+                    "connector": "SMA_3.5mm",
+                    "manifold": "82052D"
+                }
+            ],
+            "connections": null,
+            "components": [],
+            "environment": null,
+            "manufacturer": "Agilent"
+        },
+        {
+            "name": "E8364A",
+            "ports": [
+                {
+                    "name": "PORT1",
+                    "domain": "RF",
+                    "connector": null,
+                    "manifold": null
+                },
+                {
+                    "name": "PORT2",
+                    "domain": "RF",
+                    "connector": null,
+                    "manifold": null
+                }
+            ],
+            "connections": null,
+            "components": [],
+            "environment": null,
+            "manufacturer": "Agilent",
+            "configuration": null
+        }
+    ],
+    "connections": [
+        {
+            "name": null,
+            "ports": [
+                {
+                    "name": "PORT1"
+                },
+                {
+                    "name": "IN"
+                }
+            ]
+        },
+        {
+            "name": null,
+            "ports": [
+                {
+                    "name": "PORT2"
+                },
+                {
+                    "name": "OUT"
+                }
+            ]
+        }
+    ],
+    "goal": null,
+    "index": null,
+    "date_configured": null,
+    "date_measured": null
+}

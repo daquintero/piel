@@ -14,6 +14,8 @@
 # As such, understanding interconnection effects turns out to be pretty important in these type of systems.
 
 # +
+import piel
+import piel.experimental as pe
 from piel.models.physical.electrical.cable import (
     calculate_coaxial_cable_geometry,
     calculate_coaxial_cable_heat_transfer,
@@ -172,34 +174,121 @@ from skrf.io.touchstone import hfss_touchstone_2_network
 #
 # An important aspect to keep track of things is the configuration of the VNA.
 
+# ## Frequency-Domain Analysis
+#
+# ## Performing the VNA/Deembedding Calibration
+#
+# We will use the calibration kit of an Agilent E8364A PNA which is nominally designed for 2.4mm coaxial cables. Using 2.4mm to 3.5mm SMA adapters is probably fine given that we're deembedding up to a given cable. Realistically, I would need to deembed the performance of the adapter between the calibration kit and the open, short, through adapter.
+
 # #### Using a Hardware Calibration Kit
 #
 # Decide the two reference points at which you will connect to your device to test. This is a very common way to start doing de-embedding on a machine. In our setup, we will use the Agilent 82052D 3.5mm calibration kit. We can easily follow the instructions using our E8364A Agilent PNA. Let's assume this has been done correctly.
 #
 # So, we have performed the calibration of our measurement using that calibration kit. In our case, we will perform the first hardware calibration up to the black tongs as shown in the figure below.
 
-import piel.experimental as pe
+# Let's compose the experiment into a correct format. First let's create our components.
 
-dir(pe.types)
+short_1port = pe.models.short_85052D()
+load_1port = pe.models.load_85052D()
+open_1port = pe.models.load_85052D()
+throguh_2port = pe.models.through_85052D()
+vna = pe.models.E8364A()
+
+# We can explore the parameters of these components to understand their configuration and information
+
+vna
+
+short_1port
 
 
-# ## Frequency-Domain Analysis
-#
-# ## Performing the VNA/Deembedding Calibration
-#
-# We will use the calibration kit of an Agilent E8364A PNA which is nominally designed for 2.4mm coaxial cables. Using 2.4mm to 3.5mm SMA adapters is probably fine given that we're deembedding up to a given cable. Realistically, I would need to deembed the performance of the adapter between the calibration kit and the open, short, through adapter.
-#
-# I've saved the calibration under `files/vna_calibration/calibation_35mm_calkit.cst` which can be reloaded. Note it's only useful up to 20GHz. Standard amount of points is 6401 between 0-20 GHz exactly in the frequency spectrum which is about 3MHz resolution per point. Only use GHz.
-#
-# * TODO list of equipment
-#
+def one_port_measurement_configuration(one_port_component, vna):
+    # Note that each measurement can be considered an experiment instance
+    experiment_instances = list()
 
-# * S1-S2 Through
-# * S6-S7 Load 50 $\Omega$
-#
-# ### Through S-Parameter Measurement
+    # First we instantiate our short calibration connector and our VNA
+    components = [one_port_component, vna]
 
-# #### A HW Calibrated Open-Measurement
+    # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA ports.
+    vna_port1_connections = piel.create_component_connections(
+        components=components,
+        connection_reference_str_list=[
+            f"{vna.name}.PORT1",
+            f"{one_port_component.name}.IN",
+        ],
+    )
+
+    vna_port2_connections = piel.create_component_connections(
+        components=components,
+        connection_reference_str_list=[
+            f"{vna.name}.PORT2",
+            f"{one_port_component.name}.IN",
+        ],
+    )
+
+    # Create the required experiment instances
+    for connections_i in [vna_port1_connections, vna_port2_connections]:
+        experiment_instance_i = pe.types.ExperimentInstance(
+            components=components, connections=connections_i
+        )
+        experiment_instances.append(experiment_instance_i)
+
+    return experiment_instances
+
+
+# We need to do a similar thing with the remaining one ports, so let's run this now.
+
+short_experimental_instance_list = one_port_measurement_configuration(short_1port, vna)
+open_experimental_instance_list = one_port_measurement_configuration(open_1port, vna)
+load_experimental_instance_list = one_port_measurement_configuration(load_1port, vna)
+
+
+def two_port_measurement_configuration(two_port_component, vna):
+    # First we instantiate our short calibration connector and our VNA
+    components = [two_port_component, vna]
+
+    # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA ports.
+    vna_connections = piel.create_component_connections(
+        components=components,
+        connection_reference_str_list=[
+            [f"{vna.name}.PORT1", f"{two_port_component.name}.IN"],
+            [f"{vna.name}.PORT2", f"{two_port_component.name}.OUT"],
+        ],
+    )
+
+    # Create the required experiment instance
+    experiment_instance = pe.types.ExperimentInstance(
+        components=components, connections=vna_connections
+    )
+
+    return experiment_instance
+
+
+through_experiment_instance = two_port_measurement_configuration(throguh_2port, vna)
+
+
+# Now we can create an `Experiment` from this:
+
+rf_vna_self_calibration = pe.types.Experiment(
+    name="rf_vna_self_calibration",
+    experiment_instances=[through_experiment_instance]
+    + open_experimental_instance_list
+    + load_experimental_instance_list
+    + short_experimental_instance_list,
+)
+
+# Let's create the directories in which to save the data accordingly:
+
+experiment_data_directory = piel.return_path("data")
+piel.create_new_directory(experiment_data_directory)
+
+# Now, we can create the experiment in there:
+
+propagation_delay_experiment_directory = pe.construct_experiment_directories(
+    experiment=rf_vna_self_calibration,
+    parent_directory=experiment_data_directory,
+)
+
+# ### A HW Calibrated Open-Measurement
 #
 # Our two unconnected ports with the calibration applied at the machine might give a measurement such as this one.
 #
@@ -217,7 +306,7 @@ calibrated_vna_port1_open_network.plot_s_db()
 
 # This is the same data you should get if you connect the open calibration port from the calibration kit into any of the VNA ports.
 
-# #### A HW Calibrated Short Measurement
+# ### A HW Calibrated Short Measurement
 
 # Now, let's connect a short calibration port into one of the VNA ports. You can note that obviously the insertion loss doesn't change as this is just a port to port measurement.
 
@@ -229,7 +318,7 @@ calibrated_vna_port1_short_network = hfss_touchstone_2_network(
 )
 calibrated_vna_port1_short_network.plot_s_db()
 
-# #### A HW Calibrated Load Measurement
+# ### A HW Calibrated Load Measurement
 
 calibrated_load_data_file = (
     "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
@@ -237,7 +326,7 @@ calibrated_load_data_file = (
 calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_data_file)
 calibrated_vna_port1_load_network.plot_s_db()
 
-# #### A HW Calibrated Through-Measurement
+# ### A HW Calibrated Through-Measurement
 #
 # <figure>
 # <img src="../../_static/img/examples/08_basic_interconnection_modelling/experimental_cal_through.jpg" alt="drawing" width="70%"/>
@@ -329,7 +418,6 @@ import piel
 import os
 
 
-# +
 def construct_calibration_networks(measurements_directory: piel.PathTypes):
     """
     This function takes a directory with a collection of ``.s2p`` measurements and constructs the relevant calibration measurements accordingly.
