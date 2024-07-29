@@ -38,6 +38,7 @@ def create_one_port_square_wave_waveform_generator(
         name="two_port_oscilloscope",
         ports=ports,
         configuration=configuration,
+        manufacturer="Tektronix",
     )
 
 
