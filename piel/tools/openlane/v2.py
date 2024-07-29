@@ -1,4 +1,3 @@
-from openlane.flows import Flow
 from piel.types import PathTypes, LogicImplementationType
 from piel.file_system import (
     return_path,
@@ -83,6 +82,7 @@ def generate_flow_setup(
     design_directory: PathTypes = ".",
     logic_implementation_type: LogicImplementationType = "combinatorial",
 ):
+    from openlane.flows import Flow
     if logic_implementation_type == "combinatorial":
         from openlane.flows import SequentialFlow
         from openlane.steps import Yosys, OpenROAD, Magic, Netgen
