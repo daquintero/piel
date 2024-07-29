@@ -22,5 +22,22 @@ def create_two_port_oscilloscope() -> Oscilloscope:
     )
 
 
-def DPO73304():
-    pass
+def DPO73304() -> Oscilloscope:
+    ports = [
+        PhysicalPort(
+            name="CH1",
+            domain="RF",
+            connector="SMA",
+        ),
+        PhysicalPort(
+            name="CH2",
+            domain="RF",
+            connector="SMA",
+        ),
+    ]
+
+    return Oscilloscope(
+        name="DPO73304",
+        ports=ports,
+        manufacturer="Tektronix",
+    )

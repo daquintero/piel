@@ -26,6 +26,11 @@ class Device(PhysicalComponent):
 
     configuration: Optional[DeviceConfiguration] = None
 
+    manufacturer: Optional[str] = None
+    """
+    The manufacturer of the device.
+    """
+
 
 class MeasurementDevice(Device):
     measurement: Optional[DeviceMeasurement] = None
