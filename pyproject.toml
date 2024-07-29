@@ -16,6 +16,7 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Natural Language :: English",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Topic :: Scientific/Engineering",
   "Topic :: Scientific/Engineering :: Physics"
@@ -69,10 +70,13 @@ myst-parser = {version = "*", optional = true}
 nbsphinx = {version = "*", optional = true}
 networkx = "^3.1"
 numpy = "^1.24.4"
-openlane = {version = "^2.0.0"}
+openlane = [
+    {version = "^2.0", platform = "linux"},
+    {version = "^2.0", platform = "darwin"},
+    {version = "*", platform = "win32"}
+]
 pandas = "^1.5.3"
 pandoc = {version = "*", optional = true}
-poetry = {version = "1.8.2"}  # I am not happy with this being here
 pre-commit = {version = "*", optional = true}
 pydantic = "^2.0"
 pydata-sphinx-theme = {version = ">=0.13.3", optional = true}
@@ -93,8 +97,8 @@ sphinx-copybutton = {version = ">=0.5.2", optional = true}
 sphinx-gallery = {version = "*", optional = true}
 sphinx-pydantic = {version = "*", optional = true}
 sphinx-rtd-theme = {version = "*", optional = true}
-sphinx_book_theme = {version = "*", optional = true}
 sphinx-version-warning = {version = "*", optional = true}
+sphinx_book_theme = {version = "*", optional = true}
 sphinxcontrib-pdfembed = {git = "https://github.com/SuperKogito/sphinxcontrib-pdfembed.git", optional = true}
 thewalrus = "^0.20.0"
 tox = {version = "*", optional = true}
@@ -126,7 +130,6 @@ dev = [
   "myst-parser",
   "nbsphinx",
   "pandoc",
-  "poetry",
   "pre-commit",
   "pytest",
   "pydata-sphinx-theme",
@@ -145,9 +148,6 @@ dev = [
   "sphinxcontrib-pdfembed",
   "tox",
   "watchdog"
-]
-nonix = [
-  "openlane"
 ]
 
 [tool.poetry.scripts]
