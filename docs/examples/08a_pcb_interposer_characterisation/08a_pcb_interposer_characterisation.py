@@ -107,15 +107,13 @@ def create_vna_measurements(
 
         # Let's assume that we want to measure an open return loss between SIG14 and RES1
         experiment_connections.extend(
-            piel.models.create_all_connections(
+            piel.create_all_connections(
                 [vna.ports[0], rf_calibration_pcb.ports[0]],
             )
         )
 
         experiment_connections.extend(
-            piel.models.create_all_connections(
-                [vna.ports[1], rf_calibration_pcb.ports[1]]
-            )
+            piel.create_all_connections([vna.ports[1], rf_calibration_pcb.ports[1]])
         )
 
         # Define experiment with connections
@@ -178,7 +176,7 @@ def calibration_propagation_delay_experiment_instance(
     splitter = pe.models.create_power_splitter_1to2()
 
     # List of connections
-    experiment_connections = piel.models.create_connection_list_from_ports_lists(
+    experiment_connections = piel.create_connection_list_from_ports_lists(
         [
             [splitter.ports[1], oscilloscope.ports[0]],
             [splitter.ports[2], oscilloscope.ports[1]],
@@ -209,7 +207,7 @@ def pcb_propagation_delay_experiment_instance(
     splitter = pe.models.create_power_splitter_1to2()
 
     # List of connections
-    experiment_connections = piel.models.create_connection_list_from_ports_lists(
+    experiment_connections = piel.create_connection_list_from_ports_lists(
         [
             [splitter.ports[1], oscilloscope.ports[0]],
             [splitter.ports[2], oscilloscope.ports[1]],

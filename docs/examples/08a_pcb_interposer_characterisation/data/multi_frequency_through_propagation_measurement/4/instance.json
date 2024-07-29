@@ -1,1 +1,72 @@
-"{\"name\":\"pcb_5000000000.0_Hz\",\"components\":[{\"name\":\"two_port_oscilloscope\",\"ports\":[{\"name\":\"CH1\"},{\"name\":\"CH2\"}],\"connections\":null,\"components\":[]},{\"name\":\"two_port_oscilloscope\",\"ports\":[{\"name\":\"CH1\"}],\"connections\":null,\"components\":[]},{\"name\":\"power_splitter_1to2\",\"ports\":[{\"name\":\"IN\"},{\"name\":\"OUT1\"},{\"name\":\"OUT2\"}],\"connections\":null,\"components\":[]}],\"connections\":[{\"name\":null,\"ports\":[{\"name\":\"OUT1\"},{\"name\":\"CH1\"}]},{\"name\":null,\"ports\":[{\"name\":\"OUT2\"},{\"name\":\"CH2\"}]}],\"goal\":null,\"index\":null,\"date_configured\":null,\"date_measured\":null}"
+{
+    "name": "pcb_5000000000.0_Hz",
+    "components": [
+        {
+            "name": "two_port_oscilloscope",
+            "ports": [
+                {
+                    "name": "CH1"
+                },
+                {
+                    "name": "CH2"
+                }
+            ],
+            "connections": null,
+            "components": []
+        },
+        {
+            "name": "two_port_oscilloscope",
+            "ports": [
+                {
+                    "name": "CH1"
+                }
+            ],
+            "connections": null,
+            "components": []
+        },
+        {
+            "name": "power_splitter_1to2",
+            "ports": [
+                {
+                    "name": "IN"
+                },
+                {
+                    "name": "OUT1"
+                },
+                {
+                    "name": "OUT2"
+                }
+            ],
+            "connections": null,
+            "components": []
+        }
+    ],
+    "connections": [
+        {
+            "name": null,
+            "ports": [
+                {
+                    "name": "OUT1"
+                },
+                {
+                    "name": "CH1"
+                }
+            ]
+        },
+        {
+            "name": null,
+            "ports": [
+                {
+                    "name": "OUT2"
+                },
+                {
+                    "name": "CH2"
+                }
+            ]
+        }
+    ],
+    "goal": null,
+    "index": null,
+    "date_configured": null,
+    "date_measured": null
+}

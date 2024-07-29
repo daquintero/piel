@@ -1,1 +1,395 @@
-TODO
+- **name**: multi_frequency_through_propagation_measurement
+- **goal**: Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
+- **experiment_instances**:
+  -
+    - **name**: pcb_1000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: calibration_1000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: pcb_3000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: calibration_3000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: pcb_5000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: calibration_5000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: pcb_10000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
+  -
+    - **name**: calibration_10000000000.0_Hz
+    - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+          -
+            - **name**: CH2
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: two_port_oscilloscope
+        - **ports**:
+          -
+            - **name**: CH1
+        - **connections**: None
+        - **components**:
+      -
+        - **name**: power_splitter_1to2
+        - **ports**:
+          -
+            - **name**: IN
+          -
+            - **name**: OUT1
+          -
+            - **name**: OUT2
+        - **connections**: None
+        - **components**:
+    - **connections**:
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT1
+          -
+            - **name**: CH1
+      -
+        - **name**: None
+        - **ports**:
+          -
+            - **name**: OUT2
+          -
+            - **name**: CH2
+    - **goal**: None
+    - **index**: None
+    - **date_configured**: None
+    - **date_measured**: None
