@@ -1,17 +1,17 @@
 from piel.types import Short, Open, Load, Through
 
 
-def short_82052D():
-    return Short(name="short_82052D")
+def short_85052D():
+    return Short(name="short_85052D", manufacturer="Agilent")
 
 
-def open_82052D():
-    return Open(name="open_82052D")
+def open_85052D():
+    return Open(name="open_85052D", manufacturer="Agilent")
 
 
 def load_85052D():
-    return Load(name="load_82052D")
+    return Load(name="load_82052D", manufacturer="Agilent")
 
 
 def through_85052D():
-    return Through(name="through_82052D")
+    return Through(name="through_82052D", manufacturer="Agilent")

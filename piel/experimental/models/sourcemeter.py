@@ -2,7 +2,7 @@ from ...types import PhysicalPort
 from ..types import Sourcemeter
 
 
-def SMU2450() -> Sourcemeter:
+def SMU2450(**kwargs) -> Sourcemeter:
     ports = [
         PhysicalPort(
             name="FORCEHI",
@@ -31,8 +31,4 @@ def SMU2450() -> Sourcemeter:
         ),
     ]
 
-    return Sourcemeter(
-        name="SMU2450",
-        manufacturer="Keithley",
-        ports=ports,
-    )
+    return Sourcemeter(name="SMU2450", manufacturer="Keithley", ports=ports, **kwargs)

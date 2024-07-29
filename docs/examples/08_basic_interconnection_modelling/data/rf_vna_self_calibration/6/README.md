@@ -1,0 +1,44 @@
+- **name**: None
+- **components**:
+  -
+    - **name**: short_85052D
+    - **ports**:
+      -
+        - **name**: IN
+        - **domain**: None
+        - **connector**: SMA_3.5mm
+        - **manifold**: 82052D
+    - **connections**: None
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **domain**: RF
+        - **connector**: None
+        - **manifold**: None
+      -
+        - **name**: PORT2
+        - **domain**: RF
+        - **connector**: None
+        - **manifold**: None
+    - **connections**: None
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **configuration**: None
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: PORT2
+      -
+        - **name**: IN
+- **goal**: None
+- **index**: None
+- **date_configured**: None
+- **date_measured**: None

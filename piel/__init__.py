@@ -17,6 +17,7 @@ from piel.parametric import *
 from piel.project_structure import *
 from piel.tools import *
 from piel.utils import *
+from piel.connectivity import *
 
 import piel.flows as flows  # NOQA: F401
 

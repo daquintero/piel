@@ -2,8 +2,8 @@ from .cables import rg164
 from .multimeter import DMM6500
 from .rf_passives import create_power_splitter_1to2
 from .rf_calibration import (
-    open_82052D,
-    short_82052D,
+    open_85052D,
+    short_85052D,
     load_85052D,
     through_85052D,
 )

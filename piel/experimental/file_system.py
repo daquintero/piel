@@ -12,6 +12,7 @@ from ..file_system import (
     write_file,
     read_json,
 )
+from ..visual import dictionary_to_markdown_str
 
 
 def write_schema_markdown(schema_json_file: PathTypes, target_markdown_file: PathTypes):
@@ -23,8 +24,8 @@ def write_schema_markdown(schema_json_file: PathTypes, target_markdown_file: Pat
     """
     schema_json_file = return_path(schema_json_file)
     schema_json_file = read_json(schema_json_file)
-    assert schema_json_file is not None
-    write_file(target_markdown_file.parent, "TODO", target_markdown_file.name)
+    schema_markdown = dictionary_to_markdown_str(schema_json_file)
+    write_file(target_markdown_file.parent, schema_markdown, target_markdown_file.name)
 
 
 def construct_experiment_directories(

@@ -39,3 +39,10 @@ class Component(Instance):
     """
     Note the recursive relationship that a component can be composed of multiple components.
     """
+
+    def get_port(self, port_name: str) -> Optional[Port]:
+        """
+        Get a port by its name.
+        """
+        port_dict = {port.name: port for port in self.ports if port.name is not None}
+        return port_dict.get(port_name, None)

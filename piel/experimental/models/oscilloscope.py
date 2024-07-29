@@ -22,7 +22,7 @@ def create_two_port_oscilloscope() -> Oscilloscope:
     )
 
 
-def DPO73304() -> Oscilloscope:
+def DPO73304(**kwargs) -> Oscilloscope:
     ports = [
         PhysicalPort(
             name="CH1",
@@ -37,7 +37,5 @@ def DPO73304() -> Oscilloscope:
     ]
 
     return Oscilloscope(
-        name="DPO73304",
-        ports=ports,
-        manufacturer="Tektronix",
+        name="DPO73304", ports=ports, manufacturer="Tektronix", **kwargs
     )

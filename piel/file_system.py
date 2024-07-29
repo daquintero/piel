@@ -760,7 +760,8 @@ def write_file(
                 UserWarning(
                     "Could not create directory: "
                     + str(directory_path.resolve())
-                    + ". Your Python executable might not have the required permissions. Restructure your project directory so Python does not have to change permissions."
+                    + ". Your Python executable might not have the required permissions. Restructure your project "
+                    "directory so Python does not have to change permissions."
                 )
             )
 
@@ -779,5 +780,5 @@ def write_model_to_json(
     """
     file_path = return_path(file_path)
     with open(file_path, "w") as file:
-        json.dump(model.model_dump_json(), file, indent=4)
+        json.dump(model.model_dump(), file, indent=4)
     return file_path
