@@ -1,3 +1,4 @@
+from typing import Optional
 from .device import Device, DeviceConfiguration
 
 
@@ -16,7 +17,7 @@ class Sourcemeter(Device):
     Represents a sourcemeter.
     """
 
-    configuration: SourcemeterConfiguration
+    configuration: Optional[SourcemeterConfiguration] = None
 
 
 class MultimeterConfiguration(DeviceConfiguration):
