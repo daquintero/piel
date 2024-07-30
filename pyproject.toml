@@ -71,12 +71,13 @@ nbsphinx = {version = "*", optional = true}
 networkx = "^3.1"
 numpy = "^1.24.4"
 openlane = [
-    {version = "^2.0", platform = "linux"},
-    {version = "^2.0", platform = "darwin"},
-    {version = "*", platform = "win32"}
+  {version = "^2.0", platform = "linux"},
+  {version = "^2.0", platform = "darwin"},
+  {version = "*", platform = "win32"}
 ]
 pandas = "^1.5.3"
 pandoc = {version = "*", optional = true}
+poetry = {version = "1.8.2", optional = true}  # TODO FIX: THIS SHOULD NOT BE HERE
 pre-commit = {version = "*", optional = true}
 pydantic = "^2.0"
 pydata-sphinx-theme = {version = ">=0.13.3", optional = true}
@@ -130,6 +131,7 @@ dev = [
   "myst-parser",
   "nbsphinx",
   "pandoc",
+  "poetry",
   "pre-commit",
   "pytest",
   "pydata-sphinx-theme",
