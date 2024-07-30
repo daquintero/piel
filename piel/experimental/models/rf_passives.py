@@ -1,7 +1,12 @@
-from ...types import PhysicalPort, PowerSplitter
+from typing import Optional
+from functools import partial
+from ...types import PhysicalPort, PowerSplitter, BiasTee
 
 
-def create_power_splitter_1to2():
+def create_power_splitter_1to2(name: Optional[str] = None):
+    if name is None:
+        name = "power_splitter_1to2"
+
     ports = [
         PhysicalPort(
             name="IN",
@@ -21,6 +26,62 @@ def create_power_splitter_1to2():
     ]
 
     return PowerSplitter(
-        name="power_splitter_1to2",
+        name=name,
         ports=ports,
     )
+
+
+def create_bias_tee(name: Optional[str] = None):
+    if name is None:
+        name = "bias_tee"
+
+    ports = [
+        PhysicalPort(
+            name="IN_RF",
+            domain="RF",
+            connector="SMA",
+        ),
+        PhysicalPort(
+            name="IN_DC",
+            domain="RF",
+            connector="SMA",
+        ),
+        PhysicalPort(
+            name="OUT",
+            domain="RF",
+            connector="SMA",
+        ),
+    ]
+
+    return BiasTee(
+        name=name,
+        ports=ports,
+    )
+
+
+def create_attenuator(name: Optional[str] = None):
+    if name is None:
+        name = "attenuator"
+
+    ports = [
+        PhysicalPort(
+            name="RF",
+            domain="RF",
+            connector="SMA",
+        ),
+        PhysicalPort(
+            name="OUT",
+            domain="RF",
+            connector="SMA",
+        ),
+    ]
+
+    return BiasTee(
+        name=name,
+        ports=ports,
+    )
+
+
+Picosecond5575A104 = partial(
+    create_bias_tee, manufacturer="Picosecond Pulse Labs", model="5575A104"
+)

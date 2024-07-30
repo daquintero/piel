@@ -1,4 +1,3 @@
-import datetime
 from typing import Optional
 from ...types import Instance, ComponentTypes, ConnectionTypes
 
@@ -30,12 +29,12 @@ class ExperimentInstance(Instance):
     A defined index of the experiment instance tuple.
     """
 
-    date_configured: Optional[datetime.datetime] = None
+    date_configured: Optional[str] = None
     """
     The date the experiment was configured.
     """
 
-    date_measured: Optional[datetime.datetime] = None
+    date_measured: Optional[str] = None
     """
     The date the experiment was measured.
     """
@@ -56,3 +55,13 @@ class Experiment(Instance):
     """
     Contains all the experiment instances.
     """
+
+
+class SweepExperiment(Experiment):
+    """
+    This is a specific instance of an experimental configuration. It can be the result of serialization a given
+    experiment configuration. The experiment contains all devices that correspond a specific setup. Each device
+    contains a particular configuration, or may have information about the environment, etc.
+    """
+
+    sweep_configuration: Optional[list[dict]]

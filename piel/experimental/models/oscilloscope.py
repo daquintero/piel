@@ -2,7 +2,9 @@ from ...types import PhysicalPort
 from ..types import Oscilloscope
 
 
-def create_two_port_oscilloscope() -> Oscilloscope:
+def create_two_port_oscilloscope(
+    name: str = "two_port_oscilloscope", **kwargs
+) -> Oscilloscope:
     ports = [
         PhysicalPort(
             name="CH1",
@@ -17,12 +19,12 @@ def create_two_port_oscilloscope() -> Oscilloscope:
     ]
 
     return Oscilloscope(
-        name="two_port_oscilloscope",
+        name=name,
         ports=ports,
     )
 
 
-def DPO73304(**kwargs) -> Oscilloscope:
+def DPO73304(name: str = "DPO73304", **kwargs) -> Oscilloscope:
     ports = [
         PhysicalPort(
             name="CH1",
@@ -37,5 +39,5 @@ def DPO73304(**kwargs) -> Oscilloscope:
     ]
 
     return Oscilloscope(
-        name="DPO73304", ports=ports, manufacturer="Tektronix", **kwargs
+        name=name, ports=ports, manufacturer="Tektronix", model="DPO73304", **kwargs
     )

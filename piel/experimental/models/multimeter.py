@@ -31,4 +31,6 @@ def DMM6500(**kwargs) -> Multimeter:
         ),
     ]
 
-    return Multimeter(name="DMM6500", ports=ports, manufacturer="Keithley", **kwargs)
+    return Multimeter(
+        name="DMM6500", ports=ports, manufacturer="Keithley", model="DMM6500", **kwargs
+    )

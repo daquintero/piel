@@ -34,14 +34,31 @@ room_temperature_environment = piel.types.Environment(temperature_K=273)
 
 
 # Now we can create our custom `PCB` definition.
+#
+# ```
+# S6-S7 Load 50 pcb 3
+# S1-S2 Through
+# RES1 Short to GND
+# S8 OPEN
+# ```
 
 
 # +
-def pcb_smp_connector(name):
+def pcb_smp_connector(name, pcb_name):
     """
     This is our PCB SMP Port definition factory.
     """
-    return piel.types.PhysicalPort(name=name, connector="smp_plug", domain="RF")
+    return piel.types.PhysicalPort(
+        name=name, connector="smp_plug", domain="RF", parent_component_name=pcb_name
+    )
+
+
+# These are the measurements we want to check
+measurement_connections = {
+    "load_through": ("SIG6", "SIG7"),
+    "throguh": ("SIG1", "SIG2"),
+    "short": ("RES1", "GND"),
+}
 
 
 rf_calibration_pcb = piel.models.physical.electrical.create_pcb(
@@ -61,76 +78,96 @@ rf_calibration_pcb = piel.models.physical.electrical.create_pcb(
         "RES4",
         "SIG8",
         "L50",
+        "GND",
     ],
+    connection_tuple_list=[],
     port_factory=pcb_smp_connector,
-    name="rf_calibration_pcb",
+    pcb_name="PCB3",
     environment=room_temperature_environment,
+    components=[],
 )
 
 rf_calibration_pcb
 # -
 
 # ```python
-# PCB(name='cryo_rf_eic_interposer_v1', ports=[PhysicalPort(name='SIG14', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='OPEN', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SHORT', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG5', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES4', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG8', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='L50', domain='RF', connector='smp_plug', manifold=None)], connections=[], environment=Environment(temperature_K=273.0, region=None))
+# PCB(name='PCB3', ports=[PhysicalPort(name='SIG14', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='OPEN', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SHORT', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG5', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES4', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG8', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='L50', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='GND', domain='RF', connector='smp_plug', manifold=None)], connections=[PhysicalConnection(connections=[Connection(name=None, ports=(PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None)))], components=None), PhysicalConnection(connections=[Connection(name=None, ports=(PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None)))], components=None), PhysicalConnection(connections=[Connection(name=None, ports=(PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='GND', domain='RF', connector='smp_plug', manifold=None)))], components=None)], components=[], environment=Environment(temperature_K=273.0, region=None), manufacturer=None, model=None)
 # ```
 
 # A `Component` might contain subcomponents and there are parameters like `Environment`. In any case, we have all the flexibility of `python` of composing all the `ExperimentInstances` we want. As long as we create an `Experiment` with multiple `ExperimentInstances`, then it is pretty straightforward to just export that to a JSON model file. Using `pydantic`, we can also reinstantiate the model back into `python` which is quite powerful for this type of experiment management.
 
-# For example, we might do multiple measurements with different relevant for example.
+# ### Frequency-Domain Analysis
+
+# It is possible to extract the time-domain performance from frequency-domain measurements:
+#
+# - Time Domain Analysis Using a Network Analyzer, Keysight, Application Note
+# - [scikit-rf Time Domain and Gating](https://scikit-rf.readthedocs.io/en/latest/examples/networktheory/Time%20Domain.html)
+#
+# Now, let's define an experiment accordingly. In this experiment, we will do s-parameter measurmeents of two shorted PCB traces directly from a reference plane.
 
 
-# Now, let's define an experiment accordingly:
-
-
-def create_vna_measurements(
-    vna_configuration: list[pe.types.VNAConfiguration] = None, **kwargs
-):
+def create_calibration_vna_experiments(measurements: dict, **kwargs):
     """
-    This is a function that parametrizes multiple VNA measurement configurations and creates a set of VNA measurements
-     accordingly.
+    Simple two port measurement experiment.
     """
-    if vna_configuration is None:
-        vna_configuration = [None]
-
     experiment_instances = list()
     i = 0
-    for vna_configuration_i in vna_configuration:
-        # Simple two port measurement
-        vna = pe.types.VNA(
-            environment=room_temperature_environment,
-            name="DPO73304",
-            configuration=vna_configuration_i,
+    for measurement_i in measurements.items():
+        # Define experimental components
+        vna_configuration = pe.types.VNAConfiguration(
+            test_port_power_dBm=-17, frequency_range_Hz=[45e6, 20e9]
         )
 
-        # List of connections
-        experiment_connections = []
-
-        # Let's assume that we want to measure an open return loss between SIG14 and RES1
-        experiment_connections.extend(
-            piel.create_all_connections(
-                [vna.ports[0], rf_calibration_pcb.ports[0]],
-            )
+        vna = pe.models.vna.E8364A(configuration=vna_configuration)
+        blue_extension_cable = pe.models.cables.generic_sma(
+            name="blue_extension", model="1251C", length_m=0.025
         )
+        experiment_components = [vna, blue_extension_cable, rf_calibration_pcb]
 
-        experiment_connections.extend(
-            piel.create_all_connections([vna.ports[1], rf_calibration_pcb.ports[1]])
+        # Connect the iteration ports
+        measurement_name = measurement_i[0]
+        measurement_port1 = measurement_i[1][0]
+        measurement_port2 = measurement_i[1][1]
+
+        # Create the VNA connectivity
+        experiment_connections = piel.create_component_connections(
+            components=experiment_components,
+            connection_reference_str_list=[
+                [
+                    f"{vna.name}.PORT1",
+                    f"{blue_extension_cable.name}.IN",
+                ],
+                [
+                    f"{blue_extension_cable.name}.OUT",
+                    f"{rf_calibration_pcb.name}.{measurement_port1}",
+                ],
+                [
+                    f"{rf_calibration_pcb.name}.{measurement_port2}",
+                    f"{vna.name}.PORT2",
+                ],
+            ],
         )
 
         # Define experiment with connections
-        experiment = pe.types.ExperimentInstance(
-            components=[rf_calibration_pcb, vna],
+        experiment_measurement = pe.types.ExperimentInstance(
+            name=measurement_name,
+            components=experiment_components,
             connections=experiment_connections,
             index=i,
-            date_configured=datetime.now(),
+            date_configured=str(datetime.now()),
         )
 
-        experiment_instances.append(experiment)
+        experiment_instances.append(experiment_measurement)
         i += 1
 
     return pe.types.Experiment(experiment_instances=experiment_instances, **kwargs)
 
 
-vna_pcb_experiment = create_vna_measurements(name="basic_vna_test")
+vna_pcb_experiment = create_calibration_vna_experiments(
+    name="pcb_rf_vna_measurement",
+    measurements=measurement_connections,
+    goal="Perform S-Parameter characterization of a PCB trace.",
+)
 vna_pcb_experiment
 
 # Now, let's create an experiment `data` directory in which to save the data accordingly:
@@ -141,8 +178,10 @@ piel.create_new_directory(experiment_data_directory)
 # Now, the beautiful thing that this can do, especially if you are allergic to repettitive experimental tasks like me, is that we can use this to identify all our experimental instances which correspond to specific dials and operating points we need to configure manually.
 
 
-pe.construct_experiment_directories(
-    experiment=vna_pcb_experiment, parent_directory=experiment_data_directory
+vna_pcb_experiment_directory = pe.construct_experiment_directories(
+    experiment=vna_pcb_experiment,
+    parent_directory=experiment_data_directory,
+    construct_directory=True,
 )
 
 # ```
@@ -152,6 +191,11 @@ pe.construct_experiment_directories(
 
 # Let's see how the structure of the project looks like:
 
+
+# !pwd $vna_pcb_experiment_directory
+# !ls $vna_pcb_experiment_directory
+
+# Now, let's save the experimental data in there accordingly.
 
 # ## Time-Domain Analysis
 #
@@ -260,6 +304,7 @@ basic_propagation_delay_experiment = propagation_delay_experiment(
 propagation_delay_experiment_directory = pe.construct_experiment_directories(
     experiment=basic_propagation_delay_experiment,
     parent_directory=experiment_data_directory,
+    construct_directory=True,
 )
 
 # ```
@@ -372,7 +417,11 @@ fig, ax = pe.visual.plot_signal_propagation_sweep_measurement(
     measurement_name="delay_ch1_ch2__s_1",
 )
 
-# TODO add graph showing this exact setup.
+fig, ax = pe.visual.plot_signal_propagation_sweep_signals(
+    pcb_propagation_delay_sweep_data,
+)
+
+# ### TODO add graph showing this exact setup.
 #
 # In this setup, we will use a RF signal generator and a RF oscilloscope.
 #

@@ -1,4 +1,4 @@
-from ...types import PhysicalPort, PulseSource
+from ...types import PhysicalPort, PulseSource, SignalTimeSources
 from ..types import WaveformGenerator, WaveformGeneratorConfiguration
 
 
@@ -38,9 +38,26 @@ def create_one_port_square_wave_waveform_generator(
         name="two_port_oscilloscope",
         ports=ports,
         configuration=configuration,
-        manufacturer="Tektronix",
     )
 
 
-def AWG70001A(**kwargs) -> WaveformGenerator:
-    pass
+def AWG70001A(signal: SignalTimeSources, **kwargs) -> WaveformGenerator:
+    # Configure the waveform generator
+    configuration = WaveformGeneratorConfiguration(signal=signal)
+
+    # Configure the ports
+    ports = [
+        PhysicalPort(
+            name="CH1",
+            domain="RF",
+            connector="SMA",
+        ),
+    ]
+
+    return WaveformGenerator(
+        name="AWG70001A",
+        ports=ports,
+        configuration=configuration,
+        manufacturer="Tektronix",
+        **kwargs
+    )

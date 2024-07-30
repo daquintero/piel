@@ -1,0 +1,163 @@
+- **name**: throguh
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **domain**: RF
+        - **connector**: None
+        - **manifold**: None
+      -
+        - **name**: PORT2
+        - **domain**: RF
+        - **connector**: None
+        - **manifold**: None
+    - **connections**: None
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+    - **configuration**: None
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **domain**: RF
+        - **connector**: SMA
+        - **manifold**: None
+      -
+        - **name**: OUT
+        - **domain**: RF
+        - **connector**: SMA
+        - **manifold**: None
+    - **connections**: None
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: None
+    - **model**: 1251C
+    - **geometry**:
+      - **units**: None
+      - **core_cross_sectional_area_m2**: None
+      - **length_m**: 0.025
+      - **sheath_cross_sectional_area_m2**: None
+      - **total_cross_sectional_area_m2**: None
+    - **heat_transfer**: None
+    - **material_specification**: None
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: RES1
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG1
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG2
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: RES2
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG3
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: OPEN
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SHORT
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG5
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: RES3
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG6
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG7
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: RES4
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: SIG8
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: L50
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+      -
+        - **name**: GND
+        - **domain**: RF
+        - **connector**: smp_plug
+        - **manifold**: None
+    - **connections**:
+    - **components**:
+    - **environment**:
+      - **temperature_K**: 273.0
+      - **region**: None
+    - **manufacturer**: None
+    - **model**: None
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: PORT1
+      -
+        - **name**: IN
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT
+      -
+        - **name**: SIG1
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: SIG2
+      -
+        - **name**: PORT2
+- **goal**: None
+- **index**: 1
+- **date_configured**: 2024-07-31 12:50:13.412438
+- **date_measured**: None

@@ -22,8 +22,8 @@ class PhysicalConnection(PielBaseModel):
     The components represent the physical implementation of the connections for the same connection index.
     """
 
-    connections: tuple[Connection]
-    components: Optional[tuple[Component]]
+    connections: list[Connection]
+    components: Optional[tuple[Component]] = None
 
 
 class PhysicalComponent(Component):
@@ -38,4 +38,9 @@ class PhysicalComponent(Component):
     manufacturer: Optional[str] = None
     """
     The manufacturer of the device.
+    """
+
+    model: Optional[str] = None
+    """
+    The model of the device.
     """

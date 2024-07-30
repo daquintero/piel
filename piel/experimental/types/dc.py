@@ -8,8 +8,10 @@ class SourcemeterConfiguration(DeviceConfiguration):
     not the experimental setup connectivity.
     """
 
-    current_limit_A: float
-    voltage_limit_V: float
+    voltage_set_V: Optional[float] = None
+    voltage_range_V: Optional[tuple] = None
+    current_limit_A: Optional[float] = None
+    voltage_limit_V: Optional[float] = None
 
 
 class Sourcemeter(Device):
