@@ -14,6 +14,9 @@ The implementation of this consists of tying down the requirements of the primar
 
 To guarantee full functionality of ``piel``, we provide some customised environment installations, particularly through ``nix`` in Linux.
 
+On each feature upgrade, ``piel`` has a github action that verifies the compatibility of the environments with some tools and platforms `here <https://github.com/daquintero/piel/blob/develop/.github/workflows/test_import.yaml>`. You can verify your OS platform and your tools with it.
+
+
 Dependency Environment Breakdown
 -----------------------------------------------
 
@@ -39,7 +42,7 @@ This table of tools compatibility is provided should you use a specific set of t
         - *
         - Many
       * - ``openlane``
-        -
+        - Not compatible
         - *
         -
         -
@@ -59,7 +62,7 @@ This table of tools compatibility is provided should you use a specific set of t
         - *
         - *
 
-This is a preliminary table, I mostly develop on Linux, you need to verify your system configuration or use the recommended Docker environment. TODO I am unsure about the OS X integrations.
+This is a preliminary table, I mostly develop on Linux, you need to verify your system configuration or use the recommended ``nix`` environment.
 
 In the future, we will have custom installations for different types of users so they can install minimal dependencies for their use case.
 
