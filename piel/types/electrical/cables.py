@@ -6,7 +6,7 @@ from ..connectivity.physical import PhysicalConnection, PhysicalComponent, Physi
 
 # TODO This shouldn't be a quantity
 class CoaxialCableGeometryType(QuantityType):
-    core_cross_sectional_area_m2: Optional[float]
+    core_cross_sectional_area_m2: Optional[float] = None
     """
     The cross-sectional area of the core in meters squared.
     """
@@ -16,12 +16,12 @@ class CoaxialCableGeometryType(QuantityType):
     The length of the cable in meters.
     """
 
-    sheath_cross_sectional_area_m2: Optional[float]
+    sheath_cross_sectional_area_m2: Optional[float] = None
     """
     The cross-sectional area of the sheath in meters squared.
     """
 
-    total_cross_sectional_area_m2: Optional[float]
+    total_cross_sectional_area_m2: Optional[float] = None
     """
     The total cross-sectional area of the cable in meters squared.
     """
@@ -32,17 +32,17 @@ class CoaxialCableHeatTransferType(QuantityType):
     All units are in watts.
     """
 
-    core: Optional[float]
+    core: Optional[float] = None
     """
     The computed heat transfer in watts for the core of the cable.
     """
 
-    sheath: Optional[float]
+    sheath: Optional[float] = None
     """
     The computed heat transfer in watts for the sheath of the cable.
     """
 
-    dielectric: Optional[float]
+    dielectric: Optional[float] = None
     """
     The computed heat transfer in watts for the dielectric of the cable.
     """
@@ -56,17 +56,17 @@ class CoaxialCableHeatTransferType(QuantityType):
 
 
 class CoaxialCableMaterialSpecificationType(QuantityType):
-    core: Optional[MaterialReferenceType]
+    core: Optional[MaterialReferenceType] = None
     """
     The material of the core.
     """
 
-    sheath: Optional[MaterialReferenceType]
+    sheath: Optional[MaterialReferenceType] = None
     """
     The material of the sheath.
     """
 
-    dielectric: Optional[MaterialReferenceType]
+    dielectric: Optional[MaterialReferenceType] = None
     """
     The material of the dielectric.
     """
@@ -94,7 +94,7 @@ class DCCableHeatTransferType(QuantityType):
     All units are in watts.
     """
 
-    core: Optional[float]
+    core: Optional[float] = None
     """
     The computed heat transfer in watts for the core of the cable.
     """
@@ -108,7 +108,7 @@ class DCCableHeatTransferType(QuantityType):
 
 
 class DCCableMaterialSpecificationType(QuantityType):
-    core: Optional[MaterialReferenceType]
+    core: Optional[MaterialReferenceType] = None
     """
     The material of the core.
     """

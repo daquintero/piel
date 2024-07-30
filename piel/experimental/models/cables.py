@@ -8,7 +8,24 @@ def rg164(
         length_m=length_m,
     )
 
-    return CoaxialCable(name="RG164", geometry=geometry)
+    ports = [
+        PhysicalPort(
+            name="IN",
+            domain="RF",
+            connector="SMA",
+        ),
+        PhysicalPort(
+            name="OUT",
+            domain="RF",
+            connector="SMA",
+        )
+    ]
+
+    return CoaxialCable(
+        name="RG164",
+        geometry=geometry,
+        ports=ports,
+    )
 
 
 def cryo_cable(
