@@ -16,7 +16,7 @@ def generic_banana(
             name="OUT",
             domain="DC",
             connector="Male",
-        )
+        ),
     ]
 
     return DCCable(
@@ -26,9 +26,9 @@ def generic_banana(
     )
 
 
-
 def rg164(
     length_m: float,
+    name: str = "RG164",
     **kwargs,
 ) -> CoaxialCable:
     geometry = CoaxialCableGeometryType(
@@ -45,13 +45,14 @@ def rg164(
             name="OUT",
             domain="RF",
             connector="SMA",
-        )
+        ),
     ]
 
     return CoaxialCable(
-        name="RG164",
+        name=name,
         geometry=geometry,
         ports=ports,
+        model="RG164",
         **kwargs,
     )
 
@@ -75,7 +76,7 @@ def generic_sma(
             name="OUT",
             domain="RF",
             connector="SMA",
-        )
+        ),
     ]
 
     return CoaxialCable(

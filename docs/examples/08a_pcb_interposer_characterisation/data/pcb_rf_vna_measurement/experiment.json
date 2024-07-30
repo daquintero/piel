@@ -1,0 +1,627 @@
+{
+    "name": "pcb_rf_vna_measurement",
+    "goal": "Perform S-Parameter characterization of a PCB trace.",
+    "experiment_instances": [
+        {
+            "name": "load_through",
+            "components": [
+                {
+                    "name": "E8364A",
+                    "ports": [
+                        {
+                            "name": "PORT1",
+                            "domain": "RF",
+                            "connector": null,
+                            "manifold": null
+                        },
+                        {
+                            "name": "PORT2",
+                            "domain": "RF",
+                            "connector": null,
+                            "manifold": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": [],
+                    "environment": null,
+                    "manufacturer": "Agilent",
+                    "model": "E8364A",
+                    "configuration": null
+                },
+                {
+                    "name": "blue_extension",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "domain": "RF",
+                            "connector": "SMA",
+                            "manifold": null
+                        },
+                        {
+                            "name": "OUT",
+                            "domain": "RF",
+                            "connector": "SMA",
+                            "manifold": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": [],
+                    "environment": null,
+                    "manufacturer": null,
+                    "model": "1251C",
+                    "geometry": {
+                        "units": null,
+                        "core_cross_sectional_area_m2": null,
+                        "length_m": 0.025,
+                        "sheath_cross_sectional_area_m2": null,
+                        "total_cross_sectional_area_m2": null
+                    },
+                    "heat_transfer": null,
+                    "material_specification": null
+                },
+                {
+                    "name": "PCB3",
+                    "ports": [
+                        {
+                            "name": "SIG14",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES1",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG1",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG2",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES2",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG3",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "OPEN",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SHORT",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG5",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES3",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG6",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG7",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES4",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG8",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "L50",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "GND",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        }
+                    ],
+                    "connections": [],
+                    "components": [],
+                    "environment": {
+                        "temperature_K": 273.0,
+                        "region": null
+                    },
+                    "manufacturer": null,
+                    "model": null
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "PORT1"
+                        },
+                        {
+                            "name": "IN"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT"
+                        },
+                        {
+                            "name": "SIG6"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "SIG7"
+                        },
+                        {
+                            "name": "PORT2"
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "index": 0,
+            "date_configured": "2024-07-31 12:50:13.412285",
+            "date_measured": null
+        },
+        {
+            "name": "throguh",
+            "components": [
+                {
+                    "name": "E8364A",
+                    "ports": [
+                        {
+                            "name": "PORT1",
+                            "domain": "RF",
+                            "connector": null,
+                            "manifold": null
+                        },
+                        {
+                            "name": "PORT2",
+                            "domain": "RF",
+                            "connector": null,
+                            "manifold": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": [],
+                    "environment": null,
+                    "manufacturer": "Agilent",
+                    "model": "E8364A",
+                    "configuration": null
+                },
+                {
+                    "name": "blue_extension",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "domain": "RF",
+                            "connector": "SMA",
+                            "manifold": null
+                        },
+                        {
+                            "name": "OUT",
+                            "domain": "RF",
+                            "connector": "SMA",
+                            "manifold": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": [],
+                    "environment": null,
+                    "manufacturer": null,
+                    "model": "1251C",
+                    "geometry": {
+                        "units": null,
+                        "core_cross_sectional_area_m2": null,
+                        "length_m": 0.025,
+                        "sheath_cross_sectional_area_m2": null,
+                        "total_cross_sectional_area_m2": null
+                    },
+                    "heat_transfer": null,
+                    "material_specification": null
+                },
+                {
+                    "name": "PCB3",
+                    "ports": [
+                        {
+                            "name": "SIG14",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES1",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG1",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG2",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES2",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG3",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "OPEN",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SHORT",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG5",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES3",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG6",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG7",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES4",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG8",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "L50",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "GND",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        }
+                    ],
+                    "connections": [],
+                    "components": [],
+                    "environment": {
+                        "temperature_K": 273.0,
+                        "region": null
+                    },
+                    "manufacturer": null,
+                    "model": null
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "PORT1"
+                        },
+                        {
+                            "name": "IN"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT"
+                        },
+                        {
+                            "name": "SIG1"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "SIG2"
+                        },
+                        {
+                            "name": "PORT2"
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "index": 1,
+            "date_configured": "2024-07-31 12:50:13.412438",
+            "date_measured": null
+        },
+        {
+            "name": "short",
+            "components": [
+                {
+                    "name": "E8364A",
+                    "ports": [
+                        {
+                            "name": "PORT1",
+                            "domain": "RF",
+                            "connector": null,
+                            "manifold": null
+                        },
+                        {
+                            "name": "PORT2",
+                            "domain": "RF",
+                            "connector": null,
+                            "manifold": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": [],
+                    "environment": null,
+                    "manufacturer": "Agilent",
+                    "model": "E8364A",
+                    "configuration": null
+                },
+                {
+                    "name": "blue_extension",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "domain": "RF",
+                            "connector": "SMA",
+                            "manifold": null
+                        },
+                        {
+                            "name": "OUT",
+                            "domain": "RF",
+                            "connector": "SMA",
+                            "manifold": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": [],
+                    "environment": null,
+                    "manufacturer": null,
+                    "model": "1251C",
+                    "geometry": {
+                        "units": null,
+                        "core_cross_sectional_area_m2": null,
+                        "length_m": 0.025,
+                        "sheath_cross_sectional_area_m2": null,
+                        "total_cross_sectional_area_m2": null
+                    },
+                    "heat_transfer": null,
+                    "material_specification": null
+                },
+                {
+                    "name": "PCB3",
+                    "ports": [
+                        {
+                            "name": "SIG14",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES1",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG1",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG2",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES2",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG3",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "OPEN",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SHORT",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG5",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES3",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG6",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG7",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "RES4",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "SIG8",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "L50",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        },
+                        {
+                            "name": "GND",
+                            "domain": "RF",
+                            "connector": "smp_plug",
+                            "manifold": null
+                        }
+                    ],
+                    "connections": [],
+                    "components": [],
+                    "environment": {
+                        "temperature_K": 273.0,
+                        "region": null
+                    },
+                    "manufacturer": null,
+                    "model": null
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "PORT1"
+                        },
+                        {
+                            "name": "IN"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT"
+                        },
+                        {
+                            "name": "RES1"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "GND"
+                        },
+                        {
+                            "name": "PORT2"
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "index": 2,
+            "date_configured": "2024-07-31 12:50:13.412562",
+            "date_measured": null
+        }
+    ]
+}

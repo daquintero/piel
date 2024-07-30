@@ -17,6 +17,8 @@ class Port(Instance):
     This represents the fundamental data structure to identify a port.
     """
 
+    parent_component_name: Optional[str] = None
+
 
 class Connection(Instance):
     """

@@ -29,7 +29,9 @@ def write_schema_markdown(schema_json_file: PathTypes, target_markdown_file: Pat
 
 
 def construct_experiment_directories(
-    experiment: Experiment, parent_directory: PathTypes
+    experiment: Experiment,
+    parent_directory: PathTypes,
+    construct_directory: bool = True,
 ) -> PathTypes:
     """
     This function constructs the directories of the experiment configuration. It iterates through the experiment
@@ -73,7 +75,7 @@ def construct_experiment_directories(
     # Create the experiment directory
     experiment_directory = parent_directory / experiment.name
 
-    if experiment_directory.exists():
+    if (experiment_directory.exists()) and not construct_directory:
         input(
             "The directory already exists. Press enter to continue and overwrite all the json and configuration "
             "files."

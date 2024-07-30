@@ -1,11 +1,5 @@
-import skrf
 from ..core import PielBaseModel
-
-
-SParameterNetwork = skrf.Network
-"""
-Corresponds to a container that contains a s-parameter representation.
-"""
+from ..frequency import FrequencyNetworkModel
 
 
 class TwoPortCalibrationNetworkCollection(PielBaseModel):
@@ -13,22 +7,22 @@ class TwoPortCalibrationNetworkCollection(PielBaseModel):
     Two-port representation of the corresponding networks
     """
 
-    through: SParameterNetwork
+    through: FrequencyNetworkModel
     """
     This should correspond to a two-port through network.
     """
 
-    short: SParameterNetwork
+    short: FrequencyNetworkModel
     """
     This should correspond to a two-port short network either reciprocal or non-reciprocal.
     """
 
-    open: SParameterNetwork
+    open: FrequencyNetworkModel
     """
     This should correspond to a two-port open network either reciprocal or non-reciprocal.
     """
 
-    load: SParameterNetwork
+    load: FrequencyNetworkModel
     """
     This should correspond to a two-port load network either reciprocal or non-reciprocal.
     """

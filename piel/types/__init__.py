@@ -50,6 +50,7 @@ from .electrical.rf_calibration import Short, Open, Load, Through
 
 from .electrical.rf_passives import (
     PowerSplitter,
+    BiasTee,
 )
 
 from .electro_optic import (
@@ -60,7 +61,18 @@ from .electro_optic import (
     SwitchFunctionParameter,
     SParameterCollection,
 )
-from .electronic import HVAMetricsType, LNAMetricsType, ElectronicCircuitComponent
+
+from .electronic.core import (
+    ElectronicCircuit,
+    ElectronicChip,
+    ElectronicCircuitComponent,
+)
+from .electronic.amplifier import RFTwoPortAmplifier
+from .electronic.hva import HVAMetricsType, HighVoltageTwoPortAmplifier
+from .electronic.lna import LNAMetricsType, LowNoiseTwoPortAmplifier
+
+from .frequency import FrequencyNetworkModel
+
 from .file_system import ProjectType
 from .integration import CircuitComponent
 from .materials import (
@@ -81,7 +93,6 @@ from .signal.core import ElectricalSignalDomains
 from .signal.dc_data import SignalDC, DCSweepData
 
 from .signal.frequency import (
-    SParameterNetwork,
     TwoPortCalibrationNetworkCollection,
 )
 

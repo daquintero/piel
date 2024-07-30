@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Literal
 from ...types import PathTypes, PhysicalPort
 from .device import (
     DeviceMeasurement,
@@ -14,8 +14,10 @@ class VNAConfiguration(DeviceConfiguration):
     """
 
     calibration_setting_name: Optional[str] = None
-    sweep_points: int
-    frequency_range_Hz: tuple[float, float]
+    sweep_points: int = None
+    frequency_range_Hz: tuple[float, float] = None
+    test_port_power_dBm: float = None
+    measurement_type: Literal["s_parameter", "power_sweep"] = "s_parameter"
 
 
 class VNA(Device):
