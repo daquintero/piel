@@ -30,6 +30,12 @@ You can either clone the public repository:
 
    $ git clone git://github.com/daquintero/piel
 
+If you are using Windows, you might have to run this too:
+
+.. code:: bash
+
+    git config --global core.longpaths true
+
 Or download the
 `tarball <https://github.com/daquintero/piel/tarball/master>`__:
 
@@ -55,11 +61,12 @@ Developer’s Requirements
 You might also need to run the following commands to run the examples,
 documentation, and full environment:
 
-::
+.. code:: bash
 
    mamba install pandoc
    mamba install jupyterlab jupytext
    poetry install -E dev
+
 
 Usage
 -----
