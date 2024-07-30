@@ -1,8 +1,14 @@
+from typing import Optional
 from ...types import PhysicalPort
 from ..types import Sourcemeter
 
 
-def SMU2450(**kwargs) -> Sourcemeter:
+def SMU2450(name: Optional[str] = None,
+            **kwargs) -> Sourcemeter:
+    
+    if name is None:
+        name = "SMU2450"
+
     ports = [
         PhysicalPort(
             name="FORCEHI",
@@ -31,4 +37,4 @@ def SMU2450(**kwargs) -> Sourcemeter:
         ),
     ]
 
-    return Sourcemeter(name="SMU2450", manufacturer="Keithley", ports=ports, **kwargs)
+    return Sourcemeter(name=name, manufacturer="Keithley", ports=ports, **kwargs)

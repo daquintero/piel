@@ -1,4 +1,4 @@
-from .cables import rg164
+from .cables import rg164, generic_sma, generic_banana
 from .multimeter import DMM6500
 from .rf_passives import create_power_splitter_1to2
 from .rf_calibration import (
