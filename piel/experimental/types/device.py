@@ -2,17 +2,10 @@
 Note that this section of experimental types is separate from the main piel package flow because they correspond to
 specific experimental files that is not yet part of the main package in a flow used as per the devices provided.
 """
+
 from typing import Optional
-from ...types import PielBaseModel, PhysicalComponent, PathTypes
-
-
-class DeviceMeasurement(PielBaseModel):
-    """
-    Standard definition for a measurement.
-    """
-
-    name: Optional[str] = None
-    parent_directory: Optional[PathTypes] = None
+from ...types import PielBaseModel, PhysicalComponent
+from .measurements.core import MeasurementConfiguration
 
 
 class DeviceConfiguration(PielBaseModel):
@@ -28,7 +21,7 @@ class Device(PhysicalComponent):
 
 
 class MeasurementDevice(Device):
-    measurement: Optional[DeviceMeasurement] = None
+    measurement: Optional[MeasurementConfiguration] = None
     """
     Contains the measurement information.
     """

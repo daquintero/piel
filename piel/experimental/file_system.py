@@ -3,6 +3,9 @@ This file contains all functionality required to verify the corresponding experi
 mapping between experimental data, configuration ids, and the file structure accordingly. The goal would be to create
 a direct mapping between an operating setup configuration, or experiment.
 """
+
+import pandas as pd
+
 from ..types import PathTypes
 from .types import Experiment
 from ..file_system import (
@@ -25,7 +28,13 @@ def write_schema_markdown(schema_json_file: PathTypes, target_markdown_file: Pat
     schema_json_file = return_path(schema_json_file)
     schema_json_file = read_json(schema_json_file)
     schema_markdown = dictionary_to_markdown_str(schema_json_file)
-    write_file(target_markdown_file.parent, schema_markdown, target_markdown_file.name)
+    schema_markdown = "\n\n## Schema \n" + schema_markdown
+    write_file(
+        target_markdown_file.parent,
+        schema_markdown,
+        target_markdown_file.name,
+        append=True,
+    )
 
 
 def construct_experiment_directories(
@@ -87,6 +96,26 @@ def construct_experiment_directories(
     experiment_json_path = experiment_directory / "experiment.json"
     experiment_markdown_path = experiment_directory / "README.md"
     write_model_to_json(experiment, experiment_json_path)
+
+    # Experiment Top Level
+    markdown_top_text = (
+        "# "
+        + str(experiment.name)
+        + "\n\n**Goal**: "
+        + str(experiment.goal)
+        + "\n\n## Experiment Parameters \n\n"
+    )
+    write_file(
+        experiment_markdown_path.parent,
+        markdown_top_text,
+        experiment_markdown_path.name,
+    )
+
+    # Construct the iteration parameters table and save iteration table to markdown
+    iteration_parameters_table = pd.DataFrame(experiment.parameters_list)
+    iteration_parameters_table.to_markdown(experiment_markdown_path, mode="a")
+
+    # Append schema to markdown
     write_schema_markdown(experiment_json_path, experiment_markdown_path)
 
     # Create the experiment instances

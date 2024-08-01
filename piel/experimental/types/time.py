@@ -1,6 +1,6 @@
 from typing import Optional
-from ...types import SignalTimeSources, MinimumMaximumType, PathTypes
-from .device import DeviceConfiguration, Device, MeasurementDevice, DeviceMeasurement
+from ...types import SignalTimeSources, MinimumMaximumType
+from .device import DeviceConfiguration, Device, MeasurementDevice
 
 
 class WaveformGeneratorConfiguration(DeviceConfiguration):
@@ -44,4 +44,3 @@ class Oscilloscope(MeasurementDevice):
     """
     Just overwrites this section of the device definition.
     """
-

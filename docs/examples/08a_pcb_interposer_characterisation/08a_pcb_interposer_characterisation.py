@@ -113,9 +113,17 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
     experiment_instances = list()
     i = 0
     for measurement_i in measurements.items():
+        sparameter_measurement_configuration = (
+            pe.types.VNASParameterMeasurementConfiguration(
+                test_port_power_dBm=-17,
+                sweep_points=6401,
+                frequency_range_Hz=(45e6, 20e9),
+            )
+        )
+
         # Define experimental components
         vna_configuration = pe.types.VNAConfiguration(
-            test_port_power_dBm=-17, frequency_range_Hz=[45e6, 20e9]
+            measurement_configuration=sparameter_measurement_configuration
         )
 
         vna = pe.models.vna.E8364A(configuration=vna_configuration)
@@ -197,6 +205,7 @@ vna_pcb_experiment_directory = pe.construct_experiment_directories(
 
 # Now, let's save the experimental data in there accordingly.
 
+
 # ## Time-Domain Analysis
 #
 # Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain response is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
@@ -231,6 +240,7 @@ def calibration_propagation_delay_experiment_instance(
         name=f"calibration_{square_wave_frequency_Hz}_Hz",
         components=[oscilloscope, waveform_generator, splitter],
         connections=experiment_connections,
+        parameters={"square_wave_frequency_Hz": square_wave_frequency_Hz},
     )
     return experiment_instance
 
@@ -273,7 +283,13 @@ oscilloscope
 
 
 def propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = None):
+    # Create reference iteration parameters
+    parameters_list = list()
+
+    # Create all the experiment instances
     experiment_instance_list = list()
+
+    # Iterate through experimental parameters
     for square_wave_frequency_Hz_i in square_wave_frequency_Hz_list:
         pcb_experiment_instance_i = pcb_propagation_delay_experiment_instance(
             square_wave_frequency_Hz=square_wave_frequency_Hz_i
@@ -286,11 +302,13 @@ def propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = No
             )
         )
         experiment_instance_list.append(calibration_experiment_instance_i)
+        parameters_list.append({"square_wave_frequency_Hz": square_wave_frequency_Hz_i})
 
     experiment = pe.types.Experiment(
         name="multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
         goal="Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
+        parameters_list=parameters_list,
     )
     return experiment
 

@@ -1,10 +1,10 @@
-from typing import Optional, Literal
-from ...types import PathTypes, PhysicalPort
+from typing import Optional
+from ...types import PhysicalPort
 from .device import (
-    DeviceMeasurement,
     DeviceConfiguration,
     Device,
 )
+from .measurements.generic import FrequencyMeasurementConfigurationTypes
 
 
 class VNAConfiguration(DeviceConfiguration):
@@ -14,10 +14,7 @@ class VNAConfiguration(DeviceConfiguration):
     """
 
     calibration_setting_name: Optional[str] = None
-    sweep_points: int = None
-    frequency_range_Hz: tuple[float, float] = None
-    test_port_power_dBm: float = None
-    measurement_type: Literal["s_parameter", "power_sweep"] = "s_parameter"
+    measurement_configuration: FrequencyMeasurementConfigurationTypes = None
 
 
 class VNA(Device):
@@ -37,11 +34,3 @@ class VNA(Device):
     """
     Defaults to a two-port VNA, defined as PORT1 and PORT2.
     """
-
-
-class VNAMeasurement(DeviceMeasurement):
-    """
-    Standard definition for a collection of files that are part of a VNA measurement.
-    """
-
-    spectrum_file: PathTypes

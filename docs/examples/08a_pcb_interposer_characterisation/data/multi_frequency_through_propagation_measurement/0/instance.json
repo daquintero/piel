@@ -5,10 +5,12 @@
             "name": "two_port_oscilloscope",
             "ports": [
                 {
-                    "name": "CH1"
+                    "name": "CH1",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "CH2"
+                    "name": "CH2",
+                    "parent_component_name": null
                 }
             ],
             "connections": null,
@@ -18,7 +20,8 @@
             "name": "two_port_oscilloscope",
             "ports": [
                 {
-                    "name": "CH1"
+                    "name": "CH1",
+                    "parent_component_name": null
                 }
             ],
             "connections": null,
@@ -28,13 +31,16 @@
             "name": "power_splitter_1to2",
             "ports": [
                 {
-                    "name": "IN"
+                    "name": "IN",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "OUT1"
+                    "name": "OUT1",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "OUT2"
+                    "name": "OUT2",
+                    "parent_component_name": null
                 }
             ],
             "connections": null,
@@ -46,10 +52,12 @@
             "name": null,
             "ports": [
                 {
-                    "name": "OUT1"
+                    "name": "OUT1",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "CH1"
+                    "name": "CH1",
+                    "parent_component_name": null
                 }
             ]
         },
@@ -57,15 +65,18 @@
             "name": null,
             "ports": [
                 {
-                    "name": "OUT2"
+                    "name": "OUT2",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "CH2"
+                    "name": "CH2",
+                    "parent_component_name": null
                 }
             ]
         }
     ],
     "goal": null,
+    "parameters": null,
     "index": null,
     "date_configured": null,
     "date_measured": null

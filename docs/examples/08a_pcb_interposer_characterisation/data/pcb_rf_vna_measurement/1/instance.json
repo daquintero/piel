@@ -6,12 +6,14 @@
             "ports": [
                 {
                     "name": "PORT1",
+                    "parent_component_name": null,
                     "domain": "RF",
                     "connector": null,
                     "manifold": null
                 },
                 {
                     "name": "PORT2",
+                    "parent_component_name": null,
                     "domain": "RF",
                     "connector": null,
                     "manifold": null
@@ -22,19 +24,33 @@
             "environment": null,
             "manufacturer": "Agilent",
             "model": "E8364A",
-            "configuration": null
+            "configuration": {
+                "calibration_setting_name": null,
+                "measurement_configuration": {
+                    "name": null,
+                    "parent_directory": null,
+                    "frequency_range_Hz": [
+                        45000000.0,
+                        20000000000.0
+                    ],
+                    "sweep_points": 6401,
+                    "test_port_power_dBm": -17.0
+                }
+            }
         },
         {
             "name": "blue_extension",
             "ports": [
                 {
                     "name": "IN",
+                    "parent_component_name": null,
                     "domain": "RF",
                     "connector": "SMA",
                     "manifold": null
                 },
                 {
                     "name": "OUT",
+                    "parent_component_name": null,
                     "domain": "RF",
                     "connector": "SMA",
                     "manifold": null
@@ -60,96 +76,112 @@
             "ports": [
                 {
                     "name": "SIG14",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "RES1",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG1",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG2",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "RES2",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG3",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "OPEN",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SHORT",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG5",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "RES3",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG6",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG7",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "RES4",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "SIG8",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "L50",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
                 },
                 {
                     "name": "GND",
+                    "parent_component_name": "PCB3",
                     "domain": "RF",
                     "connector": "smp_plug",
                     "manifold": null
@@ -170,10 +202,12 @@
             "name": null,
             "ports": [
                 {
-                    "name": "PORT1"
+                    "name": "PORT1",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "IN"
+                    "name": "IN",
+                    "parent_component_name": null
                 }
             ]
         },
@@ -181,10 +215,12 @@
             "name": null,
             "ports": [
                 {
-                    "name": "OUT"
+                    "name": "OUT",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "SIG1"
+                    "name": "SIG1",
+                    "parent_component_name": "PCB3"
                 }
             ]
         },
@@ -192,16 +228,19 @@
             "name": null,
             "ports": [
                 {
-                    "name": "SIG2"
+                    "name": "SIG2",
+                    "parent_component_name": "PCB3"
                 },
                 {
-                    "name": "PORT2"
+                    "name": "PORT2",
+                    "parent_component_name": null
                 }
             ]
         }
     ],
     "goal": null,
+    "parameters": null,
     "index": 1,
-    "date_configured": "2024-07-31 12:50:13.412438",
+    "date_configured": "2024-08-01 12:55:13.398641",
     "date_measured": null
 }

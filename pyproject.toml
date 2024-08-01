@@ -88,6 +88,7 @@ sax = "0.12.2"  # Pinned for pydantic <v2 compatibility.
 scikit-rf = "^1.1.0"
 scipy = "^1.11.4"
 setuptools = "*"
+tabulate = "*"
 sky130 = {git = "https://github.com/daquintero/skywater130.git", branch = "dario/patch_for_rladder_gplugins"}
 sky130-hdl21 = {version = "^6.0.0"}
 sphinx = {version = "^7.2.1", optional = true}

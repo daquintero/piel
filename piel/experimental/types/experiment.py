@@ -1,5 +1,6 @@
 from typing import Optional
 from ...types import Instance, ComponentTypes, ConnectionTypes
+from .measurements.generic import MeasurementTypes
 
 
 class ExperimentInstance(Instance):
@@ -24,6 +25,11 @@ class ExperimentInstance(Instance):
     The goal of the experiment test.
     """
 
+    parameters: Optional[dict] = None
+    """
+    A dictionary of reference parameters in this experimental instance. Does not contain all the serialised experimental data.
+    """
+
     index: Optional[int] = None
     """
     A defined index of the experiment instance tuple.
@@ -38,6 +44,8 @@ class ExperimentInstance(Instance):
     """
     The date the experiment was measured.
     """
+
+    measurement_configuration_list: list[MeasurementTypes] = None
 
 
 class Experiment(Instance):
@@ -56,12 +64,7 @@ class Experiment(Instance):
     Contains all the experiment instances.
     """
 
-
-class SweepExperiment(Experiment):
+    parameters_list: list[dict] = None
     """
-    This is a specific instance of an experimental configuration. It can be the result of serialization a given
-    experiment configuration. The experiment contains all devices that correspond a specific setup. Each device
-    contains a particular configuration, or may have information about the environment, etc.
+    List of basic important parameters in dictionaries used to do basic metadata analysis of the experiment.
     """
-
-    sweep_configuration: Optional[list[dict]]
