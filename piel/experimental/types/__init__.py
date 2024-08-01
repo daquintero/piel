@@ -25,24 +25,48 @@ from .frequency import (
 
 from .measurements.core import MeasurementConfiguration
 
-from .measurements.frequency import (
-    VNASParameterMeasurementConfiguration,
-    VNAPowerSweepMeasurementConfiguration,
-)
-
-from .measurements.propagation import (
-    PropagationDelayMeasurement,
-    PropagationDelayMeasurementSweep,
+from .measurements.data.core import (
+    MeasurementData,
+    MeasurementDataCollection
 )
 
 from .measurements.data.propagation import (
     PropagationDelayMeasurementData,
-    PropagationDelayMeasurementSweepData,
+    PropagationDelayMeasurementDataCollection,
 )
 
-from .measurements.data.frequency import VNASParameterMeasurementData
+from .measurements.data.frequency import (
+    VNASParameterMeasurementData,
+    VNASParameterMeasurementDataCollection
+)
 
-from .measurements.generic import MeasurementTypes
+from .measurements.data.generic import (
+    MeasurementDataTypes,
+    MeasurementDataCollectionTypes,
+    FrequencyMeasurementDataTypes
+)
+
+from .measurements.frequency import (
+    VNASParameterMeasurementConfiguration,
+    VNAPowerSweepMeasurementConfiguration,
+    VNASParameterMeasurement,
+    VNAPowerSweepMeasurement,
+    VNAPowerSweepMeasurementCollection,
+    VNASParameterMeasurementCollection,
+)
+
+from .measurements.propagation import (
+    PropagationDelayMeasurement,
+    PropagationDelayMeasurementCollection,
+)
+
+from .measurements.generic import (
+    FrequencyMeasurementConfigurationTypes,
+    FrequencyMeasurementTypes,
+    MeasurementTypes,
+    MeasurementConfigurationTypes,
+    MeasurementCollectionTypes,
+)
 
 from .time import (
     Oscilloscope,

@@ -38,6 +38,7 @@
           - **measurement_configuration**:
             - **name**: None
             - **parent_directory**: None
+            - **measurement_type**: None
             - **frequency_range_Hz**:
               - 45000000.0
               - 20000000000.0
@@ -208,8 +209,18 @@
     - **goal**: None
     - **parameters**: None
     - **index**: 0
-    - **date_configured**: 2024-08-01 12:55:13.398558
+    - **date_configured**: 2024-08-01 18:00:33.268242
     - **date_measured**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**:
+          - 45000000.0
+          - 20000000000.0
+        - **sweep_points**: 6401
+        - **test_port_power_dBm**: -17.0
   -
     - **name**: throguh
     - **components**:
@@ -238,6 +249,7 @@
           - **measurement_configuration**:
             - **name**: None
             - **parent_directory**: None
+            - **measurement_type**: None
             - **frequency_range_Hz**:
               - 45000000.0
               - 20000000000.0
@@ -408,8 +420,18 @@
     - **goal**: None
     - **parameters**: None
     - **index**: 1
-    - **date_configured**: 2024-08-01 12:55:13.398641
+    - **date_configured**: 2024-08-01 18:00:33.268399
     - **date_measured**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**:
+          - 45000000.0
+          - 20000000000.0
+        - **sweep_points**: 6401
+        - **test_port_power_dBm**: -17.0
   -
     - **name**: short
     - **components**:
@@ -438,6 +460,7 @@
           - **measurement_configuration**:
             - **name**: None
             - **parent_directory**: None
+            - **measurement_type**: None
             - **frequency_range_Hz**:
               - 45000000.0
               - 20000000000.0
@@ -608,6 +631,16 @@
     - **goal**: None
     - **parameters**: None
     - **index**: 2
-    - **date_configured**: 2024-08-01 12:55:13.398710
+    - **date_configured**: 2024-08-01 18:00:33.268505
     - **date_measured**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**:
+          - 45000000.0
+          - 20000000000.0
+        - **sweep_points**: 6401
+        - **test_port_power_dBm**: -17.0
 - **parameters_list**: None

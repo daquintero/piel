@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
-from ..types import PropagationDelayMeasurementSweepData
+from ..types import PropagationDelayMeasurementDataCollection
 from typing import Optional
 
 
 def plot_signal_propagation_sweep_signals(
-    signal_propagation_sweep_data: PropagationDelayMeasurementSweepData,
+    signal_propagation_sweep_data: PropagationDelayMeasurementDataCollection,
     measurement_section: Optional[list[str]] = None,
     xlabel=r"Time $ns$",
     ylabel=r"Voltage $mV$",
@@ -60,7 +60,7 @@ def plot_signal_propagation_sweep_signals(
 
 
 def plot_signal_propagation_sweep_measurement(
-    signal_propagation_sweep_data: PropagationDelayMeasurementSweepData,
+    signal_propagation_sweep_data: PropagationDelayMeasurementDataCollection,
     measurement_name: str,
     measurement_section: Optional[list[str]] = None,
     xlabel=r"Source Frequency $GHz$",

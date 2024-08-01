@@ -163,6 +163,7 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
             connections=experiment_connections,
             index=i,
             date_configured=str(datetime.now()),
+            measurement_configuration_list=[sparameter_measurement_configuration],
         )
 
         experiment_instances.append(experiment_measurement)
@@ -176,7 +177,7 @@ vna_pcb_experiment = create_calibration_vna_experiments(
     measurements=measurement_connections,
     goal="Perform S-Parameter characterization of a PCB trace.",
 )
-vna_pcb_experiment
+# vna_pcb_experiment
 
 # Now, let's create an experiment `data` directory in which to save the data accordingly:
 
@@ -203,8 +204,28 @@ vna_pcb_experiment_directory = pe.construct_experiment_directories(
 # !pwd $vna_pcb_experiment_directory
 # !ls $vna_pcb_experiment_directory
 
-# Now, let's save the experimental data in there accordingly.
+# Now, let's save the experimental data in there accordingly. Once we save the data, we can recompose the data into measurement containers based on the `MeasurementConfigurationTypes` we defined for each `ExperimantInstance`.
 
+
+example_measurement = pe.compose_measurement_from_experiment_instance(
+    vna_pcb_experiment.experiment_instances[1],
+    instance_directory=vna_pcb_experiment_directory / "1",
+)
+example_measurement
+
+# However, we might want to compose our measurements into a `MeasurementCollection`:
+
+vna_pcb_experiment_collection = pe.compose_measurement_collection_from_experiment(
+    vna_pcb_experiment,
+    experiment_directory=vna_pcb_experiment_directory,
+)
+vna_pcb_experiment_collection
+
+pe.extract_data_from_measurement_collection(
+    measurement_collection=vna_pcb_experiment_collection,
+    # measurement_to_data_map: dict = measurement_to_data_map,
+    # measurement_to_data_method_map: dict = measurement_to_data_method_map,
+)
 
 # ## Time-Domain Analysis
 #
@@ -402,10 +423,12 @@ calibration_propagation_data = [
 
 # Now we need to write some functionality to extract the files stored in these files in a meaningful way. Fortunately, there's already some functionality using `piel` in this context:
 
-calibration_propagation_delay_sweep_data = pe.types.PropagationDelayMeasurementSweep(
-    measurements=calibration_propagation_data,
+calibration_propagation_delay_sweep_data = (
+    pe.types.PropagationDelayMeasurementCollection(
+        measurements=calibration_propagation_data,
+    )
 )
-pcb_propagation_delay_sweep_data = pe.types.PropagationDelayMeasurementSweep(
+pcb_propagation_delay_sweep_data = pe.types.PropagationDelayMeasurementCollection(
     measurements=pcb_propagation_data, name="frequency_sweep"
 )
 
