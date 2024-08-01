@@ -29,6 +29,7 @@
                 "measurement_configuration": {
                     "name": null,
                     "parent_directory": null,
+                    "measurement_type": null,
                     "frequency_range_Hz": [
                         45000000.0,
                         20000000000.0
@@ -241,6 +242,19 @@
     "goal": null,
     "parameters": null,
     "index": 0,
-    "date_configured": "2024-08-01 12:55:13.398558",
-    "date_measured": null
+    "date_configured": "2024-08-01 18:00:33.268242",
+    "date_measured": null,
+    "measurement_configuration_list": [
+        {
+            "name": null,
+            "parent_directory": null,
+            "measurement_type": null,
+            "frequency_range_Hz": [
+                45000000.0,
+                20000000000.0
+            ],
+            "sweep_points": 6401,
+            "test_port_power_dBm": -17.0
+        }
+    ]
 }

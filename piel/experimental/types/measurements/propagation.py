@@ -1,6 +1,5 @@
-from ....types import Instance, PathTypes
-from ..device import Measurement
-from .core import MeasurementConfiguration
+from ....types import PathTypes
+from .core import MeasurementConfiguration, Measurement
 
 
 class PropagationDelayMeasurementConfiguration(MeasurementConfiguration):
@@ -15,15 +14,9 @@ class PropagationDelayMeasurement(Measurement):
     TODO add link to the documentation of the propagation delay measurement.
     """
 
-    dut_waveform_prefix: PathTypes
-    reference_waveform_prefix: PathTypes
-    measurements_prefix: PathTypes
+    dut_waveform_file: PathTypes
+    reference_waveform_file: PathTypes
+    measurements_file: PathTypes
 
 
-class PropagationDelayMeasurementSweep(Instance):
-    """
-    This class is used to define a collection of PropagationDelayFileCollection that are part of a sweep of a parameter
-    as defined within each PropagationDelayFileCollection.
-    """
-
-    measurements: list[PropagationDelayMeasurement]
+PropagationDelayMeasurementCollection = list[PropagationDelayMeasurement]

@@ -4,4 +4,7 @@ from ....types import ExperimentInstance
 
 
 class MeasurementData(Instance):
-    experimental_instance: Optional[ExperimentInstance] = None
+    pass
+
+
+MeasurementDataCollection = list[MeasurementData]

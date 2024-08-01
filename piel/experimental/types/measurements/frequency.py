@@ -27,3 +27,7 @@ class VNAPowerSweepMeasurement(Measurement):
     """
 
     spectrum_file: PathTypes
+
+
+VNASParameterMeasurementCollection = list[VNASParameterMeasurement]
+VNAPowerSweepMeasurementCollection = list[VNASParameterMeasurementCollection]

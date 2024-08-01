@@ -1,6 +1,6 @@
 from typing import Optional
 from ...types import Instance, ComponentTypes, ConnectionTypes
-from .measurements.generic import MeasurementTypes
+from .measurements.generic import MeasurementConfigurationTypes
 
 
 class ExperimentInstance(Instance):
@@ -45,7 +45,7 @@ class ExperimentInstance(Instance):
     The date the experiment was measured.
     """
 
-    measurement_configuration_list: list[MeasurementTypes] = None
+    measurement_configuration_list: list[MeasurementConfigurationTypes] = None
 
 
 class Experiment(Instance):

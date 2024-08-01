@@ -21,16 +21,4 @@ class PropagationDelayMeasurementData(MeasurementData):
 
 
 # TODO modify this for the new structure
-class PropagationDelayMeasurementSweepData(Instance):
-    """
-    This class is used to define a collection of PropagationDelayData that are part of a sweep of a parameter
-    as defined within each PropagationDelayData.
-
-    Attributes:
-        data (list[SignalPropagationData]): The collection of PropagationDelay
-    """
-
-    """
-    The name of the parameter that is being swept. Must exist within the PropagationDelayMeasurement files definition.
-    """
-    data: list[PropagationDelayMeasurementData]
+PropagationDelayMeasurementDataCollection = list[PropagationDelayMeasurementData]
