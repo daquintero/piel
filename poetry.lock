@@ -6928,6 +6928,20 @@ mpmath = ">=1.1.0,<1.4"
 dev = ["hypothesis (>=6.70.0)", "pytest (>=7.1.0)"]
 
 [[package]]
+name = "tabulate"
+version = "0.9.0"
+description = "Pretty-print tabular data"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
+    {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
+]
+
+[package.extras]
+widechars = ["wcwidth"]
+
+[[package]]
 name = "tensorstore"
 version = "0.1.63"
 description = "Read and write large, multi-dimensional arrays"
@@ -8108,4 +8122,4 @@ dev = ["black", "bokeh", "bump-my-version", "cookiecutter", "coverage", "flake8"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "9b731a519ec7e28fc6d8c3d93887d82ac3fdd8d042613b3b56d6ce2a60301fa8"
+content-hash = "6d68b0c8b119c5f5d34c575c3212b162bf40800f4d5deef96eb60cbda2a6f825"

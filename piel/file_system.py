@@ -735,14 +735,16 @@ def write_file(
     directory_path: PathTypes,
     file_text: str,
     file_name: str,
+    append: bool = False,
 ) -> bool:
     """
-    Writes a file to a directory.
+    Writes a file to a directory. Appends to the file if it exists and append is True.
 
     Args:
         directory_path(PathTypes): Directory path.
         file_text(str): File text.
         file_name(str): File name.
+        append(bool): If True, appends to the file if it exists. Defaults to False.
 
     Returns:
         bool: True if successful.
@@ -750,9 +752,7 @@ def write_file(
     directory_path = return_path(directory_path)
     directory_exists = check_path_exists(directory_path)
 
-    if directory_exists:
-        pass
-    else:
+    if not directory_exists:
         try:
             create_new_directory(directory_path)
         except PermissionError:
@@ -764,10 +764,14 @@ def write_file(
                     "directory so Python does not have to change permissions."
                 )
             )
+            return False
 
-    file = open(str(directory_path / file_name), "w")
-    file.write(file_text)
-    file.close()
+    mode = (
+        "a" if append else "w"
+    )  # Use append mode if append is True, otherwise use write mode
+    with open(str(directory_path / file_name), mode) as file:
+        file.write(file_text)
+
     return True
 
 

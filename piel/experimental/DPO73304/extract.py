@@ -128,10 +128,10 @@ def extract_propagation_delay_measurement_sweep_data(
         propagation_delay_measurement_i
     ) in propagation_delay_measurement_sweep.measurements:
         data_i = dict()
-        if hasattr(propagation_delay_measurement_i, "measurement_file_prefix"):
+        if hasattr(propagation_delay_measurement_i, "measurements_prefix"):
             file = (
                 propagation_delay_measurement_i.parent_directory
-                / propagation_delay_measurement_i.measurement_file_prefix
+                / propagation_delay_measurement_i.measurements_prefix
             )  # TODO fix this, find prefix file
             data_i["measurements"] = extract_to_signal_measurement(file)
 

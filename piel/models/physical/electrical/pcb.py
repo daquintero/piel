@@ -36,7 +36,9 @@ def create_pcb(
         port_factory = default_port_factory
 
     # Create ports based on port_name_list
-    ports_list = [port_factory(name=port_name) for port_name in port_name_list]
+    ports_list = [
+        port_factory(name=port_name, pcb_name=pcb_name) for port_name in port_name_list
+    ]
 
     # Create a dictionary to quickly lookup ports by name
     port_dict = {port.name: port for port in ports_list}
