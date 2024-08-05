@@ -66,6 +66,7 @@ def compose_measurement_collection_from_experiment(
         )
         measurement_collection_list.append(measurement_i)
         # TODO implement measurement to measurement collection mapping
+        instance_directory_index_i += 1
 
     # Use the last element to verify the collection map
     MeasurementCollectionType = measurement_to_collection_map[

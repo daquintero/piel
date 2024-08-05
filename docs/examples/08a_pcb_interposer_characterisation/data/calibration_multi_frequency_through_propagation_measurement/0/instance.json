@@ -1,0 +1,86 @@
+{
+    "name": "calibration_1000000000.0_Hz",
+    "components": [
+        {
+            "name": "two_port_oscilloscope",
+            "ports": [
+                {
+                    "name": "CH1",
+                    "parent_component_name": null
+                },
+                {
+                    "name": "CH2",
+                    "parent_component_name": null
+                }
+            ],
+            "connections": null,
+            "components": []
+        },
+        {
+            "name": "two_port_oscilloscope",
+            "ports": [
+                {
+                    "name": "CH1",
+                    "parent_component_name": null
+                }
+            ],
+            "connections": null,
+            "components": []
+        },
+        {
+            "name": "power_splitter_1to2",
+            "ports": [
+                {
+                    "name": "IN",
+                    "parent_component_name": null
+                },
+                {
+                    "name": "OUT1",
+                    "parent_component_name": null
+                },
+                {
+                    "name": "OUT2",
+                    "parent_component_name": null
+                }
+            ],
+            "connections": null,
+            "components": []
+        }
+    ],
+    "connections": [
+        {
+            "name": null,
+            "ports": [
+                {
+                    "name": "OUT1",
+                    "parent_component_name": null
+                },
+                {
+                    "name": "CH1",
+                    "parent_component_name": null
+                }
+            ]
+        },
+        {
+            "name": null,
+            "ports": [
+                {
+                    "name": "OUT2",
+                    "parent_component_name": null
+                },
+                {
+                    "name": "CH2",
+                    "parent_component_name": null
+                }
+            ]
+        }
+    ],
+    "goal": null,
+    "parameters": {
+        "square_wave_frequency_Hz": 1000000000.0
+    },
+    "index": null,
+    "date_configured": null,
+    "date_measured": null,
+    "measurement_configuration_list": null
+}

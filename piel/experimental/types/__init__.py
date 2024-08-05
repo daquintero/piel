@@ -25,10 +25,9 @@ from .frequency import (
 
 from .measurements.core import MeasurementConfiguration
 
-from .measurements.data.core import (
-    MeasurementData,
-    MeasurementDataCollection
-)
+from .measurements.data.core import MeasurementData, MeasurementDataCollection
+
+from .measurements.data.experiment import ExperimentData
 
 from .measurements.data.propagation import (
     PropagationDelayMeasurementData,
@@ -37,13 +36,13 @@ from .measurements.data.propagation import (
 
 from .measurements.data.frequency import (
     VNASParameterMeasurementData,
-    VNASParameterMeasurementDataCollection
+    VNASParameterMeasurementDataCollection,
 )
 
 from .measurements.data.generic import (
     MeasurementDataTypes,
     MeasurementDataCollectionTypes,
-    FrequencyMeasurementDataTypes
+    FrequencyMeasurementDataTypes,
 )
 
 from .measurements.frequency import (

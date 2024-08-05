@@ -12,6 +12,8 @@ By translating the data from multiple tools into standard types, we guarantee th
 of this data type can be validated, verified and extensibly used at a higher-level without worrying of the lower-level implementation.
 
 
+The verification of the data types provides certainty that instantiating the usage of such a type definition to perform operations can be correctly implemented. As such, we want to add as many validator methods as we can of the provided data types so that they can be extensibly used in higher-level operations.
+
 Note that there are both standard types and experimental types according to the functionality required:
 
 .. toctree::

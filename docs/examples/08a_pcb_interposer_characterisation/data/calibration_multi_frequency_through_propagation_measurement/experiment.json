@@ -1,0 +1,364 @@
+{
+    "name": "calibration_multi_frequency_through_propagation_measurement",
+    "goal": "Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
+    "experiment_instances": [
+        {
+            "name": "calibration_1000000000.0_Hz",
+            "components": [
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "power_splitter_1to2",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "parameters": {
+                "square_wave_frequency_Hz": 1000000000.0
+            },
+            "index": null,
+            "date_configured": null,
+            "date_measured": null,
+            "measurement_configuration_list": null
+        },
+        {
+            "name": "calibration_3000000000.0_Hz",
+            "components": [
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "power_splitter_1to2",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "parameters": {
+                "square_wave_frequency_Hz": 3000000000.0
+            },
+            "index": null,
+            "date_configured": null,
+            "date_measured": null,
+            "measurement_configuration_list": null
+        },
+        {
+            "name": "calibration_5000000000.0_Hz",
+            "components": [
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "power_splitter_1to2",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "parameters": {
+                "square_wave_frequency_Hz": 5000000000.0
+            },
+            "index": null,
+            "date_configured": null,
+            "date_measured": null,
+            "measurement_configuration_list": null
+        },
+        {
+            "name": "calibration_10000000000.0_Hz",
+            "components": [
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "two_port_oscilloscope",
+                    "ports": [
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                },
+                {
+                    "name": "power_splitter_1to2",
+                    "ports": [
+                        {
+                            "name": "IN",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        }
+                    ],
+                    "connections": null,
+                    "components": []
+                }
+            ],
+            "connections": [
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT1",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH1",
+                            "parent_component_name": null
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "ports": [
+                        {
+                            "name": "OUT2",
+                            "parent_component_name": null
+                        },
+                        {
+                            "name": "CH2",
+                            "parent_component_name": null
+                        }
+                    ]
+                }
+            ],
+            "goal": null,
+            "parameters": {
+                "square_wave_frequency_Hz": 10000000000.0
+            },
+            "index": null,
+            "date_configured": null,
+            "date_measured": null,
+            "measurement_configuration_list": null
+        }
+    ],
+    "parameters_list": [
+        {
+            "square_wave_frequency_Hz": 1000000000.0
+        },
+        {
+            "square_wave_frequency_Hz": 3000000000.0
+        },
+        {
+            "square_wave_frequency_Hz": 5000000000.0
+        },
+        {
+            "square_wave_frequency_Hz": 10000000000.0
+        }
+    ]
+}

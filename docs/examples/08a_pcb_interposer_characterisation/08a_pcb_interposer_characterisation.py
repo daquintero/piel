@@ -57,7 +57,6 @@ def pcb_smp_connector(name, pcb_name):
 measurement_connections = {
     "load_through": ("SIG6", "SIG7"),
     "throguh": ("SIG1", "SIG2"),
-    "short": ("RES1", "GND"),
 }
 
 
@@ -179,6 +178,8 @@ vna_pcb_experiment = create_calibration_vna_experiments(
 )
 # vna_pcb_experiment
 
+measurement_connections
+
 # Now, let's create an experiment `data` directory in which to save the data accordingly:
 
 experiment_data_directory = piel.return_path("data")
@@ -221,10 +222,38 @@ vna_pcb_experiment_collection = pe.compose_measurement_collection_from_experimen
 )
 vna_pcb_experiment_collection
 
-pe.extract_data_from_measurement_collection(
+s_parameter_measurement_data_sweep = pe.extract_data_from_measurement_collection(
     measurement_collection=vna_pcb_experiment_collection,
-    # measurement_to_data_map: dict = measurement_to_data_map,
-    # measurement_to_data_method_map: dict = measurement_to_data_method_map,
+)
+s_parameter_measurement_data_sweep
+
+# We can analyse each of these networks.
+#
+# We can first understand the `scikit-rf` network configuration:
+
+s_parameter_measurement_data_sweep[0].network
+
+# Let's plot the basic s-parameter `dB` magnitude response:
+
+s_parameter_measurement_data_sweep[0].network.plot_s_db(0, 0)
+
+# Let's plot the two s-parameter measurement data in a basic form:
+
+import matplotlib.pyplot as plt
+
+s11_network = s_parameter_measurement_data_sweep[1].network.subnetwork(ports=[0])
+s21_network = s_parameter_measurement_data_sweep[1].network.subnetwork(ports=[1])
+s11_time, s11_signal = s11_network.step_response()
+s21_time, s21_signal = s21_network.step_response()
+plt.plot(s11_time, s11_signal)
+plt.plot(s21_time, s21_signal)
+
+#  Now this is not particularly useful on its own. It'd be nicer if we can do some more programmatic analysis our our sweep data.
+
+pe.visual.plot_s_parameter_measurements_to_step_responses(
+    measurements=s_parameter_measurement_data_sweep,
+    network_port_index=0,
+    time_range_s=(-0.5e-9, 2e-9),
 )
 
 # ## Time-Domain Analysis
@@ -300,10 +329,15 @@ def pcb_propagation_delay_experiment_instance(
 oscilloscope = pe.models.create_two_port_oscilloscope()
 oscilloscope
 
-# Now let's actually create our `Experiment`:
+# Now let's actually create our `Experiment`.
+#
+# We want to create an `Experiment` according to our data analysis. It will be easier to understand measurements comparing a `PCB` trace and an identical `calibration` set of cables.
 
 
-def propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = None):
+# We will test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
+
+
+def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = None):
     # Create reference iteration parameters
     parameters_list = list()
 
@@ -316,7 +350,31 @@ def propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = No
             square_wave_frequency_Hz=square_wave_frequency_Hz_i
         )
         experiment_instance_list.append(pcb_experiment_instance_i)
+        parameters_list.append({"square_wave_frequency_Hz": square_wave_frequency_Hz_i})
 
+    experiment = pe.types.Experiment(
+        name="pcb_multi_frequency_through_propagation_measurement",
+        experiment_instances=experiment_instance_list,
+        goal="Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
+        parameters_list=parameters_list,
+    )
+    return experiment
+
+
+# We also want to connect the two interconnect cable paths without a DUT to measure how identical they are, as a reference measurement of our device accuracy.
+
+
+def calibration_propagation_delay_experiment(
+    square_wave_frequency_Hz_list: list[float] = None,
+):
+    # Create reference iteration parameters
+    parameters_list = list()
+
+    # Create all the experiment instances
+    experiment_instance_list = list()
+
+    # Iterate through experimental parameters
+    for square_wave_frequency_Hz_i in square_wave_frequency_Hz_list:
         calibration_experiment_instance_i = (
             calibration_propagation_delay_experiment_instance(
                 square_wave_frequency_Hz=square_wave_frequency_Hz_i
@@ -326,28 +384,41 @@ def propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = No
         parameters_list.append({"square_wave_frequency_Hz": square_wave_frequency_Hz_i})
 
     experiment = pe.types.Experiment(
-        name="multi_frequency_through_propagation_measurement",
+        name="calibration_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
-        goal="Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
+        goal="Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
         parameters_list=parameters_list,
     )
     return experiment
 
 
-basic_propagation_delay_experiment = propagation_delay_experiment(
+pcb_propagation_delay_experiment_setup = pcb_propagation_delay_experiment(
     square_wave_frequency_Hz_list=[1e9, 3e9, 5e9, 10e9]
+)
+calibration_propagation_delay_experiment_setup = (
+    calibration_propagation_delay_experiment(
+        square_wave_frequency_Hz_list=[1e9, 3e9, 5e9, 10e9]
+    )
 )
 
 # Now, let's create the experiment directory structure with the corresponding experiment instances
 
-propagation_delay_experiment_directory = pe.construct_experiment_directories(
-    experiment=basic_propagation_delay_experiment,
+pcb_propagation_delay_experiment_directory = pe.construct_experiment_directories(
+    experiment=pcb_propagation_delay_experiment_setup,
     parent_directory=experiment_data_directory,
     construct_directory=True,
 )
+calibration_propagation_delay_experiment_directory = (
+    pe.construct_experiment_directories(
+        experiment=calibration_propagation_delay_experiment_setup,
+        parent_directory=experiment_data_directory,
+        construct_directory=True,
+    )
+)
 
 # ```
-# Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/multi_frequency_through_propagation_measurement
+# Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/pcb_multi_frequency_through_propagation_measurement
+# Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/calibration_multi_frequency_through_propagation_measurement
 # ```
 
 # We can see in each directory the generated directories and files accordingly. Now we can use this directory to save and consolidate all the metadata of our experiments accordingly.
@@ -359,111 +430,124 @@ propagation_delay_experiment_directory = pe.construct_experiment_directories(
 # +
 pcb_propagation_data = [
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(0),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[0],
-        reference_waveform_prefix="through_ch1ref_ch2pcb_1GHz_Ch1.csv",
-        dut_waveform_prefix="through_ch1ref_ch2pcb_1GHz_Ch2.csv",
-        measurement_file_prefix="mdata_through_ch1ref_ch2pcb_1GHz.csv",
+        parent_directory=pcb_propagation_delay_experiment_directory / str(0),
+        reference_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch1.csv",
+        dut_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch2.csv",
+        measurements_file="mdata_through_ch1ref_ch2pcb_1GHz.csv",
     ),
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(1),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[1],
-        reference_waveform_prefix="through_ch1ref_ch2pcb_3GHz_Ch1.csv",
-        dut_waveform_prefix="through_ch1ref_ch2pcb_3GHz_Ch2.csv",
-        measurement_file_prefix="mdata_through_ch1ref_ch2pcb_3GHz.csv",
+        parent_directory=pcb_propagation_delay_experiment_directory / str(1),
+        reference_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch1.csv",
+        dut_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch2.csv",
+        measurements_file="mdata_through_ch1ref_ch2pcb_3GHz.csv",
     ),
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(2),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[2],
-        reference_waveform_prefix="through_ch1ref_ch2pcb_5GHz_Ch1.csv",
-        dut_waveform_prefix="through_ch1ref_ch2pcb_5GHz_Ch2.csv",
-        measurement_file_prefix="mdata_through_ch1ref_ch2pcb_5GHz.csv",
+        parent_directory=pcb_propagation_delay_experiment_directory / str(2),
+        reference_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch1.csv",
+        dut_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch2.csv",
+        measurements_file="mdata_through_ch1ref_ch2pcb_5GHz.csv",
     ),
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(3),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[3],
-        reference_waveform_prefix="through_ch1ref_ch2pcb_10GHz_Ch1.csv",
-        dut_waveform_prefix="through_ch1ref_ch2pcb_10GHz_Ch2.csv",
-        measurement_file_prefix="mdata_through_ch1ref_ch2pcb_10GHz.csv",
+        parent_directory=pcb_propagation_delay_experiment_directory / str(3),
+        reference_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch1.csv",
+        dut_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch2.csv",
+        measurements_file="mdata_through_ch1ref_ch2pcb_10GHz.csv",
     ),
 ]
 
 calibration_propagation_data = [
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(4),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[4],
-        reference_waveform_prefix="calibration_loop_1Ghz_Ch1.csv",
-        dut_waveform_prefix="calibration_loop_1Ghz_Ch2.csv",
-        measurement_file_prefix="mdata_calibration_loop_1Ghz.csv",
+        parent_directory=calibration_propagation_delay_experiment_directory / str(0),
+        reference_waveform_file="calibration_loop_1Ghz_Ch1.csv",
+        dut_waveform_file="calibration_loop_1Ghz_Ch2.csv",
+        measurements_file="mdata_calibration_loop_1Ghz.csv",
     ),
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(5),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[5],
-        reference_waveform_prefix="calibration_loop_3Ghz_Ch1.csv",
-        dut_waveform_prefix="calibration_loop_3Ghz_Ch2.csv",
-        measurement_file_prefix="mdata_calibration_loop_3Ghz.csv",
+        parent_directory=calibration_propagation_delay_experiment_directory / str(1),
+        reference_waveform_file="calibration_loop_3Ghz_Ch1.csv",
+        dut_waveform_file="calibration_loop_3Ghz_Ch2.csv",
+        measurements_file="mdata_calibration_loop_3Ghz.csv",
     ),
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(6),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[6],
-        reference_waveform_prefix="calibration_loop_5Ghz_Ch1.csv",
-        dut_waveform_prefix="calibration_loop_5Ghz_Ch2.csv",
-        measurement_file_prefix="mdata_calibration_loop_5Ghz.csv",
+        parent_directory=calibration_propagation_delay_experiment_directory / str(2),
+        reference_waveform_file="calibration_loop_5Ghz_Ch1.csv",
+        dut_waveform_file="calibration_loop_5Ghz_Ch2.csv",
+        measurements_file="mdata_calibration_loop_5Ghz.csv",
     ),
     pe.types.PropagationDelayMeasurement(
-        parent_directory=propagation_delay_experiment_directory / str(7),
-        experiment_instance=basic_propagation_delay_experiment.experiment_instances[6],
-        reference_waveform_prefix="calibration_loop_10Ghz_Ch1.csv",
-        dut_waveform_prefix="calibration_loop_10Ghz_Ch2.csv",
-        measurement_file_prefix="mdata_calibration_loop_10Ghz.csv",
+        parent_directory=calibration_propagation_delay_experiment_directory / str(3),
+        reference_waveform_file="calibration_loop_10Ghz_Ch1.csv",
+        dut_waveform_file="calibration_loop_10Ghz_Ch2.csv",
+        measurements_file="mdata_calibration_loop_10Ghz.csv",
     ),
 ]
 # -
 
 
-# Now we need to write some functionality to extract the files stored in these files in a meaningful way. Fortunately, there's already some functionality using `piel` in this context:
-
-calibration_propagation_delay_sweep_data = (
-    pe.types.PropagationDelayMeasurementCollection(
-        measurements=calibration_propagation_data,
-    )
-)
-pcb_propagation_delay_sweep_data = pe.types.PropagationDelayMeasurementCollection(
-    measurements=pcb_propagation_data, name="frequency_sweep"
-)
-
 # So these measurements are just the measurement definition, but do not contain the data. We need to extract it from the files.
 
-calibration_propagation_delay_sweep_data = (
+calibration_propagation_delay_data = (
     pe.DPO73304.extract_propagation_delay_measurement_sweep_data(
-        calibration_propagation_delay_sweep_data
+        calibration_propagation_data
     )
 )
-pcb_propagation_delay_sweep_data = (
-    pe.DPO73304.extract_propagation_delay_measurement_sweep_data(
-        pcb_propagation_delay_sweep_data
-    )
+pcb_propagation_delay_data = (
+    pe.DPO73304.extract_propagation_delay_measurement_sweep_data(pcb_propagation_data)
 )
 
-# Now, we want to plot this files as a function of the sweep parameter. Fortunately this is pretty easy:
+# Now we need to write some functionality to extract the files stored in these files in a meaningful way. Fortunately, there's already some functionality using `piel` in this context. We will now create a set of `ExperimentData` that represent both the metadata, configuration and data extracted accordingly.
 
-
-fig, ax = pe.visual.plot_signal_propagation_sweep_measurement(
-    pcb_propagation_delay_sweep_data,
-    measurement_name="delay_ch1_ch2__s_2",
+pcb_propagation_delay_experiment_data = pe.types.ExperimentData(
+    experiment=pcb_propagation_delay_experiment_setup, data=pcb_propagation_delay_data
+)
+calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
+    experiment=calibration_propagation_delay_experiment_setup,
+    data=calibration_propagation_delay_data,
 )
 
-fig, ax = pe.visual.plot_signal_propagation_sweep_measurement(
-    pcb_propagation_delay_sweep_data,
-    measurement_name="delay_ch1_ch2__s_1",
-)
-
-fig, ax = pe.visual.plot_signal_propagation_sweep_signals(
-    pcb_propagation_delay_sweep_data,
-)
-
+# Now, we want to plot this files as a function of the sweep parameters. Fortunately this is pretty easy. Let's first start by plotting the signals in time.
+#
 # ### TODO add graph showing this exact setup.
+#
 #
 # In this setup, we will use a RF signal generator and a RF oscilloscope.
 #
 # First, we will split the signal generator signal through two paths and see them in the oscillscope. They should overlap each other perfectly. Both signals are terminated at the oscilloscope inputs in order to get an exact rising edge.
+
+
+fig, ax = pe.visual.plot_signal_propagation_signals(
+    calibration_propagation_delay_experiment_data,
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
+)
+
+# ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg)
+
+fig, ax = pe.visual.plot_signal_propagation_signals(
+    pcb_propagation_delay_experiment_data,
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg",
+)
+
+
+# ![pcb_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg)
+
+# We can also plot the data related to the metrics extracted from the measurements.
+
+fig, ax = pe.visual.plot_signal_propagation_measurements(
+    calibration_propagation_delay_experiment_data,
+    x_parameter="square_wave_frequency_Hz",
+    measurement_name="delay_ch1_ch2__s_2",
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg",
+)
+
+# ![calibration_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg)
+
+fig, ax = pe.visual.plot_signal_propagation_measurements(
+    pcb_propagation_delay_experiment_data,
+    x_parameter="square_wave_frequency_Hz",
+    measurement_name="delay_ch1_ch2__s_1",
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg",
+)
+
+# ![pcb_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg)
+
+#
