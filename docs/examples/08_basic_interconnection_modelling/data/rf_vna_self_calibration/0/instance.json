@@ -6,12 +6,14 @@
             "ports": [
                 {
                     "name": "IN",
+                    "parent_component_name": null,
                     "domain": null,
                     "connector": "SMA_3.5mm",
                     "manifold": "82052D"
                 },
                 {
                     "name": "OUT",
+                    "parent_component_name": null,
                     "domain": null,
                     "connector": "SMA_3.5mm",
                     "manifold": "82052D"
@@ -20,19 +22,22 @@
             "connections": null,
             "components": [],
             "environment": null,
-            "manufacturer": "Agilent"
+            "manufacturer": "Agilent",
+            "model": "85052D"
         },
         {
             "name": "E8364A",
             "ports": [
                 {
                     "name": "PORT1",
+                    "parent_component_name": null,
                     "domain": "RF",
                     "connector": null,
                     "manifold": null
                 },
                 {
                     "name": "PORT2",
+                    "parent_component_name": null,
                     "domain": "RF",
                     "connector": null,
                     "manifold": null
@@ -42,6 +47,7 @@
             "components": [],
             "environment": null,
             "manufacturer": "Agilent",
+            "model": "E8364A",
             "configuration": null
         }
     ],
@@ -50,10 +56,12 @@
             "name": null,
             "ports": [
                 {
-                    "name": "PORT1"
+                    "name": "PORT1",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "IN"
+                    "name": "IN",
+                    "parent_component_name": null
                 }
             ]
         },
@@ -61,16 +69,20 @@
             "name": null,
             "ports": [
                 {
-                    "name": "PORT2"
+                    "name": "PORT2",
+                    "parent_component_name": null
                 },
                 {
-                    "name": "OUT"
+                    "name": "OUT",
+                    "parent_component_name": null
                 }
             ]
         }
     ],
     "goal": null,
+    "parameters": null,
     "index": null,
     "date_configured": null,
-    "date_measured": null
+    "date_measured": null,
+    "measurement_configuration_list": null
 }

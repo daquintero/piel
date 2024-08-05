@@ -20,7 +20,7 @@ quantum, and more.
 - Co-simulation and optimisation between integrated photonic and
     electronic chip design.
 - System interconnection modelling in multiple domains.
-- Experimental and simulation data integration and management.
+- Experimental and simulation metadata/data management & integration.
 - Chip and interposer design integration.
 - Co-design components to circuits flow.
 - Maintain a multi-tool dependency design environment.
