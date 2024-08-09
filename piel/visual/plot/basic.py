@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from typing import List, Union, Tuple, Optional
+from typing import List, Tuple, Optional
 
 __all__ = [
     "plot_simple",
@@ -18,8 +18,7 @@ def plot_simple(
     fig: Optional[plt.Figure] = None,
     ax: Optional[plt.Axes] = None,
     title: Optional[str] = None,
-    *args,
-    **kwargs
+    plot_kwargs: dict = None,
 ) -> Tuple[plt.Figure, plt.Axes]:
     """
     Plot a simple line graph. This function abstracts the basic files representation while
@@ -43,7 +42,10 @@ def plot_simple(
     if fig is None and ax is None:
         fig, ax = plt.subplots()
 
-    ax.plot(x_data, y_data, label=label, *args, **kwargs)
+    if plot_kwargs is None:
+        plot_kwargs = dict()
+
+    ax.plot(x_data, y_data, label=label, **plot_kwargs)
 
     if ylabel is not None:
         ax.set_ylabel(ylabel)
@@ -109,13 +111,13 @@ def plot_simple_multi_row(
     if row_amount == 1:
         axes = [axes]
 
-    for i, (ax, y_data, y_label, title) in enumerate(
+    for _, (ax_i, y_data_i, y_label_i, title) in enumerate(
         zip(axes, y_data_list, y_label, titles)
     ):
-        ax.plot(x_data, y_data)
-        ax.grid(True)
-        ax.set_ylabel(y_label)
-        ax.set_title(title)
+        ax_i.plot(x_data, y_data_i)
+        ax_i.grid(True)
+        ax_i.set_ylabel(y_label_i)
+        ax_i.set_title(title)
 
     if x_label is not None:
         axes[-1].set_xlabel(x_label)

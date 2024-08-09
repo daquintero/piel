@@ -68,3 +68,9 @@ class Experiment(Instance):
     """
     List of basic important parameters in dictionaries used to do basic metadata analysis of the experiment.
     """
+
+    @property
+    def parameters(self):
+        import pandas as pd  # TODO maybe move this?
+
+        return pd.DataFrame(self.parameters_list)

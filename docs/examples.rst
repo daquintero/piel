@@ -18,6 +18,5 @@ Examples
    examples/05_quantum_integration_basics
    examples/06_component_codesign_basics
    examples/06a_analytical_mzm_model
-   examples/07_mixed_signal_photonic_cosimulation
    examples/08_basic_interconnection_modelling/08_basic_interconnection_modelling
    examples/08a_pcb_interposer_characterisation/08a_pcb_interposer_characterisation

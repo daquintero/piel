@@ -88,9 +88,9 @@ from .photonic import (
     SParameterMatrixTuple,
 )
 
-from .signal.core import ElectricalSignalDomains
+from .signal.core import ElectricalSignalDomains, QuantityTypesDC
 
-from .signal.dc_data import SignalDC, DCSweepData
+from .signal.dc_data import SignalInstanceDC, SignalInstanceMetadataDC, SignalDC
 
 from .signal.frequency import (
     TwoPortCalibrationNetworkCollection,

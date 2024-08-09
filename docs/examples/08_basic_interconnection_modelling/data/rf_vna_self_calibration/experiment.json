@@ -3,7 +3,7 @@
     "goal": null,
     "experiment_instances": [
         {
-            "name": null,
+            "name": "through_port_12",
             "components": [
                 {
                     "name": "through_82052D",
@@ -52,7 +52,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -88,10 +91,19 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         },
         {
-            "name": null,
+            "name": "open_port_1",
             "components": [
                 {
                     "name": "load_82052D",
@@ -133,7 +145,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -156,10 +171,19 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         },
         {
-            "name": null,
+            "name": "open_port_2",
             "components": [
                 {
                     "name": "load_82052D",
@@ -201,7 +225,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -224,10 +251,19 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         },
         {
-            "name": null,
+            "name": "load_port_1",
             "components": [
                 {
                     "name": "load_82052D",
@@ -269,7 +305,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -292,10 +331,19 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         },
         {
-            "name": null,
+            "name": "load_port_2",
             "components": [
                 {
                     "name": "load_82052D",
@@ -337,7 +385,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -360,10 +411,19 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         },
         {
-            "name": null,
+            "name": "short_port_1",
             "components": [
                 {
                     "name": "short_85052D",
@@ -405,7 +465,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -428,10 +491,19 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         },
         {
-            "name": null,
+            "name": "short_port_2",
             "components": [
                 {
                     "name": "short_85052D",
@@ -473,7 +545,10 @@
                     "environment": null,
                     "manufacturer": "Agilent",
                     "model": "E8364A",
-                    "configuration": null
+                    "configuration": {
+                        "calibration_setting_name": "bpl_vna_ports",
+                        "measurement_configuration": null
+                    }
                 }
             ],
             "connections": [
@@ -496,8 +571,53 @@
             "index": null,
             "date_configured": null,
             "date_measured": null,
-            "measurement_configuration_list": null
+            "measurement_configuration_list": [
+                {
+                    "name": null,
+                    "parent_directory": null,
+                    "measurement_type": null,
+                    "frequency_range_Hz": null,
+                    "sweep_points": null,
+                    "test_port_power_dBm": null
+                }
+            ]
         }
     ],
-    "parameters_list": null
+    "parameters_list": [
+        {
+            "port": "12",
+            "measurement": "through",
+            "calibration": "vna_ports"
+        },
+        {
+            "port": 1,
+            "measurement": "open",
+            "calibration": "vna_ports"
+        },
+        {
+            "port": 2,
+            "measurement": "open",
+            "calibration": "vna_ports"
+        },
+        {
+            "port": 1,
+            "measurement": "load",
+            "calibration": "vna_ports"
+        },
+        {
+            "port": 2,
+            "measurement": "load",
+            "calibration": "vna_ports"
+        },
+        {
+            "port": 1,
+            "measurement": "short",
+            "calibration": "vna_ports"
+        },
+        {
+            "port": 2,
+            "measurement": "short",
+            "calibration": "vna_ports"
+        }
+    ]
 }
