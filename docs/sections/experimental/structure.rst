@@ -1,5 +1,5 @@
-Experimental Data Structure
-===========================
+Experiment Metadata Management
+------------------------------
 
 When performing experimental testing and acquiring data, one major issue is both knowing what configuration to apply if you have multiple tests and then relating this to a given plotting configuration. It would be nice if we could reuse all the existing functionality from the simulation data to analyse the experimental data. As such, it is necessary to create a common directory and device test structure that can be reused.
 
@@ -12,15 +12,15 @@ Ultimately, the way this works is that we have a data directory in this structur
 .. raw::
 
     measurements/ # Contains all the measurements, for all devices, interconnection and operating conditions
-        experimental_operating_condition_setup_id_A/ # A specific setup configuration identified via an id
-            # data for this setup
-        experimental_measurement_map.csv # mapping between ids and all the information for the experimental setup
+        1/ # A specific setup configuration identified via an id
+            instance.json # metadata for this setup
+        experiment.json # mapping between ids and all the information for the experimental setup
 
-This means that a unique `experimental_operating_condition_setup_id_A/` directory is created for each measurement set that contains a custom configuration, specific device test, corresponding bias configuration, and device setup. This can be mapped, and saved, through a `experiment_id` which can be mapped within `experimental_measurement_map.csv`.
+This means that a unique `1/` directory is created for each measurement set that contains a custom configuration, specific device test, corresponding bias configuration, and device setup. This can be mapped, and saved, through a `experiment_id` which can be mapped within `experiment.json`.
 
 It could be argued that if there are more than one files per operating setup, then it requires a directory in which this is saved.
 
-Note that the information within an operating setup can involve:
+Note that the information within an operating setup as defined in the `experiment.json` can involve:
 
 .. raw::
 

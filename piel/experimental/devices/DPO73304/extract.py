@@ -1,18 +1,18 @@
 import pandas as pd
 from typing import get_origin
-from ..types import (
+from ...types import (
     PropagationDelayMeasurementCollection,
     PropagationDelayMeasurementDataCollection,
     PropagationDelayMeasurementData,
 )
-from ...types import (
+from ....types import (
     DataTimeSignalData,
     MultiDataTimeSignal,
     PathTypes,
     SignalMetricsData,
     SignalMetricsMeasurementCollection,
 )
-from ...file_system import return_path
+from ....file_system import return_path
 
 
 def extract_measurement_to_dataframe(file: PathTypes) -> pd.DataFrame:

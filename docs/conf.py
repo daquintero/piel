@@ -142,9 +142,11 @@ latex_elements: dict = {
 
 versionwarning_admonition_type = "tip"
 versionwarning_messages = {
-    'latest': 'You are reading the "latest" pip-unreleased version of this documentation.'
-              ' See the stable branch for the latest release.',
+    "develop": 'You are reading the "develop" pip-unreleased version of this documentation.'
+    " See the ``stable`` branch for the stable release.",
+    "latest": 'You are reading the "latest" pip-unreleased version of this documentation.'
+    " See the ``stable`` branch for the latest release.",
 }
-versionwarning_admonition_type = 'tip'
-versionwarning_banner_title = 'Tip'
+versionwarning_admonition_type = "tip"
+versionwarning_banner_title = "Tip"
 versionwarning_body_selector = 'div[itemprop="articleBody"]'

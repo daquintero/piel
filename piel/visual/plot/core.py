@@ -1,4 +1,4 @@
-from ..file_system import return_path
+from ...file_system import return_path
 
 
 def save(fig, **kwargs):

@@ -9,7 +9,7 @@ class Instance(PielBaseModel):
     This represents the fundamental data structure of an element in connectivity
     """
 
-    name: Optional[str] | None = None
+    name: str = None
 
 
 class Port(Instance):
@@ -17,7 +17,7 @@ class Port(Instance):
     This represents the fundamental data structure to identify a port.
     """
 
-    parent_component_name: Optional[str] = None
+    parent_component_name: str = None
 
 
 class Connection(Instance):

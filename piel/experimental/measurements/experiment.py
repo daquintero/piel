@@ -26,11 +26,12 @@ def compose_measurement_from_experiment_instance(
     Each experiment instance should correspond to a list of measurement configurations, ie the specific set of measurements
      that are required at each directory generated for the experimental instance. Hence, for this function to work properly,
      it is required to have a mapping between experiment configuration types and measurement classes accordingly.
-     The mapping will be between a given MeasurementConfiguration type and a Measurement class which has the references
+     The mapping will be between a given ``MeasurementConfiguration`` type and a ``Measurement`` class which has the references
      of the data containers accordingly.
     """
     # This corresponds to the instance directory
     instance_directory = return_path(instance_directory)
+    # TODO verify that print(experiment_instance.measurement_configuration_list) exists
 
     for (
         measurement_configuration_i
@@ -39,7 +40,9 @@ def compose_measurement_from_experiment_instance(
         measurement_composition_method = measurement_composition_method_mapping[
             measurement_configuration_i.__class__.__name__
         ]
-        measurement = measurement_composition_method(instance_directory, **kwargs)
+        measurement = measurement_composition_method(
+            instance_directory, name=experiment_instance.name, **kwargs
+        )
 
     return measurement
 

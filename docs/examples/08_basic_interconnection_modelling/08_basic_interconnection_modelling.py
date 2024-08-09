@@ -1,4 +1,4 @@
-# # Basic Interconnection Modelling
+# # Interconnection Modelling & Experimental Analysis
 #
 # It is very difficult to design an electronic-photonic system without actually *connecting* them together. As it turns out, interconnection modelling is crucial in understanding the scaling of these systems.
 #
@@ -16,6 +16,7 @@
 # +
 import piel
 import piel.experimental as pe
+import piel.visual as pv
 from piel.models.physical.electrical.cable import (
     calculate_coaxial_cable_geometry,
     calculate_coaxial_cable_heat_transfer,
@@ -27,7 +28,9 @@ from piel.types.electrical.cables import (
 
 import matplotlib.pyplot as plt
 import pandas as pd
-
+import skrf
+from skrf.io.touchstone import hfss_touchstone_2_network
+from skrf.plotting import stylely
 # -
 
 # ## Basic Thermal Modelling
@@ -156,9 +159,6 @@ basic_coaxial_cable_heat_transfer_4_in_series
 #
 # As far as I can tell from basic usage, the only useful files are one-port `.s1p` and two-port`.s2p` Touchstone files for trace measurements, and `.cti` files for calibration/instrument settings storage. We will use `.s2p` files throughout primarily.
 
-import skrf
-from skrf.io.touchstone import hfss_touchstone_2_network
-
 # We will also explore how to manage the way the data is being saved with experimental planning and design.
 
 # ### Understanding Hardware and Software Measurements & Calibration
@@ -180,7 +180,7 @@ from skrf.io.touchstone import hfss_touchstone_2_network
 #
 # We will use the calibration kit of an Agilent E8364A PNA which is nominally designed for 2.4mm coaxial cables. Using 2.4mm to 3.5mm SMA adapters is probably fine given that we're deembedding up to a given cable. Realistically, I would need to deembed the performance of the adapter between the calibration kit and the open, short, through adapter.
 
-# #### Using a Hardware Calibration Kit
+# ### Using a Hardware Calibration Kit
 #
 # Decide the two reference points at which you will connect to your device to test. This is a very common way to start doing de-embedding on a machine. In our setup, we will use the Agilent 82052D 3.5mm calibration kit. We can easily follow the instructions using our E8364A Agilent PNA. Let's assume this has been done correctly.
 #
@@ -192,7 +192,13 @@ short_1port = pe.models.short_85052D()
 load_1port = pe.models.load_85052D()
 open_1port = pe.models.load_85052D()
 throguh_2port = pe.models.through_85052D()
-vna = pe.models.E8364A()
+
+# We can create our `VNA` and a standard configuration too:
+
+vna_configuration = pe.types.VNAConfiguration(calibration_setting_name="bpl_vna_ports")
+vna = pe.models.E8364A(configuration=vna_configuration)
+
+vna_configuration
 
 # We can explore the parameters of these components to understand their configuration and information
 
@@ -201,9 +207,12 @@ vna
 short_1port
 
 
-def one_port_measurement_configuration(one_port_component, vna):
+def one_port_measurement_configuration(
+    one_port_component, vna, measurement_type, calibration
+):
     # Note that each measurement can be considered an experiment instance
     experiment_instances = list()
+    parameters = list()
 
     # First we instantiate our short calibration connector and our VNA
     components = [one_port_component, vna]
@@ -226,25 +235,46 @@ def one_port_measurement_configuration(one_port_component, vna):
     )
 
     # Create the required experiment instances
+    i = 1
     for connections_i in [vna_port1_connections, vna_port2_connections]:
         experiment_instance_i = pe.types.ExperimentInstance(
-            components=components, connections=connections_i
+            name=f"{measurement_type}_port_{i}",
+            components=components,
+            connections=connections_i,
+            measurement_configuration_list=[
+                pe.types.VNASParameterMeasurementConfiguration()
+            ],
         )
         experiment_instances.append(experiment_instance_i)
 
-    return experiment_instances
+        parameters += [
+            {"port": i, "measurement": measurement_type, "calibration": calibration}
+        ]
+
+        i += 1
+
+    return experiment_instances, parameters
 
 
 # We need to do a similar thing with the remaining one ports, so let's run this now.
 
-short_experimental_instance_list = one_port_measurement_configuration(short_1port, vna)
-open_experimental_instance_list = one_port_measurement_configuration(open_1port, vna)
-load_experimental_instance_list = one_port_measurement_configuration(load_1port, vna)
+short_experimental_instance_list, short_parameters_list = (
+    one_port_measurement_configuration(short_1port, vna, "short", "vna_ports")
+)
+open_experimental_instance_list, open_parameters_list = (
+    one_port_measurement_configuration(open_1port, vna, "open", "vna_ports")
+)
+load_experimental_instance_list, load_parameters_list = (
+    one_port_measurement_configuration(load_1port, vna, "load", "vna_ports")
+)
 
 
-def two_port_measurement_configuration(two_port_component, vna):
+def two_port_measurement_configuration(
+    two_port_component, vna, measurement_type, calibration
+):
     # First we instantiate our short calibration connector and our VNA
     components = [two_port_component, vna]
+    port = "12"
 
     # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA ports.
     vna_connections = piel.create_component_connections(
@@ -257,23 +287,50 @@ def two_port_measurement_configuration(two_port_component, vna):
 
     # Create the required experiment instance
     experiment_instance = pe.types.ExperimentInstance(
-        components=components, connections=vna_connections
+        name=f"{measurement_type}_port_{port}",
+        components=components,
+        connections=vna_connections,
+        measurement_configuration_list=[
+            pe.types.VNASParameterMeasurementConfiguration()
+        ],
     )
 
-    return experiment_instance
+    parameters = [
+        {"port": port, "measurement": measurement_type, "calibration": calibration}
+    ]
+
+    return experiment_instance, parameters
 
 
-through_experiment_instance = two_port_measurement_configuration(throguh_2port, vna)
+through_experiment_instance, through_parameters = two_port_measurement_configuration(
+    throguh_2port, vna, "through", "vna_ports"
+)
 
+
+# Let's define all our relevant `ExperimentInstance`:
+
+vna_self_calibration_experiment_instances = (
+    [through_experiment_instance]
+    + open_experimental_instance_list
+    + load_experimental_instance_list
+    + short_experimental_instance_list
+)
+
+# We can also simplify our parameter representation by combining all the relevant experiment instances in the same order as the experiment instances.
+
+rf_vna_calibration_parameters = (
+    through_parameters
+    + open_parameters_list
+    + load_parameters_list
+    + short_parameters_list
+)
 
 # Now we can create an `Experiment` from this:
 
 rf_vna_self_calibration = pe.types.Experiment(
     name="rf_vna_self_calibration",
-    experiment_instances=[through_experiment_instance]
-    + open_experimental_instance_list
-    + load_experimental_instance_list
-    + short_experimental_instance_list,
+    experiment_instances=vna_self_calibration_experiment_instances,
+    parameters_list=rf_vna_calibration_parameters,
 )
 
 # Let's create the directories in which to save the data accordingly:
@@ -288,6 +345,30 @@ propagation_delay_experiment_directory = pe.construct_experiment_directories(
     parent_directory=experiment_data_directory,
 )
 
+# We can also see the generated table in the `README.md` of the top level experiment:
+#
+# |    |   port | measurement   | calibration   |
+# |---:|-------:|:--------------|:--------------|
+# |  0 |     12 | through       | vna_ports     |
+# |  1 |      1 | open          | vna_ports     |
+# |  2 |      2 | open          | vna_ports     |
+# |  3 |      1 | load          | vna_ports     |
+# |  4 |      2 | load          | vna_ports     |
+# |  5 |      1 | short         | vna_ports     |
+# |  6 |      2 | short         | vna_ports     |
+
+# We can now perform our measurements and save the data in this directory, and it saves all the corresponding metadata that we care about alongside it. Once we have done that, we can also extract the corresponding measurements of data already saved in the directory.
+#
+# We want a functionality that helps us analyse and construct the data into a data structure that makes sense alongside all the metadata. We want to construct the `ExperimentData` from this accordingly. Now, we know that in this `Experiment`, we are mainly using frequency-domain s-parameter data. This enables us to have a set of functions that operate on `Experiment` to automatically create `ExperimentData` with everything ready for us to use internally:
+
+rf_vna_self_calibration_data = pe.extract_data_from_experiment(
+    experiment=rf_vna_self_calibration,
+    experiment_directory=propagation_delay_experiment_directory,
+)
+rf_vna_self_calibration_data.data
+
+# Now, we can begin plotting this data in multiple ways:
+
 # ### A HW Calibrated Open-Measurement
 #
 # Our two unconnected ports with the calibration applied at the machine might give a measurement such as this one.
@@ -298,27 +379,71 @@ propagation_delay_experiment_directory = pe.construct_experiment_directories(
 # </figure>
 
 
-calibrated_open_data_file = (
-    "measurement_data/calibration_kit_vna_cal_at_vna_ports/open_port1.s2p"
+# We can plot this data, for example, still using `scikit-rf` as usual:
+
+stylely()
+fig, axs = plt.subplots(2, 1, figsize=(8, 6))
+calibrated_vna_port1_open_network = rf_vna_self_calibration_data.data[
+    1
+].network.subnetwork([0])  # only looking at port 1
+calibrated_vna_port1_open_network.plot_s_re(ax=axs[0])
+calibrated_vna_port1_open_network.plot_s_im(ax=axs[1])
+axs[0].set_title("Real S11")
+axs[1].set_title("Imaginary S11")
+plt.tight_layout()
+fig.savefig(
+    "../../_static/img/examples/08_basic_interconnection_modelling/skrf_plot_open.jpg"
 )
-calibrated_vna_port1_open_network = hfss_touchstone_2_network(calibrated_open_data_file)
-calibrated_vna_port1_open_network.plot_s_db()
+
+# ![skrf_plot_open](../../_static/img/examples/08_basic_interconnection_modelling/skrf_plot_open.jpg)
 
 # This is the same data you should get if you connect the open calibration port from the calibration kit into any of the VNA ports.
 
+# It is important to note we can also map the keys to the data index using the `Experiment` metadata. Normally, it would simply be easier to have keys map to the corresponding `MeasurementData` instance. However, when there are multiple parameters in a given set of measurements, it can be too much to reasonably index. Hence, it is in this case that a parameter index mapping can be useful. We can simply use the `parameters_list` we initially composed for our `Experiment` and `pandas` or whatever else.
+
+rf_vna_self_calibration_data.experiment.parameters
+
+# |    |   port | measurement   | calibration   |
+# |---:|-------:|:--------------|:--------------|
+# |  0 |     12 | through       | vna_ports     |
+# |  1 |      1 | open          | vna_ports     |
+# |  2 |      2 | open          | vna_ports     |
+# |  3 |      1 | load          | vna_ports     |
+# |  4 |      2 | load          | vna_ports     |
+# |  5 |      1 | short         | vna_ports     |
+# |  6 |      2 | short         | vna_ports     |
+
 # ### A HW Calibrated Short Measurement
 
-# Now, let's connect a short calibration port into one of the VNA ports. You can note that obviously the insertion loss doesn't change as this is just a port to port measurement.
+# Now, let's connect a short calibration port into one of the VNA ports. You can note that obviously the insertion loss doesn't change as this is just a port to port measurement and should affect mainly the phase.
+#
+# We can, for example, also use the data directly without having to use any `piel` data structures. This can be useful if you want to use this functionality to create the metadata and directories but not interact with other functionality in the package.
+#
+# You might, for example, already have a stylesheet for your project and don't want to deviate from this when using `scikit-rf`. This unfortunately requires some tweaking as many of the `scikit-rf` plotting functionality may simply not look nice enough accordingly. You can also activate your styles, in our case `piel.visual.styles.activate_piel_styles` would activate `piel` styling functionality.
 
-calibrated_short_data_file = (
-    "measurement_data/calibration_kit_vna_cal_at_vna_ports/short_port1.s2p"
-)
+pv.style.activate_piel_styles()
+fig, axs = plt.subplots(2, 1, figsize=(10, 6))
+calibrated_short_data_file = "data/rf_vna_self_calibration/5/short_port1.s2p"
 calibrated_vna_port1_short_network = hfss_touchstone_2_network(
     calibrated_short_data_file
+).subnetwork([0])  # Only looking at port1
+calibrated_vna_port1_short_network.plot_s_re(ax=axs[0])
+calibrated_vna_port1_short_network.plot_s_im(ax=axs[1])
+axs[0].set_title("Real S11")
+axs[1].set_title("Imaginary S11")
+plt.tight_layout()
+fig.savefig(
+    "../../_static/img/examples/08_basic_interconnection_modelling/skrf_plot_short.jpg"
 )
-calibrated_vna_port1_short_network.plot_s_db()
+
+# ![skrf_plot_open](../../_static/img/examples/08_basic_interconnection_modelling/skrf_plot_short.jpg)
 
 # ### A HW Calibrated Load Measurement
+
+# We might also want to automate a lot of certain types of plots. `scikit-rf` already does a great job at this. In our case, we might want to give our plotting functions a set of `ExperimentalData` measurement collections with a given set of networks and metadata and be able to easily plot this according to the type of plot structure we want. `piel` provide a common set of examples that can help automate some of this for some functionality.
+
+fig, axs = pv.create_plot_containers(container_list=[1, 1, 2], axes_per_element=1)
+plt.tight_layout()
 
 calibrated_load_data_file = (
     "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
@@ -327,6 +452,8 @@ calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_da
 calibrated_vna_port1_load_network.plot_s_db()
 
 # ### A HW Calibrated Through-Measurement
+#
+# This measurement is particularly useful for determining the insertion loss through our component. In this case, we should expect zero insertion loss as it is a measurement on the through calibration reference.
 #
 # <figure>
 # <img src="../../_static/img/examples/08_basic_interconnection_modelling/experimental_cal_through.jpg" alt="drawing" width="70%"/>
@@ -338,6 +465,17 @@ calibrated_through_data_file = (
 )
 calibrated_vna_through_network = hfss_touchstone_2_network(calibrated_through_data_file)
 calibrated_vna_through_network.plot_s_db()
+
+# #### Further Automatic Plotting Functionality
+#
+# Now, you might have `MeasurementCollection` or `ExperimentData` with many `s-parameters` data. It might just be easier to get the feel of all of them by automatically plotting them using some of the generic visualisation utilities in `piel` such these. You can also copy the source code through Github and modify your own function from them, and are most welcome to contribute/PR back into the project.
+
+pe.visual.plot_s_parameter_real_and_imaginary(
+    rf_vna_self_calibration_data.data,
+    figure_kwargs={"figsize": (10, 20)},
+    path="../../_static/img/examples/08_basic_interconnection_modelling/s_parameter_re_im_vna_calibration_experiment_data_collection.jpg",
+)
+
 
 # #### Identifying bad/shifting calibration
 
@@ -393,7 +531,7 @@ self_dembedded_network = skrf.network.de_embed(
 )
 self_dembedded_network.plot_s_db()
 
-# Note that if the measurements are not approximately similar in terms of the magnitude of the responses, say because one SMA has been screwed tighter than in another measurement, then this type of network measuremnt de-embedding is inaccurate. This can be observed in the image below:
+# Note that if the measurements are not approximately similar in terms of the magnitude of the responses, say because one SMA has been screwed tighter than in another measurement, then this type of network measurement de-embedding is inaccurate. This can be observed in the image below:
 
 software_dembeded_attenuator = skrf.network.de_embed(
     calvna_cables_through_network, calvna_cables_20db_attenuator_network
@@ -464,13 +602,13 @@ def construct_calibration_networks(measurements_directory: piel.PathTypes):
             for one_port_reference_name_i in one_port_references:
                 if one_port_reference_name_i in file:
                     if "port1" in file:
-                        raw_networks[one_port_reference_name_i][
-                            1
-                        ] = hfss_touchstone_2_network(file_name)
+                        raw_networks[one_port_reference_name_i][1] = (
+                            hfss_touchstone_2_network(file_name)
+                        )
                     elif "port2" in file:
-                        raw_networks[one_port_reference_name_i][
-                            2
-                        ] = hfss_touchstone_2_network(file_name)
+                        raw_networks[one_port_reference_name_i][2] = (
+                            hfss_touchstone_2_network(file_name)
+                        )
 
     # Now we need to construct the relevant reciprocal networks from a collection of two-port networks
     for one_port_reference_name_i in one_port_references:
@@ -810,4 +948,6 @@ calibrated_14111msm_network
 
 calibrated_14111msm_network.plot_s_db()
 
-#
+748 * (((31 - 22) + (14)) / 30)
+
+748 * (20 / 31)

@@ -4,14 +4,22 @@
 
 ## Experiment Parameters 
 
-
+|    |   port | measurement   | calibration   |
+|---:|-------:|:--------------|:--------------|
+|  0 |     12 | through       | vna_ports     |
+|  1 |      1 | open          | vna_ports     |
+|  2 |      2 | open          | vna_ports     |
+|  3 |      1 | load          | vna_ports     |
+|  4 |      2 | load          | vna_ports     |
+|  5 |      1 | short         | vna_ports     |
+|  6 |      2 | short         | vna_ports     |
 
 ## Schema 
 - **name**: rf_vna_self_calibration
 - **goal**: None
 - **experiment_instances**:
   -
-    - **name**: None
+    - **name**: through_port_12
     - **components**:
       -
         - **name**: through_82052D
@@ -53,7 +61,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -78,9 +88,16 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
   -
-    - **name**: None
+    - **name**: open_port_1
     - **components**:
       -
         - **name**: load_82052D
@@ -116,7 +133,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -132,9 +151,16 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
   -
-    - **name**: None
+    - **name**: open_port_2
     - **components**:
       -
         - **name**: load_82052D
@@ -170,7 +196,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -186,9 +214,16 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
   -
-    - **name**: None
+    - **name**: load_port_1
     - **components**:
       -
         - **name**: load_82052D
@@ -224,7 +259,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -240,9 +277,16 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
   -
-    - **name**: None
+    - **name**: load_port_2
     - **components**:
       -
         - **name**: load_82052D
@@ -278,7 +322,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -294,9 +340,16 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
   -
-    - **name**: None
+    - **name**: short_port_1
     - **components**:
       -
         - **name**: short_85052D
@@ -332,7 +385,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -348,9 +403,16 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
   -
-    - **name**: None
+    - **name**: short_port_2
     - **components**:
       -
         - **name**: short_85052D
@@ -386,7 +448,9 @@
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
-        - **configuration**: None
+        - **configuration**:
+          - **calibration_setting_name**: bpl_vna_ports
+          - **measurement_configuration**: None
     - **connections**:
       -
         - **name**: None
@@ -402,5 +466,40 @@
     - **index**: None
     - **date_configured**: None
     - **date_measured**: None
-    - **measurement_configuration_list**: None
-- **parameters_list**: None
+    - **measurement_configuration_list**:
+      -
+        - **name**: None
+        - **parent_directory**: None
+        - **measurement_type**: None
+        - **frequency_range_Hz**: None
+        - **sweep_points**: None
+        - **test_port_power_dBm**: None
+- **parameters_list**:
+  -
+    - **port**: 12
+    - **measurement**: through
+    - **calibration**: vna_ports
+  -
+    - **port**: 1
+    - **measurement**: open
+    - **calibration**: vna_ports
+  -
+    - **port**: 2
+    - **measurement**: open
+    - **calibration**: vna_ports
+  -
+    - **port**: 1
+    - **measurement**: load
+    - **calibration**: vna_ports
+  -
+    - **port**: 2
+    - **measurement**: load
+    - **calibration**: vna_ports
+  -
+    - **port**: 1
+    - **measurement**: short
+    - **calibration**: vna_ports
+  -
+    - **port**: 2
+    - **measurement**: short
+    - **calibration**: vna_ports
