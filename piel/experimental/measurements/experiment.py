@@ -1,4 +1,3 @@
-from typing import get_origin
 from ..types import (
     Experiment,
     ExperimentInstance,
@@ -93,12 +92,9 @@ def compose_measurement_collection_from_experiment(
     else:
         # Use the last element to verify the collection map
         measurement_collection_type = measurement_to_collection_map[
-            measurement_collection_list[-1].__class__.__name__
+            measurement_collection_list[-1].type
         ]
-        assert isinstance(
-            measurement_collection_list, get_origin(measurement_collection_type)
-        )
-        return measurement_collection_list
+        return measurement_collection_type(collection=measurement_collection_list)
 
 
 def load_from_directory(

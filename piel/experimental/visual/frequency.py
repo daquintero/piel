@@ -23,10 +23,12 @@ def plot_s_parameter_measurements_to_step_responses(
     if figure_kwargs is None:
         figure_kwargs = dict()
 
-    fig, axs = create_plot_containers(container_list=measurements, **figure_kwargs)
+    fig, axs = create_plot_containers(
+        container_list=measurements.collection, **figure_kwargs
+    )
 
     i = 0
-    for measurement_i in measurements:
+    for measurement_i in measurements.collection:
         subnetwork = measurement_i.network.subnetwork(ports=[network_port_index])
         subnetwork_s11_time_i, subnetwork_s11_signal_i = subnetwork.step_response()
         axs[i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
@@ -36,8 +38,8 @@ def plot_s_parameter_measurements_to_step_responses(
 
         i += 1
 
-    if kwargs["path"] is not None:
-        save(fig, **kwargs)
+    # Save the figure if 'path' is provided in kwargs
+    save(fig, **kwargs)
 
     return fig, axs
 
@@ -54,10 +56,12 @@ def plot_s_parameter_real_and_imaginary(
     if s_plot_kwargs is None:
         s_plot_kwargs = dict()
 
-    fig, axs = create_plot_containers(container_list=measurements, **figure_kwargs)
+    fig, axs = create_plot_containers(
+        container_list=measurements.collection, **figure_kwargs
+    )
 
     i = 0
-    for measurement_i in measurements:
+    for measurement_i in measurements.collection:
         network = measurement_i.network
         network.plot_s_re(ax=axs[i], **s_plot_kwargs)
         # network.plot_s_im(ax=axs[1], **s_plot_configuration)
@@ -66,7 +70,7 @@ def plot_s_parameter_real_and_imaginary(
 
     plt.tight_layout()
 
-    if kwargs["path"]:
-        save(fig, **kwargs)
+    # Save the figure if 'path' is provided in kwargs
+    save(fig, **kwargs)
 
     return fig, axs

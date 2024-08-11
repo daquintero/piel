@@ -2,7 +2,10 @@ from .propagation import (
     PropagationDelayMeasurementDataCollection,
     PropagationDelayMeasurementData,
 )
-from .frequency import FrequencyMeasurementDataTypes, FrequencyMeasurementDataCollection
+from .frequency import (
+    FrequencyMeasurementDataTypes,
+    FrequencyMeasurementDataCollectionTypes,
+)
 from .dc import DCMeasurementDataTypes, DCMeasurementDataCollection
 
 MeasurementDataTypes = (
@@ -14,6 +17,6 @@ MeasurementDataTypes = (
 # Measurement Collections
 MeasurementDataCollectionTypes = (
     DCMeasurementDataCollection
-    | FrequencyMeasurementDataCollection
+    | FrequencyMeasurementDataCollectionTypes
     | PropagationDelayMeasurementDataCollection
 )

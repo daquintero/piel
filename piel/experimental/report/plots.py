@@ -1,19 +1,21 @@
 from ...types import PathTypes
 from ...file_system import return_path
 from ..types import ExperimentData
-from ..measurements.extract import load_experiment_data_from_directory
+from ..measurements.data.extract import load_experiment_data_from_directory
+from ..visual import auto_plot_from_experiment_data
 
 
 def create_plots_from_experiment_data(
     experiment_data: ExperimentData,
     plot_output_directory: PathTypes = None,
     experiment_directory: PathTypes = None,
-) -> list[tuple]:
+    **kwargs,
+) -> list[list[tuple], PathTypes]:
     """
     This function iterates through all the saved experimental data and generates the corresponding plots
     for the type of data provided using a method as specified.
 
-    Returns a list of (Figures,Axes)
+    Returns a list of (Figures,Axes), and a reference list of paths where the image has been saved.
     """
     # First we need to validate an experiment directory does exist. TODO decide if this stays.
     if experiment_directory is None:
@@ -45,9 +47,12 @@ def create_plots_from_experiment_data(
     print(f"Plots will be generated at: {plot_output_directory}")
 
     # Now we need to iterate through each MeasurementData and generate the plot accordingly.
-
-    # TODO implement automatic plot generation here from ExperimentData.
-    return experiment_data
+    plots, plots_paths = auto_plot_from_experiment_data(
+        experiment_data=experiment_data,
+        plot_output_directory=plot_output_directory,
+        **kwargs,
+    )
+    return plots, plots_paths
 
 
 def create_plots_from_experiment_directory(
@@ -59,7 +64,7 @@ def create_plots_from_experiment_directory(
     """
     experiment_directory = return_path(experiment_directory)
     experiment_data = load_experiment_data_from_directory(experiment_directory)
-    figure_axes_list = create_plots_from_experiment_data(
+    plots, plots_paths = create_plots_from_experiment_data(
         experiment_data=experiment_data, plot_output_directory=plot_output_directory
     )
-    return figure_axes_list
+    return plots, plots_paths

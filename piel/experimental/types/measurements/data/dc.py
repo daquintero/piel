@@ -1,4 +1,4 @@
-from .core import MeasurementData
+from .core import MeasurementData, MeasurementDataCollection
 from .....types import SignalDC
 
 
@@ -11,6 +11,7 @@ class MultimeterSweepVoltageMeasurementData(MeasurementData):
 
 
 class DCSweepMeasurementData(MeasurementData):
+    type: str = "DCSweepMeasurementData"
     inputs: list[SourcemeterSweepMeasurementData] = None
     """
     The input DC signals as sourced by a sourcemeter.
@@ -22,14 +23,18 @@ class DCSweepMeasurementData(MeasurementData):
     """
 
 
-DCSweepMeasurementDataCollection = list[DCSweepMeasurementData]
-
 DCMeasurementDataTypes = (
     DCSweepMeasurementData
     | MultimeterSweepVoltageMeasurementData
     | SourcemeterSweepMeasurementData
 )
 
-DCMeasurementDataCollection = (
-    list[DCMeasurementDataTypes] | DCSweepMeasurementDataCollection
-)
+
+class DCSweepMeasurementDataCollection(MeasurementDataCollection):
+    type: str = "DCSweepMeasurementDataCollection"
+    collection: list[DCSweepMeasurementData] = []
+
+
+class DCMeasurementDataCollection(MeasurementDataCollection):
+    type: str = "DCMeasurementDataCollection"
+    collection: list[DCMeasurementDataTypes] | DCSweepMeasurementDataCollection = []

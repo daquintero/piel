@@ -6602,3 +6602,318 @@ e
 - **date_configured**: 
 - **date_measured**: 
 - **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: pcb_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: None
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+- **goal**: 
+- **parameters**:
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: pcb_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: None
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+- **goal**: 
+- **parameters**:
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: pcb_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: None
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+- **goal**: 
+- **parameters**:
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: pcb_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: None
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+- **goal**: 
+- **parameters**:
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: pcb_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: None
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: None
+      -
+        - **name**: CH1
+        - **parent_component_name**: None
+  -
+    - **name**: None
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: None
+      -
+        - **name**: CH2
+        - **parent_component_name**: None
+- **goal**: 
+- **parameters**:
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:

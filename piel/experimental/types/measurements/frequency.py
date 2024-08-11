@@ -1,5 +1,5 @@
 from ....types import PathTypes
-from .core import MeasurementConfiguration, Measurement
+from .core import MeasurementConfiguration, Measurement, MeasurementCollection
 
 
 class VNASParameterMeasurementConfiguration(MeasurementConfiguration):
@@ -20,7 +20,8 @@ class VNASParameterMeasurement(Measurement):
     Standard definition for a collection of files that are part of a S-Parameter VNA measurement.
     """
 
-    spectrum_file: PathTypes
+    type: str = "VNASParameterMeasurement"
+    spectrum_file: PathTypes = None
 
 
 class VNAPowerSweepMeasurement(Measurement):
@@ -28,8 +29,15 @@ class VNAPowerSweepMeasurement(Measurement):
     Standard definition for a collection of files that are part of a VNA measurement.
     """
 
-    spectrum_file: PathTypes
+    type: str = "VNAPowerSweepMeasurement"
+    spectrum_file: PathTypes = None
 
 
-VNASParameterMeasurementCollection = list[VNASParameterMeasurement]
-VNAPowerSweepMeasurementCollection = list[VNASParameterMeasurementCollection]
+class VNASParameterMeasurementCollection(MeasurementCollection):
+    type: str = "VNASParameterMeasurementCollection"
+    collection: list[VNASParameterMeasurement] = []
+
+
+class VNAPowerSweepMeasurementCollection(MeasurementCollection):
+    type: str = "VNAPowerSweepMeasurementCollection"
+    collection: list[VNASParameterMeasurementCollection] = []

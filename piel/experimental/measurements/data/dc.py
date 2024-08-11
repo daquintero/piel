@@ -292,4 +292,4 @@ def extract_dc_sweeps_from_operating_point_csv(
 
         dc_sweep_data.append(dc_sweep)
 
-    return dc_sweep_data
+    return DCSweepMeasurementDataCollection(collection=dc_sweep_data)

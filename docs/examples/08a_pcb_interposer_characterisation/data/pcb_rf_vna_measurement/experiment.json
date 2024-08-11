@@ -31,9 +31,9 @@
                     "configuration": {
                         "calibration_setting_name": null,
                         "measurement_configuration": {
-                            "name": null,
+                            "name": "",
                             "parent_directory": null,
-                            "measurement_type": null,
+                            "measurement_type": "",
                             "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
                             "frequency_range_Hz": [
                                 45000000.0,
@@ -247,13 +247,13 @@
             "goal": "",
             "parameters": {},
             "index": 0,
-            "date_configured": "2024-08-11 21:41:10.779207",
+            "date_configured": "2024-08-12 15:11:57.160208",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
-                    "name": null,
+                    "name": "",
                     "parent_directory": null,
-                    "measurement_type": null,
+                    "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
                     "frequency_range_Hz": [
                         45000000.0,
@@ -293,9 +293,9 @@
                     "configuration": {
                         "calibration_setting_name": null,
                         "measurement_configuration": {
-                            "name": null,
+                            "name": "",
                             "parent_directory": null,
-                            "measurement_type": null,
+                            "measurement_type": "",
                             "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
                             "frequency_range_Hz": [
                                 45000000.0,
@@ -509,13 +509,13 @@
             "goal": "",
             "parameters": {},
             "index": 1,
-            "date_configured": "2024-08-11 21:41:10.779300",
+            "date_configured": "2024-08-12 15:11:57.160298",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
-                    "name": null,
+                    "name": "",
                     "parent_directory": null,
-                    "measurement_type": null,
+                    "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
                     "frequency_range_Hz": [
                         45000000.0,

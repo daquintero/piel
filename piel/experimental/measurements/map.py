@@ -3,10 +3,19 @@ from ..types.measurements.frequency import (
     VNASParameterMeasurementCollection,
 )
 
-from ..types.measurements.propagation import PropagationDelayMeasurement
+from ..types.measurements.propagation import (
+    PropagationDelayMeasurement,
+    PropagationDelayMeasurementCollection,
+)
 
-from ..types.measurements.data.propagation import PropagationDelayMeasurementData, PropagationDelayMeasurementDataCollection
-from ..types.measurements.data.frequency import VNASParameterMeasurementData, VNASParameterMeasurementDataCollection
+from ..types.measurements.data.propagation import (
+    PropagationDelayMeasurementData,
+    PropagationDelayMeasurementDataCollection,
+)
+from ..types.measurements.data.frequency import (
+    VNASParameterMeasurementData,
+    VNASParameterMeasurementDataCollection,
+)
 
 from .propagation import compose_propagation_delay_measurement
 from .frequency import compose_vna_s_parameter_measurement
@@ -37,11 +46,16 @@ measurement_to_data_method_map = {
 }
 
 measurement_to_collection_map = {
-    "PropagationDelayMeasurement": PropagationDelayMeasurementData,
+    "PropagationDelayMeasurement": PropagationDelayMeasurementCollection,
     "VNASParameterMeasurement": VNASParameterMeasurementCollection,
 }
 
 measurement_collection_to_data_map = {
     "PropagationDelayMeasurementCollection": PropagationDelayMeasurementDataCollection,
     "VNASParameterMeasurementCollection": VNASParameterMeasurementDataCollection,
+}
+
+measurement_data_to_measurement_collection_data_map = {
+    "PropagationDelayMeasurementData": PropagationDelayMeasurementDataCollection,
+    "VNASParameterMeasurementData": VNASParameterMeasurementDataCollection,
 }

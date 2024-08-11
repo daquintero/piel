@@ -19,10 +19,11 @@ from .frequency import (
     VNA,
     VNAConfiguration,
 )
-
-from .measurements.core import MeasurementConfiguration
-
-
+from .measurements.core import (
+    MeasurementConfiguration,
+    Measurement,
+    MeasurementCollection,
+)
 from .measurements.data.dc import (
     DCSweepMeasurementData,
     DCSweepMeasurementDataCollection,
