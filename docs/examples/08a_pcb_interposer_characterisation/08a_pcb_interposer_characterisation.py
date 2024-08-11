@@ -243,18 +243,22 @@ s_parameter_measurement_data_sweep
 #
 # We can first understand the `scikit-rf` network configuration:
 
-s_parameter_measurement_data_sweep[0].network
+s_parameter_measurement_data_sweep.collection[0].network
 
 # Let's plot the basic s-parameter `dB` magnitude response:
 
-s_parameter_measurement_data_sweep[0].network.plot_s_db(0, 0)
+s_parameter_measurement_data_sweep.collection[0].network.plot_s_db(0, 0)
 
 # Let's plot the two s-parameter measurement data in a basic form:
 
 import matplotlib.pyplot as plt
 
-s11_network = s_parameter_measurement_data_sweep[1].network.subnetwork(ports=[0])
-s21_network = s_parameter_measurement_data_sweep[1].network.subnetwork(ports=[1])
+s11_network = s_parameter_measurement_data_sweep.collection[1].network.subnetwork(
+    ports=[0]
+)
+s21_network = s_parameter_measurement_data_sweep.collection[1].network.subnetwork(
+    ports=[1]
+)
 s11_time, s11_signal = s11_network.step_response()
 s21_time, s21_signal = s21_network.step_response()
 plt.plot(s11_time, s11_signal)
@@ -445,59 +449,67 @@ calibration_propagation_delay_experiment_directory = (
 # First, let's consolidate the relevant files in a way we can index and analyse. In this case I have done this manually, but of course this can be automated with proper file naming in mind.
 
 # +
-pcb_propagation_data = [
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=pcb_propagation_delay_experiment_directory / str(0),
-        reference_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch1.csv",
-        dut_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch2.csv",
-        measurements_file="mdata_through_ch1ref_ch2pcb_1GHz.csv",
-    ),
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=pcb_propagation_delay_experiment_directory / str(1),
-        reference_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch1.csv",
-        dut_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch2.csv",
-        measurements_file="mdata_through_ch1ref_ch2pcb_3GHz.csv",
-    ),
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=pcb_propagation_delay_experiment_directory / str(2),
-        reference_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch1.csv",
-        dut_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch2.csv",
-        measurements_file="mdata_through_ch1ref_ch2pcb_5GHz.csv",
-    ),
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=pcb_propagation_delay_experiment_directory / str(3),
-        reference_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch1.csv",
-        dut_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch2.csv",
-        measurements_file="mdata_through_ch1ref_ch2pcb_10GHz.csv",
-    ),
-]
+pcb_propagation_data = pe.types.PropagationDelayMeasurementCollection(
+    collection=[
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=pcb_propagation_delay_experiment_directory / str(0),
+            reference_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch1.csv",
+            dut_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch2.csv",
+            measurements_file="mdata_through_ch1ref_ch2pcb_1GHz.csv",
+        ),
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=pcb_propagation_delay_experiment_directory / str(1),
+            reference_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch1.csv",
+            dut_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch2.csv",
+            measurements_file="mdata_through_ch1ref_ch2pcb_3GHz.csv",
+        ),
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=pcb_propagation_delay_experiment_directory / str(2),
+            reference_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch1.csv",
+            dut_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch2.csv",
+            measurements_file="mdata_through_ch1ref_ch2pcb_5GHz.csv",
+        ),
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=pcb_propagation_delay_experiment_directory / str(3),
+            reference_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch1.csv",
+            dut_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch2.csv",
+            measurements_file="mdata_through_ch1ref_ch2pcb_10GHz.csv",
+        ),
+    ]
+)
 
-calibration_propagation_data = [
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=calibration_propagation_delay_experiment_directory / str(0),
-        reference_waveform_file="calibration_loop_1Ghz_Ch1.csv",
-        dut_waveform_file="calibration_loop_1Ghz_Ch2.csv",
-        measurements_file="mdata_calibration_loop_1Ghz.csv",
-    ),
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=calibration_propagation_delay_experiment_directory / str(1),
-        reference_waveform_file="calibration_loop_3Ghz_Ch1.csv",
-        dut_waveform_file="calibration_loop_3Ghz_Ch2.csv",
-        measurements_file="mdata_calibration_loop_3Ghz.csv",
-    ),
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=calibration_propagation_delay_experiment_directory / str(2),
-        reference_waveform_file="calibration_loop_5Ghz_Ch1.csv",
-        dut_waveform_file="calibration_loop_5Ghz_Ch2.csv",
-        measurements_file="mdata_calibration_loop_5Ghz.csv",
-    ),
-    pe.types.PropagationDelayMeasurement(
-        parent_directory=calibration_propagation_delay_experiment_directory / str(3),
-        reference_waveform_file="calibration_loop_10Ghz_Ch1.csv",
-        dut_waveform_file="calibration_loop_10Ghz_Ch2.csv",
-        measurements_file="mdata_calibration_loop_10Ghz.csv",
-    ),
-]
+calibration_propagation_data = pe.types.PropagationDelayMeasurementCollection(
+    collection=[
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=calibration_propagation_delay_experiment_directory
+            / str(0),
+            reference_waveform_file="calibration_loop_1Ghz_Ch1.csv",
+            dut_waveform_file="calibration_loop_1Ghz_Ch2.csv",
+            measurements_file="mdata_calibration_loop_1Ghz.csv",
+        ),
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=calibration_propagation_delay_experiment_directory
+            / str(1),
+            reference_waveform_file="calibration_loop_3Ghz_Ch1.csv",
+            dut_waveform_file="calibration_loop_3Ghz_Ch2.csv",
+            measurements_file="mdata_calibration_loop_3Ghz.csv",
+        ),
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=calibration_propagation_delay_experiment_directory
+            / str(2),
+            reference_waveform_file="calibration_loop_5Ghz_Ch1.csv",
+            dut_waveform_file="calibration_loop_5Ghz_Ch2.csv",
+            measurements_file="mdata_calibration_loop_5Ghz.csv",
+        ),
+        pe.types.PropagationDelayMeasurement(
+            parent_directory=calibration_propagation_delay_experiment_directory
+            / str(3),
+            reference_waveform_file="calibration_loop_10Ghz_Ch1.csv",
+            dut_waveform_file="calibration_loop_10Ghz_Ch2.csv",
+            measurements_file="mdata_calibration_loop_10Ghz.csv",
+        ),
+    ]
+)
 # -
 
 
@@ -580,7 +592,9 @@ calibration_propagation_delay_experiment_directory_json = (
 )
 assert calibration_propagation_delay_experiment_directory_json.exists()
 
-calibration_propagation_delay_experiment_setup
+# +
+# calibration_propagation_delay_experiment_setup
+# -
 
 reinsantiated_calibration_experiment = piel.models.load_from_json(
     calibration_propagation_delay_experiment_directory_json, pe.types.Experiment

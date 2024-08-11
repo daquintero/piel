@@ -19,6 +19,8 @@ class ExperimentData(Instance):
         """
         This function creates a dictionary between the experiment.parameters
         and the corresponding data instance so that it's easier to index accordingly.
+        The goal is that this enables us to index and create the corresponding collections of measurements required
+        to input into the corresponding analysis accordingly.
         """
         # TODO finish
         # import pandas as pd

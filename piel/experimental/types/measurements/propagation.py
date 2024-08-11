@@ -1,5 +1,5 @@
 from ....types import PathTypes
-from .core import MeasurementConfiguration, Measurement
+from .core import MeasurementConfiguration, Measurement, MeasurementCollection
 
 
 class PropagationDelayMeasurementConfiguration(MeasurementConfiguration):
@@ -15,9 +15,12 @@ class PropagationDelayMeasurement(Measurement):
     TODO add link to the documentation of the propagation delay measurement.
     """
 
+    type: str = "PropagationDelayMeasurement"
     dut_waveform_file: PathTypes
     reference_waveform_file: PathTypes
     measurements_file: PathTypes
 
 
-PropagationDelayMeasurementCollection = list[PropagationDelayMeasurement]
+class PropagationDelayMeasurementCollection(MeasurementCollection):
+    type: str = "PropagationDelayMeasurementCollection"
+    collection: list[PropagationDelayMeasurement] = []

@@ -1,10 +1,10 @@
-from typing import Optional
 from .....types import Instance
-from ....types import ExperimentInstance
 
 
 class MeasurementData(Instance):
-    pass
+    type: str = ""
 
 
-MeasurementDataCollection = list[MeasurementData]
+class MeasurementDataCollection(Instance):
+    type: str = ""
+    collection: list[MeasurementData] = []

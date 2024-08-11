@@ -365,7 +365,7 @@ rf_vna_self_calibration_data = pe.extract_data_from_experiment(
     experiment=rf_vna_self_calibration,
     experiment_directory=vna_self_calibration_experiment_directory,
 )
-rf_vna_self_calibration_data.data
+rf_vna_self_calibration_data.data.collection
 
 # ```python
 # [VNASParameterMeasurementData(name='through_port_12', network=2-Port Network: 'through_port_12',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
@@ -384,7 +384,7 @@ reinstantiated_vna_self_calibration_experiment_data = (
         experiment_directory=vna_self_calibration_experiment_directory,
     )
 )
-reinstantiated_vna_self_calibration_experiment_data.data
+reinstantiated_vna_self_calibration_experiment_data.data.collection
 
 # ```python
 # [VNASParameterMeasurementData(name='through_port_12', network=2-Port Network: 'through_port_12',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
@@ -412,7 +412,7 @@ reinstantiated_vna_self_calibration_experiment_data.data
 
 stylely()
 fig, axs = plt.subplots(2, 1, figsize=(8, 6))
-calibrated_vna_port1_open_network = rf_vna_self_calibration_data.data[
+calibrated_vna_port1_open_network = rf_vna_self_calibration_data.data.collection[
     1
 ].network.subnetwork([0])  # only looking at port 1
 calibrated_vna_port1_open_network.plot_s_re(ax=axs[0])
@@ -474,11 +474,13 @@ fig.savefig(
 fig, axs = pv.create_plot_containers(container_list=[1, 1, 2], axes_per_element=1)
 plt.tight_layout()
 
-calibrated_load_data_file = (
-    "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
-)
-calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_data_file)
-calibrated_vna_port1_load_network.plot_s_db()
+# + active=""
+# calibrated_load_data_file = (
+#     "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
+# )
+# calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_data_file)
+# calibrated_vna_port1_load_network.plot_s_db()
+# -
 
 # ### A HW Calibrated Through-Measurement
 #
@@ -489,11 +491,13 @@ calibrated_vna_port1_load_network.plot_s_db()
 # <figcaption align = "center"> YOUR CAPTION </figcaption>
 # </figure>
 
-calibrated_through_data_file = (
-    "measurement_data/calibration_kit_vna_cal_at_vna_ports/through_port1_port2.s2p"
-)
-calibrated_vna_through_network = hfss_touchstone_2_network(calibrated_through_data_file)
-calibrated_vna_through_network.plot_s_db()
+# + active=""
+# calibrated_through_data_file = (
+#     "measurement_data/calibration_kit_vna_cal_at_vna_ports/through_port1_port2.s2p"
+# )
+# calibrated_vna_through_network = hfss_touchstone_2_network(calibrated_through_data_file)
+# calibrated_vna_through_network.plot_s_db()
+# -
 
 # #### Further Automatic Plotting Functionality
 #
@@ -505,6 +509,12 @@ pe.visual.plot_s_parameter_real_and_imaginary(
     path="../../_static/img/examples/08_basic_interconnection_modelling/s_parameter_re_im_vna_calibration_experiment_data_collection.jpg",
 )
 
+
+# We can also create a set of automatic plots directly from the `ExperimentData` and create a `REPORT.md` on the experiment directory.
+
+pe.create_report_from_experiment_directory(
+    experiment_directory=vna_self_calibration_experiment_directory,
+)
 
 # #### Identifying bad/shifting calibration
 

@@ -13,7 +13,7 @@ def plot_signal_propagation_signals(
     **kwargs,
 ):
     # TODO Implement validation that it's a time-propagation delay measurement
-    signal_propagation_sweep_data = experiment_data.data
+    signal_propagation_sweep_data = experiment_data.data.collection
 
     fig, axs = plt.subplots(
         len(signal_propagation_sweep_data),
@@ -85,7 +85,7 @@ def plot_signal_propagation_measurements(
         x_parameter
     ]
 
-    signal_propagation_sweep_data = experiment_data.data
+    signal_propagation_sweep_data = experiment_data.data.collection
 
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
@@ -118,7 +118,7 @@ def plot_signal_propagation_measurements(
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
-    if kwargs["path"]:
-        save(fig, **kwargs)
+    # Save the figure if 'path' is provided in kwargs
+    save(fig, **kwargs)
 
     return fig, ax

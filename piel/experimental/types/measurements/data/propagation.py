@@ -1,6 +1,6 @@
 from typing import Optional
-from .core import MeasurementData
-from .....types import SignalMetricsMeasurementCollection, DataTimeSignalData, Instance
+from .core import MeasurementData, MeasurementDataCollection
+from .....types import SignalMetricsMeasurementCollection, DataTimeSignalData
 
 
 class PropagationDelayMeasurementData(MeasurementData):
@@ -15,10 +15,12 @@ class PropagationDelayMeasurementData(MeasurementData):
         reference_waveform (Optional[DataTimeSignalData]): The reference waveform.
     """
 
+    type: str = "PropagationDelayMeasurementData"
     measurements: Optional[SignalMetricsMeasurementCollection]
     dut_waveform: Optional[DataTimeSignalData]
     reference_waveform: Optional[DataTimeSignalData]
 
 
-# TODO modify this for the new structure
-PropagationDelayMeasurementDataCollection = list[PropagationDelayMeasurementData]
+class PropagationDelayMeasurementDataCollection(MeasurementDataCollection):
+    type: str = "PropagationDelayMeasurementDataCollection"
+    collection: list[PropagationDelayMeasurementData] = []

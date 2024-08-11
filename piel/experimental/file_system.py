@@ -4,37 +4,14 @@ mapping between experimental data, configuration ids, and the file structure acc
 a direct mapping between an operating setup configuration, or experiment.
 """
 
-import pandas as pd
-
 from ..types import PathTypes
 from .types import Experiment
 from ..file_system import (
     create_new_directory,
     return_path,
     write_model_to_json,
-    write_file,
-    read_json,
 )
-from ..visual import dictionary_to_markdown_str
-
-
-def write_schema_markdown(schema_json_file: PathTypes, target_markdown_file: PathTypes):
-    """
-    This function writes the schema markdown file for the experiment configuration. This schema markdown file should
-    contain all the required information to understand the experiment configuration. This should include all the
-    experiment instances and their corresponding configurations.
-
-    """
-    schema_json_file = return_path(schema_json_file)
-    schema_json_file = read_json(schema_json_file)
-    schema_markdown = dictionary_to_markdown_str(schema_json_file)
-    schema_markdown = "\n\n## Schema \n" + schema_markdown
-    write_file(
-        target_markdown_file.parent,
-        schema_markdown,
-        target_markdown_file.name,
-        append=True,
-    )
+from .text import write_schema_markdown, write_experiment_top_markdown
 
 
 def construct_experiment_directories(
@@ -94,29 +71,21 @@ def construct_experiment_directories(
 
     # Create the experiment.json file
     experiment_json_path = experiment_directory / "experiment.json"
-    experiment_markdown_path = experiment_directory / "README.md"
     write_model_to_json(experiment, experiment_json_path)
 
-    # Experiment Top Level
-    markdown_top_text = (
-        "# "
-        + str(experiment.name)
-        + "\n\n**Goal**: "
-        + str(experiment.goal)
-        + "\n\n## Experiment Parameters \n\n"
+    # Create the experiment README.md file
+    experiment_markdown_path = experiment_directory / "README.md"
+    setup_experiment_markdown_path = experiment_directory / "SETUP.md"
+    write_experiment_top_markdown(
+        experiment, experiment_directory, experiment_markdown_path
     )
-    write_file(
-        experiment_markdown_path.parent,
-        markdown_top_text,
-        experiment_markdown_path.name,
+    write_experiment_top_markdown(
+        experiment, experiment_directory, setup_experiment_markdown_path
     )
-
-    # Construct the iteration parameters table and save iteration table to markdown
-    iteration_parameters_table = pd.DataFrame(experiment.parameters_list)
-    iteration_parameters_table.to_markdown(experiment_markdown_path, mode="a")
 
     # Append schema to markdown
     write_schema_markdown(experiment_json_path, experiment_markdown_path)
+    write_schema_markdown(experiment_json_path, setup_experiment_markdown_path)
 
     # Create the experiment instances
     for index, experiment_instance in enumerate(experiment.experiment_instances):

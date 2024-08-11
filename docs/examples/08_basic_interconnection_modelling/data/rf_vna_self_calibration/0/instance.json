@@ -89,9 +89,9 @@
     "date_measured": "",
     "measurement_configuration_list": [
         {
-            "name": null,
+            "name": "",
             "parent_directory": null,
-            "measurement_type": null,
+            "measurement_type": "",
             "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
             "frequency_range_Hz": null,
             "sweep_points": null,

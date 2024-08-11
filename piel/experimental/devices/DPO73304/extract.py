@@ -1,5 +1,4 @@
 import pandas as pd
-from typing import get_origin
 from ...types import (
     PropagationDelayMeasurementCollection,
     PropagationDelayMeasurementDataCollection,
@@ -126,7 +125,9 @@ def extract_propagation_delay_measurement_sweep_data(
     the files in the sweep file collection.
     """
     measurement_sweep_data = list()
-    for propagation_delay_measurement_i in propagation_delay_measurement_sweep:
+    for (
+        propagation_delay_measurement_i
+    ) in propagation_delay_measurement_sweep.collection:
         data_i = dict()
         if hasattr(propagation_delay_measurement_i, "measurements_file"):
             file = propagation_delay_measurement_i.measurements_file
@@ -163,10 +164,10 @@ def extract_propagation_delay_measurement_sweep_data(
 
         measurement_sweep_data.append(PropagationDelayMeasurementData(**data_i))
 
-    assert isinstance(
-        measurement_sweep_data, get_origin(PropagationDelayMeasurementDataCollection)
+    measurement_data_collection = PropagationDelayMeasurementDataCollection(
+        collection=measurement_sweep_data
     )
-    return measurement_sweep_data
+    return measurement_data_collection
 
 
 def extract_to_signal_measurement(
