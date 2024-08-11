@@ -19,7 +19,6 @@ def plot_s_parameter_measurements_to_step_responses(
 
     TODO explore the other caveats of performing transformations this way.
     TODO generalise this functionality for simulation-sparameter networks.
-    :param **kwargs:
     """
     if figure_kwargs is None:
         figure_kwargs = dict()
@@ -31,12 +30,13 @@ def plot_s_parameter_measurements_to_step_responses(
         subnetwork = measurement_i.network.subnetwork(ports=[network_port_index])
         subnetwork_s11_time_i, subnetwork_s11_signal_i = subnetwork.step_response()
         axs[i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
+
+        if time_range_s is not None:
+            axs[i].set_xlim(time_range_s[0], time_range_s[1])
+
         i += 1
 
-    if time_range_s is not None:
-        fig.xlim(time_range_s[0], time_range_s[1])
-
-    if kwargs["path"]:
+    if kwargs["path"] is not None:
         save(fig, **kwargs)
 
     return fig, axs

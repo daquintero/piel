@@ -75,12 +75,12 @@
             ]
         }
     ],
-    "goal": null,
+    "goal": "",
     "parameters": {
         "square_wave_frequency_Hz": 10000000000.0
     },
     "index": null,
-    "date_configured": null,
-    "date_measured": null,
-    "measurement_configuration_list": null
+    "date_configured": "",
+    "date_measured": "",
+    "measurement_configuration_list": []
 }

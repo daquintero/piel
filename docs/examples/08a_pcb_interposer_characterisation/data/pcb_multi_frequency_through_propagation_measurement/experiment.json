@@ -79,12 +79,12 @@
                     ]
                 }
             ],
-            "goal": null,
-            "parameters": null,
+            "goal": "",
+            "parameters": {},
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         },
         {
             "name": "pcb_3000000000.0_Hz",
@@ -163,12 +163,12 @@
                     ]
                 }
             ],
-            "goal": null,
-            "parameters": null,
+            "goal": "",
+            "parameters": {},
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         },
         {
             "name": "pcb_5000000000.0_Hz",
@@ -247,12 +247,12 @@
                     ]
                 }
             ],
-            "goal": null,
-            "parameters": null,
+            "goal": "",
+            "parameters": {},
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         },
         {
             "name": "pcb_10000000000.0_Hz",
@@ -331,12 +331,12 @@
                     ]
                 }
             ],
-            "goal": null,
-            "parameters": null,
+            "goal": "",
+            "parameters": {},
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         }
     ],
     "parameters_list": [
@@ -352,5 +352,6 @@
         {
             "square_wave_frequency_Hz": 10000000000.0
         }
-    ]
+    ],
+    "parent_directory": null
 }

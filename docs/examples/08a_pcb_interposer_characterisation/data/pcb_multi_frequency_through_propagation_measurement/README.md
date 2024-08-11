@@ -70,12 +70,12 @@
           -
             - **name**: CH2
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **date_configured**: 
+    - **date_measured**: 
+    - **measurement_configuration_list**:
   -
     - **name**: pcb_3000000000.0_Hz
     - **components**:
@@ -131,12 +131,12 @@
           -
             - **name**: CH2
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **date_configured**: 
+    - **date_measured**: 
+    - **measurement_configuration_list**:
   -
     - **name**: pcb_5000000000.0_Hz
     - **components**:
@@ -192,12 +192,12 @@
           -
             - **name**: CH2
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **date_configured**: 
+    - **date_measured**: 
+    - **measurement_configuration_list**:
   -
     - **name**: pcb_10000000000.0_Hz
     - **components**:
@@ -253,12 +253,12 @@
           -
             - **name**: CH2
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
-    - **measurement_configuration_list**: None
+    - **date_configured**: 
+    - **date_measured**: 
+    - **measurement_configuration_list**:
 - **parameters_list**:
   -
     - **square_wave_frequency_Hz**: 1000000000.0
@@ -268,3 +268,4 @@
     - **square_wave_frequency_Hz**: 5000000000.0
   -
     - **square_wave_frequency_Hz**: 10000000000.0
+- **parent_directory**: None

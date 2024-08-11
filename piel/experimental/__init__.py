@@ -26,10 +26,19 @@ from .measurements.experiment import (
     compose_measurement_from_experiment_instance,
     compose_measurement_collection_from_experiment,
 )
-from .measurements.extract import extract_data_from_experiment
+from .measurements.extract import (
+    extract_data_from_experiment,
+    load_experiment_data_from_directory,
+)
 from .measurements.frequency import compose_vna_s_parameter_measurement
 from .measurements.map import (
     configuration_to_measurement_map,
     measurement_composition_method_mapping,
 )
 from .measurements.propagation import compose_propagation_delay_measurement
+
+from .report.report import create_report
+from .report.plots import (
+    create_plots_from_experiment_data,
+    create_plots_from_experiment_directory,
+)

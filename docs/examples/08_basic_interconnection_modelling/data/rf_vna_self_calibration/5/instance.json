@@ -62,16 +62,17 @@
             ]
         }
     ],
-    "goal": null,
-    "parameters": null,
+    "goal": "",
+    "parameters": {},
     "index": null,
-    "date_configured": null,
-    "date_measured": null,
+    "date_configured": "",
+    "date_measured": "",
     "measurement_configuration_list": [
         {
             "name": null,
             "parent_directory": null,
             "measurement_type": null,
+            "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
             "frequency_range_Hz": null,
             "sweep_points": null,
             "test_port_power_dBm": null

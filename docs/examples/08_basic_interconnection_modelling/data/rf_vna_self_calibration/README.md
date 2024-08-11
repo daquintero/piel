@@ -1,6 +1,6 @@
 # rf_vna_self_calibration
 
-**Goal**: None
+**Goal**: 
 
 ## Experiment Parameters 
 
@@ -16,7 +16,7 @@
 
 ## Schema 
 - **name**: rf_vna_self_calibration
-- **goal**: None
+- **goal**: 
 - **experiment_instances**:
   -
     - **name**: through_port_12
@@ -83,16 +83,17 @@
           -
             - **name**: OUT
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -146,16 +147,17 @@
           -
             - **name**: IN
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -209,16 +211,17 @@
           -
             - **name**: IN
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -272,16 +275,17 @@
           -
             - **name**: IN
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -335,16 +339,17 @@
           -
             - **name**: IN
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -398,16 +403,17 @@
           -
             - **name**: IN
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -461,16 +467,17 @@
           -
             - **name**: IN
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: None
-    - **date_configured**: None
-    - **date_measured**: None
+    - **date_configured**: 
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**: None
         - **sweep_points**: None
         - **test_port_power_dBm**: None
@@ -503,3 +510,4 @@
     - **port**: 2
     - **measurement**: short
     - **calibration**: vna_ports
+- **parent_directory**: None
