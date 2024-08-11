@@ -2,7 +2,9 @@ name: "piel-coverage"
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
+    branches:
+      - develop
 
 defaults:
   run:
@@ -55,3 +57,18 @@ jobs:
         coverage report -m
         echo "total=$(coverage report --format=total)" >> $GITHUB_ENV
         echo '### Total coverage: ${{ env.total }}%'
+
+    - name: "Create badge"
+      # if: ${{ github.ref == 'refs/heads/latest' }}
+      # https://gist.githubusercontent.com/nedbat/8c6980f77988a327348f9b02bbaf67f5
+      uses: schneegans/dynamic-badges-action@v1.7.0
+      with:
+        auth: ${{ secrets.GH_PAT }}
+        gistID: 605df9da19061593715258b77e06ab9b
+        filename: piel_coverage.json
+        label: Coverage
+        message: ${{ env.total }}%
+        minColorRange: 60
+        maxColorRange: 95
+        valColorRange: ${{ env.total }}
+        style: "for-the-badge"

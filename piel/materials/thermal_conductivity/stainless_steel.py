@@ -14,18 +14,18 @@ def stainless_steel(
     temperature_range_K: TemperatureRangeTypes,
     material_reference: MaterialReferenceType,
     *args,
-    **kwargs
+    **kwargs,
 ):
-    try:
-        specification = material_reference[1]
-        material_sub_name = specification[1]
-    except IndexError as e:
+    specification = material_reference[1]
+    if specification not in supported_specifications:
         raise ValueError(
             "Invalid specification for stainless steel: "
             + specification
             + ". Valid options are: "
-            + str(supported_specifications)
-        ) from e
+            + ", ".join(supported_specifications)
+        )
+
+    material_sub_name = specification
 
     if material_sub_name == "304":
         # https://trc.nist.gov/cryogenics/materials/304Stainless/304Stainless_rev.htm

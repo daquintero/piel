@@ -2,8 +2,12 @@
 **P**\ hotonic **I**\ ntegrated **EL**\ ectronics
 ####################################################
 
-|PyPI Name| |PyPI Version| |Documentation Status| |MIT|
+|PyPI Name| |PyPI Version| |Documentation Status| |Coverage| |MIT|
 |Black|
+
+.. warning::
+
+   **``piel < 0.1`` is still in active development. The API is starting to stabilize, but use it currently at your own risk.**
 
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.
@@ -84,7 +88,11 @@ want to do a single contribution, let's do this together!
    :target: https://pypi.python.org/pypi/piel
 .. |Documentation Status| image:: https://readthedocs.org/projects/piel/badge/?style=for-the-badge
    :target: https://piel.readthedocs.io/en/latest/?version=latest
+.. |Coverage| image:: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/daquintero/605df9da19061593715258b77e06ab9b/raw/piel_coverage.json
 .. |MIT| image:: https://img.shields.io/github/license/gdsfactory/gdsfactory?style=for-the-badge
    :target: https://choosealicense.com/licenses/mit/
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
    :target: https://github.com/psf/black
+
+
+
