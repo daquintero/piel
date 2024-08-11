@@ -95,6 +95,8 @@ rf_calibration_pcb
 
 # A `Component` might contain subcomponents and there are parameters like `Environment`. In any case, we have all the flexibility of `python` of composing all the `ExperimentInstances` we want. As long as we create an `Experiment` with multiple `ExperimentInstances`, then it is pretty straightforward to just export that to a JSON model file. Using `pydantic`, we can also reinstantiate the model back into `python` which is quite powerful for this type of experiment management.
 
+# ## Creating a Serializable `Experiment`
+
 # ### Frequency-Domain Analysis
 
 # It is possible to extract the time-domain performance from frequency-domain measurements:
@@ -195,8 +197,7 @@ vna_pcb_experiment_directory = pe.construct_experiment_directories(
 )
 
 # ```
-# Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/basic_vna_test
-# PosixPath('/home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/basic_vna_test')
+# Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/pcb_rf_vna_measurement
 # ```
 
 # Let's see how the structure of the project looks like:
@@ -204,6 +205,11 @@ vna_pcb_experiment_directory = pe.construct_experiment_directories(
 
 # !pwd $vna_pcb_experiment_directory
 # !ls $vna_pcb_experiment_directory
+
+# ```bash
+# /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation
+# 0  1  experiment.json  README.md
+# ```
 
 # Now, let's save the experimental data in there accordingly. Once we save the data, we can recompose the data into measurement containers based on the `MeasurementConfigurationTypes` we defined for each `ExperimantInstance`.
 
@@ -221,6 +227,12 @@ vna_pcb_experiment_collection = pe.compose_measurement_collection_from_experimen
     experiment_directory=vna_pcb_experiment_directory,
 )
 vna_pcb_experiment_collection
+
+# ```
+# [VNASParameterMeasurement(name='load_through', parent_directory=PosixPath('/home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/pcb_rf_vna_measurement/0'), spectrum_file=PosixPath('/home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/pcb_rf_vna_measurement/0/through_293K_s1s2_wbluec_50oihm_cjhip.s2p')),
+#  VNASParameterMeasurement(name='throguh', parent_directory=PosixPath('/home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/pcb_rf_vna_measurement/1'), spectrum_file=PosixPath('/home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/pcb_rf_vna_measurement/1/single_trace_293K_s1s2_wbluec.s2p'))]
+#
+# ```
 
 s_parameter_measurement_data_sweep = pe.extract_data_from_measurement_collection(
     measurement_collection=vna_pcb_experiment_collection,
@@ -254,15 +266,18 @@ pe.visual.plot_s_parameter_measurements_to_step_responses(
     measurements=s_parameter_measurement_data_sweep,
     network_port_index=0,
     time_range_s=(-0.5e-9, 2e-9),
+    path=None,
 )
 
-# ## Time-Domain Analysis
+# ### Time-Domain Analysis: DUT & Reference Paths
 #
 # Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain response is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
 #
 # Let's configure the propagation delay experimental measurement in order to save the files in a reasonable location. We need to define how a specific experiment instance, in this case a measurement looks like. This involves the device configuration and stimulus parameters.
 
 
+# TODO make a diagram
+#
 # First, we will do the exact test between two identical set of cables.
 
 
@@ -421,6 +436,8 @@ calibration_propagation_delay_experiment_directory = (
 # Experiment directory created at /home/daquintero/phd/piel/docs/examples/08a_pcb_interposer_characterisation/data/calibration_multi_frequency_through_propagation_measurement
 # ```
 
+# ## Performing `ExperimentData` Analysis and Plotting
+
 # We can see in each directory the generated directories and files accordingly. Now we can use this directory to save and consolidate all the metadata of our experiments accordingly.
 #
 # I've already done it for the experiment as described in this code, so let's explore the data using `piel` accordingly.
@@ -505,9 +522,11 @@ calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
     data=calibration_propagation_delay_data,
 )
 
+# #### Specific Data Plotting Functionality
+
 # Now, we want to plot this files as a function of the sweep parameters. Fortunately this is pretty easy. Let's first start by plotting the signals in time.
 #
-# ### TODO add graph showing this exact setup.
+# TODO add graph showing this exact setup.
 #
 #
 # In this setup, we will use a RF signal generator and a RF oscilloscope.
@@ -550,4 +569,29 @@ fig, ax = pe.visual.plot_signal_propagation_measurements(
 
 # ![pcb_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg)
 
-#
+# #### Automatic Report and Plotting
+
+# One of the nice functionalities provided by `piel.experimental` is that because `Experiment`s and `ExperimentData`s can be serialized. That means their analysis can also be automated at multiple stages of the development flow.
+
+# In this example, we have relied on using previous metadata generated in the same python session. We don't always have to do this. Using the generated `experiment.json` or `instance.json` we can straightforwardly reinstantiate our `Experiment` or `ExperimentInstance` models into another instance.
+
+calibration_propagation_delay_experiment_directory_json = (
+    calibration_propagation_delay_experiment_directory / "experiment.json"
+)
+assert calibration_propagation_delay_experiment_directory_json.exists()
+
+calibration_propagation_delay_experiment_setup
+
+reinsantiated_calibration_experiment = piel.models.load_from_json(
+    calibration_propagation_delay_experiment_directory_json, pe.types.Experiment
+)
+reinsantiated_calibration_experiment
+
+# assert reinsantiated_calibration_experiment == calibration_propagation_delay_experiment_setup
+reinsantiated_calibration_experiment.name
+
+# ```bash
+# 'calibration_multi_frequency_through_propagation_measurement'
+# ```
+
+# Note that this has some limitations of revalidation and reinstantion of python classes.

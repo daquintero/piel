@@ -3,6 +3,7 @@ from .core import MeasurementConfiguration, Measurement
 
 
 class PropagationDelayMeasurementConfiguration(MeasurementConfiguration):
+    measurement_configuration_type: str = "PropagationDelayMeasurementConfiguration"
     pass
 
 

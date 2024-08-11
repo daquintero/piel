@@ -3,12 +3,14 @@ from .core import MeasurementConfiguration, Measurement
 
 
 class VNASParameterMeasurementConfiguration(MeasurementConfiguration):
+    measurement_configuration_type: str = "VNASParameterMeasurementConfiguration"
     frequency_range_Hz: tuple[float, float] = None
     sweep_points: int = None
     test_port_power_dBm: float = None
 
 
 class VNAPowerSweepMeasurementConfiguration(MeasurementConfiguration):
+    measurement_configuration_type: str = "VNAPowerSweepMeasurementConfiguration"
     base_frequency_Hz: float = None
     power_range_dBm: tuple[float, float] = None
 

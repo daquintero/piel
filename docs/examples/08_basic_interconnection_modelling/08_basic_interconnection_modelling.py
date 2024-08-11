@@ -340,7 +340,7 @@ piel.create_new_directory(experiment_data_directory)
 
 # Now, we can create the experiment in there:
 
-propagation_delay_experiment_directory = pe.construct_experiment_directories(
+vna_self_calibration_experiment_directory = pe.construct_experiment_directories(
     experiment=rf_vna_self_calibration,
     parent_directory=experiment_data_directory,
 )
@@ -363,9 +363,38 @@ propagation_delay_experiment_directory = pe.construct_experiment_directories(
 
 rf_vna_self_calibration_data = pe.extract_data_from_experiment(
     experiment=rf_vna_self_calibration,
-    experiment_directory=propagation_delay_experiment_directory,
+    experiment_directory=vna_self_calibration_experiment_directory,
 )
 rf_vna_self_calibration_data.data
+
+# ```python
+# [VNASParameterMeasurementData(name='through_port_12', network=2-Port Network: 'through_port_12',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='open_port_1', network=2-Port Network: 'open_port_1',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='open_port_2', network=2-Port Network: 'open_port_2',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='load_port_1', network=2-Port Network: 'load_port_1',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='load_port_2', network=2-Port Network: 'load_port_2',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='short_port_1', network=2-Port Network: 'short_port_1',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='short_port_2', network=2-Port Network: 'short_port_2',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j])]
+# ```
+
+# We could simply skip all of this and extract the data directly from the directory. Note that we don't always have to work from the same python instance as we can reload the classes (with some caveats) from the metadata.
+
+reinstantiated_vna_self_calibration_experiment_data = (
+    pe.load_experiment_data_from_directory(
+        experiment_directory=vna_self_calibration_experiment_directory,
+    )
+)
+reinstantiated_vna_self_calibration_experiment_data.data
+
+# ```python
+# [VNASParameterMeasurementData(name='through_port_12', network=2-Port Network: 'through_port_12',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='open_port_1', network=2-Port Network: 'open_port_1',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='open_port_2', network=2-Port Network: 'open_port_2',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='load_port_1', network=2-Port Network: 'load_port_1',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='load_port_2', network=2-Port Network: 'load_port_2',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='short_port_1', network=2-Port Network: 'short_port_1',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j]),
+#  VNASParameterMeasurementData(name='short_port_2', network=2-Port Network: 'short_port_2',  45000000.0-20000000000.0 Hz, 6401 pts, z0=[50.+0.j 50.+0.j])]
+# ```
 
 # Now, we can begin plotting this data in multiple ways:
 

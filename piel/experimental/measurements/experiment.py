@@ -2,6 +2,7 @@ from typing import get_origin
 from ..types import (
     Experiment,
     ExperimentInstance,
+    ExperimentCollection,
     MeasurementTypes,
     MeasurementCollectionTypes,
 )
@@ -12,6 +13,7 @@ from .map import (
 )
 from ...types import PathTypes
 from ...file_system import return_path
+from ...models import load_from_json, load_from_dict
 
 
 def compose_measurement_from_experiment_instance(
@@ -33,22 +35,30 @@ def compose_measurement_from_experiment_instance(
     instance_directory = return_path(instance_directory)
     # TODO verify that print(experiment_instance.measurement_configuration_list) exists
 
-    for (
-        measurement_configuration_i
-    ) in experiment_instance.measurement_configuration_list:
-        # Now we need to go through the instance directory and map these files to a specific measurement instance
-        measurement_composition_method = measurement_composition_method_mapping[
-            measurement_configuration_i.__class__.__name__
-        ]
-        measurement = measurement_composition_method(
-            instance_directory, name=experiment_instance.name, **kwargs
-        )
+    experiment_instance_dict = experiment_instance.model_dump()
 
-    return measurement
+    measurement_configuration_list = experiment_instance_dict[
+        "measurement_configuration_list"
+    ]
+
+    if len(measurement_configuration_list) == 0:
+        pass
+    else:
+        for measurement_configuration_i in measurement_configuration_list:
+            # Now we need to go through the instance directory and map these files to a specific measurement instance
+            measurement_composition_method = measurement_composition_method_mapping[
+                measurement_configuration_i["measurement_configuration_type"]
+            ]
+            measurement = measurement_composition_method(
+                instance_directory, name=experiment_instance.name, **kwargs
+            )
+            # TODO fix me
+
+            return measurement
 
 
 def compose_measurement_collection_from_experiment(
-    experiment: Experiment, experiment_directory: PathTypes, **kwargs
+    experiment: Experiment, experiment_directory: PathTypes = None, **kwargs
 ) -> MeasurementCollectionTypes:
     """
     This function takes a defined experiment and returns a measurement collection from them.
@@ -57,10 +67,15 @@ def compose_measurement_collection_from_experiment(
     """
     experiment_directory = return_path(experiment_directory)
     measurement_collection_list: MeasurementCollectionTypes = list()
+    experiment_dict = experiment.model_dump()
 
     instance_directory_index_i = 0
-    for experiment_instance_i in experiment.experiment_instances:
+    for experiment_instance_i in experiment_dict["experiment_instances"]:
         instance_directory = experiment_directory / str(instance_directory_index_i)
+
+        experiment_instance_i = load_from_dict(
+            experiment_instance_i, ExperimentInstance
+        )
 
         measurement_i = compose_measurement_from_experiment_instance(
             experiment_instance=experiment_instance_i,
@@ -71,11 +86,55 @@ def compose_measurement_collection_from_experiment(
         # TODO implement measurement to measurement collection mapping
         instance_directory_index_i += 1
 
-    # Use the last element to verify the collection map
-    MeasurementCollectionType = measurement_to_collection_map[
-        measurement_i.__class__.__name__
-    ]
-    assert isinstance(
-        measurement_collection_list, get_origin(MeasurementCollectionType)
-    )
-    return measurement_collection_list
+    if len(measurement_collection_list) == 0:
+        raise ValueError(
+            "The experiment does not contain any measurements. Please verify the experiment configuration."
+        )
+    else:
+        # Use the last element to verify the collection map
+        measurement_collection_type = measurement_to_collection_map[
+            measurement_collection_list[-1].__class__.__name__
+        ]
+        assert isinstance(
+            measurement_collection_list, get_origin(measurement_collection_type)
+        )
+        return measurement_collection_list
+
+
+def load_from_directory(
+    parent_directory: PathTypes,
+) -> ExperimentInstance | Experiment:
+    """
+    This function is inputted a directory, and the aim is to read the corresponding metadata to extract
+    the model definition used to re-instantiate the class instance a Python object. This is useful for
+    when we want to load a previously saved experiment instance.
+
+    Parameters
+    ----------
+    parent_directory : PathTypes
+        The directory where the metadata file is located.
+
+    Returns
+    -------
+    ExperimentInstance | Experiment
+        The corresponding experiment instance or experiment object
+    """
+    experiment_json = parent_directory / "experiment.json"
+    instance_json = parent_directory / "instance.json"
+
+    if experiment_json.exists():
+        model_instance = load_from_json(experiment_json, Experiment)
+    elif instance_json.exists():
+        model_instance = load_from_json(instance_json, ExperimentInstance)
+    else:
+        raise FileNotFoundError(
+            f"Could not find the corresponding metadata file in {parent_directory} to reconstruct the model class."
+        )
+    return model_instance
+
+
+def load_experiment_collection() -> ExperimentCollection:
+    """
+    This function is provided a directory which contains subdirectories of experiments. It will load all the experiments
+    and return an `ExperimentCollection` object.
+    """

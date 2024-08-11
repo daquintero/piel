@@ -79,14 +79,14 @@
                     ]
                 }
             ],
-            "goal": null,
+            "goal": "",
             "parameters": {
                 "square_wave_frequency_Hz": 1000000000.0
             },
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         },
         {
             "name": "calibration_3000000000.0_Hz",
@@ -165,14 +165,14 @@
                     ]
                 }
             ],
-            "goal": null,
+            "goal": "",
             "parameters": {
                 "square_wave_frequency_Hz": 3000000000.0
             },
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         },
         {
             "name": "calibration_5000000000.0_Hz",
@@ -251,14 +251,14 @@
                     ]
                 }
             ],
-            "goal": null,
+            "goal": "",
             "parameters": {
                 "square_wave_frequency_Hz": 5000000000.0
             },
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         },
         {
             "name": "calibration_10000000000.0_Hz",
@@ -337,14 +337,14 @@
                     ]
                 }
             ],
-            "goal": null,
+            "goal": "",
             "parameters": {
                 "square_wave_frequency_Hz": 10000000000.0
             },
             "index": null,
-            "date_configured": null,
-            "date_measured": null,
-            "measurement_configuration_list": null
+            "date_configured": "",
+            "date_measured": "",
+            "measurement_configuration_list": []
         }
     ],
     "parameters_list": [
@@ -360,5 +360,6 @@
         {
             "square_wave_frequency_Hz": 10000000000.0
         }
-    ]
+    ],
+    "parent_directory": null
 }

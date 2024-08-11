@@ -4,7 +4,8 @@
 
 ## Experiment Parameters 
 
-
+|--:|
+| 0 |
 
 ## Schema 
 - **name**: pcb_rf_vna_measurement
@@ -39,6 +40,7 @@
             - **name**: None
             - **parent_directory**: None
             - **measurement_type**: None
+            - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
             - **frequency_range_Hz**:
               - 45000000.0
               - 20000000000.0
@@ -206,16 +208,17 @@
           -
             - **name**: PORT2
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: 0
-    - **date_configured**: 2024-08-06 11:45:52.370350
-    - **date_measured**: None
+    - **date_configured**: 2024-08-11 21:41:10.779207
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**:
           - 45000000.0
           - 20000000000.0
@@ -250,6 +253,7 @@
             - **name**: None
             - **parent_directory**: None
             - **measurement_type**: None
+            - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
             - **frequency_range_Hz**:
               - 45000000.0
               - 20000000000.0
@@ -417,19 +421,22 @@
           -
             - **name**: PORT2
             - **parent_component_name**: None
-    - **goal**: None
-    - **parameters**: None
+    - **goal**: 
+    - **parameters**:
     - **index**: 1
-    - **date_configured**: 2024-08-06 11:45:52.370437
-    - **date_measured**: None
+    - **date_configured**: 2024-08-11 21:41:10.779300
+    - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: None
         - **parent_directory**: None
         - **measurement_type**: None
+        - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**:
           - 45000000.0
           - 20000000000.0
         - **sweep_points**: 6401
         - **test_port_power_dBm**: -17.0
-- **parameters_list**: None
+- **parameters_list**:
+  -
+- **parent_directory**: None

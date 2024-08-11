@@ -13,10 +13,7 @@ from .device import (
     MeasurementDevice,
 )
 
-from .experiment import (
-    ExperimentInstance,
-    Experiment,
-)
+from .experiment import ExperimentInstance, Experiment, ExperimentCollection
 
 from .frequency import (
     VNA,

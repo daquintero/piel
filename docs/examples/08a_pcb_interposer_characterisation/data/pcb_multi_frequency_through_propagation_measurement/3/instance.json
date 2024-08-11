@@ -75,10 +75,10 @@
             ]
         }
     ],
-    "goal": null,
-    "parameters": null,
+    "goal": "",
+    "parameters": {},
     "index": null,
-    "date_configured": null,
-    "date_measured": null,
-    "measurement_configuration_list": null
+    "date_configured": "",
+    "date_measured": "",
+    "measurement_configuration_list": []
 }
