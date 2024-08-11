@@ -19,7 +19,7 @@ def copper(
     temperature_range_K: TemperatureRangeTypes,
     material_reference: MaterialReferenceType,
     *args,
-    **kwargs
+    **kwargs,
 ) -> ArrayTypes:
     specification = material_reference[1]
     copper_thermal_conductivity_file = (
@@ -63,65 +63,3 @@ def copper(
     thermal_conductivity_fit = numerator / denominator
 
     return thermal_conductivity_fit
-
-
-# if self.material_name == "copper":
-#     thermal_conductivity_material_dataset = pd.read_csv(
-#         file_path + "/../materials/files/raw/thermal_conductivity/ofhc_copper_thermal_conductivity.csv")
-#     a = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "a"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "a"][
-#                   self.material_sub_name].values)
-#     b = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "b"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "b"][
-#                   self.material_sub_name].values)
-#     c = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "c"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "c"][
-#                   self.material_sub_name].values)
-#     d = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "d"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "d"][
-#                   self.material_sub_name].values)
-#     e = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "e"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "e"][
-#                   self.material_sub_name].values)
-#     f = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "f"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "f"][
-#                   self.material_sub_name].values)
-#     g = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "g"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "g"][
-#                   self.material_sub_name].values)
-#     h = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "h"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "h"][
-#                   self.material_sub_name].values)
-#     i = nsy.C(s=thermal_conductivity_material_dataset[
-#         thermal_conductivity_material_dataset["coefficient"] == "i"][self.material_sub_name].values[0],
-#               n=thermal_conductivity_material_dataset[
-#                   thermal_conductivity_material_dataset["coefficient"] == "i"][
-#                   self.material_sub_name].values)
-#     self.__thermal_conductivity_fit__ = nsy.V(n=10) ** ((a +
-#                                                          c * self.temperature_range_K ** 0.5 +
-#                                                          e * self.temperature_range_K +
-#                                                          g * self.temperature_range_K ** 1.5 +
-#                                                          i * self.temperature_range_K ** 2) /
-#                                                         (1 +
-#                                                          b * self.temperature_range_K ** 0.5 +
-#                                                          d * self.temperature_range_K +
-#                                                          f * self.temperature_range_K ** 1.5 +
-#                                                          h * self.temperature_range_K ** 2)
-#
-# return self.__thermal_conductivity_fit__.n

@@ -144,7 +144,7 @@ versionwarning_admonition_type = "tip"
 versionwarning_messages = {
     "develop": 'You are reading the "develop" pip-unreleased version of this documentation.'
     " See the ``stable`` branch for the stable release.",
-    "latest": 'You are reading the "latest" pip-unreleased version of this documentation.'
+    "latest": 'You are reading the "latest" version of this documentation.'
     " See the ``stable`` branch for the latest release.",
 }
 versionwarning_admonition_type = "tip"

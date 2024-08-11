@@ -25,7 +25,7 @@ class Connection(Instance):
     This represents the fundamental data structure to identify a connection between two ports.
     """
 
-    ports: tuple[Port, Port]
+    ports: tuple[Port, Port] = tuple()
 
 
 class Component(Instance):
@@ -33,9 +33,9 @@ class Component(Instance):
     This represents the fundamental data structure to identify a component with ports and internal or external connectivity.
     """
 
-    ports: list[Port]
+    ports: list[Port] = []
 
-    connections: list[Connection]
+    connections: list[Connection] = []
 
     components: list[Component] = []
     """
