@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
-from ...visual import save
-from ..types import ExperimentData
+from piel.visual import save
+from piel.experimental.types import ExperimentData
 from typing import Optional
+from . import measurement_data_collection
 
 
-def plot_signal_propagation_signals(
+def plot_propagation_signals_time(
     experiment_data: ExperimentData,
     measurement_section: Optional[list[str]] = None,
     xlabel=r"Time $ns$",
@@ -13,65 +14,21 @@ def plot_signal_propagation_signals(
     **kwargs,
 ):
     # TODO Implement validation that it's a time-propagation delay measurement
-    signal_propagation_sweep_data = experiment_data.data.collection
-
-    fig, axs = plt.subplots(
-        len(signal_propagation_sweep_data),
-        1,
-        sharex=True,
+    fig, ax = measurement_data_collection.plot_propagation_signals_time(
+        data_collection=experiment_data.data,
+        measurement_section=measurement_section,
+        xlabel=xlabel,
+        ylabel=ylabel,
+        **kwargs,
     )
-    axs[0].set_xlim(
-        [
-            signal_propagation_sweep_data[1].reference_waveform.time_s[0],
-            signal_propagation_sweep_data[1].reference_waveform.time_s[-1],
-        ]
-    )
-
-    reference_x_data = list()
-    reference_y_data = list()
-    dut_x_data = list()
-    dut_y_data = list()
-
-    i = 0
-    for signal_propagation_measurement_data_i in signal_propagation_sweep_data:
-        # Go through each of the files measurements to extract the relevant files
-        reference_x_data = (
-            signal_propagation_measurement_data_i.reference_waveform.time_s
-        )
-        reference_y_data = signal_propagation_measurement_data_i.reference_waveform.data
-        dut_x_data = signal_propagation_measurement_data_i.dut_waveform.time_s
-        dut_y_data = signal_propagation_measurement_data_i.dut_waveform.data
-        ax = axs[i]
-
-        ax.plot(
-            reference_x_data,
-            reference_y_data,
-            "-",
-            label=f"reference_{signal_propagation_measurement_data_i.reference_waveform.data_name}",
-        )
-        ax.plot(
-            dut_x_data,
-            dut_y_data,
-            "-",
-            label=f"reference_{signal_propagation_measurement_data_i.dut_waveform.data_name}",
-        )
-        i += 1
-
-    # ax.legend()
-    # fig.set_title("Transient Propagation Delay Characterization \n RF PCB")
-    # ax.set_xlabel(xlabel)
-    # ax.set_ylabel(ylabel)
-
-    if kwargs["path"]:
-        save(fig, **kwargs)
 
     return fig, ax
 
 
 def plot_signal_propagation_measurements(
     experiment_data: ExperimentData,
-    x_parameter: str,
-    measurement_name: str,
+    x_parameter: str = "",
+    measurement_name: str = "",
     measurement_section: Optional[list[str]] = None,
     xlabel=r"Source Frequency $GHz$",
     ylabel=r"Propagation Delay $ns$",

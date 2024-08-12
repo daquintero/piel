@@ -469,17 +469,14 @@ fig.savefig(
 
 # ### A HW Calibrated Load Measurement
 
-# We might also want to automate a lot of certain types of plots. `scikit-rf` already does a great job at this. In our case, we might want to give our plotting functions a set of `ExperimentalData` measurement collections with a given set of networks and metadata and be able to easily plot this according to the type of plot structure we want. `piel` provide a common set of examples that can help automate some of this for some functionality.
-
-fig, axs = pv.create_plot_containers(container_list=[1, 1, 2], axes_per_element=1)
-plt.tight_layout()
-
 # + active=""
+# fig, axs = pv.create_plot_containers(container_list=[1, 1, 2], axes_per_element=1)
 # calibrated_load_data_file = (
-#     "measurement_data/calibration_kit_vna_cal_at_vna_ports/load_port1.s2p"
+#     "data/rf_vna_self_calibration/3/load_port1.s2p"
 # )
 # calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_data_file)
 # calibrated_vna_port1_load_network.plot_s_db()
+# plt.tight_layout()
 # -
 
 # ### A HW Calibrated Through-Measurement
@@ -491,30 +488,76 @@ plt.tight_layout()
 # <figcaption align = "center"> YOUR CAPTION </figcaption>
 # </figure>
 
-# + active=""
-# calibrated_through_data_file = (
-#     "measurement_data/calibration_kit_vna_cal_at_vna_ports/through_port1_port2.s2p"
-# )
-# calibrated_vna_through_network = hfss_touchstone_2_network(calibrated_through_data_file)
-# calibrated_vna_through_network.plot_s_db()
-# -
+# It might also be desired to plot each of the s-parameter elements in different axes.
+
+fig, axs = pv.create_plot_containers(
+    container_list=["PORT1", "PORT2"], axes_per_element=2
+)
+calibrated_load_data_file = "data/rf_vna_self_calibration/0/through_port1_port2.s2p"
+calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_data_file)
+for m in range(2):
+    for n in range(2):
+        calibrated_vna_port1_load_network.plot_s_db(ax=axs[m, n], m=m, n=n)
+plt.tight_layout()
+fig.savefig(
+    "../../_static/img/examples/08_basic_interconnection_modelling/basic_plot_through.jpg"
+)
+
+# ![basic_plot_through](../../_static/img/examples/08_basic_interconnection_modelling/basic_plot_through.jpg)
+
+# You can implement a very similar functionality directly with `piel`. Note that you need to import the corresponding function from the type of data input you want to provide, in order for the function to compile the corresponding inputs and `metadata` from the current location. In this case, it is from a `MeasurementDataCollection`
+
+pe.visual.frequency.measurement_data_collection.plot_s_parameter_per_component(
+    data_collection=reinstantiated_vna_self_calibration_experiment_data.data,
+    s_parameter_plot="plot_s_db",
+    path="../../_static/img/examples/08_basic_interconnection_modelling/reinstantiate_subset_example_plot_through.jpg",
+)
+
+# ![reinstantiate_subset_example_plot_through](../../_static/img/examples/08_basic_interconnection_modelling/reinstantiate_subset_example_plot_through.jpg)
 
 # #### Further Automatic Plotting Functionality
 #
 # Now, you might have `MeasurementCollection` or `ExperimentData` with many `s-parameters` data. It might just be easier to get the feel of all of them by automatically plotting them using some of the generic visualisation utilities in `piel` such these. You can also copy the source code through Github and modify your own function from them, and are most welcome to contribute/PR back into the project.
 
-pe.visual.plot_s_parameter_real_and_imaginary(
-    rf_vna_self_calibration_data.data,
+# We might also want to automate a lot of certain types of plots. `scikit-rf` already does a great job at this. In our case, we might want to give our plotting functions a set of `ExperimentalData` measurement collections with a given set of networks and metadata and be able to easily plot this according to the type of plot structure we want. `piel` provide a common set of examples that can help automate some of this for some functionality.
+
+# **Plotting from the ExperimentData**
+#
+# For example, you can simply plot directly from a provided `ExperimentData` accordingly too.
+
+pe.visual.frequency.experiment_data.plot_s_parameter_real_and_imaginary(
+    rf_vna_self_calibration_data,
     figure_kwargs={"figsize": (10, 20)},
     path="../../_static/img/examples/08_basic_interconnection_modelling/s_parameter_re_im_vna_calibration_experiment_data_collection.jpg",
 )
 
 
+# **Creating Reports**
+
 # We can also create a set of automatic plots directly from the `ExperimentData` and create a `REPORT.md` on the experiment directory.
 
-pe.create_report_from_experiment_directory(
-    experiment_directory=vna_self_calibration_experiment_directory,
+report_info = pe.create_report_from_experiment_directory(
+    experiment_directory=vna_self_calibration_experiment_directory
 )
+
+# ```
+# Experiment data will be extracted from: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration
+# Plots will be generated at: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration/img
+# Figure saved at: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration/img/None_plot_s_parameter_real_and_imaginary.png
+# README.md updated at: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration/README.md
+# REPORT.md written to: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration/REPORT.md
+# ```
+
+# **Plotting from Operating Points**
+#
+# We might also want to extract the relevant operating points from a given `ExperimentData` in order to create an `ExperimentDataCollection`. We can automate the creation of the corresponding `ExperimentData` subsets based on the operating points in the `Experiment.parameters_list`.
+
+example_subset_data_collection = (
+    pe.create_experiment_data_collection_from_unique_parameters(
+        experiment_data=rf_vna_self_calibration_data
+    )
+)
+# TODO show this works example_subset_data_collection
 
 # #### Identifying bad/shifting calibration
 
@@ -990,3 +1033,11 @@ calibrated_14111msm_network.plot_s_db()
 748 * (((31 - 22) + (14)) / 30)
 
 748 * (20 / 31)
+
+# ## Understanding S-Parameter Power Sweeps
+
+measured_high_resolution_14111msm_data_file = "measurement_data/example_power_sweep.s2p"
+high_resolution_14111msm_network = skrf.Network(
+    measured_high_resolution_14111msm_data_file
+)
+high_resolution_14111msm_network

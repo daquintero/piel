@@ -8,6 +8,7 @@ def compose_propagation_delay_measurement(
     dut_file_prefix: str = "Ch1",
     reference_file_prefix: str = "Ch2",
     measurement_file_prefix: str = "",
+    skip_missing: bool = False,
     **kwargs,
 ) -> PropagationDelayMeasurement:
     """
@@ -28,10 +29,15 @@ def compose_propagation_delay_measurement(
             reference_file = file_i
         elif (measurement_file_prefix in file_i.name) and file_i.suffix == ".csv":
             measurements_file = file_i
-    if dut_file is None or reference_file is None or measurements_file is None:
-        raise FileNotFoundError(
+    if (dut_file is None) or (reference_file is None) or (measurements_file is None):
+        missing_error = FileNotFoundError(
             f"Could not find the required files in the directory {instance_directory}"
         )
+        if skip_missing:
+            print(missing_error)
+            return PropagationDelayMeasurement()
+        else:
+            raise missing_error
     return PropagationDelayMeasurement(
         parent_directory=instance_directory,
         dut_waveform_file=dut_file,

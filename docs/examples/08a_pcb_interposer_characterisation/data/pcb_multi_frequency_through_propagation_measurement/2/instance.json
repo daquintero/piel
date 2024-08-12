@@ -6,11 +6,11 @@
             "ports": [
                 {
                     "name": "CH1",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 },
                 {
                     "name": "CH2",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 }
             ],
             "connections": null,
@@ -21,7 +21,7 @@
             "ports": [
                 {
                     "name": "CH1",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 }
             ],
             "connections": null,
@@ -32,15 +32,15 @@
             "ports": [
                 {
                     "name": "IN",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 },
                 {
                     "name": "OUT1",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 },
                 {
                     "name": "OUT2",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 }
             ],
             "connections": null,
@@ -49,28 +49,28 @@
     ],
     "connections": [
         {
-            "name": null,
+            "name": "",
             "ports": [
                 {
                     "name": "OUT1",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 },
                 {
                     "name": "CH1",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 }
             ]
         },
         {
-            "name": null,
+            "name": "",
             "ports": [
                 {
                     "name": "OUT2",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 },
                 {
                     "name": "CH2",
-                    "parent_component_name": null
+                    "parent_component_name": ""
                 }
             ]
         }
@@ -80,5 +80,12 @@
     "index": null,
     "date_configured": "",
     "date_measured": "",
-    "measurement_configuration_list": []
+    "measurement_configuration_list": [
+        {
+            "name": "",
+            "parent_directory": null,
+            "measurement_type": "",
+            "measurement_configuration_type": "PropagationDelayMeasurementConfiguration"
+        }
+    ]
 }

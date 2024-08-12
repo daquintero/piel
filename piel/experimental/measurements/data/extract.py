@@ -18,6 +18,8 @@ def extract_data_from_measurement_collection(
     measurement_collection: MeasurementCollectionTypes,
     measurement_to_data_map: dict = measurement_to_data_map,
     measurement_to_data_method_map: dict = measurement_to_data_method_map,
+    skip_missing: bool = False,
+    **kwargs,
 ) -> MeasurementDataCollectionTypes:
     """
     The goal of this function is to compose the data from a collection of measurement references.
@@ -30,7 +32,15 @@ def extract_data_from_measurement_collection(
         # Identify correct data mapping
         measurement_data_type = measurement_to_data_map[measurement_i.type]
         extract_data_method = measurement_to_data_method_map[measurement_i.type]
-        measurement_data_i = extract_data_method(measurement_i)
+        try:
+            measurement_data_i = extract_data_method(measurement_i)
+        except Exception as e:
+            missing_data_error = f"Missing data for measurement: {measurement_i} in collection: {measurement_collection}"
+            if skip_missing:
+                print(missing_data_error)
+                measurement_data_i = measurement_data_type()
+            else:
+                raise e
         assert isinstance(measurement_data_i, measurement_data_type)
         measurement_data_collection.append(measurement_data_i)
 
@@ -49,7 +59,11 @@ def extract_data_from_measurement_collection(
 
 
 def extract_data_from_experiment(
-    experiment: Experiment, experiment_directory: PathTypes, **kwargs
+    experiment: Experiment,
+    experiment_directory: PathTypes,
+    composition_kwargs: dict = None,
+    extraction_kwargs: dict = None,
+    **kwargs,
 ) -> ExperimentData:
     """
     This function must be run after data has already been written within the ``Experiment`` directories
@@ -73,13 +87,20 @@ def extract_data_from_experiment(
     ExperimentData
         The data extracted from the experiment.
     """
+    if composition_kwargs is None:
+        composition_kwargs = dict()
+
+    if extraction_kwargs is None:
+        extraction_kwargs = dict()
+
     measurement_collection = compose_measurement_collection_from_experiment(
         experiment=experiment,
         experiment_directory=experiment_directory,
+        **composition_kwargs,
     )
 
     measurement_data_collection = extract_data_from_measurement_collection(
-        measurement_collection=measurement_collection
+        measurement_collection=measurement_collection, **extraction_kwargs
     )
 
     return ExperimentData(
@@ -88,7 +109,7 @@ def extract_data_from_experiment(
 
 
 def load_experiment_data_from_directory(
-    experiment_directory: PathTypes,
+    experiment_directory: PathTypes, **kwargs
 ) -> ExperimentData:
     """
     This function will load an `Experiment` from the metadata stored in the `experiment.json` directory.
@@ -98,6 +119,6 @@ def load_experiment_data_from_directory(
     assert experiment_metadata_json.exists()
     experiment = load_from_json(experiment_metadata_json, Experiment)
     experiment_data = extract_data_from_experiment(
-        experiment, experiment_directory=experiment_directory
+        experiment, experiment_directory=experiment_directory, **kwargs
     )
     return experiment_data

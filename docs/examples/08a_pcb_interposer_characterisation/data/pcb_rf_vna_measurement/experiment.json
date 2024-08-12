@@ -10,14 +10,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -49,14 +49,14 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": "SMA",
                             "manifold": null
                         },
                         {
                             "name": "OUT",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": "SMA",
                             "manifold": null
@@ -205,24 +205,24 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "OUT",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "SIG6",
@@ -231,7 +231,7 @@
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "SIG7",
@@ -239,7 +239,7 @@
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -247,7 +247,7 @@
             "goal": "",
             "parameters": {},
             "index": 0,
-            "date_configured": "2024-08-12 15:11:57.160208",
+            "date_configured": "2024-08-13 15:15:47.819596",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
@@ -272,14 +272,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -311,14 +311,14 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": "SMA",
                             "manifold": null
                         },
                         {
                             "name": "OUT",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": "SMA",
                             "manifold": null
@@ -467,24 +467,24 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "OUT",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "SIG1",
@@ -493,7 +493,7 @@
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "SIG2",
@@ -501,7 +501,7 @@
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -509,7 +509,7 @@
             "goal": "",
             "parameters": {},
             "index": 1,
-            "date_configured": "2024-08-12 15:11:57.160298",
+            "date_configured": "2024-08-13 15:15:47.819842",
             "date_measured": "",
             "measurement_configuration_list": [
                 {

@@ -26,13 +26,13 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
           -
             - **name**: OUT
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -46,13 +46,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -66,23 +66,23 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
@@ -105,7 +105,7 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -119,13 +119,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -139,14 +139,14 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
@@ -169,7 +169,7 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -183,13 +183,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -203,14 +203,14 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
@@ -233,7 +233,7 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -247,13 +247,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -267,14 +267,14 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
@@ -297,7 +297,7 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -311,13 +311,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -331,14 +331,14 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
@@ -361,7 +361,7 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -375,13 +375,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -395,14 +395,14 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
@@ -425,7 +425,7 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
@@ -439,13 +439,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -459,14 +459,14 @@
           - **measurement_configuration**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None

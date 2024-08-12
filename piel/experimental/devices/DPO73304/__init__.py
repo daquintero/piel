@@ -1,5 +1,6 @@
 from .extract import (
     extract_measurement_to_dataframe,
+    extract_propagation_delay_data_from_measurement,
     extract_propagation_delay_measurement_sweep_data,
     extract_waveform_to_dataframe,
     extract_to_data_time_signal,

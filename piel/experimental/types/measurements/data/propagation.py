@@ -1,4 +1,3 @@
-from typing import Optional
 from .core import MeasurementData, MeasurementDataCollection
 from .....types import SignalMetricsMeasurementCollection, DataTimeSignalData
 
@@ -16,9 +15,9 @@ class PropagationDelayMeasurementData(MeasurementData):
     """
 
     type: str = "PropagationDelayMeasurementData"
-    measurements: Optional[SignalMetricsMeasurementCollection]
-    dut_waveform: Optional[DataTimeSignalData]
-    reference_waveform: Optional[DataTimeSignalData]
+    measurements: SignalMetricsMeasurementCollection = None
+    dut_waveform: DataTimeSignalData = None
+    reference_waveform: DataTimeSignalData = None
 
 
 class PropagationDelayMeasurementDataCollection(MeasurementDataCollection):

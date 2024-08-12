@@ -717,9 +717,12 @@ def return_path(
     return output_path
 
 
-def run_script(script_path: PathTypes) -> None:
+def run_script(
+    script_path: PathTypes,
+    program: str = None,
+) -> None:
     """
-    Runs a script on the filesystem `script_path`.
+    Runs a script on the filesystem `script_path`. By default this is a bash script.
 
     Args:
         script_path(PathTypes): Script path.
@@ -728,7 +731,20 @@ def run_script(script_path: PathTypes) -> None:
         None
     """
     script = return_path(script_path)
-    subprocess.run(str(script.resolve()), check=True, capture_output=True)
+    try:
+        if program is None:
+            subprocess.run(str(script.resolve()), check=True, capture_output=True)
+        else:
+            subprocess.run(
+                [program, str(script.resolve())], check=True, capture_output=True
+            )
+    except subprocess.CalledProcessError as e:
+        print(f"Error running script {script}:")
+        print(f"Command: {e.cmd}")
+        print(f"Return code: {e.returncode}")
+        print(f"Output: {e.stdout}")
+        print(f"Error output: {e.stderr}")
+        raise e  # Re-raise the exception after logging the details
 
 
 def write_file(

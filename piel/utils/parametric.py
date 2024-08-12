@@ -1,9 +1,6 @@
+import pandas as pd
 import itertools
-
-__all__ = [
-    "single_parameter_sweep",
-    "multi_parameter_sweep",
-]
+from itertools import combinations
 
 
 def single_parameter_sweep(
@@ -83,3 +80,53 @@ def multi_parameter_sweep(
         parameter_sweep_design_dictionary_array.extend([design])
 
     return parameter_sweep_design_dictionary_array
+
+
+def get_unique_dataframe_subsets(dataframe: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """
+    This function takes a pandas DataFrame and returns a list of unique subsets of the DataFrame.
+    It is useful for identifying unique operating points in a dataset.
+    The function returns a list of DataFrames that contain the unique combinations of values for each column in the input DataFrame.
+
+    Parameters
+    ----------
+    dataframe : pd.DataFrame
+
+    Returns
+    -------
+    list[str, pd.DataFrame]
+        A list of tuples where the first element is a string identifier for the subset and the second element is a DataFrame containing
+    """
+
+    # Modified function to create an identifier string with columns and elements together
+    def create_identifier(columns, elements):
+        """
+        This function takes a list of columns and a list of elements and returns a string identifier for the subset.
+        """
+        return "_".join([f"{col}_{val}" for col, val in zip(columns, elements)])
+
+    subset_dictionary = {}
+
+    for r in range(1, len(dataframe.columns) + 1):
+        for column_combination in combinations(dataframe.columns, r):
+            # Get the unique combinations of values for the selected columns
+            unique_combinations = (
+                dataframe[list(column_combination)].drop_duplicates().values
+            )
+
+            for unique_value_combination in unique_combinations:
+                # Filter rows that match the unique value combination across the selected columns
+                subset = dataframe[
+                    (
+                        dataframe[list(column_combination)] == unique_value_combination
+                    ).all(axis=1)
+                ]
+
+                # Only consider the subset if there are two or more identical elements
+                if len(subset) >= 2:
+                    identifier = create_identifier(
+                        column_combination, unique_value_combination
+                    )
+                    subset_dictionary[identifier] = subset.copy()
+
+    return subset_dictionary

@@ -19,13 +19,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -51,13 +51,13 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
             - **manifold**: None
           -
             - **name**: OUT
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
             - **manifold**: None
@@ -182,36 +182,36 @@
         - **model**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: SIG6
             - **parent_component_name**: PCB3
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: SIG7
             - **parent_component_name**: PCB3
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: 0
-    - **date_configured**: 2024-08-12 15:11:57.160208
+    - **date_configured**: 2024-08-13 15:15:47.819596
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
@@ -232,13 +232,13 @@
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: None
             - **manifold**: None
@@ -264,13 +264,13 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
             - **manifold**: None
           -
             - **name**: OUT
-            - **parent_component_name**: None
+            - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
             - **manifold**: None
@@ -395,36 +395,36 @@
         - **model**: None
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: PORT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: SIG1
             - **parent_component_name**: PCB3
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: SIG2
             - **parent_component_name**: PCB3
           -
             - **name**: PORT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: 1
-    - **date_configured**: 2024-08-12 15:11:57.160298
+    - **date_configured**: 2024-08-13 15:15:47.819842
     - **date_measured**: 
     - **measurement_configuration_list**:
       -

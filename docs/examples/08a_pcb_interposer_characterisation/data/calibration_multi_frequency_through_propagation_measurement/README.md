@@ -23,10 +23,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -34,7 +34,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -42,34 +42,34 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 1000000000.0
@@ -85,10 +85,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -96,7 +96,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -104,34 +104,34 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 3000000000.0
@@ -147,10 +147,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -158,7 +158,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -166,34 +166,34 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 5000000000.0
@@ -209,10 +209,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -220,7 +220,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -228,34 +228,34 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 10000000000.0

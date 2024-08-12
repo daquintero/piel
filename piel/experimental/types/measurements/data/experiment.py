@@ -14,16 +14,6 @@ class ExperimentData(Instance):
     # TODO add validators to make sure data and experimental parameters are the same size
     # TODO add validators for data type matches experiment type
 
-    @property
-    def parameter_map(self):
-        """
-        This function creates a dictionary between the experiment.parameters
-        and the corresponding data instance so that it's easier to index accordingly.
-        The goal is that this enables us to index and create the corresponding collections of measurements required
-        to input into the corresponding analysis accordingly.
-        """
-        # TODO finish
-        # import pandas as pd
-        # data_dictionary = {"data": data_i for data_i in data}
-        # print(data_dictionary)
-        # dataframe = pd.DataFrame(self.experiment.parameters_list)
+
+class ExperimentDataCollection(Instance):
+    collection: list[ExperimentData] = []

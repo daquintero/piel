@@ -7,7 +7,8 @@
 
 .. warning::
 
-   **``piel < 0.1`` is still in active development. The API is starting to stabilize, but use it currently at your own risk.**
+   ``piel < 0.1`` is still in active development. The API is starting to stabilize, but use it currently at your own risk.
+
 
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.
