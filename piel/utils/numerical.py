@@ -1,5 +1,5 @@
 import jax.numpy as jnp
-from .types import ArrayTypes
+from piel.types import ArrayTypes
 
 __all__ = [
     "round_complex_array",

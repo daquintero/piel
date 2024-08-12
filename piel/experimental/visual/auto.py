@@ -3,7 +3,7 @@ from ..types import MeasurementDataTypes, MeasurementDataCollectionTypes, Experi
 from .map import (
     measurement_data_collection_to_plot_map,
     measurement_data_to_plot_map,
-    measurement_data_collection_to_plot_prefix_map,
+    measurement_data_collection_to_plot_suffix_map,
 )
 
 
@@ -29,7 +29,7 @@ def auto_plot_from_measurement_data_collection(
     measurement_data_collection: MeasurementDataCollectionTypes,
     plot_output_directory: PathTypes = None,
     measurement_data_collection_to_plot_map: dict = measurement_data_collection_to_plot_map,
-    measurement_data_collection_to_plot_prefix_map: dict = measurement_data_collection_to_plot_prefix_map,
+    measurement_data_collection_to_plot_prefix_map: dict = measurement_data_collection_to_plot_suffix_map,
     **kwargs,
 ) -> tuple[list[tuple], list[PathTypes]]:
     """

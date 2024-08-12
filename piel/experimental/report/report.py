@@ -20,6 +20,8 @@ def create_report_from_experiment_directory(
     experiment_directory: PathTypes,
     plot_output_directory: PathTypes = None,
     report_readme_path: PathTypes = None,
+    load_data_kwargs: dict = None,
+    **kwargs,
 ):
     """
     First we need to extract the `ExperimentData` from the directory.
@@ -36,9 +38,12 @@ def create_report_from_experiment_directory(
         main_readme_path = experiment_directory / "README.md"
         report_readme_path = experiment_directory / "REPORT.md"
 
+    if load_data_kwargs is None:
+        load_data_kwargs = {}
+
     # We load the experiment data from the metadata
     experiment_data = load_experiment_data_from_directory(
-        experiment_directory=experiment_directory
+        experiment_directory=experiment_directory, **load_data_kwargs
     )
 
     # Now we need to generate all plots accordingly

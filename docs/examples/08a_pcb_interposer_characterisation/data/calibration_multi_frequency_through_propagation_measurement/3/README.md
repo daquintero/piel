@@ -6948,3 +6948,195 @@ e
 - **date_configured**: 
 - **date_measured**: 
 - **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: calibration_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+  - **square_wave_frequency_Hz**: 10000000000.0
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: calibration_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+  - **square_wave_frequency_Hz**: 10000000000.0
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+
+
+## Schema 
+- **name**: calibration_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+    - **connections**: None
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+  - **square_wave_frequency_Hz**: 10000000000.0
+- **index**: None
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:

@@ -10,14 +10,14 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
                         },
                         {
                             "name": "OUT",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -34,14 +34,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -60,28 +60,28 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT2",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "OUT",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -111,7 +111,7 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -128,14 +128,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -154,15 +154,15 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -192,7 +192,7 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -209,14 +209,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -235,15 +235,15 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT2",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -273,7 +273,7 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -290,14 +290,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -316,15 +316,15 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -354,7 +354,7 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -371,14 +371,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -397,15 +397,15 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT2",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -435,7 +435,7 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -452,14 +452,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -478,15 +478,15 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }
@@ -516,7 +516,7 @@
                     "ports": [
                         {
                             "name": "IN",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": null,
                             "connector": "SMA_3.5mm",
                             "manifold": "82052D"
@@ -533,14 +533,14 @@
                     "ports": [
                         {
                             "name": "PORT1",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
                         },
                         {
                             "name": "PORT2",
-                            "parent_component_name": null,
+                            "parent_component_name": "",
                             "domain": "RF",
                             "connector": null,
                             "manifold": null
@@ -559,15 +559,15 @@
             ],
             "connections": [
                 {
-                    "name": null,
+                    "name": "",
                     "ports": [
                         {
                             "name": "PORT2",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         },
                         {
                             "name": "IN",
-                            "parent_component_name": null
+                            "parent_component_name": ""
                         }
                     ]
                 }

@@ -13,7 +13,7 @@ import piel.visual as visual  # NOQA: F401
 # Functions
 from piel.file_system import *
 from piel.integration import *
-from piel.parametric import *
+from piel.utils.parametric import *
 from piel.project_structure import *
 from piel.tools import *
 from piel.utils import *

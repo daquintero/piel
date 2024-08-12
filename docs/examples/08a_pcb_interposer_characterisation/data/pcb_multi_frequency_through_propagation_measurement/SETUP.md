@@ -23,10 +23,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -34,7 +34,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -42,40 +42,45 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
+      -
+        - **name**: 
+        - **parent_directory**: None
+        - **measurement_type**: 
+        - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
   -
     - **name**: pcb_3000000000.0_Hz
     - **components**:
@@ -84,10 +89,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -95,7 +100,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -103,40 +108,45 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
+      -
+        - **name**: 
+        - **parent_directory**: None
+        - **measurement_type**: 
+        - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
   -
     - **name**: pcb_5000000000.0_Hz
     - **components**:
@@ -145,10 +155,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -156,7 +166,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -164,40 +174,45 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
+      -
+        - **name**: 
+        - **parent_directory**: None
+        - **measurement_type**: 
+        - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
   -
     - **name**: pcb_10000000000.0_Hz
     - **components**:
@@ -206,10 +221,10 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -217,7 +232,7 @@
         - **ports**:
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
       -
@@ -225,40 +240,45 @@
         - **ports**:
           -
             - **name**: IN
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
         - **connections**: None
         - **components**:
     - **connections**:
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH1
-            - **parent_component_name**: None
+            - **parent_component_name**: 
       -
-        - **name**: None
+        - **name**: 
         - **ports**:
           -
             - **name**: OUT2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
           -
             - **name**: CH2
-            - **parent_component_name**: None
+            - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
     - **index**: None
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
+      -
+        - **name**: 
+        - **parent_directory**: None
+        - **measurement_type**: 
+        - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
 - **parameters_list**:
   -
     - **square_wave_frequency_Hz**: 1000000000.0

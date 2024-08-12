@@ -21,6 +21,15 @@ def create_axes_per_figure(rows: int = 1, columns: int = 1, **kwargs) -> tuple:
     """
     This function creates a figure and a set of axes in this figure according to the number of rows or columns defined.
     """
+    # Default size depends on the number of rows and columns, or provided configuration parameters
+    if "figsize" in kwargs:
+        pass
+    else:
+        if (rows > 4) or (columns > 4):
+            kwargs["figsize"] = (2 * columns, 2 * rows)
+        else:
+            kwargs["figsize"] = (16, 8)
+
     fig, axs = plt.subplots(rows, columns, **kwargs)
 
     if (rows == 1) and (columns == 1):

@@ -4,6 +4,9 @@ import piel.experimental.models as models
 
 from piel.experimental.devices import DPO73304
 
+from .analysis.operating_point import (
+    create_experiment_data_collection_from_unique_parameters,
+)
 from .file_system import (
     construct_experiment_directories,
     construct_experiment_structure,
@@ -18,7 +21,7 @@ from .measurements.data.dc import (
     extract_dc_sweeps_from_operating_point_csv,
 )
 from .measurements.data.propagation import (
-    extract_propagation_delay_from_measurement,
+    extract_propagation_delay_data_from_measurement,
 )
 from .measurements.data.frequency import extract_s_parameter_data_from_vna_measurement
 from .measurements.data.extract import (

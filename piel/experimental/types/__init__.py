@@ -32,7 +32,7 @@ from .measurements.data.dc import (
     SourcemeterSweepMeasurementData,
 )
 from .measurements.data.core import MeasurementData, MeasurementDataCollection
-from .measurements.data.experiment import ExperimentData
+from .measurements.data.experiment import ExperimentData, ExperimentDataCollection
 from .measurements.data.generic import (
     MeasurementDataTypes,
     MeasurementDataCollectionTypes,
@@ -61,6 +61,7 @@ from .measurements.frequency import (
 from .measurements.propagation import (
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
+    PropagationDelayMeasurementConfiguration,
 )
 from .measurements.generic import (
     FrequencyMeasurementConfigurationTypes,

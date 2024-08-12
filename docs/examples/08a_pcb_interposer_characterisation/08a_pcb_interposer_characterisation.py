@@ -266,8 +266,8 @@ plt.plot(s21_time, s21_signal)
 
 #  Now this is not particularly useful on its own. It'd be nicer if we can do some more programmatic analysis our our sweep data.
 
-pe.visual.plot_s_parameter_measurements_to_step_responses(
-    measurements=s_parameter_measurement_data_sweep,
+pe.visual.frequency.measurement_data_collection.plot_s_parameter_measurements_to_step_responses(
+    data_collection=s_parameter_measurement_data_sweep,
     network_port_index=0,
     time_range_s=(-0.5e-9, 2e-9),
     path=None,
@@ -320,6 +320,7 @@ def calibration_propagation_delay_experiment_instance(
 def pcb_propagation_delay_experiment_instance(
     square_wave_frequency_Hz: float,
 ):
+    # We create out components
     oscilloscope = pe.models.create_two_port_oscilloscope()
     waveform_generator = pe.models.create_one_port_square_wave_waveform_generator(
         peak_to_peak_voltage_V=0.5,
@@ -337,10 +338,17 @@ def pcb_propagation_delay_experiment_instance(
         ]
     )
 
+    # If we want the data that will be generated to have automated analysis, we have to specify what type of experiment instance analysis we want
+    propagation_delay_configuration = (
+        pe.types.PropagationDelayMeasurementConfiguration()
+    )
+
+    # We declare the experimental instance.
     experiment_instance = pe.types.ExperimentInstance(
         name=f"pcb_{square_wave_frequency_Hz}_Hz",
         components=[oscilloscope, waveform_generator, splitter],
         connections=experiment_connections,
+        measurement_configuration_list=[propagation_delay_configuration],
     )
     return experiment_instance
 
@@ -546,14 +554,14 @@ calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
 # First, we will split the signal generator signal through two paths and see them in the oscillscope. They should overlap each other perfectly. Both signals are terminated at the oscilloscope inputs in order to get an exact rising edge.
 
 
-fig, ax = pe.visual.plot_signal_propagation_signals(
+fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
     calibration_propagation_delay_experiment_data,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
 )
 
 # ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg)
 
-fig, ax = pe.visual.plot_signal_propagation_signals(
+fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
     pcb_propagation_delay_experiment_data,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg",
 )
@@ -563,7 +571,7 @@ fig, ax = pe.visual.plot_signal_propagation_signals(
 
 # We can also plot the data related to the metrics extracted from the measurements.
 
-fig, ax = pe.visual.plot_signal_propagation_measurements(
+fig, ax = pe.visual.propagation.experiment_data.plot_signal_propagation_measurements(
     calibration_propagation_delay_experiment_data,
     x_parameter="square_wave_frequency_Hz",
     measurement_name="delay_ch1_ch2__s_2",
@@ -572,7 +580,7 @@ fig, ax = pe.visual.plot_signal_propagation_measurements(
 
 # ![calibration_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg)
 
-fig, ax = pe.visual.plot_signal_propagation_measurements(
+fig, ax = pe.visual.propagation.experiment_data.plot_signal_propagation_measurements(
     pcb_propagation_delay_experiment_data,
     x_parameter="square_wave_frequency_Hz",
     measurement_name="delay_ch1_ch2__s_1",

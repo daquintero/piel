@@ -16,9 +16,9 @@ class PropagationDelayMeasurement(Measurement):
     """
 
     type: str = "PropagationDelayMeasurement"
-    dut_waveform_file: PathTypes
-    reference_waveform_file: PathTypes
-    measurements_file: PathTypes
+    dut_waveform_file: PathTypes = None
+    reference_waveform_file: PathTypes = None
+    measurements_file: PathTypes = None
 
 
 class PropagationDelayMeasurementCollection(MeasurementCollection):

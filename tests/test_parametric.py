@@ -1,5 +1,5 @@
 import numpy as np
-from piel.parametric import (
+from piel.utils.parametric import (
     single_parameter_sweep,
     multi_parameter_sweep,
 )  # Adjust the import based on your actual module structure

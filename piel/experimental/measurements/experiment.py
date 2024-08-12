@@ -20,6 +20,7 @@ def compose_measurement_from_experiment_instance(
     instance_directory: PathTypes,
     configuration_measurement_map: dict = configuration_to_measurement_map,
     measurement_composition_method_mapping: dict = measurement_composition_method_mapping,
+    composition_methods_kwargs: dict = None,
     **kwargs,
 ) -> MeasurementTypes:
     """
@@ -30,6 +31,9 @@ def compose_measurement_from_experiment_instance(
      The mapping will be between a given ``MeasurementConfiguration`` type and a ``Measurement`` class which has the references
      of the data containers accordingly.
     """
+    if composition_methods_kwargs is None:
+        composition_methods_kwargs = {}
+
     # This corresponds to the instance directory
     instance_directory = return_path(instance_directory)
     # TODO verify that print(experiment_instance.measurement_configuration_list) exists
@@ -41,7 +45,12 @@ def compose_measurement_from_experiment_instance(
     ]
 
     if len(measurement_configuration_list) == 0:
-        pass
+        # Include information about which experiment or directory this is.
+        raise ValueError(
+            "The experiment instance does not contain any measurements. Please verify the experiment configuration."
+            + f"Experiment instance: {experiment_instance.name} "
+            + f"Directory: {instance_directory}"
+        )
     else:
         for measurement_configuration_i in measurement_configuration_list:
             # Now we need to go through the instance directory and map these files to a specific measurement instance
@@ -49,7 +58,9 @@ def compose_measurement_from_experiment_instance(
                 measurement_configuration_i["measurement_configuration_type"]
             ]
             measurement = measurement_composition_method(
-                instance_directory, name=experiment_instance.name, **kwargs
+                instance_directory,
+                name=experiment_instance.name,
+                **composition_methods_kwargs,
             )
             # TODO fix me
 
@@ -88,11 +99,13 @@ def compose_measurement_collection_from_experiment(
     if len(measurement_collection_list) == 0:
         raise ValueError(
             "The experiment does not contain any measurements. Please verify the experiment configuration."
+            + f"Experiment instance: {experiment.name} "
+            + f"Directory: {experiment_directory}"
         )
     else:
-        # Use the last element to verify the collection map
+        # Use the first element to verify the collection map
         measurement_collection_type = measurement_to_collection_map[
-            measurement_collection_list[-1].type
+            measurement_collection_list[0].type
         ]
         return measurement_collection_type(collection=measurement_collection_list)
 

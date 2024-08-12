@@ -1,5 +1,6 @@
 import pandas as pd
 from ...types import (
+    PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
     PropagationDelayMeasurementDataCollection,
     PropagationDelayMeasurementData,
@@ -116,6 +117,47 @@ def extract_to_data_time_signal(
     return data_time_signal
 
 
+def extract_propagation_delay_data_from_measurement(
+    propagation_delay_measurement: PropagationDelayMeasurement,
+) -> PropagationDelayMeasurementData:
+    propagation_delay_measurement_i = propagation_delay_measurement
+    data_i = dict()
+    if hasattr(propagation_delay_measurement_i, "measurements_file"):
+        file = propagation_delay_measurement_i.measurements_file
+        file = return_path(file)
+        if not file.exists():
+            # Try appending to parent directory if file does not exist
+            file = (
+                propagation_delay_measurement_i.parent_directory
+                / propagation_delay_measurement_i.measurements_file
+            )
+        data_i["measurements"] = extract_to_signal_measurement(file)
+
+    if hasattr(propagation_delay_measurement_i, "reference_waveform_file"):
+        file = propagation_delay_measurement_i.reference_waveform_file
+        file = return_path(file)
+        if not file.exists():
+            # Try appending to parent directory if file does not exist
+            file = (
+                propagation_delay_measurement_i.parent_directory
+                / propagation_delay_measurement_i.reference_waveform_file
+            )
+        data_i["reference_waveform"] = extract_to_data_time_signal(file)
+
+    if hasattr(propagation_delay_measurement_i, "dut_waveform_file"):
+        file = propagation_delay_measurement_i.dut_waveform_file
+        file = return_path(file)
+        if not file.exists():
+            # Try appending to parent directory if file does not exist
+            file = (
+                propagation_delay_measurement_i.parent_directory
+                / propagation_delay_measurement_i.dut_waveform_file
+            )
+        data_i["dut_waveform"] = extract_to_data_time_signal(file)
+
+    return PropagationDelayMeasurementData(**data_i)
+
+
 def extract_propagation_delay_measurement_sweep_data(
     propagation_delay_measurement_sweep: PropagationDelayMeasurementCollection,
 ) -> PropagationDelayMeasurementDataCollection:
@@ -128,41 +170,10 @@ def extract_propagation_delay_measurement_sweep_data(
     for (
         propagation_delay_measurement_i
     ) in propagation_delay_measurement_sweep.collection:
-        data_i = dict()
-        if hasattr(propagation_delay_measurement_i, "measurements_file"):
-            file = propagation_delay_measurement_i.measurements_file
-            file = return_path(file)
-            if not file.exists():
-                # Try appending to parent directory if file does not exist
-                file = (
-                    propagation_delay_measurement_i.parent_directory
-                    / propagation_delay_measurement_i.measurements_file
-                )
-            data_i["measurements"] = extract_to_signal_measurement(file)
-
-        if hasattr(propagation_delay_measurement_i, "reference_waveform_file"):
-            file = propagation_delay_measurement_i.reference_waveform_file
-            file = return_path(file)
-            if not file.exists():
-                # Try appending to parent directory if file does not exist
-                file = (
-                    propagation_delay_measurement_i.parent_directory
-                    / propagation_delay_measurement_i.reference_waveform_file
-                )
-            data_i["reference_waveform"] = extract_to_data_time_signal(file)
-
-        if hasattr(propagation_delay_measurement_i, "dut_waveform_file"):
-            file = propagation_delay_measurement_i.dut_waveform_file
-            file = return_path(file)
-            if not file.exists():
-                # Try appending to parent directory if file does not exist
-                file = (
-                    propagation_delay_measurement_i.parent_directory
-                    / propagation_delay_measurement_i.dut_waveform_file
-                )
-            data_i["dut_waveform"] = extract_to_data_time_signal(file)
-
-        measurement_sweep_data.append(PropagationDelayMeasurementData(**data_i))
+        measurement_data_i = extract_propagation_delay_data_from_measurement(
+            propagation_delay_measurement_i
+        )
+        measurement_sweep_data.append(measurement_data_i)
 
     measurement_data_collection = PropagationDelayMeasurementDataCollection(
         collection=measurement_sweep_data

@@ -4,7 +4,7 @@ from ...file_system import return_path
 
 
 def compose_vna_s_parameter_measurement(
-    instance_directory: PathTypes, **kwargs
+    instance_directory: PathTypes, skip_missing: bool = False, **kwargs
 ) -> VNASParameterMeasurement:
     """
     There should only be one .s2p s-parameter file in this directory. If there are more than one, it will read the first one.
@@ -18,9 +18,15 @@ def compose_vna_s_parameter_measurement(
             s2p_file = file_i
             break
     if s2p_file is None:
-        raise FileNotFoundError(
+        error = FileNotFoundError(
             f"Could not find the .s2p file in the directory {instance_directory}"
         )
+        if skip_missing:
+            print(error)
+            return VNASParameterMeasurement()
+        else:
+            raise error
+
     return VNASParameterMeasurement(
         parent_directory=instance_directory, spectrum_file=s2p_file, **kwargs
     )
