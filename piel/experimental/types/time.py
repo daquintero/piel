@@ -9,7 +9,7 @@ class WaveformGeneratorConfiguration(DeviceConfiguration):
     not the experimental setup connectivity.
     """
 
-    signal: SignalTimeSources
+    signal: SignalTimeSources = None
     """
     Contains an instantiation of the signal configuration applied as a reference.
     """
@@ -20,7 +20,7 @@ class WaveformGenerator(Device):
     Represents a vector-network analyser.
     """
 
-    configuration: WaveformGeneratorConfiguration
+    configuration: WaveformGeneratorConfiguration = None
     """
     Just overwrites this section of the device definition.
     """
@@ -32,7 +32,7 @@ class OscilloscopeConfiguration(DeviceConfiguration):
     not the experimental setup connectivity.
     """
 
-    bandwidth_Hz: MinimumMaximumType
+    bandwidth_Hz: MinimumMaximumType = None
 
 
 class Oscilloscope(MeasurementDevice):

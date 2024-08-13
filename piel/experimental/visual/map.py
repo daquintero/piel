@@ -24,7 +24,11 @@ def auto_function_name_list_from_module(module) -> list[str]:
     # Remove "plot_" prefix from the function names
     function_name_list = [name.replace("plot_", "") for name in functions_list]
 
-    return function_name_list
+    # Ensure each function name length is limited to a reasonable length
+    # while still ensuring the total file name is under 100 characters
+    truncated_function_name_list = [name[:20] for name in function_name_list]
+
+    return truncated_function_name_list
 
 
 """
@@ -51,6 +55,7 @@ measurement_data_collection_to_plot_map = {
         frequency.measurement_data_collection
     ),
 }
+
 
 measurement_data_collection_to_plot_suffix_map = {
     "PropagationDelayMeasurementDataCollection": auto_function_name_list_from_module(

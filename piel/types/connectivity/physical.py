@@ -11,8 +11,8 @@ class PhysicalPort(Port):
     """
 
     domain: Optional[ElectricalSignalDomains] = None
-    connector: Optional[str] = None
-    manifold: Optional[str] = None
+    connector: str = ""
+    manifold: str = ""
 
 
 class PhysicalConnection(PielBaseModel):
@@ -22,8 +22,8 @@ class PhysicalConnection(PielBaseModel):
     The components represent the physical implementation of the connections for the same connection index.
     """
 
-    connections: list[Connection]
-    components: Optional[tuple[Component]] = None
+    connections: list[Connection] = []
+    components: tuple[Component] | list[Component] = []
 
 
 class PhysicalComponent(Component):
@@ -31,16 +31,16 @@ class PhysicalComponent(Component):
     Represents the data of a physical component or device.
     """
 
-    ports: list[PhysicalPort]
-    connections: Optional[list[PhysicalConnection]] = None
-    environment: Optional[Environment] = None
+    ports: list[PhysicalPort] = []
+    connections: list[PhysicalConnection] = []
+    environment: Environment = None
 
-    manufacturer: Optional[str] = None
+    manufacturer: str = ""
     """
     The manufacturer of the device.
     """
 
-    model: Optional[str] = None
+    model: str = ""
     """
     The model of the device.
     """

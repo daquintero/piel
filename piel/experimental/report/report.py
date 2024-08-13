@@ -21,6 +21,7 @@ def create_report_from_experiment_directory(
     plot_output_directory: PathTypes = None,
     report_readme_path: PathTypes = None,
     load_data_kwargs: dict = None,
+    plot_kwargs: dict = None,
     **kwargs,
 ):
     """
@@ -41,6 +42,9 @@ def create_report_from_experiment_directory(
     if load_data_kwargs is None:
         load_data_kwargs = {}
 
+    if plot_kwargs is None:
+        plot_kwargs = {}
+
     # We load the experiment data from the metadata
     experiment_data = load_experiment_data_from_directory(
         experiment_directory=experiment_directory, **load_data_kwargs
@@ -51,6 +55,7 @@ def create_report_from_experiment_directory(
         experiment_data=experiment_data,
         plot_output_directory=plot_output_directory,
         experiment_directory=experiment_directory,
+        **plot_kwargs,
     )
 
     # Now we need to generate the new experiment README.md

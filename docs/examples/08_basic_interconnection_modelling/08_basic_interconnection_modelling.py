@@ -536,9 +536,11 @@ pe.visual.frequency.experiment_data.plot_s_parameter_real_and_imaginary(
 
 # We can also create a set of automatic plots directly from the `ExperimentData` and create a `REPORT.md` on the experiment directory.
 
-report_info = pe.create_report_from_experiment_directory(
-    experiment_directory=vna_self_calibration_experiment_directory
-)
+# + active=""
+# report_info = pe.create_report_from_experiment_directory(
+#     experiment_directory=vna_self_calibration_experiment_directory,
+# )
+# -
 
 # ```
 # Experiment data will be extracted from: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration
@@ -547,6 +549,13 @@ report_info = pe.create_report_from_experiment_directory(
 # README.md updated at: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration/README.md
 # REPORT.md written to: /home/daquintero/phd/piel/docs/examples/08_basic_interconnection_modelling/data/rf_vna_self_calibration/REPORT.md
 # ```
+
+# We can also create a parametric plot with automatically analyzed operation points accordingly.
+
+report_info = pe.create_report_from_experiment_directory(
+    experiment_directory=vna_self_calibration_experiment_directory,
+    plot_kwargs={"parametric": True},
+)
 
 # **Plotting from Operating Points**
 #

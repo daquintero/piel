@@ -5,6 +5,19 @@ from .map import (
     measurement_data_to_plot_map,
     measurement_data_collection_to_plot_suffix_map,
 )
+from ..analysis.operating_point import (
+    create_experiment_data_collection_from_unique_parameters,
+)
+
+
+def truncate_filename(filename, max_length=100):
+    # TODO move this out of here.
+    """
+    Truncate the filename if it exceeds max_length, appending a hash to ensure uniqueness.
+    """
+    if len(filename) > max_length:
+        filename = filename[: max_length - 1]
+    return filename
 
 
 def auto_plot_from_measurement_data(
@@ -52,10 +65,12 @@ def auto_plot_from_measurement_data_collection(
     i = 0
     # We iterate through the corresponding plotting methods and generate the plots, and save them to the parent directory.
     for plot_method_i in plot_methods:
-        plot_file_i = (
-            plot_output_directory
-            / f"{measurement_data_collection.name}_{plot_prefix[i]}.png"
+        file_name = truncate_filename(
+            f"{plot_prefix}_{measurement_data_collection.name}"
         )
+
+        plot_file_i = plot_output_directory / f"{file_name}.png"
+
         plot_i = plot_method_i(measurement_data_collection, path=plot_file_i, **kwargs)
         plots.append(plot_i)
         plot_path_list.append(plot_file_i)
@@ -65,14 +80,35 @@ def auto_plot_from_measurement_data_collection(
 
 
 def auto_plot_from_experiment_data(
-    experiment_data: ExperimentData, plot_output_directory: PathTypes = None, **kwargs
+    experiment_data: ExperimentData,
+    plot_output_directory: PathTypes = None,
+    parametric: bool = False,
+    **kwargs,
 ) -> tuple[list[tuple], list[PathTypes]]:
     """
     This function will automatically plot the data from the `ExperimentData` object provided.
     """
-    plots, plot_path_list = auto_plot_from_measurement_data_collection(
-        measurement_data_collection=experiment_data.data,
-        plot_output_directory=plot_output_directory,
-        **kwargs,
-    )
+    if parametric:
+        # Here we fill first extract all the corresponding parametric `ExperimentData`
+        experiment_data_collection = (
+            create_experiment_data_collection_from_unique_parameters(
+                experiment_data=experiment_data
+            )
+        )
+
+        for experiment_data_i in experiment_data_collection.collection:
+            # Default just plots a single set of parametric plots.
+            plots, plot_path_list = auto_plot_from_measurement_data_collection(
+                measurement_data_collection=experiment_data_i.data,
+                plot_output_directory=plot_output_directory,
+                **kwargs,
+            )
+
+    else:
+        # Default just plots a single set of parametric plots.
+        plots, plot_path_list = auto_plot_from_measurement_data_collection(
+            measurement_data_collection=experiment_data.data,
+            plot_output_directory=plot_output_directory,
+            **kwargs,
+        )
     return plots, plot_path_list

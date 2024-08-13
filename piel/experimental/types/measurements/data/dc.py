@@ -12,12 +12,12 @@ class MultimeterSweepVoltageMeasurementData(MeasurementData):
 
 class DCSweepMeasurementData(MeasurementData):
     type: str = "DCSweepMeasurementData"
-    inputs: list[SourcemeterSweepMeasurementData] = None
+    inputs: list[SourcemeterSweepMeasurementData] = []
     """
     The input DC signals as sourced by a sourcemeter.
     """
 
-    outputs: list[MultimeterSweepVoltageMeasurementData] = None
+    outputs: list[MultimeterSweepVoltageMeasurementData] = []
     """
     The output DC signals from a multimeter for example.
     """

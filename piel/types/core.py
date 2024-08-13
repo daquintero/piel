@@ -1,6 +1,5 @@
 import jax.numpy as jnp
 import numpy as np
-import pandas as pd
 import os
 import pathlib
 import pydantic
@@ -47,7 +46,7 @@ class PielBaseModel(pydantic.BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
-        extra = "forbid"
+        extra = "ignore"
         validate_assignment = True
         strict = True
 

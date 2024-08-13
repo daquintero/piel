@@ -4,12 +4,12 @@ from .....types import FrequencyNetworkModel
 
 class VNASParameterMeasurementData(MeasurementData):
     type: str = "VNASParameterMeasurementData"
-    network: FrequencyNetworkModel
+    network: FrequencyNetworkModel = None
 
 
 class VNAPowerSweepMeasurementData(MeasurementData):
     type: str = "VNAPowerSweepMeasurementData"
-    network: FrequencyNetworkModel
+    network: FrequencyNetworkModel = None
 
 
 FrequencyMeasurementDataTypes = (

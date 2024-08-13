@@ -23,7 +23,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -36,18 +36,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -88,18 +88,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         },
@@ -117,7 +117,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -130,18 +130,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -169,18 +169,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         },
@@ -198,7 +198,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -211,18 +211,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -250,18 +250,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         },
@@ -279,7 +279,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -292,18 +292,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -331,18 +331,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         },
@@ -360,7 +360,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -373,18 +373,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -412,18 +412,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         },
@@ -441,7 +441,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -454,18 +454,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -493,18 +493,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         },
@@ -522,7 +522,7 @@
                             "manifold": "82052D"
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -535,18 +535,18 @@
                             "name": "PORT1",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         },
                         {
                             "name": "PORT2",
                             "parent_component_name": "",
                             "domain": "RF",
-                            "connector": null,
-                            "manifold": null
+                            "connector": "",
+                            "manifold": ""
                         }
                     ],
-                    "connections": null,
+                    "connections": [],
                     "components": [],
                     "environment": null,
                     "manufacturer": "Agilent",
@@ -574,18 +574,18 @@
             ],
             "goal": "",
             "parameters": {},
-            "index": null,
+            "index": 0,
             "date_configured": "",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
-                    "parent_directory": null,
+                    "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
-                    "frequency_range_Hz": null,
-                    "sweep_points": null,
-                    "test_port_power_dBm": null
+                    "frequency_range_Hz": [],
+                    "sweep_points": 0,
+                    "test_port_power_dBm": 0.0
                 }
             ]
         }
@@ -627,5 +627,5 @@
             "calibration": "vna_ports"
         }
     ],
-    "parent_directory": null
+    "parent_directory": ""
 }
