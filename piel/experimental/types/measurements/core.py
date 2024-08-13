@@ -7,7 +7,7 @@ class MeasurementConfiguration(PielBaseModel):
     """
 
     name: str = ""
-    parent_directory: PathTypes = None
+    parent_directory: PathTypes = ""
     measurement_type: str = ""
 
 
@@ -18,7 +18,7 @@ class Measurement(PielBaseModel):
 
     name: str = ""
     type: str = ""
-    parent_directory: PathTypes = None
+    parent_directory: PathTypes = ""
 
 
 class MeasurementCollection(PielBaseModel):

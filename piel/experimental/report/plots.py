@@ -9,6 +9,7 @@ def create_plots_from_experiment_data(
     experiment_data: ExperimentData,
     plot_output_directory: PathTypes = None,
     experiment_directory: PathTypes = None,
+    parametric: bool = False,
     **kwargs,
 ) -> list[list[tuple], PathTypes]:
     """
@@ -50,6 +51,7 @@ def create_plots_from_experiment_data(
     plots, plots_paths = auto_plot_from_experiment_data(
         experiment_data=experiment_data,
         plot_output_directory=plot_output_directory,
+        parametric=parametric,
         **kwargs,
     )
     return plots, plots_paths

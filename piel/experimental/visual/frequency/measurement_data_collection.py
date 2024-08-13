@@ -35,12 +35,18 @@ def plot_s_parameter_measurements_to_step_responses(
 
     i = 0
     for measurement_i in data_collection.collection:
-        subnetwork = measurement_i.network.subnetwork(ports=[network_port_index])
-        subnetwork_s11_time_i, subnetwork_s11_signal_i = subnetwork.step_response()
-        axs[i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
+        network = measurement_i.network
+        if (network is None) or (network.number_of_ports == 0):
+            print(
+                f"Skipping network not found in the measurement data: {measurement_i}"
+            )
+        else:
+            subnetwork = network.subnetwork(ports=[network_port_index])
+            subnetwork_s11_time_i, subnetwork_s11_signal_i = subnetwork.step_response()
+            axs[i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
 
-        if time_range_s is not None:
-            axs[i].set_xlim(time_range_s[0], time_range_s[1])
+            if time_range_s is not None:
+                axs[i].set_xlim(time_range_s[0], time_range_s[1])
 
         i += 1
 
@@ -69,9 +75,15 @@ def plot_s_parameter_real_and_imaginary(
     i = 0
     for measurement_i in data_collection.collection:
         network = measurement_i.network
-        network.plot_s_re(ax=axs[i], **s_plot_kwargs)
-        # network.plot_s_im(ax=axs[1], **s_plot_configuration)
-        axs[i].set_title("Real S11")
+        if network is None:
+            print(
+                f"Skipping network not found in the measurement data: {measurement_i}"
+            )
+        else:
+            network.plot_s_re(ax=axs[i], **s_plot_kwargs)
+            # network.plot_s_im(ax=axs[1], **s_plot_configuration)
+            axs[i].set_title("Real S11")
+
         i += 1
 
     plt.tight_layout()

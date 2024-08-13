@@ -1,4 +1,3 @@
-from typing import Optional
 from ...types import Instance, ComponentTypes, ConnectionTypes, PathTypes
 from .measurements.generic import MeasurementConfigurationTypes
 
@@ -30,7 +29,7 @@ class ExperimentInstance(Instance):
     A dictionary of reference parameters in this experimental instance. Does not contain all the serialised experimental data.
     """
 
-    index: Optional[int] = None
+    index: int = 0
     """
     A defined index of the experiment instance tuple.
     """
@@ -59,7 +58,7 @@ class Experiment(Instance):
     The goal of the complete experiment.
     """
 
-    experiment_instances: list[ExperimentInstance] | tuple[ExperimentInstance] = []
+    experiment_instances: list[ExperimentInstance] = []
     """
     Contains all the experiment instances.
     """
@@ -69,7 +68,7 @@ class Experiment(Instance):
     List of basic important parameters in dictionaries used to do basic metadata analysis of the experiment.
     """
 
-    parent_directory: PathTypes = None
+    parent_directory: PathTypes = ""
     """
     Optional parameter to specify the `parent_directory` of the Experiment, where the directories containing the data
     and metadata of the `ExperimentInstances` are constructed.

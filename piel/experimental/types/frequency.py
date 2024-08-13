@@ -13,7 +13,7 @@ class VNAConfiguration(DeviceConfiguration):
     not the experimental setup connectivity.
     """
 
-    calibration_setting_name: Optional[str] = None
+    calibration_setting_name: str = ""
     measurement_configuration: FrequencyMeasurementConfigurationTypes = None
 
 
@@ -27,7 +27,7 @@ class VNA(Device):
     Just overwrites this section of the device definition.
     """
 
-    ports: tuple[PhysicalPort] = (
+    ports: tuple[PhysicalPort] | list[PhysicalPort] = (
         PhysicalPort(name="PORT1", domain="RF"),
         PhysicalPort(name="PORT2", domain="RF"),
     )

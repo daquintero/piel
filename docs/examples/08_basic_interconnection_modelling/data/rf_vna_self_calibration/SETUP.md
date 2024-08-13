@@ -36,7 +36,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -48,15 +48,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -85,18 +85,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
   -
     - **name**: open_port_1
     - **components**:
@@ -109,7 +109,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -121,15 +121,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -149,18 +149,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
   -
     - **name**: open_port_2
     - **components**:
@@ -173,7 +173,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -185,15 +185,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -213,18 +213,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
   -
     - **name**: load_port_1
     - **components**:
@@ -237,7 +237,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -249,15 +249,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -277,18 +277,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
   -
     - **name**: load_port_2
     - **components**:
@@ -301,7 +301,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -313,15 +313,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -341,18 +341,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
   -
     - **name**: short_port_1
     - **components**:
@@ -365,7 +365,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -377,15 +377,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -405,18 +405,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
   -
     - **name**: short_port_2
     - **components**:
@@ -429,7 +429,7 @@
             - **domain**: None
             - **connector**: SMA_3.5mm
             - **manifold**: 82052D
-        - **connections**: None
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -441,15 +441,15 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
@@ -469,18 +469,18 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
-        - **frequency_range_Hz**: None
-        - **sweep_points**: None
-        - **test_port_power_dBm**: None
+        - **frequency_range_Hz**:
+        - **sweep_points**: 0
+        - **test_port_power_dBm**: 0.0
 - **parameters_list**:
   -
     - **port**: 12
@@ -510,4 +510,4 @@
     - **port**: 2
     - **measurement**: short
     - **calibration**: vna_ports
-- **parent_directory**: None
+- **parent_directory**: 

@@ -1,6 +1,7 @@
 from ...utils import get_unique_dataframe_subsets
 from ..types import Experiment, ExperimentData, ExperimentDataCollection
 from ..measurements.map import measurement_data_to_measurement_collection_data_map
+from ...models import load_from_dict
 
 
 def create_experiment_data_collection_from_unique_parameters(
@@ -19,9 +20,14 @@ def create_experiment_data_collection_from_unique_parameters(
     Then, we will need to create a new ``ExperimentData`` for each of the operating points.
     Finally, we will need to create a new ``ExperimentDataCollection`` with the new ``ExperimentData``.
     """
+    # We need to make this function capable of running with loaded serialized items
+    experiment_data = experiment_data.model_dump()
+    experiment_data = load_from_dict(experiment_data, model=ExperimentData)
+    experiment = load_from_dict(experiment_data.experiment, model=Experiment)
+
     # First we extract the relevant parameter subsets
     unique_parameter_subset_dictionary = get_unique_dataframe_subsets(
-        experiment_data.experiment.parameters
+        experiment.parameters
     )
 
     # Then we create a new ExperimentData for each of the operating points, we also need to create a new Experiment within the ExperimentData to match the indices
@@ -30,30 +36,28 @@ def create_experiment_data_collection_from_unique_parameters(
         identifier_i,
         unique_parameter_subset_i,
     ) in unique_parameter_subset_dictionary.items():
-        experiment_i = experiment_data.experiment
-
         # We also need to create a new Experiment within the ExperimentData to match the indices
         experiment_instances_subset_i = [
-            experiment_i.experiment_instances[i]
-            for i in unique_parameter_subset_i.index
+            experiment.experiment_instances[i] for i in unique_parameter_subset_i.index
         ]
 
         # Create sub experiment accordingly
         experiment_i = Experiment(
-            name=f"{experiment_i.name}_{identifier_i}",
-            goal=f"{experiment_i.goal}_{identifier_i}",
+            name=f"{experiment.name}_{identifier_i}",
+            goal=f"{experiment.goal}_{identifier_i}",
             experiment_instances=experiment_instances_subset_i,
             parameters_list=unique_parameter_subset_i.to_dict(orient="records"),
         )
 
         # Create subset of experiment data
         experiment_data_instances_subset_i = [
-            experiment_data.data.collection[i] for i in unique_parameter_subset_i.index
+            experiment_data.data["collection"][i]
+            for i in unique_parameter_subset_i.index
         ]
 
         # Create the measurement collection with the correct type.
         collection_type = measurement_data_to_measurement_collection_data_map[
-            experiment_data_instances_subset_i[-1].__class__.__name__
+            experiment_data.data["collection"][-1]["type"]
         ]
 
         # Create the corresponding ExperimentData

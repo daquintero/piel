@@ -19,7 +19,7 @@ class Sourcemeter(Device):
     Represents a sourcemeter.
     """
 
-    configuration: Optional[SourcemeterConfiguration] = None
+    configuration: SourcemeterConfiguration = None
 
 
 class MultimeterConfiguration(DeviceConfiguration):
