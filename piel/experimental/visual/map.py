@@ -26,9 +26,9 @@ def auto_function_name_list_from_module(module) -> list[str]:
 
     # Ensure each function name length is limited to a reasonable length
     # while still ensuring the total file name is under 100 characters
-    truncated_function_name_list = [name[:20] for name in function_name_list]
+    # truncated_function_name_list = [name[:20] for name in function_name_list]
 
-    return truncated_function_name_list
+    return function_name_list
 
 
 """

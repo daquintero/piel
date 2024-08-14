@@ -10,16 +10,6 @@ from ..analysis.operating_point import (
 )
 
 
-def truncate_filename(filename, max_length=100):
-    # TODO move this out of here.
-    """
-    Truncate the filename if it exceeds max_length, appending a hash to ensure uniqueness.
-    """
-    if len(filename) > max_length:
-        filename = filename[: max_length - 1]
-    return filename
-
-
 def auto_plot_from_measurement_data(
     measurement_data: MeasurementDataTypes,
     **kwargs,
@@ -65,10 +55,7 @@ def auto_plot_from_measurement_data_collection(
     i = 0
     # We iterate through the corresponding plotting methods and generate the plots, and save them to the parent directory.
     for plot_method_i in plot_methods:
-        file_name = truncate_filename(
-            f"{plot_prefix}_{measurement_data_collection.name}"
-        )
-
+        file_name = f"{plot_prefix[i]}_{measurement_data_collection.name}"
         plot_file_i = plot_output_directory / f"{file_name}.png"
 
         plot_i = plot_method_i(measurement_data_collection, path=plot_file_i, **kwargs)
@@ -88,6 +75,8 @@ def auto_plot_from_experiment_data(
     """
     This function will automatically plot the data from the `ExperimentData` object provided.
     """
+    plots = []
+    plot_path_list = []
     if parametric:
         # Here we fill first extract all the corresponding parametric `ExperimentData`
         experiment_data_collection = (
@@ -98,17 +87,22 @@ def auto_plot_from_experiment_data(
 
         for experiment_data_i in experiment_data_collection.collection:
             # Default just plots a single set of parametric plots.
-            plots, plot_path_list = auto_plot_from_measurement_data_collection(
+            plots_i, plot_path_list_i = auto_plot_from_measurement_data_collection(
                 measurement_data_collection=experiment_data_i.data,
                 plot_output_directory=plot_output_directory,
                 **kwargs,
             )
+            plots += plots_i
+            plot_path_list += plot_path_list_i
 
     else:
         # Default just plots a single set of parametric plots.
-        plots, plot_path_list = auto_plot_from_measurement_data_collection(
+        plots_i, plot_path_list_i = auto_plot_from_measurement_data_collection(
             measurement_data_collection=experiment_data.data,
             plot_output_directory=plot_output_directory,
             **kwargs,
         )
+        plots += plots_i
+        plot_path_list += plot_path_list_i
+
     return plots, plot_path_list
