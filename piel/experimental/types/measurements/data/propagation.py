@@ -15,9 +15,9 @@ class PropagationDelayMeasurementData(MeasurementData):
     """
 
     type: str = "PropagationDelayMeasurementData"
-    measurements: SignalMetricsMeasurementCollection = None
-    dut_waveform: DataTimeSignalData = None
-    reference_waveform: DataTimeSignalData = None
+    measurements: SignalMetricsMeasurementCollection | None = None
+    dut_waveform: DataTimeSignalData | None = None
+    reference_waveform: DataTimeSignalData | None = None
 
 
 class PropagationDelayMeasurementDataCollection(MeasurementDataCollection):

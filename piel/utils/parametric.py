@@ -82,23 +82,27 @@ def multi_parameter_sweep(
     return parameter_sweep_design_dictionary_array
 
 
-def get_unique_dataframe_subsets(dataframe: pd.DataFrame) -> dict[str, pd.DataFrame]:
+def get_unique_dataframe_subsets(
+    dataframe: pd.DataFrame, max_depth: int = 2
+) -> dict[str, pd.DataFrame]:
     """
-    This function takes a pandas DataFrame and returns a list of unique subsets of the DataFrame.
+    This function takes a pandas DataFrame and returns a dictionary of unique subsets of the DataFrame.
     It is useful for identifying unique operating points in a dataset.
-    The function returns a list of DataFrames that contain the unique combinations of values for each column in the input DataFrame.
+    The function returns a dictionary where the keys are string identifiers for the subsets, and the values are DataFrames containing
+    the unique combinations of values for each column in the input DataFrame.
 
     Parameters
     ----------
     dataframe : pd.DataFrame
+    max_depth : int, optional
+        The maximum depth of combinations to consider. For example, if max_depth is 2, only combinations of up to 2 columns will be generated.
 
     Returns
     -------
-    list[str, pd.DataFrame]
-        A list of tuples where the first element is a string identifier for the subset and the second element is a DataFrame containing
+    dict[str, pd.DataFrame]
+        A dictionary where the keys are string identifiers for the subsets and the values are DataFrames containing the unique combinations of values.
     """
 
-    # Modified function to create an identifier string with columns and elements together
     def create_identifier(columns, elements):
         """
         This function takes a list of columns and a list of elements and returns a string identifier for the subset.
@@ -107,22 +111,23 @@ def get_unique_dataframe_subsets(dataframe: pd.DataFrame) -> dict[str, pd.DataFr
 
     subset_dictionary = {}
 
-    for r in range(1, len(dataframe.columns) + 1):
+    max_depth = max_depth or len(
+        dataframe.columns
+    )  # Set max_depth to the number of columns if not provided
+
+    for r in range(1, min(max_depth, len(dataframe.columns)) + 1):
         for column_combination in combinations(dataframe.columns, r):
-            # Get the unique combinations of values for the selected columns
             unique_combinations = (
                 dataframe[list(column_combination)].drop_duplicates().values
             )
 
             for unique_value_combination in unique_combinations:
-                # Filter rows that match the unique value combination across the selected columns
                 subset = dataframe[
                     (
                         dataframe[list(column_combination)] == unique_value_combination
                     ).all(axis=1)
                 ]
 
-                # Only consider the subset if there are two or more identical elements
                 if len(subset) >= 2:
                     identifier = create_identifier(
                         column_combination, unique_value_combination
