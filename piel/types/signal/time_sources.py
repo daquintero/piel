@@ -4,7 +4,7 @@ from typing import List, Optional
 
 
 class PulseSource(PielBaseModel):
-    voltage_1_V: float = Field(..., description="Initial voltage level (V1) in volts")
+    voltage_1_V: float = Field(0, description="Initial voltage level (V1) in volts")
     voltage_2_V: float = Field(..., description="Pulsed voltage level (V2) in volts")
     delay_time_s: float = Field(..., description="Delay time (TD) in seconds")
     rise_time_s: float = Field(..., description="Rise time (TR) in seconds")

@@ -55,7 +55,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [
@@ -149,7 +150,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [
@@ -230,7 +232,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [
@@ -311,7 +314,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [
@@ -392,7 +396,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [
@@ -473,7 +478,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [
@@ -554,7 +560,8 @@
                     "configuration": {
                         "calibration_setting_name": "bpl_vna_ports",
                         "measurement_configuration": null
-                    }
+                    },
+                    "serial_number": ""
                 }
             ],
             "connections": [

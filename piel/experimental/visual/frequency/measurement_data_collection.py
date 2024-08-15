@@ -3,7 +3,12 @@ from piel.experimental.types.measurements.data.frequency import (
     VNASParameterMeasurementDataCollection,
 )
 from piel.types import MinimumMaximumType
-from piel.visual import create_plot_containers, save, create_axes_per_figure
+from piel.visual import (
+    create_plot_containers,
+    save,
+    create_axes_per_figure,
+    create_axes_parameters_table,
+)
 
 default_skrf_figure_kwargs = {
     "show_legend": False,
@@ -12,6 +17,7 @@ default_skrf_figure_kwargs = {
 
 def plot_s_parameter_measurements_to_step_responses(
     data_collection: VNASParameterMeasurementDataCollection,
+    parameters_list: list = None,
     network_port_index: int = 0,
     time_range_s: MinimumMaximumType = None,
     figure_kwargs: dict = None,
@@ -29,9 +35,14 @@ def plot_s_parameter_measurements_to_step_responses(
     if figure_kwargs is None:
         figure_kwargs = dict()
 
+    if parameters_list is None:
+        parameters_list = range(len(data_collection.collection))
+
     fig, axs = create_plot_containers(
         container_list=data_collection.collection, **figure_kwargs
     )
+
+    fig.suptitle(f"{data_collection.name} Step Responses")
 
     i = 0
     for measurement_i in data_collection.collection:
@@ -43,7 +54,7 @@ def plot_s_parameter_measurements_to_step_responses(
         else:
             subnetwork = network.subnetwork(ports=[network_port_index])
             subnetwork_s11_time_i, subnetwork_s11_signal_i = subnetwork.step_response()
-            axs[i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
+            axs[i].set_title(f"{measurement_i.name} Port {network_port_index}")
 
             if time_range_s is not None:
                 axs[i].set_xlim(time_range_s[0], time_range_s[1])
@@ -58,6 +69,7 @@ def plot_s_parameter_measurements_to_step_responses(
 
 def plot_s_parameter_real_and_imaginary(
     data_collection: VNASParameterMeasurementDataCollection,
+    parameters_list: list = None,
     figure_kwargs: dict = None,
     s_plot_kwargs: dict = None,
     **kwargs,
@@ -67,6 +79,9 @@ def plot_s_parameter_real_and_imaginary(
 
     if s_plot_kwargs is None:
         s_plot_kwargs = default_skrf_figure_kwargs
+
+    if parameters_list is None:
+        parameters_list = range(len(data_collection.collection))
 
     fig, axs = create_plot_containers(
         container_list=data_collection.collection, **figure_kwargs
@@ -96,6 +111,7 @@ def plot_s_parameter_real_and_imaginary(
 
 def plot_s_parameter_per_component(
     data_collection: VNASParameterMeasurementDataCollection,
+    parameters_list: list = None,
     s_parameter_plot: str = "plot_s_db",
     figure_kwargs: dict = None,
     s_plot_kwargs: dict = None,
@@ -119,11 +135,28 @@ def plot_s_parameter_per_component(
     # We generate four separate plots for each of the two-port S-parameters
     fig, axs = create_axes_per_figure(rows=2, columns=2, **figure_kwargs)
 
-    # axs[i].set_title("Real S11")
+    fig.suptitle(data_collection.name)
+
+    # Create the plot titles
+    axs[0, 0].set_title("S11")
+    axs[0, 1].set_title("S12")
+    axs[1, 0].set_title("S21")
+    axs[1, 1].set_title("S22")
+
+    # Create the ylabels
+    axs[0, 0].set_ylabel(f"{s_parameter_plot}")
+    axs[1, 0].set_ylabel(f"{s_parameter_plot}")
+    axs[0, 0].set_ylabel(f"{s_parameter_plot}")
+    axs[0, 0].set_ylabel(f"{s_parameter_plot}")
+
     # The goal of the following section is to plot the S-parameters in the corresponding axes of the figure
 
+    i = 0
     for measurement_i in data_collection.collection:
         network = measurement_i.network
+
+        # We want to extract the relevant parameter set from the network name here.
+
         if network is None:
             print(
                 f"Skipping network not found in the measurement data: {measurement_i}"
@@ -134,13 +167,24 @@ def plot_s_parameter_per_component(
                 for n in range(2):
                     # Create corresponding plot
                     try:
+                        s_plot_kwargs = {"label": parameters_list[i], **s_plot_kwargs}
                         getattr(network, s_parameter_plot)(
                             ax=axs[m, n], m=m, n=n, **s_plot_kwargs
                         )
+
                     except Exception as e:
                         print(f"Error plotting measurement: {measurement_i}")
                         print(f"Error plotting network: {network}")
                         print(f"Error plotting S-parameter: {e}")
+
+        i += 1
+
+    if parameters_list is not None:
+        if len(parameters_list) == len(data_collection.collection):
+            # Create the labels accordingly
+            create_axes_parameters_table(
+                ax=axs[-1, -1], parameters_list=parameters_list
+            )
 
     plt.tight_layout()
 

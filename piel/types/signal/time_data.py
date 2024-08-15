@@ -27,13 +27,12 @@ class DataTimeSignalData(PielBaseModel):
     Sources could be both experimental and simulation.
     """
 
-    time_s: ArrayTypes
-    data: ArrayTypes
-    data_name: Optional[str]
+    time_s: ArrayTypes = []
+    data: ArrayTypes = []
+    data_name: str = ""
 
 
 MultiDataTimeSignal = list[DataTimeSignalData, ...]
 """
 Collection of DataTimeSignals that can be used to analyse a set of signals together in a particular files flow.
 """
-

@@ -27,7 +27,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -35,7 +35,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -49,7 +49,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -73,7 +73,7 @@
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 1000000000.0
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
@@ -89,7 +89,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -97,7 +97,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -111,7 +111,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -135,7 +135,7 @@
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 3000000000.0
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
@@ -151,7 +151,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -159,7 +159,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -173,7 +173,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -197,7 +197,7 @@
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 5000000000.0
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
@@ -213,7 +213,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -221,7 +221,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -235,7 +235,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -259,7 +259,7 @@
     - **goal**: 
     - **parameters**:
       - **square_wave_frequency_Hz**: 10000000000.0
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
@@ -272,4 +272,4 @@
     - **square_wave_frequency_Hz**: 5000000000.0
   -
     - **square_wave_frequency_Hz**: 10000000000.0
-- **parent_directory**: None
+- **parent_directory**: 

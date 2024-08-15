@@ -1,3 +1,5 @@
+import piel
+
 from ...types import PathTypes
 from ...file_system import return_path
 from ..types import ExperimentData
@@ -10,6 +12,7 @@ def create_plots_from_experiment_data(
     plot_output_directory: PathTypes = None,
     experiment_directory: PathTypes = None,
     parametric: bool = False,
+    erase_plot_output_path: bool = False,
     **kwargs,
 ) -> list[list[tuple], PathTypes]:
     """
@@ -47,6 +50,14 @@ def create_plots_from_experiment_data(
         plot_output_directory = return_path(plot_output_directory)
     print(f"Plots will be generated at: {plot_output_directory}")
 
+    if plot_output_directory.exists() and erase_plot_output_path:
+        print(
+            f"Erase Plot Output Path Flag is True, deleting {str(plot_output_directory)}"
+        )
+        piel.delete_path(plot_output_directory)
+
+    piel.create_new_directory(plot_output_directory)
+
     # Now we need to iterate through each MeasurementData and generate the plot accordingly.
     plots, plots_paths = auto_plot_from_experiment_data(
         experiment_data=experiment_data,
@@ -67,6 +78,8 @@ def create_plots_from_experiment_directory(
     experiment_directory = return_path(experiment_directory)
     experiment_data = load_experiment_data_from_directory(experiment_directory)
     plots, plots_paths = create_plots_from_experiment_data(
-        experiment_data=experiment_data, plot_output_directory=plot_output_directory
+        experiment_data=experiment_data,
+        plot_output_directory=plot_output_directory,
+        **kwargs,
     )
     return plots, plots_paths

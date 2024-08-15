@@ -18,6 +18,7 @@ class Device(PhysicalComponent):
     """
 
     configuration: Optional[DeviceConfiguration] = None
+    serial_number: str = ""
 
 
 class MeasurementDevice(Device):
