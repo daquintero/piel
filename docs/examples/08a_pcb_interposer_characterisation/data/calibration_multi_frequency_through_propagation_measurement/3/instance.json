@@ -13,7 +13,7 @@
                     "parent_component_name": ""
                 }
             ],
-            "connections": null,
+            "connections": [],
             "components": []
         },
         {
@@ -24,7 +24,7 @@
                     "parent_component_name": ""
                 }
             ],
-            "connections": null,
+            "connections": [],
             "components": []
         },
         {
@@ -43,7 +43,7 @@
                     "parent_component_name": ""
                 }
             ],
-            "connections": null,
+            "connections": [],
             "components": []
         }
     ],
@@ -79,7 +79,7 @@
     "parameters": {
         "square_wave_frequency_Hz": 10000000000.0
     },
-    "index": null,
+    "index": 0,
     "date_configured": "",
     "date_measured": "",
     "measurement_configuration_list": []

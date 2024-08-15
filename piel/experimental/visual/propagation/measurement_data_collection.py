@@ -12,10 +12,8 @@ def plot_propagation_signals_time(
     **kwargs,
 ):
     # TODO Implement validation that it's a time-propagation delay measurement
-    signal_propagation_sweep_data = data_collection.collection
-
     fig, axs = create_plot_containers(
-        signal_propagation_sweep_data,
+        data_collection.collection,
         sharex=True,
     )
 
@@ -36,7 +34,7 @@ def plot_propagation_signals_time(
     dut_y_data = list()
 
     i = 0
-    for signal_propagation_measurement_data_i in signal_propagation_sweep_data:
+    for signal_propagation_measurement_data_i in (data_collection.collection,):
         if signal_propagation_measurement_data_i.reference_waveform is None:
             pass
         else:

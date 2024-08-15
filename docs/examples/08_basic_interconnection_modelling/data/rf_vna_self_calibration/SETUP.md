@@ -64,6 +64,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 
@@ -137,6 +138,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 
@@ -201,6 +203,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 
@@ -265,6 +268,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 
@@ -329,6 +333,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 
@@ -393,6 +398,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 
@@ -457,6 +463,7 @@
         - **configuration**:
           - **calibration_setting_name**: bpl_vna_ports
           - **measurement_configuration**: None
+        - **serial_number**: 
     - **connections**:
       -
         - **name**: 

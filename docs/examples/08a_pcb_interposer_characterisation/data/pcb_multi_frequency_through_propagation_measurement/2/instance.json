@@ -13,7 +13,7 @@
                     "parent_component_name": ""
                 }
             ],
-            "connections": null,
+            "connections": [],
             "components": []
         },
         {
@@ -24,7 +24,7 @@
                     "parent_component_name": ""
                 }
             ],
-            "connections": null,
+            "connections": [],
             "components": []
         },
         {
@@ -43,7 +43,7 @@
                     "parent_component_name": ""
                 }
             ],
-            "connections": null,
+            "connections": [],
             "components": []
         }
     ],
@@ -77,13 +77,13 @@
     ],
     "goal": "",
     "parameters": {},
-    "index": null,
+    "index": 0,
     "date_configured": "",
     "date_measured": "",
     "measurement_configuration_list": [
         {
             "name": "",
-            "parent_directory": null,
+            "parent_directory": "",
             "measurement_type": "",
             "measurement_configuration_type": "PropagationDelayMeasurementConfiguration"
         }
