@@ -7121,3 +7121,71 @@ e
     - **parent_directory**: None
     - **measurement_type**: 
     - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
+
+
+## Schema 
+- **name**: pcb_10000000000.0_Hz
+- **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: two_port_oscilloscope
+    - **ports**:
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: power_splitter_1to2
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT1
+        - **parent_component_name**: 
+      -
+        - **name**: CH1
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT2
+        - **parent_component_name**: 
+      -
+        - **name**: CH2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 0
+- **date_configured**: 
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration

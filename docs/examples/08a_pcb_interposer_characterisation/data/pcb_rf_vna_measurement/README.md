@@ -21,24 +21,24 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
         - **configuration**:
-          - **calibration_setting_name**: None
+          - **calibration_setting_name**: 
           - **measurement_configuration**:
             - **name**: 
-            - **parent_directory**: None
+            - **parent_directory**: 
             - **measurement_type**: 
             - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
             - **frequency_range_Hz**:
@@ -46,6 +46,7 @@
               - 20000000000.0
             - **sweep_points**: 6401
             - **test_port_power_dBm**: -17.0
+        - **serial_number**: 
       -
         - **name**: blue_extension
         - **ports**:
@@ -54,17 +55,17 @@
             - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: OUT
             - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
-            - **manifold**: None
-        - **connections**: None
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
-        - **manufacturer**: None
+        - **manufacturer**: 
         - **model**: 1251C
         - **geometry**:
           - **units**: None
@@ -82,104 +83,104 @@
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES1
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG1
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG2
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES2
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG3
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: OPEN
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SHORT
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG5
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES3
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG6
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG7
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES4
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG8
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: L50
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: GND
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
         - **connections**:
         - **components**:
         - **environment**:
           - **temperature_K**: 273.0
           - **region**: None
-        - **manufacturer**: None
-        - **model**: None
+        - **manufacturer**: 
+        - **model**: 
     - **connections**:
       -
         - **name**: 
@@ -211,12 +212,12 @@
     - **goal**: 
     - **parameters**:
     - **index**: 0
-    - **date_configured**: 2024-08-13 15:15:47.819596
+    - **date_configured**: 2024-08-15 14:44:29.191239
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**:
@@ -234,24 +235,24 @@
             - **name**: PORT1
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
+            - **connector**: 
+            - **manifold**: 
           -
             - **name**: PORT2
             - **parent_component_name**: 
             - **domain**: RF
-            - **connector**: None
-            - **manifold**: None
-        - **connections**: None
+            - **connector**: 
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
         - **manufacturer**: Agilent
         - **model**: E8364A
         - **configuration**:
-          - **calibration_setting_name**: None
+          - **calibration_setting_name**: 
           - **measurement_configuration**:
             - **name**: 
-            - **parent_directory**: None
+            - **parent_directory**: 
             - **measurement_type**: 
             - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
             - **frequency_range_Hz**:
@@ -259,6 +260,7 @@
               - 20000000000.0
             - **sweep_points**: 6401
             - **test_port_power_dBm**: -17.0
+        - **serial_number**: 
       -
         - **name**: blue_extension
         - **ports**:
@@ -267,17 +269,17 @@
             - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: OUT
             - **parent_component_name**: 
             - **domain**: RF
             - **connector**: SMA
-            - **manifold**: None
-        - **connections**: None
+            - **manifold**: 
+        - **connections**:
         - **components**:
         - **environment**: None
-        - **manufacturer**: None
+        - **manufacturer**: 
         - **model**: 1251C
         - **geometry**:
           - **units**: None
@@ -295,104 +297,104 @@
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES1
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG1
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG2
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES2
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG3
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: OPEN
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SHORT
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG5
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES3
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG6
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG7
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: RES4
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: SIG8
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: L50
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
           -
             - **name**: GND
             - **parent_component_name**: PCB3
             - **domain**: RF
             - **connector**: smp_plug
-            - **manifold**: None
+            - **manifold**: 
         - **connections**:
         - **components**:
         - **environment**:
           - **temperature_K**: 273.0
           - **region**: None
-        - **manufacturer**: None
-        - **model**: None
+        - **manufacturer**: 
+        - **model**: 
     - **connections**:
       -
         - **name**: 
@@ -424,12 +426,12 @@
     - **goal**: 
     - **parameters**:
     - **index**: 1
-    - **date_configured**: 2024-08-13 15:15:47.819842
+    - **date_configured**: 2024-08-15 14:44:29.191503
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
         - **frequency_range_Hz**:
@@ -439,4 +441,4 @@
         - **test_port_power_dBm**: -17.0
 - **parameters_list**:
   -
-- **parent_directory**: None
+- **parent_directory**: 

@@ -6,8 +6,8 @@ from piel.types import PhysicalComponent, Environment, Component
 def test_physical_port_initialization():
     port = PhysicalPort()
     assert port.domain is None
-    assert port.connector is None
-    assert port.manifold is None
+    assert port.connector == ""
+    assert port.manifold == ""
 
 
 def test_physical_port_assignment():
@@ -20,7 +20,6 @@ def test_physical_port_assignment():
 def test_physical_connection_initialization():
     conn = PhysicalConnection(connections=[])
     assert isinstance(conn.connections, list)
-    assert conn.components is None
 
 
 def test_physical_connection_with_components():

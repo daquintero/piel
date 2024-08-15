@@ -31,7 +31,7 @@ def create_power_splitter_1to2(name: Optional[str] = None):
     )
 
 
-def create_bias_tee(name: Optional[str] = None):
+def create_bias_tee(name: Optional[str] = None, **kwargs):
     if name is None:
         name = "bias_tee"
 
@@ -53,13 +53,10 @@ def create_bias_tee(name: Optional[str] = None):
         ),
     ]
 
-    return BiasTee(
-        name=name,
-        ports=ports,
-    )
+    return BiasTee(name=name, ports=ports, **kwargs)
 
 
-def create_attenuator(name: Optional[str] = None):
+def create_attenuator(name: Optional[str] = None, **kwargs):
     if name is None:
         name = "attenuator"
 

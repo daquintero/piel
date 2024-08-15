@@ -27,7 +27,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -35,7 +35,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -49,7 +49,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -72,13 +72,13 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
   -
@@ -93,7 +93,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -101,7 +101,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -115,7 +115,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -138,13 +138,13 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
   -
@@ -159,7 +159,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -167,7 +167,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -181,7 +181,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -204,13 +204,13 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
   -
@@ -225,7 +225,7 @@
           -
             - **name**: CH2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: two_port_oscilloscope
@@ -233,7 +233,7 @@
           -
             - **name**: CH1
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
       -
         - **name**: power_splitter_1to2
@@ -247,7 +247,7 @@
           -
             - **name**: OUT2
             - **parent_component_name**: 
-        - **connections**: None
+        - **connections**:
         - **components**:
     - **connections**:
       -
@@ -270,13 +270,13 @@
             - **parent_component_name**: 
     - **goal**: 
     - **parameters**:
-    - **index**: None
+    - **index**: 0
     - **date_configured**: 
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
         - **name**: 
-        - **parent_directory**: None
+        - **parent_directory**: 
         - **measurement_type**: 
         - **measurement_configuration_type**: PropagationDelayMeasurementConfiguration
 - **parameters_list**:
@@ -288,4 +288,4 @@
     - **square_wave_frequency_Hz**: 5000000000.0
   -
     - **square_wave_frequency_Hz**: 10000000000.0
-- **parent_directory**: None
+- **parent_directory**: 
