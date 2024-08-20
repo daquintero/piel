@@ -8,7 +8,7 @@ from .plot.position import (
 )
 from .plot.table import (
     create_axes_parameters_table_overlay,
-    create_axes_parameters_tables_sequential,
+    create_axes_parameters_tables_separate,
 )
 from .data_conversion import append_row_to_dict, points_to_lines_fixed_transient
 from .style import activate_piel_styles

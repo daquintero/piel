@@ -38336,3 +38336,3062 @@ e
       - 20000000000.0
     - **sweep_points**: 6401
     - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: throguh
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 21:36:05.497611
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: throguh
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 21:39:05.882230
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: throguh
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 21:39:36.024351
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: throguh
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 21:40:01.713233
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 21:58:28.963443
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:00:12.122115
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:04:54.279564
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:05:20.857391
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:06:20.887669
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:07:28.390203
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:08:11.799969
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:09:37.720173
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:10:04.831711
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:10:30.493186
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:11:00.600128
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:11:42.627831
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:14:13.470267
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:15:03.600874
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:23:24.990246
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:23:45.138624
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:24:06.554486
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:30:07.323501
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0
+
+
+## Schema 
+- **name**: through
+- **components**:
+  -
+    - **name**: E8364A
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+        - **domain**: RF
+        - **connector**: 
+        - **manifold**: 
+    - **connections**:
+    - **components**:
+    - **environment**: None
+    - **manufacturer**: Agilent
+    - **model**: E8364A
+  -
+    - **name**: blue_extension
+    - **ports**:
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+    - **connections**:
+    - **components**:
+  -
+    - **name**: PCB3
+    - **ports**:
+      -
+        - **name**: SIG14
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: OPEN
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SHORT
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG5
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES3
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG6
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG7
+        - **parent_component_name**: PCB3
+      -
+        - **name**: RES4
+        - **parent_component_name**: PCB3
+      -
+        - **name**: SIG8
+        - **parent_component_name**: PCB3
+      -
+        - **name**: L50
+        - **parent_component_name**: PCB3
+      -
+        - **name**: GND
+        - **parent_component_name**: PCB3
+    - **connections**:
+    - **components**:
+- **connections**:
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: PORT1
+        - **parent_component_name**: 
+      -
+        - **name**: IN
+        - **parent_component_name**: 
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: OUT
+        - **parent_component_name**: 
+      -
+        - **name**: SIG1
+        - **parent_component_name**: PCB3
+  -
+    - **name**: 
+    - **ports**:
+      -
+        - **name**: SIG2
+        - **parent_component_name**: PCB3
+      -
+        - **name**: PORT2
+        - **parent_component_name**: 
+- **goal**: 
+- **parameters**:
+- **index**: 1
+- **date_configured**: 2024-08-20 22:32:02.401410
+- **date_measured**: 
+- **measurement_configuration_list**:
+  -
+    - **name**: 
+    - **parent_directory**: 
+    - **measurement_type**: 
+    - **measurement_configuration_type**: VNASParameterMeasurementConfiguration
+    - **frequency_range_Hz**:
+      - 45000000.0
+      - 20000000000.0
+    - **sweep_points**: 6401
+    - **test_port_power_dBm**: -17.0

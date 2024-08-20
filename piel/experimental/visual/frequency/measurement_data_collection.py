@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from piel.experimental.types.measurements.data.frequency import (
     VNASParameterMeasurementDataCollection,
 )
@@ -8,6 +7,7 @@ from piel.visual import (
     save,
     create_axes_per_figure,
     create_axes_parameters_table_overlay,
+    create_axes_parameters_tables_separate,
 )
 
 default_skrf_figure_kwargs = {
@@ -29,6 +29,7 @@ def plot_s_parameter_measurements_to_step_responses(
     Note that each step response depends on the corresponding input port for the subnetwork it is extracted from,
     as it is derived from the S11 or S22 based on the return loss, hence matching in a real transmission line network.
 
+    It will plot the transformations on top of each other rather than sequentially.
     TODO explore the other caveats of performing transformations this way.
     TODO generalise this functionality for simulation-sparameter networks.
     """
@@ -39,7 +40,9 @@ def plot_s_parameter_measurements_to_step_responses(
         parameters_list = range(len(data_collection.collection))
 
     fig, axs = create_plot_containers(
-        container_list=data_collection.collection, **figure_kwargs
+        container_list=data_collection.collection,
+        axes_structure="overlay",
+        **figure_kwargs,
     )
 
     fig.suptitle(f"{data_collection.name} Step Responses")
@@ -54,12 +57,11 @@ def plot_s_parameter_measurements_to_step_responses(
         else:
             subnetwork = network.subnetwork(ports=[network_port_index])
             subnetwork_s11_time_i, subnetwork_s11_signal_i = subnetwork.step_response()
-            axs[i].set_title(f"{measurement_i.name} Port {network_port_index}")
 
             if time_range_s is not None:
-                axs[i].set_xlim(time_range_s[0], time_range_s[1])
+                axs[0].set_xlim(time_range_s[0], time_range_s[1])
 
-            axs[-i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
+            axs[0].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
 
         i += 1
 
@@ -75,8 +77,6 @@ def plot_s_parameter_measurements_to_step_responses(
 
     # Save the figure if 'path' is provided in kwargs
     save(fig, **kwargs)
-
-    plt.tight_layout()
 
     return fig, axs
 
@@ -101,6 +101,8 @@ def plot_s_parameter_real_and_imaginary(
         container_list=data_collection.collection, **figure_kwargs
     )
 
+    parameter_tables_list = list()
+
     i = 0
     for measurement_i in data_collection.collection:
         network = measurement_i.network
@@ -111,6 +113,7 @@ def plot_s_parameter_real_and_imaginary(
         else:
             network.plot_s_re(ax=axs[i], **s_plot_kwargs)
             # network.plot_s_im(ax=axs[1], **s_plot_configuration)
+            parameter_tables_list.append(parameters_list[i])
             axs[i].set_title("Real S11")
 
         i += 1
@@ -118,14 +121,15 @@ def plot_s_parameter_real_and_imaginary(
     if parameters_list is not None:
         if len(parameters_list) == len(data_collection.collection):
             # Create the labels accordingly
-            try:
-                create_axes_parameters_table_overlay(
-                    fig=fig, axs=axs, parameters_list=parameters_list
-                )
-            except Exception:
-                pass
 
-    plt.tight_layout()
+            # TODO make tables list
+            try:
+                create_axes_parameters_tables_separate(
+                    fig=fig, axs=axs, parameter_tables_list=parameter_tables_list
+                )
+            except Exception as e:
+                if "debug" in kwargs and kwargs.get("debug", False):
+                    raise e
 
     # Save the figure if 'path' is provided in kwargs
     save(fig, **kwargs)
@@ -200,7 +204,7 @@ def plot_s_parameter_per_component(
                         print(f"Error plotting measurement: {measurement_i}")
                         print(f"Error plotting network: {network}")
                         print(f"Error plotting S-parameter: {e}")
-                        if kwargs["debug"]:
+                        if "debug" in kwargs and kwargs.get("debug", False):
                             raise e
 
         i += 1
@@ -214,8 +218,6 @@ def plot_s_parameter_per_component(
                 )
             except Exception:
                 pass
-
-    plt.tight_layout()
 
     # Save the figure if 'path' is provided in kwargs
     save(fig, **kwargs)

@@ -56,7 +56,7 @@ def pcb_smp_connector(name, pcb_name):
 # These are the measurements we want to check
 measurement_connections = {
     "load_through": ("SIG6", "SIG7"),
-    "throguh": ("SIG1", "SIG2"),
+    "through": ("SIG1", "SIG2"),
 }
 
 
@@ -563,6 +563,7 @@ calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
 fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
     calibration_propagation_delay_experiment_data,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
+    debug=True,
 )
 
 # ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg)

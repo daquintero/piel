@@ -138,8 +138,8 @@ def create_axes_parameters_table_overlay(
     return fig, [*axs, table_ax]
 
 
-def create_axes_parameters_tables_sequential(
-    fig, axs: list, tables_list: list, table_height=0.2, spacing=0.05
+def create_axes_parameters_tables_separate(
+    fig, axs: list, parameter_tables_list: list, table_height=0.15, spacing=0.01
 ) -> tuple:
     """
     Inserts tables between vertical subplots in an existing figure.
@@ -148,19 +148,31 @@ def create_axes_parameters_tables_sequential(
     Parameters:
     - fig: The figure object containing the subplots.
     - axs: A list of axes objects corresponding to the subplots.
-    - tables_list: A list of lists containing the data to display in the tables.
-                   Each sub-list corresponds to one table.
+    - parameter_tables_list: A list containing the data to display in the tables.
+                             Each element can be a DataFrame, Series, or list of lists.
     - table_height: The height of the tables relative to the figure (default is 0.2).
     - spacing: Space between the subplots and the tables (default is 0.05).
 
     Returns:
-    - None
+    - fig: The updated figure object.
+    - axs: The updated list of axes objects, including the tables.
     """
+    tables_df_list = []
 
-    # Loop over each axis and table
+    # Convert input data into DataFrames if necessary
+    for data in parameter_tables_list:
+        if isinstance(data, pd.DataFrame):
+            tables_df_list.append(data)
+        elif isinstance(data, pd.Series):
+            tables_df_list.append(
+                data.to_frame().T
+            )  # Convert Series to a single-row DataFrame
+        else:  # Assume it's a list of lists
+            tables_df_list.append(pd.DataFrame(data, index=[0]))
+
+    # Loop over each axis and corresponding table DataFrame
     for i in range(len(axs)):
-        # Convert the current table's list into a DataFrame
-        df = pd.DataFrame(tables_list[i][1:], columns=tables_list[i][0])
+        df_i = tables_df_list[i]
 
         # Calculate the amount of space required for the table plus spacing
         total_shift = table_height + spacing
@@ -181,8 +193,9 @@ def create_axes_parameters_tables_sequential(
             [upper_bbox.x0, table_bottom, upper_bbox.width, table_height]
         )
         table_ax.axis("off")  # Turn off the axis for the table
+
         table_ax.table(
-            cellText=df.values, colLabels=df.columns, loc="center", cellLoc="center"
+            cellText=df_i.values, colLabels=df_i.columns, loc="center", cellLoc="center"
         )
 
     return fig, [*axs, table_ax]
