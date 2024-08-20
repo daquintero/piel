@@ -26,7 +26,7 @@ def create_axes_per_figure(rows: int = 1, columns: int = 1, **kwargs) -> tuple:
         pass
     else:
         if (rows > 4) or (columns > 4):
-            kwargs["figsize"] = (2 * columns, 2 * rows)
+            kwargs["figsize"] = (12 * columns, 4 * rows)
         else:
             kwargs["figsize"] = (16, 8)
 

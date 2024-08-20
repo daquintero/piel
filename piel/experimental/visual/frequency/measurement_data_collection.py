@@ -7,7 +7,7 @@ from piel.visual import (
     create_plot_containers,
     save,
     create_axes_per_figure,
-    create_axes_parameters_table,
+    create_axes_parameters_table_overlay,
 )
 
 default_skrf_figure_kwargs = {
@@ -59,10 +59,24 @@ def plot_s_parameter_measurements_to_step_responses(
             if time_range_s is not None:
                 axs[i].set_xlim(time_range_s[0], time_range_s[1])
 
+            axs[-i].plot(subnetwork_s11_time_i, subnetwork_s11_signal_i)
+
         i += 1
+
+    if parameters_list is not None:
+        if len(parameters_list) == len(data_collection.collection):
+            # Create the labels accordingly
+            try:
+                create_axes_parameters_table_overlay(
+                    fig=fig, axs=axs, parameters_list=parameters_list
+                )
+            except Exception:
+                pass
 
     # Save the figure if 'path' is provided in kwargs
     save(fig, **kwargs)
+
+    plt.tight_layout()
 
     return fig, axs
 
@@ -100,6 +114,16 @@ def plot_s_parameter_real_and_imaginary(
             axs[i].set_title("Real S11")
 
         i += 1
+
+    if parameters_list is not None:
+        if len(parameters_list) == len(data_collection.collection):
+            # Create the labels accordingly
+            try:
+                create_axes_parameters_table_overlay(
+                    fig=fig, axs=axs, parameters_list=parameters_list
+                )
+            except Exception:
+                pass
 
     plt.tight_layout()
 
@@ -167,7 +191,7 @@ def plot_s_parameter_per_component(
                 for n in range(2):
                     # Create corresponding plot
                     try:
-                        s_plot_kwargs = {"label": parameters_list[i], **s_plot_kwargs}
+                        # s_plot_kwargs = {"label": parameters_list[i], **s_plot_kwargs}
                         getattr(network, s_parameter_plot)(
                             ax=axs[m, n], m=m, n=n, **s_plot_kwargs
                         )
@@ -176,15 +200,20 @@ def plot_s_parameter_per_component(
                         print(f"Error plotting measurement: {measurement_i}")
                         print(f"Error plotting network: {network}")
                         print(f"Error plotting S-parameter: {e}")
+                        if kwargs["debug"]:
+                            raise e
 
         i += 1
 
     if parameters_list is not None:
         if len(parameters_list) == len(data_collection.collection):
             # Create the labels accordingly
-            create_axes_parameters_table(
-                fig=fig, axs=axs, parameters_list=parameters_list
-            )
+            try:
+                create_axes_parameters_table_overlay(
+                    fig=fig, axs=axs, parameters_list=parameters_list
+                )
+            except Exception:
+                pass
 
     plt.tight_layout()
 

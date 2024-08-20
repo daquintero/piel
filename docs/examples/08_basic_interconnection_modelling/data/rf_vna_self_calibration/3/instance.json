@@ -6,17 +6,11 @@
             "ports": [
                 {
                     "name": "IN",
-                    "parent_component_name": "",
-                    "domain": null,
-                    "connector": "SMA_3.5mm",
-                    "manifold": "82052D"
+                    "parent_component_name": ""
                 }
             ],
             "connections": [],
-            "components": [],
-            "environment": null,
-            "manufacturer": "Agilent",
-            "model": "85052D"
+            "components": []
         },
         {
             "name": "E8364A",
@@ -40,12 +34,7 @@
             "components": [],
             "environment": null,
             "manufacturer": "Agilent",
-            "model": "E8364A",
-            "configuration": {
-                "calibration_setting_name": "bpl_vna_ports",
-                "measurement_configuration": null
-            },
-            "serial_number": ""
+            "model": "E8364A"
         }
     ],
     "connections": [

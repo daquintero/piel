@@ -1,7 +1,7 @@
-from ....types import PielBaseModel, PathTypes
+from ....types import Instance, PathTypes
 
 
-class MeasurementConfiguration(PielBaseModel):
+class MeasurementConfiguration(Instance):
     """
     Standard definition for a measurement configuration.
     """
@@ -11,7 +11,7 @@ class MeasurementConfiguration(PielBaseModel):
     measurement_type: str = ""
 
 
-class Measurement(PielBaseModel):
+class Measurement(Instance):
     """
     Standard definition for a measurement. This should be the container for all the measurement files, it is not the data container.
     """
@@ -21,7 +21,7 @@ class Measurement(PielBaseModel):
     parent_directory: PathTypes = ""
 
 
-class MeasurementCollection(PielBaseModel):
+class MeasurementCollection(Instance):
     """
     Generic class for MeasurementCollection
     """
