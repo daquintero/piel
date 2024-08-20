@@ -56,7 +56,7 @@ def pcb_smp_connector(name, pcb_name):
 # These are the measurements we want to check
 measurement_connections = {
     "load_through": ("SIG6", "SIG7"),
-    "throguh": ("SIG1", "SIG2"),
+    "through": ("SIG1", "SIG2"),
 }
 
 
@@ -268,6 +268,7 @@ plt.plot(s21_time, s21_signal)
 
 pe.visual.frequency.measurement_data_collection.plot_s_parameter_measurements_to_step_responses(
     data_collection=s_parameter_measurement_data_sweep,
+    parameters_list=vna_pcb_experiment.parameters_list,
     network_port_index=0,
     time_range_s=(-0.5e-9, 2e-9),
     path=None,
@@ -458,6 +459,7 @@ calibration_propagation_delay_experiment_directory = (
 
 # +
 pcb_propagation_data = pe.types.PropagationDelayMeasurementCollection(
+    name="pcb_propagation_data",
     collection=[
         pe.types.PropagationDelayMeasurement(
             parent_directory=pcb_propagation_delay_experiment_directory / str(0),
@@ -483,10 +485,11 @@ pcb_propagation_data = pe.types.PropagationDelayMeasurementCollection(
             dut_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch2.csv",
             measurements_file="mdata_through_ch1ref_ch2pcb_10GHz.csv",
         ),
-    ]
+    ],
 )
 
 calibration_propagation_data = pe.types.PropagationDelayMeasurementCollection(
+    name="calibration_propagation_data",
     collection=[
         pe.types.PropagationDelayMeasurement(
             parent_directory=calibration_propagation_delay_experiment_directory
@@ -516,7 +519,7 @@ calibration_propagation_data = pe.types.PropagationDelayMeasurementCollection(
             dut_waveform_file="calibration_loop_10Ghz_Ch2.csv",
             measurements_file="mdata_calibration_loop_10Ghz.csv",
         ),
-    ]
+    ],
 )
 # -
 
@@ -535,9 +538,12 @@ pcb_propagation_delay_data = (
 # Now we need to write some functionality to extract the files stored in these files in a meaningful way. Fortunately, there's already some functionality using `piel` in this context. We will now create a set of `ExperimentData` that represent both the metadata, configuration and data extracted accordingly.
 
 pcb_propagation_delay_experiment_data = pe.types.ExperimentData(
-    experiment=pcb_propagation_delay_experiment_setup, data=pcb_propagation_delay_data
+    name="pcb_propagation_delay_experiment_data",
+    experiment=pcb_propagation_delay_experiment_setup,
+    data=pcb_propagation_delay_data,
 )
 calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
+    name="calibration_propagation_delay_experiment_data",
     experiment=calibration_propagation_delay_experiment_setup,
     data=calibration_propagation_delay_data,
 )
@@ -557,6 +563,7 @@ calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
 fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
     calibration_propagation_delay_experiment_data,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
+    debug=True,
 )
 
 # ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg)

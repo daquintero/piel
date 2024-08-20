@@ -509,6 +509,7 @@ fig.savefig(
 
 pe.visual.frequency.measurement_data_collection.plot_s_parameter_per_component(
     data_collection=reinstantiated_vna_self_calibration_experiment_data.data,
+    parameters_list=reinstantiated_vna_self_calibration_experiment_data.experiment.parameters_list,
     s_parameter_plot="plot_s_db",
     path="../../_static/img/examples/08_basic_interconnection_modelling/reinstantiate_subset_example_plot_through.jpg",
 )
@@ -527,7 +528,6 @@ pe.visual.frequency.measurement_data_collection.plot_s_parameter_per_component(
 
 pe.visual.frequency.experiment_data.plot_s_parameter_real_and_imaginary(
     rf_vna_self_calibration_data,
-    figure_kwargs={"figsize": (10, 20)},
     path="../../_static/img/examples/08_basic_interconnection_modelling/s_parameter_re_im_vna_calibration_experiment_data_collection.jpg",
 )
 

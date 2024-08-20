@@ -122,6 +122,7 @@ def extract_propagation_delay_data_from_measurement(
 ) -> PropagationDelayMeasurementData:
     propagation_delay_measurement_i = propagation_delay_measurement
     data_i = dict()
+    data_i["name"] = propagation_delay_measurement.name
     if hasattr(propagation_delay_measurement_i, "measurements_file"):
         file = propagation_delay_measurement_i.measurements_file
         file = return_path(file)
@@ -176,7 +177,8 @@ def extract_propagation_delay_measurement_sweep_data(
         measurement_sweep_data.append(measurement_data_i)
 
     measurement_data_collection = PropagationDelayMeasurementDataCollection(
-        collection=measurement_sweep_data
+        name=propagation_delay_measurement_sweep.name,
+        collection=measurement_sweep_data,
     )
     return measurement_data_collection
 
