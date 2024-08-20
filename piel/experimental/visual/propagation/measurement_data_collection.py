@@ -17,6 +17,8 @@ def plot_propagation_signals_time(
         sharex=True,
     )
 
+    signal_propagation_sweep_data = data_collection.collection
+
     # Manage missing data here
     if signal_propagation_sweep_data[1].reference_waveform is None:
         pass
@@ -34,7 +36,7 @@ def plot_propagation_signals_time(
     dut_y_data = list()
 
     i = 0
-    for signal_propagation_measurement_data_i in (data_collection.collection,):
+    for signal_propagation_measurement_data_i in data_collection.collection:
         if signal_propagation_measurement_data_i.reference_waveform is None:
             pass
         else:

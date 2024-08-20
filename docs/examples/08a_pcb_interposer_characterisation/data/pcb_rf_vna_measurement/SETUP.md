@@ -212,7 +212,7 @@
     - **goal**: 
     - **parameters**:
     - **index**: 0
-    - **date_configured**: 2024-08-18 17:24:23.120127
+    - **date_configured**: 2024-08-20 15:33:42.559018
     - **date_measured**: 
     - **measurement_configuration_list**:
       -
@@ -426,7 +426,7 @@
     - **goal**: 
     - **parameters**:
     - **index**: 1
-    - **date_configured**: 2024-08-18 17:24:23.120336
+    - **date_configured**: 2024-08-20 15:33:42.559111
     - **date_measured**: 
     - **measurement_configuration_list**:
       -

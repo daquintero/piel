@@ -183,7 +183,7 @@ def plot_s_parameter_per_component(
         if len(parameters_list) == len(data_collection.collection):
             # Create the labels accordingly
             create_axes_parameters_table(
-                ax=axs[-1, -1], parameters_list=parameters_list
+                fig=fig, axs=axs, parameters_list=parameters_list
             )
 
     plt.tight_layout()
