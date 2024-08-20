@@ -13,6 +13,9 @@ def extract_figure_bottom_bbox(axs):
     # Initialize bounding box to the extremes
     x0, y0, x1, y1 = 1, 1, 0, 0
 
+    if isinstance(axs, list):
+        axs = np.array(axs)
+
     # Flatten the axs array if it's 2D or higher, otherwise treat it as a list
     if isinstance(axs, np.ndarray):
         axs = axs.ravel()
@@ -59,7 +62,7 @@ def create_axes_parameters_table_overlay(
     table_ax = fig.add_axes(new_position)
 
     # Extract the lines from the original axes (last subplot)
-    lines_list = axs.ravel()[-1].get_lines()
+    lines_list = np.array(axs).ravel()[-1].get_lines()
 
     # Extract colors and line styles from the lines
     colors = [line.get_color() for line in lines_list]

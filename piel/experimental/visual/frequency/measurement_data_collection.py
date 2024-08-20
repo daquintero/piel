@@ -72,7 +72,9 @@ def plot_s_parameter_measurements_to_step_responses(
                 create_axes_parameters_table_overlay(
                     fig=fig, axs=axs, parameters_list=parameters_list
                 )
-            except Exception:
+            except Exception as e:
+                if "debug" in kwargs and kwargs.get("debug", False):
+                    raise e
                 pass
 
     # Save the figure if 'path' is provided in kwargs
@@ -130,6 +132,7 @@ def plot_s_parameter_real_and_imaginary(
             except Exception as e:
                 if "debug" in kwargs and kwargs.get("debug", False):
                     raise e
+                pass
 
     # Save the figure if 'path' is provided in kwargs
     save(fig, **kwargs)
