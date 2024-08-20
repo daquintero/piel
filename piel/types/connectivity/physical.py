@@ -30,7 +30,7 @@ class PhysicalComponent(Component):
     Represents the data of a physical component or device.
     """
 
-    ports: list[PhysicalPort] = []
+    ports: list[PhysicalPort] | tuple[PhysicalPort] = []
     connections: list[PhysicalConnection] = []
     environment: Environment = None
 

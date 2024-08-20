@@ -21,12 +21,21 @@ def create_axes_per_figure(rows: int = 1, columns: int = 1, **kwargs) -> tuple:
     """
     This function creates a figure and a set of axes in this figure according to the number of rows or columns defined.
     """
+    max_width = 100
+    max_height = 100
+
     # Default size depends on the number of rows and columns, or provided configuration parameters
     if "figsize" in kwargs:
         pass
     else:
         if (rows > 4) or (columns > 4):
-            kwargs["figsize"] = (2 * columns, 2 * rows)
+            width = min(12 * columns, max_width)
+            height = min(4 * rows, max_height)
+            kwargs["figsize"] = (width, height)
+
+        elif (rows > 2) or (columns > 2):
+            kwargs["figsize"] = (12, 6)
+
         else:
             kwargs["figsize"] = (16, 8)
 

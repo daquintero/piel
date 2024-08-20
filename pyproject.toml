@@ -43,7 +43,7 @@ amaranth-yosys = "^0.40.0.0.post94"
 black = {version = "24.3.0", optional = true}
 bokeh = {version = "*", optional = true}
 bump-my-version = {version = "*", optional = true}
-cocotb = "1.8.1"
+cocotb = "uv1.8.1"
 cookiecutter = {version = "*", optional = true}
 coverage = {version = "*", optional = true}
 flake8 = {version = "*", optional = true}
