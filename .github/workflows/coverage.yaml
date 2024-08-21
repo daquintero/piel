@@ -42,14 +42,16 @@ jobs:
     # install dependencies if cache does not exist
     #----------------------------------------------
     - name: Install dependencies
-      run: uv pip install -e .[dev]
+      run: |
+        uv venv venv
+        uv pip install -e .[dev]
 
     #----------------------------------------------
     #    add matrix specifics and run test suite
     #----------------------------------------------
     - name: Run tests
       run: |
-        source $VENV
+        source venv/bin/activate
         uv run coverage run -m pytest -rA tests
         uv run coverage report -m
         echo "total=$(coverage report --format=total)" >> $GITHUB_ENV
