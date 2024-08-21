@@ -49,11 +49,11 @@ Once you have a copy of the source, you can install it with:
 
    $ pip install -e .
 
-You can install our exact supported dependencies in a poetry-managed environment by:
+You can install our exact supported dependencies in a `uv`-managed environment by:
 
 .. code:: console
 
-   $ poetry install
+   $ uv pip install piel
 
 Developer’s Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,8 +64,7 @@ documentation, and full environment:
 .. code:: bash
 
    mamba install pandoc
-   mamba install jupyterlab jupytext
-   poetry install -E dev
+   uv pip install -e .[dev]
 
 
 Usage

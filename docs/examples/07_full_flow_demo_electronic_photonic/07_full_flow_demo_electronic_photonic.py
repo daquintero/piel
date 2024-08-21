@@ -8,30 +8,23 @@
 
 # ## 1a. Configuring our `piel` Project
 
-# You can install `piel` directly via `pip`, or use the provided `poetry` lockfile-controlled environment directly from `git`.
+# You can install `piel` directly via `pip`, or use the provided `uv` lockfile-controlled environment directly from `git`.
 #
 
 # All the imports we will need throughout this flows.
 
 # +
 # We begin by importing a parametric circuit from `gdsfactory`:
-import jax.numpy as jnp
 import hdl21 as h
-import gdsfactory as gf
 import numpy as np
 import pandas as pd
 import piel
-import sax
-import sys
 
 from piel.models.physical.photonic import (
     mzi2x2_2x2_phase_shifter,
     component_lattice_generic,
 )
 
-from piel.integration.amaranth_openlane import (
-    layout_truth_table_through_openlane,
-)
 
 # -
 
@@ -83,8 +76,6 @@ import full_flow_demo
 
 
 def create_switch_fabric():
-    from gdsfactory.generic_tech import get_generic_pdk
-
     PDK = get_generic_pdk()
     PDK.activate()
     # CURRENT TODO: Create a basic chain fabric and verify the logic is implemented properly with binary inputs.
@@ -115,9 +106,9 @@ optical_logic_verification_models = piel.models.frequency.get_default_models(
     type="optical_logic_verification"
 )
 # A specific custom addition to our application:
-optical_logic_verification_models[
-    "straight_heater_metal_undercut_length200"
-] = optical_logic_verification_models["straight_heater_metal_undercut"]
+optical_logic_verification_models["straight_heater_metal_undercut_length200"] = (
+    optical_logic_verification_models["straight_heater_metal_undercut"]
+)
 
 # Now, we need to compute our transmission information accordingly for a given set of optical inputs:
 
@@ -544,7 +535,6 @@ component
 # ## 4b. Composing and Equivalent-Circuit Modelling
 
 # +
-from gdsfactory.generic_tech import get_generic_pdk
 
 our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
     allow_multiple=True, exclude_port_types="optical"
@@ -571,9 +561,7 @@ class TransientTb:
         rise=10 * h.prefix.m,
         fall=10 * h.prefix.m,
         width=75 * h.prefix.m,
-    )(
-        n=VSS
-    )  # A configured voltage pulse source
+    )(n=VSS)  # A configured voltage pulse source
 
     # Our component under test
     dut = example_straight_resistor()
