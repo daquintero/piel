@@ -1,174 +1,114 @@
-[bdist_wheel]
-universal = 1
+[project]
+name = "piel"
+version = "0.0.56"
+description = "Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more."
+authors = [
+    {name="Dario Quintero", email="darioaquintero@gmail.com"}
+]
+license = {file = "LICENSE"}
+readme = "README.md"
+keywords = ["piel", "photonics", "electronics", "codesign", "quantum", "hardware"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics"
+]
+requires-python = ">=3.10,<3.12"
+dependencies = [
+  "Click>=7.0",
+  "amaranth>=0.4.0,<0.5.0",
+  "amaranth-yosys>=0.40.0.0.post94,<0.41.0",
+  "gdsfactory@git+https://github.com/daquintero/gdsfactory7.git@dario/fix_recursive_e_netlist",
+  "gplugins[schematic]>=0.14.0,<0.15.0",
+  "hdl21>=6.0.0,<7.0.0",
+  "jax>=0.4.14,<0.5.0",
+  "jaxlib>=0.4.14,<0.5.0",
+  "matplotlib",
+  "networkx>=3.1,<4.0",
+  "numpy>=1.24.4,<2.0.0",
+  "openlane==2.0; platform_system == 'Linux'",
+  "openlane==2.0; platform_system == 'Darwin'",
+  "openlane; platform_system == 'Windows'",
+  "pandas>=1.5.3,<2.0.0",
+  "pydantic>=2.0,<3.0",
+  "qutip>=4.7,<5.0",
+  "sax==0.12.2",  # Pinned for pydantic <v2 compatibility.
+  "scikit-rf>=1.1.0,<2.0.0",
+  "scipy>=1.11.4,<2.0.0",
+  "setuptools",
+  "sky130@git+https://github.com/daquintero/skywater130.git@dario/patch_for_rladder_gplugins",
+  "sky130-hdl21>=6.0.0,<7.0.0",
+  "thewalrus>=0.20.0,<0.21.0",
+  "vlsirtools>=6.0.0,<7.0.0",
+  "xarray>=2023.12.0,<2024.0.0"
+]
 
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+[tool.setuptools]
+packages = ["piel"]
 
-[flake8]
+[project.urls]
+homepage = "https://github.com/daquintero/piel"
+repository = "https://github.com/daquintero/piel"
+
+[project.optional-dependencies]
+dev = [
+    "black==24.3.0",
+    "bokeh",
+    "bump-my-version",
+    "cocotb==1.8.1",
+    "cookiecutter",
+    "coverage",
+    "flake8",
+    "ipyevents",
+    "ipytree",
+    "ipywidgets>=7.6.0,<9",
+    "jupyter",
+    "jupyter-bokeh",
+    "jupyter-core",
+    "jupyter-packaging>=0.7.9",
+    "jupyterlab>=4.0.0,<5.0.0",
+    "jupytext==1.15.0",
+    "kfactory[git,ipy]",
+    "kweb>=2.0.1,<3.0.0",
+    "myst-parser",
+    "nbsphinx",
+    "pandoc",
+    "pre-commit",
+    "pytest>=3.0",
+    "pydata-sphinx-theme>=0.13.3",
+    "sphinx>=7.2.1,<8.0.0",
+    "sphinx-autoapi",
+    "sphinx-autobuild",
+    "sphinx-autodoc-typehints",
+    "sphinx-book_theme",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-gallery",
+    "sphinx-pydantic",
+    "sphinx-rtd-theme",
+    "sphinx-version-warning",
+    "sphinxcontrib-pdfembed @ git+https://github.com/SuperKogito/sphinxcontrib-pdfembed.git",
+    "tox",
+    "watchdog"
+]
+
+
+[scripts]
+piel = "piel.cli:main"
+
+[source]
+pypi = { priority = "primary" }
+jaxsource = { url = "https://storage.googleapis.com/jax-releases/jax_releases.html", priority = "supplemental" }
+
+[tools.flake8]
 exclude = "docs"
 
-[tool.poetry]
-authors = ["Dario Quintero <darioaquintero@gmail.com>"]
-classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
-  "Intended Audience :: Science/Research",
-  "License :: OSI Approved :: MIT License",
-  "Natural Language :: English",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Topic :: Scientific/Engineering",
-  "Topic :: Scientific/Engineering :: Physics"
-]
-description = "Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more."
-homepage = "https://github.com/daquintero/piel"
-keywords = ["piel"]
-license = "MIT"
-name = "piel"
-# packages = [
-# {include = "piel/"},
-# {include = "docs/"}
-# ]
-readme = "README.md"
-repository = "https://github.com/daquintero/piel"
-version = "0.0.56"
-
-[tool.poetry.dependencies]
-# CORE PACKAGES #
-Click = ">=7.0"
-amaranth = "^0.4.0"
-amaranth-yosys = "^0.40.0.0.post94"
-# DEVELOPMENT ONLY
-black = {version = "24.3.0", optional = true}
-bokeh = {version = "*", optional = true}
-bump-my-version = {version = "*", optional = true}
-cocotb = "uv1.8.1"
-cookiecutter = {version = "*", optional = true}
-coverage = {version = "*", optional = true}
-flake8 = {version = "*", optional = true}
-# cython = "0.29.21"
-gdsfactory = {git = "https://github.com/daquintero/gdsfactory7.git", branch = "dario/fix_recursive_e_netlist"}
-gplugins = {version = "^0.14.0", extras = ["schematic"]}
-# femwell = "*"
-hdl21 = {version = "^6.0.0"}
-ipyevents = {version = "*", optional = true}
-ipytree = {version = "*", optional = true}
-ipywidgets = {version = ">=7.6.0,<9", optional = true}
-jax = "^0.4.14"
-jaxlib = "^0.4.14"
-jupyter = {version = "*", optional = true}
-jupyter-bokeh = {version = "*", optional = true}
-jupyter-core = {version = "*", optional = true}
-jupyter-packaging = {version = ">=0.7.9", optional = true}
-jupyterlab = {version = "^4.0.0", optional = true}
-jupytext = {version = "1.15.0", optional = true}
-kfactory = {version = "*", extras = ["git", "ipy"], optional = true}
-kweb = {version = "^2.0.1", optional = true}
-matplotlib = {version = "*"}
-myst-parser = {version = "*", optional = true}
-nbsphinx = {version = "*", optional = true}
-networkx = "^3.1"
-numpy = "^1.24.4"
-openlane = [
-  {version = "^2.0", platform = "linux"},
-  {version = "^2.0", platform = "darwin"},
-  {version = "*", platform = "win32"}
-]
-pandas = "^1.5.3"
-pandoc = {version = "*", optional = true}
-poetry = {version = "1.8.2", optional = true}  # TODO FIX: THIS SHOULD NOT BE HERE
-pre-commit = {version = "*", optional = true}
-pydantic = "^2.0"
-pydata-sphinx-theme = {version = ">=0.13.3", optional = true}
-pytest = {version = ">=3.0", optional = true}
-python = ">=3.10,<3.12"
-qutip = "^4.7"
-sax = "0.12.2"  # Pinned for pydantic <v2 compatibility.
-scikit-rf = "^1.1.0"
-scipy = "^1.11.4"
-setuptools = "*"
-tabulate = "*"
-sky130 = {git = "https://github.com/daquintero/skywater130.git", branch = "dario/patch_for_rladder_gplugins"}
-sky130-hdl21 = {version = "^6.0.0"}
-sphinx = {version = "^7.2.1", optional = true}
-sphinx-autoapi = {version = "*", optional = true}
-sphinx-autobuild = {version = "*", optional = true}
-sphinx-autodoc-typehints = {version = "*", optional = true}
-sphinx-copybutton = {version = ">=0.5.2", optional = true}
-sphinx-gallery = {version = "*", optional = true}
-sphinx-pydantic = {version = "*", optional = true}
-sphinx-rtd-theme = {version = "*", optional = true}
-sphinx-version-warning = {version = "*", optional = true}
-sphinx_book_theme = {version = "*", optional = true}
-sphinxcontrib-pdfembed = {git = "https://github.com/SuperKogito/sphinxcontrib-pdfembed.git", optional = true}
-thewalrus = "^0.20.0"
-tox = {version = "*", optional = true}
-vlsirtools = "^6.0.0"
-watchdog = {version = "*", optional = true}
-xarray = "^2023.12.0"
-
-[tool.poetry.extras]
-dev = [
-  "amaranth_driven_flow",
-  "black",
-  "bokeh",
-  "bump-my-version",
-  "cookiecutter",
-  "coverage",
-  "example_empty_project",
-  "flake8",
-  "ipyevents",
-  "ipytree",
-  "ipywidgets",
-  "jupyter",
-  "jupyter-bokeh",
-  "jupyter-core",
-  "jupyter-packaging",
-  "jupyterlab",
-  "jupytext",
-  "kfactory",
-  "kweb",
-  "myst-parser",
-  "nbsphinx",
-  "pandoc",
-  "poetry",
-  "pre-commit",
-  "pytest",
-  "pydata-sphinx-theme",
-  "simple_copied_design",
-  "simple_design",
-  "sphinx",
-  "sphinx-autoapi",
-  "sphinx-autobuild",
-  "sphinx-autodoc-typehints",
-  "sphinx-book_theme",
-  "sphinx-copybutton",
-  "sphinx-gallery",
-  "sphinx-pydantic",
-  "sphinx-rtd-theme",
-  "sphinx-version-warning",
-  "sphinxcontrib-pdfembed",
-  "tox",
-  "watchdog"
-]
-
-[tool.poetry.scripts]
-piel = "piel.cli:main"
-poetry = "poetry.console.application:main"
-
-[[tool.poetry.source]]
-name = "pypi"
-priority = "primary"
-
-[[tool.poetry.source]]
-name = "jaxsource"
-priority = "supplemental"
-url = "https://storage.googleapis.com/jax-releases/jax_releases.html"
-
-[tool.pytest.ini_options]
+[tools.pytest.ini_options]
 addopts = "-rav"
 minversion = "6.0"
-testpaths = [
-  "tests"
-]
+testpaths = ["tests"]

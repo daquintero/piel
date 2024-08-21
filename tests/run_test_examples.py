@@ -32,7 +32,7 @@ def test_script_execution(script_directory):
         script_path = os.path.join(script_directory, script)
         try:
             run(
-                ["poetry", "run", "python", script_path],
+                ["uv", "run", "python", script_path],
                 capture_output=True,
                 text=True,
                 check=True,

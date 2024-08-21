@@ -15,12 +15,13 @@ def develop():
 @develop.command(name="build-docs", help="Builds the sphinx documentation.")
 def build_documentation(args=None):
     """Verifies and builds the documentation."""
-    # Runs the documentation build from the poetry environment
-    # TODO fix this so it runs from poetry.
+    # Runs the documentation build from the uv environment
+    # TODO fix this so it runs from uv.
     echo_and_check_subprocess(["python", "-m", "sphinx", "docs/", "_docs/"])
     return 0
 
 
+# TODO migrate to uv
 @develop.command(
     name="generate-poetry2nix-flake", help="Generates the poetry2nix flake."
 )
@@ -52,7 +53,7 @@ def generate_poetry2nix_flake(args=None):
         else:
             raise Exception(
                 "Failed to generate the poetry2nix flake and none was found in the root directory.s"
-            )
+            ) from None
 
 
 @develop.command(
@@ -75,7 +76,7 @@ def build_piel_cachix_command(args=None):
         )
     elif platform.system() == "Linux":
         # cachix use openlane
-        # create_and_activate_venv()  # Currently unused, TODO future poetry integration
+        # create_and_activate_venv()  # Currently unused, TODO future uv integration
         nix_shell_directory = get_python_install_directory() / "environment" / "nix"
         # nix develop --extra-experimental-features nix-command --extra-experimental-features flakes
         echo_and_check_subprocess(
