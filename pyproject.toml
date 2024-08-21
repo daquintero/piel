@@ -58,7 +58,7 @@ repository = "https://github.com/daquintero/piel"
 
 [project.optional-dependencies]
 dev = [
-    "black==24.3.0",
+    "black==24.8.0",
     "bokeh",
     "bump-my-version",
     "cocotb==1.8.1",
