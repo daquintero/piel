@@ -39,15 +39,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    #----------------------------------------------
-    #  -----  install & configure poetry  -----
-    #----------------------------------------------
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: 1.8.2
-        virtualenvs-create: true
-        virtualenvs-in-project: true
+    - name: Set up uv
+      # Install a specific uv version using the installer
+      run: curl -LsSf https://astral.sh/uv/0.3.0/install.sh | sh
 
     #----------------------------------------------
     # install your root project, if required
@@ -56,14 +50,15 @@ jobs:
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        poetry --version
-        poetry install -E dev
+        uv --version
+        uv venv --python=python${{ matrix.python-version }} venv
+        source venv/bin/activate
+        uv pip install -e .[dev]
 
     #----------------------------------------------
     #    add matrix specifics and run test suite
     #----------------------------------------------
     - name: Run tests
       run: |
-        # poetry run black . --check --diff
-        # poetry run ruff check piel --fix --exit-non-zero-on-fix
-        poetry run pytest -rA tests
+        source venv/bin/activate
+        uv run pytest -rA tests

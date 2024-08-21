@@ -33,28 +33,25 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.10"
-    #----------------------------------------------
-    #  -----  install & configure poetry  -----
-    #----------------------------------------------
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: 1.8.2
-        virtualenvs-create: true
-        virtualenvs-in-project: true
+
+    - name: Set up uv
+      # Install a specific uv version using the installer
+      run: curl -LsSf https://astral.sh/uv/0.3.0/install.sh | sh
+
     #----------------------------------------------
     # install dependencies if cache does not exist
     #----------------------------------------------
     - name: Install dependencies
-      run: poetry install -E dev
+      run: uv pip install -e .[dev]
+
     #----------------------------------------------
     #    add matrix specifics and run test suite
     #----------------------------------------------
     - name: Run tests
       run: |
         source $VENV
-        coverage run -m pytest -rA tests
-        coverage report -m
+        uv run coverage run -m pytest -rA tests
+        uv run coverage report -m
         echo "total=$(coverage report --format=total)" >> $GITHUB_ENV
         echo '### Total coverage: ${{ env.total }}%'
 
