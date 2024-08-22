@@ -1,3 +1,4 @@
+import logging
 from ....types import PathTypes
 from ...types import (
     Experiment,
@@ -12,6 +13,8 @@ from ..map import (
     measurement_to_data_method_map,
     measurement_data_to_measurement_collection_data_map,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def extract_data_from_measurement_collection(
@@ -28,21 +31,30 @@ def extract_data_from_measurement_collection(
     """
     measurement_data_collection: MeasurementDataCollectionTypes = list()
 
+    logger.debug(
+        f"extract_data_from_measurement_collection: Starting to extracting data from measurement collection: {measurement_collection}"
+    )
+
+    i = 0
     for measurement_i in measurement_collection.collection:
+        logger.debug(
+            f"extract_data_from_measurement_collection: Extracting data from measurement: {measurement_i.name}"
+        )
         # Identify correct data mapping
         measurement_data_type = measurement_to_data_map[measurement_i.type]
         extract_data_method = measurement_to_data_method_map[measurement_i.type]
         try:
             measurement_data_i = extract_data_method(measurement_i)
         except Exception as e:
-            missing_data_error = f"Missing data for measurement: {measurement_i} in collection: {measurement_collection}"
+            missing_data_error = f"Missing data for measurement: {measurement_i.name} in collection: {measurement_collection.name} with index: {i}"
             if skip_missing:
-                print(missing_data_error)
+                logger.error(missing_data_error)
                 measurement_data_i = measurement_data_type()
             else:
                 raise e
         assert isinstance(measurement_data_i, measurement_data_type)
         measurement_data_collection.append(measurement_data_i)
+        i += 1
 
     # Now we need to extract the corresponding MeasurementCollection type from measurement_data_collection
     # Use the last element

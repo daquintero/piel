@@ -4,6 +4,9 @@ from ...types import (
     PropagationDelayMeasurementCollection,
     PropagationDelayMeasurementDataCollection,
     PropagationDelayMeasurementData,
+    OscilloscopeMeasurement,
+    OscilloscopeMeasurementDataCollection,
+    OscilloscopeMeasurementData,
 )
 from ....types import (
     DataTimeSignalData,
@@ -179,6 +182,67 @@ def extract_propagation_delay_measurement_sweep_data(
     measurement_data_collection = PropagationDelayMeasurementDataCollection(
         name=propagation_delay_measurement_sweep.name,
         collection=measurement_sweep_data,
+    )
+    return measurement_data_collection
+
+
+def extract_oscilloscope_data_from_measurement(
+    oscilloscope_measurement: OscilloscopeMeasurement,
+) -> OscilloscopeMeasurementData:
+    data_i = dict()
+    data_i["name"] = oscilloscope_measurement.name
+
+    # Extracting measurements from the measurements file if it exists
+    if hasattr(oscilloscope_measurement, "measurements_file"):
+        file = oscilloscope_measurement.measurements_file
+        file = return_path(file)
+        if not file.exists():
+            # Try appending to parent directory if file does not exist
+            file = oscilloscope_measurement.parent_directory / file
+        if file.exists():
+            data_i["measurements"] = extract_to_signal_measurement(file)
+        else:
+            raise FileNotFoundError(f"Measurements file {file} does not exist.")
+    else:
+        data_i["measurements"] = None  # Or some default value if needed
+
+    # Extracting data from waveform files
+    waveform_data_list = []
+    for waveform_file in oscilloscope_measurement.waveform_file_list:
+        file = return_path(waveform_file)
+        if not file.exists():
+            # Try appending to parent directory if file does not exist
+            file = oscilloscope_measurement.parent_directory / waveform_file
+        if file.exists():
+            waveform_data = extract_to_data_time_signal(file)
+            waveform_data_list.append(waveform_data)
+        else:
+            raise FileNotFoundError(f"Waveform file {file} does not exist.")
+
+    data_i["waveform_list"] = waveform_data_list
+
+    return OscilloscopeMeasurementData(**data_i)
+
+
+def extract_oscilloscope_measurement_data_collection(
+    oscilloscope_measurement_data: OscilloscopeMeasurementData,
+) -> OscilloscopeMeasurementDataCollection:
+    # TODO write this.
+    """
+    This function is used to extract the relevant measurement files amd relate them to the sweep parameter. Because
+    this function extracts multi-index files then we use xarray to analyze this files more clearly. It aims to extract all
+    the files in the sweep file collection.
+    """
+    measurement_data_collection_raw = list()
+    for oscilloscope_measurement_i in oscilloscope_measurement_data.collection:
+        measurement_data_i = extract_oscilloscope_data_from_measurement(
+            oscilloscope_measurement_i
+        )
+        measurement_data_collection_raw.append(measurement_data_i)
+
+    measurement_data_collection = OscilloscopeMeasurementDataCollection(
+        name=oscilloscope_measurement_data.name,
+        collection=measurement_data_collection_raw,
     )
     return measurement_data_collection
 

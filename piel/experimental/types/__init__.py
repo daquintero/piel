@@ -47,6 +47,10 @@ from .measurements.data.propagation import (
     PropagationDelayMeasurementData,
     PropagationDelayMeasurementDataCollection,
 )
+from .measurements.data.oscilloscope import (
+    OscilloscopeMeasurementData,
+    OscilloscopeMeasurementDataCollection,
+)
 from .measurements.dc import (
     MultimeterSignalName,
     SourcemeterVoltageCurrentSignalNamePair,
@@ -63,6 +67,11 @@ from .measurements.propagation import (
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
     PropagationDelayMeasurementConfiguration,
+)
+from .measurements.oscilloscope import (
+    OscilloscopeMeasurement,
+    OscilloscopeMeasurementCollection,
+    OscilloscopeMeasurementConfiguration,
 )
 from .measurements.generic import (
     FrequencyMeasurementConfigurationTypes,

@@ -3,7 +3,7 @@ from ..file_system import read_json
 from ..types import PielBaseModel, PathTypes
 
 
-def load_from_dict(model_dictionary: dict, model: Any) -> Any:
+def load_from_dict(model_dictionary: dict, type: Any) -> Any:
     """
     See limitations in https://github.com/pydantic/pydantic/issues/8084
     :param model_dictionary:
@@ -11,22 +11,22 @@ def load_from_dict(model_dictionary: dict, model: Any) -> Any:
     :return:
     """
     # Validate this is a PielPydanticModel
-    assert issubclass(model, PielBaseModel)
+    assert issubclass(type, PielBaseModel)
 
     # Validate the model
-    model_instance = model.model_construct(**model_dictionary)
+    type_instance = type.model_construct(**model_dictionary)
 
-    return model_instance
+    return type_instance
 
 
 def load_from_json(
     json_file: PathTypes,
-    model: Any,
+    type: Any,
 ) -> Any:
     """
     This function will load the model from the given model instance.
     """
     # Read the json file
     model_dictionary = read_json(json_file)
-    model_instance = load_from_dict(model_dictionary, model)
-    return model_instance
+    type_instance = load_from_dict(model_dictionary, type)
+    return type_instance
