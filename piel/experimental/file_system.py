@@ -12,6 +12,9 @@ from ..file_system import (
     write_model_to_json,
 )
 from .text import write_schema_markdown, write_experiment_top_markdown
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def construct_experiment_directories(
@@ -69,9 +72,19 @@ def construct_experiment_directories(
     else:
         create_new_directory(experiment_directory)
 
+    logger.debug(
+        "construct_experiment_directories: Creating experiment directory at %s",
+        experiment_directory,
+    )
+
     # Create the experiment.json file
     experiment_json_path = experiment_directory / "experiment.json"
     write_model_to_json(experiment, experiment_json_path)
+
+    logger.debug(
+        "construct_experiment_directories: Writing experiment configuration to %s",
+        experiment_json_path,
+    )
 
     # Create the experiment README.md file
     experiment_markdown_path = experiment_directory / "README.md"
@@ -81,6 +94,11 @@ def construct_experiment_directories(
     )
     write_experiment_top_markdown(
         experiment, experiment_directory, setup_experiment_markdown_path
+    )
+
+    logger.debug(
+        "construct_experiment_directories: Writing experiment markdown to %s",
+        experiment_markdown_path,
     )
 
     # Append schema to markdown
@@ -98,6 +116,11 @@ def construct_experiment_directories(
         instance_markdown_path = experiment_instance_directory / "README.md"
         write_model_to_json(experiment_instance, instance_json_path)
         write_schema_markdown(instance_json_path, instance_markdown_path)
+
+    logger.debug(
+        "construct_experiment_directories: Finished creating experiment instances at %s",
+        experiment_directory,
+    )
 
     print(f"Experiment directory created at {experiment_directory}")
     return experiment_directory

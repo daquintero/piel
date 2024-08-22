@@ -39,6 +39,7 @@ from .measurements.map import (
     measurement_composition_method_mapping,
 )
 from .measurements.propagation import compose_propagation_delay_measurement
+from .measurements.oscilloscope import compose_oscilloscope_measurement
 
 from .report.report import create_report, create_report_from_experiment_directory
 from .report.plots import (

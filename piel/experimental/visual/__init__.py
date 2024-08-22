@@ -23,6 +23,7 @@ Note that all the functions inside the ``experiment_data`` just take the raw dat
 from . import dc
 from . import frequency
 from . import propagation
+from . import oscilloscope
 
 from .map import (
     measurement_data_to_plot_map,

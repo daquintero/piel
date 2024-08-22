@@ -7,11 +7,17 @@ from .frequency import (
     FrequencyMeasurementDataCollectionTypes,
 )
 from .dc import DCMeasurementDataTypes, DCMeasurementDataCollection
+from .oscilloscope import (
+    OscilloscopeMeasurementData,
+    OscilloscopeMeasurementDataCollection,
+)
+
 
 MeasurementDataTypes = (
     DCMeasurementDataTypes
     | FrequencyMeasurementDataTypes
     | PropagationDelayMeasurementData
+    | OscilloscopeMeasurementData
 )
 
 # Measurement Collections
@@ -19,4 +25,5 @@ MeasurementDataCollectionTypes = (
     DCMeasurementDataCollection
     | FrequencyMeasurementDataCollectionTypes
     | PropagationDelayMeasurementDataCollection
+    | OscilloscopeMeasurementDataCollection
 )

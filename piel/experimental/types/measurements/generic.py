@@ -11,22 +11,32 @@ from .propagation import (
     PropagationDelayMeasurementConfiguration,
     PropagationDelayMeasurementCollection,
 )
+from .oscilloscope import (
+    OscilloscopeMeasurement,
+    OscilloscopeMeasurementConfiguration,
+    OscilloscopeMeasurementCollection,
+)
 
 # Configuration
+TimeMeasurementConfigurationTypes = (
+    PropagationDelayMeasurementConfiguration | OscilloscopeMeasurementConfiguration
+)
 FrequencyMeasurementConfigurationTypes = (
     VNASParameterMeasurementConfiguration | VNAPowerSweepMeasurementConfiguration
 )
 MeasurementConfigurationTypes = (
-    PropagationDelayMeasurementConfiguration | FrequencyMeasurementConfigurationTypes
+    TimeMeasurementConfigurationTypes | FrequencyMeasurementConfigurationTypes
 )
 
 # Measurements
 FrequencyMeasurementTypes = VNASParameterMeasurement | VNAPowerSweepMeasurement
-MeasurementTypes = PropagationDelayMeasurement | FrequencyMeasurementTypes
+TimeMeasurementTypes = OscilloscopeMeasurement | PropagationDelayMeasurement
+MeasurementTypes = TimeMeasurementTypes | FrequencyMeasurementTypes
 
 # Measurement Collections
 MeasurementCollectionTypes = (
     PropagationDelayMeasurementCollection
+    | OscilloscopeMeasurementCollection
     | VNASParameterMeasurementCollection
     | VNAPowerSweepMeasurementCollection
 )

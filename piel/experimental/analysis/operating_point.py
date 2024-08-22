@@ -22,8 +22,8 @@ def create_experiment_data_collection_from_unique_parameters(
     """
     # We need to make this function capable of running with loaded serialized items
     experiment_data = experiment_data.model_dump()
-    experiment_data = load_from_dict(experiment_data, model=ExperimentData)
-    experiment = load_from_dict(experiment_data.experiment, model=Experiment)
+    experiment_data = load_from_dict(experiment_data, type=ExperimentData)
+    experiment = load_from_dict(experiment_data.experiment, type=Experiment)
 
     # First we extract the relevant parameter subsets
     unique_parameter_subset_dictionary = get_unique_dataframe_subsets(
