@@ -1,3 +1,4 @@
-import qutip
+def configure():
+    import qutip
 
-qutip.settings.atol = 1e-6  # TODO config
+    qutip.settings.atol = 1e-6  # TODO config

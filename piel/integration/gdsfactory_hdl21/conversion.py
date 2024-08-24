@@ -6,26 +6,6 @@ this would be done from the component instance as that way the component model c
 parameters, but does not have to be done necessarily. This comes down to implementing a backend function to compile
 SAX compiled circuit.
 """
-import copy
-import networkx as nx
-from sax.circuit import (
-    _create_dag,
-    _ensure_recursive_netlist_dict,
-    remove_unused_instances,
-    _extract_instance_models,
-    _validate_net,
-    _validate_dag,
-    _validate_models,
-)
-from sax.netlist import RecursiveNetlist
-
-from ...models.physical.electronic import get_default_models
-from .utils import convert_tuples_to_strings
-
-__all__ = [
-    "convert_connections_to_tuples",
-    "gdsfactory_netlist_with_hdl21_generators",
-]
 
 
 def convert_connections_to_tuples(connections: dict):
@@ -76,6 +56,8 @@ def get_matching_connections(names: list, connections: dict):
 
 
 def get_matching_port_nets(names, connections):
+    from .utils import convert_tuples_to_strings
+
     """
     This function returns a list of tuples that match the names of the connections.
 
@@ -114,6 +96,21 @@ def gdsfactory_netlist_with_hdl21_generators(
     Returns:
         The ``GDSFactory`` netlist with the ``hdl21`` models dictionary.
     """
+    import copy
+    import networkx as nx
+    from sax.circuit import (
+        _create_dag,
+        _ensure_recursive_netlist_dict,
+        remove_unused_instances,
+        _extract_instance_models,
+        _validate_net,
+        _validate_dag,
+        _validate_models,
+    )
+    from sax.netlist import RecursiveNetlist
+
+    from ...models.physical.electronic import get_default_models
+
     electrical_models_netlist = copy.copy(gdsfactory_netlist)
     if generators is None:
         generators = get_default_models()
@@ -149,9 +146,9 @@ def gdsfactory_netlist_with_hdl21_generators(
 
         # Iterate over every instance and append the corresponding required SPICE connectivity
         for instance_name_i, _ in list(electrical_models_netlist["instances"].items()):
-            electrical_models_netlist["instances"][instance_name_i][
-                "hdl21_model"
-            ] = inst2model[instance_name_i]
+            electrical_models_netlist["instances"][instance_name_i]["hdl21_model"] = (
+                inst2model[instance_name_i]
+            )
     return electrical_models_netlist
 
 
@@ -200,6 +197,21 @@ def gdsfactory_netlist_to_spice_string_connectivity_netlist(
             ...
         }
     """
+    import copy
+    import networkx as nx
+    from sax.circuit import (
+        _create_dag,
+        _ensure_recursive_netlist_dict,
+        remove_unused_instances,
+        _extract_instance_models,
+        _validate_net,
+        _validate_dag,
+        _validate_models,
+    )
+    from sax.netlist import RecursiveNetlist
+
+    from ...models.physical.electronic import get_default_models
+
     spice_netlist = copy.copy(gdsfactory_netlist)
     if models is None:
         models = get_default_models()
@@ -233,15 +245,17 @@ def gdsfactory_netlist_to_spice_string_connectivity_netlist(
 
         # Iterate over every instance and append the corresponding required SPICE connectivity
         for instance_name_i, _ in list(spice_netlist["instances"].items()):
-            spice_netlist["instances"][instance_name_i][
-                "connections"
-            ] = get_matching_connections(
-                names=[instance_name_i], connections=gdsfactory_netlist["connections"]
+            spice_netlist["instances"][instance_name_i]["connections"] = (
+                get_matching_connections(
+                    names=[instance_name_i],
+                    connections=gdsfactory_netlist["connections"],
+                )
             )
-            spice_netlist["instances"][instance_name_i][
-                "spice_nets"
-            ] = get_matching_port_nets(
-                names=[instance_name_i], connections=gdsfactory_netlist["connections"]
+            spice_netlist["instances"][instance_name_i]["spice_nets"] = (
+                get_matching_port_nets(
+                    names=[instance_name_i],
+                    connections=gdsfactory_netlist["connections"],
+                )
             )
             spice_netlist["instances"][instance_name_i]["spice_model"] = inst2model[
                 instance_name_i

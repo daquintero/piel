@@ -13,7 +13,7 @@ def heat_transfer_1d_W(
     cross_sectional_area_m2: float,
     length_m: float,
     *args,
-    **kwargs
+    **kwargs,
 ) -> float:
     """
     Calculate the heat transfer in watts for a 1D system. The thermal conductivity is assumed to be a function of

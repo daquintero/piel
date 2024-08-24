@@ -13,7 +13,6 @@ The question in this case, is of combining multiple figures, or just combining m
 It sounds like creating the axes is the best way to implement this for a given figure.
 """
 
-import matplotlib.pyplot as plt
 from ..types import AxesPlottingTypes, ExtensiblePlotsDirectionPerElement
 
 
@@ -21,6 +20,8 @@ def create_axes_per_figure(rows: int = 1, columns: int = 1, **kwargs) -> tuple:
     """
     This function creates a figure and a set of axes in this figure according to the number of rows or columns defined.
     """
+    import matplotlib.pyplot as plt
+
     max_width = 100
     max_height = 100
 

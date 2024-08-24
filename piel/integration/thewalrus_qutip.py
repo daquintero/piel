@@ -1,6 +1,5 @@
 import jax.numpy as jnp
-import qutip
-
+from typing import Any
 from ..tools.thewalrus import unitary_permanent
 from ..tools.qutip import (
     fock_state_nonzero_indexes,
@@ -10,8 +9,8 @@ from ..tools.qutip import (
 
 
 def fock_transition_probability_amplitude(
-    initial_fock_state: qutip.Qobj | jnp.ndarray,
-    final_fock_state: qutip.Qobj | jnp.ndarray,
+    initial_fock_state: Any,  # qutip.Qobj | jnp.ndarray,
+    final_fock_state: Any,  # qutip.Qobj | jnp.ndarray,
     unitary_matrix: jnp.ndarray,
 ):
     """
@@ -42,6 +41,7 @@ def fock_transition_probability_amplitude(
     Returns:
         float: The transition probability amplitude between the initial and final Fock states.
     """
+
     columns_indices = fock_state_nonzero_indexes(initial_fock_state)
     rows_indices = fock_state_nonzero_indexes(final_fock_state)
 

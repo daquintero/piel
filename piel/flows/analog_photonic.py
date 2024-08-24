@@ -1,18 +1,20 @@
 """
 This file contains the design flow from going from a photonic component into an analogue.
 """
+
 import sys
-import hdl21 as h
 from piel.types import CircuitComponent, PathTypes
-from piel.integration import (
-    gdsfactory_netlist_with_hdl21_generators,
-    construct_hdl21_module,
-)
 
 
 def extract_component_spice_from_netlist(
     component: CircuitComponent, output_path: PathTypes = sys.stdout, fmt: str = "spice"
 ):
+    import hdl21 as h
+    from piel.integration import (
+        gdsfactory_netlist_with_hdl21_generators,
+        construct_hdl21_module,
+    )
+
     """
     This function extracts the SPICE netlist from a component definition and writes it to a file. The function uses
     the HDL21 library to generate the SPICE netlist from the component's netlist. The netlist is then written to a

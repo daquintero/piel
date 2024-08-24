@@ -6,7 +6,6 @@ from functools import partial
 import jax.numpy as jnp
 import numpy as np
 import pandas as pd
-import qutip
 from .core import ArrayTypes, PackageArrayType, TupleIntType
 from .digital import AbstractBitsType, BitsType, LogicSignalsList
 
@@ -36,6 +35,8 @@ def convert_array_type(array: ArrayTypes, output_type: PackageArrayType):
         (1, 2, 3)
     """
     if output_type == "qutip":
+        import qutip
+
         if not isinstance(array, qutip.Qobj):
             array = qutip.Qobj(array)
     elif output_type == "jax":

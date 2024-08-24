@@ -13,6 +13,25 @@ To install piel, run this command in your terminal:
 This is the preferred method to install piel, as it will always install
 the most recent stable release.
 
+If you intend to do simulations only:
+
+.. code:: console
+
+  $ pip install piel[simulation]
+
+Or use ``piel`` only for experimental work:
+
+.. code:: console
+
+  $ pip install piel[experimental]
+
+
+If you want to do both simulation and experimental work:
+
+.. code:: console
+
+  $ pip install piel[simulation, experimental]
+
 If you don't have `pip <https://pip.pypa.io>`__ installed, this `Python
 installation
 guide <http://docs.python-guide.org/en/latest/starting/installation/>`__

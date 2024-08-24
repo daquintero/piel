@@ -36,9 +36,7 @@ def m_dh_green_h(T):
     numerator = (
         0.444 + 0.361e-2 * T + 0.117e-3 * T**2 + 0.126e-5 * T**3 + 0.303e-8 * T**4
     )
-    denominator = (
-        1 + 0.468e-2 * T + 0.229e-3 * T**2 + 0.747e-6 * T**3 + 0.173e-8 * T**4
-    )
+    denominator = 1 + 0.468e-2 * T + 0.229e-3 * T**2 + 0.747e-6 * T**3 + 0.173e-8 * T**4
     return (numerator / denominator) ** (2 / 3)
 
 

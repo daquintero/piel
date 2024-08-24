@@ -1,7 +1,6 @@
 import jax.numpy as jnp
 import numpy as np
 from typing import Optional
-import qutip
 
 
 def matrix_to_qutip_qobj(
@@ -43,6 +42,8 @@ def matrix_to_qutip_qobj(
         qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
 
     """
+    import qutip
+
     s_parameter_standard_matrix_numpy = np.asarray(s_parameters_standard_matrix)
     qobj_unitary = qutip.Qobj(s_parameter_standard_matrix_numpy)
     return qobj_unitary

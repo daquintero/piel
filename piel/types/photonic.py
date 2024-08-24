@@ -3,8 +3,7 @@ This module defines type aliases for components and files structures used in pho
 It includes type definitions for ports, S-parameter matrices, and photonic circuit components.
 """
 
-import gdsfactory as gf
-import sax
+from typing import Any
 from .core import ArrayTypes
 
 # Type alias for a tuple of port names as strings.
@@ -26,7 +25,7 @@ SParameterMatrixTuple:
 """
 
 # Type alias for a callable representing an optical transmission circuit in SAX.
-OpticalTransmissionCircuit = sax.saxtypes.Callable
+OpticalTransmissionCircuit = Any  # sax.saxtypes.Callable
 """
 OpticalTransmissionCircuit:
     A callable type representing an optical transmission circuit in the SAX framework.
@@ -34,7 +33,7 @@ OpticalTransmissionCircuit:
 """
 
 # Type alias for a recursive netlist in SAX, which describes a hierarchical circuit structure.
-RecursiveNetlist = sax.RecursiveNetlist
+RecursiveNetlist = Any  # sax.RecursiveNetlist
 """
 RecursiveNetlist:
     A type representing a recursive netlist in the SAX framework.
@@ -42,7 +41,7 @@ RecursiveNetlist:
 """
 
 # Type alias for a photonic circuit component in gdsfactory.
-PhotonicCircuitComponent = gf.Component
+PhotonicCircuitComponent = Any  # gf.Component
 """
 PhotonicCircuitComponent:
     A type representing a component in a photonic circuit, as defined in the gdsfactory framework.

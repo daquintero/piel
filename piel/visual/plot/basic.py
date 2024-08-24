@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from typing import List, Tuple, Optional
+from typing import List, Optional, Any
 
 __all__ = [
     "plot_simple",
@@ -15,11 +14,11 @@ def plot_simple(
     label: Optional[str] = None,
     ylabel: Optional[str] = None,
     xlabel: Optional[str] = None,
-    fig: Optional[plt.Figure] = None,
-    ax: Optional[plt.Axes] = None,
+    fig: Optional[Any] = None,
+    ax: Optional[Any] = None,
     title: Optional[str] = None,
     plot_kwargs: dict = None,
-) -> Tuple[plt.Figure, plt.Axes]:
+) -> tuple:
     """
     Plot a simple line graph. This function abstracts the basic files representation while
     keeping the flexibility of the matplotlib library.
@@ -39,6 +38,8 @@ def plot_simple(
     Returns:
         Tuple[plt.Figure, plt.Axes]: The figure and axes of the plot.
     """
+    import matplotlib.pyplot as plt
+
     if fig is None and ax is None:
         fig, ax = plt.subplots()
 
@@ -77,7 +78,7 @@ def plot_simple_multi_row(
     x_label: Optional[str] = None,
     titles: Optional[List[str]] = None,
     subplot_spacing: float = 0.15,
-) -> plt.Figure:
+) -> Any:
     """
     Plot multiple rows of files on separate subplots, sharing the same x-axis.
 
@@ -93,6 +94,8 @@ def plot_simple_multi_row(
     Returns:
         plt.Figure: The matplotlib figure containing the subplots.
     """
+    import matplotlib.pyplot as plt
+
     if row_list is None:
         raise ValueError("row_list must be provided")
 

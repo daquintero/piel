@@ -3,13 +3,10 @@ This module provides functions to configure and run various types of simulations
 It includes utilities to set up NGSPICE simulations, configure operating point and transient simulations, and handle the results.
 """
 
-import hdl21 as h
-import hdl21.sim as hs
 import numpy as np
 import pandas as pd
-from typing import Literal, Optional
-import vlsirtools.spice as vsp
-from ...types import PathTypes
+from typing import Literal, Any
+from ...types import PathTypes, AnalogueModule
 from ...file_system import return_path
 
 __all__ = [
@@ -32,6 +29,9 @@ def configure_ngspice_simulation(
     Returns:
         vsp.SimOptions: Configured NGSPICE simulation options.
     """
+    import vlsirtools.spice as vsp
+    from ...file_system import return_path
+
     run_directory = return_path(run_directory)
     simulation_options = vsp.SimOptions(
         simulator=vsp.SupportedSimulators.NGSPICE,
@@ -42,9 +42,11 @@ def configure_ngspice_simulation(
 
 
 def configure_operating_point_simulation(
-    testbench: h.Module,
+    testbench: AnalogueModule,
     **kwargs,
 ):
+    import hdl21.sim as hs
+
     """
     Configures the DC operating point simulation for the circuit and returns a simulation class.
 
@@ -65,11 +67,14 @@ def configure_operating_point_simulation(
 
 
 def configure_transient_simulation(
-    testbench: h.Module,
+    testbench: AnalogueModule,
     stop_time_s: float,
     step_time_s: float,
     **kwargs,
 ):
+    import hdl21 as h
+    import hdl21.sim as hs
+
     """
     Configures the transient simulation for the circuit and returns a simulation class.
 
@@ -96,7 +101,9 @@ def configure_transient_simulation(
 
 
 def save_results_to_csv(
-    results: hs.SimResult, file_name: str, save_directory: PathTypes = "."
+    results: Any,  # hs.SimResult,
+    file_name: str,
+    save_directory: PathTypes = ".",
 ):
     """
     Converts the simulation results to a pandas dataframe and saves it to a CSV file.
@@ -126,9 +133,9 @@ def save_results_to_csv(
 
 
 def run_simulation(
-    simulation: h.sim.Sim,
+    simulation: Any,  # h.sim.Sim,
     simulator_name: Literal["ngspice"] = "ngspice",
-    simulation_options: Optional[vsp.SimOptions] = None,
+    simulation_options: Any = None,  # Optional[vsp.SimOptions] = None,
     to_csv: bool = True,
 ):
     """
@@ -143,6 +150,8 @@ def run_simulation(
     Returns:
         hs.SimResult: Results of the simulation.
     """
+    import vlsirtools.spice as vsp
+
     if simulator_name == "ngspice":
         if simulation_options is None:
             if not vsp.ngspice.available():

@@ -1,7 +1,4 @@
-import matplotlib.pyplot as plt
 import pandas as pd
-from matplotlib.lines import Line2D
-from matplotlib import font_manager as fm
 import numpy as np
 
 
@@ -52,6 +49,10 @@ def create_axes_parameters_table_overlay(
 
     This function is particularly useful if the parametric sweep is overlaid in multiple lines of the same axes.
     """
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    from matplotlib import font_manager as fm
+
     # Get the combined bounding box of the bottom axes
     bbox1 = extract_figure_bottom_bbox(axs)
 

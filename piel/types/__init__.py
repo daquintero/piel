@@ -1,4 +1,6 @@
 # Top Level Types Declaration, all should be imported here.
+from .analogue import AnalogueModule, AnalogModule
+
 from .core import (
     PathTypes,
     PielBaseModel,
@@ -18,6 +20,7 @@ from .connectivity.generic import ConnectionTypes, PortTypes, ComponentTypes
 from .connectivity.physical import PhysicalComponent, PhysicalConnection, PhysicalPort
 
 from .digital import (
+    DigitalLogicModule,
     AbstractBitsType,
     BitsType,
     BitsList,

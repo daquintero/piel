@@ -1,14 +1,5 @@
-from collections.abc import Callable
-from difflib import get_close_matches
-
-import hdl21 as h
-import sky130
-
-from ...tools.gplugins import SchematicEditor
-from .netlist import (
-    _generate_raw_netlist_dict_from_proto_dict,
-    _parse_module_to_proto_dict,
-)
+from ...types import AnalogueModule
+from typing import Callable
 
 custom_mapping_dict = {
     "sky130_fd_pr__nfet_01v8": "sky130_fd_pr__rf_nfet_01v8_aM02W1p65L0p15",
@@ -17,9 +8,13 @@ custom_mapping_dict = {
 }
 
 
-def find_most_relevant_gds(
-    component_name, component_dict=sky130.cells, custom_mapping=None
-):
+def find_most_relevant_gds(component_name, component_dict=None, custom_mapping=None):
+    from difflib import get_close_matches
+    import sky130
+
+    if component_dict is None:
+        component_dict = sky130.cells
+
     if custom_mapping is None:
         custom_mapping = custom_mapping_dict
 
@@ -50,11 +45,11 @@ def filter_port(port):
 
 
 def hdl21_module_to_schematic_editor(
-    module: h.module,
+    module: AnalogueModule,
     yaml_schematic_file_name: str,
     spice_gds_mapping_method: Callable | None = find_most_relevant_gds,
     port_filter_method: Callable = filter_port,
-) -> SchematicEditor:
+):
     """
     Constructs a SchematicEditor instance from a hdl21 module object.
 
@@ -64,6 +59,14 @@ def hdl21_module_to_schematic_editor(
         spice_gds_mapping_method (Callable): The method to map the spice instance name to the component name.
         port_filter_method (Callable): The method to filter the port name.
     """
+    import sky130
+
+    from ...tools.gplugins import SchematicEditor
+    from .netlist import (
+        _generate_raw_netlist_dict_from_proto_dict,
+        _parse_module_to_proto_dict,
+    )
+
     proto_dict = _parse_module_to_proto_dict(module)
     raw_netlist_dict = _generate_raw_netlist_dict_from_proto_dict(proto_dict)
 

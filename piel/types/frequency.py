@@ -1,10 +1,7 @@
-import skrf
 from .connectivity.physical import PhysicalComponent
 from typing import Any
 
-FrequencyNetworkModel = (
-    skrf.Network | Any | None
-)  # TODO temporary nonetype till reserialization
+FrequencyNetworkModel = Any | None  # TODO temporary nonetype till reserialization
 """
 Corresponds to a container that contains a s-parameter representation.
 """

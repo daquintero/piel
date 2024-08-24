@@ -1,4 +1,4 @@
-import sax
+from typing import Any
 from ..tools.sax import sax_to_s_parameters_standard_matrix
 from ..tools.thewalrus import unitary_permanent
 
@@ -7,7 +7,7 @@ __all__ = ["sax_circuit_permanent", "unitary_permanent"]
 
 
 def sax_circuit_permanent(
-    sax_input: sax.SType,
+    sax_input: Any,  # sax.SType,
 ) -> tuple:
     """
     The permanent of a unitary is used to determine the state probability of combinatorial Gaussian boson samping systems.

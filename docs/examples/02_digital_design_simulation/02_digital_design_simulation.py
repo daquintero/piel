@@ -65,7 +65,7 @@ detector_phase_truth_table_dictionary = {
 detector_phase_truth_table = TruthTable(
     input_ports=["detector_in"],
     output_ports=["phase_map_out"],
-    **detector_phase_truth_table_dictionary
+    **detector_phase_truth_table_dictionary,
 )
 
 
@@ -170,7 +170,7 @@ detector_phase_truth_table = {
 truth_table = TruthTable(
     input_ports=["detector_in"],
     output_ports=["phase_map_out"],
-    **detector_phase_truth_table
+    **detector_phase_truth_table,
 )
 am_module = piel.amaranth.construct_amaranth_module_from_truth_table(
     truth_table, logic_implementation_type="sequential"
@@ -351,7 +351,7 @@ piel.simple_plot_simulation_data(example_simple_simulation_data)
 
 # +
 from openlane.flows import SequentialFlow
-from openlane.steps import Yosys, Misc, OpenROAD, Magic, Netgen
+from openlane.steps import Yosys, OpenROAD, Magic, Netgen
 
 
 class MyFlow(SequentialFlow):

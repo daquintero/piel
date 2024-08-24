@@ -1,7 +1,7 @@
 # TODO finish
 from .photonic import straight_waveguide
-from .photonic import mmi1x2
-from .photonic import mmi2x2
+from .photonic.mmi1x2 import mmi1x2_50_50
+from .photonic.mmi2x2 import mmi2x2_50_50
 from .photonic import coupler_simple
 
 __all__ = [
@@ -11,8 +11,8 @@ __all__ = [
 # Default model dictionary library that can be overwritten for specific modelling applications.
 __default_models_dictionary__ = {
     "coupler": coupler_simple,
-    "mmi1x2_50_50": mmi1x2.mmi1x2_50_50,
-    "mmi2x2_50_50": mmi2x2.mmi2x2_50_50,
+    "mmi1x2_50_50": mmi1x2_50_50,
+    "mmi2x2_50_50": mmi2x2_50_50,
     "ideal_active_waveguide": straight_waveguide.active_waveguide,
     "simple_straight": straight_waveguide.simple_straight,
     "waveguide": straight_waveguide.waveguide,

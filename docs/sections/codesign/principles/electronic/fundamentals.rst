@@ -26,4 +26,10 @@ There are some important definitions we must account for in terms of analysing t
      - :math:`J = Ws` Joule is equal to :math:`1W` Watt of power flowing throughout :math:`1s` second.
 
 
-Currents occur by placing a voltage through a device, and the rate of the current, hence the rate of the power consumption is dependent on the channel *impedance*. Now, this has an important effect on microwave engineering and system design.
+Currents occur by placing a voltage through a device, and the rate of the current, hence the rate of the power consumption is dependent on the channel *impedance*.
+Now, this has an important effect on microwave engineering and system design.
+
+
+Let's consider some unit conversion, since it is important particularly between relating time and frequency, and DC and RF metrics.
+
+

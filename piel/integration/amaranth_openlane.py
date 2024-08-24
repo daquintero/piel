@@ -2,22 +2,8 @@
 This file enhances some functions that translate an `amaranth` function to an `openlane` flow implementation.
 """
 
-import amaranth as am
 from typing import Optional, Literal
-import types as ty
-from ..tools.amaranth import (
-    construct_amaranth_module_from_truth_table,
-    generate_verilog_from_amaranth_truth_table,
-)
-from ..file_system import return_path, create_new_directory
-from ..project_structure import create_empty_piel_project
-from ..tools.openlane.v1 import write_configuration_openlane_v1
-from ..tools.openlane.v2 import run_openlane_flow
-from ..tools.openlane.defaults import (
-    test_basic_open_lane_configuration_v1,
-    test_basic_open_lane_configuration_v2,
-)
-from ..types import PathTypes, TruthTable
+from ..types import PathTypes, TruthTable, DigitalLogicModule
 
 
 def layout_truth_table_through_openlane(
@@ -25,7 +11,7 @@ def layout_truth_table_through_openlane(
     parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v2",
-    **kwargs
+    **kwargs,
 ):
     """
     Translates a truth table to an OpenLane flow implementation.
@@ -44,6 +30,10 @@ def layout_truth_table_through_openlane(
     Returns:
         None
     """
+    from ..tools.amaranth import (
+        construct_amaranth_module_from_truth_table,
+    )
+
     # Extract inputs and outputs from the truth table
     truth_table = truth_table
 
@@ -59,17 +49,17 @@ def layout_truth_table_through_openlane(
         parent_directory=parent_directory,
         target_directory_name=target_directory_name,
         openlane_version=openlane_version,
-        **kwargs
+        **kwargs,
     )
 
 
 def layout_amaranth_truth_table_through_openlane(
-    amaranth_module: am.Module,
+    amaranth_module: DigitalLogicModule,
     truth_table: TruthTable,
     parent_directory: PathTypes,
     target_directory_name: Optional[str] = None,
     openlane_version: Literal["v1", "v2"] = "v2",
-    **kwargs
+    **kwargs,
 ):
     """
     Implements an Amaranth truth table module through the OpenLane flow.
@@ -98,6 +88,21 @@ def layout_amaranth_truth_table_through_openlane(
     Returns:
         None
     """
+    import types as ty
+    from ..tools.amaranth import (
+        generate_verilog_from_amaranth_truth_table,
+    )
+    from ..file_system import return_path, create_new_directory
+    from ..project_structure import create_empty_piel_project
+    from ..tools.openlane.v1 import write_configuration_openlane_v1
+    from ..tools.openlane.v2 import run_openlane_flow
+    from ..tools.openlane.defaults import (
+        test_basic_open_lane_configuration_v1,
+        test_basic_open_lane_configuration_v2,
+    )
+
+    # TODO static typing verification of am.Module
+
     # Determine the design and source directories
     if isinstance(parent_directory, ty.ModuleType):
         parent_directory = return_path(parent_directory)
@@ -144,5 +149,5 @@ def layout_amaranth_truth_table_through_openlane(
         run_openlane_flow(
             configuration=our_amaranth_openlane_config,
             design_directory=design_directory,
-            **kwargs
+            **kwargs,
         )

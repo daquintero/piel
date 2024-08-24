@@ -83,6 +83,7 @@ def generate_flow_setup(
     logic_implementation_type: LogicImplementationType = "combinatorial",
 ):
     from openlane.flows import Flow
+
     if logic_implementation_type == "combinatorial":
         from openlane.flows import SequentialFlow
         from openlane.steps import Yosys, OpenROAD, Magic, Netgen

@@ -16,7 +16,7 @@ def aluminum(
     temperature_range_K: TemperatureRangeTypes,
     material_reference: MaterialReferenceType,
     *args,
-    **kwargs
+    **kwargs,
 ) -> float:
     specification = material_reference[1]
     if specification == "1100":

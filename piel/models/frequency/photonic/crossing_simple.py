@@ -1,9 +1,6 @@
-import sax
-
-__all__ = ["crossing_simple"]
-
-
 def crossing_simple(cross_transmission=0.9999):
+    import sax
+
     """
     An ideal crosser functionality swaps the input of the diagonal ports with some crossing loss.
 
