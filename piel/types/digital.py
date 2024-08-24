@@ -5,7 +5,7 @@ It leverages pydantic for model validation and pandas for files manipulation.
 
 import pandas as pd
 from pydantic import ConfigDict
-from typing import Literal, Iterable
+from typing import Literal, Iterable, Any
 from .core import PielBaseModel, PathTypes
 
 # Type aliases for different types of digital bits and HDL simulators.
@@ -119,3 +119,6 @@ class TruthTable(PielBaseModel):
         selected_ports = set(self.input_ports + self.output_ports)
         filtered_dict = {k: v for k, v in self.dict().items() if k in selected_ports}
         return filtered_dict
+
+
+DigitalLogicModule = Any

@@ -1,17 +1,14 @@
-import qutip  # NOQA : F401
-import sax
-from ..tools.qutip.unitary import matrix_to_qutip_qobj
-from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
-
-__all__ = [
-    "sax_to_ideal_qutip_unitary",
-    "verify_sax_model_is_unitary",
-]
+from ..types import OpticalTransmissionCircuit
 
 
 def sax_to_ideal_qutip_unitary(
-    sax_input: sax.SType, input_ports_order: tuple | None = None
+    sax_input: OpticalTransmissionCircuit, input_ports_order: tuple | None = None
 ):
+    import qutip  # NOQA : F401
+    from ..tools.qutip.unitary import matrix_to_qutip_qobj
+    from piel.tools.sax.utils import sax_to_s_parameters_standard_matrix
+
+    # TODO verify optical transmission circuit.
     """
     This function converts the calculated S-parameters into a standard Unitary matrix topology so that the shape and
     dimensions of the matrix can be observed.
@@ -61,8 +58,10 @@ def sax_to_ideal_qutip_unitary(
 
 
 def verify_sax_model_is_unitary(
-    model: sax.SType, input_ports_order: tuple | None = None
+    model: OpticalTransmissionCircuit, input_ports_order: tuple | None = None
 ) -> bool:
+    import qutip  # NOQA : F401
+
     """
     Verify that the model is unitary.
 
@@ -73,5 +72,7 @@ def verify_sax_model_is_unitary(
     Returns:
         bool: True if the model is unitary, False otherwise.
     """
+    # TODO verify sax.SType in Optical
+
     qobj = sax_to_ideal_qutip_unitary(model, input_ports_order=input_ports_order)
     return qobj.check_isunitary()

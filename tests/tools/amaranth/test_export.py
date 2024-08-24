@@ -1,11 +1,7 @@
 import pytest
 import amaranth as am
-from amaranth.back import verilog
 from piel.tools.amaranth import generate_verilog_from_amaranth_truth_table
 from piel.types import TruthTable
-import pathlib
-import types
-import os
 
 
 # Helper function to create a dummy Amaranth module
@@ -65,7 +61,7 @@ def test_generate_verilog_with_missing_port(tmp_path):
     truth_table = TruthTable(
         input_ports=["input1", "missing_input"],
         output_ports=["output1"],
-        **truth_table_data
+        **truth_table_data,
     )
 
     # Create a simple Amaranth module

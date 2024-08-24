@@ -22,31 +22,15 @@ classifiers = [
 requires-python = ">=3.10,<3.12"
 dependencies = [
   "Click>=7.0",
-  "amaranth>=0.4.0,<0.5.0",
-  "amaranth-yosys>=0.40.0.0.post94,<0.41.0",
-  "gdsfactory@git+https://github.com/daquintero/gdsfactory7.git@dario/fix_recursive_e_netlist",
-  "gplugins[schematic]>=0.14.0,<0.15.0",
-  "hdl21>=6.0.0,<7.0.0",
   "jax>=0.4.14,<0.5.0",
   "jaxlib>=0.4.14,<0.5.0",
   "matplotlib",
   "networkx>=3.1,<4.0",
   "numpy>=1.24.4,<2.0.0",
-  "openlane==2.0; platform_system == 'Linux'",
-  "openlane==2.0; platform_system == 'Darwin'",
-  "openlane; platform_system == 'Windows'",
   "pandas>=1.5.3,<2.0.0",
   "pydantic>=2.0,<3.0",
-  "qutip>=4.7,<5.0",
-  "sax==0.12.2",  # Pinned for pydantic <v2 compatibility.
-  "scikit-rf>=1.1.0,<2.0.0",
   "scipy>=1.11.4,<2.0.0",
   "setuptools",
-  "sky130@git+https://github.com/daquintero/skywater130.git@dario/patch_for_rladder_gplugins",
-  "sky130-hdl21>=6.0.0,<7.0.0",
-  "thewalrus>=0.20.0,<0.21.0",
-  "vlsirtools>=6.0.0,<7.0.0",
-  "xarray>=2023.12.0,<2024.0.0"
 ]
 
 [tool.setuptools]
@@ -57,11 +41,46 @@ homepage = "https://github.com/daquintero/piel"
 repository = "https://github.com/daquintero/piel"
 
 [project.optional-dependencies]
+simulation = [
+  "amaranth>=0.4.0,<0.5.0",
+  "amaranth-yosys>=0.40.0.0.post94,<0.41.0",
+  "cocotb==1.8.1",
+  "gdsfactory @ git+https://github.com/daquintero/gdsfactory7.git@dario/fix_recursive_e_netlist",
+  "gplugins[schematic]>=0.14.0,<0.15.0",
+  "hdl21>=6.0.0,<7.0.0",
+  "openlane==2.0; platform_system == 'Linux'",
+  "openlane==2.0; platform_system == 'Darwin'",
+  "openlane; platform_system == 'Windows'",
+  "qutip>=4.7,<5.0",
+  "sax==0.12.2",  # Pinned for pydantic <v2 compatibility.
+  "scikit-rf>=1.1.0,<2.0.0",
+  "sky130 @ git+https://github.com/daquintero/skywater130.git@dario/patch_for_rladder_gplugins",
+  "sky130-hdl21>=6.0.0,<7.0.0",
+  "thewalrus>=0.20.0,<0.21.0",
+  "vlsirtools>=6.0.0,<7.0.0",
+]
+experimental = [
+  "scikit-rf>=1.1.0,<2.0.0",
+]
 dev = [
-    "black==24.3.0",
+    "amaranth>=0.4.0,<0.5.0",
+    "amaranth-yosys>=0.40.0.0.post94,<0.41.0",
+    "cocotb==1.8.1",
+    "gdsfactory @ git+https://github.com/daquintero/gdsfactory7.git@dario/fix_recursive_e_netlist",
+    "gplugins[schematic]>=0.14.0,<0.15.0",
+    "hdl21>=6.0.0,<7.0.0",
+    "openlane==2.0; platform_system == 'Linux'",
+    "openlane==2.0; platform_system == 'Darwin'",
+    "openlane; platform_system == 'Windows'",
+    "qutip>=4.7,<5.0",
+    "sax==0.12.2",  # Pinned for pydantic <v2 compatibility.
+    "scikit-rf>=1.1.0,<2.0.0",
+    "sky130 @ git+https://github.com/daquintero/skywater130.git@dario/patch_for_rladder_gplugins",
+    "sky130-hdl21>=6.0.0,<7.0.0",
+    "thewalrus>=0.20.0,<0.21.0",
+    "vlsirtools>=6.0.0,<7.0.0",
     "bokeh",
     "bump-my-version",
-    "cocotb==1.8.1",
     "cookiecutter",
     "coverage",
     "flake8",
@@ -82,6 +101,7 @@ dev = [
     "pre-commit",
     "pytest>=3.0",
     "pydata-sphinx-theme>=0.13.3",
+    "ruff==0.5.5",
     "sphinx>=7.2.1,<8.0.0",
     "sphinx-autoapi",
     "sphinx-autobuild",
@@ -96,7 +116,6 @@ dev = [
     "tox",
     "watchdog"
 ]
-
 
 [scripts]
 piel = "piel.cli:main"

@@ -1,7 +1,7 @@
 """
 This module aims to extend sax from standard netlist operations to include more complex operations that enable connectivity.
 """
-import sax
+
 from typing import Optional
 from ...models.frequency import get_default_models
 
@@ -93,6 +93,8 @@ def compose_recursive_instance_location(
                 - target_component_mapping (dict): A mapping of target components to their parent components.
 
     """
+    import sax
+
     model_composition_mapping = dict()
     instance_composition_mapping = dict()
     target_component_mapping = dict()
@@ -198,6 +200,8 @@ def get_component_instances(
      Returns:
         dict: A dictionary mapping the component prefix to a list of instance names that match the prefix.
     """
+    import sax
+
     # TODO interim function until Floris merges.
     recursive_netlist_sax = sax.netlist(recursive_netlist)
     instance_names = []
@@ -232,6 +236,8 @@ def get_netlist_instances_by_prefix(
         ValueError: If no instance or more than one instance matches the given prefix.
 
     """
+    import sax
+
     # TODO interim function until Floris merges.
     recursive_netlist = sax.netlist(recursive_netlist)
     recursive_netlist_root = recursive_netlist.dict()["__root__"]
@@ -293,6 +299,8 @@ def get_matched_model_recursive_netlist_instances(
         Each tuple has the form (parent_component, target_instance, custom_subcomponent_instance).
 
     """
+    import sax
+
     matched_instance_list = []
     if models is None:
         models = get_default_models()

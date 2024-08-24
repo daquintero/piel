@@ -106,7 +106,7 @@ def test_convert_to_bits_from_str():
 
 
 def test_convert_to_bits_from_bytes():
-    bits = b"\x0F"  # 00001111 in binary
+    bits = b"\x0f"  # 00001111 in binary
     result = convert_to_bits(bits)
     assert result == "00001111"
 

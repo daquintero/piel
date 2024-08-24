@@ -2,12 +2,13 @@
 This module defines files models for low-noise amplifier (LNA) and high-voltage amplifier (HVA) metrics.
 It provides structured types using pydantic for validation and includes type aliases for metric ranges.
 """
-import gdsfactory as gf
+
+from typing import Any
 from ..connectivity.physical import PhysicalComponent, PhysicalPort
 from ..frequency import RFPhysicalComponent
 
 # Type alias for a photonic circuit component in gdsfactory.
-ElectronicCircuitComponent = gf.Component
+ElectronicCircuitComponent = Any
 """
 PhotonicCircuitComponent:
     A type representing a component in a photonic circuit, as defined in the gdsfactory framework.

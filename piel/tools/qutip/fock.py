@@ -2,9 +2,8 @@ from itertools import product
 import math
 import numpy as np
 import jax.numpy as jnp
-from typing import Optional, Literal
+from typing import Optional, Literal, Any
 from piel.types.type_conversion import convert_array_type
-import qutip
 
 
 def all_fock_states_from_photon_number(
@@ -32,7 +31,7 @@ def all_fock_states_from_photon_number(
     return states
 
 
-def convert_qobj_to_jax(qobj: qutip.Qobj) -> jnp.ndarray:
+def convert_qobj_to_jax(qobj: Any) -> jnp.ndarray:
     return jnp.array(qobj.data.todense())
 
 
@@ -40,7 +39,7 @@ convert_output_type = convert_array_type
 
 
 def fock_state_to_photon_number_factorial(
-    fock_state: qutip.Qobj | jnp.ndarray,
+    fock_state: Any,
 ) -> float:
     """
     This function converts a Fock state defined as:
@@ -63,6 +62,8 @@ def fock_state_to_photon_number_factorial(
         float: The photon number factorial of the Fock state.
     """
     # TODO implement checks of Fock state validity
+    import qutip
+
     if isinstance(fock_state, qutip.Qobj):
         fock_state = convert_qobj_to_jax(fock_state)
 
@@ -73,7 +74,7 @@ def fock_state_to_photon_number_factorial(
     return photon_number_factorial
 
 
-def fock_state_nonzero_indexes(fock_state: qutip.Qobj | jnp.ndarray) -> tuple[int]:
+def fock_state_nonzero_indexes(fock_state: Any) -> tuple[int]:
     """
     This function returns the indexes of the nonzero elements of a Fock state.
 
@@ -84,6 +85,8 @@ def fock_state_nonzero_indexes(fock_state: qutip.Qobj | jnp.ndarray) -> tuple[in
         tuple: The indexes of the nonzero elements of the Fock state.
     """
     # TODO implement checks of Fock state validity
+    import qutip
+
     if isinstance(fock_state, qutip.Qobj):
         fock_state = convert_qobj_to_jax(fock_state)
 

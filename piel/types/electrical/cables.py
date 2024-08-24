@@ -1,7 +1,7 @@
 from typing import Optional, Union
 from piel.types.core import QuantityType
 from piel.types.materials import MaterialReferenceType
-from ..connectivity.physical import PhysicalConnection, PhysicalComponent, PhysicalPort
+from ..connectivity.physical import PhysicalComponent
 
 
 # TODO This shouldn't be a quantity
@@ -122,6 +122,7 @@ class DCCable(Cable):
     """
     A DC cable is a single core cable that is used to transmit direct current.
     """
+
     geometry: Optional[DCCableGeometryType] = None
     heat_transfer: Optional[DCCableHeatTransferType] = None
     material_specification: Optional[DCCableMaterialSpecificationType] = None
@@ -132,6 +133,7 @@ class CoaxialCable(Cable):
     A coaxial cable is a type of electrical cable that has an inner conductor surrounded by a tubular insulating layer,
     surrounded by a tubular conducting shield.
     """
+
     geometry: Optional[CoaxialCableGeometryType] = None
     heat_transfer: Optional[CoaxialCableHeatTransferType] = None
     material_specification: Optional[CoaxialCableMaterialSpecificationType] = None

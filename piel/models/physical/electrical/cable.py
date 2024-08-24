@@ -22,7 +22,7 @@ def calculate_coaxial_cable_geometry(
     core_diameter_dimension: Literal["awg", "metric"] = "metric",
     core_diameter_awg: Optional[float] = None,
     core_diameter_m: float = 2e-3,
-    **kwargs
+    **kwargs,
 ) -> CoaxialCableGeometryType:
     """
     Calculate the geometry of a coaxial cable. Defaults are based on the parameters of a TODO
@@ -145,7 +145,7 @@ def calculate_dc_cable_geometry(
     core_diameter_awg: Optional[float] = None,
     core_diameter_m: float = 2e-3,
     *args,
-    **kwargs
+    **kwargs,
 ) -> DCCableGeometryType:
     """
     Calculate the geometry of a DC cable. Defaults are based on the parameters of a TODO

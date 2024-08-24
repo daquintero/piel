@@ -9,7 +9,7 @@ assumed that, as is currently, cocotb can interface python with multiple solvers
 this) writes an equivalent python-based or C++ based python time-domain simulation solver.
 
 The nice thing about cocotb is that as long as the photonic simulations can be written asynchronously, time-domain
-simulations can be closely integrated or simulated through this verification software. """
+simulations can be closely integrated or simulated through this verification software."""
 
 import functools
 import pathlib

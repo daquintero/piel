@@ -5,13 +5,8 @@ It is worth noting that GDSFactory has already the following PDKs installed:
 * SKY130nm https://gdsfactory.github.io/skywater130/
 * GF180nm https://gdsfactory.github.io/gf180/
 """
-import gdsfactory as gf
 
-import piel
-from ..types import PathTypes
-from ..file_system import check_path_exists
-from piel.tools.openlane.migrate import get_design_from_openlane_migration
-from piel.tools.openlane import find_latest_design_run, get_gds_path_from_design_run
+from ..types import PathTypes, PhotonicCircuitComponent
 
 
 def create_gdsfactory_component_from_openlane(
@@ -19,7 +14,14 @@ def create_gdsfactory_component_from_openlane(
     design_directory: PathTypes | None = None,
     run_name: str | None = None,
     v1: bool = False,
-) -> gf.Component:
+) -> PhotonicCircuitComponent:
+    import gdsfactory as gf
+
+    import piel
+    from ..file_system import check_path_exists
+    from piel.tools.openlane.migrate import get_design_from_openlane_migration
+    from piel.tools.openlane import find_latest_design_run, get_gds_path_from_design_run
+
     """
     This function cretes a gdsfactory layout component that can be included in the network codesign of the device, or that can be used for interconnection codesign.
 

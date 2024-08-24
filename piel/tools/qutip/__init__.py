@@ -1,4 +1,4 @@
-from .config import *
+from .config import configure
 from .fock import (
     all_fock_states_from_photon_number,
     convert_qobj_to_jax,

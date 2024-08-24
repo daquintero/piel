@@ -1,5 +1,4 @@
 from datetime import datetime
-import pathlib
 from piel.types import PathTypes, DigitalRunID
 from piel.file_system import return_path
 from typing import Literal
@@ -99,8 +98,7 @@ def find_latest_design_run(
     latest_version = None
 
     sorted_runs_per_version = find_all_design_runs(
-        design_directory=design_directory,
-        run_name=run_name
+        design_directory=design_directory, run_name=run_name
     )
 
     # If a specific version is specified

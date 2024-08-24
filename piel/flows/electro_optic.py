@@ -1,8 +1,6 @@
 import jax.numpy as jnp  # TODO add typing
-import gdsfactory as gf
 from itertools import product
-import sax
-from typing import Optional, Callable
+from typing import Optional, Callable, Any
 from ..types import (
     absolute_to_threshold,
     convert_array_type,
@@ -71,13 +69,14 @@ def compose_switch_function_parameter_state(
     Returns:
         phase_shifter_function_parameter_state (dict): The dictionary of the phase shifter function parameter state.
     """
+
     phase_shifter_function_parameter_state = dict()
     for id_i, phase_address_map in switch_phase_address_state.items():
-        phase_shifter_function_parameter_state[
-            id_i
-        ] = address_value_dictionary_to_function_parameter_dictionary(
-            address_value_dictionary=phase_address_map,
-            parameter_key="active_phase_rad",
+        phase_shifter_function_parameter_state[id_i] = (
+            address_value_dictionary_to_function_parameter_dictionary(
+                address_value_dictionary=phase_address_map,
+                parameter_key="active_phase_rad",
+            )
         )
     return phase_shifter_function_parameter_state
 
@@ -239,12 +238,12 @@ def construct_unitary_transition_probability_performance(
     for id_i, circuit_unitaries_i in unitary_phase_implementations_dictionary.items():
         implemented_unitary_probability_dictionary[id_i] = dict()
         for id_i_i, implemented_unitaries_i in circuit_unitaries_i.items():
-            implemented_unitary_probability_dictionary[id_i][
-                id_i_i
-            ] = calculate_all_transition_probability_amplitudes(
-                unitary_matrix=implemented_unitaries_i[0],
-                input_fock_states=input_fock_states,
-                output_fock_states=output_fock_states,
+            implemented_unitary_probability_dictionary[id_i][id_i_i] = (
+                calculate_all_transition_probability_amplitudes(
+                    unitary_matrix=implemented_unitaries_i[0],
+                    input_fock_states=input_fock_states,
+                    output_fock_states=output_fock_states,
+                )
             )
     return implemented_unitary_probability_dictionary
 
@@ -438,8 +437,8 @@ def format_electro_optic_fock_transition(
 
 
 def generate_s_parameter_circuit_from_photonic_circuit(
-    circuit: gf.Component,
-    models: sax.ModelFactory = None,
+    circuit: PhotonicCircuitComponent,
+    models: Any = None,  # sax.modelfactory
     netlist_function: Optional[Callable] = None,
 ) -> tuple[any, any]:
     """
@@ -453,6 +452,8 @@ def generate_s_parameter_circuit_from_photonic_circuit(
     Returns:
         tuple[any, any]: The S-parameters circuit and related information.
     """
+    import sax
+
     # Step 1: Retrieve default models if not provided
     if models is None:
         models = get_default_models()
@@ -509,8 +510,8 @@ def generate_s_parameter_circuit_from_photonic_circuit(
 
 def get_state_phase_transitions(
     circuit_component: PhotonicCircuitComponent,
-    models: sax.ModelFactory,
-    mode_amount: int,
+    models: dict = None,
+    mode_amount: int = None,
     input_fock_states: list[ArrayTypes] | None = None,
     switch_states: list[NumericalTypes] | None = None,
     determine_ideal_mode_function: Optional[Callable] = None,
@@ -547,10 +548,6 @@ def get_state_phase_transitions(
 
     When the switch function is larger than a single switch, it is necessary to extract the location of the corresponding switches as function parameters.
     """
-    # We compose the switch_states we want to apply
-    if switch_states is None:
-        switch_states = [0, jnp.pi]
-
     # We compose the fock states we want to apply
     if input_fock_states is None:
         input_fock_states = fock_states_only_individual_modes(

@@ -1,12 +1,11 @@
 """
 Translated from https://github.com/flaport/sax or https://github.com/flaport/photontorch/tree/master
 """
-import jax.numpy as jnp
-
-__all__ = ["grating_coupler_simple"]
 
 
 def grating_coupler_simple(R=0.0, R_in=0.0, Tmax=1.0, bandwidth=0.06e-6, wl0=1.55e-6):
+    import jax.numpy as jnp
+
     # Constants
     fwhm2sigma = 1.0 / (2 * jnp.sqrt(2 * jnp.log(2)))
 

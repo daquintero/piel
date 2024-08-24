@@ -1,6 +1,7 @@
 """
 This file allows us to automate several aspects of creating a fully compatible project structure.
 """
+
 import subprocess
 from typing import Literal, Optional
 

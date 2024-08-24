@@ -18,6 +18,7 @@ We can define the two corresponding angles that this would be.
 
 A more complex implementation of phase mapping can be similar to a DAC mapping: a bitstring within a converter
 bit-size can map directly to a particular phase space within a particular mapping."""
+
 import numpy as np
 from ..electronic.digital import bits_array_from_bits_amount
 from ....types.digital_electro_optic import BitPhaseMap

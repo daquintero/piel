@@ -6,7 +6,7 @@ def compose_switch_position_list(
     gap_elements: list = None,
     cross_elements: list = None,
     *args,
-    **kwargs
+    **kwargs,
 ):
     """
     This function returns a list of the switch positions in the network, the corresponding instance, and the 2D position in the network.

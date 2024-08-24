@@ -186,20 +186,16 @@ We know what our top model ports are. We know our internal instance ports as wel
 model too. For the sake of easiness, we can describe these as ``hdl21`` equivalent ``InOut`` or ``Port` `ports and
 not have to deal with directionality. After instance declaration, and models for each of these components with the
 corresponding port topology, it is then straightforward to parse the connectivity and implement the network,
-and extract the SPICE. """
-import hdl21
-import hdl21 as h
-from .conversion import (
-    convert_connections_to_tuples,
-    gdsfactory_netlist_with_hdl21_generators,
-)
+and extract the SPICE."""
+
+from ...types import AnalogueModule
 
 __all__ = ["gdsfactory_netlist_to_spice_netlist", "construct_hdl21_module"]
 
 
 def gdsfactory_netlist_to_spice_netlist(
     gdsfactory_netlist: dict, generators: dict, **kwargs
-) -> hdl21.Module:
+) -> AnalogueModule:
     """
     This function converts a GDSFactory electrical netlist into a standard SPICE netlist. It follows the same
     principle as the `sax` circuit composition.
@@ -219,6 +215,10 @@ def gdsfactory_netlist_to_spice_netlist(
     Returns:
         hdl21 module or raw SPICE string
     """
+    from .conversion import (
+        gdsfactory_netlist_with_hdl21_generators,
+    )
+
     spice_netlist = gdsfactory_netlist_with_hdl21_generators(
         gdsfactory_netlist=gdsfactory_netlist, generators=generators
     )
@@ -226,7 +226,7 @@ def gdsfactory_netlist_to_spice_netlist(
     return hdl21_module
 
 
-def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
+def construct_hdl21_module(spice_netlist: dict, **kwargs) -> AnalogueModule:
     """
     This function converts a gdsfactory-spice converted netlist using the component models into a SPICE circuit.
 
@@ -241,6 +241,11 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> h.Module:
 
     # TODO implement validators
     """
+    import hdl21 as h
+    from .conversion import (
+        convert_connections_to_tuples,
+    )
+
     circuit = h.Module(name=spice_netlist["name"])
     instance_id = 0
     # Declare all the instances

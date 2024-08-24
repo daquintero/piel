@@ -1,4 +1,3 @@
-import matplotlib as mpl
 import pathlib
 
 
@@ -9,4 +8,6 @@ def activate_piel_styles():
     Returns:
         None
     """
+    import matplotlib.pyplot as mpl
+
     mpl.style.use(pathlib.Path(__file__).parent / pathlib.Path("piel_fast.rcParams"))

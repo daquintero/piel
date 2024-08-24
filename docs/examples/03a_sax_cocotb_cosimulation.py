@@ -747,18 +747,18 @@ for unitary_i in switch_lattice_simulation_data.unitary:
     output_amplitude_i = np.dot(unitary_i[0], optical_port_input)
     for input_port in unitary_i[1]:
         port_id = int(re.search(r"\d+", input_port).group())
-        switch_lattice_simulation_data.at[
-            i, "out_o_" + str(port_id)
-        ] = output_amplitude_i[port_id]
-        switch_lattice_simulation_data.at[
-            i, "out_o_" + str(port_id) + "_abs"
-        ] = jnp.abs(output_amplitude_i[port_id])
-        switch_lattice_simulation_data.at[
-            i, "out_o_" + str(port_id) + "_phase_rad"
-        ] = jnp.angle(output_amplitude_i[port_id])
-        switch_lattice_simulation_data.at[
-            i, "out_o_" + str(port_id) + "_phase_deg"
-        ] = jnp.angle(output_amplitude_i[port_id], deg=True)
+        switch_lattice_simulation_data.at[i, "out_o_" + str(port_id)] = (
+            output_amplitude_i[port_id]
+        )
+        switch_lattice_simulation_data.at[i, "out_o_" + str(port_id) + "_abs"] = (
+            jnp.abs(output_amplitude_i[port_id])
+        )
+        switch_lattice_simulation_data.at[i, "out_o_" + str(port_id) + "_phase_rad"] = (
+            jnp.angle(output_amplitude_i[port_id])
+        )
+        switch_lattice_simulation_data.at[i, "out_o_" + str(port_id) + "_phase_deg"] = (
+            jnp.angle(output_amplitude_i[port_id], deg=True)
+        )
     i += 1
 switch_lattice_simulation_data.head()
 

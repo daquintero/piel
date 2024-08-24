@@ -14,7 +14,7 @@ P = PETA = Prefix.PETA
 UNIT = Prefix.UNIT
 
 """
-import hdl21 as h
+
 import numpy as np
 
 
@@ -25,6 +25,8 @@ def convert_numeric_to_prefix(
     This function converts a numeric value to a number under a SPICE unit closest to the base prefix. This allows us
     to connect a particular number real output, into a term that can be used in a SPICE netlist.
     """
+    import hdl21 as h
+
     prefixes = [
         (h.Prefix.YOCTO, h.prefix.y),
         (h.Prefix.ZEPTO, h.prefix.z),

@@ -59,5 +59,5 @@ def AWG70001A(signal: SignalTimeSources, **kwargs) -> WaveformGenerator:
         ports=ports,
         configuration=configuration,
         manufacturer="Tektronix",
-        **kwargs
+        **kwargs,
     )

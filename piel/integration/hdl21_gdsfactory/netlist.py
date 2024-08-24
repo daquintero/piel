@@ -2,17 +2,16 @@
 This module provides functions to generate a raw netlist semi-compatible with gdsfactory from a hdl21 module object.
 """
 
-import hdl21 as h
-import yaml
-
+from ...types import AnalogueModule
 
 ParsedProtoVLSIR = dict
 
 
-def _parse_module_to_proto_dict(module: h.module) -> ParsedProtoVLSIR:
+def _parse_module_to_proto_dict(module: AnalogueModule) -> ParsedProtoVLSIR:
     """
     Parse a hdl21 module object into a dictionary with the same structure as the proto VLSIR format.
     """
+    import hdl21 as h
 
     def parse_value(lines, index):
         value = {}
@@ -275,7 +274,7 @@ def _generate_raw_netlist_dict_from_proto_dict(proto_dict: ParsedProtoVLSIR):
     return raw_netlist_dict
 
 
-def generate_raw_netlist_dict_from_module(module: h.module):
+def generate_raw_netlist_dict_from_module(module: AnalogueModule):
     """
     Generate a raw netlist dictionary from a hdl21 module object.
     This just gives us a raw structure of the hdl21 modules, we cannot use this json equivalently to a gdsfactory netlist.
@@ -284,11 +283,12 @@ def generate_raw_netlist_dict_from_module(module: h.module):
     return _generate_raw_netlist_dict_from_proto_dict(proto_dict)
 
 
-def generate_raw_yaml_from_module(module: h.module):
+def generate_raw_yaml_from_module(module: AnalogueModule):
     """
     Generate a raw netlist yaml from a hdl21 module object which could be manually edited for specific instances
     related to the corresponding SPICE.
     """
+    import yaml
 
     raw_netlist = generate_raw_netlist_dict_from_module(module)
     return yaml.dump(raw_netlist, default_flow_style=False)

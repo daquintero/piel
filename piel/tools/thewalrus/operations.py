@@ -1,6 +1,5 @@
 import jax.numpy as jnp
 import time
-import thewalrus
 import numpy as np
 
 
@@ -25,6 +24,8 @@ def unitary_permanent(
         tuple: The circuit permanent and the time it took to compute it.
 
     """
+    import thewalrus
+
     start_time = time.time()
     unitary_matrix_numpy = np.asarray(unitary_matrix)
     circuit_permanent = thewalrus.perm(unitary_matrix_numpy)

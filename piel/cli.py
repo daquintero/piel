@@ -1,4 +1,5 @@
 """Console script for piel."""
+
 import sys
 from .cli.main import main
 from .file_system import create_piel_home_directory

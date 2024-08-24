@@ -1,12 +1,12 @@
 """
 This file provides a set of utilities that allow much easier integration between `sax` and the relevant tools that we use.
 """
+
 import jax.numpy as jnp
-import sax
 from ..gdsfactory.netlist import get_matched_ports_tuple_index
 from ...utils import round_complex_array
 from ...types import SParameterMatrixTuple
-from typing import Optional  # NOQA : F401
+from typing import Optional, Any  # NOQA : F401
 
 
 def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> dict:
@@ -49,11 +49,11 @@ def get_sdense_ports_index(input_ports_order: tuple, all_ports_index: dict) -> d
 
 
 def sax_to_s_parameters_standard_matrix(
-    sax_input: sax.SType,
+    sax_input: Any,
     input_ports_order: tuple[str] | None = None,
     round_int: bool | None = None,
     *args,
-    **kwargs
+    **kwargs,
 ) -> SParameterMatrixTuple:
     """
     A ``sax`` S-parameter SDict is provided as a dictionary of tuples with (port0, port1) as the key. This
@@ -148,6 +148,8 @@ def sax_to_s_parameters_standard_matrix(
     Returns:
         tuple: The S-parameter matrix and the input ports index tuple in the standard S-parameter notation.
     """
+    import sax
+
     dense_s_parameter_matrix, dense_s_parameter_index = sax.sdense(sax_input)
     # print(dense_s_parameter_index)
     all_ports_list = dense_s_parameter_index.keys()
@@ -192,13 +194,13 @@ def sax_to_s_parameters_standard_matrix(
         s_parameters_standard_matrix = dense_s_parameter_matrix.at[
             output_ports_index_tuple_order_jax
         ].get()
-    except TypeError:
+    except TypeError as e:
         print("sax_input: " + str(sax_input))
         print("all_ports_list: " + str(all_ports_list))
         print("output_ports_index_tuple_order: " + str(output_ports_index_tuple_order))
         raise TypeError(
             "Verify your network composition contains `out` keywords. This can be caused by the network topology."
-        )
+        ) from e
     s_parameters_standard_matrix = s_parameters_standard_matrix.at[
         :, input_ports_index_tuple_order_jax
     ].get()
