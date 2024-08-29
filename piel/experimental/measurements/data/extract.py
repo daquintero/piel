@@ -52,7 +52,15 @@ def extract_data_from_measurement_collection(
                 measurement_data_i = measurement_data_type()
             else:
                 raise e
-        assert isinstance(measurement_data_i, measurement_data_type)
+
+        try:
+            logger.error(
+                f"Constructed {measurement_data_i} is not of the target measurement data type {measurement_data_type}"
+            )
+            assert isinstance(measurement_data_i, measurement_data_type)
+        except AssertionError as e:
+            raise e
+
         measurement_data_collection.append(measurement_data_i)
         i += 1
 

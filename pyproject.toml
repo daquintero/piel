@@ -61,6 +61,7 @@ simulation = [
 ]
 experimental = [
   "scikit-rf>=1.1.0,<2.0.0",
+  "tabulate"
 ]
 dev = [
     "amaranth>=0.4.0,<0.5.0",
@@ -113,6 +114,7 @@ dev = [
     "sphinx-rtd-theme",
     "sphinx-version-warning",
     "sphinxcontrib-pdfembed @ git+https://github.com/SuperKogito/sphinxcontrib-pdfembed.git",
+    "tabulate",
     "tox",
     "watchdog"
 ]

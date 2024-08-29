@@ -12,6 +12,8 @@ from ...types import (
     DCSweepMeasurementDataCollection,
     MultimeterSweepVoltageMeasurementData,
     SourcemeterVoltageCurrentSignalNamePair,
+    Experiment,
+    ExperimentData,
 )
 
 
@@ -277,6 +279,7 @@ def extract_dc_sweeps_from_operating_point_csv(
 
     # Iterate through the unique operating points and extract the DC sweep data
     dc_sweep_data = []
+    parameter_list = []
 
     for _, operating_point in unique_operating_points.iterrows():
         operating_point_data = dataframe[
@@ -293,3 +296,77 @@ def extract_dc_sweeps_from_operating_point_csv(
         dc_sweep_data.append(dc_sweep)
 
     return DCSweepMeasurementDataCollection(collection=dc_sweep_data)
+
+
+def extract_dc_sweep_experiment_data_from_csv(
+    file_path: PathTypes,
+    sourcemeter_voltage_current_signal_name_pairs: list[
+        SourcemeterVoltageCurrentSignalNamePair
+    ],
+    multimeter_signals: list[str],
+    unique_operating_point_columns: list[str],
+    **kwargs,
+) -> ExperimentData:
+    """
+    Extract DC sweep data experiment data from a full operating point CSV file. The operating point CSV file contains the DC sweep data
+    for multiple operating points. The unique operating point columns are used to extract the unique operating points
+    from the CSV file. The DC sweep data is then extracted for each unique operating point. The DC sweep data is returned as a ExperimentData with the unique_operating_point_columns as part of the parameter_list definition, and the sweep data as part of the collection DCSweepMeasurementDataCollection.
+
+    Parameters
+    ----------
+
+    file_path : PathTypes
+        The path to the operating point CSV file.
+    sourcemeter_voltage_current_signal_name_pairs : list[SourcemeterVoltageCurrentSignalNamePair]
+        The pairs of sourcemeter voltage and current signal names.
+    multimeter_signals : list[str]
+        The multimeter signals.
+    unique_operating_point_columns : list[str]
+        The unique operating point columns.
+    **kwargs
+        Additional keyword arguments.
+
+    Returns
+    -------
+    ExperimentData
+      A collection of experiment and metadata to represent a DC sweep analysis.
+    """
+    file = return_path(file_path)
+    dataframe = pd.read_csv(file)
+
+    # Extract the unique operating points
+    unique_operating_points = dataframe[
+        unique_operating_point_columns
+    ].drop_duplicates()
+
+    parameters_list = unique_operating_points.to_dict(orient="records")
+
+    # Iterate through the unique operating points and extract the DC sweep data
+    dc_sweep_data = []
+
+    for _, operating_point in unique_operating_points.iterrows():
+        operating_point_data = dataframe[
+            (dataframe[unique_operating_point_columns] == operating_point).all(axis=1)
+        ]
+
+        dc_sweep = extract_signal_data_from_dataframe(
+            dataframe=operating_point_data,
+            sourcemeter_voltage_current_signal_name_pairs=sourcemeter_voltage_current_signal_name_pairs,
+            multimeter_signals=multimeter_signals,
+            **kwargs,
+        )
+
+        dc_sweep_data.append(dc_sweep)
+
+    # Save the data in a collection
+    data_collection = DCSweepMeasurementDataCollection(collection=dc_sweep_data)
+
+    # Create metadata containers for automatic plotting/analysis.
+    experiment = Experiment(
+        parameters_list=parameters_list,
+    )
+
+    # Final output
+    experiment_data = ExperimentData(experiment=experiment, data=data_collection)
+
+    return experiment_data

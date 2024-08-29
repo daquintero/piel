@@ -1,8 +1,26 @@
-# # SNSPD Parametric Modelling
+# # Photodetector Modelling
 #
-# In this example, we will explore some parametric modelling of superconducting-nanowire single-photon detectors in the context of the electronic interconnection requirements and effects.
+# In this example, we will explore some parametric modelling of standard photodetector and superconducting-nanowire single-photon detectors in the context of the electronic interconnection requirements and effects.
 
-# ## Create a SNSPD MOdel
+# ## Basic Photodetector Property Analysis
+
+# Let's consider
+
+import piel
+
+piel.units.dBm2watt(20 - 35) * 500
+
+piel.units.dBm2vpp(-1)
+
+piel.units.vpp2dBm(3.3)
+
+piel.units.vpp2dBm(0.5)
+
+piel.units.dBm2vpp(piel.units.vpp2dBm(0.880) + 10)
+
+piel.units.vpp2dBm(1.6)
+
+# ## Create a SNSPD Model
 #
 # Let's start by first composing the SPICE model of a superconducting-nanowire single-photon detector. Let's get the equivalent circuit model:
 #
