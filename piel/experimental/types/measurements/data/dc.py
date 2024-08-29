@@ -38,3 +38,8 @@ class DCSweepMeasurementDataCollection(MeasurementDataCollection):
 class DCMeasurementDataCollection(MeasurementDataCollection):
     type: str = "DCMeasurementDataCollection"
     collection: list[DCMeasurementDataTypes] | DCSweepMeasurementDataCollection = []
+
+
+DCMeasurementDataCollectionTypes = (
+    DCSweepMeasurementDataCollection | DCMeasurementDataCollection
+)

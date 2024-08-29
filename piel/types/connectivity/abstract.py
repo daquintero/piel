@@ -1,15 +1,8 @@
 from __future__ import annotations
 
 from typing import Optional
-from piel.types import PielBaseModel
-
-
-class Instance(PielBaseModel):
-    """
-    This represents the fundamental data structure of an element in connectivity
-    """
-
-    name: str = ""
+from .core import Instance
+from .timing import TimeMetricsTypes, ZeroTimeMetrics
 
 
 class Port(Instance):
@@ -23,9 +16,12 @@ class Port(Instance):
 class Connection(Instance):
     """
     This represents the fundamental data structure to identify a connection between two ports.
+
+    Note that any connection has a
     """
 
-    ports: tuple[Port, Port] = tuple()
+    ports: tuple[Port, Port] | list[Port] = tuple()
+    time: TimeMetricsTypes = ZeroTimeMetrics
 
 
 class Component(Instance):

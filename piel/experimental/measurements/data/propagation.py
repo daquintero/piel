@@ -4,4 +4,6 @@ from ...types import PropagationDelayMeasurementData, PropagationDelayMeasuremen
 def extract_propagation_delay_data_from_measurement(
     measurement: PropagationDelayMeasurement,
 ) -> PropagationDelayMeasurementData:
-    pass
+    raise NotImplementedError(
+        "This generic data extraction method has not been generically implemented."
+    )

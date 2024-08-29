@@ -4,4 +4,6 @@ from ...types import OscilloscopeMeasurementData, OscilloscopeMeasurement
 def extract_oscilloscope_data_from_measurement(
     measurement: OscilloscopeMeasurement,
 ) -> OscilloscopeMeasurementData:
-    pass
+    raise NotImplementedError(
+        "This extraction method has not been generically implemented."
+    )

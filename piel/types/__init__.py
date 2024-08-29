@@ -15,9 +15,17 @@ from .core import (
     ModuleType,
 )
 
-from .connectivity.abstract import Connection, Component, Port, Instance
+from .connectivity.core import Instance
+from .connectivity.abstract import Connection, Component, Port
 from .connectivity.generic import ConnectionTypes, PortTypes, ComponentTypes
 from .connectivity.physical import PhysicalComponent, PhysicalConnection, PhysicalPort
+from .connectivity.timing import (
+    ScalarMetrics,
+    TimeMetrics,
+    DispersiveTimeMetrics,
+    TimeMetricsTypes,
+    ZeroTimeMetrics,
+)
 
 from .digital import (
     DigitalLogicModule,
@@ -125,3 +133,5 @@ from .type_conversion import (
     convert_to_bits,
     convert_dataframe_to_bits,
 )
+
+from .units import Unit, BaseSIUnitNameList, s, ns, us

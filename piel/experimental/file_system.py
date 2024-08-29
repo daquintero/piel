@@ -11,7 +11,7 @@ from ..file_system import (
     return_path,
     write_model_to_json,
 )
-from .text import write_schema_markdown, write_experiment_top_markdown
+from .text import write_experiment_top_markdown
 import logging
 
 logger = logging.getLogger(__name__)
@@ -21,6 +21,7 @@ def construct_experiment_directories(
     experiment: Experiment,
     parent_directory: PathTypes,
     construct_directory: bool = True,
+    write_schema_markdown: bool = False,
 ) -> PathTypes:
     """
     This function constructs the directories of the experiment configuration. It iterates through the experiment
@@ -42,7 +43,7 @@ def construct_experiment_directories(
     The data files are manually generated from the corresponding measurements specified in the instance.json file.
     These will be added after wards from this directory structure creation.
 
-    This schema is used to generate a README file for the experiment configuration. This README file should contain
+    This schema is used to generate a README file for the experiment configuration if `write_markdown_schema` is true. This README file should contain
     all the information about the experiment configuration. This includes the experiment instances and their
     corresponding configurations.
 
@@ -53,6 +54,9 @@ def construct_experiment_directories(
 
     parent_directory : PathTypes
         The parent directory to create the experiment directory in.
+
+    write_markdown_schema : bool
+        Writes the json schema into markdown if true. Defaults to false.
 
     Returns
     -------
@@ -89,6 +93,7 @@ def construct_experiment_directories(
     # Create the experiment README.md file
     experiment_markdown_path = experiment_directory / "README.md"
     setup_experiment_markdown_path = experiment_directory / "SETUP.md"
+
     write_experiment_top_markdown(
         experiment, experiment_directory, experiment_markdown_path
     )
@@ -101,9 +106,10 @@ def construct_experiment_directories(
         experiment_markdown_path,
     )
 
-    # Append schema to markdown
-    write_schema_markdown(experiment_json_path, experiment_markdown_path)
-    write_schema_markdown(experiment_json_path, setup_experiment_markdown_path)
+    if write_schema_markdown:
+        # Append schema to markdown
+        write_schema_markdown(experiment_json_path, experiment_markdown_path)
+        write_schema_markdown(experiment_json_path, setup_experiment_markdown_path)
 
     # Create the experiment instances
     for index, experiment_instance in enumerate(experiment.experiment_instances):
@@ -115,7 +121,9 @@ def construct_experiment_directories(
         instance_json_path = experiment_instance_directory / "instance.json"
         instance_markdown_path = experiment_instance_directory / "README.md"
         write_model_to_json(experiment_instance, instance_json_path)
-        write_schema_markdown(instance_json_path, instance_markdown_path)
+
+        if write_schema_markdown:
+            write_schema_markdown(instance_json_path, instance_markdown_path)
 
     logger.debug(
         "construct_experiment_directories: Finished creating experiment instances at %s",

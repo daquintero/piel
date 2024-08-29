@@ -19,6 +19,7 @@ from .measurements.data.dc import (
     extract_signal_data_from_csv,
     extract_signal_data_from_dataframe,
     extract_dc_sweeps_from_operating_point_csv,
+    extract_dc_sweep_experiment_data_from_csv,
 )
 from .measurements.data.propagation import (
     extract_propagation_delay_data_from_measurement,

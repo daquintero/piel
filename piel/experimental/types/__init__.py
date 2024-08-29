@@ -30,6 +30,8 @@ from .measurements.data.dc import (
     DCMeasurementDataCollection,
     MultimeterSweepVoltageMeasurementData,
     SourcemeterSweepMeasurementData,
+    DCMeasurementDataTypes,
+    DCMeasurementDataCollectionTypes,
 )
 from .measurements.data.core import MeasurementData, MeasurementDataCollection
 from .measurements.data.experiment import ExperimentData, ExperimentDataCollection
