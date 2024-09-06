@@ -1,18 +1,8 @@
-from typing import Optional
+from typing import Optional, Union
 from piel.types.core import NumericalTypes
 from piel.types.connectivity.core import Instance
-
-
-class ScalarMetrics(Instance):
-    """
-    Standard definition for a scalar metrics. It includes the value, mean, min, max, standard deviation and count.
-    """
-
-    value: NumericalTypes
-    mean: Optional[NumericalTypes]
-    min: Optional[NumericalTypes]
-    max: Optional[NumericalTypes]
-    standard_deviation: Optional[NumericalTypes]
+from piel.types.units import Unit, s
+from piel.types.metrics import ScalarMetrics
 
 
 class TimeMetrics(ScalarMetrics):
@@ -47,6 +37,7 @@ class TimeMetrics(ScalarMetrics):
     min: Optional[NumericalTypes] = 0
     max: Optional[NumericalTypes] = 0
     standard_deviation: Optional[NumericalTypes] = 0
+    unit: Unit = s
 
 
 class DispersiveTimeMetrics(Instance):
@@ -57,11 +48,11 @@ class DispersiveTimeMetrics(Instance):
 
     frequency_group: dict[float, TimeMetrics] = {}
     """
-  Definition of a mutli-frequency component.
-  """
+    Definition of a mutli-frequency component.
+    """
 
 
-TimeMetricsTypes = TimeMetrics | DispersiveTimeMetrics
+TimeMetricsTypes = Union[TimeMetrics, DispersiveTimeMetrics]
 """
 Corresponds to all the implemented timing metrics accordingly.
 """

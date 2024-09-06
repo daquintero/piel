@@ -1,18 +1,13 @@
-from ...types import PhysicalComponent, MinimumMaximumType
+from piel.types.frequency import RFPhysicalComponent
 
 
-class RFComponent(PhysicalComponent):
-    bandwidth: MinimumMaximumType = None
-
-
-class PowerSplitter(RFComponent):
+class PowerSplitter(RFPhysicalComponent):
     pass
 
 
-class BiasTee(RFComponent):
+class BiasTee(RFPhysicalComponent):
     pass
 
 
-class Attenuator(RFComponent):
-    nominal_attenuation_dB: float = None
+class Attenuator(RFPhysicalComponent):
     pass

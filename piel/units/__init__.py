@@ -14,3 +14,5 @@ from .power import (
     watt2vrms,
     watt2dBm,
 )
+
+from .time import Hz2s, s2Hz

@@ -20,6 +20,9 @@ piel.units.dBm2vpp(piel.units.vpp2dBm(0.880) + 10)
 
 piel.units.vpp2dBm(1.6)
 
+piel.units.vpp2dBm(0.5)
+piel.units.dBm2watt(-2)
+
 # ## Create a SNSPD Model
 #
 # Let's start by first composing the SPICE model of a superconducting-nanowire single-photon detector. Let's get the equivalent circuit model:
