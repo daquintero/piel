@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from typing import Any
 from .abstract import Port, Connection, Component
 from ..core import PielBaseModel
 from ..environment import Environment
@@ -21,8 +24,9 @@ class PhysicalConnection(PielBaseModel):
     The components represent the physical implementation of the connections for the same connection index.
     """
 
-    connections: list[Connection] = []
-    components: tuple[Component] | list[Component] = []
+    connections: list[Connection | Any] = []
+    # TODO pending refactor of correct connectivity
+    components: tuple[Component, ...] | list[Component] = []
 
 
 class PhysicalComponent(Component):
@@ -30,9 +34,12 @@ class PhysicalComponent(Component):
     Represents the data of a physical component or device.
     """
 
-    ports: list[PhysicalPort] | tuple[PhysicalPort] = []
-    connections: list[PhysicalConnection] = []
-    environment: Environment = None
+    ports: list[PhysicalPort | Port] | tuple[PhysicalPort | Port] = []
+    connections: (
+        list[PhysicalConnection | Connection] | tuple[PhysicalConnection | Connection]
+    ) = []
+    components: list[Component | PhysicalComponent] = []
+    environment: Environment = Environment()
 
     manufacturer: str = ""
     """

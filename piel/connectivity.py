@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, Callable
 from piel.types import (
     Port,
@@ -5,7 +6,19 @@ from piel.types import (
     PhysicalConnection,
     ConnectionTypes,
     ComponentTypes,
+    TimeMetrics,
+    PhysicalComponent,
 )
+
+
+logger = logging.getLogger(__name__)
+
+
+__all__ = [
+    "create_all_connections",
+    "create_component_connections",
+    "create_sequential_component_path",
+]
 
 
 def create_all_connections(
@@ -166,3 +179,100 @@ def create_component_connections(
         connection_list.append(connection)
 
     return connection_list
+
+
+def create_sequential_component_path(
+    components: list[ComponentTypes], name: str = "", **kwargs
+) -> ComponentTypes:
+    """
+    This function takes in a list of components and creates a sequential path connectivity of components with all the ports defined in each component.
+    By default, the connectivity will be implemented with the first two ports of the components. There is a clear input and output on each component.
+    The timing metric calculations is provided by the timing model of each connection of the component, if there is none defined it will assume a default zero
+    time connectivity between the relevant ports. For the output component collection, it will output the timing of the network as a whole based on the
+    defined subcomponents.
+    This will create an output component with all the subcomponents, TODO more than two ports, and the list of ports
+
+    Creates a sequential path connectivity of components with all the ports defined in each component.
+
+    Parameters:
+    -----------
+    components : List[ComponentTypes]
+          A list of components to be connected sequentially.
+
+    Returns:
+    --------
+    ComponentTypes
+        A new component that encapsulates the sequential path of input components.
+    """
+    if len(components) < 2:
+        raise ValueError(
+            "At least two components are required to create a sequential path."
+        )
+
+    connections = []
+    total_time_value = 0  # = TimeMetrics(name=name, attrs={}, value=0, mean=0, min=0, max=0, standard_deviation=0)
+
+    for i in range(len(components) - 1):
+        current_component = components[i]
+        next_component = components[i + 1]
+
+        # Assume the first port is output and the second is input
+        if len(current_component.ports) < 1 or len(next_component.ports) < 1:
+            raise ValueError(
+                f"Component {current_component.name} or {next_component.name} doesn't have enough ports."
+            )
+
+        output_port = current_component.ports[1]
+        input_port = next_component.ports[0]
+
+        # Create connection with timing information
+        connection_time = (
+            output_port.time if hasattr(output_port, "time") else TimeMetrics(value=0)
+        )
+        connection_i = Connection(
+            ports=[output_port, input_port],
+            time=connection_time,
+            name=f"{current_component.name}_to_{next_component.name}",
+        )
+        physical_connection = PhysicalConnection(connections=[connection_i])
+        connections.append(physical_connection)
+
+        # Update total time
+        total_time_value += connection_time.value
+        # TODO total_time.mean += connection_time.mean
+        # TODO total_time.min += connection_time.min
+        # TODO total_time.max += connection_time.max
+        # Assuming standard deviation is not simply additive
+
+    total_time = TimeMetrics(value=total_time_value)
+    # TODO implement full network timing analysis
+
+    top_level_ports = [components[0].ports[0], components[-1].ports[-1]]
+    # TODO best define top level ports
+
+    top_level_connection = Connection(ports=top_level_ports, time=total_time)
+    top_level_physical_connection = PhysicalConnection(
+        connections=[top_level_connection]
+    )
+    # Define abstract path. Note that this is not a physical connection, just that there is a connection path between the ports.
+    # TODO this may have to be redefined
+
+    connections.append(top_level_physical_connection)
+
+    ports = [
+        components[0].ports[0],
+        components[-1].ports[-1],
+    ]
+
+    logger.debug(f"Sequential Component connections: {connections}")
+    logger.debug(f"Sequential Component components: {components}")
+    logger.debug(f"Sequential Component ports: {ports}")
+
+    # Create a new component that encapsulates this path
+    path_component = PhysicalComponent(
+        ports=ports,  # Input of first, output of last
+        components=components,
+        connections=connections,
+    )
+
+    return path_component

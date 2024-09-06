@@ -1,27 +1,28 @@
 from typing import Optional, Union
 from piel.types.core import QuantityType
 from piel.types.materials import MaterialReferenceType
+from piel.types.frequency import RFPhysicalComponent
 from ..connectivity.physical import PhysicalComponent
 
 
 # TODO This shouldn't be a quantity
 class CoaxialCableGeometryType(QuantityType):
-    core_cross_sectional_area_m2: Optional[float] = None
+    core_cross_sectional_area_m2: float | None = 0
     """
     The cross-sectional area of the core in meters squared.
     """
 
-    length_m: float
+    length_m: float = 0
     """
     The length of the cable in meters.
     """
 
-    sheath_cross_sectional_area_m2: Optional[float] = None
+    sheath_cross_sectional_area_m2: float | None = 0
     """
     The cross-sectional area of the sheath in meters squared.
     """
 
-    total_cross_sectional_area_m2: Optional[float] = None
+    total_cross_sectional_area_m2: float | None = 0
     """
     The total cross-sectional area of the cable in meters squared.
     """
@@ -32,22 +33,22 @@ class CoaxialCableHeatTransferType(QuantityType):
     All units are in watts.
     """
 
-    core: Optional[float] = None
+    core: float | None = 0
     """
     The computed heat transfer in watts for the core of the cable.
     """
 
-    sheath: Optional[float] = None
+    sheath: float | None = 0
     """
     The computed heat transfer in watts for the sheath of the cable.
     """
 
-    dielectric: Optional[float] = None
+    dielectric: float | None = 0
     """
     The computed heat transfer in watts for the dielectric of the cable.
     """
 
-    total: float
+    total: float = 0
     """
     The total computed heat transfer in watts for the cable.
     """
@@ -73,17 +74,17 @@ class CoaxialCableMaterialSpecificationType(QuantityType):
 
 
 class DCCableGeometryType(QuantityType):
-    core_cross_sectional_area_m2: float
+    core_cross_sectional_area_m2: float = 0
     """
     The cross-sectional area of the core in meters squared.
     """
 
-    length_m: float
+    length_m: float = 0
     """
     The length of the cable in meters.
     """
 
-    total_cross_sectional_area_m2: float
+    total_cross_sectional_area_m2: float = 0
     """
     The total cross-sectional area of the cable in meters squared.
     """
@@ -94,12 +95,12 @@ class DCCableHeatTransferType(QuantityType):
     All units are in watts.
     """
 
-    core: Optional[float] = None
+    core: Optional[float] = 0
     """
     The computed heat transfer in watts for the core of the cable.
     """
 
-    total: float
+    total: float = 0
     """
     The total computed heat transfer in watts for the cable.
     """
@@ -123,18 +124,18 @@ class DCCable(Cable):
     A DC cable is a single core cable that is used to transmit direct current.
     """
 
-    geometry: Optional[DCCableGeometryType] = None
-    heat_transfer: Optional[DCCableHeatTransferType] = None
-    material_specification: Optional[DCCableMaterialSpecificationType] = None
+    geometry: DCCableGeometryType | None = None
+    heat_transfer: DCCableHeatTransferType | None = None
+    material_specification: DCCableMaterialSpecificationType | None = None
 
 
-class CoaxialCable(Cable):
+class CoaxialCable(RFPhysicalComponent):
     """
     A coaxial cable is a type of electrical cable that has an inner conductor surrounded by a tubular insulating layer,
     surrounded by a tubular conducting shield.
     """
 
-    geometry: Optional[CoaxialCableGeometryType] = None
+    geometry: CoaxialCableGeometryType | None = CoaxialCableGeometryType()
     heat_transfer: Optional[CoaxialCableHeatTransferType] = None
     material_specification: Optional[CoaxialCableMaterialSpecificationType] = None
 
@@ -144,3 +145,4 @@ CableGeometryTypes = Union[CoaxialCableGeometryType, DCCableGeometryType]
 CableMaterialSpecificationTypes = Union[
     CoaxialCableMaterialSpecificationType, DCCableMaterialSpecificationType
 ]
+CableTypes = Union[DCCable, CoaxialCable]

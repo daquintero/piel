@@ -20,7 +20,6 @@ from .connectivity.abstract import Connection, Component, Port
 from .connectivity.generic import ConnectionTypes, PortTypes, ComponentTypes
 from .connectivity.physical import PhysicalComponent, PhysicalConnection, PhysicalPort
 from .connectivity.timing import (
-    ScalarMetrics,
     TimeMetrics,
     DispersiveTimeMetrics,
     TimeMetricsTypes,
@@ -82,7 +81,7 @@ from .electronic.amplifier import RFTwoPortAmplifier
 from .electronic.hva import HVAMetricsType, HighVoltageTwoPortAmplifier
 from .electronic.lna import LNAMetricsType, LowNoiseTwoPortAmplifier
 
-from .frequency import FrequencyNetworkModel
+from .frequency import FrequencyNetworkModel, RFPhysicalComponent
 
 from .file_system import ProjectType
 from .integration import CircuitComponent
@@ -91,6 +90,8 @@ from .materials import (
     MaterialReferencesTypes,
     MaterialSpecificationType,
 )
+
+from .metrics import ScalarMetrics
 from .photonic import (
     PhotonicCircuitComponent,
     PortsTuple,

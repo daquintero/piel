@@ -1,10 +1,11 @@
-from typing import Optional, Literal
-
+from typing import Optional, Literal, Callable
+from piel.types.connectivity.physical import PhysicalConnection
+from piel.types.connectivity.timing import TimeMetrics, TimeMetricsTypes
 from ..geometry import calculate_cross_sectional_area_m2, awg_to_cross_sectional_area_m2
 from ..thermal import heat_transfer_1d_W
-from piel.types.materials import MaterialReferenceType
 from piel.materials.thermal_conductivity.utils import get_thermal_conductivity_fit
 from piel.types.electrical.cables import (
+    CoaxialCable,
     CoaxialCableGeometryType,
     CoaxialCableHeatTransferType,
     CoaxialCableMaterialSpecificationType,
@@ -12,7 +13,10 @@ from piel.types.electrical.cables import (
     DCCableHeatTransferType,
     DCCableMaterialSpecificationType,
 )
+from piel.types.materials import MaterialReferenceType
 from piel.types.physical import TemperatureRangeTypes
+from piel.types import PhysicalPort
+from piel.types import Connection
 
 
 def calculate_coaxial_cable_geometry(
@@ -84,12 +88,12 @@ def define_coaxial_cable_materials(
 
 
 def calculate_coaxial_cable_heat_transfer(
-    temperature_range_K: TemperatureRangeTypes,
-    geometry_class: Optional[CoaxialCableGeometryType],
-    material_class: Optional[CoaxialCableMaterialSpecificationType],
-    core_material: Optional[MaterialReferenceType] = None,
-    sheath_material: Optional[MaterialReferenceType] = None,
-    dielectric_material: Optional[MaterialReferenceType] = None,
+    temperature_range_K: TemperatureRangeTypes = [273, 293],
+    geometry_class: CoaxialCableGeometryType = CoaxialCableGeometryType(),
+    material_class: CoaxialCableMaterialSpecificationType | None = None,
+    core_material: MaterialReferenceType | None = None,
+    sheath_material: MaterialReferenceType | None = None,
+    dielectric_material: MaterialReferenceType | None = None,
 ) -> CoaxialCableHeatTransferType:
     """
     Calculate the heat transfer of a coaxial cable.
@@ -142,7 +146,7 @@ def calculate_coaxial_cable_heat_transfer(
 def calculate_dc_cable_geometry(
     length_m: float = 1,
     core_diameter_dimension: Literal["awg", "metric"] = "metric",
-    core_diameter_awg: Optional[float] = None,
+    core_diameter_awg: float = 0.0,
     core_diameter_m: float = 2e-3,
     *args,
     **kwargs,
@@ -173,6 +177,7 @@ def calculate_dc_cable_geometry(
         length_m=length_m,
         core_cross_sectional_area_m2=core_cross_sectional_area_m2,
         total_cross_sectional_area_m2=total_cross_sectional_area_m2,
+        **kwargs,
     )
 
 
@@ -194,10 +199,11 @@ def define_dc_cable_materials(
 
 
 def calculate_dc_cable_heat_transfer(
-    temperature_range_K: TemperatureRangeTypes,
-    geometry_class: Optional[DCCableGeometryType],
-    material_class: Optional[DCCableMaterialSpecificationType],
-    core_material: Optional[MaterialReferenceType] = None,
+    temperature_range_K: TemperatureRangeTypes = [273, 293],
+    geometry_class: DCCableGeometryType = DCCableGeometryType(),
+    material_class: DCCableMaterialSpecificationType
+    | None = DCCableMaterialSpecificationType(),
+    core_material: MaterialReferenceType = MaterialReferenceType(),
 ) -> DCCableHeatTransferType:
     """
     Calculate the heat transfer of a coaxial cable.
@@ -244,3 +250,113 @@ def calculate_dc_cable_heat_transfer(
     return DCCableHeatTransferType(
         **heat_transfer_parameters,
     )
+
+
+def create_coaxial_cable(
+    material_specification_function: Callable[
+        ..., CoaxialCableMaterialSpecificationType
+    ]
+    | None = None,
+    timing_function: Callable[..., TimeMetricsTypes] | TimeMetricsTypes = TimeMetrics(),
+    geometry_function: Callable[
+        ..., CoaxialCableGeometryType
+    ] = calculate_coaxial_cable_geometry,
+    heat_transfer_function: Callable[
+        ..., CoaxialCableHeatTransferType
+    ] = calculate_coaxial_cable_heat_transfer,
+    parameters: dict = {},
+    **kwargs,
+) -> CoaxialCable:
+    """
+    Creates a complete model of a CoaxialCable with relevant geometrical, frequency, timing, and heat transfer descriptions.
+
+    This function operates on a collection of functions to create a comprehensive model of a `CoaxialCable`.
+    Each function is parametrized through a `parameters` dictionary common to all defined internal functions,
+    in order to compose each relevant model accordingly. This is decomposed internally within this method.
+
+    Parameters:
+    -----------
+    material_specification_function : Callable[..., CoaxialCableMaterialSpecificationType] | None, optional
+        A function that returns the material specification for the coaxial cable.
+        This function should not take any arguments as it will be called without parameters.
+        If None, no material specification will be set. Defaults to None.
+
+    timing_function : Callable[..., TimeMetricsTypes] | TimeMetricsTypes, optional
+        Either a function that calculates and returns the timing metrics for the coaxial cable,
+        or a TimeMetricsTypes object directly.
+        If a function, it will be called with the parameters from the `parameters` dict.
+        Defaults to TimeMetrics().
+
+    geometry_function : Callable[..., CoaxialCableGeometryType], optional
+        A function that calculates and returns the geometry specification for the coaxial cable.
+        Defaults to `calculate_coaxial_cable_geometry`.
+        This function will be called with the parameters from the `parameters` dict.
+
+    heat_transfer_function : Callable[..., CoaxialCableHeatTransferType], optional
+        A function that calculates and returns the heat transfer characteristics of the coaxial cable.
+        Defaults to `calculate_coaxial_cable_heat_transfer`.
+        This function will be called with the parameters from the `parameters` dict.
+
+    parameters : dict, optional
+        A dictionary of parameters to be passed to the geometry, timing, and heat transfer functions.
+        These parameters are used to customize the calculations for each aspect of the coaxial cable.
+        Defaults to an empty dictionary.
+
+    **kwargs :
+        Additional keyword arguments to be passed to the CoaxialCable constructor.
+
+    Returns:
+    --------
+    CoaxialCable
+        A fully specified CoaxialCable object with all relevant properties set.
+
+    Notes:
+    ------
+    - The function creates a Connection object with "in" and "out" PhysicalPorts, using the calculated time metrics.
+    - A PhysicalConnection is created using the Connection object.
+    - The CoaxialCable is constructed using the results from all calculation functions and the created PhysicalConnection.
+    - If material_specification_function is None, no material specification will be set for the CoaxialCable.
+    - The timing_function parameter can now be either a callable or a TimeMetricsTypes object directly.
+
+    Example:
+    --------
+    >>> def material_spec():
+    ...     return CoaxialCableMaterialSpecification(...)
+    >>> def timing_calc(**params):
+    ...     return TimeMetrics(...)
+    >>> cable = create_coaxial_cable(
+    ...     material_specification_function=material_spec,
+    ...     timing_function=timing_calc,
+    ...     parameters={'length': 10, 'diameter': 0.5},
+    ...     name='My Coaxial Cable'
+    ... )
+    """
+    heat_transfer = heat_transfer_function(**parameters)
+    geometry = geometry_function(**parameters)
+
+    if callable(timing_function):
+        time_metrics = timing_function(**parameters)
+    else:
+        time_metrics = timing_function
+
+    ports = [PhysicalPort(name="in"), PhysicalPort(name="out")]
+
+    connection = Connection(
+        ports=ports,
+        time=time_metrics,
+    )
+
+    physical_connection = PhysicalConnection(connections=[connection])
+
+    cable_kwargs = {
+        "geometry": geometry,
+        "heat_transfer": heat_transfer,
+        "connections": [physical_connection],
+        "ports": ports,
+        **kwargs,
+    }
+
+    if material_specification_function is not None:
+        cable_kwargs["material_specification"] = material_specification_function()
+
+    return CoaxialCable(**cable_kwargs)
