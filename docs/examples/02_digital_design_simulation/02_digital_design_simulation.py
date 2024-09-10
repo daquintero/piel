@@ -1,6 +1,6 @@
 # # Digital Design & Simulation Flow
 
-# There are many tools to perform a digital design flow. I have summarised some of the most relevant ones in the TODO LINK INTEGRATION PAGE. In `piel`, there are a few digital design flow functionalities integrated. However, because the output or interconnections have a set of accepted common types, it is possible to use different design flows to integrate with other tools in the flow.
+# There are many tools to perform a digital design flow. I have summarised some of the most relevant ones in the TODO LINK INTEGRATION PAGE. In `piel`, there are a few digital design flow functionalities integrated. However, because the output or interconnections have a set of accepted common measurement, it is possible to use different design flows to integrate with other tools in the flow.
 #
 # We will explore two popular ones:
 # * `amaranth` aims to be more than just Python-to-HDL design, but a full digital-flow package design tool.

@@ -1,9 +1,9 @@
-from piel.experimental.models import (
+from piel.models.physical.electrical import (
     create_dc_operating_point_configuration,
     create_dc_sweep_configuration,
     SMU2450,
 )
-from piel.experimental.types import (
+from piel.types.experimental import (
     SourcemeterConfiguration,
     Sourcemeter,
 )

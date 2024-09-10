@@ -1,5 +1,5 @@
 import pandas as pd
-from ...types import (
+from piel.types.experimental import (
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
     PropagationDelayMeasurementDataCollection,
@@ -8,7 +8,7 @@ from ...types import (
     OscilloscopeMeasurementDataCollection,
     OscilloscopeMeasurementData,
 )
-from ....types import (
+from piel.types import (
     DataTimeSignalData,
     MultiDataTimeSignal,
     PathTypes,

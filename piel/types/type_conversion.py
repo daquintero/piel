@@ -1,5 +1,5 @@
 """
-This module provides a set of utilities for converting between common files types to facilitate the representation of information across different toolsets.
+This module provides a set of utilities for converting between common files measurement to facilitate the representation of information across different toolsets.
 """
 
 from functools import partial
@@ -160,7 +160,7 @@ def convert_to_bits(bits: AbstractBitsType) -> BitsType:
 
     else:
         raise TypeError(
-            "Unsupported type for bits conversion. Supported types are str, bytes, or int."
+            "Unsupported type for bits conversion. Supported measurement are str, bytes, or int."
         )
 
 

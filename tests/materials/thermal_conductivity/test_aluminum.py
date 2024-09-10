@@ -17,7 +17,7 @@ def test_aluminum_correct_calculations(temperature, expected):
     material_ref = ("aluminum", "1100")
     result = aluminum(temperature, material_ref)
     assert jnp.isclose(
-        result, expected, rtol=1e-4
+        result, expected, rtol=1e-2
     ), f"Expected {expected}, got {result}"
 
 

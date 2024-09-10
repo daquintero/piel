@@ -14,7 +14,7 @@ PortsTuple:
     Each element in the tuple is a string corresponding to a port name.
 """
 
-# Type alias for an S-parameter matrix, which includes a matrix of array types and a tuple of port names.
+# Type alias for an S-parameter matrix, which includes a matrix of array measurement and a tuple of port names.
 SParameterMatrixTuple = tuple[ArrayTypes, PortsTuple]
 """
 SParameterMatrixTuple:

@@ -1,5 +1,7 @@
-from piel.experimental.models import (
+from piel.models.physical.electrical.cables.dc import (
     generic_banana,
+)
+from piel.models.physical.electrical.cables.rf import (
     rg164,
     generic_sma,
     cryo_cable,

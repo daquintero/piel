@@ -4,14 +4,14 @@ import piel
 import piel.experimental as pe
 from datetime import datetime
 
-# In this example, we will compare experimental measurements and simulated measurements to understand the performance of a cryogenic-designed EIC-interposer printed-circuit board.
+# In this example, we will compare measurement measurements and simulated measurements to understand the performance of a cryogenic-designed EIC-interposer printed-circuit board.
 #
 # We will:
 #
 # - Compare the simulated design characterisitcs with propagation measurements of the device.
 # - Understand how to perform cryo-compensation of a microstrip design and compare between cryogenic and room-temperature results.
 # - Perform de-embedding and propagation delay measurements of the microstrips to EIC pads.
-# - Demonstrate how the `piel` experimental functionality can help implement this.
+# - Demonstrate how the `piel` measurement functionality can help implement this.
 #
 #
 # <figure>
@@ -21,7 +21,7 @@ from datetime import datetime
 
 # ## Creating an `ExperimentInstance`
 #
-# Whenever using an experimental setup, it can be difficult to remember all the configurations that need to be tested with multiple parameters, a set of wiring, and time setups and more. This is especially pressing if the experiment cannot be automated and requires manual input. As such, there is some functionality built into the `piel.experimental` module to help track, manage and compare data with simulated data accordingly.
+# Whenever using an measurement setup, it can be difficult to remember all the configurations that need to be tested with multiple parameters, a set of wiring, and time setups and more. This is especially pressing if the experiment cannot be automated and requires manual input. As such, there is some functionality built into the `piel.measurement` module to help track, manage and compare data with simulated data accordingly.
 #
 # Let's go through some examples as we talk about the type of characterization we want to perform.
 #
@@ -30,7 +30,7 @@ from datetime import datetime
 
 # First, let's create environmental metadata.
 
-room_temperature_environment = piel.types.Environment(temperature_K=273)
+room_temperature_environment = piel.experimental.types.Environment(temperature_K=273)
 
 
 # Now we can create our custom `PCB` definition.
@@ -48,7 +48,7 @@ def pcb_smp_connector(name, pcb_name):
     """
     This is our PCB SMP Port definition factory.
     """
-    return piel.types.PhysicalPort(
+    return piel.experimental.types.PhysicalPort(
         name=name, connector="smp_plug", domain="RF", parent_component_name=pcb_name
     )
 
@@ -122,14 +122,18 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
             )
         )
 
-        # Define experimental components
+        # Define measurement components
         vna_configuration = pe.types.VNAConfiguration(
             measurement_configuration=sparameter_measurement_configuration
         )
 
-        vna = pe.models.vna.E8364A(configuration=vna_configuration)
-        blue_extension_cable = pe.models.cables.generic_sma(
-            name="blue_extension", model="1251C", length_m=0.025
+        vna = piel.models.physical.electrical.models.vna.E8364A(
+            configuration=vna_configuration
+        )
+        blue_extension_cable = (
+            piel.models.physical.electrical.models.cables.generic_sma(
+                name="blue_extension", model="1251C", length_m=0.025
+            )
         )
         experiment_components = [vna, blue_extension_cable, rf_calibration_pcb]
 
@@ -187,7 +191,7 @@ measurement_connections
 experiment_data_directory = piel.return_path("data")
 piel.create_new_directory(experiment_data_directory)
 
-# Now, the beautiful thing that this can do, especially if you are allergic to repettitive experimental tasks like me, is that we can use this to identify all our experimental instances which correspond to specific dials and operating points we need to configure manually.
+# Now, the beautiful thing that this can do, especially if you are allergic to repettitive measurement tasks like me, is that we can use this to identify all our measurement instances which correspond to specific dials and operating points we need to configure manually.
 
 
 vna_pcb_experiment_directory = pe.construct_experiment_directories(
@@ -211,7 +215,7 @@ vna_pcb_experiment_directory = pe.construct_experiment_directories(
 # 0  1  experiment.json  README.md
 # ```
 
-# Now, let's save the experimental data in there accordingly. Once we save the data, we can recompose the data into measurement containers based on the `MeasurementConfigurationTypes` we defined for each `ExperimantInstance`.
+# Now, let's save the measurement data in there accordingly. Once we save the data, we can recompose the data into measurement containers based on the `MeasurementConfigurationTypes` we defined for each `ExperimantInstance`.
 
 
 example_measurement = pe.compose_measurement_from_experiment_instance(
@@ -266,7 +270,7 @@ plt.plot(s21_time, s21_signal)
 
 #  Now this is not particularly useful on its own. It'd be nicer if we can do some more programmatic analysis our our sweep data.
 
-pe.visual.frequency.measurement_data_collection.plot_s_parameter_measurements_to_step_responses(
+piel.visual.experimental.frequency.measurement_data_collection.plot_s_parameter_measurements_to_step_responses(
     data_collection=s_parameter_measurement_data_sweep,
     parameters_list=vna_pcb_experiment.parameters_list,
     network_port_index=0,
@@ -278,7 +282,7 @@ pe.visual.frequency.measurement_data_collection.plot_s_parameter_measurements_to
 #
 # Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain response is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
 #
-# Let's configure the propagation delay experimental measurement in order to save the files in a reasonable location. We need to define how a specific experiment instance, in this case a measurement looks like. This involves the device configuration and stimulus parameters.
+# Let's configure the propagation delay measurement measurement in order to save the files in a reasonable location. We need to define how a specific experiment instance, in this case a measurement looks like. This involves the device configuration and stimulus parameters.
 
 
 # TODO make a diagram
@@ -344,7 +348,7 @@ def pcb_propagation_delay_experiment_instance(
         pe.types.PropagationDelayMeasurementConfiguration()
     )
 
-    # We declare the experimental instance.
+    # We declare the measurement instance.
     experiment_instance = pe.types.ExperimentInstance(
         name=f"pcb_{square_wave_frequency_Hz}_Hz",
         components=[oscilloscope, waveform_generator, splitter],
@@ -372,7 +376,7 @@ def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] 
     # Create all the experiment instances
     experiment_instance_list = list()
 
-    # Iterate through experimental parameters
+    # Iterate through measurement parameters
     for square_wave_frequency_Hz_i in square_wave_frequency_Hz_list:
         pcb_experiment_instance_i = pcb_propagation_delay_experiment_instance(
             square_wave_frequency_Hz=square_wave_frequency_Hz_i
@@ -401,7 +405,7 @@ def calibration_propagation_delay_experiment(
     # Create all the experiment instances
     experiment_instance_list = list()
 
-    # Iterate through experimental parameters
+    # Iterate through measurement parameters
     for square_wave_frequency_Hz_i in square_wave_frequency_Hz_list:
         calibration_experiment_instance_i = (
             calibration_propagation_delay_experiment_instance(
@@ -560,17 +564,21 @@ calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
 # First, we will split the signal generator signal through two paths and see them in the oscillscope. They should overlap each other perfectly. Both signals are terminated at the oscilloscope inputs in order to get an exact rising edge.
 
 
-fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
-    calibration_propagation_delay_experiment_data,
-    path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
-    debug=True,
+fig, ax = (
+    piel.visual.experimental.propagation.experiment_data.plot_propagation_signals_time(
+        calibration_propagation_delay_experiment_data,
+        path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
+        debug=True,
+    )
 )
 
 # ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg)
 
-fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
-    pcb_propagation_delay_experiment_data,
-    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg",
+fig, ax = (
+    piel.visual.experimental.propagation.experiment_data.plot_propagation_signals_time(
+        pcb_propagation_delay_experiment_data,
+        path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg",
+    )
 )
 
 
@@ -578,29 +586,33 @@ fig, ax = pe.visual.propagation.experiment_data.plot_propagation_signals_time(
 
 # We can also plot the data related to the metrics extracted from the measurements.
 
-fig, ax = pe.visual.propagation.experiment_data.plot_signal_propagation_measurements(
-    calibration_propagation_delay_experiment_data,
-    x_parameter="square_wave_frequency_Hz",
-    measurement_name="delay_ch1_ch2__s_2",
-    path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg",
+fig, ax = (
+    piel.visual.experimental.propagation.experiment_data.plot_signal_propagation_measurements(
+        calibration_propagation_delay_experiment_data,
+        x_parameter="square_wave_frequency_Hz",
+        measurement_name="delay_ch1_ch2__s_2",
+        path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg",
+    )
 )
 
 # ![calibration_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg)
 
-fig, ax = pe.visual.propagation.experiment_data.plot_signal_propagation_measurements(
-    pcb_propagation_delay_experiment_data,
-    x_parameter="square_wave_frequency_Hz",
-    measurement_name="delay_ch1_ch2__s_1",
-    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg",
+fig, ax = (
+    piel.visual.experimental.propagation.experiment_data.plot_signal_propagation_measurements(
+        pcb_propagation_delay_experiment_data,
+        x_parameter="square_wave_frequency_Hz",
+        measurement_name="delay_ch1_ch2__s_1",
+        path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg",
+    )
 )
 
 # ![pcb_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg)
 
 # #### Automatic Report and Plotting
 
-# One of the nice functionalities provided by `piel.experimental` is that because `Experiment`s and `ExperimentData`s can be serialized. That means their analysis can also be automated at multiple stages of the development flow.
+# One of the nice functionalities provided by `piel.measurement` is that because `Experiment`s and `ExperimentData`s can be serialized. That means their analysis can also be automated at multiple stages of the development flow.
 
-# In this example, we have relied on using previous metadata generated in the same python session. We don't always have to do this. Using the generated `experiment.json` or `instance.json` we can straightforwardly reinstantiate our `Experiment` or `ExperimentInstance` models into another instance.
+# In this example, we have relied on using previous metadata generated in the same python session. We don't always have to do this. Using the generated `experiment.json` or `instance.json` we can straightforwardly reinstantiate our `Experiment` or `ExperimentInstance` measurement into another instance.
 
 calibration_propagation_delay_experiment_directory_json = (
     calibration_propagation_delay_experiment_directory / "experiment.json"

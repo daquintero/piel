@@ -8,7 +8,7 @@ per a given set of parameters,
 
 There can be multiple elements per plot. There are overlaying plots and separate plots.
 Overlaying plots require sharing the same axes and separate plots require the same figure.
-So, we want to configure plotting types based on this.
+So, we want to configure plotting measurement based on this.
 The question in this case, is of combining multiple figures, or just combining multiple axes.
 It sounds like creating the axes is the best way to implement this for a given figure.
 """

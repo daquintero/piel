@@ -1,4 +1,4 @@
-from ..types import OscilloscopeMeasurement
+from piel.types.experimental import OscilloscopeMeasurement
 from ...types import PathTypes
 from ...file_system import return_path, get_files_recursively_in_directory
 

@@ -1,4 +1,4 @@
-from ..types import (
+from piel.types.experimental import (
     Experiment,
     ExperimentInstance,
     ExperimentCollection,
@@ -26,8 +26,8 @@ def compose_measurement_from_experiment_instance(
     """
     This function is meant to be run after the measurements have been collected and the data exists within the measurement directories.
     Each experiment instance should correspond to a list of measurement configurations, ie the specific set of measurements
-     that are required at each directory generated for the experimental instance. Hence, for this function to work properly,
-     it is required to have a mapping between experiment configuration types and measurement classes accordingly.
+     that are required at each directory generated for the measurement instance. Hence, for this function to work properly,
+     it is required to have a mapping between experiment configuration measurement and measurement classes accordingly.
      The mapping will be between a given ``MeasurementConfiguration`` type and a ``Measurement`` class which has the references
      of the data containers accordingly.
     """

@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from piel.experimental.types import (
+from piel.types.experimental import (
     ExperimentInstance,
     Experiment,
     ExperimentCollection,
@@ -12,7 +12,7 @@ from piel.types import (
 )
 
 
-# Fixtures for the types used in ExperimentInstance and Experiment
+# Fixtures for the measurement used in ExperimentInstance and Experiment
 @pytest.fixture
 def mock_component_types():
     return PhysicalComponent()

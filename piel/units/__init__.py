@@ -16,3 +16,4 @@ from .power import (
 )
 
 from .time import Hz2s, s2Hz
+from .geometry import awg2m2

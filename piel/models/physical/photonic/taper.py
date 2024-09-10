@@ -36,7 +36,7 @@ def taper(
         cross_section: specification (CrossSection, string, CrossSectionFactory dict).
         port_names(tuple): Ordered tuple of port names. First port is default \
                 taper port, second name only if with_two_ports flags used.
-        port_types(tuple): Ordered tuple of port types. First port is default \
+        port_types(tuple): Ordered tuple of port measurement. First port is default \
                 taper port, second name only if with_two_ports flags used.
         kwargs: cross_section settings.
     """

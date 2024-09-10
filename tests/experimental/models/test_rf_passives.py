@@ -1,4 +1,4 @@
-from piel.experimental.models import (
+from piel.models.physical.electrical import (
     create_power_splitter_1to2,
     create_bias_tee,
     create_attenuator,

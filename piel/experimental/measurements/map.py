@@ -1,26 +1,26 @@
-from ..types.measurements.frequency import (
+from piel.types.experimental import (
     VNASParameterMeasurement,
     VNASParameterMeasurementCollection,
 )
-from ..types.measurements.oscilloscope import (
+from piel.types.experimental import (
     OscilloscopeMeasurement,
     OscilloscopeMeasurementCollection,
 )
-from ..types.measurements.propagation import (
+from piel.types.experimental import (
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
 )
 
 
-from ..types.measurements.data.frequency import (
+from piel.types.experimental import (
     VNASParameterMeasurementData,
     VNASParameterMeasurementDataCollection,
 )
-from ..types.measurements.data.oscilloscope import (
+from piel.types.experimental import (
     OscilloscopeMeasurementData,
     OscilloscopeMeasurementDataCollection,
 )
-from ..types.measurements.data.propagation import (
+from piel.types.experimental import (
     PropagationDelayMeasurementData,
     PropagationDelayMeasurementDataCollection,
 )

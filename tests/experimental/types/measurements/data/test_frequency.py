@@ -1,4 +1,4 @@
-from piel.experimental.types import (
+from piel.types.experimental import (
     VNASParameterMeasurementData,
     VNASParameterMeasurementDataCollection,
     VNAPowerSweepMeasurementData,
@@ -64,7 +64,7 @@ def test_vna_sparameter_measurement_data_collection_default_initialization():
     assert data_collection.collection == []
 
 
-# Test FrequencyMeasurementDataCollection with mixed types
+# Test FrequencyMeasurementDataCollection with mixed measurement
 def test_frequency_measurement_data_collection_initialization():
     sparam_data = VNASParameterMeasurementData()
     power_sweep_data = VNAPowerSweepMeasurementData()

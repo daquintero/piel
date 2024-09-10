@@ -3,21 +3,18 @@ This module provides a utility to generate Verilog code from an Amaranth module 
 It handles the conversion and export process, integrating with a specified file system structure.
 """
 
-import amaranth as am
-from amaranth.back import verilog
-import types
-
+from typing import Any, Literal
 from ...file_system import return_path
 from ...project_structure import get_module_folder_type_location
 from ...types import PathTypes, TruthTable
 
 
 def generate_verilog_from_amaranth_truth_table(
-    amaranth_module: am.Elaboratable,
+    amaranth_module: Any,
     truth_table: TruthTable,
     target_file_name: str,
     target_directory: PathTypes,
-    backend=verilog,
+    backend: Literal["verilog", "vhdl"] = "verilog",
 ) -> None:
     """
     Exports an Amaranth module to Verilog code and writes it to a specified path.
@@ -50,6 +47,21 @@ def generate_verilog_from_amaranth_truth_table(
         >>> )
         >>> generate_verilog_from_amaranth_truth_table(am_module, truth_table, "output.v", "/path/to/save")
     """
+    import amaranth as am
+    import types
+
+    if backend == "verilog":
+        from amaranth.back import verilog
+
+        backend = verilog
+    elif backend == "vhdl":
+        raise NotImplementedError("This backend is not yet implemented.")
+
+    if isinstance(amaranth_module, am.Elaboratable):
+        pass
+    else:
+        raise AttributeError("Amaranth module should be am.Elaboratable")
+
     ports_list = truth_table.ports_list
 
     if isinstance(target_directory, types.ModuleType):

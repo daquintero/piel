@@ -3,7 +3,6 @@ import subprocess
 import types
 import json
 from piel.project_structure import (
-    create_setup_py,
     create_empty_piel_project,
     get_module_folder_type_location,
     pip_install_local_module,
@@ -76,12 +75,12 @@ def test_create_empty_piel_project(tmp_path):
     assert (project_dir / project_name / "components" / "analogue").exists()
     assert (project_dir / project_name / "components" / "photonics").exists()
     assert (project_dir / project_name / "components" / "digital").exists()
-    assert (project_dir / project_name / "models").exists()
-    assert (project_dir / project_name / "models" / "analogue").exists()
-    assert (project_dir / project_name / "models" / "frequency").exists()
-    assert (project_dir / project_name / "models" / "logic").exists()
-    assert (project_dir / project_name / "models" / "physical").exists()
-    assert (project_dir / project_name / "models" / "transient").exists()
+    assert (project_dir / project_name / "measurement").exists()
+    assert (project_dir / project_name / "measurement" / "analogue").exists()
+    assert (project_dir / project_name / "measurement" / "frequency").exists()
+    assert (project_dir / project_name / "measurement" / "logic").exists()
+    assert (project_dir / project_name / "measurement" / "physical").exists()
+    assert (project_dir / project_name / "measurement" / "transient").exists()
     assert (project_dir / project_name / "photonic").exists()
     assert (project_dir / project_name / "runs").exists()
     assert (project_dir / project_name / "scripts").exists()

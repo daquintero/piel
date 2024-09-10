@@ -1,16 +1,16 @@
 # TODO depends on the simulation tool refactor.
 # import pytest
 # from unittest.mock import MagicMock, patch
-# from piel.experimental import (
+# from piel.measurement import (
 #     create_experiment_data_collection_from_unique_parameters,
 # )
-# from piel.experimental.types import (
+# from piel.measurement.measurement import (
 #     Experiment,
 #     ExperimentData,
 #     ExperimentDataCollection,
 # )
-# from piel.models import load_from_dict
-# from piel.experimental.measurements.map import measurement_data_to_measurement_collection_data_map
+# from piel.measurement import load_from_dict
+# from piel.measurement.measurements.map import measurement_data_to_measurement_collection_data_map
 # from piel.utils.parametric import get_unique_dataframe_subsets
 #
 # def test_create_experiment_data_collection_from_unique_parameters():
@@ -36,8 +36,8 @@
 #     }
 #
 #     with patch("piel.utils.parametric.get_unique_dataframe_subsets", return_value=mock_unique_parameter_subset_dictionary), \
-#          patch("piel.models.load_from_dict", side_effect=lambda data, model: data if model == ExperimentData else mock_experiment), \
-#          patch("piel.experimental.measurements.map.measurement_data_to_measurement_collection_data_map", return_value=MagicMock()):
+#          patch("piel.measurement.load_from_dict", side_effect=lambda data, model: data if model == ExperimentData else mock_experiment), \
+#          patch("piel.measurement.measurements.map.measurement_data_to_measurement_collection_data_map", return_value=MagicMock()):
 #
 #         result = create_experiment_data_collection_from_unique_parameters(mock_experiment_data)
 #
@@ -67,7 +67,7 @@
 #     mock_unique_parameter_subset_dictionary = {}
 #
 #     with patch("piel.utils.parametric.get_unique_dataframe_subsets", return_value=mock_unique_parameter_subset_dictionary), \
-#          patch("piel.models.load_from_dict", side_effect=lambda data, model: data if model == ExperimentData else mock_experiment):
+#          patch("piel.measurement.load_from_dict", side_effect=lambda data, model: data if model == ExperimentData else mock_experiment):
 #
 #         result = create_experiment_data_collection_from_unique_parameters(mock_experiment_data)
 #
@@ -82,8 +82,8 @@
 #     mock_experiment_data.data = {"collection": [MagicMock()]}
 #
 #     with patch("piel.utils.parametric.get_unique_dataframe_subsets", return_value={}), \
-#          patch("piel.models.load_from_dict", side_effect=lambda data, model: data if model == ExperimentData else mock_experiment), \
-#          patch("piel.experimental.measurements.map.measurement_data_to_measurement_collection_data_map", return_value=None):
+#          patch("piel.measurement.load_from_dict", side_effect=lambda data, model: data if model == ExperimentData else mock_experiment), \
+#          patch("piel.measurement.measurements.map.measurement_data_to_measurement_collection_data_map", return_value=None):
 #
 #         with pytest.raises(KeyError):
 #             create_experiment_data_collection_from_unique_parameters(mock_experiment_data)

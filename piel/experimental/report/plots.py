@@ -2,9 +2,9 @@ import piel
 
 from ...types import PathTypes
 from ...file_system import return_path
-from ..types import ExperimentData
+from piel.types.experimental import ExperimentData
 from ..measurements.data.extract import load_experiment_data_from_directory
-from ..visual import auto_plot_from_experiment_data
+from piel.visual.experimental import auto_plot_from_experiment_data
 
 
 def create_plots_from_experiment_data(
@@ -16,7 +16,7 @@ def create_plots_from_experiment_data(
     **kwargs,
 ) -> list[list[tuple], PathTypes]:
     """
-    This function iterates through all the saved experimental data and generates the corresponding plots
+    This function iterates through all the saved measurement data and generates the corresponding plots
     for the type of data provided using a method as specified.
 
     Returns a list of (Figures,Axes), and a reference list of paths where the image has been saved.

@@ -1,6 +1,5 @@
 import pytest
 import amaranth as am
-from amaranth.sim import Simulator, Settle
 from piel.tools.amaranth import (
     construct_amaranth_module_from_truth_table,
 )  # Adjust the import based on your actual module structure
@@ -114,7 +113,7 @@ def test_sequential_truth_table():
         input_ports=["input_port"], output_ports=["output_port"], **truth_table_data
     )
 
-    # For now, we simulate only combinatorial. Implementing sequential and memory types would be more complex.
+    # For now, we simulate only combinatorial. Implementing sequential and memory measurement would be more complex.
     am_module = construct_amaranth_module_from_truth_table(
         truth_table, logic_implementation_type="sequential"
     )

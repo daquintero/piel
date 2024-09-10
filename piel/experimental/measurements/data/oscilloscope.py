@@ -1,4 +1,4 @@
-from ...types import OscilloscopeMeasurementData, OscilloscopeMeasurement
+from piel.types.experimental import OscilloscopeMeasurementData, OscilloscopeMeasurement
 
 
 def extract_oscilloscope_data_from_measurement(

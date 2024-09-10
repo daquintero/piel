@@ -1,10 +1,7 @@
 import pytest
 import amaranth as am
-from amaranth.sim import Simulator, Delay
 from piel.tools.amaranth import verify_amaranth_truth_table
 from piel.types import TruthTable  # Adjust the import based on your actual module path
-import pathlib
-import types
 
 
 # Helper function to create a dummy Amaranth module
@@ -156,7 +153,7 @@ def test_verify_non_matching_output(tmp_path):
 #     monkeypatch.setattr("your_actual_module_path.get_module_folder_type_location", mock_get_module_folder_type_location)
 #
 #     # Create a dummy module
-#     dummy_module = types.ModuleType("dummy_module")
+#     dummy_module = measurement.ModuleType("dummy_module")
 #     dummy_module.__file__ = str(module_path / "dummy_file.py")
 #
 #     # Call the function to verify the truth table

@@ -83,7 +83,7 @@ our_resistive_mzi_2x2_2x2_phase_shifter_netlist["instances"]["sxt"]
 #   'with_undercut': False}}
 # ```
 
-# Now we have a resistance parameter directly connected to the geometry of our phase shifter topology, which is an incredibly powerful tool. In your models, you can compute or extract resisivity and performance files parameters of your components in order to create SPICE models from them. This is related to the way that you perform your component design. `piel` can then enable you to understand how this component affects the total system performance.
+# Now we have a resistance parameter directly connected to the geometry of our phase shifter topology, which is an incredibly powerful tool. In your measurement, you can compute or extract resisivity and performance files parameters of your components in order to create SPICE measurement from them. This is related to the way that you perform your component design. `piel` can then enable you to understand how this component affects the total system performance.
 #
 # We can make another variation of our phase shifter to explore physical differences.
 
@@ -103,7 +103,7 @@ our_short_resistive_mzi_2x2_2x2_phase_shifter.named_references["sxt"].info
 # Info(resistance=0)
 # ```
 
-# So this is very cool, we have our device model giving us electrical files when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component models and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
+# So this is very cool, we have our device model giving us electrical files when connected to the geometrical design parameters. What effect does half that resistance have on the driver though? We need to first create a SPICE model of our circuit. One of the main complexities now is that we need to create a mapping between our component measurement and `hdl21` which is dependent on our device model extraction. Another functionality we might desire is to validate physical electrical connectivity by simulating the circuit accordingly.
 
 from gdsfactory.export import to_svg
 to_svg(our_short_resistive_mzi_2x2_2x2_phase_shifter)
@@ -112,7 +112,7 @@ to_svg(our_short_resistive_mzi_2x2_2x2_phase_shifter)
 
 # We will exemplify how `piel` microservices enable the extraction and configuration of the SPICE circuit. This is done by implementing a SPICE netlist construction backend to the circuit composition functions in `sax`, and is composed in a way that is then integrated into `hdl21` or any SPICE-based solver through the `VLSIR` `Netlist`.
 #
-# The way this is achieved is by extracting all the `instances`, `connections`, `ports`, `models` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
+# The way this is achieved is by extracting all the `instances`, `connections`, `ports`, `measurement` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
 
 our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
     allow_multiple=True, exclude_port_types="optical"
@@ -123,8 +123,8 @@ our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
 # We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist. However, to do this we need to assign what type of element each component each gdsfactory instance is. We show an algorithm that does the following in order to construct our SPICE netlist:
 #
 # 1. Parse the gdsfactory netlist, assign the electrical ports for the model. Extract all instances and
-# required models from the netlist.
-# 2. Verify that the models have been provided. Each model describes the type of
+# required measurement from the netlist.
+# 2. Verify that the measurement have been provided. Each model describes the type of
 # component this is, how many ports it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
 # netlist, this is reasonable as it is composed, and not a generator class. This generates a large amount of instantiated ``hdl21`` modules that are generated from `generators`.
 # 3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the ports accordingly.
@@ -154,7 +154,7 @@ our_resistive_heater_netlist["instances"]["straight_1"]
 #  'hdl21_model': Generator(name=straight)}
 # ```
 
-# We can compose our SPICE using ``hdl21`` using the models we have provided. The final circuit can be extracted accordingly:
+# We can compose our SPICE using ``hdl21`` using the measurement we have provided. The final circuit can be extracted accordingly:
 
 our_resistive_heater_circuit = piel.construct_hdl21_module(
     spice_netlist=our_resistive_heater_spice_netlist
@@ -193,7 +193,7 @@ our_resistive_heater_circuit.signals
 #  'via_stack_2_e1': Signal(name='via_stack_2_e1', width=1, desc=None)}
 # ```
 
-# We can explore the models we have provided too:
+# We can explore the measurement we have provided too:
 
 # We can also extract information for our subinstances. We can also get the netlist of each subinstance using the inherent `hdl21` functionality:
 
@@ -331,11 +331,11 @@ piel.flows.extract_component_spice_from_netlist(
 
 # ## `SPICE` Integration
 
-# We have seen in the previous example how to integrate digital-driven files with photonic circuit steady-state simulations. However, this is making a big assumption: whenever digital codes are applied to photonic components, the photonic component responds immediately. We need to account for the electrical load physics in order to perform more accurate simulation models of our systems.
+# We have seen in the previous example how to integrate digital-driven files with photonic circuit steady-state simulations. However, this is making a big assumption: whenever digital codes are applied to photonic components, the photonic component responds immediately. We need to account for the electrical load physics in order to perform more accurate simulation measurement of our systems.
 #
-# `piel` provides a set of basic models for common photonic loads that integrates closely with `gdsfactory`. This will enable the multi-domain co-design we like when integrated with all the open-source tools we have previously exemplified. You can find the list and definition of the provided models in:
+# `piel` provides a set of basic measurement for common photonic loads that integrates closely with `gdsfactory`. This will enable the multi-domain co-design we like when integrated with all the open-source tools we have previously exemplified. You can find the list and definition of the provided measurement in:
 #
-# Currently, these models do not physically represent electrically the components yet. We will do this later.
+# Currently, these measurement do not physically represent electrically the components yet. We will do this later.
 
 piel_hdl21_models = piel.models.physical.electronic.get_default_models()
 piel_hdl21_models
@@ -590,7 +590,7 @@ simple_transient_plot_full.savefig(
 
 # ### Driving our Phase Shifter
 #
-# We have demonstrated how we can extract a simple model of a resistor and create different types of `SPICE` simulations. Now, let's consider how would this affect the photonic performance in a phase-shifter context. One important aspect is that we need to create a mapping between our analogue voltage and a phase. Ideally, this should be a functional mapping.
+# We have demonstrated how we can extract a simple model of a resistor and create different measurement of `SPICE` simulations. Now, let's consider how would this affect the photonic performance in a phase-shifter context. One important aspect is that we need to create a mapping between our analogue voltage and a phase. Ideally, this should be a functional mapping.
 #
 # Let's create an arbitrary phase mapping with a function that bounds the voltage linearly. What we can do is create a function with a particular phase-power slope. This will vary depending on the thermo-optic modulator design so we will choose an arbitrary value.
 

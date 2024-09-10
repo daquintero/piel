@@ -258,13 +258,13 @@ def compose_network_matrix_from_models(
     **kwargs,
 ):
     """
-    This function composes the network matrix from the models dictionary and the switch states. It does this by first
+    This function composes the network matrix from the measurement dictionary and the switch states. It does this by first
     composing the switch functions, then composing the switch matrix, then composing the network matrix. It returns
     the network matrix and the switch matrix.
 
     Args:
         circuit_component (gf.Component): The circuit.
-        models (dict): The models dictionary.
+        models (dict): The measurement dictionary.
         switch_states (list): The list of switch states.
         top_level_instance_prefix (str): The top level instance prefix.
         target_component_prefix (str): The target component prefix.
@@ -442,11 +442,11 @@ def generate_s_parameter_circuit_from_photonic_circuit(
     netlist_function: Optional[Callable] = None,
 ) -> tuple[any, any]:
     """
-    Generates the S-parameters and related information for a given circuit using SAX and custom models.
+    Generates the S-parameters and related information for a given circuit using SAX and custom measurement.
 
     Args:
         circuit (gf.Component): The circuit for which the S-parameters are to be generated.
-        models (sax.ModelFactory, optional): The models to be used for the S-parameter generation. Defaults to None.
+        models (sax.ModelFactory, optional): The measurement to be used for the S-parameter generation. Defaults to None.
         netlist_function (Callable, optional): The function to generate the netlist. Defaults to None.
 
     Returns:
@@ -454,7 +454,7 @@ def generate_s_parameter_circuit_from_photonic_circuit(
     """
     import sax
 
-    # Step 1: Retrieve default models if not provided
+    # Step 1: Retrieve default measurement if not provided
     if models is None:
         models = get_default_models()
 
@@ -478,7 +478,7 @@ def generate_s_parameter_circuit_from_photonic_circuit(
         # Step 3: Identify the top-level circuit name
         top_level_name = circuit.get_netlist()["name"]
 
-        # Step 4: Get required models for the top-level circuit
+        # Step 4: Get required measurement for the top-level circuit
         required_models = sax.get_required_circuit_models(
             netlist[top_level_name], models=models
         )
@@ -496,11 +496,11 @@ def generate_s_parameter_circuit_from_photonic_circuit(
             models=models,
         )
         print("Error in generating S-parameters. Check the following:")
-        print("Required models for the top-level circuit:")
+        print("Required measurement for the top-level circuit:")
         print(required_models)
-        print("Required models for the specific model:")
+        print("Required measurement for the specific model:")
         print(specific_model_key)
-        print("Required models for the specific model:")
+        print("Required measurement for the specific model:")
         print(specific_model_required)
 
         raise e
@@ -542,7 +542,7 @@ def get_state_phase_transitions(
         [0]]        [1]]
 
     However, sometimes it is easier to describe a photonic logic transformation based on these states, rather than inherently
-    the numerical phase that is applied. This may be the case, for example, in asymmetric Mach-Zehnder modulators models, etc.
+    the numerical phase that is applied. This may be the case, for example, in asymmetric Mach-Zehnder modulators measurement, etc.
 
     As such, this function will help us extract the corresponding phase for a particular switch transition.
 
@@ -646,7 +646,7 @@ def get_state_to_phase_map(
         [0]]        [1]]
 
     However, sometimes it is easier to describe a photonic logic transformation based on these states, rather than inherently
-    the numerical phase that is applied. This may be the case, for example, in asymmetric Mach-Zehnder modulators models, etc.
+    the numerical phase that is applied. This may be the case, for example, in asymmetric Mach-Zehnder modulators measurement, etc.
 
     As such, this function will help us extract the corresponding phase for a particular switch transition.
     """

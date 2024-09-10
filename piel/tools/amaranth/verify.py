@@ -1,7 +1,4 @@
-import amaranth as am
-from amaranth.sim import Simulator, Delay
-import types
-from typing import Literal
+from typing import Literal, Any
 
 from ...project_structure import get_module_folder_type_location
 from ...file_system import return_path
@@ -12,7 +9,7 @@ __all__ = ["verify_amaranth_truth_table"]
 
 
 def verify_amaranth_truth_table(
-    truth_table_amaranth_module: am.Elaboratable,
+    truth_table_amaranth_module: Any,
     truth_table: TruthTable,
     vcd_file_name: str,
     target_directory: PathTypes,
@@ -51,6 +48,15 @@ def verify_amaranth_truth_table(
         >>> )
         >>> verify_amaranth_truth_table(am_module, truth_table, "output.vcd", "/path/to/save")
     """
+    import amaranth as am
+    from amaranth.sim import Simulator, Delay
+    import types
+
+    if isinstance(truth_table_amaranth_module, am.Elaboratable):
+        pass
+    else:
+        raise AttributeError("Amaranth module should be am.Elaboratable")
+
     inputs = truth_table.input_ports
     outputs = truth_table.output_ports
     truth_table_df = truth_table.dataframe

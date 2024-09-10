@@ -104,13 +104,13 @@ def create_empty_piel_project(project_name: str, parent_directory: PathTypes) ->
 
     #### MODELS ####
     create_new_directory(
-        module_directory / "models"
-    )  # Custom Python models for digital, analog and photonic
-    create_new_directory(module_directory / "models" / "analogue")
-    create_new_directory(module_directory / "models" / "frequency")
-    create_new_directory(module_directory / "models" / "logic")
-    create_new_directory(module_directory / "models" / "physical")
-    create_new_directory(module_directory / "models" / "transient")
+        module_directory / "measurement"
+    )  # Custom Python measurement for digital, analog and photonic
+    create_new_directory(module_directory / "measurement" / "analogue")
+    create_new_directory(module_directory / "measurement" / "frequency")
+    create_new_directory(module_directory / "measurement" / "logic")
+    create_new_directory(module_directory / "measurement" / "physical")
+    create_new_directory(module_directory / "measurement" / "transient")
 
     create_new_directory(
         module_directory / "photonic"
@@ -156,32 +156,32 @@ def create_empty_piel_project(project_name: str, parent_directory: PathTypes) ->
 
     ### MODELS ###
     write_file(
-        directory_path=module_directory / "models",
+        directory_path=module_directory / "measurement",
         file_text="",
         file_name="__init__.py",
     )  # Models
     write_file(
-        directory_path=module_directory / "models" / "analogue",
+        directory_path=module_directory / "measurement" / "analogue",
         file_text="",
         file_name="__init__.py",
     )  # Models
     write_file(
-        directory_path=module_directory / "models" / "frequency",
+        directory_path=module_directory / "measurement" / "frequency",
         file_text="",
         file_name="__init__.py",
     )  # Models
     write_file(
-        directory_path=module_directory / "models" / "logic",
+        directory_path=module_directory / "measurement" / "logic",
         file_text="",
         file_name="__init__.py",
     )  # Models
     write_file(
-        directory_path=module_directory / "models" / "physical",
+        directory_path=module_directory / "measurement" / "physical",
         file_text="",
         file_name="__init__.py",
     )  # Models
     write_file(
-        directory_path=module_directory / "models" / "transient",
+        directory_path=module_directory / "measurement" / "transient",
         file_text="",
         file_name="__init__.py",
     )  # Models

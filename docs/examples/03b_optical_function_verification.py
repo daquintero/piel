@@ -2,7 +2,7 @@
 #
 # Increasingly, as we design photonic-electronic systems, it is necessary to verify the implemented optical logic. For example, to explore whether the optical switching network implements the desired dynamic optical function, or to compute how much the system thermal performance for a given operation is required.
 #
-# The point of this script is to demonstrate relevant verification functions. What it should do is to take the optical logic implemented and input some test functions with ideal models and
+# The point of this script is to demonstrate relevant verification functions. What it should do is to take the optical logic implemented and input some test functions with ideal measurement and
 # compare with the expected optical logic.
 
 # See the example [Analytical MZM Model](./06a_analytical_mzm_model.html) TODO verify link. to first understand the underlying physics behind this numerical implementation, before we discuss a logical verification of the "optical function" applied.
@@ -76,7 +76,7 @@ valid_input_fock_states
 #         [1]], dtype=int32)]
 # ```
 
-# Let's evaluate our models
+# Let's evaluate our measurement
 
 verification_models = piel.models.frequency.get_default_models(
     type="optical_logic_verification"
@@ -149,11 +149,11 @@ print(piel.round_complex_array(pi_phase_circuit[0]))
 raw_output_state_0 = jnp.dot(zero_phase_circuit[0], valid_input_fock_states[0])
 output_state_0 = {
     "phase": (switch_states[0],),
-    "input_fock_state": piel.types.convert_array_type(
-        valid_input_fock_states[0], piel.types.TupleIntType
+    "input_fock_state": piel.experimental.types.convert_array_type(
+        valid_input_fock_states[0], piel.experimental.types.TupleIntType
     ),
-    "output_fock_state": piel.types.absolute_to_threshold(
-        raw_output_state_0, output_array_type=piel.types.TupleIntType
+    "output_fock_state": piel.experimental.types.absolute_to_threshold(
+        raw_output_state_0, output_array_type=piel.experimental.types.TupleIntType
     ),
 }
 output_state_0
@@ -341,9 +341,11 @@ target_output_transition_mzi_2x2 = [
         "target_mode_output": None,
     },
 ]
-target_optical_state_transition_mzi_2x2 = piel.types.OpticalStateTransitions(
-    transmission_data=target_output_transition_mzi_2x2,
-    mode_amount=2,
+target_optical_state_transition_mzi_2x2 = (
+    piel.experimental.types.OpticalStateTransitions(
+        transmission_data=target_output_transition_mzi_2x2,
+        mode_amount=2,
+    )
 )
 
 print("Target Numerical Implementation")
@@ -384,7 +386,6 @@ else:
 # ### Setup
 
 # We begin by importing a parametric circuit from `gdsfactory`:
-import gdsfactory as gf
 from piel.models.physical.photonic import (
     mzi2x2_2x2_phase_shifter,
     component_lattice_generic,

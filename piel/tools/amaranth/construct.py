@@ -2,14 +2,13 @@
 This module provides a function to construct an Amaranth module from a truth table. It converts a truth table
 into a digital logic module using the Amaranth framework.
 
-The supported implementation types are:
+The supported implementation measurement are:
 - "combinatorial"
 - "sequential"
 - "memory"
 """
 
-import amaranth as am
-from ...types.digital import TruthTable, LogicImplementationType
+from piel.types.digital import TruthTable, LogicImplementationType
 
 
 def construct_amaranth_module_from_truth_table(
@@ -43,6 +42,7 @@ def construct_amaranth_module_from_truth_table(
         >>> )
         >>> am_module = construct_amaranth_module_from_truth_table(my_truth_table)
     """
+    import amaranth as am
 
     # Extract inputs and outputs from the truth table
     inputs = truth_table.input_ports

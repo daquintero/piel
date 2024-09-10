@@ -1,4 +1,7 @@
-from ...types import PropagationDelayMeasurementData, PropagationDelayMeasurement
+from piel.types.experimental import (
+    PropagationDelayMeasurementData,
+    PropagationDelayMeasurement,
+)
 
 
 def extract_propagation_delay_data_from_measurement(

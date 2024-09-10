@@ -1,7 +1,7 @@
 """
 This module provides functions to read, plot, and analyze Cocotb simulation files. It supports reading simulation
 output files, converting them into Pandas dataframes, and plotting the files using Bokeh for interactive visualization.
-# TODO: Implement the logic for processing different signal types.
+# TODO: Implement the logic for processing different signal measurement.
 """
 
 import functools

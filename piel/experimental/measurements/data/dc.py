@@ -6,7 +6,7 @@ from ....models.physical.electrical import (
     construct_current_dc_signal,
     construct_voltage_dc_signal,
 )
-from ...types import (
+from piel.types.experimental import (
     SourcemeterSweepMeasurementData,
     DCSweepMeasurementData,
     DCSweepMeasurementDataCollection,
@@ -279,7 +279,6 @@ def extract_dc_sweeps_from_operating_point_csv(
 
     # Iterate through the unique operating points and extract the DC sweep data
     dc_sweep_data = []
-    parameter_list = []
 
     for _, operating_point in unique_operating_points.iterrows():
         operating_point_data = dataframe[

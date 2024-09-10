@@ -108,7 +108,7 @@ def test_generate_verilog_with_missing_port(tmp_path):
 #     monkeypatch.setattr("your_actual_module_path.get_module_folder_type_location", mock_get_module_folder_type_location)
 #
 #     # Create a dummy module
-#     dummy_module = types.ModuleType("dummy_module")
+#     dummy_module = measurement.ModuleType("dummy_module")
 #     dummy_module.__file__ = str(module_path / "dummy_file.py")
 #
 #     # Call the function to generate Verilog

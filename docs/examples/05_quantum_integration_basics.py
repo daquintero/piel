@@ -17,7 +17,7 @@ get_generic_pdk().activate()
 
 # ## Quantum Unitary Representation
 
-# One of the main complexities of modelling a quantum photonic system is that loss is a killer. It is a killer far more than we understand in classical systems. When we model unitary operations, they are lossless. When loss occurs on quantum photonic operations, it translates into Pauli gate errors, or less efficient resource state generation models. This means that we need to model our phase separate from our target logical operations that implement our quantum circuit or specific components accordingly. So, how we model our circuits, essentially depends on the methodology we compose our circuit models. To model a quantum network, we need to compose our circuit connectivity using unitary models. However, to model loss and optical phase variations, we need to then model our circuit with more realstic physical models. This will allow us to extract different aspects of circuit information accordingly.
+# One of the main complexities of modelling a quantum photonic system is that loss is a killer. It is a killer far more than we understand in classical systems. When we model unitary operations, they are lossless. When loss occurs on quantum photonic operations, it translates into Pauli gate errors, or less efficient resource state generation measurement. This means that we need to model our phase separate from our target logical operations that implement our quantum circuit or specific components accordingly. So, how we model our circuits, essentially depends on the methodology we compose our circuit measurement. To model a quantum network, we need to compose our circuit connectivity using unitary measurement. However, to model loss and optical phase variations, we need to then model our circuit with more realstic physical measurement. This will allow us to extract different aspects of circuit information accordingly.
 #
 # See docs/microservices/dependencies/qutip for further theory and validation. TODO link.
 
@@ -32,7 +32,7 @@ switch_circuit.get_netlist_recursive().keys()
 
 # ### Quantum Models
 
-# Let's first check that the quantum models in which we will compose our circuit are actually unitary, otherwise the composed circuit will not be unitary. Note that a circuit being unitary means: $U^\dagger U = 1$ where $U^\dagger$ is the conjugate transpose of the unitary $U$. This is inherently checked in `qutip`. Basically, what it means is that a unitary operation is reversible in time, and that energy is not lost.
+# Let's first check that the quantum measurement in which we will compose our circuit are actually unitary, otherwise the composed circuit will not be unitary. Note that a circuit being unitary means: $U^\dagger U = 1$ where $U^\dagger$ is the conjugate transpose of the unitary $U$. This is inherently checked in `qutip`. Basically, what it means is that a unitary operation is reversible in time, and that energy is not lost.
 
 quantum_models = piel.models.frequency.get_default_models(type="quantum")
 quantum_models["mmi2x2"]()
@@ -42,7 +42,7 @@ mmi2x2_qobj = piel.sax_to_ideal_qutip_unitary(
 )
 mmi2x2_qobj.check_isunitary()
 
-# We follow the same process as the previous examples, but we use lossless models for the circuit composition.
+# We follow the same process as the previous examples, but we use lossless measurement for the circuit composition.
 
 recursive_netlist = switch_circuit.get_netlist_recursive()
 switch_circuit_model_quantum, switch_circuit_model_quantum_info = sax.circuit(
@@ -211,7 +211,7 @@ piel.unitary_permanent(our_subunitary)
 
 # ## Lossy Models
 
-# What we will do now is explore how our circuit behaves when composing it with more realistic physical models.
+# What we will do now is explore how our circuit behaves when composing it with more realistic physical measurement.
 
 recursive_netlist = switch_circuit.get_netlist_recursive()
 switch_circuit_model_classical, switch_circuit_model_classical_info = sax.circuit(

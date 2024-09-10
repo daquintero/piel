@@ -1,1 +1,1 @@
-# Use the types/__init__.py instead
+# Use the measurement/__init__.py instead

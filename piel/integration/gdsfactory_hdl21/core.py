@@ -2,10 +2,10 @@
 some `translation language` inherent to the ``piel`` implementation of these tools is included here.
 
 Note that to be able to construct a full circuit model of the netlist tools provided, it is necessary to create
-individual circuit models of the devices that we will interconnect, and then map them to a larger netlist. This means
-that it is necessary to create specific SPICE models for each particular component, say in an electrical netlist.
+individual circuit measurement of the devices that we will interconnect, and then map them to a larger netlist. This means
+that it is necessary to create specific SPICE measurement for each particular component, say in an electrical netlist.
 
-This functions convert a GDSFactory netlist, with a set of component models, into `hdl21` that accounts for the
+This functions convert a GDSFactory netlist, with a set of component measurement, into `hdl21` that accounts for the
 instance properties, which can then be connected into a VLSIR compatible `Netlist` implementation.
 
 Eventually we will implement RCX where we can extract the netlist with parasitics directly from the layout,
@@ -146,12 +146,12 @@ This is particularly useful when creating our components and connectivity, becau
 devices with their corresponding values, and then create our connectivity accordingly. To do this properly from our
 GDSFactory netlist to ``hdl21``, we can then extract the total SPICE circuit, and convert it to a VLSIR format using
 the ``Netlist`` module. The reason why we can't use the Netlist package from Dan Fritchman directly is that we need to
-apply a set of models that translate a particular component instantiation into an electrical model. Because we are
+apply a set of measurement that translate a particular component instantiation into an electrical model. Because we are
 not yet doing layout extraction as that requires EM solvers, we need to create some sort of SPICE level assignment
 based on the provided dictionary.
 
 Note that ``hdl21`` already can implement the port connectivity directly from internal instances, and translate this
-to our connectivity netlist. This means we only need to iterate to create our instances based on our models into a
+to our connectivity netlist. This means we only need to iterate to create our instances based on our measurement into a
 ``hdl21`` module, then we can easily assign the corresponding values. It is also possible to create the assigned
 parameters as part of the ``hdl21`` component which would form part of our module. Because the gdsfactory names are
 compatible with ``hdl21``, then it is fine to create the integration accordingly.
@@ -159,8 +159,8 @@ compatible with ``hdl21``, then it is fine to create the integration accordingly
 The algorithm can be to:
 
 1. Parse the gdsfactory netlist, assign the electrical ports for the model. Extract all instances and
-required models from the netlist.
-2. Verify that the models have been provided. Each model describes the type of
+required measurement from the netlist.
+2. Verify that the measurement have been provided. Each model describes the type of
 component this is, how many ports it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
 netlist, this is reasonable as it is composed, and not a generator class. This generates a large amount of instantiated ``hdl21`` modules that are generated from `generators`.
 3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the ports accordingly.
@@ -184,7 +184,7 @@ The connections are a bit more complex. So each of our connections dictionary is
 
 We know what our top model ports are. We know our internal instance ports as well, and this will be provided by the
 model too. For the sake of easiness, we can describe these as ``hdl21`` equivalent ``InOut`` or ``Port` `ports and
-not have to deal with directionality. After instance declaration, and models for each of these components with the
+not have to deal with directionality. After instance declaration, and measurement for each of these components with the
 corresponding port topology, it is then straightforward to parse the connectivity and implement the network,
 and extract the SPICE."""
 
@@ -204,7 +204,7 @@ def gdsfactory_netlist_to_spice_netlist(
     set of geometrical settings that can be applied to each particular model. We know the type of SPICE model from
     the instance model we provides.
 
-    We know that the gdsfactory has a set of instances, and we can map unique models via sax through our own
+    We know that the gdsfactory has a set of instances, and we can map unique measurement via sax through our own
     composition circuit. Write the SPICE component based on the model into a total circuit representation in string
     from the reshaped gdsfactory dictionary into our own structure.
 
@@ -228,9 +228,9 @@ def gdsfactory_netlist_to_spice_netlist(
 
 def construct_hdl21_module(spice_netlist: dict, **kwargs) -> AnalogueModule:
     """
-    This function converts a gdsfactory-spice converted netlist using the component models into a SPICE circuit.
+    This function converts a gdsfactory-spice converted netlist using the component measurement into a SPICE circuit.
 
-    Part of the complexity of this function is the multiport nature of some components and models, and assigning the
+    Part of the complexity of this function is the multiport nature of some components and measurement, and assigning the
     parameters accordingly into the SPICE function. This is because not every SPICE component will be bi-port,
     and many will have multi-ports and parameters accordingly. Each model can implement the composition into a
     SPICE circuit, but they depend on a set of parameters that must be set from the instance. Another aspect is

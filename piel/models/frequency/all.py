@@ -21,13 +21,13 @@ __default_models_dictionary__ = {
 
 def get_all_models(custom_library: dict | None = None) -> dict:
     """
-    Returns the default models dictionary.
+    Returns the default measurement dictionary.
 
     Args:
         custom_library (dict): Custom defaults dictionary.
 
     Returns:
-        dict: Default models dictionary.
+        dict: Default measurement dictionary.
     """
     if custom_library is not None:
         return custom_library

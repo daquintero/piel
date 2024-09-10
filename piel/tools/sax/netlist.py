@@ -50,7 +50,7 @@ def compose_recursive_instance_location(
     This function returns the recursive location of any matching ``target_component_prefix`` instances within the
     ``recursive_netlist``. A function that returns the mapping of the ``matched_component`` in the corresponding
     netlist at any particular level of recursion. This function iterates over a particular level of recursion of a
-    netlist. It returns a list of the missing required components, and updates a dictionary of models that contains a
+    netlist. It returns a list of the missing required components, and updates a dictionary of measurement that contains a
     particular matching component. It returns the corresponding list of instances of a particular component at that
     level of recursion, so that it can be appended upon in order to construct the location of the corresponding
     matching elements.
@@ -59,11 +59,11 @@ def compose_recursive_instance_location(
        ``required_model_i`` in ``required_models`` matches ``target_component_prefix``, then no more recursion is
        required down the component function.
 
-       The ``recursive_netlist`` should contain all the missing composed models that are not provided in the main
-       models dictionary. If not, then we need to require the user to input the missing model that cannot be
+       The ``recursive_netlist`` should contain all the missing composed measurement that are not provided in the main
+       measurement dictionary. If not, then we need to require the user to input the missing model that cannot be
        extracted from the composed netlist. We know when a model is composed, and when it is already provided at
-       every level of recursion based on the ``models`` dictionary that gets updated at each level of recursion with
-       the corresponding models of that level, and the ``required_models`` down itself.
+       every level of recursion based on the ``measurement`` dictionary that gets updated at each level of recursion with
+       the corresponding measurement of that level, and the ``required_models`` down itself.
 
        However, a main question appears on how to do the recursion. There needs to be a flag that determines that the
        recursion is complete. However, this is only valid for every particular component in the ``required_models``
@@ -82,14 +82,14 @@ def compose_recursive_instance_location(
        Args:
         recursive_netlist (dict): The hierarchical netlist dictionary.
         top_level_instance_name (str): The name of the top-level instance to start the search from.
-        required_models (list): A list of models that need to be included in the recursion.
+        required_models (list): A list of measurement that need to be included in the recursion.
         target_component_prefix (str): The prefix of the component instances to locate.
-        models (dict): A dictionary of models provided to aid in the recursion.
+        models (dict): A dictionary of measurement provided to aid in the recursion.
 
         Returns:
             tuple: A tuple containing:
-                - model_composition_mapping (dict): A mapping of required models to their composed models.
-                - instance_composition_mapping (dict): A mapping of required models to their corresponding instances.
+                - model_composition_mapping (dict): A mapping of required measurement to their composed measurement.
+                - instance_composition_mapping (dict): A mapping of required measurement to their corresponding instances.
                 - target_component_mapping (dict): A mapping of target components to their parent components.
 
     """
@@ -110,12 +110,12 @@ def compose_recursive_instance_location(
         # inside the recursive netlist and we need to find it. We iterate over each of the required model names to
         # see if they match our active component name.
         for required_model_name_i in required_models:
-            # Appends required_models_i from subcomponent to the required_models input based on the models provided.
+            # Appends required_models_i from subcomponent to the required_models input based on the measurement provided.
 
             try:
                 required_models_i = sax.get_required_circuit_models(
                     recursive_netlist[required_model_name_i],
-                    # TODO make this recursive so it can search inside? This will never have to be 2D as all models
+                    # TODO make this recursive so it can search inside? This will never have to be 2D as all measurement
                     #  outside.
                     models={**models, **model_composition_mapping},
                 )  # eg. ["straight_heater_metal_s_ad3c1693"]
@@ -146,7 +146,7 @@ def compose_recursive_instance_location(
             instance_composition_mapping.update(instance_composition_mapping_i)
 
             # This model is now at a particular level of recursion, let's check if this is the model we want in the
-            # required composed models.
+            # required composed measurement.
             for required_model_name_i_i in required_models_i:
                 if required_model_name_i_i.startswith(target_component_prefix):
                     # Yes, this is the model we want. Can we compose the instance location?
@@ -277,7 +277,7 @@ def get_matched_model_recursive_netlist_instances(
     """
     This function returns an active component list with a tuple mapping of the location of the active component
     within the recursive netlist and corresponding model. It will recursively look within a netlist to locate what
-    models use a particular component model. At each stage of recursion, it will compose a list of the elements that
+    measurement use a particular component model. At each stage of recursion, it will compose a list of the elements that
     implement this matching model in order to relate the model to the instance, and hence the netlist address of the
     component that needs to be updated in order to functionally implement the model.
 
@@ -291,7 +291,7 @@ def get_matched_model_recursive_netlist_instances(
         recursive_netlist (dict): The hierarchical netlist dictionary.
         top_level_instance_prefix (str): The prefix of the top-level instance to search under.
         target_component_prefix (str): The prefix of the target component to find.
-        models (Optional[dict]): A dictionary of models to aid in the recursion. Defaults to None.
+        models (Optional[dict]): A dictionary of measurement to aid in the recursion. Defaults to None.
         custom_subcomponent_instance (Optional[str]): The instance name for subcomponents, used for backwards compatibility.
 
     Returns:

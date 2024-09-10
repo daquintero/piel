@@ -1,4 +1,4 @@
-from ..types import PropagationDelayMeasurement
+from piel.types.experimental import PropagationDelayMeasurement
 from ...types import PathTypes
 from ...file_system import return_path
 

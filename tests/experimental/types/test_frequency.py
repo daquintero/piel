@@ -1,5 +1,5 @@
 import pytest
-from piel.experimental.types import (
+from piel.types.experimental import (
     VNA,
     VNAConfiguration,
     VNASParameterMeasurementConfiguration,

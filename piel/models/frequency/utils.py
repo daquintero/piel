@@ -9,13 +9,13 @@ def compose_custom_model_library_from_defaults(
     custom_models: dict, *args, **kwargs
 ) -> dict:
     """
-    Compose the default models with the custom models.
+    Compose the default measurement with the custom measurement.
 
     Args:
-        custom_models (dict): Custom models dictionary.
+        custom_models (dict): Custom measurement dictionary.
 
     Returns:
-        dict: Composed models dictionary.
+        dict: Composed measurement dictionary.
     """
     return {**get_default_models(*args, **kwargs), **custom_models}
 

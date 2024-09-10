@@ -18,6 +18,7 @@ __all__ = [
     "create_all_connections",
     "create_component_connections",
     "create_sequential_component_path",
+    "create_connection_list_from_ports_lists",
 ]
 
 

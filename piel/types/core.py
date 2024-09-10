@@ -6,7 +6,7 @@ import pydantic
 import types
 from typing import Optional, Literal
 
-# Type aliases for various path and array types used throughout the module.
+# Type aliases for various path and array measurement used throughout the module.
 PathTypes = str | pathlib.Path | os.PathLike | types.ModuleType
 ArrayTypes = np.ndarray | jnp.ndarray
 NumericalTypes = int | float | np.dtype | jnp.dtype
@@ -27,13 +27,13 @@ MinimumMaximumType:
 
 class PielBaseModel(pydantic.BaseModel):
     """
-    A base model class that serves as the foundation for other models in the project.
+    A base model class that serves as the foundation for other measurement in the project.
     This class extends pydantic's BaseModel and includes additional configuration
     settings for strict validation and immutability.
 
     Attributes:
         Config: A nested class to configure the behavior of the model.
-            arbitrary_types_allowed (bool): Allows arbitrary types.
+            arbitrary_types_allowed (bool): Allows arbitrary measurement.
             extra (str): Forbids extra attributes not defined in the model.
             validate_assignment (bool): Validates fields on assignment.
             strict (bool): Enforces strict type validation.

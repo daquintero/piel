@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from ..types import TruthTable
 
 __all__ = [
     "append_row_to_dict",

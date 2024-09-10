@@ -1,5 +1,5 @@
 """
-This module defines type aliases for representing temperature ranges in various formats, using core array types.
+This module defines type aliases for representing temperature ranges in various formats, using core array measurement.
 """
 
 from .core import ArrayTypes

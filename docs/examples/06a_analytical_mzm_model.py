@@ -24,11 +24,6 @@
 # +
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
-from matplotlib import cm
-from matplotlib.ticker import LinearLocator, FormatStrFormatter
-from mpl_toolkits.mplot3d import proj3d
 
 import piel
 import numpy as np
@@ -401,7 +396,7 @@ cross_waveguide_phase
 # (1+0j)
 # ```
 
-# We can verify our `sax` models in relation to this:
+# We can verify our `sax` measurement in relation to this:
 
 ideal_optical_logic_models = piel.models.frequency.get_default_models(
     type="optical_logic_verification"
@@ -889,7 +884,7 @@ fig.savefig("thermo_optic_temperature_dependence.png")
 # > This leads to the definition of the VπLπ figure-of-merit (FOM), which
 # can be used to compare the efficiency of modulators. A low value of this FOM indicates a
 # more efficient modulator. In silicon, it is important to note that phase shift is non-linear
-# with applied voltage, as will be shown with experimental measurements in Section 5.2.
+# with applied voltage, as will be shown with measurement measurements in Section 5.2.
 # Therefore, knowing the $V_{\pi} L_{\pi}$ FOM does not allow the accurate calculation of $V_{\pi}$ for a
 # given modulator length or the calculation of Lπ for a given voltage
 #
@@ -969,14 +964,14 @@ m_c_h = 0.39 * m_c_0
 
 # From Nedeljkovic, "Free-Carrier Electrorefraction and Electroabsorption Modulation Predictionsfor Silicon Over the 1–14-m Infrared Wavelength Range" based on Soref and Bennet:
 #
-# Assumptions of Soref and Bennet's models:
-# * > It is well known that n and k are related by the Kramers-Kronig dispersion relations. The same relations hold for An and Ak as discussed below. It has been known for many years that the optical absorption spectrum of silicon is modified by external electric fields (the Franz-Keldysh effect) or by changes in the material’s charge-carrier density. If we start with an experimental knowledge of the modified spectrum Aa(w, E) or Aa(w, AN), then we can compute the change in the index An.
-# * > The optical properties of silicon are strongly affected by injection of charge carriers into an undoped sample (AN) or by the removal of free carriers from a doped sample (-AN). However, we are not aware of any experimental results in the Si literature on spectral changes via injection/depletion. There are, on the other hand, numerous literature references to the effects of impurity doping on Si optical properties. Optically, it does not make much difference whether carriers come from impurity ionization or from injection. Thus, an equivalence is assumed here. We draw upon experimental results that show how the a spectrum is changed by a density Ni of impurity atoms in the crystal. The An calculated from that spectrum is assumed to be the An that arises from AN Three carrier effects are important: 1) traditional freecarrier absorption, 2) Burstein-Moss bandfilling that shifts the a spectrum to shorter wavelengths, and 3) Coulombic interaction of carriers with impurities, an effect that shifts the spectrum to longer wavelengths. These act simultaneously. What is actually observed is an a redshift; thus, Coulombic effects are stronger than bandfilling in c-Si (see [ll] and [12]).
+# Assumptions of Soref and Bennet's measurement:
+# * > It is well known that n and k are related by the Kramers-Kronig dispersion relations. The same relations hold for An and Ak as discussed below. It has been known for many years that the optical absorption spectrum of silicon is modified by external electric fields (the Franz-Keldysh effect) or by changes in the material’s charge-carrier density. If we start with an measurement knowledge of the modified spectrum Aa(w, E) or Aa(w, AN), then we can compute the change in the index An.
+# * > The optical properties of silicon are strongly affected by injection of charge carriers into an undoped sample (AN) or by the removal of free carriers from a doped sample (-AN). However, we are not aware of any measurement results in the Si literature on spectral changes via injection/depletion. There are, on the other hand, numerous literature references to the effects of impurity doping on Si optical properties. Optically, it does not make much difference whether carriers come from impurity ionization or from injection. Thus, an equivalence is assumed here. We draw upon measurement results that show how the a spectrum is changed by a density Ni of impurity atoms in the crystal. The An calculated from that spectrum is assumed to be the An that arises from AN Three carrier effects are important: 1) traditional freecarrier absorption, 2) Burstein-Moss bandfilling that shifts the a spectrum to shorter wavelengths, and 3) Coulombic interaction of carriers with impurities, an effect that shifts the spectrum to longer wavelengths. These act simultaneously. What is actually observed is an a redshift; thus, Coulombic effects are stronger than bandfilling in c-Si (see [ll] and [12]).
 # * > We shall consider first the added loss introduced by free electrons or free holes. Theoretical curves from (5) are
-# plotted together with the experimental absorption values taken from Schmid [ 1 11 and from Spitzer and Fan [ 131.
+# plotted together with the measurement absorption values taken from Schmid [ 1 11 and from Spitzer and Fan [ 131.
 # Curves for electrons and holes at the 1.3 and 1.55 pm wavelengths are given as a function of “injected” carrier concentration in Figs. 12-15] Good matching.
 # * > The theoretical curves in Figs. 12-15 were obtained by substituting the values m% = 0.26 mo and m:h = 0.39 mo into (5). The mobility values used in (5) were taken from Fig. 2.3.1 of Wolf [21].
-# * > With the aid of x-y lines drawn on Figs. 5 and 7, the (a, w) files were digitized and entered into the computer, and the absorption spectrum of pure material was subtracted point by point from each of the quantized a(AN) curves to give a set of Aa values that were inserted into the numerator of (2). With our trapezoid-rule program, we calculated the integral (2) over the range I/ = 0.001- 2.8 V, and we took Ni = AN. This produced the result shown in Fig. 8 for free electrons and the result of Fig. 9 for free holes. Figs. 8 and 9 are plots of An as a function of wavelength from 1 .O to 2.0 pm with AN as a parameter. The increase of An with X is approximately quadratic. Next, we used the results of Figs. 8 and 9 to determine the carrier-concentration dependence of An at the fiberoptic wavelengths: X = 1.3 or 1.55 pm. Those results are shown in Figs. 10 and 11. The curves presented in Figs. 10 and 11 are least squares fit to the files points obtained from Figs. 8 and 9. In Fig. 10 (X = 1.3 pm), the freehole files are fitted with a line of slope +0.805, while the free-electron files are fitted with a + 1.05 slope line. In Fig. 14 (X = 1.55 pm), the fitted slopes are +0.818(holes) and +l.O4(electrons). It is interesting to compare the predictions of a simple free-carrier or Dmde model of c-Si to our An results and to experimental Aa files. The well-known formulas for refraction and absorption due to free electrons and free holes are as follows:
+# * > With the aid of x-y lines drawn on Figs. 5 and 7, the (a, w) files were digitized and entered into the computer, and the absorption spectrum of pure material was subtracted point by point from each of the quantized a(AN) curves to give a set of Aa values that were inserted into the numerator of (2). With our trapezoid-rule program, we calculated the integral (2) over the range I/ = 0.001- 2.8 V, and we took Ni = AN. This produced the result shown in Fig. 8 for free electrons and the result of Fig. 9 for free holes. Figs. 8 and 9 are plots of An as a function of wavelength from 1 .O to 2.0 pm with AN as a parameter. The increase of An with X is approximately quadratic. Next, we used the results of Figs. 8 and 9 to determine the carrier-concentration dependence of An at the fiberoptic wavelengths: X = 1.3 or 1.55 pm. Those results are shown in Figs. 10 and 11. The curves presented in Figs. 10 and 11 are least squares fit to the files points obtained from Figs. 8 and 9. In Fig. 10 (X = 1.3 pm), the freehole files are fitted with a line of slope +0.805, while the free-electron files are fitted with a + 1.05 slope line. In Fig. 14 (X = 1.55 pm), the fitted slopes are +0.818(holes) and +l.O4(electrons). It is interesting to compare the predictions of a simple free-carrier or Dmde model of c-Si to our An results and to measurement Aa files. The well-known formulas for refraction and absorption due to free electrons and free holes are as follows:
 # * Does not account for temperature dependence
 #
 # From

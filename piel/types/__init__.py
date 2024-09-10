@@ -42,6 +42,7 @@ from .digital import (
 from .digital_electro_optic import BitPhaseMap
 
 from .environment import Environment
+from .experimental import *  # NOQA: F403
 
 from .electrical.cables import (
     CoaxialCableGeometryType,
