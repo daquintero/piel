@@ -17,7 +17,7 @@
 import piel
 import piel.experimental as pe
 import piel.visual as pv
-from piel.models.physical.electrical.cable import (
+from piel.models.physical.electrical.cables import (
     calculate_coaxial_cable_geometry,
     calculate_coaxial_cable_heat_transfer,
     calculate_dc_cable_geometry,
@@ -153,13 +153,13 @@ basic_coaxial_cable_heat_transfer_4_in_series
 
 # ## RF Modelling and Experimental Relationship
 
-# In the following section of this example, we will explore some basic principles of RF transmission line measurements in the context of both experimental measurements and larger system modelling. We will really explore some basic RF principles and how these can be represented with open-source toolsets using `piel`.
+# In the following section of this example, we will explore some basic principles of RF transmission line measurements in the context of both measurement measurements and larger system modelling. We will really explore some basic RF principles and how these can be represented with open-source toolsets using `piel`.
 #
 # A very common package to model radio-frequency systems in python is called [`scikit-rf`](https://scikit-rf.readthedocs.io/en/latest/index.html). Particularly, it has a lot of useful functionality to translate IO files directly from common measurement standards in a format that is useful for device characterization and modelling. We will explore some basic situations commonly used throughout modelling `rf-photonic` systems.
 #
 # As far as I can tell from basic usage, the only useful files are one-port `.s1p` and two-port`.s2p` Touchstone files for trace measurements, and `.cti` files for calibration/instrument settings storage. We will use `.s2p` files throughout primarily.
 
-# We will also explore how to manage the way the data is being saved with experimental planning and design.
+# We will also explore how to manage the way the data is being saved with measurement planning and design.
 
 # ### Understanding Hardware and Software Measurements & Calibration
 
@@ -448,7 +448,7 @@ rf_vna_self_calibration_data.experiment.parameters
 #
 # We can, for example, also use the data directly without having to use any `piel` data structures. This can be useful if you want to use this functionality to create the metadata and directories but not interact with other functionality in the package.
 #
-# You might, for example, already have a stylesheet for your project and don't want to deviate from this when using `scikit-rf`. This unfortunately requires some tweaking as many of the `scikit-rf` plotting functionality may simply not look nice enough accordingly. You can also activate your styles, in our case `piel.visual.styles.activate_piel_styles` would activate `piel` styling functionality.
+# You might, for example, already have a stylesheet for your project and don't want to deviate from this when using `scikit-rf`. This unfortunately requires some tweaking as many of the `scikit-rf` plotting functionality may simply not look nice enough accordingly. You can also activate your styles, in our case `piel.experimental.styles.activate_piel_styles` would activate `piel` styling functionality.
 
 pv.style.activate_piel_styles()
 fig, axs = plt.subplots(2, 1, figsize=(10, 6))
@@ -507,7 +507,7 @@ fig.savefig(
 
 # You can implement a very similar functionality directly with `piel`. Note that you need to import the corresponding function from the type of data input you want to provide, in order for the function to compile the corresponding inputs and `metadata` from the current location. In this case, it is from a `MeasurementDataCollection`
 
-pe.visual.frequency.measurement_data_collection.plot_s_parameter_per_component(
+piel.visual.experimental.frequency.measurement_data_collection.plot_s_parameter_per_component(
     data_collection=reinstantiated_vna_self_calibration_experiment_data.data,
     parameters_list=reinstantiated_vna_self_calibration_experiment_data.experiment.parameters_list,
     s_parameter_plot="plot_s_db",
@@ -520,13 +520,13 @@ pe.visual.frequency.measurement_data_collection.plot_s_parameter_per_component(
 #
 # Now, you might have `MeasurementCollection` or `ExperimentData` with many `s-parameters` data. It might just be easier to get the feel of all of them by automatically plotting them using some of the generic visualisation utilities in `piel` such these. You can also copy the source code through Github and modify your own function from them, and are most welcome to contribute/PR back into the project.
 
-# We might also want to automate a lot of certain types of plots. `scikit-rf` already does a great job at this. In our case, we might want to give our plotting functions a set of `ExperimentalData` measurement collections with a given set of networks and metadata and be able to easily plot this according to the type of plot structure we want. `piel` provide a common set of examples that can help automate some of this for some functionality.
+# We might also want to automate a lot of certain measurement of plots. `scikit-rf` already does a great job at this. In our case, we might want to give our plotting functions a set of `ExperimentalData` measurement collections with a given set of networks and metadata and be able to easily plot this according to the type of plot structure we want. `piel` provide a common set of examples that can help automate some of this for some functionality.
 
 # **Plotting from the ExperimentData**
 #
 # For example, you can simply plot directly from a provided `ExperimentData` accordingly too.
 
-pe.visual.frequency.experiment_data.plot_s_parameter_real_and_imaginary(
+piel.visual.experimental.frequency.experiment_data.plot_s_parameter_real_and_imaginary(
     rf_vna_self_calibration_data,
     path="../../_static/img/examples/08_basic_interconnection_modelling/s_parameter_re_im_vna_calibration_experiment_data_collection.jpg",
 )
@@ -779,9 +779,9 @@ calvna_20db_attenuator_network.plot_s_db()
 
 # ### Measurement Verification of a Coaxial-Cable
 
-# A coaxial cable is a transmission line, which means it has a signal transmission associated with it for a range of RF frequencies. We might want to explore how the attenuation and reflection of our high-frequency signals operate. Let's understand some network theory basics in relation to an actual experimental context.
+# A coaxial cable is a transmission line, which means it has a signal transmission associated with it for a range of RF frequencies. We might want to explore how the attenuation and reflection of our high-frequency signals operate. Let's understand some network theory basics in relation to an actual measurement context.
 #
-# In this example, we will consider the experimental PNA network measurement of a [141-1MSM+](https://www.minicircuits.com/WebStore/dashboard.html?model=141-1MSM%2B) cable and compare it to some network theory.
+# In this example, we will consider the measurement PNA network measurement of a [141-1MSM+](https://www.minicircuits.com/WebStore/dashboard.html?model=141-1MSM%2B) cable and compare it to some network theory.
 #
 # Note that it is important to know the fundamental limits of the measurement. For example, for an SMA 3.5mm network, the bandwidth is inherently limited to 18-24.5 GHz.
 

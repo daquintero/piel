@@ -1,4 +1,4 @@
-from ..types import VNASParameterMeasurement
+from piel.types.experimental import VNASParameterMeasurement
 from ...types import PathTypes
 from ...file_system import return_path
 

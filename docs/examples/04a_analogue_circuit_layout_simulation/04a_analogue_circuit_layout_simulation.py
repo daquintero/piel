@@ -94,7 +94,7 @@ class SkyInv:
 #
 # Say, we can then extract a netlist from the schematic with individual cell names and PDK cells identifiers. We could in `gdsfactory` map these PDK cell identifiers to instantiate the elements in a layout. We can then use this instantated cells to perform some automatic or
 #
-# It is important to know that with the SPICE-generated YAML, we cannot actually create a layout on its own. This is because the SPICE models do not exactly directly map to layout instances. SPICE models can represent performance corners for the same device, with multiple temperature or yield quality variations. As such, we need to assign the corresponding gds we want to layout for our specific schematic model.
+# It is important to know that with the SPICE-generated YAML, we cannot actually create a layout on its own. This is because the SPICE measurement do not exactly directly map to layout instances. SPICE measurement can represent performance corners for the same device, with multiple temperature or yield quality variations. As such, we need to assign the corresponding gds we want to layout for our specific schematic model.
 
 example_inverter_manual_yaml = piel.generate_raw_yaml_from_module(SkyInv)
 print(example_inverter_manual_yaml)

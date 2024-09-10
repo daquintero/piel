@@ -1,5 +1,5 @@
-from piel.experimental.models import create_two_port_oscilloscope, DPO73304
-from piel.experimental.types import Oscilloscope
+from piel.models.physical.electrical import create_two_port_oscilloscope, DPO73304
+from piel.types.experimental import Oscilloscope
 from piel.types import PhysicalPort
 
 

@@ -1,5 +1,5 @@
 """
-This module defines files models and types for working with digital circuits and logic signals.
+This module defines files measurement and measurement for working with digital circuits and logic signals.
 It leverages pydantic for model validation and pandas for files manipulation.
 """
 
@@ -8,10 +8,10 @@ from pydantic import ConfigDict
 from typing import Literal, Iterable, Any
 from .core import PielBaseModel, PathTypes
 
-# Type aliases for different types of digital bits and HDL simulators.
+# Type aliases for different measurement of digital bits and HDL simulators.
 AbstractBitsType = str | bytes | int
 """
-AbstractBitsType: Alias for types representing digital bits.
+AbstractBitsType: Alias for measurement representing digital bits.
     Can be one of:
     - str: A string representation of bits.
     - bytes: A byte representation of bits.

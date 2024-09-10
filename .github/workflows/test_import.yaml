@@ -49,7 +49,7 @@ jobs:
           python -c "import piel.visual"
         shell: bash
 
-      - name: Install dependencies - sim
+      - name: Install dependencies - tools
         run: |
           git config --global core.longpaths true
           uv --version
@@ -59,10 +59,10 @@ jobs:
           else
             source venv_basic/bin/activate
           fi
-          uv pip install -e .[sim, experimental]
+          uv pip install -e .[tools]
         shell: bash
 
-      - name: Test package import - sim
+      - name: Test package import - tools
         run: |
           if [[ "$RUNNER_OS" == "Windows" ]]; then
             source venv_basic/Scripts/activate

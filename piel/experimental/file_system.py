@@ -1,11 +1,11 @@
 """
-This file contains all functionality required to verify the corresponding experimental file structure and the
-mapping between experimental data, configuration ids, and the file structure accordingly. The goal would be to create
+This file contains all functionality required to verify the corresponding measurement file structure and the
+mapping between measurement data, configuration ids, and the file structure accordingly. The goal would be to create
 a direct mapping between an operating setup configuration, or experiment.
 """
 
 from ..types import PathTypes
-from .types import Experiment
+from piel.types.experimental import Experiment
 from ..file_system import (
     create_new_directory,
     return_path,

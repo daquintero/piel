@@ -46,7 +46,7 @@ piel.create_empty_piel_project(
 # ! ls full_flow_demo/full_flow_demo
 
 # ```bash
-# analogue    __init__.py  models    runs     sdc  tb
+# analogue    __init__.py  measurement    runs     sdc  tb
 # components  io		 photonic  scripts  src
 # ```
 
@@ -100,7 +100,7 @@ chain_3_mode_lattice_circuit
 
 # We know that we have three optical modes to compute the inputs, and we always are inputting a discrete (on-off) optical pulse on any input. Let's assume our design target is to implement some electronic logic that tries to route the input light down the chain to the very bottom.
 #
-# Let's implement basic optical switch models "1/0" states:
+# Let's implement basic optical switch measurement "1/0" states:
 
 optical_logic_verification_models = piel.models.frequency.get_default_models(
     type="optical_logic_verification"
@@ -319,7 +319,7 @@ cocotb_simulation_data
 
 # +
 # # Current work in progress move this out of here.
-# simple_ideal_o4_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
+# simple_ideal_o4_mzi_2x2_plots = piel.experimental.plot_simple_multi_row(
 #     files=mzi2x2_simple_simulation_data_lines,
 #     x_axis_column_name="t",
 #     row_list=[
@@ -371,7 +371,7 @@ cocotb_simulation_data
 #     simulation_data["phase"] = phase_array
 
 #     # Create the circuit model using the netlist and custom library
-#     circuit_model, _ = sax.circuit(netlist=netlist, models=custom_library)
+#     circuit_model, _ = sax.circuit(netlist=netlist, measurement=custom_library)
 
 #     # Generate unitaries for each phase in the phase array
 #     unitaries = []
@@ -391,7 +391,7 @@ cocotb_simulation_data
 # # output returns list of unitaries accordingly
 
 # # basic_ideal_phase_array = (
-# #     piel.models.logic.electro_optic.return_phase_array_from_data_series(
+# #     piel.measurement.logic.electro_optic.return_phase_array_from_data_series(
 # #         data_series=example_simple_simulation_data.x, phase_map=basic_ideal_phase_map
 # #     )
 # # )
@@ -399,13 +399,13 @@ cocotb_simulation_data
 # # example_simple_simulation_data["phase"] = basic_ideal_phase_array
 # # example_simple_simulation_data
 
-# # our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
+# # our_custom_library = piel.measurement.frequency.compose_custom_model_library_from_defaults(
 # #     {"straight_heater_metal_undercut": straight_heater_metal_simple}
 # # )
 # # our_custom_library
 
 # # mzi2x2_model, mzi2x2_model_info = sax.circuit(
-# #     netlist=mzi2x2_2x2_phase_shifter_netlist, models=our_custom_library
+# #     netlist=mzi2x2_2x2_phase_shifter_netlist, measurement=our_custom_library
 # # )
 # # piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
@@ -430,7 +430,7 @@ cocotb_simulation_data
 # output returns list of unitaries accordingly
 
 # basic_ideal_phase_array = (
-#     piel.models.logic.electro_optic.return_phase_array_from_data_series(
+#     piel.measurement.logic.electro_optic.return_phase_array_from_data_series(
 #         data_series=example_simple_simulation_data.x, phase_map=basic_ideal_phase_map
 #     )
 # )
@@ -438,13 +438,13 @@ cocotb_simulation_data
 # example_simple_simulation_data["phase"] = basic_ideal_phase_array
 # example_simple_simulation_data
 
-# our_custom_library = piel.models.frequency.compose_custom_model_library_from_defaults(
+# our_custom_library = piel.measurement.frequency.compose_custom_model_library_from_defaults(
 #     {"straight_heater_metal_undercut": straight_heater_metal_simple}
 # )
 # our_custom_library
 
 # mzi2x2_model, mzi2x2_model_info = sax.circuit(
-#     netlist=mzi2x2_2x2_phase_shifter_netlist, models=our_custom_library
+#     netlist=mzi2x2_2x2_phase_shifter_netlist, measurement=our_custom_library
 # )
 # piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
@@ -487,13 +487,13 @@ cocotb_simulation_data
 # mzi2x2_simple_simulation_data["output_amplitude_array_1"] = output_amplitude_array_1
 # mzi2x2_simple_simulation_data
 
-# mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transient(
+# mzi2x2_simple_simulation_data_lines = piel.experimental.points_to_lines_fixed_transient(
 #     files=mzi2x2_simple_simulation_data,
 #     time_index_name="t",
 #     fixed_transient_time=1,
 # )
 
-# simple_ideal_o3_mzi_2x2_plots = piel.visual.plot_simple_multi_row(
+# simple_ideal_o3_mzi_2x2_plots = piel.experimental.plot_simple_multi_row(
 #     files=mzi2x2_simple_simulation_data_lines,
 #     x_axis_column_name="t",
 #     row_list=[

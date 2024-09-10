@@ -20,7 +20,6 @@ from ..tools.cocotb import (
     read_simulation_data,
     get_simulation_output_files_from_design,
 )
-from ..tools.openlane import find_latest_design_run
 from ..integration.amaranth_openlane import layout_truth_table_through_openlane
 from ..integration.gdsfactory_openlane import create_gdsfactory_component_from_openlane
 

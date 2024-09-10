@@ -170,7 +170,7 @@ def straight_heater_metal_simple(
     ohms_per_square: float | None = None,
     straight: ComponentSpec = straight_function,
 ) -> Component:
-    """Returns a thermal phase shifter that has properly fixed electrical connectivity to extract a suitable electrical netlist and models.
+    """Returns a thermal phase shifter that has properly fixed electrical connectivity to extract a suitable electrical netlist and measurement.
     dimensions from https://doi.org/10.1364/OE.27.010456
 
     Args:

@@ -9,7 +9,6 @@ import piel
 
 # Each design flow might have its own implementation strategy. Combinatorial designs follow different flows to sequential designs and this can be automated if we want to quickly go through an implementation strategy. Let's verify our implementation configuration.
 
-import piel
 
 # ## Basic Inverter Project
 

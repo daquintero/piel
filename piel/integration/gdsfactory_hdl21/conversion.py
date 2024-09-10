@@ -1,6 +1,6 @@
 """
 `sax` has very good GDSFactory integration functions, so there is a question on whether implementing our own circuit
-construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical models to our
+construction, and SPICE netlist parser from it, accordingly. We need in some form to connect electrical measurement to our
 parsed netlist, in order to apply SPICE passive values, and create connectivity for each particular device. Ideally,
 this would be done from the component instance as that way the component model can be integrated with its geometrical
 parameters, but does not have to be done necessarily. This comes down to implementing a backend function to compile
@@ -78,7 +78,7 @@ def gdsfactory_netlist_with_hdl21_generators(
     generators=None,
 ):
     """
-    This function allows us to map the ``hdl21`` models dictionary in a `sax`-like implementation to the ``GDSFactory`` netlist. This allows us to iterate over each instance in the netlist and construct a circuit after this function.]
+    This function allows us to map the ``hdl21`` measurement dictionary in a `sax`-like implementation to the ``GDSFactory`` netlist. This allows us to iterate over each instance in the netlist and construct a circuit after this function.]
 
     Example usage:
 
@@ -86,15 +86,15 @@ def gdsfactory_netlist_with_hdl21_generators(
 
         >>> import gdsfactory as gf
         >>> from piel.integration.gdsfactory_hdl21.conversion import gdsfactory_netlist_with_hdl21_generators
-        >>> from piel.models.physical.electronic import get_default_models
+        >>> from piel.measurement.physical.electronic import get_default_models
         >>> gdsfactory_netlist_with_hdl21_generators(gdsfactory_netlist=gf.components.mzi2x2_2x2_phase_shifter().get_netlist(exclude_port_types="optical"),generators=get_default_models())
 
     Args:
-        gdsfactory_netlist: The netlist from ``GDSFactory`` to map to the ``hdl21`` models dictionary.
-        generators: The ``hdl21`` models dictionary to map to the ``GDSFactory`` netlist.
+        gdsfactory_netlist: The netlist from ``GDSFactory`` to map to the ``hdl21`` measurement dictionary.
+        generators: The ``hdl21`` measurement dictionary to map to the ``GDSFactory`` netlist.
 
     Returns:
-        The ``GDSFactory`` netlist with the ``hdl21`` models dictionary.
+        The ``GDSFactory`` netlist with the ``hdl21`` measurement dictionary.
     """
     import copy
     import networkx as nx
@@ -177,8 +177,8 @@ def gdsfactory_netlist_to_spice_string_connectivity_netlist(
 
     .. code-block::
 
-        1. Extract all instances and required models from the netlist, and assign the corresponding parameters on instantiation.
-        2. Verify that the models have been provided. Each model describes the type of component this is, how many ports it requires and so on.
+        1. Extract all instances and required measurement from the netlist, and assign the corresponding parameters on instantiation.
+        2. Verify that the measurement have been provided. Each model describes the type of component this is, how many ports it requires and so on.
         3. Map the connections to each instance port as part of the instance dictionary.
 
     We should get as an output a dictionary in the structure:
@@ -192,7 +192,7 @@ def gdsfactory_netlist_to_spice_string_connectivity_netlist(
                                 ('straight_1,e2', 'taper_2,e2')],
                 'spice_nets': {'e1': 'straight_1__e1___taper_1__e2',
                         'e2': 'straight_1__e2___taper_2__e2'},
-                'spice_model': <function piel.models.physical.electronic.spice.resistor.basic_resistor()>},
+                'spice_model': <function piel.measurement.physical.electronic.spice.resistor.basic_resistor()>},
             }
             ...
         }

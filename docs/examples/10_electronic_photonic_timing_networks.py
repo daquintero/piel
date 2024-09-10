@@ -16,9 +16,9 @@ import piel
 
 # Let's create a basic network between two paths.
 
-port_1 = piel.types.Port()
-port_2 = piel.types.Port()
-connection = piel.types.Connection(ports=[port_1, port_2])
+port_1 = piel.experimental.types.Port()
+port_2 = piel.experimental.types.Port()
+connection = piel.experimental.types.Connection(ports=[port_1, port_2])
 connection
 
 # ```
@@ -27,8 +27,10 @@ connection
 
 # You will note that this `Connection` has some timing information attached to it. We can compose relevant timing information accordingly in the `Connection` definition:
 
-basic_timing = piel.types.TimeMetrics(value=1)
-timed_connection = piel.types.Connection(ports=[port_1, port_2], time=basic_timing)
+basic_timing = piel.experimental.types.TimeMetrics(value=1)
+timed_connection = piel.experimental.types.Connection(
+    ports=[port_1, port_2], time=basic_timing
+)
 timed_connection
 
 # Using this functionality, now we can compute the total timing path of a given directional path. Now this is useful if we can define a `Component` and create connectivity accordingly.

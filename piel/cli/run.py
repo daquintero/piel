@@ -1,6 +1,5 @@
 import click
 import sys
-from .utils import get_python_install_directory
 from .main import main
 
 

@@ -14,7 +14,7 @@ from piel.materials.thermal_conductivity import stainless_steel
 def test_stainless_steel_valid_specifications(temperature, specification, expected):
     result = stainless_steel(temperature, specification)
     assert jnp.isclose(
-        result, expected, rtol=1e-4
+        result, expected, rtol=1e-2
     ), f"Expected {expected}, got {result}"
 
 

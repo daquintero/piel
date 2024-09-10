@@ -4,7 +4,7 @@ This module defines type aliases for material specifications and references used
 
 from typing import Literal, Optional
 
-# Type alias for material specification types, allowing for strict typing using Literal.
+# Type alias for material specification measurement, allowing for strict typing using Literal.
 MaterialSpecificationType = Literal
 """
 MaterialSpecificationType:

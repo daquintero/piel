@@ -156,13 +156,13 @@ truth_table.dataframe
 
 # ### Simple Active 2x2 MZI Phase Shifter
 
-# In order to determine the variation of the unitary dependent on an active phase, we need to first define our circuit model and which phase shifter we would be modulating. We will compose an active MZI2x2 switch based on the decomposition provided by the extracted `sax` netlist. First we determine what are our circuit missing models.
+# In order to determine the variation of the unitary dependent on an active phase, we need to first define our circuit model and which phase shifter we would be modulating. We will compose an active MZI2x2 switch based on the decomposition provided by the extracted `sax` netlist. First we determine what are our circuit missing measurement.
 
 sax.get_required_circuit_models(mzi2x2_2x2_phase_shifter_netlist)
 
 # ```['bend_euler', 'mmi2x2', 'straight', 'straight_heater_metal_undercut']```
 
-# We have some basic models in `piel` we can use to compose our circuit
+# We have some basic measurement in `piel` we can use to compose our circuit
 
 all_models = piel.models.frequency.get_all_models()
 all_models
@@ -406,7 +406,7 @@ mixed_switch_lattice_circuit_netlist.keys()
 
 mixed_switch_lattice_circuit_netlist["mzi_d3794663"]["instances"].keys()
 
-# We can check what models we need to provide to compose the circuit. In our case, we want to determine all the instances that implement a particular model. This can be built directly into sax.
+# We can check what measurement we need to provide to compose the circuit. In our case, we want to determine all the instances that implement a particular model. This can be built directly into sax.
 
 recursive_composed_required_models = sax.get_required_circuit_models(
     mixed_switch_lattice_circuit_netlist[top_level_name],
@@ -418,7 +418,7 @@ recursive_composed_required_models
 # ['mzi_d3794663', 'mzi_d46c281f']
 # ```
 #
-# So this tells us all the models that are recursively composed, but not inherently provided by our defaults library. These are the models we can explore.
+# So this tells us all the measurement that are recursively composed, but not inherently provided by our defaults library. These are the measurement we can explore.
 
 recursive_composed_required_models_0 = sax.get_required_circuit_models(
     mixed_switch_lattice_circuit_netlist[recursive_composed_required_models[0]],
@@ -440,7 +440,7 @@ piel.get_component_instances(
 # {'straight_heater_metal_undercut_length200': ['sxt']}
 # ```
 
-# Now, we know from our example above that we can go deeper down the rabbit hole of iterative models until we have provided all models for our device. Let's just look at this in practice:
+# Now, we know from our example above that we can go deeper down the rabbit hole of iterative measurement until we have provided all measurement for our device. Let's just look at this in practice:
 
 recursive_composed_required_models_0_0 = sax.get_required_circuit_models(
     mixed_switch_lattice_circuit_netlist[recursive_composed_required_models_0[0]],
@@ -553,9 +553,9 @@ piel.sax_to_s_parameters_standard_matrix(
 #  ('in_o_0', 'in_o_1', 'in_o_2', 'in_o_3'))
 # ```
 
-# However, we want to control the phase shifting effect and control the component we are modifying. In our case, we want to modify the phase of the model controlled by our thermo-optic phase shifters which are `straight_heater_metal_s_*` instances. So let's find all the instances and corresponding models where there is one of these models. We know from the `required_models` function that we are have distinct models required for each of these Mach-Zeneder components.
+# However, we want to control the phase shifting effect and control the component we are modifying. In our case, we want to modify the phase of the model controlled by our thermo-optic phase shifters which are `straight_heater_metal_s_*` instances. So let's find all the instances and corresponding measurement where there is one of these measurement. We know from the `required_models` function that we are have distinct measurement required for each of these Mach-Zeneder components.
 
-# From this we can tell only of the corresponding instances and submodels. It is important to note that some of the models can be composed from other models, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification. What we need to do now, is extract a list of our phase shifters that we can then apply our phase to.
+# From this we can tell only of the corresponding instances and submodels. It is important to note that some of the measurement can be composed from other measurement, which means that you need to explore the composition of the internal components potentially if you want to do a full circuit composition verification. What we need to do now, is extract a list of our phase shifters that we can then apply our phase to.
 
 # ### Algorithmically Extracted Phase-Shifter Instances
 
@@ -583,7 +583,7 @@ switch_lattice_address
 #  ('component_lattice_generic_6555a796', 'mzi_5', 'sxt')]
 # ```
 
-# These keys tell us the location of our phase shifter elements as we have defined in the composition of our component `straight_heater_metal_s` mapping to our `"straight_heater_metal_simple": ideal_active_waveguide` definition in the `piel.models.frequency.get_default_models()`. We can use them to compose our phases accordingly as these are hashable elements.
+# These keys tell us the location of our phase shifter elements as we have defined in the composition of our component `straight_heater_metal_s` mapping to our `"straight_heater_metal_simple": ideal_active_waveguide` definition in the `piel.measurement.frequency.get_default_models()`. We can use them to compose our phases accordingly as these are hashable elements.
 
 switch_lattice_state_phase = dict()
 for switch_lattice_address_i in switch_lattice_address:

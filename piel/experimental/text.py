@@ -1,7 +1,7 @@
 import pandas as pd
 
 from ..types import PathTypes
-from .types import Experiment
+from piel.types.experimental import Experiment
 from ..file_system import (
     return_path,
     write_file,

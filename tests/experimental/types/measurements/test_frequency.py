@@ -2,7 +2,7 @@ import pytest
 import pathlib
 import os
 import types
-from piel.experimental.types import (
+from piel.types.experimental import (
     VNASParameterMeasurementConfiguration,
     VNAPowerSweepMeasurementConfiguration,
     VNASParameterMeasurement,
@@ -63,7 +63,7 @@ def test_vna_power_sweep_measurement_configuration_default_initialization():
         "/path/to/spectrum_file",  # str
         pathlib.Path("/path/to/spectrum_file"),  # pathlib.Path
         os.path,  # os.PathLike (os module itself in this case)
-        types.ModuleType("mock_module"),  # types.ModuleType
+        types.ModuleType("mock_module"),  # measurement.ModuleType
     ],
 )
 def test_vna_sparameter_measurement_initialization(path_type):
@@ -85,7 +85,7 @@ def test_vna_sparameter_measurement_default_initialization():
         "/path/to/spectrum_file",  # str
         pathlib.Path("/path/to/spectrum_file"),  # pathlib.Path
         os.path,  # os.PathLike (os module itself in this case)
-        types.ModuleType("mock_module"),  # types.ModuleType
+        types.ModuleType("mock_module"),  # measurement.ModuleType
     ],
 )
 def test_vna_power_sweep_measurement_initialization(path_type):

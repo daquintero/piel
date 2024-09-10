@@ -1,6 +1,4 @@
 import piel.experimental.types as types
-import piel.experimental.visual as visual
-import piel.experimental.models as models
 
 from piel.experimental.devices import DPO73304
 

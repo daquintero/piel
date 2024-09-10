@@ -73,7 +73,7 @@ recursive_netlist[list(recursive_netlist.keys())[0]]["instances"].keys()
 
 flat_netlist_keys = switch_circuit.get_netlist_flat()["instances"].keys()
 
-# Understanding the photonic netlisting functions are important when actively mapping our component models to these functions.
+# Understanding the photonic netlisting functions are important when actively mapping our component measurement to these functions.
 
 # ### Individual Components
 
@@ -90,9 +90,9 @@ mzi2x2_netlist["ports"].keys()
 # dict_keys(['o1', 'o2', 'o4', 'o3'])
 # ```
 
-# Worth noting that in this model it is defined by passive models, whereas ours above has composite components, and this is dependent on the netlisting function and implementation.
+# Worth noting that in this model it is defined by passive measurement, whereas ours above has composite components, and this is dependent on the netlisting function and implementation.
 #
-# We have contributed to `sax` in order to `piel` provides some functionality to extract the base models that we require to define:
+# We have contributed to `sax` in order to `piel` provides some functionality to extract the base measurement that we require to define:
 
 sax.get_required_circuit_models(mzi2x2_netlist)
 
@@ -102,18 +102,18 @@ sax.get_required_circuit_models(mzi2x2_netlist)
 
 # #### Basic Models
 
-# We will now include a basic list of models to do a `sax` s-parameter network simulation of the circuit. Based on the [layout-aware sax example](https://flaport.github.io/sax/examples/07_layout_aware.html), the `models` are a dictionary that maps the instance name to a functional `s-parameter` representation of the circuit.
+# We will now include a basic list of measurement to do a `sax` s-parameter network simulation of the circuit. Based on the [layout-aware sax example](https://flaport.github.io/sax/examples/07_layout_aware.html), the `measurement` are a dictionary that maps the instance name to a functional `s-parameter` representation of the circuit.
 #
-# `piel` conveniently provides a library of component models that can be used to co-simulate electronic and photonic systems.
+# `piel` conveniently provides a library of component measurement that can be used to co-simulate electronic and photonic systems.
 
-# Now we need to include our device models, we will start with basic ones and expand from that. It is easy to create some models as the components are all the in this default example.
+# Now we need to include our device measurement, we will start with basic ones and expand from that. It is easy to create some measurement as the components are all the in this default example.
 
 
-# `piel` provides a library with a list of models, that we hope we can extend and improve with your contribution! We create our model dictionary accordingly based on our default photonic frequency library:
+# `piel` provides a library with a list of measurement, that we hope we can extend and improve with your contribution! We create our model dictionary accordingly based on our default photonic frequency library:
 
 piel.models.frequency.get_default_models()
 
-# Let's explore one of our default models. Each model has its source in the documentation.
+# Let's explore one of our default measurement. Each model has its source in the documentation.
 
 piel.models.frequency.get_default_models()["straight"]()
 
@@ -185,7 +185,7 @@ mzi2x2_model(bend_euler_1={"length": 15}, bend_euler_3={"length": 20})
 
 # ## Passive Network Analysis
 
-# Using these basic models we can also extract the total network performance of our composed generic_network_lattice:
+# Using these basic measurement we can also extract the total network performance of our composed generic_network_lattice:
 
 # We can extract the whole netlist using a recursive netlist extraction:
 
@@ -269,7 +269,7 @@ switch_circuit_model()
 
 # ## Phase-Dependent Network Analysis
 
-# Note that a recursive netlist allows us to construct our unitary based on fundamental elements, we can see the models it requires:
+# Note that a recursive netlist allows us to construct our unitary based on fundamental elements, we can see the measurement it requires:
 
 sax.get_required_circuit_models(recursive_netlist)
 

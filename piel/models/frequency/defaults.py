@@ -46,14 +46,14 @@ def get_default_models(
     type: Literal["classical", "quantum", "optical_logic_verification"] = "classical",
 ) -> dict:
     """
-    Returns the default models dictionary.
+    Returns the default measurement dictionary.
 
     Args:
         custom_defaults (dict): Custom defaults dictionary.
-        type (Literal["default", "quantum"]): Type of default models dictionary to return.
+        type (Literal["default", "quantum"]): Type of default measurement dictionary to return.
 
     Returns:
-        dict: Default models dictionary.
+        dict: Default measurement dictionary.
     """
     if custom_defaults is not None:
         return custom_defaults

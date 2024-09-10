@@ -1,6 +1,6 @@
 """
-This module defines files models for low-noise amplifier (LNA) and high-voltage amplifier (HVA) metrics.
-It provides structured types using pydantic for validation and includes type aliases for metric ranges.
+This module defines files measurement for low-noise amplifier (LNA) and high-voltage amplifier (HVA) metrics.
+It provides structured measurement using pydantic for validation and includes type aliases for metric ranges.
 """
 
 from typing import Any

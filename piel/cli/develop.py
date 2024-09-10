@@ -32,7 +32,7 @@ def generate_poetry2nix_flake(args=None):
     Returns:
 
     """
-    # nix flake init --template github:nix-community/poetry2nix  --experimental-features 'nix-command flakes'
+    # nix flake init --template github:nix-community/poetry2nix  --measurement-features 'nix-command flakes'
     try:
         echo_and_check_subprocess(
             [
@@ -41,7 +41,7 @@ def generate_poetry2nix_flake(args=None):
                 "init",
                 "--template",
                 "github:nix-community/poetry2nix",
-                "--experimental-features",
+                "--measurement-features",
                 "nix-command flakes",
             ]
         )
@@ -78,14 +78,14 @@ def build_piel_cachix_command(args=None):
         # cachix use openlane
         # create_and_activate_venv()  # Currently unused, TODO future uv integration
         nix_shell_directory = get_python_install_directory() / "environment" / "nix"
-        # nix develop --extra-experimental-features nix-command --extra-experimental-features flakes
+        # nix develop --extra-measurement-features nix-command --extra-measurement-features flakes
         echo_and_check_subprocess(
             [
                 "nix",
                 "build",
-                "--extra-experimental-features",
+                "--extra-measurement-features",
                 "nix-command",
-                "--extra-experimental-features",
+                "--extra-measurement-features",
                 "flakes",
                 "--show-trace",
             ],

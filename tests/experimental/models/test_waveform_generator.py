@@ -1,9 +1,9 @@
 import pytest
-from piel.experimental.models import (
+from piel.models.physical.electrical import (
     create_one_port_square_wave_waveform_generator,
     AWG70001A,
 )
-from piel.experimental.types import (
+from piel.types.experimental import (
     WaveformGenerator,
     WaveformGeneratorConfiguration,
 )

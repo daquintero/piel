@@ -14,13 +14,13 @@ __default_models_dictionary__ = {
 
 def get_default_models(custom_defaults: dict | None = None) -> dict:
     """
-    Returns the default models dictionary.
+    Returns the default measurement dictionary.
 
     Args:
         custom_defaults (dict): Custom defaults dictionary.
 
     Returns:
-        dict: Default models dictionary.
+        dict: Default measurement dictionary.
     """
     if custom_defaults is not None:
         return custom_defaults

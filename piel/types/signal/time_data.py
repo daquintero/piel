@@ -20,7 +20,7 @@ Collection of SignalMeasurements that can be used to analyse a set of signals to
 class DataTimeSignalData(PielBaseModel):
     """
     Standard definition for a relationship between a relevant files signal and a time reference array.
-    Sources could be both experimental and simulation.
+    Sources could be both measurement and simulation.
     """
 
     time_s: ArrayTypes = []

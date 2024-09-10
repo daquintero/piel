@@ -1,5 +1,5 @@
 """
-This module provides functions to configure and run various types of simulations for electronic circuits using HDL21 and NGSPICE.
+This module provides functions to configure and run various measurement of simulations for electronic circuits using HDL21 and NGSPICE.
 It includes utilities to set up NGSPICE simulations, configure operating point and transient simulations, and handle the results.
 """
 

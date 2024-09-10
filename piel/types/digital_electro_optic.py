@@ -1,6 +1,6 @@
 """
 This module defines the BitPhaseMap class, which provides a mapping between bits and corresponding phases.
-It also includes the necessary imports and type aliases for numerical types and bit types.
+It also includes the necessary imports and type aliases for numerical measurement and bit measurement.
 """
 
 import numpy as np

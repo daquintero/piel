@@ -1,5 +1,5 @@
 from ...utils import get_unique_dataframe_subsets
-from ..types import Experiment, ExperimentData, ExperimentDataCollection
+from piel.types.experimental import Experiment, ExperimentData, ExperimentDataCollection
 from ..measurements.map import measurement_data_to_measurement_collection_data_map
 from ...models import load_from_dict
 

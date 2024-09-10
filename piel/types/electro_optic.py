@@ -1,5 +1,5 @@
 """
-This module defines the OpticalStateTransitions class and related types for managing phase transitions in electro-optic models.
+This module defines the OpticalStateTransitions class and related measurement for managing phase transitions in electro-optic measurement.
 It also provides a typed dictionary for Fock state phase transitions and includes necessary imports and type aliases.
 """
 
@@ -12,7 +12,7 @@ from .core import ArrayTypes, PielBaseModel, TupleNumericalType, TupleIntType
 # Type alias for phase maps, which can be either a tuple of floats or a tuple of integers.
 PhaseMapType = TupleNumericalType
 """
-PhaseMapType: Alias for phase map types.
+PhaseMapType: Alias for phase map measurement.
     Can be one of:
     - TupleFloatType: A tuple of float values.
     - TupleIntType: A tuple of integer values.
@@ -36,10 +36,10 @@ class FockStatePhaseTransitionType(TypedDict):
     target_mode_output: Optional[bool | int] | None
 
 
-# Literal type representing possible phase transition types in an optical model.
+# Literal type representing possible phase transition measurement in an optical model.
 PhaseTransitionTypes = Literal["cross", "bar"]
 """
-PhaseTransitionTypes: A literal type for phase transition types.
+PhaseTransitionTypes: A literal type for phase transition measurement.
     Can be one of:
     - "cross": Refers to a cross-type phase transition.
     - "bar": Refers to a bar-type phase transition.

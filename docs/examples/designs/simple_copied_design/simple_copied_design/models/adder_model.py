@@ -3,5 +3,5 @@
 
 
 def adder_model(a: int, b: int) -> int:
-    """models of adder"""
+    """measurement of adder"""
     return a + b

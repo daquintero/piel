@@ -72,7 +72,7 @@ def test_create_axes_parameters_table_overlay():
 #     axs[2].legend()
 #
 #     # Insert tables and adjust subplot positions
-#     piel.visual.create_axes_parameters_tables_separate(
+#     piel.experimental.create_axes_parameters_tables_separate(
 #         fig, axs, tables_list, table_height=0.15, spacing=0.005
 #     )
 #

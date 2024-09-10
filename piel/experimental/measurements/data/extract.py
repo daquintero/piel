@@ -1,13 +1,16 @@
 import logging
 from ....types import PathTypes
-from ...types import (
+from piel.types.experimental import (
     Experiment,
     ExperimentData,
 )
 from ....file_system import return_path
 from ....models import load_from_json
 from ..experiment import compose_measurement_collection_from_experiment
-from ...types import MeasurementCollectionTypes, MeasurementDataCollectionTypes
+from piel.types.experimental import (
+    MeasurementCollectionTypes,
+    MeasurementDataCollectionTypes,
+)
 from ..map import (
     measurement_to_data_map,
     measurement_to_data_method_map,
@@ -27,7 +30,7 @@ def extract_data_from_measurement_collection(
     """
     The goal of this function is to compose the data from a collection of measurement references.
     Based on each type of measurement, it will apply an extraction function based on the data mapping accordingly.
-    It will return a collection of data types which is inherent to the type of the measurement collection provided.
+    It will return a collection of data measurement which is inherent to the type of the measurement collection provided.
     """
     measurement_data_collection: MeasurementDataCollectionTypes = list()
 

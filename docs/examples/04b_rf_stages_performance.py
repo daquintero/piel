@@ -2,9 +2,9 @@
 #
 # The goal of this notebook is to:
 # - Demonstrate functionality of modelling performance parameters of a RF electronic network in the time and frequency domain.
-# - Demonstrate some functionality of how the `piel` structure can streamline this analysis, alongside some default models.
+# - Demonstrate some functionality of how the `piel` structure can streamline this analysis, alongside some default measurement.
 #
-# This enables us to determine how to test a corresponding device in terms of the required test equipment specification and also provide a reference range when comparing experimental results. This can then be understood in the context of an RF-photonic system of what is the expected optical performance of a photonic network accordingly.
+# This enables us to determine how to test a corresponding device in terms of the required test equipment specification and also provide a reference range when comparing measurement results. This can then be understood in the context of an RF-photonic system of what is the expected optical performance of a photonic network accordingly.
 #
 # ## System to Model
 #
@@ -14,7 +14,7 @@
 #
 # ## Constructing our Components Models
 #
-# First, we will understand how to create, or extract realistic electronic models for components that we might use in practice in our system. Let's get some reference files to use:
+# First, we will understand how to create, or extract realistic electronic measurement for components that we might use in practice in our system. Let's get some reference files to use:
 #
 # **Relevant Data References for this notebook:**
 # 1. Siew, Shawn Yohanes, et al. "Review of silicon photonics technology and platform development." Journal of Lightwave Technology 39.13 (2021): 4374-4389.

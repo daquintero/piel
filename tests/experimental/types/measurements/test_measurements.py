@@ -2,7 +2,7 @@ import pytest
 import pathlib
 import os
 import types
-from piel.experimental.types import (
+from piel.types.experimental import (
     MeasurementConfiguration,
     Measurement,
     MeasurementCollection,
@@ -37,7 +37,7 @@ def test_measurement_configuration_default_initialization():
         "/path/to/parent_directory",  # str
         pathlib.Path("/path/to/parent_directory"),  # pathlib.Path
         os.path,  # os.PathLike (os module itself in this case)
-        types.ModuleType("mock_module"),  # types.ModuleType
+        types.ModuleType("mock_module"),  # measurement.ModuleType
     ],
 )
 def test_measurement_initialization(path_type):

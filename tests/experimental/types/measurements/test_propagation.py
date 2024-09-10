@@ -1,4 +1,4 @@
-from piel.experimental.types import (
+from piel.types.experimental import (
     PropagationDelayMeasurementConfiguration,
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,

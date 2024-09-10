@@ -69,7 +69,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",  # Add a link to the Python source code for classes, functions etc.
     "sphinx_copybutton",
-    "sphinx_autodoc_typehints",  # Automatically document param types (less noise in class signature)
+    "sphinx_autodoc_typehints",  # Automatically document param measurement (less noise in class signature)
     "sphinx_gallery.load_style",
     "sphinx-pydantic",
     "versionwarning.extension",

@@ -54,7 +54,7 @@ truth_table_dictionary = truth_table = {
 }
 input_ports_list = ["input"]
 output_ports_list = ["output"]
-truth_table = piel.types.TruthTable(
+truth_table = piel.experimental.types.TruthTable(
     input_ports=input_ports_list,
     output_ports=output_ports_list,
     **truth_table_dictionary,

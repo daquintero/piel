@@ -1,5 +1,5 @@
-from piel.experimental.models import DMM6500
-from piel.experimental.types import Multimeter
+from piel.models.physical.electrical import DMM6500
+from piel.types.experimental import Multimeter
 from piel.types import PhysicalPort
 
 

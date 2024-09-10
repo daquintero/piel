@@ -79,8 +79,8 @@ def test_extract_propagation_delay_data_from_measurement():
     # mock_measurement.dut_waveform_file = "dummy_dut_waveform_file.csv"
     #
     # with patch("piel.return_path", return_value=MagicMock(exists=lambda: True)):
-    #     with patch("piel.experimental.devices.DPO73304.extract_to_signal_measurement") as mock_extract_signal_measurement, \
-    #          patch("piel.experimental.devices.DPO73304.extract_to_data_time_signal") as mock_extract_data_time_signal:
+    #     with patch("piel.measurement.devices.DPO73304.extract_to_signal_measurement") as mock_extract_signal_measurement, \
+    #          patch("piel.measurement.devices.DPO73304.extract_to_data_time_signal") as mock_extract_data_time_signal:
     #         mock_extract_signal_measurement.return_value = MagicMock(spec=SignalMetricsMeasurementCollection)
     #         mock_extract_data_time_signal.return_value = MagicMock(spec=DataTimeSignalData)
     #
