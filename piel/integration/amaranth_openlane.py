@@ -146,8 +146,13 @@ def layout_amaranth_truth_table_through_openlane(
 
     elif openlane_version == "v2":
         our_amaranth_openlane_config = test_basic_open_lane_configuration_v2
-        run_openlane_flow(
-            configuration=our_amaranth_openlane_config,
-            design_directory=design_directory,
-            **kwargs,
-        )
+        try:
+            run_openlane_flow(
+                configuration=our_amaranth_openlane_config,
+                design_directory=design_directory,
+                **kwargs,
+            )
+        except ModuleNotFoundError as e:
+            print(
+                f"Make sure you are running this from an environment with Openlane nix installed {e}"
+            )

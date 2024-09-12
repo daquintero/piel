@@ -1,6 +1,18 @@
 # # Digital & Photonic Cosimulation with `sax` and `cocotb`
 
+# <div style="padding: 10px; border-radius: 5px;">
+# <strong>⚠️ Warning:</strong> This example requires uses packages which are locally available when cloning and installing the `stable` verision of the github source code. See example setup as follows:
+# </div>
+
+# + active=""
+# !git clone https://github.com/daquintero/piel.git
+# !cd piel/
+# !pip install -e .[tools]
+# !pip install -r requirements_notebooks.txt
+# -
+
 # We begin by importing a parametric circuit from `gdsfactory`:
+
 from piel.models.physical.photonic import (
     mzi2x2_2x2_phase_shifter,
     mzi2x2_2x2,
@@ -101,8 +113,8 @@ basic_ideal_bits_phase_map.dataframe
 # you might have to restart your kernel here
 import simple_design
 
-cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(
-    simple_design
+cocotb_simulation_output_files = (
+    piel.tools.cocotb.get_simulation_output_files_from_design(simple_design)
 )
 example_simple_truth_table = piel.flows.read_simulation_data_to_truth_table(
     cocotb_simulation_output_files[0],
@@ -178,7 +190,9 @@ our_custom_library
 mzi2x2_model, mzi2x2_model_info = sax.circuit(
     netlist=mzi2x2_2x2_phase_shifter_netlist, models=our_custom_library
 )
-piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
+    mzi2x2_model(), input_ports_order=("o2", "o1")
+)
 
 # ```python
 # (Array([[-0.3519612 -0.88685119j,  0.11042854+0.27825136j],
@@ -188,7 +202,7 @@ piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2"
 
 # Because we want to model the phase change applied from our heated waveguide, which we know previously corresponds to the `sxb` instance, we can recalculate our s-parameter matrix according to our applied phase:
 
-piel.sax_to_s_parameters_standard_matrix(
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
     mzi2x2_model(sxt={"active_phase_rad": np.pi}),
     input_ports_order=(
         "o2",
@@ -210,7 +224,7 @@ piel.sax_to_s_parameters_standard_matrix(
 
 mzi2x2_active_unitary_array = list()
 for phase_i in truth_table.dataframe.phase_0:
-    mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
+    mzi2x2_active_unitary_i = piel.tools.sax.sax_to_s_parameters_standard_matrix(
         mzi2x2_model(sxt={"active_phase_rad": phase_i}),
         input_ports_order=(
             "o2",
@@ -430,7 +444,7 @@ recursive_composed_required_models_0
 # ['straight_heater_metal_undercut_length200']
 # ```
 
-piel.get_component_instances(
+piel.tools.sax.get_component_instances(
     mixed_switch_lattice_circuit_netlist,
     top_level_prefix="mzi_d3794663",
     component_name_prefix=recursive_composed_required_models_0[0],
@@ -463,7 +477,7 @@ our_recursive_custom_library
 
 # What we can do now is that we can extract what instances use this model.
 
-active_phase_shifters_dictionary = piel.get_component_instances(
+active_phase_shifters_dictionary = piel.tools.sax.get_component_instances(
     mixed_switch_lattice_circuit_netlist,
     top_level_prefix=top_level_name,
     component_name_prefix=recursive_composed_required_models[0],
@@ -490,7 +504,9 @@ active_phase_shifters_dictionary
     models=our_recursive_custom_library,
     ignore_missing_ports=True,
 )
-piel.sax_to_s_parameters_standard_matrix(mixed_switch_lattice_circuit_s_parameters())
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
+    mixed_switch_lattice_circuit_s_parameters()
+)
 # mzi2x2_model(sxt={"active_phase_rad": phase_i}),
 
 # ```python
@@ -511,7 +527,7 @@ piel.sax_to_s_parameters_standard_matrix(mixed_switch_lattice_circuit_s_paramete
 
 active_phase_shifters_dictionary[recursive_composed_required_models[0]][0]
 
-piel.sax_to_s_parameters_standard_matrix(
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
     mixed_switch_lattice_circuit_s_parameters(
         mzi_1={"sxt": {"active_phase_rad": np.pi}}
     )
@@ -531,7 +547,7 @@ piel.sax_to_s_parameters_standard_matrix(
 
 # You can clearly see the position and change of the s-parameter matrix accordingly.
 
-piel.sax_to_s_parameters_standard_matrix(
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
     mixed_switch_lattice_circuit_s_parameters(
         **{
             "mzi_1": {"sxt": {"active_phase_rad": np.pi}},
@@ -570,7 +586,7 @@ piel.sax_to_s_parameters_standard_matrix(
 # However, then we need to determine the index. Let's determine the location of our phase shifter elements in the recursive netlist.
 
 
-switch_lattice_address = piel.get_matched_model_recursive_netlist_instances(
+switch_lattice_address = piel.tools.sax.get_matched_model_recursive_netlist_instances(
     recursive_netlist=mixed_switch_lattice_circuit_netlist,
     top_level_instance_prefix="component_lattice_generic",
     target_component_prefix="mzi_d3794663",
@@ -598,7 +614,7 @@ switch_lattice_state_phase
 # Let's convert this into a function parameter dictionary that you can use to set the `sax.circuit` function:
 
 example_switch_lattice_function_parameter_dictionary = (
-    piel.address_value_dictionary_to_function_parameter_dictionary(
+    piel.tools.sax.address_value_dictionary_to_function_parameter_dictionary(
         address_value_dictionary=switch_lattice_state_phase,
         parameter_key="active_phase_rad",
     )
@@ -623,7 +639,7 @@ example_switch_lattice_function_parameter_dictionary
 
 # We can now do everything we did previously as a function:
 
-piel.sax_to_s_parameters_standard_matrix(
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
     mixed_switch_lattice_circuit_s_parameters(
         **example_switch_lattice_function_parameter_dictionary
     )
@@ -664,7 +680,7 @@ def switch_lattice_phase_array_to_state(
 
     # Create a tuple of the corresponding phase shifter positions we can input into other functions.
     phase_address_function_parameter_dictionary = (
-        piel.address_value_dictionary_to_function_parameter_dictionary(
+        piel.tools.sax.address_value_dictionary_to_function_parameter_dictionary(
             address_value_dictionary=phase_address_dictionary,
             parameter_key=parameter_key,
         )
@@ -673,7 +689,7 @@ def switch_lattice_phase_array_to_state(
     # Return the phase shifter controller accordingly
     # Find a way to transform this information into corresponding phases, or maybe map a set of inputs accordingly.
     if to_s_parameters_standard_matrix:
-        return piel.sax_to_s_parameters_standard_matrix(
+        return piel.tools.sax.sax_to_s_parameters_standard_matrix(
             circuit(**phase_address_function_parameter_dictionary)
         )
     else:

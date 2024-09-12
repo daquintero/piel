@@ -96,7 +96,7 @@ class SkyInv:
 #
 # It is important to know that with the SPICE-generated YAML, we cannot actually create a layout on its own. This is because the SPICE measurement do not exactly directly map to layout instances. SPICE measurement can represent performance corners for the same device, with multiple temperature or yield quality variations. As such, we need to assign the corresponding gds we want to layout for our specific schematic model.
 
-example_inverter_manual_yaml = piel.generate_raw_yaml_from_module(SkyInv)
+example_inverter_manual_yaml = piel.integration.generate_raw_yaml_from_module(SkyInv)
 print(example_inverter_manual_yaml)
 
 example_inverter_manual_yaml = """
@@ -164,7 +164,7 @@ with open("example_inverter_manual.schem.yaml", "w") as file:
 
 # ### Automatically mapping layout instances to the YAML - Inverter
 
-example_inverter_schematic_editor = piel.hdl21_module_to_schematic_editor(
+example_inverter_schematic_editor = piel.integration.hdl21_module_to_schematic_editor(
     module=SkyInv,
     yaml_schematic_file_name="example_inverter_auto.schem.yaml",
 )
@@ -396,9 +396,11 @@ duts = [rladder(rparams), mux_tree(mparams)]
 # h.netlist(duts, sys.stdout, fmt="xyce")
 # -
 
-example_resistor_ladder_schematic_editor = piel.hdl21_module_to_schematic_editor(
-    module=rladder(rparams),
-    yaml_schematic_file_name="rladder.schem.yaml",
+example_resistor_ladder_schematic_editor = (
+    piel.integration.hdl21_module_to_schematic_editor(
+        module=rladder(rparams),
+        yaml_schematic_file_name="rladder.schem.yaml",
+    )
 )
 example_resistor_ladder_schematic_editor.visualize()
 

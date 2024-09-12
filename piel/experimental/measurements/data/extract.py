@@ -114,7 +114,7 @@ def extract_data_from_experiment(
         composition_kwargs = dict()
 
     if extraction_kwargs is None:
-        extraction_kwargs = dict()
+        extraction_kwargs = {"skip_missing": True}
 
     measurement_collection = compose_measurement_collection_from_experiment(
         experiment=experiment,

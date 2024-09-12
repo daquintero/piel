@@ -25,7 +25,7 @@
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
-import piel
+import piel.models.frequency.photonic
 import numpy as np
 import jax.numpy as jnp
 import pandas as pd
@@ -64,7 +64,6 @@ import pandas as pd
 # \end{equation}
 #
 # An implementation of this coupler in an integrated photonics platform using `gdsfactory` is shown in the image below. Note that the equation notation above matches that within the `gds` implementation:
-
 from gdsfactory.components import mmi1x2
 
 mmi1x2().plot()
@@ -73,7 +72,7 @@ mmi1x2().plot()
 
 # The numerical implementation of this transfer matrix in `sax` is, for a 50:50 splitter is:
 
-piel.models.frequency.photonic.mmi1x2.mmi1x2_50_50()
+piel.models.frequency.photonic.mmi1x2_50_50()
 
 # ```python
 # {('o1', 'o2'): 0.7071067811865476,
@@ -82,13 +81,13 @@ piel.models.frequency.photonic.mmi1x2.mmi1x2_50_50()
 #  ('o3', 'o1'): 0.7071067811865476}
 # ```
 
-mmi1x2_transfer_matrix = piel.sax_to_s_parameters_standard_matrix(
-    piel.models.frequency.photonic.mmi1x2.mmi1x2_50_50(),
+mmi1x2_transfer_matrix = piel.tools.sax.sax_to_s_parameters_standard_matrix(
+    piel.models.frequency.photonic.mmi1x2_50_50(),
     input_ports_order=("o1",),
 )
 mmi1x2_transfer_matrix
 
-piel.models.frequency.photonic.mmi1x2.mmi1x2(splitting_ratio=0.4)
+piel.models.frequency.photonic.mmi1x2(splitting_ratio=0.4)
 
 # ```python
 # {('o1', 'o2'): 0.6324555320336759,
@@ -126,8 +125,8 @@ mmi2x2().ports
 
 # ![mmi_2x2](../_static/img/examples/06a_analytical_mzm_model/mmi_2x2.png)
 
-mmi2x2_transfer_matrix = piel.sax_to_s_parameters_standard_matrix(
-    piel.models.frequency.photonic.mmi2x2.mmi2x2(splitting_ratio=0.5),
+mmi2x2_transfer_matrix = piel.tools.sax.sax_to_s_parameters_standard_matrix(
+    piel.models.frequency.photonic.mmi2x2(splitting_ratio=0.5),
     input_ports_order=("o2", "o1"),
 )
 mmi2x2_transfer_matrix
@@ -138,8 +137,8 @@ mmi2x2_transfer_matrix
 #  ('o2', 'o1'))
 # ```
 
-piel.sax_to_s_parameters_standard_matrix(
-    piel.models.frequency.photonic.mmi2x2.mmi2x2(splitting_ratio=0.4),
+piel.tools.sax.sax_to_s_parameters_standard_matrix(
+    piel.models.frequency.photonic.mmi2x2(splitting_ratio=0.4),
     input_ports_order=("o2", "o1"),
 )
 

@@ -113,7 +113,7 @@ dev = [
     "sphinxcontrib-pdfembed @ git+https://github.com/SuperKogito/sphinxcontrib-pdfembed.git",
     "tabulate",
     "tox",
-    "watchdog"
+    "watchdog",
 ]
 
 [scripts]

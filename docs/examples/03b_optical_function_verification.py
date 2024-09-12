@@ -36,6 +36,7 @@ import pandas as pd
 import piel
 import sax
 from gdsfactory.generic_tech import get_generic_pdk
+from piel.models.physical.photonic import mzi2x2_2x2_phase_shifter
 
 PDK = get_generic_pdk()
 PDK.activate()
@@ -45,9 +46,7 @@ piel.visual.activate_piel_styles()
 
 # We will explore and compose our switch as we have done in some of the previous examples.
 
-ideal_mzi_2x2_2x2_phase_shifter = (
-    piel.models.physical.photonic.mzi2x2_2x2_phase_shifter()
-)
+ideal_mzi_2x2_2x2_phase_shifter = mzi2x2_2x2_phase_shifter()
 ideal_mzi_2x2_2x2_phase_shifter.plot()
 
 # We can extract the optical netlist accordingly.
@@ -62,7 +61,7 @@ switch_netlist = optical_recursive_netlist(ideal_mzi_2x2_2x2_phase_shifter)
 
 # These are our optical switch function tests.
 
-valid_input_fock_states = piel.fock_states_only_individual_modes(
+valid_input_fock_states = piel.tools.qutip.fock_states_only_individual_modes(
     mode_amount=2,
     maximum_photon_amount=1,
     output_type="jax",
@@ -105,7 +104,7 @@ ideal_mzi_2x2_2x2_phase_shifter_circuit
 
 # Let's evaluate our circuits for both states:
 
-zero_phase_circuit = piel.sax_to_s_parameters_standard_matrix(
+zero_phase_circuit = piel.tools.sax.sax_to_s_parameters_standard_matrix(
     ideal_mzi_2x2_2x2_phase_shifter_circuit(sxt={"active_phase_rad": switch_states[0]}),
     input_ports_order=(
         "o2",
@@ -122,7 +121,7 @@ print(piel.round_complex_array(zero_phase_circuit[0]))
 #  [0.+1.j 0.+0.j]]
 # ```
 
-pi_phase_circuit = piel.sax_to_s_parameters_standard_matrix(
+pi_phase_circuit = piel.tools.sax.sax_to_s_parameters_standard_matrix(
     ideal_mzi_2x2_2x2_phase_shifter_circuit(sxt={"active_phase_rad": switch_states[1]}),
     input_ports_order=(
         "o2",
@@ -149,11 +148,11 @@ print(piel.round_complex_array(pi_phase_circuit[0]))
 raw_output_state_0 = jnp.dot(zero_phase_circuit[0], valid_input_fock_states[0])
 output_state_0 = {
     "phase": (switch_states[0],),
-    "input_fock_state": piel.experimental.types.convert_array_type(
-        valid_input_fock_states[0], piel.experimental.types.TupleIntType
+    "input_fock_state": piel.types.convert_array_type(
+        valid_input_fock_states[0], piel.types.TupleIntType
     ),
-    "output_fock_state": piel.experimental.types.absolute_to_threshold(
-        raw_output_state_0, output_array_type=piel.experimental.types.TupleIntType
+    "output_fock_state": piel.types.absolute_to_threshold(
+        raw_output_state_0, output_array_type=piel.types.TupleIntType
     ),
 }
 output_state_0
@@ -341,11 +340,9 @@ target_output_transition_mzi_2x2 = [
         "target_mode_output": None,
     },
 ]
-target_optical_state_transition_mzi_2x2 = (
-    piel.experimental.types.OpticalStateTransitions(
-        transmission_data=target_output_transition_mzi_2x2,
-        mode_amount=2,
-    )
+target_optical_state_transition_mzi_2x2 = piel.types.OpticalStateTransitions(
+    transmission_data=target_output_transition_mzi_2x2,
+    mode_amount=2,
 )
 
 print("Target Numerical Implementation")
@@ -475,7 +472,7 @@ our_recursive_custom_library
 
 # +
 # TODO work out why it needs to be inverted, it's an implementation problem, continuing for now.
-bar_bar_state = piel.sax_to_s_parameters_standard_matrix(
+bar_bar_state = piel.tools.sax.sax_to_s_parameters_standard_matrix(
     chain_3_mode_lattice_circuit_s_parameters(
         mzi_1={"sxt": {"active_phase_rad": bar_phase}},
         mzi_2={"sxt": {"active_phase_rad": bar_phase}},
@@ -483,7 +480,7 @@ bar_bar_state = piel.sax_to_s_parameters_standard_matrix(
 )[0]
 bar_bar_state = jnp.abs(piel.round_complex_array(bar_bar_state))
 
-cross_bar_state = piel.sax_to_s_parameters_standard_matrix(
+cross_bar_state = piel.tools.sax.sax_to_s_parameters_standard_matrix(
     chain_3_mode_lattice_circuit_s_parameters(
         mzi_1={"sxt": {"active_phase_rad": cross_phase}},
         mzi_2={"sxt": {"active_phase_rad": bar_phase}},
@@ -493,7 +490,7 @@ cross_bar_state = piel.sax_to_s_parameters_standard_matrix(
 )[0]
 
 
-bar_cross_state = piel.sax_to_s_parameters_standard_matrix(
+bar_cross_state = piel.tools.sax.sax_to_s_parameters_standard_matrix(
     chain_3_mode_lattice_circuit_s_parameters(
         mzi_1={"sxt": {"active_phase_rad": bar_phase}},
         mzi_2={"sxt": {"active_phase_rad": cross_phase}},
@@ -502,7 +499,7 @@ bar_cross_state = piel.sax_to_s_parameters_standard_matrix(
     to_absolute=True,
 )[0]
 
-cross_cross_state = piel.sax_to_s_parameters_standard_matrix(
+cross_cross_state = piel.tools.sax.sax_to_s_parameters_standard_matrix(
     chain_3_mode_lattice_circuit_s_parameters(
         mzi_1={"sxt": {"active_phase_rad": cross_phase}},
         mzi_2={"sxt": {"active_phase_rad": cross_phase}},

@@ -1,15 +1,19 @@
 {
     "name": "calibration_3000000000.0_Hz",
+    "attrs": {},
     "components": [
         {
             "name": "two_port_oscilloscope",
+            "attrs": {},
             "ports": [
                 {
                     "name": "CH1",
+                    "attrs": {},
                     "parent_component_name": ""
                 },
                 {
                     "name": "CH2",
+                    "attrs": {},
                     "parent_component_name": ""
                 }
             ],
@@ -18,9 +22,11 @@
         },
         {
             "name": "two_port_oscilloscope",
+            "attrs": {},
             "ports": [
                 {
                     "name": "CH1",
+                    "attrs": {},
                     "parent_component_name": ""
                 }
             ],
@@ -29,17 +35,21 @@
         },
         {
             "name": "power_splitter_1to2",
+            "attrs": {},
             "ports": [
                 {
                     "name": "IN",
+                    "attrs": {},
                     "parent_component_name": ""
                 },
                 {
                     "name": "OUT1",
+                    "attrs": {},
                     "parent_component_name": ""
                 },
                 {
                     "name": "OUT2",
+                    "attrs": {},
                     "parent_component_name": ""
                 }
             ],
@@ -50,29 +60,63 @@
     "connections": [
         {
             "name": "",
+            "attrs": {},
             "ports": [
                 {
                     "name": "OUT1",
+                    "attrs": {},
                     "parent_component_name": ""
                 },
                 {
                     "name": "CH1",
+                    "attrs": {},
                     "parent_component_name": ""
                 }
-            ]
+            ],
+            "time": {
+                "name": "",
+                "attrs": {},
+                "value": 0,
+                "mean": 0,
+                "min": 0,
+                "max": 0,
+                "standard_deviation": 0,
+                "unit": {
+                    "name": "second",
+                    "datum": "second",
+                    "base": 1
+                }
+            }
         },
         {
             "name": "",
+            "attrs": {},
             "ports": [
                 {
                     "name": "OUT2",
+                    "attrs": {},
                     "parent_component_name": ""
                 },
                 {
                     "name": "CH2",
+                    "attrs": {},
                     "parent_component_name": ""
                 }
-            ]
+            ],
+            "time": {
+                "name": "",
+                "attrs": {},
+                "value": 0,
+                "mean": 0,
+                "min": 0,
+                "max": 0,
+                "standard_deviation": 0,
+                "unit": {
+                    "name": "second",
+                    "datum": "second",
+                    "base": 1
+                }
+            }
         }
     ],
     "goal": "",

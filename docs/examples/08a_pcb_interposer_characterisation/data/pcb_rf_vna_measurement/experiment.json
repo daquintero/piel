@@ -1,15 +1,19 @@
 {
     "name": "pcb_rf_vna_measurement",
+    "attrs": {},
     "goal": "Perform S-Parameter characterization of a PCB trace.",
     "experiment_instances": [
         {
             "name": "load_through",
+            "attrs": {},
             "components": [
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -17,6 +21,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -25,19 +30,25 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 },
                 {
                     "name": "blue_extension",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -46,69 +57,86 @@
                 },
                 {
                     "name": "PCB3",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "SIG14",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES1",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG1",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG2",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES2",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG3",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "OPEN",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SHORT",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG5",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES3",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG6",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG7",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES4",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG8",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "L50",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "GND",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         }
                     ],
@@ -119,52 +147,104 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "SIG6",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "SIG7",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
             "parameters": {},
             "index": 0,
-            "date_configured": "2024-08-20 22:32:02.401316",
+            "date_configured": "2024-09-14 18:12:01.920877",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -179,12 +259,15 @@
         },
         {
             "name": "through",
+            "attrs": {},
             "components": [
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -192,6 +275,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -200,19 +284,25 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 },
                 {
                     "name": "blue_extension",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -221,69 +311,86 @@
                 },
                 {
                     "name": "PCB3",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "SIG14",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES1",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG1",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG2",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES2",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG3",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "OPEN",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SHORT",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG5",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES3",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG6",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG7",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "RES4",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "SIG8",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "L50",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "GND",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         }
                     ],
@@ -294,52 +401,104 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "SIG1",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "SIG2",
+                            "attrs": {},
                             "parent_component_name": "PCB3"
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
             "parameters": {},
             "index": 1,
-            "date_configured": "2024-08-20 22:32:02.401410",
+            "date_configured": "2024-09-14 18:12:01.921088",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",

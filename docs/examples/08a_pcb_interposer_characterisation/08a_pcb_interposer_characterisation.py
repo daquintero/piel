@@ -2,6 +2,7 @@
 
 import piel
 import piel.experimental as pe
+from piel.models.physical.electrical import E8364A, cables
 from datetime import datetime
 
 # In this example, we will compare measurement measurements and simulated measurements to understand the performance of a cryogenic-designed EIC-interposer printed-circuit board.
@@ -30,7 +31,7 @@ from datetime import datetime
 
 # First, let's create environmental metadata.
 
-room_temperature_environment = piel.experimental.types.Environment(temperature_K=273)
+room_temperature_environment = piel.types.Environment(temperature_K=273)
 
 
 # Now we can create our custom `PCB` definition.
@@ -48,7 +49,7 @@ def pcb_smp_connector(name, pcb_name):
     """
     This is our PCB SMP Port definition factory.
     """
-    return piel.experimental.types.PhysicalPort(
+    return piel.types.PhysicalPort(
         name=name, connector="smp_plug", domain="RF", parent_component_name=pcb_name
     )
 
@@ -115,7 +116,7 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
     i = 0
     for measurement_i in measurements.items():
         sparameter_measurement_configuration = (
-            pe.types.VNASParameterMeasurementConfiguration(
+            piel.types.VNASParameterMeasurementConfiguration(
                 test_port_power_dBm=-17,
                 sweep_points=6401,
                 frequency_range_Hz=(45e6, 20e9),
@@ -123,17 +124,13 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
         )
 
         # Define measurement components
-        vna_configuration = pe.types.VNAConfiguration(
+        vna_configuration = piel.types.VNAConfiguration(
             measurement_configuration=sparameter_measurement_configuration
         )
 
-        vna = piel.models.physical.electrical.models.vna.E8364A(
-            configuration=vna_configuration
-        )
-        blue_extension_cable = (
-            piel.models.physical.electrical.models.cables.generic_sma(
-                name="blue_extension", model="1251C", length_m=0.025
-            )
+        vna = E8364A(configuration=vna_configuration)
+        blue_extension_cable = cables.rf.generic_sma(
+            name="blue_extension", model="1251C", length_m=0.025
         )
         experiment_components = [vna, blue_extension_cable, rf_calibration_pcb]
 
@@ -162,7 +159,7 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
         )
 
         # Define experiment with connections
-        experiment_measurement = pe.types.ExperimentInstance(
+        experiment_measurement = piel.types.ExperimentInstance(
             name=measurement_name,
             components=experiment_components,
             connections=experiment_connections,
@@ -174,7 +171,7 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
         experiment_instances.append(experiment_measurement)
         i += 1
 
-    return pe.types.Experiment(experiment_instances=experiment_instances, **kwargs)
+    return piel.types.Experiment(experiment_instances=experiment_instances, **kwargs)
 
 
 vna_pcb_experiment = create_calibration_vna_experiments(
@@ -293,14 +290,16 @@ piel.visual.experimental.frequency.measurement_data_collection.plot_s_parameter_
 def calibration_propagation_delay_experiment_instance(
     square_wave_frequency_Hz: float,
 ):
-    oscilloscope = pe.models.create_two_port_oscilloscope()
-    waveform_generator = pe.models.create_one_port_square_wave_waveform_generator(
-        peak_to_peak_voltage_V=0.5,
-        rise_time_s=1,
-        fall_time_s=1,
-        frequency_Hz=square_wave_frequency_Hz,
+    oscilloscope = piel.models.physical.electrical.create_two_port_oscilloscope()
+    waveform_generator = (
+        piel.models.physical.electrical.create_one_port_square_wave_waveform_generator(
+            peak_to_peak_voltage_V=0.5,
+            rise_time_s=1,
+            fall_time_s=1,
+            frequency_Hz=square_wave_frequency_Hz,
+        )
     )
-    splitter = pe.models.create_power_splitter_1to2()
+    splitter = piel.models.physical.electrical.create_power_splitter_1to2()
 
     # List of connections
     experiment_connections = piel.create_connection_list_from_ports_lists(
@@ -310,7 +309,7 @@ def calibration_propagation_delay_experiment_instance(
         ]
     )
 
-    experiment_instance = pe.types.ExperimentInstance(
+    experiment_instance = piel.types.ExperimentInstance(
         name=f"calibration_{square_wave_frequency_Hz}_Hz",
         components=[oscilloscope, waveform_generator, splitter],
         connections=experiment_connections,
@@ -326,14 +325,16 @@ def pcb_propagation_delay_experiment_instance(
     square_wave_frequency_Hz: float,
 ):
     # We create out components
-    oscilloscope = pe.models.create_two_port_oscilloscope()
-    waveform_generator = pe.models.create_one_port_square_wave_waveform_generator(
-        peak_to_peak_voltage_V=0.5,
-        rise_time_s=1,
-        fall_time_s=1,
-        frequency_Hz=square_wave_frequency_Hz,
+    oscilloscope = piel.models.physical.electrical.create_two_port_oscilloscope()
+    waveform_generator = (
+        piel.models.physical.electrical.create_one_port_square_wave_waveform_generator(
+            peak_to_peak_voltage_V=0.5,
+            rise_time_s=1,
+            fall_time_s=1,
+            frequency_Hz=square_wave_frequency_Hz,
+        )
     )
-    splitter = pe.models.create_power_splitter_1to2()
+    splitter = piel.models.physical.electrical.create_power_splitter_1to2()
 
     # List of connections
     experiment_connections = piel.create_connection_list_from_ports_lists(
@@ -345,11 +346,11 @@ def pcb_propagation_delay_experiment_instance(
 
     # If we want the data that will be generated to have automated analysis, we have to specify what type of experiment instance analysis we want
     propagation_delay_configuration = (
-        pe.types.PropagationDelayMeasurementConfiguration()
+        piel.types.PropagationDelayMeasurementConfiguration()
     )
 
     # We declare the measurement instance.
-    experiment_instance = pe.types.ExperimentInstance(
+    experiment_instance = piel.types.ExperimentInstance(
         name=f"pcb_{square_wave_frequency_Hz}_Hz",
         components=[oscilloscope, waveform_generator, splitter],
         connections=experiment_connections,
@@ -358,7 +359,7 @@ def pcb_propagation_delay_experiment_instance(
     return experiment_instance
 
 
-oscilloscope = pe.models.create_two_port_oscilloscope()
+oscilloscope = piel.models.physical.electrical.create_two_port_oscilloscope()
 oscilloscope
 
 # Now let's actually create our `Experiment`.
@@ -384,7 +385,7 @@ def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] 
         experiment_instance_list.append(pcb_experiment_instance_i)
         parameters_list.append({"square_wave_frequency_Hz": square_wave_frequency_Hz_i})
 
-    experiment = pe.types.Experiment(
+    experiment = piel.types.Experiment(
         name="pcb_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
         goal="Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
@@ -415,7 +416,7 @@ def calibration_propagation_delay_experiment(
         experiment_instance_list.append(calibration_experiment_instance_i)
         parameters_list.append({"square_wave_frequency_Hz": square_wave_frequency_Hz_i})
 
-    experiment = pe.types.Experiment(
+    experiment = piel.types.Experiment(
         name="calibration_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
         goal="Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
@@ -462,28 +463,28 @@ calibration_propagation_delay_experiment_directory = (
 # First, let's consolidate the relevant files in a way we can index and analyse. In this case I have done this manually, but of course this can be automated with proper file naming in mind.
 
 # +
-pcb_propagation_data = pe.types.PropagationDelayMeasurementCollection(
+pcb_propagation_data = piel.types.PropagationDelayMeasurementCollection(
     name="pcb_propagation_data",
     collection=[
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=pcb_propagation_delay_experiment_directory / str(0),
             reference_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch1.csv",
             dut_waveform_file="through_ch1ref_ch2pcb_1GHz_Ch2.csv",
             measurements_file="mdata_through_ch1ref_ch2pcb_1GHz.csv",
         ),
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=pcb_propagation_delay_experiment_directory / str(1),
             reference_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch1.csv",
             dut_waveform_file="through_ch1ref_ch2pcb_3GHz_Ch2.csv",
             measurements_file="mdata_through_ch1ref_ch2pcb_3GHz.csv",
         ),
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=pcb_propagation_delay_experiment_directory / str(2),
             reference_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch1.csv",
             dut_waveform_file="through_ch1ref_ch2pcb_5GHz_Ch2.csv",
             measurements_file="mdata_through_ch1ref_ch2pcb_5GHz.csv",
         ),
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=pcb_propagation_delay_experiment_directory / str(3),
             reference_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch1.csv",
             dut_waveform_file="through_ch1ref_ch2pcb_10GHz_Ch2.csv",
@@ -492,31 +493,31 @@ pcb_propagation_data = pe.types.PropagationDelayMeasurementCollection(
     ],
 )
 
-calibration_propagation_data = pe.types.PropagationDelayMeasurementCollection(
+calibration_propagation_data = piel.types.PropagationDelayMeasurementCollection(
     name="calibration_propagation_data",
     collection=[
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=calibration_propagation_delay_experiment_directory
             / str(0),
             reference_waveform_file="calibration_loop_1Ghz_Ch1.csv",
             dut_waveform_file="calibration_loop_1Ghz_Ch2.csv",
             measurements_file="mdata_calibration_loop_1Ghz.csv",
         ),
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=calibration_propagation_delay_experiment_directory
             / str(1),
             reference_waveform_file="calibration_loop_3Ghz_Ch1.csv",
             dut_waveform_file="calibration_loop_3Ghz_Ch2.csv",
             measurements_file="mdata_calibration_loop_3Ghz.csv",
         ),
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=calibration_propagation_delay_experiment_directory
             / str(2),
             reference_waveform_file="calibration_loop_5Ghz_Ch1.csv",
             dut_waveform_file="calibration_loop_5Ghz_Ch2.csv",
             measurements_file="mdata_calibration_loop_5Ghz.csv",
         ),
-        pe.types.PropagationDelayMeasurement(
+        piel.types.PropagationDelayMeasurement(
             parent_directory=calibration_propagation_delay_experiment_directory
             / str(3),
             reference_waveform_file="calibration_loop_10Ghz_Ch1.csv",
@@ -541,12 +542,12 @@ pcb_propagation_delay_data = (
 
 # Now we need to write some functionality to extract the files stored in these files in a meaningful way. Fortunately, there's already some functionality using `piel` in this context. We will now create a set of `ExperimentData` that represent both the metadata, configuration and data extracted accordingly.
 
-pcb_propagation_delay_experiment_data = pe.types.ExperimentData(
+pcb_propagation_delay_experiment_data = piel.types.ExperimentData(
     name="pcb_propagation_delay_experiment_data",
     experiment=pcb_propagation_delay_experiment_setup,
     data=pcb_propagation_delay_data,
 )
-calibration_propagation_delay_experiment_data = pe.types.ExperimentData(
+calibration_propagation_delay_experiment_data = piel.types.ExperimentData(
     name="calibration_propagation_delay_experiment_data",
     experiment=calibration_propagation_delay_experiment_setup,
     data=calibration_propagation_delay_data,
@@ -624,7 +625,7 @@ assert calibration_propagation_delay_experiment_directory_json.exists()
 # -
 
 reinsantiated_calibration_experiment = piel.models.load_from_json(
-    calibration_propagation_delay_experiment_directory_json, pe.types.Experiment
+    calibration_propagation_delay_experiment_directory_json, piel.types.Experiment
 )
 reinsantiated_calibration_experiment
 

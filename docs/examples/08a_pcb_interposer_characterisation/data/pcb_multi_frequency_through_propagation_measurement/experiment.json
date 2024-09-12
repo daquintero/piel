@@ -1,19 +1,24 @@
 {
     "name": "pcb_multi_frequency_through_propagation_measurement",
+    "attrs": {},
     "goal": "Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
     "experiment_instances": [
         {
             "name": "pcb_1000000000.0_Hz",
+            "attrs": {},
             "components": [
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -22,9 +27,11 @@
                 },
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -33,17 +40,21 @@
                 },
                 {
                     "name": "power_splitter_1to2",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -54,29 +65,63 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -87,6 +132,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "PropagationDelayMeasurementConfiguration"
@@ -95,16 +141,20 @@
         },
         {
             "name": "pcb_3000000000.0_Hz",
+            "attrs": {},
             "components": [
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -113,9 +163,11 @@
                 },
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -124,17 +176,21 @@
                 },
                 {
                     "name": "power_splitter_1to2",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -145,29 +201,63 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -178,6 +268,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "PropagationDelayMeasurementConfiguration"
@@ -186,16 +277,20 @@
         },
         {
             "name": "pcb_5000000000.0_Hz",
+            "attrs": {},
             "components": [
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -204,9 +299,11 @@
                 },
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -215,17 +312,21 @@
                 },
                 {
                     "name": "power_splitter_1to2",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -236,29 +337,63 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -269,6 +404,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "PropagationDelayMeasurementConfiguration"
@@ -277,16 +413,20 @@
         },
         {
             "name": "pcb_10000000000.0_Hz",
+            "attrs": {},
             "components": [
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -295,9 +435,11 @@
                 },
                 {
                     "name": "two_port_oscilloscope",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -306,17 +448,21 @@
                 },
                 {
                     "name": "power_splitter_1to2",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -327,29 +473,63 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH1",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "OUT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "CH2",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -360,6 +540,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "PropagationDelayMeasurementConfiguration"

@@ -139,6 +139,7 @@ delete_simulation_output_files = functools.partial(
 
 def run_cocotb_simulation(
     design_directory: str,
+    raise_error: bool = False,
 ) -> subprocess.CompletedProcess:
     """
     Runs the Cocotb simulation by executing the Makefile in the specified design directory.
@@ -183,4 +184,5 @@ def run_cocotb_simulation(
         print("Standard Error (stderr):")
         print(e.stderr.decode())  # Decode bytes to string
 
-        raise
+        if raise_error:
+            raise

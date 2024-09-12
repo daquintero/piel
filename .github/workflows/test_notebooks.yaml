@@ -1,0 +1,65 @@
+name: "piel-test-notebooks"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          submodules: 'recursive'
+      - name: Test pre-commit hooks
+        run: |
+          python -m pip install --upgrade pip
+          pip install pre-commit
+          pre-commit run # this should be really more aggressive
+  build:
+    name: test ${{ matrix.python-version }} - ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11']
+        platform: [ubuntu-latest]
+    defaults:
+      run:
+        shell: bash
+    env:  # Set environment variables for the whole job
+      PIP_ONLY_BINARY: gdstk
+      MPLBACKEND: agg
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up uv
+      # Install a specific uv version using the installer
+      run: curl -LsSf https://astral.sh/uv/0.3.0/install.sh | sh
+
+    #----------------------------------------------
+    # install your root project, if required
+    #----------------------------------------------
+    - name: Install library
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        uv --version
+        uv venv --python=python${{ matrix.python-version }} venv
+        source venv/bin/activate
+        uv pip install -e .[dev]
+        uv pip install -r requirements_notebooks.txt
+
+    #----------------------------------------------
+    #    add matrix specifics and run test suite
+    #----------------------------------------------
+    - name: Run tests
+      run: |
+        source venv/bin/activate
+        uv run python docs/examples/run_all_notebooks.py

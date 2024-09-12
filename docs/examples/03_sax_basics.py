@@ -1,5 +1,13 @@
 # # SAX Integration Basics
 
+# <div style="padding: 10px; border-radius: 5px;">
+# <strong>⚠️ Warning:</strong> This example requires dependency tools installable through <code>pip install piel[tools]</code>.
+# </div>
+
+# + active=""
+# !pip install piel[tools]
+# -
+
 # In this example, we will explore different methodologies of mapping electronic signals to photonic operations. We will start by an ideal basic example, and explore the complexity of how these systems can be interconnected accordingly. We will explore different encodings of transformations between electronic simulation implementations and corresponding photonic solutions.
 
 # In order to solve a photonic circuit using `sax`, we first need a physical netlist of our circuit that represents the inputs and outputs that we care about of our circuit.
@@ -360,7 +368,7 @@ active_switch_circuit_model()
 
 # This gives us a lot of power, and which is why I love `sax`. What we can do now is modify the composed `sax` function to add a simple active phase parameter. We will start simple and extend this more thoroguhly to different electronic signals representations in the next example. We can represent this matrix in standard S-parameter matrix form using `piel`:
 
-piel.sax_to_s_parameters_standard_matrix(active_switch_circuit_model())
+piel.tools.sax.sax_to_s_parameters_standard_matrix(active_switch_circuit_model())
 
 # ```python
 # (Array([[ 0.24680707-0.15921314j, -0.27779553+0.08816013j,
