@@ -100,8 +100,18 @@ piel.create_empty_piel_project(
 # You can interact with standard `OpenLane` [environment variables](https://openlane.readthedocs.io/en/latest/reference/configuration.html) through:
 
 import os
+import pathlib
 
-os.environ["OPENLANE_ROOT"]
+try:
+    os.environ["OPENLANE_ROOT"]
+except KeyError as e:
+    print(
+        f"Make sure you have an OPENLANE_ROOT environment variable for Openlane V1: {e}"
+    )
+    design_directory = pathlib.Path(__file__).parent.absolute()
+    print(f"Setting OPENLANE_ROOT to the piel examples: {design_directory}")
+    os.environ["OPENLANE_ROOT"] = str(design_directory)
+    exit
 
 # This gives us the source directory of the OpenLane v1 installation under `foss/tools/`, but not the version directory, nor the directory of the standard `./flow.tcl` design inclusion and execution.
 
@@ -120,5 +130,7 @@ openlane_root_directory = (
 openlane_root_directory
 
 # We can find out all the default designs in Openlane designs accordingly
-
-list((openlane_root_directory / "designs").iterdir())
+try:
+    list((openlane_root_directory / "designs").iterdir())
+except Exception as e:
+    print("Make sure you are using an Openlane V1 root directory.")

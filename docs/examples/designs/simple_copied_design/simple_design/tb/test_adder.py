@@ -73,4 +73,4 @@ async def adder_randomised_test(dut):
         "t": time_data,
     }
 
-    pd.DataFrame(simulation_data).to_csv("adder_randomised_test.csv")
+    pd.DataFrame(simulation_data).to_csv("out/adder_randomised_test.csv")

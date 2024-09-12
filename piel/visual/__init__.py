@@ -15,6 +15,7 @@ from .style import activate_piel_styles
 from .signals import *
 from .types import AxesPlottingTypes, ExtensiblePlotsDirectionPerElement
 from .json_to_markdown import dictionary_to_markdown_str
+from .experimental import *
 
 
 activate_piel_styles()

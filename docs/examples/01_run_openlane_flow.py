@@ -1,5 +1,16 @@
 # # Run OpenLane Flow
 
+# <div style="padding: 10px; border-radius: 5px;">
+# <strong>⚠️ Warning:</strong> This example requires uses packages which are locally available when cloning and installing the `stable` verision of the github source code. See example setup as follows:
+# </div>
+
+# + active=""
+# !git clone https://github.com/daquintero/piel.git
+# !cd piel/
+# !pip install -e .[tools]
+# !pip install -r requirements_notebooks.txt
+# -
+
 import piel
 
 # Assume we are starting from the iic-osic-home design directory, all our design files are there in the format as described in the piel `sections/project_structure` documentation. You have followed the previous environment docs/examples/00_setup_environment to run the projects in this example:
@@ -48,15 +59,15 @@ import piel
 
 piel.return_path(amaranth_driven_flow)
 
-openlane_2_run_amaranth_flow = piel.run_openlane_flow(
+
+openlane_2_run_amaranth_flow = piel.tools.openlane.run_openlane_flow(
     design_directory=amaranth_driven_flow,
     only_generate_flow_setup=True,
 )
-# TODO fix warnings
 
 # This should generate a `openlane 2` driven layout in the `amaranth_driven_flow` directory if you change the `only_generate_configuration` flag to `True`. Let's list the available runs in this project:
 
-all_amaranth_driven_design_runs = piel.find_all_design_runs(
+all_amaranth_driven_design_runs = piel.tools.openlane.find_all_design_runs(
     design_directory=amaranth_driven_flow,
 )
 all_amaranth_driven_design_runs
@@ -66,21 +77,23 @@ all_amaranth_driven_design_runs
 #  'v1': [PosixPath('/home/daquintero/piel/docs/examples/designs/amaranth_driven_flow/amaranth_driven_flow/runs/RUN_2023.08.22_00.06.09')]}
 # ```
 
-latest_amaranth_driven_openlane_runs = piel.find_latest_design_run(
+latest_amaranth_driven_openlane_runs = piel.tools.openlane.find_latest_design_run(
     design_directory=amaranth_driven_flow,
 )
 latest_amaranth_driven_openlane_runs
 
 # We can check what is the path to our generated `gds` file accordingly:
 
-piel.get_gds_path_from_design_run(
+piel.tools.openlane.get_gds_path_from_design_run(
     design_directory=amaranth_driven_flow,
 )
 
 # It is quite easy to visualise it on the jupyter lab using the `gdsfactory` integration widget:
 
-amaranth_driven_flow_component = piel.create_gdsfactory_component_from_openlane(
-    design_directory=amaranth_driven_flow,
+amaranth_driven_flow_component = (
+    piel.integration.create_gdsfactory_component_from_openlane(
+        design_directory=amaranth_driven_flow,
+    )
 )
 amaranth_driven_flow_component
 

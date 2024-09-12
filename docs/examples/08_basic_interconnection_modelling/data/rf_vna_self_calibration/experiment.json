@@ -1,19 +1,24 @@
 {
     "name": "rf_vna_self_calibration",
+    "attrs": {},
     "goal": "",
     "experiment_instances": [
         {
             "name": "through_port_12",
+            "attrs": {},
             "components": [
                 {
                     "name": "through_82052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -22,9 +27,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -32,6 +39,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -40,7 +48,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -48,29 +59,63 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 },
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "OUT",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -81,6 +126,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -92,12 +138,15 @@
         },
         {
             "name": "open_port_1",
+            "attrs": {},
             "components": [
                 {
                     "name": "load_82052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -106,9 +155,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -116,6 +167,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -124,7 +176,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -132,16 +187,33 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -152,6 +224,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -163,12 +236,15 @@
         },
         {
             "name": "open_port_2",
+            "attrs": {},
             "components": [
                 {
                     "name": "load_82052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -177,9 +253,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -187,6 +265,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -195,7 +274,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -203,16 +285,33 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -223,6 +322,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -234,12 +334,15 @@
         },
         {
             "name": "load_port_1",
+            "attrs": {},
             "components": [
                 {
                     "name": "load_82052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -248,9 +351,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -258,6 +363,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -266,7 +372,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -274,16 +383,33 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -294,6 +420,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -305,12 +432,15 @@
         },
         {
             "name": "load_port_2",
+            "attrs": {},
             "components": [
                 {
                     "name": "load_82052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -319,9 +449,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -329,6 +461,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -337,7 +470,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -345,16 +481,33 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -365,6 +518,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -376,12 +530,15 @@
         },
         {
             "name": "short_port_1",
+            "attrs": {},
             "components": [
                 {
                     "name": "short_85052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -390,9 +547,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -400,6 +559,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -408,7 +568,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -416,16 +579,33 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -436,6 +616,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",
@@ -447,12 +628,15 @@
         },
         {
             "name": "short_port_2",
+            "attrs": {},
             "components": [
                 {
                     "name": "short_85052D",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
                     ],
@@ -461,9 +645,11 @@
                 },
                 {
                     "name": "E8364A",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT1",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -471,6 +657,7 @@
                         },
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": "",
                             "domain": "RF",
                             "connector": "",
@@ -479,7 +666,10 @@
                     ],
                     "connections": [],
                     "components": [],
-                    "environment": null,
+                    "environment": {
+                        "temperature_K": null,
+                        "region": null
+                    },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
                 }
@@ -487,16 +677,33 @@
             "connections": [
                 {
                     "name": "",
+                    "attrs": {},
                     "ports": [
                         {
                             "name": "PORT2",
+                            "attrs": {},
                             "parent_component_name": ""
                         },
                         {
                             "name": "IN",
+                            "attrs": {},
                             "parent_component_name": ""
                         }
-                    ]
+                    ],
+                    "time": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0,
+                        "mean": 0,
+                        "min": 0,
+                        "max": 0,
+                        "standard_deviation": 0,
+                        "unit": {
+                            "name": "second",
+                            "datum": "second",
+                            "base": 1
+                        }
+                    }
                 }
             ],
             "goal": "",
@@ -507,6 +714,7 @@
             "measurement_configuration_list": [
                 {
                     "name": "",
+                    "attrs": {},
                     "parent_directory": "",
                     "measurement_type": "",
                     "measurement_configuration_type": "VNASParameterMeasurementConfiguration",

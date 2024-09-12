@@ -37,7 +37,7 @@ switch_circuit.get_netlist_recursive().keys()
 quantum_models = piel.models.frequency.get_default_models(type="quantum")
 quantum_models["mmi2x2"]()
 
-mmi2x2_qobj = piel.sax_to_ideal_qutip_unitary(
+mmi2x2_qobj = piel.integration.sax_to_ideal_qutip_unitary(
     quantum_models["mmi2x2"](), input_ports_order=("o1", "o2")
 )
 mmi2x2_qobj.check_isunitary()
@@ -57,7 +57,7 @@ default_state_unitary = switch_circuit_model_quantum()
 (
     unitary_matrix,
     input_ports_index_tuple_order,
-) = piel.sax_to_s_parameters_standard_matrix(default_state_unitary)
+) = piel.tools.sax.sax_to_s_parameters_standard_matrix(default_state_unitary)
 unitary_matrix
 
 # ```python
@@ -73,7 +73,7 @@ unitary_matrix
 
 # ### Translating to Qutip
 
-switch_circuit_qobj = piel.standard_s_parameters_to_qutip_qobj(unitary_matrix)
+switch_circuit_qobj = piel.integration.sax_to_ideal_qutip_unitary(unitary_matrix)
 switch_circuit_qobj
 
 # ![example_qutip_unitary](../_static/img/examples/05_quantum_integration_basics/example_qutip_unitary.PNG)
@@ -225,7 +225,7 @@ default_state_s_parameters = switch_circuit_model_classical()
 (
     s_parameters_standard_matrix,
     input_ports_index_tuple_order,
-) = piel.sax_to_s_parameters_standard_matrix(default_state_s_parameters)
+) = piel.tools.sax.sax_to_s_parameters_standard_matrix(default_state_s_parameters)
 s_parameters_standard_matrix
 
 # ```python

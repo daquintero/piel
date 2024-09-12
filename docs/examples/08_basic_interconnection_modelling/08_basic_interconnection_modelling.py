@@ -17,9 +17,11 @@
 import piel
 import piel.experimental as pe
 import piel.visual as pv
-from piel.models.physical.electrical.cables import (
+from piel.models.physical.electrical.cables.rf import (
     calculate_coaxial_cable_geometry,
     calculate_coaxial_cable_heat_transfer,
+)
+from piel.models.physical.electrical.cables.dc import (
     calculate_dc_cable_geometry,
 )
 from piel.types.electrical.cables import (
@@ -188,15 +190,15 @@ basic_coaxial_cable_heat_transfer_4_in_series
 
 # Let's compose the experiment into a correct format. First let's create our components.
 
-short_1port = pe.models.short_85052D()
-load_1port = pe.models.load_85052D()
-open_1port = pe.models.load_85052D()
-throguh_2port = pe.models.through_85052D()
+short_1port = piel.models.physical.electrical.short_85052D()
+load_1port = piel.models.physical.electrical.load_85052D()
+open_1port = piel.models.physical.electrical.load_85052D()
+throguh_2port = piel.models.physical.electrical.through_85052D()
 
 # We can create our `VNA` and a standard configuration too:
 
 vna_configuration = pe.types.VNAConfiguration(calibration_setting_name="bpl_vna_ports")
-vna = pe.models.E8364A(configuration=vna_configuration)
+vna = piel.models.physical.electrical.E8364A(configuration=vna_configuration)
 
 vna_configuration
 

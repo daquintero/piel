@@ -172,7 +172,7 @@ truth_table = TruthTable(
     output_ports=["phase_map_out"],
     **detector_phase_truth_table,
 )
-am_module = piel.amaranth.construct_amaranth_module_from_truth_table(
+am_module = piel.tools.amaranth.construct_amaranth_module_from_truth_table(
     truth_table, logic_implementation_type="sequential"
 )
 am_module
@@ -214,11 +214,11 @@ simulation_output_files_directory.exists()
 
 # Check that there exist cocotb python test files already in our design directory:
 
-piel.check_cocotb_testbench_exists(simple_design)
+piel.tools.cocotb.check_cocotb_testbench_exists(simple_design)
 
 # Create a cocotb Makefile
 
-piel.configure_cocotb_simulation(
+piel.tools.cocotb.configure_cocotb_simulation(
     design_directory=simple_design,
     simulator="icarus",
     top_level_language="verilog",
@@ -243,7 +243,7 @@ piel.configure_cocotb_simulation(
 # Now we can create the simulation output files from the `makefile`. Note this will only work in our configured Linux environment.
 
 # Run cocotb simulation
-piel.run_cocotb_simulation(design_directory)
+piel.tools.cocotb.run_cocotb_simulation(design_directory)
 
 # ```bash
 # Standard Output (stdout):
@@ -307,8 +307,8 @@ piel.run_cocotb_simulation(design_directory)
 #
 # We first list the files for our design directory, which is out `simple_design` local package if you have followed the correct installation instructions, and we can input our module import rather than an actual path unless you desire to customise.
 
-cocotb_simulation_output_files = piel.get_simulation_output_files_from_design(
-    simple_design
+cocotb_simulation_output_files = (
+    piel.tools.cocotb.get_simulation_output_files_from_design(simple_design)
 )
 cocotb_simulation_output_files
 
@@ -318,7 +318,7 @@ cocotb_simulation_output_files
 
 # We can read the simulation output files accordingly:
 
-example_simple_simulation_data = piel.read_simulation_data(
+example_simple_simulation_data = piel.tools.cocotb.read_simulation_data(
     cocotb_simulation_output_files[0]
 )
 example_simple_simulation_data
@@ -350,38 +350,41 @@ piel.simple_plot_simulation_data(example_simple_simulation_data)
 # ## Sequential Implementation
 
 # +
-from openlane.flows import SequentialFlow
-from openlane.steps import Yosys, OpenROAD, Magic, Netgen
+try:
+    from openlane.flows import SequentialFlow
+    from openlane.steps import Yosys, OpenROAD, Magic, Netgen
 
+    class MyFlow(SequentialFlow):
+        Steps = [
+            Yosys.Synthesis,
+            OpenROAD.Floorplan,
+            OpenROAD.TapEndcapInsertion,
+            OpenROAD.GeneratePDN,
+            OpenROAD.IOPlacement,
+            OpenROAD.GlobalPlacement,
+            OpenROAD.DetailedPlacement,
+            OpenROAD.GlobalRouting,
+            OpenROAD.DetailedRouting,
+            OpenROAD.FillInsertion,
+            Magic.StreamOut,
+            Magic.DRC,
+            Magic.SpiceExtraction,
+            Netgen.LVS,
+        ]
 
-class MyFlow(SequentialFlow):
-    Steps = [
-        Yosys.Synthesis,
-        OpenROAD.Floorplan,
-        OpenROAD.TapEndcapInsertion,
-        OpenROAD.GeneratePDN,
-        OpenROAD.IOPlacement,
-        OpenROAD.GlobalPlacement,
-        OpenROAD.DetailedPlacement,
-        OpenROAD.GlobalRouting,
-        OpenROAD.DetailedRouting,
-        OpenROAD.FillInsertion,
-        Magic.StreamOut,
-        Magic.DRC,
-        Magic.SpiceExtraction,
-        Netgen.LVS,
-    ]
-
-
-flow = MyFlow(
-    {
-        "PDK": "sky130A",
-        "DESIGN_NAME": "spm",
-        "VERILOG_FILES": ["./src/spm.v"],
-        "CLOCK_PORT": "clk",
-        "CLOCK_PERIOD": 10,
-    },
-    design_dir=".",
-)
-flow.start()
+    flow = MyFlow(
+        {
+            "PDK": "sky130A",
+            "DESIGN_NAME": "spm",
+            "VERILOG_FILES": ["./src/spm.v"],
+            "CLOCK_PORT": "clk",
+            "CLOCK_PERIOD": 10,
+        },
+        design_dir=".",
+    )
+    flow.start()
+except ModuleNotFoundError as e:
+    print(
+        f"Make sure you are running this from an environment with Openlane nix installed {e}"
+    )
 # -

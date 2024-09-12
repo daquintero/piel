@@ -18,11 +18,12 @@
 import hdl21 as h
 import numpy as np
 import pandas as pd
+from gdsfactory.generic_tech import get_generic_pdk
 import piel
-
 from piel.models.physical.photonic import (
     mzi2x2_2x2_phase_shifter,
     component_lattice_generic,
+    straight_heater_metal_simple,
 )
 
 
@@ -407,11 +408,11 @@ cocotb_simulation_data
 # # mzi2x2_model, mzi2x2_model_info = sax.circuit(
 # #     netlist=mzi2x2_2x2_phase_shifter_netlist, measurement=our_custom_library
 # # )
-# # piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
+# # piel.tools.sax.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
 # # mzi2x2_active_unitary_array = list()
 # # for phase_i in example_simple_simulation_data.phase:
-# #     mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
+# #     mzi2x2_active_unitary_i = piel.tools.sax.sax_to_s_parameters_standard_matrix(
 # #         mzi2x2_model(sxt={"active_phase_rad": phase_i}),
 # #         input_ports_order=(def compose_network_matrix_from_models(
 # # Compose the netlists as functions
@@ -446,11 +447,11 @@ cocotb_simulation_data
 # mzi2x2_model, mzi2x2_model_info = sax.circuit(
 #     netlist=mzi2x2_2x2_phase_shifter_netlist, measurement=our_custom_library
 # )
-# piel.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
+# piel.tools.sax.sax_to_s_parameters_standard_matrix(mzi2x2_model(), input_ports_order=("o2", "o1"))
 
 # mzi2x2_active_unitary_array = list()
 # for phase_i in example_simple_simulation_data.phase:
-#     mzi2x2_active_unitary_i = piel.sax_to_s_parameters_standard_matrix(
+#     mzi2x2_active_unitary_i = piel.tools.sax.sax_to_s_parameters_standard_matrix(
 #         mzi2x2_model(sxt={"active_phase_rad": phase_i}),
 #         input_ports_order=(
 #             "o2",
@@ -542,8 +543,10 @@ our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
 # our_resistive_mzi_2x2_2x2_phase_shifter_netlist = our_resistive_mzi_2x2_2x2_phase_shifter.get_netlist(exclude_port_types="optical")
 # our_resistive_heater_netlist
 
-our_resistive_heater_spice_netlist = piel.gdsfactory_netlist_with_hdl21_generators(
-    our_resistive_heater_netlist
+our_resistive_heater_spice_netlist = (
+    piel.integration.gdsfactory_netlist_with_hdl21_generators(
+        our_resistive_heater_netlist
+    )
 )
 our_resistive_heater_spice_netlist
 
@@ -569,7 +572,7 @@ class TransientTb:
     dut.e2 = VSS
 
 
-simple_transient_simulation = piel.configure_transient_simulation(
+simple_transient_simulation = piel.tools.hdl21.configure_transient_simulation(
     testbench=TransientTb,
     stop_time_s=200e-3,
     step_time_s=1e-4,
@@ -577,7 +580,7 @@ simple_transient_simulation = piel.configure_transient_simulation(
 )
 simple_transient_simulation
 
-piel.run_simulation(simple_transient_simulation, to_csv=True)
+piel.tools.hdl21.run_simulation(simple_transient_simulation, to_csv=True)
 
 transient_simulation_results = pd.read_csv("TransientTb.csv")
 transient_simulation_results.iloc[20:40]

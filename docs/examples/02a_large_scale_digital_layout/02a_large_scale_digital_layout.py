@@ -12,7 +12,7 @@ import piel
 
 # We will go through the whole process of using `amaranth` for digital simulation and design later. For now, let's assume we have a random truth table we want to implement multiple times with different `id`. We will time both sequential and parallel implementations of this layout flow, and determine which is faster.
 
-from piel.integration.amaranth_openlane import layout_openlane_from_truth_table
+from piel.integration.amaranth_openlane import layout_truth_table_through_openlane
 
 truth_table_dictionary = truth_table = {
     "input": [
@@ -54,7 +54,7 @@ truth_table_dictionary = truth_table = {
 }
 input_ports_list = ["input"]
 output_ports_list = ["output"]
-truth_table = piel.experimental.types.TruthTable(
+truth_table = piel.types.TruthTable(
     input_ports=input_ports_list,
     output_ports=output_ports_list,
     **truth_table_dictionary,
@@ -87,7 +87,7 @@ def sequential_implementations(amount_of_implementations: int):
     implementations = list()
 
     for i in range(amount_of_implementations):
-        implementation_i = layout_openlane_from_truth_table(
+        implementation_i = layout_truth_table_through_openlane(
             truth_table=truth_table,
             parent_directory="sequential",
             target_directory_name="sequential_" + str(i),
@@ -101,7 +101,7 @@ def parallel_implementations(amount_of_implementations: int):
     for i in range(amount_of_implementations):
         # Create all processes
         process_i = multiprocessing.Process(
-            target=layout_openlane_from_truth_table,
+            target=layout_truth_table_through_openlane,
             kwargs={
                 "truth_table": truth_table,
                 "parent_directory": "parallel",

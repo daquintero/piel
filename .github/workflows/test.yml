@@ -54,6 +54,7 @@ jobs:
         uv venv --python=python${{ matrix.python-version }} venv
         source venv/bin/activate
         uv pip install -e .[dev]
+        uv pip install -r requirements_notebooks.txt
 
     #----------------------------------------------
     #    add matrix specifics and run test suite

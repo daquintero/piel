@@ -104,6 +104,6 @@ dc_sweep = pe.extract_dc_sweeps_from_operating_point_csv(
     unique_operating_point_columns=["driver_b_v_set"],
 )
 
-pe.visual.plot_dc_sweep(dc_sweep=dc_sweep[0])
-
-pe.visual.plot_dc_sweeps(dc_sweep_collection=dc_sweep)
+# piel.visual.plot_dc_sweep(dc_sweep=dc_sweep[0])
+#
+# piel.visual.plot_dc_sweeps(dc_sweep_collection=dc_sweep)
