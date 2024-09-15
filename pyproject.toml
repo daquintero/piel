@@ -129,7 +129,7 @@ exclude = "docs"
 [tools.pytest.ini_options]
 addopts = "-rav"
 minversion = "6.0"
-testpaths = ["tests"]
+testpaths = ["tests/"]
 
 
 [tool.ruff.lint.per-file-ignores]

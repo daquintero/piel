@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from typing import List, Optional, Any
+from .position import create_axes_per_figure
 
 __all__ = [
     "plot_simple",
@@ -15,9 +16,12 @@ def plot_simple(
     ylabel: Optional[str] = None,
     xlabel: Optional[str] = None,
     fig: Optional[Any] = None,
-    ax: Optional[Any] = None,
+    axs: Optional[list[Any]] = None,
     title: Optional[str] = None,
+    plot_args: list = None,
     plot_kwargs: dict = None,
+    *args,
+    **kwargs,
 ) -> tuple:
     """
     Plot a simple line graph. This function abstracts the basic files representation while
@@ -30,7 +34,7 @@ def plot_simple(
         ylabel (Optional[str], optional): Y axis label. Defaults to None.
         xlabel (Optional[str], optional): X axis label. Defaults to None.
         fig (Optional[plt.Figure], optional): Matplotlib figure. Defaults to None.
-        ax (Optional[plt.Axes], optional): Matplotlib axes. Defaults to None.
+        axs (Optional[list[plt.Axes]], optional): Matplotlib axes. Defaults to None.
         title (Optional[str], optional): Title of the plot. Defaults to None.
         *args: Additional arguments passed to plt.plot().
         **kwargs: Additional keyword arguments passed to plt.plot().
@@ -38,15 +42,18 @@ def plot_simple(
     Returns:
         Tuple[plt.Figure, plt.Axes]: The figure and axes of the plot.
     """
-    import matplotlib.pyplot as plt
 
-    if fig is None and ax is None:
-        fig, ax = plt.subplots()
+    if fig is None and axs is None:
+        fig, axs = create_axes_per_figure(rows=1, columns=1)
 
     if plot_kwargs is None:
         plot_kwargs = dict()
 
-    ax.plot(x_data, y_data, label=label, **plot_kwargs)
+    if plot_args is None:
+        plot_args = list()
+
+    ax = axs[0]
+    ax.plot(x_data, y_data, label=label, *plot_args, **plot_kwargs)
 
     if ylabel is not None:
         ax.set_ylabel(ylabel)
@@ -67,7 +74,7 @@ def plot_simple(
 
     fig.tight_layout()
 
-    return fig, ax
+    return fig, axs
 
 
 def plot_simple_multi_row(

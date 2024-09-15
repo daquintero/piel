@@ -404,7 +404,7 @@ axes.axisbelow:     line    # draw axis gridlines and ticks:
 
 #axes.unicode_minus: True  # use Unicode for the minus symbol rather than hyphen.  See
                            # https://en.wikipedia.org/wiki/Plus_and_minus_signs#Character_codes
-axes.prop_cycle: cycler('color', ['1982C4', '43A8E7', 'C6B7DA', '6B4C93', 'B79174', 'A17500', '8C564B', '32490E', '6A5541',  '87C7F0'])
+axes.prop_cycle: cycler('color', ['1982C4', '6B4C93', 'C6B7DA', 'B79174', 'A17500', '8C564B', '32490E', '6A5541',  '87C7F0', '43A8E7'])
                   # color cycle for plot lines as list of string color specs:
                   # single letter, long name, or web-style hex
                   # As opposed to all other parameters in this file, the color
