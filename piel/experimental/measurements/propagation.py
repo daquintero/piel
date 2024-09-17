@@ -1,6 +1,6 @@
 from piel.types.experimental import PropagationDelayMeasurement
-from ...types import PathTypes
-from ...file_system import return_path
+from piel.types import PathTypes
+from piel.file_system import return_path
 
 
 def compose_propagation_delay_measurement(

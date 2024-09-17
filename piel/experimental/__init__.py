@@ -1,6 +1,6 @@
 import piel.experimental.types as types
 
-from piel.experimental.devices import DPO73304
+from piel.experimental.devices import DPO73304, AQ6375
 
 from .analysis.operating_point import (
     create_experiment_data_collection_from_unique_parameters,

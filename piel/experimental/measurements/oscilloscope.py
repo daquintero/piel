@@ -1,6 +1,6 @@
 from piel.types.experimental import OscilloscopeMeasurement
-from ...types import PathTypes
-from ...file_system import return_path, get_files_recursively_in_directory
+from piel.types import PathTypes
+from piel.file_system import return_path, get_files_recursively_in_directory
 
 
 def compose_oscilloscope_measurement(

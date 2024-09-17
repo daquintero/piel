@@ -5,14 +5,14 @@ from piel.types.experimental import (
     MeasurementTypes,
     MeasurementCollectionTypes,
 )
-from .map import (
+from piel.experimental.measurements.map import (
     configuration_to_measurement_map,
     measurement_composition_method_mapping,
     measurement_to_collection_map,
 )
-from ...types import PathTypes
-from ...file_system import return_path
-from ...models import load_from_json, load_from_dict
+from piel.types import PathTypes
+from piel.file_system import return_path
+from piel.models import load_from_json, load_from_dict
 
 
 def compose_measurement_from_experiment_instance(

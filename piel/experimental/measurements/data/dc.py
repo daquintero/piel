@@ -1,7 +1,7 @@
 import pandas as pd
-from ....types import PathTypes, QuantityTypesDC
-from ....file_system import return_path
-from ....models.physical.electrical import (
+from piel.types import PathTypes, QuantityTypesDC
+from piel.file_system import return_path
+from piel.models.physical.electrical import (
     construct_dc_signal,
     construct_current_dc_signal,
     construct_voltage_dc_signal,

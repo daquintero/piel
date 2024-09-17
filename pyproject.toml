@@ -33,9 +33,6 @@ dependencies = [
   "setuptools",
 ]
 
-[tool.setuptools]
-packages = ["piel"]
-
 [project.urls]
 homepage = "https://github.com/daquintero/piel"
 repository = "https://github.com/daquintero/piel"
@@ -115,6 +112,16 @@ dev = [
     "tox",
     "watchdog",
 ]
+
+[tool.setuptools]
+include-package-data = true  # Ensures package data is included
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["piel.*"]
+
+[tool.setuptools.package-data]
+"*" = ["*"]
 
 [scripts]
 piel = "piel.cli:main"

@@ -15,7 +15,7 @@ from piel.types import (
     SignalMetricsData,
     SignalMetricsMeasurementCollection,
 )
-from ....file_system import return_path
+from piel.file_system import return_path
 
 
 def extract_measurement_to_dataframe(file: PathTypes) -> pd.DataFrame:

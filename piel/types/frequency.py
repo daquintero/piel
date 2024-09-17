@@ -9,6 +9,9 @@ Corresponds to a container that contains a s-parameter representation.
 
 This type alias is currently a placeholder (Any | None) and is intended to be
 replaced with a proper s-parameter representation model in the future.
+
+This also represents a frequency, and hence wavelength spectrum if transformed
+accordingly.
 """
 
 

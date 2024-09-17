@@ -26,13 +26,13 @@ from piel.types.experimental import (
 )
 
 
-from .propagation import compose_propagation_delay_measurement
-from .oscilloscope import compose_oscilloscope_measurement
-from .frequency import compose_vna_s_parameter_measurement
+from piel.experimental.measurements.propagation import compose_propagation_delay_measurement
+from piel.experimental.measurements.oscilloscope import compose_oscilloscope_measurement
+from piel.experimental.measurements.frequency import compose_vna_s_parameter_measurement
 
-from .data.frequency import extract_s_parameter_data_from_vna_measurement
-from .data.oscilloscope import extract_oscilloscope_data_from_measurement
-from .data.propagation import extract_propagation_delay_data_from_measurement
+from piel.experimental.measurements.data.frequency import extract_s_parameter_data_from_vna_measurement
+from piel.experimental.measurements.data.oscilloscope import extract_oscilloscope_data_from_measurement
+from piel.experimental.measurements.data.propagation import extract_propagation_delay_data_from_measurement
 
 
 # Note that the configuration and measurement should have the same fields without _prefix
