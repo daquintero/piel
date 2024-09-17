@@ -1,3 +1,6 @@
+"""
+This corresponds to a Tectronic Digital Oscilloscope
+"""
 from .extract import (
     extract_measurement_to_dataframe,
     extract_oscilloscope_data_from_measurement,

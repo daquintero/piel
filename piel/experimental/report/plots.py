@@ -1,9 +1,9 @@
 import piel
 
-from ...types import PathTypes
-from ...file_system import return_path
+from piel.types import PathTypes
+from piel.file_system import return_path
 from piel.types.experimental import ExperimentData
-from ..measurements.data.extract import load_experiment_data_from_directory
+from piel.experimental.measurements.data.extract import load_experiment_data_from_directory
 from piel.visual.experimental import auto_plot_from_experiment_data
 
 

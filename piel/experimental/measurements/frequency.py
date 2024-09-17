@@ -1,6 +1,6 @@
 from piel.types.experimental import VNASParameterMeasurement
-from ...types import PathTypes
-from ...file_system import return_path
+from piel.types import PathTypes
+from piel.file_system import return_path
 
 
 def compose_vna_s_parameter_measurement(

@@ -1,17 +1,17 @@
 import logging
-from ....types import PathTypes
+from piel.types import PathTypes
 from piel.types.experimental import (
     Experiment,
     ExperimentData,
 )
-from ....file_system import return_path
-from ....models import load_from_json
-from ..experiment import compose_measurement_collection_from_experiment
+from piel.file_system import return_path
+from piel.models import load_from_json
+from piel.experimental.measurements.experiment import compose_measurement_collection_from_experiment
 from piel.types.experimental import (
     MeasurementCollectionTypes,
     MeasurementDataCollectionTypes,
 )
-from ..map import (
+from piel.experimental.measurements.map import (
     measurement_to_data_map,
     measurement_to_data_method_map,
     measurement_data_to_measurement_collection_data_map,
