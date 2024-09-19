@@ -168,6 +168,7 @@
                         "min": 0,
                         "max": 0,
                         "standard_deviation": 0,
+                        "count": null,
                         "unit": {
                             "name": "second",
                             "datum": "second",
@@ -198,6 +199,7 @@
                         "min": 0,
                         "max": 0,
                         "standard_deviation": 0,
+                        "count": null,
                         "unit": {
                             "name": "second",
                             "datum": "second",
@@ -228,6 +230,7 @@
                         "min": 0,
                         "max": 0,
                         "standard_deviation": 0,
+                        "count": null,
                         "unit": {
                             "name": "second",
                             "datum": "second",
@@ -239,7 +242,7 @@
             "goal": "",
             "parameters": {},
             "index": 0,
-            "date_configured": "2024-09-14 18:12:01.920877",
+            "date_configured": "2024-09-20 21:44:29.802106",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
@@ -422,6 +425,7 @@
                         "min": 0,
                         "max": 0,
                         "standard_deviation": 0,
+                        "count": null,
                         "unit": {
                             "name": "second",
                             "datum": "second",
@@ -452,6 +456,7 @@
                         "min": 0,
                         "max": 0,
                         "standard_deviation": 0,
+                        "count": null,
                         "unit": {
                             "name": "second",
                             "datum": "second",
@@ -482,6 +487,7 @@
                         "min": 0,
                         "max": 0,
                         "standard_deviation": 0,
+                        "count": null,
                         "unit": {
                             "name": "second",
                             "datum": "second",
@@ -493,7 +499,7 @@
             "goal": "",
             "parameters": {},
             "index": 1,
-            "date_configured": "2024-09-14 18:12:01.921088",
+            "date_configured": "2024-09-20 21:44:29.802279",
             "date_measured": "",
             "measurement_configuration_list": [
                 {

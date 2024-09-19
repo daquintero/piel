@@ -1,4 +1,4 @@
-from ..types import PathTypes
+from piel.types import PathTypes
 
 
 def dictionary_to_markdown_str(

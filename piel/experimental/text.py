@@ -1,13 +1,13 @@
 import pandas as pd
 
-from ..types import PathTypes
+from piel.types import PathTypes
 from piel.types.experimental import Experiment
-from ..file_system import (
+from piel.file_system import (
     return_path,
     write_file,
     read_json,
 )
-from ..visual import dictionary_to_markdown_str
+from piel.visual import dictionary_to_markdown_str
 
 
 def append_image_path_list_to_markdown(
