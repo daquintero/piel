@@ -48,7 +48,7 @@ class RFPhysicalComponent(PhysicalComponent):
         A representation of the component's frequency network, typically containing
         s-parameter data. This is currently a placeholder and may be None.
 
-    frequency_metrics : FrequencyMetricsCollection
+    metrics : FrequencyMetricsCollection
         A collection of frequency-related metrics for this RF component,
         including bandwidth and center transmission.
 
@@ -63,4 +63,4 @@ class RFPhysicalComponent(PhysicalComponent):
     """
 
     network: FrequencyNetworkModel | None = None
-    frequency_metrics: FrequencyMetricsCollection = FrequencyMetricsCollection()
+    metrics: FrequencyMetricsCollection = FrequencyMetricsCollection()

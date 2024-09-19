@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Optional
 from .core import Instance
 from .timing import TimeMetricsTypes, ZeroTimeMetrics
+from .metrics import ComponentMetrics
 
 
 class Port(Instance):
@@ -37,6 +38,8 @@ class Component(Instance):
     """
     Note the recursive relationship that a component can be composed of multiple components.
     """
+
+    metrics: ComponentMetrics | None = None
 
     def get_port(self, port_name: str) -> Optional[Port]:
         """

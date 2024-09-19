@@ -81,6 +81,7 @@
                 "min": 0,
                 "max": 0,
                 "standard_deviation": 0,
+                "count": null,
                 "unit": {
                     "name": "second",
                     "datum": "second",
@@ -111,6 +112,7 @@
                 "min": 0,
                 "max": 0,
                 "standard_deviation": 0,
+                "count": null,
                 "unit": {
                     "name": "second",
                     "datum": "second",

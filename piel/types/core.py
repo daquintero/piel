@@ -8,7 +8,7 @@ from typing import Optional, Literal
 
 # Type aliases for various path and array measurement used throughout the module.
 PathTypes = str | pathlib.Path | os.PathLike | types.ModuleType
-ArrayTypes = np.ndarray | jnp.ndarray
+ArrayTypes = np.ndarray | jnp.ndarray | list
 NumericalTypes = int | float | np.dtype | jnp.dtype
 TupleFloatType = tuple[float, ...]
 TupleIntType = tuple[int, ...]

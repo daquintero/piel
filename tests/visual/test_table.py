@@ -28,7 +28,7 @@ def test_create_axes_parameters_table_overlay():
     )
 
     # Show the plot with the table
-    plt.show()
+    # plt.show()
 
 
 # TODO fixme

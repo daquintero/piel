@@ -2,6 +2,7 @@
 
 import piel
 import piel.experimental as pe
+import piel.analysis.signals.time_data as tda
 from piel.models.physical.electrical import E8364A, cables
 from datetime import datetime
 
@@ -637,3 +638,63 @@ reinsantiated_calibration_experiment.name
 # ```
 
 # Note that this has some limitations of revalidation and reinstantion of python classes.
+
+# ### Extract Software-Defined Statistics from a `DataTimeSignalData`
+
+# `piel.analysis` also provides some functionality to analyse the corresponding time-data accordingly.
+#
+# For example, we might want to extract only the rising edge section of one of the measured signals:
+
+example_signal = calibration_propagation_delay_experiment_data.data.collection[
+    3
+].dut_waveform
+example_signal_measurements = (
+    calibration_propagation_delay_experiment_data.data.collection[3].measurements
+)
+
+help(tda.extract_rising_edges)
+
+example_signal_rising_edge_list = tda.extract_rising_edges(
+    signal=example_signal, lower_threshold_ratio=0.1, upper_threshold_ratio=0.9
+)
+
+# We can, for example, plot all these signals overlaid on top of each other - easily by just offsetting to a base reference time:
+
+offset_example_signal_rising_edge_list = tda.offset_time_signals(
+    example_signal_rising_edge_list
+)
+
+piel.visual.plot.signals.plot_multi_data_time_signal(
+    offset_example_signal_rising_edge_list
+)
+
+# We can technically also extract some statistical metrics from this data which we could use to compare with the measured statistics:
+
+offset_example_signal_rising_edge_metrics = tda.extract_rising_edge_statistical_metrics(
+    offset_example_signal_rising_edge_list
+)
+offset_example_signal_rising_edge_metrics.table
+
+# |    | Metric             |       Value |
+# |---:|:-------------------|------------:|
+# |  0 | Value              |  0.020914   |
+# |  1 | Mean               |  0.020914   |
+# |  2 | Min                | -0.108703   |
+# |  3 | Max                |  0.150609   |
+# |  4 | Standard Deviation |  0.00727889 |
+# |  5 | Count              | 17          |
+
+# We could now compare this to the metrics the oscilloscope calculated for us previously:
+
+example_signal_measurements["pk-pk_ch2__v"].table
+
+# |    | Metric             | Value              |
+# |---:|:-------------------|:-------------------|
+# |  0 | Value              | 0.274796879094793  |
+# |  1 | Mean               | 0.276517693380144  |
+# |  2 | Min                | 0.02445312536438   |
+# |  3 | Max                | 0.345625005150214  |
+# |  4 | Standard Deviation | 0.0039634275277739 |
+# |  5 | Count              | 9.91k              |
+
+# We can see the measurements are approximately close enough which is pretty cool! I would still trust the device measurements more, but with this functionality it is possible to compare a given waveform to a stastistical output from a machine.

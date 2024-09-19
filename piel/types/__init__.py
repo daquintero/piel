@@ -17,8 +17,14 @@ from .core import (
 
 from .connectivity.core import Instance
 from .connectivity.abstract import Connection, Component, Port
-from .connectivity.generic import ConnectionTypes, PortTypes, ComponentTypes
+from .connectivity.generic import (
+    ConnectionTypes,
+    PortTypes,
+    ComponentTypes,
+    ComponentCollection,
+)
 from .connectivity.physical import PhysicalComponent, PhysicalConnection, PhysicalPort
+from .connectivity.metrics import ComponentMetrics
 from .connectivity.timing import (
     TimeMetrics,
     DispersiveTimeMetrics,
@@ -79,8 +85,9 @@ from .electronic.core import (
     ElectronicCircuitComponent,
 )
 from .electronic.amplifier import RFTwoPortAmplifier
-from .electronic.hva import HVAMetricsType, HighVoltageTwoPortAmplifier
-from .electronic.lna import LNAMetricsType, LowNoiseTwoPortAmplifier
+from .electronic.generic import RFAmplifierCollection, RFAmplifierTypes
+from .electronic.hva import PowerAmplifierMetrics, PowerAmplifier
+from .electronic.lna import LNAMetrics, LowNoiseTwoPortAmplifier
 
 from .frequency import FrequencyNetworkModel, RFPhysicalComponent
 
@@ -93,6 +100,7 @@ from .materials import (
 )
 
 from .metrics import ScalarMetrics
+
 from .photonic import (
     PhotonicCircuitComponent,
     PortsTuple,
@@ -125,6 +133,8 @@ from .signal.time_sources import (
     SignalTimeSources,
 )
 
+from .reference import Reference
+
 # Always last
 from .type_conversion import (
     a2d,
@@ -136,4 +146,4 @@ from .type_conversion import (
     convert_dataframe_to_bits,
 )
 
-from .units import Unit, BaseSIUnitNameList, s, ns, us
+from .units import Unit, BaseSIUnitNameList, ratio, s, us, ns, mW, W, Hz, dB, V, nm, mm2
