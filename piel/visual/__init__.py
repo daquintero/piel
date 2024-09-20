@@ -18,5 +18,6 @@ from .types import AxesPlottingTypes, ExtensiblePlotsDirectionPerElement
 from .json_to_markdown import dictionary_to_markdown_str
 from .experimental import *
 
+from . import table
 
 activate_piel_styles()

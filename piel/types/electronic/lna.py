@@ -26,8 +26,6 @@ class LNAMetrics(ComponentMetrics):
             The material technology used in the amplifier.
     """
 
-    type: str = "LNAMetrics"
-
     footprint_mm2: ScalarMetrics = ScalarMetrics()
     """
     footprint_mm2 (  ScalarMetrics ):
@@ -78,5 +76,4 @@ class LNAMetrics(ComponentMetrics):
 
 
 class LowNoiseTwoPortAmplifier(RFTwoPortAmplifier):
-    type: str = "LowNoiseTwoPortAmplifier"
-    metrics: LNAMetrics = None
+    metrics: list[LNAMetrics] = []

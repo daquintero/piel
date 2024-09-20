@@ -8,129 +8,134 @@
             "ports": [],
             "connections": [],
             "components": [],
-            "metrics": {
-                "name": "Chen2007Ultra",
-                "attrs": {},
-                "reference": {
-                    "text": "Chen et al. (2007)",
-                    "bibtex": "\n    @article{chen2007ultra,\n       title={An Ultra-Wide-Band 0.4--10-GHz LNA in 0.18-um CMOS},\n       author={Chen, Ke-Hou and Lu, Jian-Hao and Chen, Bo-Jiun and Liu, Shen-Iuan},\n       journal={IEEE Transactions on Circuits and Systems II: Express Briefs},\n       volume={54},\n       number={3},\n       pages={217--221},\n       year={2007},\n       publisher={IEEE}\n    }\n    "
-                },
-                "type": "LNAMetrics",
-                "footprint_mm2": {
-                    "name": "",
+            "metrics": [
+                {
+                    "name": "Chen2007Ultra",
                     "attrs": {},
-                    "value": 0.42,
-                    "mean": null,
-                    "min": 0.42,
-                    "max": 0.42,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "millimeter_squared",
-                        "datum": "meter_squared",
-                        "base": 1e-06
-                    }
-                },
-                "bandwidth_Hz": {
-                    "name": "",
-                    "attrs": {},
-                    "value": null,
-                    "mean": null,
-                    "min": 400000000.0,
-                    "max": 10000000000.0,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Hertz",
-                        "datum": "Hertz",
-                        "base": 1
-                    }
-                },
-                "noise_figure": {
-                    "name": "",
-                    "attrs": {},
-                    "value": null,
-                    "mean": null,
-                    "min": 4.4,
-                    "max": 6.5,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "power_consumption_mW": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 12,
-                    "mean": null,
-                    "min": 12,
-                    "max": 12,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "miliwatt",
-                        "datum": "watt",
-                        "base": 0.001
-                    }
-                },
-                "power_gain_dB": {
-                    "name": "",
-                    "attrs": {},
-                    "value": null,
-                    "mean": null,
-                    "min": 11.2,
-                    "max": 12.4,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "supply_voltage_V": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 1.8,
-                    "mean": null,
-                    "min": 1.8,
-                    "max": 1.8,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Volt",
-                        "datum": "V",
-                        "base": 1
-                    }
-                },
-                "technology_nm": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 180,
-                    "mean": null,
-                    "min": 180,
-                    "max": 180,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "nanometer",
-                        "datum": "meter",
-                        "base": 1e-09
-                    }
-                },
-                "technology_material": ""
-            },
+                    "reference": {
+                        "text": "Chen et al. (2007)",
+                        "bibtex_id": "chen2007ultra",
+                        "bibtex": "\n    @article{chen2007ultra,\n       title={An Ultra-Wide-Band 0.4--10-GHz LNA in 0.18-um CMOS},\n       author={Chen, Ke-Hou and Lu, Jian-Hao and Chen, Bo-Jiun and Liu, Shen-Iuan},\n       journal={IEEE Transactions on Circuits and Systems II: Express Briefs},\n       volume={54},\n       number={3},\n       pages={217--221},\n       year={2007},\n       publisher={IEEE}\n    }\n    "
+                    },
+                    "environment": {
+                        "temperature_K": 293,
+                        "region": ""
+                    },
+                    "footprint_mm2": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0.42,
+                        "mean": null,
+                        "min": 0.42,
+                        "max": 0.42,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "millimeter_squared",
+                            "datum": "meter_squared",
+                            "base": 1e-06
+                        }
+                    },
+                    "bandwidth_Hz": {
+                        "name": "",
+                        "attrs": {},
+                        "value": null,
+                        "mean": null,
+                        "min": 400000000.0,
+                        "max": 10000000000.0,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Hertz",
+                            "datum": "Hertz",
+                            "base": 1
+                        }
+                    },
+                    "noise_figure": {
+                        "name": "",
+                        "attrs": {},
+                        "value": null,
+                        "mean": null,
+                        "min": 4.4,
+                        "max": 6.5,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "power_consumption_mW": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 12,
+                        "mean": null,
+                        "min": 12,
+                        "max": 12,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "miliwatt",
+                            "datum": "watt",
+                            "base": 0.001
+                        }
+                    },
+                    "power_gain_dB": {
+                        "name": "",
+                        "attrs": {},
+                        "value": null,
+                        "mean": null,
+                        "min": 11.2,
+                        "max": 12.4,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "supply_voltage_V": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 1.8,
+                        "mean": null,
+                        "min": 1.8,
+                        "max": 1.8,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Volt",
+                            "datum": "V",
+                            "base": 1
+                        }
+                    },
+                    "technology_nm": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 180,
+                        "mean": null,
+                        "min": 180,
+                        "max": 180,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "nanometer",
+                            "datum": "meter",
+                            "base": 1e-09
+                        }
+                    },
+                    "technology_material": ""
+                }
+            ],
             "environment": {
-                "temperature_K": null,
-                "region": null
+                "temperature_K": 293,
+                "region": ""
             },
             "manufacturer": "",
             "model": "",
-            "network": null,
-            "type": "LowNoiseTwoPortAmplifier"
+            "network": null
         },
         {
             "name": "",
@@ -138,129 +143,134 @@
             "ports": [],
             "connections": [],
             "components": [],
-            "metrics": {
-                "name": "Liu20030",
-                "attrs": {},
-                "reference": {
-                    "text": "Liu et al. (2003)",
-                    "bibtex": "\n    @inproceedings{liu20030,\n       title={A 0.5-14-GHz 10.6-dB CMOS cascode distributed amplifier},\n       author={Liu, Ren-Chieh and Lin, Chin-Shen and Deng, Kuo-Liang and Wang, Huei},\n       booktitle={2003 Symposium on VLSI Circuits. Digest of Technical Papers (IEEE Cat. No. 03CH37408)},\n       pages={139--140},\n       year={2003},\n       organization={IEEE}\n    }\n    "
-                },
-                "type": "LNAMetrics",
-                "footprint_mm2": {
-                    "name": "",
+            "metrics": [
+                {
+                    "name": "Liu20030",
                     "attrs": {},
-                    "value": 1.6,
-                    "mean": null,
-                    "min": 1.6,
-                    "max": 1.6,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "millimeter_squared",
-                        "datum": "meter_squared",
-                        "base": 1e-06
-                    }
-                },
-                "bandwidth_Hz": {
-                    "name": "",
-                    "attrs": {},
-                    "value": null,
-                    "mean": null,
-                    "min": 500000000.0,
-                    "max": 14000000000.0,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Hertz",
-                        "datum": "Hertz",
-                        "base": 1
-                    }
-                },
-                "noise_figure": {
-                    "name": "",
-                    "attrs": {},
-                    "value": null,
-                    "mean": null,
-                    "min": 3.2,
-                    "max": 5.4,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "power_consumption_mW": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 52,
-                    "mean": null,
-                    "min": 52,
-                    "max": 52,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "miliwatt",
-                        "datum": "watt",
-                        "base": 0.001
-                    }
-                },
-                "power_gain_dB": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 10.6,
-                    "mean": null,
-                    "min": 10.6,
-                    "max": 10.6,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "supply_voltage_V": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 1.3,
-                    "mean": null,
-                    "min": 1.3,
-                    "max": 1.3,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Volt",
-                        "datum": "V",
-                        "base": 1
-                    }
-                },
-                "technology_nm": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 180,
-                    "mean": null,
-                    "min": 180,
-                    "max": 180,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "nanometer",
-                        "datum": "meter",
-                        "base": 1e-09
-                    }
-                },
-                "technology_material": ""
-            },
+                    "reference": {
+                        "text": "Liu et al. (2003)",
+                        "bibtex_id": "liu20030",
+                        "bibtex": "\n    @inproceedings{liu20030,\n       title={A 0.5-14-GHz 10.6-dB CMOS cascode distributed amplifier},\n       author={Liu, Ren-Chieh and Lin, Chin-Shen and Deng, Kuo-Liang and Wang, Huei},\n       booktitle={2003 Symposium on VLSI Circuits. Digest of Technical Papers (IEEE Cat. No. 03CH37408)},\n       pages={139--140},\n       year={2003},\n       organization={IEEE}\n    }\n    "
+                    },
+                    "environment": {
+                        "temperature_K": 293,
+                        "region": ""
+                    },
+                    "footprint_mm2": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 1.6,
+                        "mean": null,
+                        "min": 1.6,
+                        "max": 1.6,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "millimeter_squared",
+                            "datum": "meter_squared",
+                            "base": 1e-06
+                        }
+                    },
+                    "bandwidth_Hz": {
+                        "name": "",
+                        "attrs": {},
+                        "value": null,
+                        "mean": null,
+                        "min": 500000000.0,
+                        "max": 14000000000.0,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Hertz",
+                            "datum": "Hertz",
+                            "base": 1
+                        }
+                    },
+                    "noise_figure": {
+                        "name": "",
+                        "attrs": {},
+                        "value": null,
+                        "mean": null,
+                        "min": 3.2,
+                        "max": 5.4,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "power_consumption_mW": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 52,
+                        "mean": null,
+                        "min": 52,
+                        "max": 52,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "miliwatt",
+                            "datum": "watt",
+                            "base": 0.001
+                        }
+                    },
+                    "power_gain_dB": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 10.6,
+                        "mean": null,
+                        "min": 10.6,
+                        "max": 10.6,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "supply_voltage_V": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 1.3,
+                        "mean": null,
+                        "min": 1.3,
+                        "max": 1.3,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Volt",
+                            "datum": "V",
+                            "base": 1
+                        }
+                    },
+                    "technology_nm": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 180,
+                        "mean": null,
+                        "min": 180,
+                        "max": 180,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "nanometer",
+                            "datum": "meter",
+                            "base": 1e-09
+                        }
+                    },
+                    "technology_material": ""
+                }
+            ],
             "environment": {
-                "temperature_K": null,
-                "region": null
+                "temperature_K": 293,
+                "region": ""
             },
             "manufacturer": "",
             "model": "",
-            "network": null,
-            "type": "LowNoiseTwoPortAmplifier"
+            "network": null
         },
         {
             "name": "",
@@ -268,129 +278,134 @@
             "ports": [],
             "connections": [],
             "components": [],
-            "metrics": {
-                "name": "Parvizi2014Sub",
-                "attrs": {},
-                "reference": {
-                    "text": "Parvizi et al. (2014)",
-                    "bibtex": "\n    @article{parvizi2014sub,\n       title={A sub-mW, ultra-low-voltage, wideband low-noise amplifier design technique},\n       author={Parvizi, Mahdi and Allidina, Karim and El-Gamal, Mourad N},\n       journal={IEEE Transactions on Very Large Scale Integration (VLSI) Systems},\n       volume={23},\n       number={6},\n       pages={1111--1122},\n       year={2014},\n       publisher={IEEE}\n    }\n    "
-                },
-                "type": "LNAMetrics",
-                "footprint_mm2": {
-                    "name": "",
+            "metrics": [
+                {
+                    "name": "Parvizi2014Sub",
                     "attrs": {},
-                    "value": 0.23,
-                    "mean": null,
-                    "min": 0.23,
-                    "max": 0.23,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "millimeter_squared",
-                        "datum": "meter_squared",
-                        "base": 1e-06
-                    }
-                },
-                "bandwidth_Hz": {
-                    "name": "",
-                    "attrs": {},
-                    "value": null,
-                    "mean": null,
-                    "min": 100000000.0,
-                    "max": 7000000000.0,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Hertz",
-                        "datum": "Hertz",
-                        "base": 1
-                    }
-                },
-                "noise_figure": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 5.5,
-                    "mean": null,
-                    "min": 5.5,
-                    "max": 5.5,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "power_consumption_mW": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 0.75,
-                    "mean": null,
-                    "min": 0.75,
-                    "max": 0.75,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "miliwatt",
-                        "datum": "watt",
-                        "base": 0.001
-                    }
-                },
-                "power_gain_dB": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 12.6,
-                    "mean": null,
-                    "min": 12.6,
-                    "max": 12.6,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "supply_voltage_V": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 0.5,
-                    "mean": null,
-                    "min": 0.5,
-                    "max": 0.5,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Volt",
-                        "datum": "V",
-                        "base": 1
-                    }
-                },
-                "technology_nm": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 90,
-                    "mean": null,
-                    "min": 90,
-                    "max": 90,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "nanometer",
-                        "datum": "meter",
-                        "base": 1e-09
-                    }
-                },
-                "technology_material": ""
-            },
+                    "reference": {
+                        "text": "Parvizi et al. (2014)",
+                        "bibtex_id": "parvizi2014sub",
+                        "bibtex": "\n    @article{parvizi2014sub,\n       title={A sub-mW, ultra-low-voltage, wideband low-noise amplifier design technique},\n       author={Parvizi, Mahdi and Allidina, Karim and El-Gamal, Mourad N},\n       journal={IEEE Transactions on Very Large Scale Integration (VLSI) Systems},\n       volume={23},\n       number={6},\n       pages={1111--1122},\n       year={2014},\n       publisher={IEEE}\n    }\n    "
+                    },
+                    "environment": {
+                        "temperature_K": 293,
+                        "region": ""
+                    },
+                    "footprint_mm2": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0.23,
+                        "mean": null,
+                        "min": 0.23,
+                        "max": 0.23,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "millimeter_squared",
+                            "datum": "meter_squared",
+                            "base": 1e-06
+                        }
+                    },
+                    "bandwidth_Hz": {
+                        "name": "",
+                        "attrs": {},
+                        "value": null,
+                        "mean": null,
+                        "min": 100000000.0,
+                        "max": 7000000000.0,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Hertz",
+                            "datum": "Hertz",
+                            "base": 1
+                        }
+                    },
+                    "noise_figure": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 5.5,
+                        "mean": null,
+                        "min": 5.5,
+                        "max": 5.5,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "power_consumption_mW": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0.75,
+                        "mean": null,
+                        "min": 0.75,
+                        "max": 0.75,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "miliwatt",
+                            "datum": "watt",
+                            "base": 0.001
+                        }
+                    },
+                    "power_gain_dB": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 12.6,
+                        "mean": null,
+                        "min": 12.6,
+                        "max": 12.6,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "supply_voltage_V": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0.5,
+                        "mean": null,
+                        "min": 0.5,
+                        "max": 0.5,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Volt",
+                            "datum": "V",
+                            "base": 1
+                        }
+                    },
+                    "technology_nm": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 90,
+                        "mean": null,
+                        "min": 90,
+                        "max": 90,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "nanometer",
+                            "datum": "meter",
+                            "base": 1e-09
+                        }
+                    },
+                    "technology_material": ""
+                }
+            ],
             "environment": {
-                "temperature_K": null,
-                "region": null
+                "temperature_K": 293,
+                "region": ""
             },
             "manufacturer": "",
             "model": "",
-            "network": null,
-            "type": "LowNoiseTwoPortAmplifier"
+            "network": null
         },
         {
             "name": "",
@@ -398,129 +413,134 @@
             "ports": [],
             "connections": [],
             "components": [],
-            "metrics": {
-                "name": "Asgaran20064",
-                "attrs": {},
-                "reference": {
-                    "text": "Asgaran et al. (2006)",
-                    "bibtex": "\n    @article{asgaran20064,\n       title={A 4-mW monolithic CMOS LNA at 5.7 GHz with the gate resistance used for input matching},\n       author={Asgaran, Saman and Deen, M Jamal and Chen, Chih-Hung},\n       journal={IEEE Microwave and Wireless Components Letters},\n       volume={16},\n       number={4},\n       pages={188--190},\n       year={2006},\n       publisher={IEEE}\n    }\n    "
-                },
-                "type": "LNAMetrics",
-                "footprint_mm2": {
-                    "name": "",
+            "metrics": [
+                {
+                    "name": "Asgaran20064",
                     "attrs": {},
-                    "value": 0.855,
-                    "mean": null,
-                    "min": 0.855,
-                    "max": 0.855,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "millimeter_squared",
-                        "datum": "meter_squared",
-                        "base": 1e-06
-                    }
-                },
-                "bandwidth_Hz": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 5700000000.0,
-                    "mean": null,
-                    "min": 5700000000.0,
-                    "max": 5700000000.0,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Hertz",
-                        "datum": "Hertz",
-                        "base": 1
-                    }
-                },
-                "noise_figure": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 3.4,
-                    "mean": null,
-                    "min": 3.4,
-                    "max": 3.4,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "power_consumption_mW": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 4,
-                    "mean": null,
-                    "min": 4,
-                    "max": 4,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "miliwatt",
-                        "datum": "watt",
-                        "base": 0.001
-                    }
-                },
-                "power_gain_dB": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 11.45,
-                    "mean": null,
-                    "min": 11.45,
-                    "max": 11.45,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Decibel",
-                        "datum": "dB",
-                        "base": 1
-                    }
-                },
-                "supply_voltage_V": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 0.5,
-                    "mean": null,
-                    "min": 0.5,
-                    "max": 0.5,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "Volt",
-                        "datum": "V",
-                        "base": 1
-                    }
-                },
-                "technology_nm": {
-                    "name": "",
-                    "attrs": {},
-                    "value": 180,
-                    "mean": null,
-                    "min": 180,
-                    "max": 180,
-                    "standard_deviation": null,
-                    "count": null,
-                    "unit": {
-                        "name": "nanometer",
-                        "datum": "meter",
-                        "base": 1e-09
-                    }
-                },
-                "technology_material": ""
-            },
+                    "reference": {
+                        "text": "Asgaran et al. (2006)",
+                        "bibtex_id": "asgaran20064",
+                        "bibtex": "\n    @article{asgaran20064,\n       title={A 4-mW monolithic CMOS LNA at 5.7 GHz with the gate resistance used for input matching},\n       author={Asgaran, Saman and Deen, M Jamal and Chen, Chih-Hung},\n       journal={IEEE Microwave and Wireless Components Letters},\n       volume={16},\n       number={4},\n       pages={188--190},\n       year={2006},\n       publisher={IEEE}\n    }\n    "
+                    },
+                    "environment": {
+                        "temperature_K": 293,
+                        "region": ""
+                    },
+                    "footprint_mm2": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0.855,
+                        "mean": null,
+                        "min": 0.855,
+                        "max": 0.855,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "millimeter_squared",
+                            "datum": "meter_squared",
+                            "base": 1e-06
+                        }
+                    },
+                    "bandwidth_Hz": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 5700000000.0,
+                        "mean": null,
+                        "min": 5700000000.0,
+                        "max": 5700000000.0,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Hertz",
+                            "datum": "Hertz",
+                            "base": 1
+                        }
+                    },
+                    "noise_figure": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 3.4,
+                        "mean": null,
+                        "min": 3.4,
+                        "max": 3.4,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "power_consumption_mW": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 4,
+                        "mean": null,
+                        "min": 4,
+                        "max": 4,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "miliwatt",
+                            "datum": "watt",
+                            "base": 0.001
+                        }
+                    },
+                    "power_gain_dB": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 11.45,
+                        "mean": null,
+                        "min": 11.45,
+                        "max": 11.45,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Decibel",
+                            "datum": "dB",
+                            "base": 1
+                        }
+                    },
+                    "supply_voltage_V": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 0.5,
+                        "mean": null,
+                        "min": 0.5,
+                        "max": 0.5,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "Volt",
+                            "datum": "V",
+                            "base": 1
+                        }
+                    },
+                    "technology_nm": {
+                        "name": "",
+                        "attrs": {},
+                        "value": 180,
+                        "mean": null,
+                        "min": 180,
+                        "max": 180,
+                        "standard_deviation": null,
+                        "count": null,
+                        "unit": {
+                            "name": "nanometer",
+                            "datum": "meter",
+                            "base": 1e-09
+                        }
+                    },
+                    "technology_material": ""
+                }
+            ],
             "environment": {
-                "temperature_K": null,
-                "region": null
+                "temperature_K": 293,
+                "region": ""
             },
             "manufacturer": "",
             "model": "",
-            "network": null,
-            "type": "LowNoiseTwoPortAmplifier"
+            "network": null
         }
     ]
 }

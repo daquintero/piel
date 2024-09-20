@@ -1,7 +1,7 @@
 # Top Level Types Declaration, all should be imported here.
-from .analogue import AnalogueModule, AnalogModule
+from piel.types.analogue import AnalogueModule, AnalogModule
 
-from .core import (
+from piel.types.core import (
     PathTypes,
     PielBaseModel,
     NumericalTypes,
@@ -15,24 +15,28 @@ from .core import (
     ModuleType,
 )
 
-from .connectivity.core import Instance
-from .connectivity.abstract import Connection, Component, Port
-from .connectivity.generic import (
+from piel.types.connectivity.core import Instance
+from piel.types.connectivity.abstract import Connection, Component, Port
+from piel.types.connectivity.generic import (
     ConnectionTypes,
     PortTypes,
     ComponentTypes,
     ComponentCollection,
 )
-from .connectivity.physical import PhysicalComponent, PhysicalConnection, PhysicalPort
-from .connectivity.metrics import ComponentMetrics
-from .connectivity.timing import (
+from piel.types.connectivity.physical import (
+    PhysicalComponent,
+    PhysicalConnection,
+    PhysicalPort,
+)
+from piel.types.connectivity.metrics import ComponentMetrics
+from piel.types.connectivity.timing import (
     TimeMetrics,
     DispersiveTimeMetrics,
     TimeMetricsTypes,
     ZeroTimeMetrics,
 )
 
-from .digital import (
+from piel.types.digital import (
     DigitalLogicModule,
     AbstractBitsType,
     BitsType,
@@ -45,12 +49,12 @@ from .digital import (
     TruthTable,
     TruthTableLogicType,
 )
-from .digital_electro_optic import BitPhaseMap
+from piel.types.digital_electro_optic import BitPhaseMap
 
-from .environment import Environment
-from .experimental import *  # NOQA: F403
+from piel.types.environment import Environment
+from piel.types.experimental import *  # NOQA: F403
 
-from .electrical.cables import (
+from piel.types.electrical.cables import (
     CoaxialCableGeometryType,
     CoaxialCableHeatTransferType,
     CoaxialCableMaterialSpecificationType,
@@ -61,16 +65,16 @@ from .electrical.cables import (
     CoaxialCable,
 )
 
-from .electrical.pcb import PCB
+from piel.types.electrical.pcb import PCB
 
-from .electrical.rf_calibration import Short, Open, Load, Through
+from piel.types.electrical.rf_calibration import Short, Open, Load, Through
 
-from .electrical.rf_passives import (
+from piel.types.electrical.rf_passives import (
     PowerSplitter,
     BiasTee,
 )
 
-from .electro_optic import (
+from piel.types.electro_optic.transition import (
     FockStatePhaseTransitionType,
     OpticalStateTransitions,
     PhaseMapType,
@@ -79,29 +83,29 @@ from .electro_optic import (
     SParameterCollection,
 )
 
-from .electronic.core import (
+from piel.types.electronic.core import (
     ElectronicCircuit,
     ElectronicChip,
     ElectronicCircuitComponent,
 )
-from .electronic.amplifier import RFTwoPortAmplifier
-from .electronic.generic import RFAmplifierCollection, RFAmplifierTypes
-from .electronic.hva import PowerAmplifierMetrics, PowerAmplifier
-from .electronic.lna import LNAMetrics, LowNoiseTwoPortAmplifier
+from piel.types.electronic.amplifier import RFTwoPortAmplifier
+from piel.types.electronic.generic import RFAmplifierCollection, RFAmplifierTypes
+from piel.types.electronic.hva import PowerAmplifierMetrics, PowerAmplifier
+from piel.types.electronic.lna import LNAMetrics, LowNoiseTwoPortAmplifier
 
-from .frequency import FrequencyNetworkModel, RFPhysicalComponent
+from piel.types.frequency import FrequencyNetworkModel, RFPhysicalComponent
 
-from .file_system import ProjectType
-from .integration import CircuitComponent
-from .materials import (
+from piel.types.file_system import ProjectType
+from piel.types.integration import CircuitComponent
+from piel.types.materials import (
     MaterialReferenceType,
     MaterialReferencesTypes,
     MaterialSpecificationType,
 )
 
-from .metrics import ScalarMetrics
+from piel.types.metrics import ScalarMetrics
 
-from .photonic import (
+from piel.types.photonic import (
     PhotonicCircuitComponent,
     PortsTuple,
     OpticalTransmissionCircuit,
@@ -109,15 +113,19 @@ from .photonic import (
     SParameterMatrixTuple,
 )
 
-from .signal.core import ElectricalSignalDomains, QuantityTypesDC
+from piel.types.signal.core import ElectricalSignalDomains, QuantityTypesDC
 
-from .signal.dc_data import SignalInstanceDC, SignalInstanceMetadataDC, SignalDC
+from piel.types.signal.dc_data import (
+    SignalInstanceDC,
+    SignalInstanceMetadataDC,
+    SignalDC,
+)
 
-from .signal.frequency import (
+from piel.types.signal.frequency import (
     TwoPortCalibrationNetworkCollection,
 )
 
-from .signal.time_data import (
+from piel.types.signal.time_data import (
     SignalMetricsMeasurementCollection,
     SignalMetricsData,
     MultiDataTimeSignal,
@@ -125,7 +133,7 @@ from .signal.time_data import (
 )
 
 
-from .signal.time_sources import (
+from piel.types.signal.time_sources import (
     ExponentialSource,
     PulseSource,
     PiecewiseLinearSource,
@@ -133,10 +141,10 @@ from .signal.time_sources import (
     SignalTimeSources,
 )
 
-from .reference import Reference
+from piel.types.reference import Reference
 
 # Always last
-from .type_conversion import (
+from piel.types.type_conversion import (
     a2d,
     absolute_to_threshold,
     convert_array_type,
