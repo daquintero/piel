@@ -9,7 +9,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   examples
+   examples/docs/index
    sections/environment/index
    sections/codesign/index
    sections/models/index

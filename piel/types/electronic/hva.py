@@ -28,8 +28,6 @@ class PowerAmplifierMetrics(ComponentMetrics):
             The material technology used in the amplifier.
     """
 
-    type: str = "PowerAmplifierMetrics"
-
     footprint_mm2: ScalarMetrics = ScalarMetrics()
     """
     footprint_mm2 ( ScalarMetrics ):
@@ -86,5 +84,4 @@ class PowerAmplifierMetrics(ComponentMetrics):
 
 
 class PowerAmplifier(RFTwoPortAmplifier):
-    type: str = "PowerAmplifier"
-    metrics: PowerAmplifierMetrics = None
+    metrics: list[PowerAmplifierMetrics] = []

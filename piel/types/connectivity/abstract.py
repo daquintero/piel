@@ -39,7 +39,10 @@ class Component(Instance):
     Note the recursive relationship that a component can be composed of multiple components.
     """
 
-    metrics: ComponentMetrics | None = None
+    metrics: list[ComponentMetrics] = []
+    """
+    Note that a given component might have a set of metrics corresponding to multiple variations of the testing conditions.
+    """
 
     def get_port(self, port_name: str) -> Optional[Port]:
         """

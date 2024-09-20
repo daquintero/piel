@@ -31,6 +31,7 @@ __all__ = [
     "replace_string_in_file",
     "replace_string_in_directory_files",
     "return_path",
+    "rp",
     "run_script",
     "write_file",
     "write_model_to_json",
@@ -715,6 +716,9 @@ def return_path(
         )
     output_path = output_path.resolve()
     return output_path
+
+
+rp = return_path
 
 
 def run_script(

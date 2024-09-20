@@ -12,9 +12,9 @@
 #     name: python3
 # ---
 
-# # Analytic Electronic-Photonic Mach-Zehnder Modulator Models
+# # Electro-Optic Mach-Zehnder Modulator Design & Analysis
 #
-# The goal of this example is to explore some of the physics related to both the optical and electronic modelling of mach-zehnder modulators. We will demonstrate how the theory matches some of the numerical implementations used throughout `piel`
+# The goal of this example is to explore some of the physics related to both the optical and electronic modelling of mach-zehnder modulators. We will demonstrate how the theory matches some of the numerical implementations used throughout `piel`. We will explore device metrics analysis and also show how this can be used in larger system architecture through `piel`.
 #
 # The main references of this notebook are:
 #
@@ -29,7 +29,6 @@ import piel.models.frequency.photonic
 import numpy as np
 import jax.numpy as jnp
 import pandas as pd
-
 # -
 
 # ## Coupler Modelling
@@ -64,6 +63,7 @@ import pandas as pd
 # \end{equation}
 #
 # An implementation of this coupler in an integrated photonics platform using `gdsfactory` is shown in the image below. Note that the equation notation above matches that within the `gds` implementation:
+
 from gdsfactory.components import mmi1x2
 
 mmi1x2().plot()

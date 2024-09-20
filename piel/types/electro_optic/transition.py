@@ -7,7 +7,7 @@ import pandas as pd
 from pydantic import ConfigDict
 from typing import Literal, Optional
 from typing_extensions import TypedDict
-from .core import ArrayTypes, PielBaseModel, TupleNumericalType, TupleIntType
+from piel.types.core import ArrayTypes, PielBaseModel, TupleNumericalType, TupleIntType
 
 # Type alias for phase maps, which can be either a tuple of floats or a tuple of integers.
 PhaseMapType = TupleNumericalType
