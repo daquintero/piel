@@ -40,6 +40,11 @@ def create_axes_per_figure(rows: int = 1, columns: int = 1, **kwargs) -> tuple:
         else:
             kwargs["figsize"] = (16, 8)
 
+    if "constrained_layout" in kwargs:
+        pass
+    else:
+        kwargs["constrained_layout"] = True
+
     fig, axs = plt.subplots(rows, columns, **kwargs)
 
     if (rows == 1) and (columns == 1):

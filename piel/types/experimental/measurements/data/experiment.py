@@ -1,3 +1,4 @@
+from __future__ import annotations
 from piel.types.connectivity.core import Instance
 from ...experiment import Experiment
 from .generic import MeasurementDataCollectionTypes

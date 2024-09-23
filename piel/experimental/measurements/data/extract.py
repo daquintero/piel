@@ -6,7 +6,9 @@ from piel.types.experimental import (
 )
 from piel.file_system import return_path
 from piel.models import load_from_json
-from piel.experimental.measurements.experiment import compose_measurement_collection_from_experiment
+from piel.experimental.measurements.experiment import (
+    compose_measurement_collection_from_experiment,
+)
 from piel.types.experimental import (
     MeasurementCollectionTypes,
     MeasurementDataCollectionTypes,
@@ -51,13 +53,13 @@ def extract_data_from_measurement_collection(
         except Exception as e:
             missing_data_error = f"Missing data for measurement: {measurement_i.name} in collection: {measurement_collection.name} with index: {i}"
             if skip_missing:
-                logger.error(missing_data_error)
+                logger.debug(missing_data_error)
                 measurement_data_i = measurement_data_type()
             else:
                 raise e
 
         try:
-            logger.error(
+            logger.debug(
                 f"Constructed {measurement_data_i} is not of the target measurement data type {measurement_data_type}"
             )
             assert isinstance(measurement_data_i, measurement_data_type)
@@ -115,6 +117,9 @@ def extract_data_from_experiment(
 
     if extraction_kwargs is None:
         extraction_kwargs = {"skip_missing": True}
+
+    logger.debug(f"Extracting data with the following kwargs: {extraction_kwargs}")
+    logger.debug(f"Composing data with the following kwargs: {composition_kwargs}")
 
     measurement_collection = compose_measurement_collection_from_experiment(
         experiment=experiment,

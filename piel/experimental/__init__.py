@@ -5,6 +5,7 @@ from piel.experimental.devices import DPO73304, AQ6375
 from .analysis.operating_point import (
     create_experiment_data_collection_from_unique_parameters,
 )
+from .analysis.subset import experiment_data_from_parameter_subset
 from .file_system import (
     construct_experiment_directories,
     construct_experiment_structure,

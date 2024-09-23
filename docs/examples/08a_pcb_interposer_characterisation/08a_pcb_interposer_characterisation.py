@@ -5,6 +5,7 @@ import piel.experimental as pe
 import piel.analysis.signals.time_data as tda
 from piel.models.physical.electrical import E8364A, cables
 from datetime import datetime
+import os
 
 # In this example, we will compare measurement measurements and simulated measurements to understand the performance of a cryogenic-designed EIC-interposer printed-circuit board.
 #
@@ -294,7 +295,7 @@ def calibration_propagation_delay_experiment_instance(
     oscilloscope = piel.models.physical.electrical.create_two_port_oscilloscope()
     waveform_generator = (
         piel.models.physical.electrical.create_one_port_square_wave_waveform_generator(
-            peak_to_peak_voltage_V=0.5,
+            peak_to_peak_voltage_V=0.25,
             rise_time_s=1,
             fall_time_s=1,
             frequency_Hz=square_wave_frequency_Hz,
@@ -329,7 +330,7 @@ def pcb_propagation_delay_experiment_instance(
     oscilloscope = piel.models.physical.electrical.create_two_port_oscilloscope()
     waveform_generator = (
         piel.models.physical.electrical.create_one_port_square_wave_waveform_generator(
-            peak_to_peak_voltage_V=0.5,
+            peak_to_peak_voltage_V=0.25,
             rise_time_s=1,
             fall_time_s=1,
             frequency_Hz=square_wave_frequency_Hz,
@@ -569,8 +570,27 @@ calibration_propagation_delay_experiment_data = piel.types.ExperimentData(
 fig, ax = (
     piel.visual.experimental.propagation.experiment_data.plot_propagation_signals_time(
         calibration_propagation_delay_experiment_data,
-        path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
+        path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals_default.jpg",
         debug=True,
+    )
+)
+
+# ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals_default.jpg)
+
+# You can visualise this plot with both a default plotting using the `ExperimentData` metadata or can also also customize this plotting easily.
+
+fig, ax = (
+    piel.visual.experimental.propagation.experiment_data.plot_propagation_signals_time(
+        calibration_propagation_delay_experiment_data,
+        debug=True,
+        path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
+        figure_title="Identical-Path Calibration Propagation-Delay Measurement",
+        create_parameters_tables=False,
+        axes_subtitle_list=["1 GHz", "3 GHz", "5 GHz", "10 GHz"],
+        legend_loc="",
+        xlabel=piel.types.units.ns,
+        ylabel=piel.types.units.V,
+        figure_kwargs={"figsize": (8, 6)},
     )
 )
 
@@ -609,6 +629,8 @@ fig, ax = (
 )
 
 # ![pcb_propagation_delay_measurements](../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_measurements.jpg)
+
+# However, maybe you want to generate a better quality figure with both metrics and the time-signals.
 
 # #### Automatic Report and Plotting
 
@@ -665,23 +687,28 @@ offset_example_signal_rising_edge_list = tda.offset_time_signals(
 )
 
 piel.visual.plot.signals.plot_multi_data_time_signal(
-    offset_example_signal_rising_edge_list
+    offset_example_signal_rising_edge_list,
+    xlabel=piel.types.units.ns,
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg",
 )
+
+# ![extracted_rising_edges](../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg)
 
 # We can technically also extract some statistical metrics from this data which we could use to compare with the measured statistics:
 
-offset_example_signal_rising_edge_metrics = tda.extract_rising_edge_statistical_metrics(
-    offset_example_signal_rising_edge_list
+offset_example_signal_rising_edge_metrics = tda.extract_statistical_metrics(
+    offset_example_signal_rising_edge_list,
+    analysis_type="peak_to_peak",
 )
 offset_example_signal_rising_edge_metrics.table
 
 # |    | Metric             |       Value |
 # |---:|:-------------------|------------:|
-# |  0 | Value              |  0.020914   |
-# |  1 | Mean               |  0.020914   |
-# |  2 | Min                | -0.108703   |
-# |  3 | Max                |  0.150609   |
-# |  4 | Standard Deviation |  0.00727889 |
+# |  0 | Value              |  0.241984   |
+# |  1 | Mean               |  0.241984   |
+# |  2 | Min                |  0.233234   |
+# |  3 | Max                |  0.251516   |
+# |  4 | Standard Deviation |  0.00642395 |
 # |  5 | Count              | 17          |
 
 # We could now compare this to the metrics the oscilloscope calculated for us previously:

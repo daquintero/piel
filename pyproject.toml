@@ -76,6 +76,7 @@ dev = [
     "vlsirtools>=6.0.0,<7.0.0",
     "bokeh",
     "bump-my-version",
+    "devtools",
     "cookiecutter",
     "coverage",
     "flake8",

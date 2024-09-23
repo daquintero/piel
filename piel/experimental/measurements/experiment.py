@@ -12,7 +12,7 @@ from piel.experimental.measurements.map import (
 )
 from piel.types import PathTypes
 from piel.file_system import return_path
-from piel.models import load_from_json, load_from_dict
+from piel.models import load_from_json
 
 
 def compose_measurement_from_experiment_instance(
@@ -38,16 +38,14 @@ def compose_measurement_from_experiment_instance(
     instance_directory = return_path(instance_directory)
     # TODO verify that print(experiment_instance.measurement_configuration_list) exists
 
-    experiment_instance_dict = experiment_instance.model_dump()
-
-    measurement_configuration_list = experiment_instance_dict[
-        "measurement_configuration_list"
-    ]
+    measurement_configuration_list = experiment_instance.measurement_configuration_list
 
     if len(measurement_configuration_list) == 0:
+        import devtools
+
         # Include information about which experiment or directory this is.
         raise ValueError(
-            "The experiment instance does not contain any measurements. Please verify the experiment configuration."
+            f"The experiment instance {devtools.debug(experiment_instance)} does not contain any measurements. Please verify the experiment configuration."
             + f"Experiment instance: {experiment_instance.name} "
             + f"Directory: {instance_directory}"
         )
@@ -55,7 +53,7 @@ def compose_measurement_from_experiment_instance(
         for measurement_configuration_i in measurement_configuration_list:
             # Now we need to go through the instance directory and map these files to a specific measurement instance
             measurement_composition_method = measurement_composition_method_mapping[
-                measurement_configuration_i["measurement_configuration_type"]
+                measurement_configuration_i.measurement_configuration_type
             ]
             measurement = measurement_composition_method(
                 instance_directory,
@@ -77,15 +75,10 @@ def compose_measurement_collection_from_experiment(
     """
     experiment_directory = return_path(experiment_directory)
     measurement_collection_list: MeasurementCollectionTypes = list()
-    experiment_dict = experiment.model_dump()
 
     instance_directory_index_i = 0
-    for experiment_instance_i in experiment_dict["experiment_instances"]:
+    for experiment_instance_i in experiment.experiment_instances:
         instance_directory = experiment_directory / str(instance_directory_index_i)
-
-        experiment_instance_i = load_from_dict(
-            experiment_instance_i, ExperimentInstance
-        )
 
         measurement_i = compose_measurement_from_experiment_instance(
             experiment_instance=experiment_instance_i,
@@ -97,8 +90,10 @@ def compose_measurement_collection_from_experiment(
         instance_directory_index_i += 1
 
     if len(measurement_collection_list) == 0:
+        import devtools
+
         raise ValueError(
-            "The experiment does not contain any measurements. Please verify the experiment configuration."
+            f"The experiment f{devtools.debug(experiment)} does not contain any measurements. Please verify the experiment configuration."
             + f"Experiment instance: {experiment.name} "
             + f"Directory: {experiment_directory}"
         )

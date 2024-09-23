@@ -130,6 +130,7 @@ from piel.types.signal.time_data import (
     SignalMetricsData,
     MultiDataTimeSignal,
     DataTimeSignalData,
+    EdgeTransitionAnalysisTypes,
 )
 
 
