@@ -23,7 +23,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "two_port_oscilloscope",
@@ -36,7 +37,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "power_splitter_1to2",
@@ -59,7 +61,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 }
             ],
             "connections": [
@@ -90,7 +93,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -121,7 +125,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 }
@@ -155,7 +160,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "two_port_oscilloscope",
@@ -168,7 +174,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "power_splitter_1to2",
@@ -191,7 +198,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 }
             ],
             "connections": [
@@ -222,7 +230,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -253,7 +262,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 }
@@ -287,7 +297,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "two_port_oscilloscope",
@@ -300,7 +311,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "power_splitter_1to2",
@@ -323,7 +335,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 }
             ],
             "connections": [
@@ -354,7 +367,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -385,7 +399,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 }
@@ -419,7 +434,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "two_port_oscilloscope",
@@ -432,7 +448,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "power_splitter_1to2",
@@ -455,7 +472,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 }
             ],
             "connections": [
@@ -486,7 +504,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -517,7 +536,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 }

@@ -8,8 +8,6 @@ from . import measurement_data_collection
 def plot_propagation_signals_time(
     experiment_data: ExperimentData,
     measurement_section: Optional[list[str]] = None,
-    xlabel=r"Time $ns$",
-    ylabel=r"Voltage $mV$",
     *args,
     **kwargs,
 ):
@@ -18,8 +16,6 @@ def plot_propagation_signals_time(
         data_collection=experiment_data.data,
         measurement_section=measurement_section,
         parameters_list=experiment_data.experiment.parameters_list,
-        xlabel=xlabel,
-        ylabel=ylabel,
         **kwargs,
     )
 

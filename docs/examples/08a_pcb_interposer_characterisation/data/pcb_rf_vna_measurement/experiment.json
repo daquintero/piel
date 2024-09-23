@@ -30,9 +30,10 @@
                     ],
                     "connections": [],
                     "components": [],
+                    "metrics": [],
                     "environment": {
-                        "temperature_K": null,
-                        "region": null
+                        "temperature_K": 293,
+                        "region": ""
                     },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
@@ -53,7 +54,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "PCB3",
@@ -141,7 +143,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 }
             ],
             "connections": [
@@ -172,7 +175,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -203,7 +207,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -234,7 +239,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 }
@@ -242,7 +248,7 @@
             "goal": "",
             "parameters": {},
             "index": 0,
-            "date_configured": "2024-09-20 21:44:29.802106",
+            "date_configured": "2024-09-25 17:14:37.013923",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
@@ -287,9 +293,10 @@
                     ],
                     "connections": [],
                     "components": [],
+                    "metrics": [],
                     "environment": {
-                        "temperature_K": null,
-                        "region": null
+                        "temperature_K": 293,
+                        "region": ""
                     },
                     "manufacturer": "Agilent",
                     "model": "E8364A"
@@ -310,7 +317,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 },
                 {
                     "name": "PCB3",
@@ -398,7 +406,8 @@
                         }
                     ],
                     "connections": [],
-                    "components": []
+                    "components": [],
+                    "metrics": []
                 }
             ],
             "connections": [
@@ -429,7 +438,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -460,7 +470,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 },
@@ -491,7 +502,8 @@
                         "unit": {
                             "name": "second",
                             "datum": "second",
-                            "base": 1
+                            "base": 1,
+                            "label": "Time $s$"
                         }
                     }
                 }
@@ -499,7 +511,7 @@
             "goal": "",
             "parameters": {},
             "index": 1,
-            "date_configured": "2024-09-20 21:44:29.802279",
+            "date_configured": "2024-09-25 17:14:37.014285",
             "date_measured": "",
             "measurement_configuration_list": [
                 {

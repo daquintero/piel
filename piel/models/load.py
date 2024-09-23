@@ -28,5 +28,5 @@ def load_from_json(
     """
     # Read the json file
     model_dictionary = read_json(json_file)
-    type_instance = load_from_dict(model_dictionary, type)
+    type_instance = type.parse_obj(model_dictionary)
     return type_instance

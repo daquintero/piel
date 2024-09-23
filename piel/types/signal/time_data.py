@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Literal
 from ..core import PielBaseModel, ArrayTypes, NumericalTypes
 from piel.types.connectivity.timing import TimeMetrics
 
@@ -32,3 +32,5 @@ MultiDataTimeSignal = list[DataTimeSignalData, ...]
 """
 Collection of DataTimeSignals that can be used to analyse a set of signals together in a particular files flow.
 """
+
+EdgeTransitionAnalysisTypes = Literal["mean", "peak_to_peak"]

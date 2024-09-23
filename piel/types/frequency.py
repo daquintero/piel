@@ -63,4 +63,4 @@ class RFPhysicalComponent(PhysicalComponent):
     """
 
     network: FrequencyNetworkModel | None = None
-    metrics: FrequencyMetricsCollection = FrequencyMetricsCollection()
+    metrics: list[FrequencyMetricsCollection] = []
