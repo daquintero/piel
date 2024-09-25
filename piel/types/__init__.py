@@ -126,9 +126,11 @@ from piel.types.signal.frequency import (
 )
 
 from piel.types.signal.time_data import (
-    MultiDataTimeSignal,
     DataTimeSignalData,
     EdgeTransitionAnalysisTypes,
+    MultiDataTimeSignal,
+    MultiDataTimeSignalAnalysisTypes,
+    DataTimeSignalAnalysisTypes,
 )
 
 

@@ -1,6 +1,7 @@
 import pandas as pd
+import logging
 
-import piel.units
+from piel.units import match_unit_abbreviation, prefix2int
 from piel.types.experimental import (
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
@@ -18,6 +19,10 @@ from piel.types import (
     ScalarMetricCollection,
 )
 from piel.file_system import return_path
+from .types import ParsedColumnInfo
+
+
+logger = logging.getLogger(__name__)
 
 
 def extract_measurement_to_dataframe(file: PathTypes) -> pd.DataFrame:
@@ -53,7 +58,10 @@ def extract_measurement_to_dataframe(file: PathTypes) -> pd.DataFrame:
         ),
     )
 
-    dataframe["count"] = piel.units.prefix2int(dataframe["count"].values[0])
+    try:
+        dataframe["count"] = prefix2int(dataframe["count"].values[0])
+    except ValueError:
+        logger.debug(f"Converting count measurement failed at dataframe: {dataframe}")
 
     # Merge the name columns into a single column called 'name'
     dataframe["name"] = dataframe[["name1", "name2", "name3"]].apply(
@@ -115,6 +123,7 @@ def extract_to_data_time_signal(
     DataTimeSignalData
         The waveform files as a DataTimeSignal.
     """
+    logger.debug(f"Extracting waveform from file: {file}")
     dataframe = extract_waveform_to_dataframe(file)
     data_time_signal = DataTimeSignalData(
         time_s=dataframe.time_s.values,
@@ -131,37 +140,55 @@ def extract_propagation_delay_data_from_measurement(
     data_i = dict()
     data_i["name"] = propagation_delay_measurement.name
     if hasattr(propagation_delay_measurement_i, "measurements_file"):
-        file = propagation_delay_measurement_i.measurements_file
-        file = return_path(file)
-        if not file.exists():
-            # Try appending to parent directory if file does not exist
-            file = (
-                propagation_delay_measurement_i.parent_directory
-                / propagation_delay_measurement_i.measurements_file
+        try:
+            file = propagation_delay_measurement_i.measurements_file
+            file = return_path(file)
+            if not file.exists():
+                # Try appending to parent directory if file does not exist
+                file = (
+                    propagation_delay_measurement_i.parent_directory
+                    / propagation_delay_measurement_i.measurements_file
+                )
+            data_i["measurements"] = extract_to_signal_measurement(file)
+        except Exception as e:
+            file = propagation_delay_measurement_i.measurements_file
+            logger.debug(
+                f"Failed to extract propagation delay measurement from measurement file: {file}, exception {e}"
             )
-        data_i["measurements"] = extract_to_signal_measurement(file)
 
     if hasattr(propagation_delay_measurement_i, "reference_waveform_file"):
-        file = propagation_delay_measurement_i.reference_waveform_file
-        file = return_path(file)
-        if not file.exists():
-            # Try appending to parent directory if file does not exist
-            file = (
-                propagation_delay_measurement_i.parent_directory
-                / propagation_delay_measurement_i.reference_waveform_file
+        try:
+            file = propagation_delay_measurement_i.reference_waveform_file
+            file = return_path(file)
+            if not file.exists():
+                # Try appending to parent directory if file does not exist
+                file = (
+                    propagation_delay_measurement_i.parent_directory
+                    / propagation_delay_measurement_i.reference_waveform_file
+                )
+            data_i["reference_waveform"] = extract_to_data_time_signal(file)
+        except Exception as e:
+            file = propagation_delay_measurement_i.reference_waveform_file
+            logger.debug(
+                f"Failed to extract reference waveform from reference_waveform_file file: {file}, exception {e}"
             )
-        data_i["reference_waveform"] = extract_to_data_time_signal(file)
 
     if hasattr(propagation_delay_measurement_i, "dut_waveform_file"):
-        file = propagation_delay_measurement_i.dut_waveform_file
-        file = return_path(file)
-        if not file.exists():
-            # Try appending to parent directory if file does not exist
-            file = (
-                propagation_delay_measurement_i.parent_directory
-                / propagation_delay_measurement_i.dut_waveform_file
+        try:
+            file = propagation_delay_measurement_i.dut_waveform_file
+            file = return_path(file)
+            if not file.exists():
+                # Try appending to parent directory if file does not exist
+                file = (
+                    propagation_delay_measurement_i.parent_directory
+                    / propagation_delay_measurement_i.dut_waveform_file
+                )
+            data_i["dut_waveform"] = extract_to_data_time_signal(file)
+        except Exception as e:
+            file = propagation_delay_measurement_i.dut_waveform_file
+            logger.debug(
+                f"Failed to extract dut waveform from dut_waveform_file file: {file}, exception {e}"
             )
-        data_i["dut_waveform"] = extract_to_data_time_signal(file)
 
     return PropagationDelayMeasurementData(**data_i)
 
@@ -193,6 +220,9 @@ def extract_propagation_delay_measurement_sweep_data(
 def extract_oscilloscope_data_from_measurement(
     oscilloscope_measurement: OscilloscopeMeasurement,
 ) -> OscilloscopeMeasurementData:
+    logger.debug(
+        f"Extracting oscilloscope data from measurement: {oscilloscope_measurement}"
+    )
     data_i = dict()
     data_i["name"] = oscilloscope_measurement.name
 
@@ -263,10 +293,26 @@ def extract_to_signal_measurement(file: PathTypes, **kwargs) -> ScalarMetricColl
     -------
         SignalMetricsMeasurementCollection : dict[str, SignalMetricsData]
     """
+    logger.debug(f"Extracting signal measurement from file: {file}")
     dataframe = extract_measurement_to_dataframe(file)
     metrics_list = list()
-    for _, row in dataframe.iterrows():
-        metrics_i = ScalarMetrics(**row)
+    for i, row in dataframe.iterrows():
+        row = row.copy()
+        metrics_information = ParsedColumnInfo()
+        try:
+            metrics_information = parse_column_name(row["name"])
+        except Exception as e:
+            logger.debug(f"Failed to parse column {i} index with error: %s", e)
+            pass
+
+        row["raw_name"] = row["name"]
+        # del row["name"]
+        metrics_i = ScalarMetrics(
+            # name=metrics_information.analysis_type,
+            unit=metrics_information.unit,
+            attrs={"raw_name": row["raw_name"]},
+            **row,
+        )
         metrics_list.append(metrics_i)
 
     return ScalarMetricCollection(metrics=metrics_list, **kwargs)
@@ -295,3 +341,72 @@ def combine_channel_data(
         multi_channel_data_time_signals.append(data_time_signal_i)
 
     return multi_channel_data_time_signals
+
+
+def parse_column_name(name: str) -> ParsedColumnInfo:
+    """
+    Parses a column name to extract the analysis type, unit, and channel information.
+
+    Expected column name format:
+    <analysis_type>_<channels>__<unit>[_<index>]
+
+    Examples:
+        'delay_ch1_ch2__s_1' -> analysis_type='delay', channels='ch1_ch2', unit='seconds', index=1
+        'pk-pk_ch2__v' -> analysis_type='peak_to_peak', channels='ch2', unit='V'
+        'neg._duty_cyc_ch2__%' -> analysis_type='negative_duty_cycle', channels='ch2', unit='percent'
+        'amplitude_ch2__v' -> analysis_type='amplitude', channels='ch2', unit='V'
+
+    Parameters:
+        name (str): The column name to parse.
+
+    Returns:
+        ParsedColumnInfo: An object containing the extracted information.
+
+    Raises:
+        ValueError: If the column name does not match the expected pattern or contains an unknown analysis type.
+    """
+    import re
+
+    # Mapping from analysis type in column name to standardized analysis types
+    analysis_type_map = {
+        "mean": "mean",
+        "pk-pk": "peak_to_peak",
+        "peak_to_peak": "peak_to_peak",
+        "delay": "delay",
+        "rise_time": "rise_time",
+        "fall_time": "fall_time",
+        "amplitude": "amplitude",
+        "neg._duty_cyc": "negative_duty_cycle",
+        "negative_duty_cycle": "negative_duty_cycle",
+        # Add more mappings as necessary
+    }
+
+    # Regular expression pattern to parse the column name
+    # Pattern breakdown:
+    # ^(?P<analysis_type>[a-zA-Z\._\-]+) : Starts with analysis_type (letters, dots, underscores, hyphens)
+    # _(?P<channels>ch\d+(?:_ch\d+)*) : Followed by channels like ch1, ch1_ch2, etc.
+    # __(?P<unit>[%a-zA-Z]+) : Double underscore followed by unit (including %)
+    # (?:_(?P<index>\d+))?$ : Optional single underscore and index number at the end
+    pattern = r"^(?P<analysis_type>[a-zA-Z\._\-]+)_(?P<channels>ch\d+(?:_ch\d+)*)__(?P<unit>[%a-zA-Z]+)(?:_(?P<index>\d+))?$"
+
+    match = re.match(pattern, name)
+    if not match:
+        raise ValueError(f"Column name '{name}' does not match the expected pattern.")
+
+    analysis_type_key = match.group("analysis_type")
+    analysis_type = analysis_type_map.get(analysis_type_key.lower())
+    if analysis_type is None:
+        raise ValueError(
+            f"Unknown analysis type '{analysis_type_key}' in column name '{name}'."
+        )
+
+    channels = match.group("channels")
+    unit = match.group("unit")
+    unit = match_unit_abbreviation(unit_str=unit)
+
+    index_str = match.group("index")
+    index = int(index_str) if index_str is not None else None
+
+    return ParsedColumnInfo(
+        analysis_type=analysis_type, unit=unit, channels=channels, index=index
+    )
