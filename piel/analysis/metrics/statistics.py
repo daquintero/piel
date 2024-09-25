@@ -1,10 +1,12 @@
 import numpy as np
-from piel.types import ScalarMetrics
+from piel.types import ScalarMetrics, ScalarMetricCollection
 
 
-def aggregate_scalar_metrics_list(metrics_list: list[ScalarMetrics]) -> ScalarMetrics:
+def aggregate_scalar_metrics_collection(
+    metrics_collection: ScalarMetricCollection,
+) -> ScalarMetrics:
     """
-    Aggregates a list of ScalarMetrics into a single ScalarMetrics instance.
+    Aggregates a ScalarMetricCollection into a single ScalarMetrics instance.
 
     The aggregation is performed as follows:
     - mean: Weighted mean based on count.
@@ -15,7 +17,7 @@ def aggregate_scalar_metrics_list(metrics_list: list[ScalarMetrics]) -> ScalarMe
     - unit: Must be consistent across all ScalarMetrics.
 
     Args:
-        metrics_list (List[ScalarMetrics]): List of ScalarMetrics instances to aggregate.
+        metrics_collection (ScalarMetricCollection): A ScalarMetricsCollection instances to aggregate.
 
     Returns:
         ScalarMetrics: A single ScalarMetrics instance representing the aggregated metrics.
@@ -23,14 +25,14 @@ def aggregate_scalar_metrics_list(metrics_list: list[ScalarMetrics]) -> ScalarMe
     Raises:
         ValueError: If the input list is empty or units are inconsistent.
     """
-    if not metrics_list:
+    if not metrics_collection:
         raise ValueError("The metrics_list is empty.")
 
     # Extract necessary values
     means = []
     min_values = []
     max_values = []
-    for metric in metrics_list:
+    for metric in metrics_collection.metrics:
         if metric.mean is None:
             raise ValueError(f"ScalarMetrics '{metric}' must have 'mean' defined.")
         if metric.min is None or metric.max is None:
@@ -70,7 +72,7 @@ def aggregate_scalar_metrics_list(metrics_list: list[ScalarMetrics]) -> ScalarMe
         max=aggregated_max,
         standard_deviation=aggregated_std_dev,
         count=total_count,
-        unit=metrics_list[0].unit,
+        unit=metrics_collection.metrics[0].unit,
     )
 
     # TODO using the last metrics list for now

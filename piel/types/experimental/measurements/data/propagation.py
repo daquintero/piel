@@ -1,8 +1,8 @@
 from .core import MeasurementData, MeasurementDataCollection
 from piel.types.signal.time_data import (
-    SignalMetricsMeasurementCollection,
     DataTimeSignalData,
 )
+from piel.types.metrics import ScalarMetricCollection
 
 
 class PropagationDelayMeasurementData(MeasurementData):
@@ -18,7 +18,7 @@ class PropagationDelayMeasurementData(MeasurementData):
     """
 
     type: str = "PropagationDelayMeasurementData"
-    measurements: SignalMetricsMeasurementCollection | None = None
+    measurements: ScalarMetricCollection | None = None
     dut_waveform: DataTimeSignalData | None = None
     reference_waveform: DataTimeSignalData | None = None
 

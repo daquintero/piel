@@ -18,7 +18,7 @@ class ScalarMetrics(Instance):
     unit: Unit = ratio
 
     @property
-    def table(self):
+    def data(self):
         # Create a dictionary with the scalar metrics
         data = {
             "Metric": ["Value", "Mean", "Min", "Max", "Standard Deviation", "Count"],
@@ -31,6 +31,66 @@ class ScalarMetrics(Instance):
                 self.count,
             ],
         }
+        return data
+
+    @property
+    def table(self):
         # Convert to a pandas DataFrame
-        df = pd.DataFrame(data)
+        df = pd.DataFrame(self.data)
+        return df
+
+
+class ScalarMetricCollection(Instance):
+    """
+    A collection of scalar metrics useful when analyzing multiple aspects of a design.
+    """
+
+    metrics: list[ScalarMetrics] = []
+
+    @property
+    def data(self):
+        data = dict()
+        for metric in self.metrics:
+            data[metric.name] = {
+                "value": metric.value,
+                "mean": metric.mean,
+                "min": metric.min,
+                "max": metric.max,
+                "standard_deviation": metric.standard_deviation,
+                "count": metric.count,
+                "unit": metric.unit.label,
+            }
+        return data
+
+    @property
+    def table(self):
+        """
+        Composes a full table with the names and all the individual metrics that are part of this collection.
+
+        Returns:
+            pd.DataFrame: A DataFrame containing all scalar metrics with their respective values.
+        """
+        # Initialize a list to collect metric data
+        metrics_data = []
+
+        for metric in self.metrics:
+            metrics_data.append(
+                {
+                    "Name": metric.name,
+                    "Value": metric.value,
+                    "Mean": metric.mean,
+                    "Min": metric.min,
+                    "Max": metric.max,
+                    "Standard Deviation": metric.standard_deviation,
+                    "Count": metric.count,
+                    "Unit": metric.unit.label,
+                }
+            )
+
+        # Create DataFrame
+        df = pd.DataFrame(metrics_data)
+
+        # Optional: Set 'Name' as the index for better readability
+        df.set_index("Name", inplace=True)
+
         return df

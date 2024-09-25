@@ -587,10 +587,10 @@ fig, ax = (
         figure_title="Identical-Path Calibration Propagation-Delay Measurement",
         create_parameters_tables=False,
         axes_subtitle_list=["1 GHz", "3 GHz", "5 GHz", "10 GHz"],
-        legend_loc="",
         xlabel=piel.types.units.ns,
         ylabel=piel.types.units.V,
         figure_kwargs={"figsize": (8, 6)},
+        rising_edges_kwargs={},
     )
 )
 
@@ -600,6 +600,7 @@ fig, ax = (
     piel.visual.experimental.propagation.experiment_data.plot_propagation_signals_time(
         pcb_propagation_delay_experiment_data,
         path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg",
+        rising_edges_kwargs={},
     )
 )
 
@@ -607,6 +608,8 @@ fig, ax = (
 # ![pcb_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_propagation_delay_signals.jpg)
 
 # We can also plot the data related to the metrics extracted from the measurements.
+
+calibration_propagation_delay_experiment_data.data.collection[0].measurements
 
 fig, ax = (
     piel.visual.experimental.propagation.experiment_data.plot_signal_propagation_measurements(
@@ -674,6 +677,8 @@ example_signal_measurements = (
     calibration_propagation_delay_experiment_data.data.collection[3].measurements
 )
 
+example_signal_measurements
+
 help(tda.extract_rising_edges)
 
 example_signal_rising_edge_list = tda.extract_rising_edges(
@@ -686,10 +691,13 @@ offset_example_signal_rising_edge_list = tda.offset_time_signals(
     example_signal_rising_edge_list
 )
 
+help(piel.visual.plot.signals.plot_multi_data_time_signal)
+
 piel.visual.plot.signals.plot_multi_data_time_signal(
     offset_example_signal_rising_edge_list,
     xlabel=piel.types.units.ns,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg",
+    title="Extracted Rising Edges - Reference",
 )
 
 # ![extracted_rising_edges](../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg)
@@ -698,7 +706,7 @@ piel.visual.plot.signals.plot_multi_data_time_signal(
 
 offset_example_signal_rising_edge_metrics = tda.extract_statistical_metrics(
     offset_example_signal_rising_edge_list,
-    analysis_type="peak_to_peak",
+    analysis_types="peak_to_peak",
 )
 offset_example_signal_rising_edge_metrics.table
 
@@ -711,9 +719,17 @@ offset_example_signal_rising_edge_metrics.table
 # |  4 | Standard Deviation |  0.00642395 |
 # |  5 | Count              | 17          |
 
+# You can also extract this in a collection form, which is easier to compose with larger more measurements:
+
+offset_example_signal_rising_edge_metrics = tda.extract_statistical_metrics_collection(
+    offset_example_signal_rising_edge_list,
+    analysis_types=["peak_to_peak"],
+)
+offset_example_signal_rising_edge_metrics.table
+
 # We could now compare this to the metrics the oscilloscope calculated for us previously:
 
-example_signal_measurements["pk-pk_ch2__v"].table
+example_signal_measurements
 
 # |    | Metric             | Value              |
 # |---:|:-------------------|:-------------------|
@@ -725,3 +741,12 @@ example_signal_measurements["pk-pk_ch2__v"].table
 # |  5 | Count              | 9.91k              |
 
 # We can see the measurements are approximately close enough which is pretty cool! I would still trust the device measurements more, but with this functionality it is possible to compare a given waveform to a stastistical output from a machine.
+
+# #### Exporting
+#
+# We might also want to export nice tables of metrics. We can do this through `pandas` and `latex`. Let's make a little metrics collection.
+
+example_nice_table = tda.concatenate_metrics_collection(
+    [offset_example_signal_rising_edge_metrics, example_signal_measurements]
+)
+example_nice_table.table
