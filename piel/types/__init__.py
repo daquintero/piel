@@ -103,7 +103,7 @@ from piel.types.materials import (
     MaterialSpecificationType,
 )
 
-from piel.types.metrics import ScalarMetrics
+from piel.types.metrics import ScalarMetrics, ScalarMetricCollection
 
 from piel.types.photonic import (
     PhotonicCircuitComponent,
@@ -126,8 +126,6 @@ from piel.types.signal.frequency import (
 )
 
 from piel.types.signal.time_data import (
-    SignalMetricsMeasurementCollection,
-    SignalMetricsData,
     MultiDataTimeSignal,
     DataTimeSignalData,
     EdgeTransitionAnalysisTypes,

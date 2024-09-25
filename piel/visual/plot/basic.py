@@ -20,6 +20,8 @@ def plot_simple(
     title: Optional[str] = None,
     plot_args: list = None,
     plot_kwargs: dict = None,
+    figure_kwargs: dict = None,
+    legend_kwargs: dict = None,
     *args,
     **kwargs,
 ) -> tuple:
@@ -43,17 +45,25 @@ def plot_simple(
         Tuple[plt.Figure, plt.Axes]: The figure and axes of the plot.
     """
 
+    if figure_kwargs is None:
+        figure_kwargs = {
+            "tight_layout": True,
+        }
+
     if fig is None and axs is None:
-        fig, axs = create_axes_per_figure(rows=1, columns=1)
+        fig, axs = create_axes_per_figure(rows=1, columns=1, **figure_kwargs)
 
     if plot_kwargs is None:
-        plot_kwargs = dict()
+        if label is not None:
+            plot_kwargs = {"label": label}
+        else:
+            plot_kwargs = {}
 
     if plot_args is None:
         plot_args = list()
 
     ax = axs[0]
-    ax.plot(x_data, y_data, label=label, *plot_args, **plot_kwargs)
+    ax.plot(x_data, y_data, *plot_args, **plot_kwargs)
 
     if ylabel is not None:
         ax.set_ylabel(ylabel)
@@ -64,15 +74,13 @@ def plot_simple(
     if title is not None:
         ax.set_title(title)
 
-    if label is not None:
-        ax.legend()
+    if (label is not None) and (legend_kwargs is not None):
+        ax.legend(**legend_kwargs)
 
     # Rotate x-axis labels for better fit
     for label in ax.get_xticklabels():
         label.set_rotation(45)
         label.set_ha("right")
-
-    fig.tight_layout()
 
     return fig, axs
 

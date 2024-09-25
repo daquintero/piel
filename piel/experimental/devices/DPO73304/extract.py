@@ -1,4 +1,6 @@
 import pandas as pd
+
+import piel.units
 from piel.types.experimental import (
     PropagationDelayMeasurement,
     PropagationDelayMeasurementCollection,
@@ -12,8 +14,8 @@ from piel.types import (
     DataTimeSignalData,
     MultiDataTimeSignal,
     PathTypes,
-    SignalMetricsData,
-    SignalMetricsMeasurementCollection,
+    ScalarMetrics,
+    ScalarMetricCollection,
 )
 from piel.file_system import return_path
 
@@ -50,6 +52,8 @@ def extract_measurement_to_dataframe(file: PathTypes) -> pd.DataFrame:
             ]
         ),
     )
+
+    dataframe["count"] = piel.units.prefix2int(dataframe["count"].values[0])
 
     # Merge the name columns into a single column called 'name'
     dataframe["name"] = dataframe[["name1", "name2", "name3"]].apply(
@@ -247,9 +251,7 @@ def extract_oscilloscope_measurement_data_collection(
     return measurement_data_collection
 
 
-def extract_to_signal_measurement(
-    file: PathTypes,
-) -> SignalMetricsMeasurementCollection:
+def extract_to_signal_measurement(file: PathTypes, **kwargs) -> ScalarMetricCollection:
     """
     Extracts the measurement files from a csv file and returns it as a SignalMeasurement that can be used to analyse the signal.
 
@@ -262,17 +264,12 @@ def extract_to_signal_measurement(
         SignalMetricsMeasurementCollection : dict[str, SignalMetricsData]
     """
     dataframe = extract_measurement_to_dataframe(file)
-    signal_measurement_collection = dict()
+    metrics_list = list()
     for _, row in dataframe.iterrows():
-        signal_measurement_collection[row["name"]] = SignalMetricsData(
-            value=row["value"],
-            mean=row["mean"],
-            min=row["min"],
-            max=row["max"],
-            standard_deviation=row["standard_deviation"],
-            count=row["count"],
-        )
-    return signal_measurement_collection
+        metrics_i = ScalarMetrics(**row)
+        metrics_list.append(metrics_i)
+
+    return ScalarMetricCollection(metrics=metrics_list, **kwargs)
 
 
 def combine_channel_data(

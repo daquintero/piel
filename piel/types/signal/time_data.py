@@ -1,20 +1,5 @@
-from typing import Optional, Literal
-from ..core import PielBaseModel, ArrayTypes, NumericalTypes
-from piel.types.connectivity.timing import TimeMetrics
-
-
-class SignalMetricsData(TimeMetrics):
-    """
-    Standard definition for a signal measurement. It includes the value, mean, min, max, standard deviation and count.
-    """
-
-    count: Optional[NumericalTypes] | Optional[str]
-
-
-SignalMetricsMeasurementCollection = dict[str, SignalMetricsData]
-"""
-Collection of SignalMeasurements that can be used to analyse a set of signals together.
-"""
+from typing import Literal
+from ..core import PielBaseModel, ArrayTypes
 
 
 class DataTimeSignalData(PielBaseModel):

@@ -12,7 +12,13 @@ from .plot.table import (
 )
 from .plot import signals
 from .data_conversion import append_row_to_dict, points_to_lines_fixed_transient
-from .style import activate_piel_styles
+from .style import (
+    activate_piel_styles,
+    primary_cycler,
+    secondary_cycler,
+    primary_color_palette,
+    secondary_color_palette,
+)
 from .signals import *
 from .types import AxesPlottingTypes, ExtensiblePlotsDirectionPerElement
 from .json_to_markdown import dictionary_to_markdown_str

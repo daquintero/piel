@@ -55,12 +55,9 @@ def plot_signal_propagation_measurements(
             # Go through each of the files measurements to extract the relevant files
             x_data.append(x_parameter_data[i])
             y_data.append(
-                getattr(
-                    signal_propagation_measurement_data_i.measurements[
-                        measurement_name
-                    ],
-                    measurement_section_i,
-                )
+                signal_propagation_measurement_data_i.measurements.data[
+                    measurement_name
+                ][measurement_section_i]
                 * yscale_factor
             )
             i += 1
