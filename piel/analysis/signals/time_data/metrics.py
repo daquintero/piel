@@ -5,7 +5,7 @@ from piel.types import (
     EdgeTransitionAnalysisTypes,
     ScalarMetricCollection,
 )
-from piel.types.units import s
+from piel.types.units import V
 from piel.analysis.metrics import aggregate_scalar_metrics_collection
 
 
@@ -57,6 +57,9 @@ def extract_mean_metrics_list(
     if not multi_data_time_signal:
         raise ValueError("The multi_signal list is empty.")
 
+    if kwargs.get("unit") is None:
+        kwargs["unit"] = V
+
     metrics_list = []
 
     for signal in multi_data_time_signal:
@@ -79,7 +82,6 @@ def extract_mean_metrics_list(
             max=max_val,
             standard_deviation=std_dev,
             count=count,
-            unit=s,
         )
 
         metrics_list.append(scalar_metric)
@@ -107,6 +109,9 @@ def extract_peak_to_peak_metrics_list(
     if not multi_data_time_signal:
         raise ValueError("The multi_data_time_signal list is empty.")
 
+    if kwargs.get("unit") is None:
+        kwargs["unit"] = V
+
     metrics_list = []
 
     for signal in multi_data_time_signal:
@@ -126,7 +131,6 @@ def extract_peak_to_peak_metrics_list(
             max=peak_to_peak,  # Max is already represented in peak-to-peak
             standard_deviation=None,  # Not applicable
             count=None,  # Not applicable
-            unit=s,  # Adjust the unit if peak-to-peak has different units
             **kwargs,
         )
 
@@ -189,7 +193,8 @@ def extract_statistical_metrics_collection(
 
     for analysis in analysis_types:
         aggregated_metrics = extract_statistical_metrics(
-            multi_data_time_signal, analysis_type=analysis
+            multi_data_time_signal,
+            analysis_type=analysis,
         )
         metrics_list.append(aggregated_metrics)
 

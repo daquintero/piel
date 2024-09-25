@@ -142,10 +142,18 @@ def load_experiment_data_from_directory(
     """
     This function will load an `Experiment` from the metadata stored in the `experiment.json` directory.
     """
+    logger.debug(
+        "Loading experiment data from the experiment directory {}".format(
+            experiment_directory
+        )
+    )
     experiment_directory = return_path(experiment_directory)
     experiment_metadata_json = experiment_directory / "experiment.json"
     assert experiment_metadata_json.exists()
+    logger.debug("Loading experiment from the experiment json.")
     experiment = load_from_json(experiment_metadata_json, Experiment)
+    logger.debug("Loaded experiment from experiment json.")
+    logger.debug("Loading measurement data from the experiment data.")
     experiment_data = extract_data_from_experiment(
         experiment, experiment_directory=experiment_directory, **kwargs
     )

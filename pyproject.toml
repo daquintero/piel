@@ -31,6 +31,7 @@ dependencies = [
   "pydantic>=2.0,<3.0",
   "scipy>=1.11.4,<2.0.0",
   "setuptools",
+  "xarray>=2024.9.0,<2024.10.0"
 ]
 
 [project.urls]
@@ -142,6 +143,7 @@ testpaths = ["tests/"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402", "F401"]
+"piel/units/string.py" = ["F403", "F405"]
 "**/{tests,docs,tools}/*" = ["E402", "F401", "F841"]
 
 [build-system]

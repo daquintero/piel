@@ -579,12 +579,13 @@ fig, ax = (
 
 # You can visualise this plot with both a default plotting using the `ExperimentData` metadata or can also also customize this plotting easily.
 
+# +
 fig, ax = (
     piel.visual.experimental.propagation.experiment_data.plot_propagation_signals_time(
         calibration_propagation_delay_experiment_data,
         debug=True,
         path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg",
-        figure_title="Identical-Path Calibration Propagation-Delay Measurement",
+        figure_title='"Identical-Path" Signal Delay Verification',
         create_parameters_tables=False,
         axes_subtitle_list=["1 GHz", "3 GHz", "5 GHz", "10 GHz"],
         xlabel=piel.types.units.ns,
@@ -593,6 +594,9 @@ fig, ax = (
         rising_edges_kwargs={},
     )
 )
+
+fig.savefig(os.path.join(os.getenv("TAP"), "calibration_propagation_delay_signals.jpg"))
+# -
 
 # ![calibration_propagation_delay_signals](../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_signals.jpg)
 
@@ -609,13 +613,13 @@ fig, ax = (
 
 # We can also plot the data related to the metrics extracted from the measurements.
 
-calibration_propagation_delay_experiment_data.data.collection[0].measurements
+calibration_propagation_delay_experiment_data.data.collection[0].measurements.metrics
 
 fig, ax = (
     piel.visual.experimental.propagation.experiment_data.plot_signal_propagation_measurements(
         calibration_propagation_delay_experiment_data,
         x_parameter="square_wave_frequency_Hz",
-        measurement_name="delay_ch1_ch2__s_2",
+        measurement_name="delay_ch1_ch2__s_1",
         path="../../_static/img/examples/08a_pcb_interposer_characterisation/calibration_propagation_delay_measurements.jpg",
     )
 )
@@ -670,31 +674,35 @@ reinsantiated_calibration_experiment.name
 #
 # For example, we might want to extract only the rising edge section of one of the measured signals:
 
-example_signal = calibration_propagation_delay_experiment_data.data.collection[
-    3
-].dut_waveform
-example_signal_measurements = (
+calibration_10ghz_dut_waveform = (
+    calibration_propagation_delay_experiment_data.data.collection[3].dut_waveform
+)
+calibration_10ghz_dut_measurements = (
     calibration_propagation_delay_experiment_data.data.collection[3].measurements
 )
 
-example_signal_measurements
+calibration_propagation_delay_experiment_data.experiment.parameters
+
+calibration_10ghz_dut_measurements
 
 help(tda.extract_rising_edges)
 
-example_signal_rising_edge_list = tda.extract_rising_edges(
-    signal=example_signal, lower_threshold_ratio=0.1, upper_threshold_ratio=0.9
+calibration_10ghz_dut_waveform_rising_edge_list = tda.extract_rising_edges(
+    signal=calibration_10ghz_dut_waveform,
+    lower_threshold_ratio=0.1,
+    upper_threshold_ratio=0.9,
 )
 
 # We can, for example, plot all these signals overlaid on top of each other - easily by just offsetting to a base reference time:
 
-offset_example_signal_rising_edge_list = tda.offset_time_signals(
-    example_signal_rising_edge_list
+offset_calibration_10ghz_dut_waveform_rising_edge_list = tda.offset_time_signals(
+    calibration_10ghz_dut_waveform_rising_edge_list
 )
 
 help(piel.visual.plot.signals.plot_multi_data_time_signal)
 
 piel.visual.plot.signals.plot_multi_data_time_signal(
-    offset_example_signal_rising_edge_list,
+    offset_calibration_10ghz_dut_waveform_rising_edge_list,
     xlabel=piel.types.units.ns,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg",
     title="Extracted Rising Edges - Reference",
@@ -704,11 +712,13 @@ piel.visual.plot.signals.plot_multi_data_time_signal(
 
 # We can technically also extract some statistical metrics from this data which we could use to compare with the measured statistics:
 
-offset_example_signal_rising_edge_metrics = tda.extract_statistical_metrics(
-    offset_example_signal_rising_edge_list,
-    analysis_types="peak_to_peak",
+offset_calibration_10ghz_dut_waveform_rising_edge_metrics = (
+    tda.extract_statistical_metrics(
+        offset_calibration_10ghz_dut_waveform_rising_edge_list,
+        analysis_types="peak_to_peak",
+    )
 )
-offset_example_signal_rising_edge_metrics.table
+offset_calibration_10ghz_dut_waveform_rising_edge_metrics.table
 
 # |    | Metric             |       Value |
 # |---:|:-------------------|------------:|
@@ -721,15 +731,17 @@ offset_example_signal_rising_edge_metrics.table
 
 # You can also extract this in a collection form, which is easier to compose with larger more measurements:
 
-offset_example_signal_rising_edge_metrics = tda.extract_statistical_metrics_collection(
-    offset_example_signal_rising_edge_list,
-    analysis_types=["peak_to_peak"],
+offset_calibration_10ghz_dut_waveform_rising_edge_metrics = (
+    tda.extract_statistical_metrics_collection(
+        offset_calibration_10ghz_dut_waveform_rising_edge_list,
+        analysis_types=["peak_to_peak"],
+    )
 )
-offset_example_signal_rising_edge_metrics.table
+offset_calibration_10ghz_dut_waveform_rising_edge_metrics.table
 
 # We could now compare this to the metrics the oscilloscope calculated for us previously:
 
-example_signal_measurements
+calibration_10ghz_dut_measurements.table.iloc[2]
 
 # |    | Metric             | Value              |
 # |---:|:-------------------|:-------------------|
@@ -742,11 +754,129 @@ example_signal_measurements
 
 # We can see the measurements are approximately close enough which is pretty cool! I would still trust the device measurements more, but with this functionality it is possible to compare a given waveform to a stastistical output from a machine.
 
-# #### Exporting
+# #### Composing Meaningful Metrics
 #
-# We might also want to export nice tables of metrics. We can do this through `pandas` and `latex`. Let's make a little metrics collection.
+# We might also want to export nice tables of metrics. We can do this through `pandas` and `latex`. Let's make a little metrics collection which we might want to customize:
 
-example_nice_table = tda.concatenate_metrics_collection(
-    [offset_example_signal_rising_edge_metrics, example_signal_measurements]
+example_nice_metrics_collection_concatenated = tda.concatenate_metrics_collection(
+    [
+        offset_calibration_10ghz_dut_waveform_rising_edge_metrics,
+        calibration_10ghz_dut_measurements,
+    ]
+)
+example_nice_metrics_collection_concatenated.table
+
+# | Name         |        Value |         Mean |          Min |         Max |   Standard Deviation |   Count | Unit        |
+# |:-------------|-------------:|-------------:|-------------:|------------:|---------------------:|--------:|:------------|
+# |              |  0.241984    |  0.241984    |  0.233234    | 0.251516    |          0.00642395  |      17 | Voltage $V$ |
+# | delay        | -1.23115e-11 |  8.07015e-12 | -7.19126e-10 | 6.7611e-10  |          4.25599e-11 |    9910 | Time $s$    |
+# | delay        | -1.42048e-11 | -1.3621e-11  | -8.78589e-10 | 1.06648e-09 |          1.61926e-12 |    9910 | Time $s$    |
+# | peak_to_peak |  0.274797    |  0.276518    |  0.0244531   | 0.345625    |          0.00396343  |    9910 | Voltage $V$ |
+# | peak_to_peak |  0.270969    |  0.276206    |  0.0221875   | 0.359875    |          0.00670219  |    9910 | Voltage $V$ |
+
+# For example, we might want to convert the units so that they're nicer to read:
+
+example_nice_table = piel.analysis.metrics.convert_metric_collection_per_unit(
+    example_nice_metrics_collection_concatenated,
+    target_units={piel.types.units.s.name: piel.types.units.ps},
 )
 example_nice_table.table
+
+# | Name         |      Value |       Mean |          Min |         Max |   Standard Deviation |   Count | Unit        |
+# |:-------------|-----------:|-----------:|-------------:|------------:|---------------------:|--------:|:------------|
+# |              |   0.241984 |   0.241984 |    0.233234  |    0.251516 |           0.00642395 |      17 | Voltage $V$ |
+# | delay        | -12.3115   |   8.07015  | -719.126     |  676.11     |          42.5599     |    9910 | Time $ps$   |
+# | delay        | -14.2048   | -13.621    | -878.589     | 1066.48     |           1.61926    |    9910 | Time $ps$   |
+# | peak_to_peak |   0.274797 |   0.276518 |    0.0244531 |    0.345625 |           0.00396343 |    9910 | Voltage $V$ |
+# | peak_to_peak |   0.270969 |   0.276206 |    0.0221875 |    0.359875 |           0.00670219 |    9910 | Voltage $V$ |
+
+print(example_nice_table.table.to_latex())
+
+# ### Larger Multi-Variable Analysis
+
+# We have just done some analysis for a single waveform. A more useful metric, say, would be to evaluate the delay metrics for multiple frequencies, or even the rise time accordingly. Maybe let's try to create this specific dataset.
+#
+# We can start by extracting all the measurements into an `xarray.Dataset` which is designed for multivariable analysis like this. We can always convert back to `pandas` when required.
+
+calibration_propagation_delay_dataset = pe.compose_xarray_dataset_from_experiment_data(
+    experiment_data=calibration_propagation_delay_experiment_data,
+)
+calibration_propagation_delay_dataset
+
+x_GHz = (
+    calibration_propagation_delay_dataset.square_wave_frequency_Hz.values
+    / piel.types.units.GHz.base
+)
+
+# We can compose our data into nice little variables to use:
+
+# +
+delay_mean_ps = (
+    calibration_propagation_delay_dataset["mean"].sel(metric_name="delay_ch1_ch2__s_2")
+    / piel.types.units.ps.base
+)
+
+delay_std_deviation_ps = (
+    calibration_propagation_delay_dataset["standard_deviation"].sel(
+        metric_name="delay_ch1_ch2__s_2"
+    )
+    / piel.types.units.ps.base
+)
+
+# We can plot metrics from our two channels
+pk_pk_ch1_mean = calibration_propagation_delay_dataset["mean"].sel(
+    metric_name="pk-pk_ch1__v"
+)
+pk_pk_ch1_std_deviation = calibration_propagation_delay_dataset[
+    "standard_deviation"
+].sel(metric_name="pk-pk_ch1__v")
+pk_pk_ch2_mean = calibration_propagation_delay_dataset["mean"].sel(
+    metric_name="pk-pk_ch2__v"
+)
+pk_pk_ch2_std_deviation = calibration_propagation_delay_dataset[
+    "standard_deviation"
+].sel(metric_name="pk-pk_ch2__v")
+# -
+
+# Let's create a custom plot based on all our current analysis:
+
+# +
+# Plotting
+fig, axs = piel.visual.create_axes_per_figure(
+    rows=1, columns=2, figsize=(9, 6), constrained_layout=True
+)
+
+# Get the standard color cycler
+color_cycle = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+
+# Plot Delay Metrics
+axs[0].errorbar(
+    x_GHz, delay_mean_ps, yerr=delay_std_deviation_ps, color=color_cycle[2], capsize=4
+)
+axs[0].set_xlabel(piel.types.units.GHz.label)
+axs[0].set_ylabel("CH1-CH2 \n Time Delay $ps$")
+
+
+# Plot Peak-2-Peak Metrics
+axs[1].errorbar(
+    x_GHz,
+    pk_pk_ch1_mean,
+    yerr=pk_pk_ch1_std_deviation,
+    label="CH1",
+    color=color_cycle[0],
+    capsize=4,
+)
+axs[1].errorbar(
+    x_GHz,
+    pk_pk_ch2_mean,
+    yerr=pk_pk_ch2_std_deviation,
+    label="CH2",
+    color=color_cycle[1],
+    capsize=4,
+)
+axs[1].set_ylabel("\n $V_{pp}$ $V$")
+axs[1].set_xlabel(piel.types.units.GHz.label)
+axs[1].legend(loc="upper right")
+
+fig.savefig(os.path.join(os.getenv("TAP"), "calibration_oscilloscope_metrics.jpg"))
+# -

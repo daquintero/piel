@@ -18,4 +18,9 @@ MultiDataTimeSignal = list[DataTimeSignalData, ...]
 Collection of DataTimeSignals that can be used to analyse a set of signals together in a particular files flow.
 """
 
-EdgeTransitionAnalysisTypes = Literal["mean", "peak_to_peak"]
+EdgeTransitionAnalysisTypes = Literal["mean", "peak_to_peak", "rise_time"]
+MultiDataTimeSignalAnalysisTypes = Literal["delay"]
+
+DataTimeSignalAnalysisTypes = (
+    EdgeTransitionAnalysisTypes | MultiDataTimeSignalAnalysisTypes
+)

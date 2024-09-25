@@ -6,6 +6,7 @@ from .analysis.operating_point import (
     create_experiment_data_collection_from_unique_parameters,
 )
 from .analysis.subset import experiment_data_from_parameter_subset
+from .analysis.dataset import compose_xarray_dataset_from_experiment_data
 from .file_system import (
     construct_experiment_directories,
     construct_experiment_structure,

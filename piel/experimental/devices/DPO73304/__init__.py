@@ -1,6 +1,7 @@
 """
 This corresponds to a Tectronic Digital Oscilloscope
 """
+
 from .extract import (
     extract_measurement_to_dataframe,
     extract_oscilloscope_data_from_measurement,
@@ -11,4 +12,6 @@ from .extract import (
     extract_to_data_time_signal,
     extract_to_signal_measurement,
     combine_channel_data,
+    parse_column_name,
 )
+from .types import ParsedColumnInfo

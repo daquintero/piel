@@ -1,3 +1,4 @@
+from piel.types.units import *
 import re
 
 
@@ -27,6 +28,17 @@ def prefix2int(s: str) -> int:
     Raises:
         ValueError: If the string format is invalid or contains unsupported suffixes.
     """
+    if isinstance(s, str):
+        pass
+    elif isinstance(s, int):
+        return s
+    elif isinstance(s, float):
+        return int(s)
+    else:
+        raise ValueError(
+            f"The prefix format {s} is invalid or contains unsupported suffixes."
+        )
+
     # Define suffix multipliers
     suffix_multipliers = {
         "k": 1_000,
@@ -57,3 +69,42 @@ def prefix2int(s: str) -> int:
     result = int(number * multiplier)
 
     return result
+
+
+def match_unit_abbreviation(unit_str: str) -> Unit:
+    """
+    Matches a unit string to a predefined Unit instance.
+
+    Parameters:
+        unit_str (str): The unit abbreviation extracted from a column name (e.g., "s", "v", "dB").
+
+    Returns:
+        Unit: The corresponding Unit instance.
+
+    Raises:
+        ValueError: If the unit string does not match any predefined units.
+    """
+    # Mapping of unit abbreviations to Unit instances
+    unit_mapping: dict[str, Unit] = {
+        "ratio": ratio,
+        "s": s,
+        "us": us,
+        "ns": ns,
+        "ps": ps,
+        "mw": mW,
+        "w": W,
+        "hz": Hz,
+        "GHz": GHz,
+        "db": dB,
+        "v": V,
+        "nm": nm,
+        "mm2": mm2,
+    }
+
+    unit_str_lower = unit_str.lower()
+    unit = unit_mapping.get(unit_str_lower)
+
+    if unit is not None:
+        return unit
+    else:
+        raise ValueError(f"Unknown unit abbreviation: '{unit_str}'")
