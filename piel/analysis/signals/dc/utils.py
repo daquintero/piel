@@ -1,6 +1,9 @@
 import numpy as np
 from typing import Optional
 from piel.types import SignalDC, Unit
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_trace_values_by_datum(
@@ -11,12 +14,13 @@ def get_trace_values_by_datum(
 
     Args:
         signal_dc (SignalDC): The SignalDC instance containing the traces.
-        desired_datum (str): The datum type to filter traces (e.g., 'voltage', 'current').
+        desired_datum (str): The datum type to filter traces (e.g., 'voltage', 'ampere') See unit definitions.
 
     Returns:
         Optional[np.ndarray]: The numpy array of trace values if found, else None.
     """
     for trace in signal_dc.trace_list:
+        logger.debug(f"Trace unit: {trace.unit.datum}")
         if trace.unit.datum.lower() == desired_datum.lower():
             return np.array(trace.values)
     return None

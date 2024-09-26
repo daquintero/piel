@@ -41,7 +41,7 @@ def construct_current_dc_signal(
     -------
         SignalTraceDC: A DC signal instance for a current signal.
     """
-    current_signal = SignalTraceDC(name=name, values=values, data_type=A)
+    current_signal = SignalTraceDC(name=name, values=values, unit=A)
     return SignalDC(trace_list=[current_signal])
 
 

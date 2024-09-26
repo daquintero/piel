@@ -29,7 +29,7 @@ class Unit(PielBaseModel):
     """
 
 
-A = Unit(name="ampere", datum="1", base=1, label=r"Current $A$")
+A = Unit(name="ampere", datum="ampere", base=1, label=r"Current $A$")
 dB = Unit(name="Decibel", datum="dB", base=1, label=r"Ratio $dB$")
 GHz = Unit(name="Gigahertz", datum="Hertz", base=1e9, label=r"Frequency $GHz$")
 Hz = Unit(name="Hertz", datum="Hertz", base=1, label=r"Frequency $Hz$")

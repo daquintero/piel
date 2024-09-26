@@ -150,6 +150,7 @@ def get_out_response_in_transition_range(
     if len(corresponding_input_voltages) == 0:
         raise ValueError(
             "No input voltages found corresponding to the specified output voltage threshold range."
+            f"input_voltage is {input_voltage}, output_voltage is {output_voltage}, selected_indices is {selected_indices}, collection is {collection}"
         )
 
     # Identify the unit for input voltage
