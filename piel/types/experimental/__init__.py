@@ -51,8 +51,7 @@ from .measurements.data.oscilloscope import (
     OscilloscopeMeasurementDataCollection,
 )
 from .measurements.dc import (
-    MultimeterSignalName,
-    SourcemeterVoltageCurrentSignalNamePair,
+    VoltageCurrentSignalNamePair,
 )
 from .measurements.frequency import (
     VNASParameterMeasurementConfiguration,

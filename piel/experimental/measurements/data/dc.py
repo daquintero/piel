@@ -10,10 +10,11 @@ from piel.types import (
     SignalDCCollection,
     DCSweepMeasurementDataCollection,
     SignalDC,
-    SourcemeterVoltageCurrentSignalNamePair,
+    VoltageCurrentSignalNamePair,
     Experiment,
     ExperimentData,
 )
+from piel.analysis.signals.dc import compile_dc_min_max_metrics_from_dc_collection
 
 
 def construct_sourcemeter_sweep_signal_from_csv(
@@ -138,10 +139,9 @@ def construct_multimeter_sweep_signal_from_dataframe(
 
 def extract_signal_data_from_dataframe(
     dataframe: pd.DataFrame,
-    sourcemeter_voltage_current_signal_name_pairs: list[
-        SourcemeterVoltageCurrentSignalNamePair
-    ],
-    multimeter_signals: list[str],
+    input_signal_name_list: list[VoltageCurrentSignalNamePair],
+    output_signal_name_list: list[str],
+    power_signal_name_list: list[VoltageCurrentSignalNamePair],
     **kwargs,
 ) -> SignalDCCollection:
     """
@@ -152,10 +152,12 @@ def extract_signal_data_from_dataframe(
 
     dataframe : pd.DataFrame
         The dataframe containing the DC sweep data.
-    sourcemeter_voltage_current_signal_name_pairs : list[SourcemeterVoltageCurrentSignalNamePair]
+    input_signal_name_list : list[VoltageCurrentSignalNamePair]
         The pairs of sourcemeter voltage and current signal names.
-    multimeter_signals : list[str]
+    output_signal_name_list : list[str]
         The multimeter signals.
+    power_signal_name_list : list[VoltageCurrentSignalNamePair]
+        The pairs of sourcemeter voltage and current signal names.
     **kwargs
         Additional keyword arguments.
 
@@ -166,11 +168,9 @@ def extract_signal_data_from_dataframe(
         The DC sweep data.
     """
     # Iterate through the sourcemeter signals and create the sourcemeter sweep signals
-    sourcemeter_sweep_signals = []
+    input_sweep_signals = []
 
-    for (
-        sourcemeter_voltage_signal_pair
-    ) in sourcemeter_voltage_current_signal_name_pairs:
+    for sourcemeter_voltage_signal_pair in input_signal_name_list:
         voltage_signal_name_i = sourcemeter_voltage_signal_pair[0]
         current_signal_name_i = sourcemeter_voltage_signal_pair[1]
         sourcemeter_sweep_signal = construct_sourcemeter_sweep_signal_from_dataframe(
@@ -178,30 +178,42 @@ def extract_signal_data_from_dataframe(
             voltage_signal_name=voltage_signal_name_i,
             current_signal_name=current_signal_name_i,
         )
-        sourcemeter_sweep_signals.append(sourcemeter_sweep_signal)
+        input_sweep_signals.append(sourcemeter_sweep_signal)
+
+    power_sweep_signals = []
+
+    for sourcemeter_voltage_signal_pair in power_signal_name_list:
+        voltage_signal_name_i = sourcemeter_voltage_signal_pair[0]
+        current_signal_name_i = sourcemeter_voltage_signal_pair[1]
+        sourcemeter_sweep_signal = construct_sourcemeter_sweep_signal_from_dataframe(
+            dataframe=dataframe,
+            voltage_signal_name=voltage_signal_name_i,
+            current_signal_name=current_signal_name_i,
+        )
+        power_sweep_signals.append(sourcemeter_sweep_signal)
 
     # Iterate through the multimeter signals and create the multimeter sweep signals
-    multimeter_sweep_signals = []
+    output_sweep_signals = []
 
-    for multimeter_signal in multimeter_signals:
+    for multimeter_signal in output_signal_name_list:
         multimeter_sweep_signal = construct_multimeter_sweep_signal_from_dataframe(
             dataframe=dataframe, signal_name=multimeter_signal
         )
-        multimeter_sweep_signals.append(multimeter_sweep_signal)
+        output_sweep_signals.append(multimeter_sweep_signal)
 
     return SignalDCCollection(
-        inputs=sourcemeter_sweep_signals,
-        outputs=multimeter_sweep_signals,
+        inputs=input_sweep_signals,
+        outputs=output_sweep_signals,
+        power=power_sweep_signals,
         **kwargs,
     )
 
 
 def extract_signal_data_from_csv(
     file_path: PathTypes,
-    sourcemeter_voltage_current_signal_name_pairs: list[
-        SourcemeterVoltageCurrentSignalNamePair
-    ],
-    multimeter_signals: list[str],
+    input_signal_name_list: list[VoltageCurrentSignalNamePair],
+    output_signal_name_list: list[str],
+    power_signal_name_list: list[VoltageCurrentSignalNamePair],
     **kwargs,
 ) -> SignalDCCollection:
     """
@@ -211,10 +223,12 @@ def extract_signal_data_from_csv(
     ----------
     file_path : PathTypes
         The path to the CSV file.
-    sourcemeter_voltage_current_signal_name_pairs : list[SourcemeterVoltageCurrentSignalNamePair]
+    input_signal_name_list : list[VoltageCurrentSignalNamePair]
         The pairs of sourcemeter voltage and current signal names.
-    multimeter_signals : list[str]
+    output_signal_name_list : list[str]
         The multimeter signals.
+    power_signal_name_list : list[VoltageCurrentSignalNamePair]
+        The pairs of sourcemeter voltage and current signal names relating to power lines.
     **kwargs
         Additional keyword arguments.
 
@@ -228,18 +242,18 @@ def extract_signal_data_from_csv(
     dataframe = pd.read_csv(file)
     return extract_signal_data_from_dataframe(
         dataframe=dataframe,
-        sourcemeter_voltage_current_signal_name_pairs=sourcemeter_voltage_current_signal_name_pairs,
-        multimeter_signals=multimeter_signals,
+        input_signal_name_list=input_signal_name_list,
+        output_signal_name_list=output_signal_name_list,
+        power_signal_name_list=power_signal_name_list,
         **kwargs,
     )
 
 
 def extract_dc_sweeps_from_operating_point_csv(
     file_path: PathTypes,
-    sourcemeter_voltage_current_signal_name_pairs: list[
-        SourcemeterVoltageCurrentSignalNamePair
-    ],
-    multimeter_signals: list[str],
+    input_signal_name_list: list[VoltageCurrentSignalNamePair],
+    output_signal_name_list: list[str],
+    power_signal_name_list: list[VoltageCurrentSignalNamePair],
     unique_operating_point_columns: list[str],
     **kwargs,
 ) -> DCSweepMeasurementDataCollection:
@@ -254,10 +268,12 @@ def extract_dc_sweeps_from_operating_point_csv(
 
     file_path : PathTypes
         The path to the operating point CSV file.
-    sourcemeter_voltage_current_signal_name_pairs : list[SourcemeterVoltageCurrentSignalNamePair]
+    input_signal_name_list : list[VoltageCurrentSignalNamePair]
         The pairs of sourcemeter voltage and current signal names.
-    multimeter_signals : list[str]
+    output_signal_name_list : list[str]
         The multimeter signals.
+    power_signal_name_list : list[VoltageCurrentSignalNamePair]
+        The pairs of sourcemeter voltage and current signal names relating to power lines.
     unique_operating_point_columns : list[str]
         The unique operating point columns.
     **kwargs
@@ -286,8 +302,9 @@ def extract_dc_sweeps_from_operating_point_csv(
 
         dc_sweep = extract_signal_data_from_dataframe(
             dataframe=operating_point_data,
-            sourcemeter_voltage_current_signal_name_pairs=sourcemeter_voltage_current_signal_name_pairs,
-            multimeter_signals=multimeter_signals,
+            input_signal_name_list=input_signal_name_list,
+            output_signal_name_list=output_signal_name_list,
+            power_signal_name_list=power_signal_name_list,
             **kwargs,
         )
 
@@ -298,10 +315,9 @@ def extract_dc_sweeps_from_operating_point_csv(
 
 def extract_dc_sweep_experiment_data_from_csv(
     file_path: PathTypes,
-    sourcemeter_voltage_current_signal_name_pairs: list[
-        SourcemeterVoltageCurrentSignalNamePair
-    ],
-    multimeter_signals: list[str],
+    input_signal_name_list: list[VoltageCurrentSignalNamePair],
+    output_signal_name_list: list[str],
+    power_signal_name_list: list[VoltageCurrentSignalNamePair],
     unique_operating_point_columns: list[str],
     **kwargs,
 ) -> ExperimentData:
@@ -315,10 +331,12 @@ def extract_dc_sweep_experiment_data_from_csv(
 
     file_path : PathTypes
         The path to the operating point CSV file.
-    sourcemeter_voltage_current_signal_name_pairs : list[SourcemeterVoltageCurrentSignalNamePair]
+    input_signal_name_list : list[VoltageCurrentSignalNamePair]
         The pairs of sourcemeter voltage and current signal names.
-    multimeter_signals : list[str]
+    output_signal_name_list : list[str]
         The multimeter signals.
+    power_signal_name_list : list[VoltageCurrentSignalNamePair]
+        The pairs of sourcemeter voltage and current signal names of the power lines.
     unique_operating_point_columns : list[str]
         The unique operating point columns.
     **kwargs
@@ -349,14 +367,15 @@ def extract_dc_sweep_experiment_data_from_csv(
 
         dc_sweep = extract_signal_data_from_dataframe(
             dataframe=operating_point_data,
-            sourcemeter_voltage_current_signal_name_pairs=sourcemeter_voltage_current_signal_name_pairs,
-            multimeter_signals=multimeter_signals,
+            input_signal_name_list=input_signal_name_list,
+            output_signal_name_list=output_signal_name_list,
+            power_signal_name_list=power_signal_name_list,
             **kwargs,
         )
 
         dc_sweep_data.append(dc_sweep)
 
-    # Save the data in a collection
+    # Save the data in a collections
     data_collection = DCSweepMeasurementDataCollection(collection=dc_sweep_data)
 
     # Create metadata containers for automatic plotting/analysis.
@@ -368,3 +387,20 @@ def extract_dc_sweep_experiment_data_from_csv(
     experiment_data = ExperimentData(experiment=experiment, data=data_collection)
 
     return experiment_data
+
+
+def extract_dc_metrics_from_experiment_data(
+    experiment_data: ExperimentData,
+    parameter_column: str = "driver_b_v_set",
+    label_column_name="ID",
+    **kwargs,
+):
+    experiment_data_metrics = compile_dc_min_max_metrics_from_dc_collection(
+        [collection for collection in experiment_data.data.collection],
+        label_list=[
+            v_dd for v_dd in experiment_data.experiment.parameters[parameter_column]
+        ],
+        label_column_name=label_column_name,
+        **kwargs,
+    )
+    return experiment_data_metrics

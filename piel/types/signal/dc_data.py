@@ -40,12 +40,17 @@ class SignalDC(Instance):
 
 
 class SignalDCCollection(Instance):
-    inputs: list[SignalDC] | list[SignalDC] = []
+    inputs: list[SignalDC] = []
     """
     The input DC signals.
     """
 
-    outputs: list[SignalDC] | list[SignalDC] = []
+    outputs: list[SignalDC] = []
     """
     The output DC signals.
+    """
+
+    power: list[SignalDC] = []
+    """
+    The power DC signals.
     """

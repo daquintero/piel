@@ -93,77 +93,167 @@ def sigmoid(x, x0, k):
     return 1 / (1 + np.exp(-k * (x - x0)))
 
 
-# Generate a range of voltages for driver_a_v and corresponding measurements
-n_points = 100
-driver_a_v = np.linspace(0, 1, n_points)  # Input voltage from 0 to 1V
-measurement_a_v = sigmoid(driver_a_v, x0=0.5, k=25)  # Sigmoid curve
+for k_i in [25, 100]:
+    # Generate a range of voltages for driver_a_v and corresponding measurements
+    n_points = 100
+    driver_a_v = np.linspace(0, 1, n_points)  # Input voltage from 0 to 1V
+    measurement_a_v = sigmoid(driver_a_v, x0=0.5, k=k_i)  # Sigmoid curve
 
-# Create a sample dataset with other values constant as in the original example
-data = {
-    "index": range(n_points),
-    "driver_a_v": driver_a_v,
-    "driver_a_i": np.random.uniform(1e-11, 5e-11, n_points),  # Simulated current
-    "measurement_a_v": measurement_a_v,
-    "driver_b_v": np.linspace(0.0004, 1.0, n_points),  # Example range for driver_b_v
-    "driver_b_i": np.random.uniform(
-        1e-6, 1e-5, n_points
-    ),  # Simulated current for driver_b
-    "time": pd.date_range(start="2024-07-19 16:40:49", periods=n_points, freq="S"),
-    "driver_a_v_set": driver_a_v,
-    "driver_a_i_set": np.nan,
-    "driver_b_v_set": [3.1] * n_points,
-}
+    # Create a sample dataset with other values constant as in the original example
+    data = {
+        "index": range(n_points),
+        "driver_a_v": driver_a_v,
+        "driver_a_i": np.logspace(1e-10, 1e-5, n_points),  # Simulated current
+        "measurement_a_v": measurement_a_v,
+        "driver_b_v": np.linspace(
+            0.0004, 1.0, n_points
+        ),  # Example range for driver_b_v
+        "driver_b_i": np.logspace(
+            1e-10, 1e-5, n_points
+        ),  # Simulated current for driver_b
+        "time": pd.date_range(start="2024-07-19 16:40:49", periods=n_points, freq="S"),
+        "driver_a_v_set": driver_a_v,
+        "driver_a_i_set": np.nan,
+        "driver_b_v_set": [3.1] * n_points,
+    }
 
-# Create DataFrame
-df = pd.DataFrame(data)
+    # Create DataFrame
+    df = pd.DataFrame(data)
 
-# Save to CSV
-csv_path = "./data/example_dc_response.csv"
-df.to_csv(csv_path, index=False)
+    # Save to CSV
+    csv_path = f"./data/example_dc_response_k{k_i}.csv"
+    df.to_csv(csv_path, index=False)
 # -
 
 # #### Analysis
 
-dc_sweep = pe.extract_dc_sweeps_from_operating_point_csv(
-    file_path="data/example_dc_response.csv",
-    sourcemeter_voltage_current_signal_name_pairs=[
+# +
+dc_sweep_k25 = pe.extract_dc_sweeps_from_operating_point_csv(
+    file_path="data/example_dc_response_k25.csv",
+    input_signal_name_list=[
         ("driver_a_v", "driver_a_i"),
+    ],
+    output_signal_name_list=["measurement_a_v"],
+    power_signal_name_list=[
         ("driver_b_v", "driver_b_i"),
     ],
-    multimeter_signals=["measurement_a_v"],
+    unique_operating_point_columns=["driver_b_v_set"],
+)
+
+dc_sweep_k100 = pe.extract_dc_sweeps_from_operating_point_csv(
+    file_path="data/example_dc_response_k100.csv",
+    input_signal_name_list=[
+        ("driver_a_v", "driver_a_i"),
+    ],
+    output_signal_name_list=["measurement_a_v"],
+    power_signal_name_list=[
+        ("driver_b_v", "driver_b_i"),
+    ],
     unique_operating_point_columns=["driver_b_v_set"],
 )
 
 # +
 # dc_sweep.collection[0]
-# -
+
+# +
+fig, axs = (
+    piel.visual.experimental.dc.measurement_data_collection.plot_two_port_dc_sweep(
+        dc_sweep_k25,
+        title="Example DC Sigmoid Response",
+        label_list=[r"$k$=25"],
+    )
+)
 
 fig, axs = (
     piel.visual.experimental.dc.measurement_data_collection.plot_two_port_dc_sweep(
-        dc_sweep,
+        dc_sweep_k100,
         title="Example DC Sigmoid Response",
+        fig=fig,
+        axs=axs,
+        label_list=[r"$k$=100"],
     )
 )
-# fig.savefig()
+# -
 
 # One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the response of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
 
 
 # We can for example begin analysing specific aspects of the signals:
 
-input_voltage_array = piel.analysis.signals.dc.get_trace_values_by_datum(
-    dc_sweep.collection[0].inputs[0], "voltage"
+dc_sweep_k25.collection[0].power[0]
+
+power_voltage_array = piel.analysis.signals.dc.get_trace_values_by_datum(
+    dc_sweep_k25.collection[0].power[0], "voltage"
 )
+power_current_array = piel.analysis.signals.dc.get_trace_values_by_datum(
+    dc_sweep_k25.collection[0].power[0], "ampere"
+)
+power_array_W = power_voltage_array * power_current_array
+power_array_W
 
 # Let's calculate the maximum DC amplitude and threshold voltage range:
 
-piel.analysis.signals.dc.get_out_min_max(dc_sweep.collection[0]).table
+piel.analysis.signals.dc.get_out_min_max(dc_sweep_k25.collection[0]).table
+
+# |    | Metric             |         Value |
+# |---:|:-------------------|--------------:|
+# |  0 | Value              | nan           |
+# |  1 | Mean               | nan           |
+# |  2 | Min                |   4.65588e-05 |
+# |  3 | Max                |   0.999953    |
+# |  4 | Standard Deviation | nan           |
+# |  5 | Count              | nan           |
 
 piel.analysis.signals.dc.get_out_response_in_transition_range(
-    dc_sweep.collection[0]
+    dc_sweep_k25.collection[0]
 ).table
 
+# |    | Metric             |      Value |
+# |---:|:-------------------|-----------:|
+# |  0 | Value              | nan        |
+# |  1 | Mean               | nan        |
+# |  2 | Min                |   0.414141 |
+# |  3 | Max                |   0.585859 |
+# |  4 | Standard Deviation | nan        |
+# |  5 | Count              | nan        |
+
 # Note that this can be pretty handy in determining DC biases of some amplifiers.
+
+# Another important metric is understanding the DC power consumption of the system. We can generally estimate this by calculate the total $VI$ power consumed within the system.
+
+dc_sweep_k25.collection[0].power
+
+piel.analysis.signals.dc.get_power_metrics(dc_sweep_k25.collection[0]).table
+
+# |    | Metric             |      Value |
+# |---:|:-------------------|-----------:|
+# |  0 | Value              |   0.500208 |
+# |  1 | Mean               |   0.500208 |
+# |  2 | Min                |   0.0004   |
+# |  3 | Max                |   1.00002  |
+# |  4 | Standard Deviation |   0.291467 |
+# |  5 | Count              | 100        |
+
+# Note that this is dummy generated data of a logspace and does not aim to represent anything physical. We can also see how these minimum and maximum values map to an input voltage relationship.
+
+piel.analysis.signals.dc.get_power_map_vin_metrics(dc_sweep_k25.collection[0]).table
+
+# Note we might have multiple curves, so we might want to make a table with metrics from multiple signal collections:
+
+piel.analysis.signals.dc.compile_dc_min_max_metrics_from_dc_collection(
+    [
+        dc_sweep_k25.collection[0],
+        dc_sweep_k100.collection[0],
+    ],
+    label_list=[r"$k$=25", r"$k$=100"],
+    label_column_name="ID",
+)
+
+# |    | ID      |   $V_{out, min}$ $V$ |   $V_{out, max}$ $V$ |   $V_{tr,in, min}$ $V$ |   $V_{tr,in, max}$ $V$ |   $P_{dd,max}$ $mW$ |   $\Delta P_{dd}$ $mW$ |
+# |---:|:--------|---------------------:|---------------------:|-----------------------:|-----------------------:|--------------------:|-----------------------:|
+# |  0 | $k$=25  |          4.65588e-05 |             0.999953 |               0.414141 |               0.585859 |             1000.02 |                999.623 |
+# |  1 | $k$=100 |          4.6999e-18  |             1        |               0.484848 |               0.515152 |             1000.02 |                999.623 |
+#
 
 # ## Automated Performance Metrics Analysis
 

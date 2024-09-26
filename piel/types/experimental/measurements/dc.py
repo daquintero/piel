@@ -1,5 +1,4 @@
-SourcemeterVoltageCurrentSignalNamePair = tuple[str, str]
-MultimeterSignalName = str
+VoltageCurrentSignalNamePair = tuple[str, str]
 
 # from .core import Measurement
 # from ....measurement import PathTypes, SignalDC
