@@ -25,11 +25,8 @@ from .measurements.core import (
     MeasurementCollection,
 )
 from .measurements.data.dc import (
-    DCSweepMeasurementData,
     DCSweepMeasurementDataCollection,
     DCMeasurementDataCollection,
-    MultimeterSweepVoltageMeasurementData,
-    SourcemeterSweepMeasurementData,
     DCMeasurementDataTypes,
     DCMeasurementDataCollectionTypes,
 )

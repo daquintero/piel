@@ -1,42 +1,14 @@
-from .core import MeasurementData, MeasurementDataCollection
-from piel.types.signal.dc_data import SignalDC
+from .core import MeasurementDataCollection
+from piel.types.signal.dc_data import SignalDCCollection, SignalDC
 
-
-class SourcemeterSweepMeasurementData(MeasurementData):
-    signal: SignalDC = None
-
-
-class MultimeterSweepVoltageMeasurementData(MeasurementData):
-    signal: SignalDC = None
-
-
-class DCSweepMeasurementData(MeasurementData):
-    type: str = "DCSweepMeasurementData"
-    inputs: list[SourcemeterSweepMeasurementData] = []
-    """
-    The input DC signals as sourced by a sourcemeter.
-    """
-
-    outputs: list[MultimeterSweepVoltageMeasurementData] = []
-    """
-    The output DC signals from a multimeter for example.
-    """
-
-
-DCMeasurementDataTypes = (
-    DCSweepMeasurementData
-    | MultimeterSweepVoltageMeasurementData
-    | SourcemeterSweepMeasurementData
-)
+DCMeasurementDataTypes = SignalDCCollection | SignalDC
 
 
 class DCSweepMeasurementDataCollection(MeasurementDataCollection):
-    type: str = "DCSweepMeasurementDataCollection"
-    collection: list[DCSweepMeasurementData] = []
+    collection: list[SignalDCCollection] = []
 
 
 class DCMeasurementDataCollection(MeasurementDataCollection):
-    type: str = "DCMeasurementDataCollection"
     collection: list[DCMeasurementDataTypes] | DCSweepMeasurementDataCollection = []
 
 

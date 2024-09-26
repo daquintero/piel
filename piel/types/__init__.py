@@ -116,8 +116,8 @@ from piel.types.photonic import (
 from piel.types.signal.core import ElectricalSignalDomains, QuantityTypesDC
 
 from piel.types.signal.dc_data import (
-    SignalInstanceDC,
-    SignalInstanceMetadataDC,
+    SignalDCCollection,
+    SignalTraceDC,
     SignalDC,
 )
 
@@ -155,4 +155,22 @@ from piel.types.type_conversion import (
     convert_dataframe_to_bits,
 )
 
-from .units import Unit, BaseSIUnitNameList, ratio, s, us, ns, mW, W, Hz, dB, V, nm, mm2
+from .units import (
+    Unit,
+    BaseSIUnitNameList,
+    A,
+    dB,
+    GHz,
+    Hz,
+    nm,
+    ns,
+    mm2,
+    mW,
+    ohm,
+    ps,
+    ratio,
+    s,
+    us,
+    W,
+    V,
+)
