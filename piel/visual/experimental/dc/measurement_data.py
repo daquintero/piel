@@ -1,8 +1,8 @@
-from piel.types.experimental import DCSweepMeasurementData
+from piel.types import SignalDCCollection
 from piel.visual import create_plot_containers, save
 
 
-def plot_dc_sweep(dc_sweep: DCSweepMeasurementData, **kwargs) -> tuple:
+def plot_dc_sweep(dc_sweep: SignalDCCollection, **kwargs) -> tuple:
     """
     Plot a DC sweep measurement.
 
@@ -14,8 +14,8 @@ def plot_dc_sweep(dc_sweep: DCSweepMeasurementData, **kwargs) -> tuple:
     fig, axs = create_plot_containers(container_list=[dc_sweep.collection])
 
     axs[0].plot(
-        # dc_sweep.inputs[0].signal.signal_instances[0].values
-        dc_sweep.outputs[0].signal.signal_instances[0].values,
+        # dc_sweep.inputs[0].signal.trace_list[0].values
+        dc_sweep.outputs[0].signal.trace_list[0].values,
     )
 
     # Save the figure if 'path' is provided in kwargs

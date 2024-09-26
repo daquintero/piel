@@ -78,22 +78,51 @@ piel.units.dBm2vpp(dBm=-30)
 # A small subset RF amplifiers have a bandwidth starting from DC as this is topology dependent, and many are narrowband or at a specific bandwidth. It can be useful to illustrate some RF amplifier concepts to the radio-frequency terminology uninitated by understanding the relationships to the terminology to used to commonly describe DC amplifiers.
 #
 # For example, DC amplifiers such as non-inverting operational amplifier circuits, will have a DC transfer function which maps the gain from inputs to outputs. This gain is frequency dependent and becomes more important in RF regimes, and is characterized differently accordingly using a VNA for example. For now, let's demonstrate some basic DC sweep analysis of a DC amplifier using some `piel` utilities.
+#
+# #### Dummy DC Data
+# Creating dummy data in order to demonstrate some linearity analysis:
 
 
 # +
-# import pandas as pd
+import numpy as np
+import pandas as pd
 
-# data = pd.read_csv("data/example_dc_response.csv")
 
-# data[data["driver_b_v_set"] == 1.6]
-# data["driver_b_v_set"].unique()
-# opp = data[["driver_b_v_set"]].drop_duplicates()
-# for index, operating_point in opp.iterrows():
-#     print(index)
-#     print(operating_point)
-#     a = data[(data[["driver_b_v_set"]] == operating_point).all(axis=1)]
-# print(a)
+# Create a sigmoid function for curvilinear behavior
+def sigmoid(x, x0, k):
+    return 1 / (1 + np.exp(-k * (x - x0)))
+
+
+# Generate a range of voltages for driver_a_v and corresponding measurements
+n_points = 100
+driver_a_v = np.linspace(0, 1, n_points)  # Input voltage from 0 to 1V
+measurement_a_v = sigmoid(driver_a_v, x0=0.5, k=25)  # Sigmoid curve
+
+# Create a sample dataset with other values constant as in the original example
+data = {
+    "index": range(n_points),
+    "driver_a_v": driver_a_v,
+    "driver_a_i": np.random.uniform(1e-11, 5e-11, n_points),  # Simulated current
+    "measurement_a_v": measurement_a_v,
+    "driver_b_v": np.linspace(0.0004, 1.0, n_points),  # Example range for driver_b_v
+    "driver_b_i": np.random.uniform(
+        1e-6, 1e-5, n_points
+    ),  # Simulated current for driver_b
+    "time": pd.date_range(start="2024-07-19 16:40:49", periods=n_points, freq="S"),
+    "driver_a_v_set": driver_a_v,
+    "driver_a_i_set": np.nan,
+    "driver_b_v_set": [3.1] * n_points,
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Save to CSV
+csv_path = "./data/example_dc_response.csv"
+df.to_csv(csv_path, index=False)
 # -
+
+# #### Analysis
 
 dc_sweep = pe.extract_dc_sweeps_from_operating_point_csv(
     file_path="data/example_dc_response.csv",
@@ -105,9 +134,36 @@ dc_sweep = pe.extract_dc_sweeps_from_operating_point_csv(
     unique_operating_point_columns=["driver_b_v_set"],
 )
 
-# piel.visual.plot_dc_sweep(dc_sweep=dc_sweep[0])
-#
-# piel.visual.plot_dc_sweeps(dc_sweep_collection=dc_sweep)
+# +
+# dc_sweep.collection[0]
+# -
+
+fig, axs = (
+    piel.visual.experimental.dc.measurement_data_collection.plot_two_port_dc_sweep(
+        dc_sweep,
+        title="Example DC Sigmoid Response",
+    )
+)
+# fig.savefig()
+
+# One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the response of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
+
+
+# We can for example begin analysing specific aspects of the signals:
+
+input_voltage_array = piel.analysis.signals.dc.get_trace_values_by_datum(
+    dc_sweep.collection[0].inputs[0], "voltage"
+)
+
+# Let's calculate the maximum DC amplitude and threshold voltage range:
+
+piel.analysis.signals.dc.get_out_min_max(dc_sweep.collection[0]).table
+
+piel.analysis.signals.dc.get_out_response_in_transition_range(
+    dc_sweep.collection[0]
+).table
+
+# Note that this can be pretty handy in determining DC biases of some amplifiers.
 
 # ## Automated Performance Metrics Analysis
 

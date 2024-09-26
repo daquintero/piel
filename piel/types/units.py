@@ -1,4 +1,5 @@
 from typing import Literal
+
 from piel.types.core import NumericalTypes, PielBaseModel
 
 BaseSIUnitNameList = Literal[
@@ -28,19 +29,22 @@ class Unit(PielBaseModel):
     """
 
 
-ratio = Unit(name="ratio", datum="1", base=1, label=r"Ratio $u$")
-s = Unit(name="second", datum="second", base=1, label=r"Time $s$")
-us = Unit(name="microsecond", datum="second", base=1e-6, label=r"Time $\mu s$")
-ns = Unit(name="nanosecond", datum="second", base=1e-9, label=r"Time $ns$")
-ps = Unit(name="picosecond", datum="second", base=1e-12, label=r"Time $ps$")
-mW = Unit(name="miliwatt", datum="watt", base=1e-3, label=r"Power $mW$")
-W = Unit(name="watt", datum="watt", base=1, label=r"Power $W$")
-Hz = Unit(name="Hertz", datum="Hertz", base=1, label=r"Frequency $Hz$")
-GHz = Unit(name="Gigahertz", datum="Hertz", base=1e9, label=r"Frequency $GHz$")
+A = Unit(name="ampere", datum="1", base=1, label=r"Current $A$")
 dB = Unit(name="Decibel", datum="dB", base=1, label=r"Ratio $dB$")
-V = Unit(name="Volt", datum="V", base=1, label=r"Voltage $V$")
+GHz = Unit(name="Gigahertz", datum="Hertz", base=1e9, label=r"Frequency $GHz$")
+Hz = Unit(name="Hertz", datum="Hertz", base=1, label=r"Frequency $Hz$")
 nm = Unit(name="nanometer", datum="meter", base=1e-9, label=r"Length $nm$")
+ns = Unit(name="nanosecond", datum="second", base=1e-9, label=r"Time $ns$")
 mm2 = Unit(
     name="millimeter_squared", datum="meter_squared", base=1e-6, label=r"Area $mm^2$"
 )
+mW = Unit(name="miliwatt", datum="watt", base=1e-3, label=r"Power $mW$")
+ohm = Unit(name="ohm", datum="resistance", base=1, label=r"Resistance $\Omega$")
+ps = Unit(name="picosecond", datum="second", base=1e-12, label=r"Time $ps$")
+ratio = Unit(name="ratio", datum="1", base=1, label=r"Ratio $u$")
+s = Unit(name="second", datum="second", base=1, label=r"Time $s$")
+us = Unit(name="microsecond", datum="second", base=1e-6, label=r"Time $\mu s$")
+W = Unit(name="watt", datum="watt", base=1, label=r"Power $W$")
+V = Unit(name="Volt", datum="voltage", base=1, label=r"Voltage $V$")
+
 # TODO implement operational units

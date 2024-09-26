@@ -1,8 +1,9 @@
+from typing import Optional
 from piel.types.connectivity.core import Instance
 
 
 class MeasurementData(Instance):
-    type: str = ""
+    type: Optional[str] = ""
 
 
 class MeasurementDataCollection(Instance):

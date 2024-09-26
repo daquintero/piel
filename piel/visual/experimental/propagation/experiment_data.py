@@ -14,8 +14,8 @@ def plot_propagation_signals_time(
     # TODO Implement validation that it's a time-propagation delay measurement
     fig, ax = measurement_data_collection.plot_propagation_signals_time(
         data_collection=experiment_data.data,
-        measurement_section=measurement_section,
         parameters_list=experiment_data.experiment.parameters_list,
+        measurement_section=measurement_section,
         **kwargs,
     )
 

@@ -1,16 +1,15 @@
 import pandas as pd
-from piel.types import PathTypes, QuantityTypesDC
+from piel.types import PathTypes, V, A, Unit
 from piel.file_system import return_path
 from piel.models.physical.electrical import (
     construct_dc_signal,
     construct_current_dc_signal,
     construct_voltage_dc_signal,
 )
-from piel.types.experimental import (
-    SourcemeterSweepMeasurementData,
-    DCSweepMeasurementData,
+from piel.types import (
+    SignalDCCollection,
     DCSweepMeasurementDataCollection,
-    MultimeterSweepVoltageMeasurementData,
+    SignalDC,
     SourcemeterVoltageCurrentSignalNamePair,
     Experiment,
     ExperimentData,
@@ -22,7 +21,7 @@ def construct_sourcemeter_sweep_signal_from_csv(
     voltage_signal_name: str,
     current_signal_name: str,
     **kwargs,
-) -> SourcemeterSweepMeasurementData:
+) -> SignalDC:
     file = return_path(file_path)
     dataframe = pd.read_csv(file)
     signal = construct_sourcemeter_sweep_signal_from_dataframe(
@@ -40,7 +39,7 @@ def construct_sourcemeter_sweep_signal_from_dataframe(
     current_signal_name: str,
     signal_kwargs: dict = None,
     **kwargs,
-) -> SourcemeterSweepMeasurementData:
+) -> SignalDC:
     if signal_kwargs is None:
         signal_kwargs = {}
 
@@ -55,15 +54,15 @@ def construct_sourcemeter_sweep_signal_from_dataframe(
         **signal_kwargs,
     )
 
-    return SourcemeterSweepMeasurementData(signal=signal, **kwargs)
+    return signal
 
 
 def construct_multimeter_sweep_signal_from_csv(
     file_path: PathTypes,
     signal_name: str,
-    signal_type: QuantityTypesDC = "voltage",
+    unit: Unit = V,
     **kwargs,
-) -> MultimeterSweepVoltageMeasurementData:
+) -> SignalDC:
     """
     Construct a multimeter sweep signal from a CSV file.
 
@@ -74,29 +73,29 @@ def construct_multimeter_sweep_signal_from_csv(
         The path to the CSV file.
     signal_name : str
         The name of the signal.
-    signal_type : QuantityTypesDC
-        The type of signal.
+    unit: Unit
+        Determines type of signal.
     **kwargs
 
     Returns
     -------
 
-    MultimeterSweepVoltageMeasurementData
+    SignalDC
         The multimeter sweep signal
     """
     file = return_path(file_path)
     dataframe = pd.read_csv(file)
 
-    if signal_type == "voltage":
+    if unit is V:
         signal = construct_voltage_dc_signal(
             name=signal_name, values=dataframe[signal_name].values
         )
-    elif signal_type == "current":
+    elif unit is A:
         signal = construct_current_dc_signal(
             name=signal_name, values=dataframe[signal_name].values ** kwargs
         )
     else:
-        raise ValueError(f"Unimplemented signal type: {signal_type}")
+        raise ValueError(f"Unimplemented signal unit: {unit}")
 
     return signal
 
@@ -106,7 +105,7 @@ def construct_multimeter_sweep_signal_from_dataframe(
     signal_name: str,
     signal_kwargs: dict = None,
     **kwargs,
-) -> MultimeterSweepVoltageMeasurementData:
+) -> SignalDC:
     """
     Construct a multimeter sweep signal from a dataframe.
 
@@ -124,7 +123,7 @@ def construct_multimeter_sweep_signal_from_dataframe(
     Returns
     -------
 
-    MultimeterSweepVoltageMeasurementData
+    SignalDC
         The multimeter sweep signal
     """
     if signal_kwargs is None:
@@ -134,7 +133,7 @@ def construct_multimeter_sweep_signal_from_dataframe(
 
     signal = construct_voltage_dc_signal(name=signal_name, values=signal_data)
 
-    return MultimeterSweepVoltageMeasurementData(signal=signal, **kwargs)
+    return signal
 
 
 def extract_signal_data_from_dataframe(
@@ -144,7 +143,7 @@ def extract_signal_data_from_dataframe(
     ],
     multimeter_signals: list[str],
     **kwargs,
-) -> DCSweepMeasurementData:
+) -> SignalDCCollection:
     """
     Extract DC sweep data from a dataframe.
 
@@ -163,7 +162,7 @@ def extract_signal_data_from_dataframe(
     Returns
     -------
 
-    DCSweepMeasurementData
+    SignalDCCollection
         The DC sweep data.
     """
     # Iterate through the sourcemeter signals and create the sourcemeter sweep signals
@@ -190,7 +189,7 @@ def extract_signal_data_from_dataframe(
         )
         multimeter_sweep_signals.append(multimeter_sweep_signal)
 
-    return DCSweepMeasurementData(
+    return SignalDCCollection(
         inputs=sourcemeter_sweep_signals,
         outputs=multimeter_sweep_signals,
         **kwargs,
@@ -204,7 +203,7 @@ def extract_signal_data_from_csv(
     ],
     multimeter_signals: list[str],
     **kwargs,
-) -> DCSweepMeasurementData:
+) -> SignalDCCollection:
     """
     Extract DC sweep data from a CSV file.
 
@@ -222,7 +221,7 @@ def extract_signal_data_from_csv(
     Returns
     -------
 
-    DCSweepMeasurementData
+    SignalDCCollection
         The DC sweep data.
     """
     file = return_path(file_path)

@@ -590,7 +590,7 @@ fig, ax = (
         axes_subtitle_list=["1 GHz", "3 GHz", "5 GHz", "10 GHz"],
         xlabel=piel.types.units.ns,
         ylabel=piel.types.units.V,
-        figure_kwargs={"figsize": (8, 6)},
+        figure_kwargs={"figsize": (8, 8)},
         rising_edges_kwargs={},
     )
 )
@@ -843,7 +843,7 @@ pk_pk_ch2_std_deviation = calibration_propagation_delay_dataset[
 # +
 # Plotting
 fig, axs = piel.visual.create_axes_per_figure(
-    rows=1, columns=2, figsize=(9, 6), constrained_layout=True
+    rows=1, columns=2, figsize=(8, 6), constrained_layout=True
 )
 
 # Get the standard color cycler
@@ -878,5 +878,10 @@ axs[1].set_ylabel("\n $V_{pp}$ $V$")
 axs[1].set_xlabel(piel.types.units.GHz.label)
 axs[1].legend(loc="upper right")
 
-fig.savefig(os.path.join(os.getenv("TAP"), "calibration_oscilloscope_metrics.jpg"))
+fig.savefig(
+    "../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_time_metrics_combined.jpg"
+)
+# fig.savefig(os.path.join(os.getenv("TAP"), "calibration_oscilloscope_metrics.jpg"))
 # -
+
+# ![extracted_time_metrics_combined](../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_time_metrics_combined.jpg)

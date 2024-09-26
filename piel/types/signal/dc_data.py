@@ -1,21 +1,9 @@
-from ..core import PielBaseModel, ArrayTypes
-from .core import QuantityTypesDC
+from ..core import ArrayTypes
 from ..connectivity.abstract import Instance
+from ..units import Unit, ratio
 
 
-class SignalInstanceMetadataDC(PielBaseModel):
-    name: str = None
-    """
-    The name of the signal.
-    """
-
-    data_type: QuantityTypesDC = "voltage"
-    """
-    The type of data that the DC operating point represents.
-    """
-
-
-class SignalInstanceDC(SignalInstanceMetadataDC):
+class SignalTraceDC(Instance):
     """
     Represents a DC signal with all relevant components as defined by Ohm's law but specified through a collection of data defined by a `OperatingPointContainer`
 
@@ -27,7 +15,12 @@ class SignalInstanceDC(SignalInstanceMetadataDC):
     These operating points can reference an array of data points that are collected from a DC sweep.
     """
 
-    values: ArrayTypes
+    unit: Unit = ratio
+    """
+    Intended for DC electrical types such as voltage, current, power and resistance.
+    """
+
+    values: ArrayTypes = []
     """
     The values of the operating points in an array format.
     """
@@ -38,6 +31,21 @@ class SignalDC(Instance):
     This is used to define a collection of `SignalInstances` which compose a DC signal. For example,
     the voltage and current of the same signal would be `SignalInstance`s but the total signal is the collection of
     these data references.
+
+    These DC signals may refer to a single trace, with a collection of voltage, current, resistance or power data points.
+    These may still be referencing the original node.
     """
 
-    signal_instances: list[SignalInstanceDC]
+    trace_list: list[SignalTraceDC] = []
+
+
+class SignalDCCollection(Instance):
+    inputs: list[SignalDC] | list[SignalDC] = []
+    """
+    The input DC signals.
+    """
+
+    outputs: list[SignalDC] | list[SignalDC] = []
+    """
+    The output DC signals.
+    """

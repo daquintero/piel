@@ -18,3 +18,4 @@ from .power import (
 from .time import Hz2s, s2Hz
 from .geometry import awg2m2
 from .string import prefix2int, match_unit_abbreviation
+from .match import get_unit_by_datum

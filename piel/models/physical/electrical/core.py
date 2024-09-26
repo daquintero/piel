@@ -1,4 +1,4 @@
-from ....types import ArrayTypes, SignalInstanceDC, SignalDC
+from ....types import ArrayTypes, SignalTraceDC, SignalDC, V, A
 
 
 def construct_voltage_dc_signal(
@@ -17,10 +17,10 @@ def construct_voltage_dc_signal(
 
     Returns
     -------
-        SignalInstanceDC: A DC signal instance for a voltage signal.
+        SignalTraceDC: A DC signal instance for a voltage signal.
     """
-    voltage_signal = SignalInstanceDC(name=name, values=values, data_type="voltage")
-    return SignalDC(signal_instances=[voltage_signal])
+    voltage_signal = SignalTraceDC(name=name, values=values, unit=V)
+    return SignalDC(trace_list=[voltage_signal])
 
 
 def construct_current_dc_signal(
@@ -39,10 +39,10 @@ def construct_current_dc_signal(
 
     Returns
     -------
-        SignalInstanceDC: A DC signal instance for a current signal.
+        SignalTraceDC: A DC signal instance for a current signal.
     """
-    current_signal = SignalInstanceDC(name=name, values=values, data_type="current")
-    return SignalDC(signal_instances=[current_signal])
+    current_signal = SignalTraceDC(name=name, values=values, data_type=A)
+    return SignalDC(trace_list=[current_signal])
 
 
 def construct_dc_signal(
@@ -76,6 +76,6 @@ def construct_dc_signal(
         current_signal_name, current_signal_values
     )
 
-    signals = voltage_signal.signal_instances + current_signal.signal_instances
+    traces = voltage_signal.trace_list + current_signal.trace_list
 
-    return SignalDC(signal_instances=signals)
+    return SignalDC(trace_list=traces)
