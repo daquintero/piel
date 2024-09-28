@@ -20,7 +20,7 @@ def compile_dc_min_max_metrics_from_dc_collection(
     Args:
         collections (List[SignalDCCollection]): List of SignalDCCollection instances to analyze.
         label_list (List[str]): List of labels corresponding to each SignalDCCollection.
-        threshold_kwargs(dict): Threshold kwargs for the transition response
+        threshold_kwargs(dict): Threshold kwargs for the transition transmission
         label_column_name(str): How the label column should be called
 
     Returns:

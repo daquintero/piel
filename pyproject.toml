@@ -24,6 +24,7 @@ dependencies = [
   "Click>=7.0",
   "jax>=0.4.14,<0.5.0",
   "jaxlib>=0.4.14,<0.5.0",
+  "jaxtyping",
   "matplotlib",
   "networkx>=3.1,<4.0",
   "numpy>=1.24.4,<2.0.0",

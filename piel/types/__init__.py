@@ -93,7 +93,32 @@ from piel.types.electronic.generic import RFAmplifierCollection, RFAmplifierType
 from piel.types.electronic.hva import PowerAmplifierMetrics, PowerAmplifier
 from piel.types.electronic.lna import LNAMetrics, LowNoiseTwoPortAmplifier
 
-from piel.types.frequency import FrequencyNetworkModel, RFPhysicalComponent
+from piel.types.frequency.core import (
+    FrequencyTransmissionModel,
+    FrequencyTransmissionCollection,
+    FrequencyTransmissionState,
+    FrequencyTransmissionArrayState,
+    FrequencyMetricsCollection,
+    RFPhysicalComponent,
+)
+
+from piel.types.frequency.sax_core import (
+    Array,
+    Complex,
+    ComplexArrayND,
+    ComplexArray1D,
+    FloatArray1D,
+    FloatArrayND,
+    IntArray1D,
+    IntArrayND,
+    Int,
+    PortMap,
+    PortCombination,
+    SDict,
+    SType,
+    SCoo,
+    SDense,
+)  # For pure-sax compatibility.
 
 from piel.types.file_system import ProjectType
 from piel.types.integration import CircuitComponent
