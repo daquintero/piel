@@ -14,7 +14,12 @@ def get_unit_by_datum(datum: str) -> Optional[Unit]:
     """
     import piel.types.units as units
 
-    for unit in dir(units):
-        if unit.datum.lower() == datum.lower():
-            return unit
-    return None
+    exact_match = None
+    for attr_name in dir(units):
+        attr = getattr(units, attr_name)
+        if isinstance(attr, Unit) and attr.datum.lower() == datum.lower():
+            if attr.base == 1:  # Prioritize units with base 1 (e.g., 's' for second)
+                return attr
+            if exact_match is None:
+                exact_match = attr
+    return exact_match
