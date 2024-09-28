@@ -434,6 +434,14 @@ extract the dispersion parameter :math:`D (\lambda)`:
     \end{equation}
 
 
+The propagation delay :math:`t_p` in the interconnect is linearly related to the propagation velocity :math:`v_{p}`.
+
+.. math::
+
+    \begin{equation}
+        t_p =  \frac{l}{v_p}
+    \end{equation}
+
 Sources of Loss
 ----------------------
 

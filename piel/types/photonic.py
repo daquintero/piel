@@ -5,23 +5,17 @@ It includes type definitions for ports, S-parameter matrices, and photonic circu
 
 from typing import Any
 from .core import ArrayTypes
+from piel.types.connectivity.abstract import PortMap
 
-# Type alias for a tuple of port names as strings.
-PortsTuple = tuple[str, ...]
-"""
-PortsTuple:
-    A tuple representing the names of ports in a photonic circuit.
-    Each element in the tuple is a string corresponding to a port name.
-"""
 
 # Type alias for an S-parameter matrix, which includes a matrix of array measurement and a tuple of port names.
-SParameterMatrixTuple = tuple[ArrayTypes, PortsTuple]
+SParameterMatrixTuple = tuple[ArrayTypes, PortMap]
 """
 SParameterMatrixTuple:
     A tuple representing an S-parameter matrix used in circuit simulations.
     It includes:
     - ArrayTypes: A matrix (numpy or jax array) representing the S-parameters.
-    - PortsTuple: A tuple of strings representing the corresponding port names.
+    - PortMap: A tuple of strings representing the corresponding port names.
 """
 
 # Type alias for a callable representing an optical transmission circuit in SAX.

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from piel.types.core import PathTypes
 from piel.types.connectivity.abstract import Instance
 

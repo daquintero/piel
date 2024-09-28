@@ -2,7 +2,7 @@ from piel.types import ExperimentData
 
 
 def compose_xarray_dataset_from_experiment_data(
-    experiment_data: "ExperimentData",
+    experiment_data: ExperimentData,
 ):
     """
     Composes an xarray.Dataset from an ExperimentData instance, using all experiment parameters as coordinates.

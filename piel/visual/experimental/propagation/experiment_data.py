@@ -27,7 +27,7 @@ def plot_signal_propagation_measurements(
     x_parameter: str = "",
     measurement_name: str = "",
     measurement_section: Optional[list[str]] = None,
-    xlabel=r"Source Frequency $GHz$",
+    xlabel=r"ScalarSource Frequency $GHz$",
     ylabel=r"Propagation Delay $ns$",
     yscale_factor=1e9,
     *args,

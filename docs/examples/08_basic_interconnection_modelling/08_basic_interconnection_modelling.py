@@ -500,7 +500,6 @@ calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_da
 for m in range(2):
     for n in range(2):
         calibrated_vna_port1_load_network.plot_s_db(ax=axs[m, n], m=m, n=n)
-plt.tight_layout()
 fig.savefig(
     "../../_static/img/examples/08_basic_interconnection_modelling/basic_plot_through.jpg"
 )
@@ -538,7 +537,7 @@ piel.visual.experimental.frequency.experiment_data.plot_s_parameter_real_and_ima
 
 # We can also create a set of automatic plots directly from the `ExperimentData` and create a `REPORT.md` on the experiment directory.
 
-# + active=""
+# +
 # report_info = pe.create_report_from_experiment_directory(
 #     experiment_directory=vna_self_calibration_experiment_directory,
 # )
@@ -554,10 +553,13 @@ piel.visual.experimental.frequency.experiment_data.plot_s_parameter_real_and_ima
 
 # We can also create a parametric plot with automatically analyzed operation points accordingly.
 
-report_info = pe.create_report_from_experiment_directory(
-    experiment_directory=vna_self_calibration_experiment_directory,
-    plot_kwargs={"parametric": True},
-)
+# +
+# # This takes a while to run, uncomment if interested
+# report_info = pe.create_report_from_experiment_directory(
+#     experiment_directory=vna_self_calibration_experiment_directory,
+#     plot_kwargs={"parametric": True},
+# )
+# -
 
 # **Plotting from Operating Points**
 #

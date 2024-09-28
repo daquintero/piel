@@ -4,7 +4,7 @@ import os
 import pathlib
 import pydantic
 import types
-from typing import Optional, Literal
+from typing import Literal
 
 # Type aliases for various path and array measurement used throughout the module.
 PathTypes = str | pathlib.Path | os.PathLike | types.ModuleType
@@ -15,14 +15,6 @@ TupleIntType = tuple[int, ...]
 TupleNumericalType = tuple[NumericalTypes, ...]
 PackageArrayType = Literal["qutip", "jax", "numpy", "list", "tuple"] | TupleIntType
 ModuleType = types.ModuleType
-
-# Type alias for representing minimum and maximum values as an optional tuple of floats.
-MinimumMaximumType = tuple[Optional[float], Optional[float]]
-"""
-MinimumMaximumType:
-    A tuple representing a range with minimum and maximum values.
-    Each value in the tuple can be a float or None.
-"""
 
 
 class PielBaseModel(pydantic.BaseModel):
@@ -58,17 +50,3 @@ class PielBaseModel(pydantic.BaseModel):
             list[str]: A list of parameter names with non-None values.
         """
         return [param for param, value in self.__dict__.items() if value is not None]
-
-
-class QuantityType(PielBaseModel):
-    """
-    A model representing a quantity with optional units.
-
-    Attributes:
-        units (Optional[str]): The units of the quantity.
-    """
-
-    units: Optional[str] = None
-    """
-    The units of the type.
-    """

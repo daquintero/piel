@@ -2,10 +2,10 @@ from typing import Optional, Union
 from piel.types.core import NumericalTypes
 from piel.types.connectivity.core import Instance
 from piel.types.units import Unit, s
-from piel.types.metrics import ScalarMetrics
+from piel.types.metrics import ScalarMetric
 
 
-class TimeMetrics(ScalarMetrics):
+class TimeMetric(ScalarMetric):
     """
     This class contains stastical timing information about a given path.
 
@@ -46,18 +46,18 @@ class DispersiveTimeMetrics(Instance):
     based on the harmonic nature of signals.
     """
 
-    frequency_group: dict[float, TimeMetrics] = {}
+    frequency_group: dict[float, TimeMetric] = {}
     """
     Definition of a mutli-frequency component.
     """
 
 
-TimeMetricsTypes = Union[TimeMetrics, DispersiveTimeMetrics]
+TimeMetricsTypes = Union[TimeMetric, DispersiveTimeMetrics]
 """
 Corresponds to all the implemented timing metrics accordingly.
 """
 
-ZeroTimeMetrics = TimeMetrics(value=0, mean=0, min=0, max=0, standard_deviation=0)
+ZeroTimeMetrics = TimeMetric(value=0, mean=0, min=0, max=0, standard_deviation=0)
 """
 Default zero-time metrics defined.
 """

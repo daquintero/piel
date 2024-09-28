@@ -41,6 +41,7 @@ from .measurements.data.frequency import (
     VNASParameterMeasurementData,
     VNASParameterMeasurementDataCollection,
     VNAPowerSweepMeasurementData,
+    FrequencyMeasurementDataCollection,
 )
 from .measurements.data.propagation import (
     PropagationDelayMeasurementData,
@@ -52,6 +53,10 @@ from .measurements.data.oscilloscope import (
 )
 from .measurements.dc import (
     VoltageCurrentSignalNamePair,
+)
+from .measurements.electro_optic import (
+    ElectroOpticDCMeasurement,
+    ElectroOpticDCMeasurementCollection,
 )
 from .measurements.frequency import (
     VNASParameterMeasurementConfiguration,

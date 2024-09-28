@@ -6,7 +6,7 @@ import pytest
 from piel.analysis.metrics import rename_metrics_collection
 
 # Import necessary classes and units
-from piel.types import ScalarMetricCollection, ScalarMetrics, Unit
+from piel.types import ScalarMetricCollection, ScalarMetric, Unit
 
 # Sample Units
 VOLTAGE_UNIT = Unit(name="volt", datum="voltage", base=1, label="V")
@@ -22,11 +22,11 @@ def create_scalar_metrics(
     standard_deviation: float,
     count: int,
     unit: Unit,
-) -> ScalarMetrics:
+) -> ScalarMetric:
     """
-    Helper function to create a ScalarMetrics instance.
+    Helper function to create a ScalarMetric instance.
     """
-    return ScalarMetrics(
+    return ScalarMetric(
         name=name,
         value=value,
         mean=mean,

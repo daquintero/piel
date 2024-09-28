@@ -1,15 +1,15 @@
 from .core import MeasurementData, MeasurementDataCollection
-from piel.types.frequency import FrequencyNetworkModel
+from piel.types.signal.frequency.transmission import FrequencyTransmissionModel
 
 
 class VNASParameterMeasurementData(MeasurementData):
     type: str = "VNASParameterMeasurementData"
-    network: FrequencyNetworkModel = None
+    network: FrequencyTransmissionModel = None
 
 
 class VNAPowerSweepMeasurementData(MeasurementData):
     type: str = "VNAPowerSweepMeasurementData"
-    network: FrequencyNetworkModel = None
+    network: FrequencyTransmissionModel | None = None
 
 
 FrequencyMeasurementDataTypes = (
@@ -23,7 +23,7 @@ class VNASParameterMeasurementDataCollection(MeasurementDataCollection):
 
 
 class FrequencyMeasurementDataCollection(MeasurementDataCollection):
-    type: str = "VNASParameterMeasurementDataCollection"
+    type: str = "FrequencyMeasurementDataCollection"
     collection: list[FrequencyMeasurementDataTypes] = []
 
 

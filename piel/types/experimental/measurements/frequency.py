@@ -40,4 +40,4 @@ class VNASParameterMeasurementCollection(MeasurementCollection):
 
 class VNAPowerSweepMeasurementCollection(MeasurementCollection):
     type: str = "VNAPowerSweepMeasurementCollection"
-    collection: list[VNASParameterMeasurementCollection] = []
+    collection: list[VNAPowerSweepMeasurement] = []

@@ -1,3 +1,4 @@
+from typing import Any
 from piel.types import MultiDataTimeSignal, Unit
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,8 +9,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def plot_multi_data_time_signal(
+def plot_multi_data_time_signal_equivalent(
     multi_signal: MultiDataTimeSignal,
+    fig: Any = None,
+    axs: Any = None,
     subplots_kwargs: dict = None,
     xlabel: str | Unit = None,
     ylabel: str | Unit = None,
@@ -56,10 +59,11 @@ def plot_multi_data_time_signal(
     if subplots_kwargs is None:
         subplots_kwargs = {}
 
-    fig, axs = create_axes_per_figure(rows=1, columns=1, **subplots_kwargs)
+    if (fig is None) or (axs is None):
+        fig, axs = create_axes_per_figure(rows=1, columns=1, **subplots_kwargs)
 
     for signal in multi_signal:
-        if not signal.time_s:
+        if (len(signal.time_s) == 0) or (signal.time_s is None):
             raise ValueError(f"Signal '{signal.data_name}' has an empty time_s array.")
 
         time = np.array(signal.time_s) / x_correction

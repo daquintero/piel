@@ -1,7 +1,7 @@
 from piel.types.experimental.measurements.data.frequency import (
     VNASParameterMeasurementDataCollection,
 )
-from piel.types import MinimumMaximumType
+from piel.types import ScalarMetric
 from piel.visual import (
     create_plot_containers,
     save,
@@ -19,14 +19,14 @@ def plot_s_parameter_measurements_to_step_responses(
     data_collection: VNASParameterMeasurementDataCollection,
     parameters_list: list = None,
     network_port_index: int = 0,
-    time_range_s: MinimumMaximumType = None,
+    time_range_s: ScalarMetric = None,
     figure_kwargs: dict = None,
     **kwargs,
 ):
     """
     The goal of this function is that it iterates through a collection of s-parameter networks,
     generates the inverse-fourier-transform step responses and plots them as defined by the plotting infrastructure.
-    Note that each step response depends on the corresponding input port for the subnetwork it is extracted from,
+    Note that each step transmission depends on the corresponding input port for the subnetwork it is extracted from,
     as it is derived from the S11 or S22 based on the return loss, hence matching in a real transmission line network.
 
     It will plot the transformations on top of each other rather than sequentially.

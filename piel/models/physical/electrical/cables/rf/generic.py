@@ -1,6 +1,6 @@
 from typing import Callable
 from piel.types.connectivity.physical import PhysicalConnection
-from piel.types.connectivity.timing import TimeMetrics, TimeMetricsTypes
+from piel.types.connectivity.timing import TimeMetric, TimeMetricsTypes
 from piel.types.electrical.cables import (
     CoaxialCable,
     CoaxialCableGeometryType,
@@ -18,7 +18,7 @@ def create_coaxial_cable(
         ..., CoaxialCableMaterialSpecificationType
     ]
     | None = None,
-    timing_function: Callable[..., TimeMetricsTypes] | TimeMetricsTypes = TimeMetrics(),
+    timing_function: Callable[..., TimeMetricsTypes] | TimeMetricsTypes = TimeMetric(),
     geometry_function: Callable[
         ..., CoaxialCableGeometryType
     ] = calculate_coaxial_cable_geometry,
@@ -84,7 +84,7 @@ def create_coaxial_cable(
     >>> def material_spec():
     ...     return CoaxialCableMaterialSpecification(...)
     >>> def timing_calc(**params):
-    ...     return TimeMetrics(...)
+    ...     return TimeMetric(...)
     >>> cable = create_coaxial_cable(
     ...     material_specification_function=material_spec,
     ...     timing_function=timing_calc,

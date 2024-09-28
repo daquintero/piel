@@ -1,12 +1,12 @@
 from typing import Optional, Union
-from piel.types.core import QuantityType
+from piel.types.quantity import Quantity
 from piel.types.materials import MaterialReferenceType
-from piel.types.frequency import RFPhysicalComponent
+from piel.types.radio_frequency import RFPhysicalComponent
 from ..connectivity.physical import PhysicalComponent
 
 
 # TODO This shouldn't be a quantity
-class CoaxialCableGeometryType(QuantityType):
+class CoaxialCableGeometryType(Quantity):
     core_cross_sectional_area_m2: float | None = 0
     """
     The cross-sectional area of the core in meters squared.
@@ -28,7 +28,7 @@ class CoaxialCableGeometryType(QuantityType):
     """
 
 
-class CoaxialCableHeatTransferType(QuantityType):
+class CoaxialCableHeatTransferType(Quantity):
     """
     All units are in watts.
     """
@@ -56,7 +56,7 @@ class CoaxialCableHeatTransferType(QuantityType):
     units: str = "W"
 
 
-class CoaxialCableMaterialSpecificationType(QuantityType):
+class CoaxialCableMaterialSpecificationType(Quantity):
     core: Optional[MaterialReferenceType] = None
     """
     The material of the core.
@@ -73,7 +73,7 @@ class CoaxialCableMaterialSpecificationType(QuantityType):
     """
 
 
-class DCCableGeometryType(QuantityType):
+class DCCableGeometryType(Quantity):
     core_cross_sectional_area_m2: float = 0
     """
     The cross-sectional area of the core in meters squared.
@@ -90,7 +90,7 @@ class DCCableGeometryType(QuantityType):
     """
 
 
-class DCCableHeatTransferType(QuantityType):
+class DCCableHeatTransferType(Quantity):
     """
     All units are in watts.
     """
@@ -108,7 +108,7 @@ class DCCableHeatTransferType(QuantityType):
     units: str = "W"
 
 
-class DCCableMaterialSpecificationType(QuantityType):
+class DCCableMaterialSpecificationType(Quantity):
     core: Optional[MaterialReferenceType] = None
     """
     The material of the core.

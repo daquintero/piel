@@ -71,6 +71,10 @@ piel.units.dBm2vpp(dBm=-30)
 # 0.02
 # ```
 
+# Note that sometimes it's hard to keep track of units when dealing with multi-physical systems. There are some type operations that are supported within `piel` to streamline this. For example, when speaking of optical power spectral density we define it in units of `dBm/nm`
+
+piel.types.dBm / piel.types.nm
+
 # ## Design Principles
 #
 # ### From a Basic DC Amplfier Context
@@ -171,11 +175,14 @@ fig, axs = (
         fig=fig,
         axs=axs,
         label_list=[r"$k$=100"],
+        path="../../_static/img/examples/09a_model_rf_amplifier/example_dc_sigmoid_response.png",
     )
 )
 # -
 
-# One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the response of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
+# ![example_dc_sigmoid_response](../../_static/img/examples/09a_model_rf_amplifier/example_dc_sigmoid_response.png)
+
+# One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the transmission of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
 
 
 # We can for example begin analysing specific aspects of the signals:
@@ -254,6 +261,68 @@ piel.analysis.signals.dc.compile_dc_min_max_metrics_from_dc_collection(
 # |  0 | $k$=25  |          4.65588e-05 |             0.999953 |               0.414141 |               0.585859 |             1000.02 |                999.623 |
 # |  1 | $k$=100 |          4.6999e-18  |             1        |               0.484848 |               0.515152 |             1000.02 |                999.623 |
 #
+
+# ### RF Amplifier Design Context
+
+# When we went through the DC example, we saw how we could apply DC input energy (through voltage and current) and would get a DC output transmission (again through voltage and current).
+#
+# In RF, especially when we think about amplifiers, we are also thinking about this in these terms. We are putting some input power ($P_{in}$) and getting an output power transmission ($P_{out}$). However, one thing we need to be aware of is that the power transmission is frequency-dependent too, and hence gain and etc. is frequency-dependent too. The relationship between powers leads to $S_{xx}$ parameter port relationships. Normally, one thing we do try to maintain is the proportionality of the voltage and current for a given network impedance ~ normally $50 \Omega$ (in optics this is equivalent to mode matching in an optical waveguide). This leads to some really interesting effects and properties which we will explore further, especially because at RF frequencies there is a lot of harmonic interactions - which are less present in optical frequencies.
+
+# #### Example RF Power Sweep Response
+
+# You might want to refer to how this has been discussed and approached within `scikit-rf`: [this](https://github.com/scikit-rf/scikit-rf/issues/432) and [this](https://github.com/scikit-rf/scikit-rf/issues/903) issue. In the interest of maximizing compatibility of this data with, say electro-optic modulator optical-transmission simulations, it makes sense to boil down the fundamental data inherent to a measurement since it does not seem supported by scikit-rf.
+#
+# We will extract a non-standard `.s2p` file that contains a power sweep, which was generated from a VNA.
+
+power_sweep_frequency_array_state = pe.extract_power_sweep_s2p_to_network_transmission(
+    file_path="data/example_power_sweep_touchstone.s2p",
+    input_frequency_Hz=0.5e6,
+)
+
+pe.extract_power_sweep_s2p_to_network_transmission
+
+piel.visual.plot.signals.frequency.plot_two_port_gain_in_dBm(
+    network_transmission=power_sweep_frequency_array_state,
+    path="../../_static/img/examples/09a_model_rf_amplifier/example_power_sweep_plot.png",
+)
+
+# ![example_power_sweep_plot](../../_static/img/examples/09a_model_rf_amplifier/example_power_sweep_plot.png)
+
+# There are multiple ways to define a `Transmission` and `Phasor` relationship that represent the frequency-domain response. There are some functions in `piel.analysis.signals.frequency` that allow you to convert between multiple types. Each might have an application depending on the computational complexity of the operations to be performed on it.
+
+two_port_network_transmission_dataframe = (
+    piel.analysis.signals.frequency.extract_two_port_network_transmission_to_dataframe(
+        power_sweep_frequency_array_state
+    )
+)
+two_port_network_transmission_dataframe
+# print(two_port_network_transmission_dataframe.head().to_markdown())
+
+# |    |   magnitude_dBm |   phase_degree |   frequency_Hz |   s_11_magnitude_dBm |   s_11_phase_degree |   s_11_frequency_Hz |   s_21_magnitude_dBm |   s_21_phase_degree |   s_21_frequency_Hz |   s_12_magnitude_dBm |   s_12_phase_degree |   s_12_frequency_Hz |   s_22_magnitude_dBm |   s_22_phase_degree |   s_22_frequency_Hz |
+# |---:|----------------:|---------------:|---------------:|---------------------:|--------------------:|--------------------:|---------------------:|--------------------:|--------------------:|---------------------:|--------------------:|--------------------:|---------------------:|--------------------:|--------------------:|
+# |  0 |       -10       |              0 |         500000 |             -9.52587 |             173.902 |              500000 |             -40.9485 |            -175.317 |              500000 |             -42.8073 |             161.842 |              500000 |             -16.1038 |             152.356 |              500000 |
+# |  1 |        -9.99766 |              0 |         500000 |             -9.48725 |             174.575 |              500000 |             -41.225  |            -173.812 |              500000 |             -43.108  |             162.236 |              500000 |             -16.0967 |             152.018 |              500000 |
+# |  2 |        -9.99531 |              0 |         500000 |             -9.5365  |             174.119 |              500000 |             -41.1954 |            -173.292 |              500000 |             -42.4291 |             160.937 |              500000 |             -16.1171 |             152.117 |              500000 |
+# |  3 |        -9.99297 |              0 |         500000 |             -9.4748  |             174.517 |              500000 |             -41.0605 |            -177.236 |              500000 |             -42.8502 |             161.739 |              500000 |             -16.0894 |             152.221 |              500000 |
+# |  4 |        -9.99062 |              0 |         500000 |             -9.50937 |             174.016 |              500000 |             -41.3541 |            -174.734 |              500000 |             -42.8737 |             163.529 |              500000 |             -16.096  |             152.14  |              500000 |
+# ....
+#
+
+# Now we have this information in a dataframe, we can use this to perform some device analysis accordingly. Maybe we might want to convert it to an `xarray` dataframe easily for example for higher-dimensional analysis.
+
+# A few things we might want to do is determine the `s_21_dB` maximum gain at the corresponding power input input. Hence, we might want to index the dataframe accordingly for this. We might also want to create a `FrequencyMetric` that contains both transmission and input information given the directional nature. We can also do the analysis directly from the dataframe. However, there are cases where we might be generating multiple frequency-domain data types and need to convert accordingly. As such, it is handy to have static data type operations that enable this analysis on a larger well-defined scale.
+
+maximum_power_transmission_metric = (
+    piel.analysis.signals.frequency.max_power_s21_frequency_metric_from_dataframe(
+        two_port_network_transmission_dataframe
+    )
+)
+maximum_power_transmission_metric.table
+
+# Part of the issue is the 2D nature of our screens and the way we represent data currently. Maybe AR will change that, for now we have to consider concatenating metrics together in the same dimensions of a 2D array. This is, however, quite useful in performing system analysis and relating this to a larger scale network.
+
+# Say we have a collection of these power-sweeps, we probably want to perform analysis on all of them whilst managing the metadata accordingly.
+
 
 # ## Automated Performance Metrics Analysis
 

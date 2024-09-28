@@ -206,7 +206,7 @@ mzi2x2_2x2().plot()
 
 # ![mzi2x2_2x2](../_static/img/examples/06a_analytical_mzm_model/mzi2x2_2x2.png)
 
-# The total transfer-matrix model transmission can be computed from multiplying the transfer together for an equivalent field phasor analysis. Let's consider this in the case of a symmetric 50:50 2x2 coupler matrix and a lossless phase shifter model as above:
+# The total transfer-matrix model transmission can be computed from multiplying the transfer together for an equivalent field input analysis. Let's consider this in the case of a symmetric 50:50 2x2 coupler matrix and a lossless phase shifter model as above:
 #
 # \begin{equation}
 # [E_O] = [C_{out}] [\phi] [C_{in}] E_{in}

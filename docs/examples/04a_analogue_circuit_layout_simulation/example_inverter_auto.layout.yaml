@@ -203,4 +203,52 @@ routes:
     routing_strategy: get_bundle
     settings: {cross_section: xs_metal1, separation: 5.0}
     links: {'ns,SOURCE': 'ps,DRAIN'}
+  r48:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ps,DRAIN': 'ns,SOURCE'}
+  r49:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ps,GATE': 'ns,GATE'}
+  r50:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ns,GATE': 'ps,GATE'}
+  r51:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ns,SOURCE': 'ps,DRAIN'}
+  r52:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ps,DRAIN': 'ns,SOURCE'}
+  r53:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ps,GATE': 'ns,GATE'}
+  r54:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ns,GATE': 'ps,GATE'}
+  r55:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ns,SOURCE': 'ps,DRAIN'}
+  r56:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ps,DRAIN': 'ns,SOURCE'}
+  r57:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ps,GATE': 'ns,GATE'}
+  r58:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ns,GATE': 'ps,GATE'}
+  r59:
+    routing_strategy: get_bundle
+    settings: {cross_section: xs_metal1, separation: 5.0}
+    links: {'ns,SOURCE': 'ps,DRAIN'}
 ports: {}

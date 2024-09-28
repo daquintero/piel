@@ -87,9 +87,11 @@
                 "count": null,
                 "unit": {
                     "name": "second",
+                    "label": "Time $s$",
+                    "shorthand": "s",
+                    "symbol": "",
                     "datum": "second",
-                    "base": 1,
-                    "label": "Time $s$"
+                    "base": 1
                 }
             }
         },
@@ -119,9 +121,11 @@
                 "count": null,
                 "unit": {
                     "name": "second",
+                    "label": "Time $s$",
+                    "shorthand": "s",
+                    "symbol": "",
                     "datum": "second",
-                    "base": 1,
-                    "label": "Time $s$"
+                    "base": 1
                 }
             }
         }

@@ -7,7 +7,7 @@ import numpy as np
 from piel.analysis.metrics import aggregate_scalar_metrics_collection
 
 # Import necessary classes and units
-from piel.types import ScalarMetricCollection, ScalarMetrics, Unit
+from piel.types import ScalarMetricCollection, ScalarMetric, Unit
 
 
 def create_scalar_metrics(
@@ -19,11 +19,11 @@ def create_scalar_metrics(
     standard_deviation: float,
     count: int,
     unit: Unit,
-) -> ScalarMetrics:
+) -> ScalarMetric:
     """
-    Helper function to create a ScalarMetrics instance.
+    Helper function to create a ScalarMetric instance.
     """
-    return ScalarMetrics(
+    return ScalarMetric(
         name=name,
         value=value,
         mean=mean,
@@ -44,7 +44,7 @@ def create_scalar_metric_collection(metrics: list) -> ScalarMetricCollection:
 
 def test_aggregate_scalar_metrics_collection_multiple_metrics():
     """
-    Test aggregating multiple ScalarMetrics with consistent units.
+    Test aggregating multiple ScalarMetric with consistent units.
     """
     # Create sample metrics
     metric1 = create_scalar_metrics(
@@ -104,8 +104,8 @@ def test_aggregate_scalar_metrics_collection_multiple_metrics():
 
     # Assertions
     assert isinstance(
-        aggregated_metrics, ScalarMetrics
-    ), "Should return a ScalarMetrics instance."
+        aggregated_metrics, ScalarMetric
+    ), "Should return a ScalarMetric instance."
     assert (
         aggregated_metrics.min == expected_min
     ), f"Expected min={expected_min}, got {aggregated_metrics.min}"
@@ -146,8 +146,8 @@ def test_aggregate_scalar_metrics_collection_single_metric():
 
     # Assertions
     assert isinstance(
-        aggregated_metrics, ScalarMetrics
-    ), "Should return a ScalarMetrics instance."
+        aggregated_metrics, ScalarMetric
+    ), "Should return a ScalarMetric instance."
     assert (
         aggregated_metrics.min == metric.min
     ), f"Expected min={metric.min}, got {aggregated_metrics.min}"
@@ -178,7 +178,7 @@ def test_aggregate_scalar_metrics_collection_empty_collection():
 
 def test_aggregate_scalar_metrics_collection_inconsistent_units():
     """
-    Test aggregating ScalarMetrics with inconsistent units.
+    Test aggregating ScalarMetric with inconsistent units.
     """
     # Create metrics with different units
     metric1 = create_scalar_metrics(
@@ -217,7 +217,7 @@ def test_aggregate_scalar_metrics_collection_inconsistent_units():
 
 def test_aggregate_scalar_metrics_collection_zero_total_count():
     """
-    Test aggregating ScalarMetrics where total count is zero.
+    Test aggregating ScalarMetric where total count is zero.
     """
     # Create metrics with zero count
     metric1 = create_scalar_metrics(
@@ -241,7 +241,7 @@ def test_aggregate_scalar_metrics_collection_zero_total_count():
 
 def test_aggregate_scalar_metrics_collection_missing_fields():
     """
-    Test aggregating ScalarMetrics with missing fields (None).
+    Test aggregating ScalarMetric with missing fields (None).
     """
     # Create metric with missing 'mean'
     metric1 = create_scalar_metrics(
@@ -259,5 +259,5 @@ def test_aggregate_scalar_metrics_collection_missing_fields():
     collection = create_scalar_metric_collection([metric1])
 
     # Call function and expect ValueError
-    # with pytest.raises(ValueError, match="ScalarMetrics '.*' must have 'mean' defined."):
+    # with pytest.raises(ValueError, match="ScalarMetric '.*' must have 'mean' defined."):
     #     aggregate_scalar_metrics_collection(collection)

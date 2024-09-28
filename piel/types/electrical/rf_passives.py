@@ -1,4 +1,4 @@
-from piel.types.frequency import RFPhysicalComponent
+from piel.types.radio_frequency import RFPhysicalComponent
 
 
 class PowerSplitter(RFPhysicalComponent):

@@ -2,7 +2,7 @@
 
 import piel
 import piel.experimental as pe
-import piel.analysis.signals.time_data as tda
+import piel.analysis.signals.time as tda
 from piel.models.physical.electrical import E8364A, cables
 from datetime import datetime
 import os
@@ -248,11 +248,54 @@ s_parameter_measurement_data_sweep
 
 s_parameter_measurement_data_sweep.collection[0].network
 
-# Let's plot the basic s-parameter `dB` magnitude response:
+# Let's plot the basic s-parameter `dB` magnitude transmission:
 
 s_parameter_measurement_data_sweep.collection[0].network.plot_s_db(0, 0)
 
-# Let's plot the two s-parameter measurement data in a basic form:
+# So one of the things we might want do do is determine specifically the performance of this transmission network. We can use some of the `piel` frequency domain analysis functions:
+
+network_transmission = piel.tools.skrf.convert_skrf_network_to_network_transmission(
+    s_parameter_measurement_data_sweep.collection[0].network
+)
+network_transmission.network[3].ports
+
+# We might want to visualise this data in a standard dataframe:
+
+network_transmission_dataframe = (
+    piel.analysis.signals.frequency.extract_two_port_network_transmission_to_dataframe(
+        network_transmission
+    )
+)
+
+network_transmission_dataframe
+
+# Let's plot to verify this:
+
+# Note this matches exactly to the `skrf`-plotting function. Now we can  use this datastructure with some electronic-photonic frequency cosimulation.
+
+piel.visual.plot_simple(
+    x_data=network_transmission_dataframe.frequency_Hz,
+    y_data=network_transmission_dataframe.s_21_magnitude_dBm,
+    xlabel=piel.types.GHz,
+    ylabel=piel.types.dBm,
+    title="Transmission S21 through PCB Traces",
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_s21_signal_trace.jpg",
+)
+
+piel.visual.plot_simple(
+    x_data=network_transmission_dataframe.frequency_Hz,
+    y_data=network_transmission_dataframe.s_11_magnitude_dBm,
+    xlabel=piel.types.GHz,
+    ylabel=piel.types.dBm,
+    title="Reflection S11 through PCB Traces",
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_s11_signal_trace.jpg",
+)
+
+# +
+# dir(s_parameter_measurement_data_sweep.collection[0].network)
+# -
+
+# #### Time-Domain Transformations
 
 import matplotlib.pyplot as plt
 
@@ -279,7 +322,7 @@ piel.visual.experimental.frequency.measurement_data_collection.plot_s_parameter_
 
 # ### Time-Domain Analysis: DUT & Reference Paths
 #
-# Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain response is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
+# Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain transmission is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
 #
 # Let's configure the propagation delay measurement measurement in order to save the files in a reasonable location. We need to define how a specific experiment instance, in this case a measurement looks like. This involves the device configuration and stimulus parameters.
 
@@ -369,7 +412,7 @@ oscilloscope
 # We want to create an `Experiment` according to our data analysis. It will be easier to understand measurements comparing a `PCB` trace and an identical `calibration` set of cables.
 
 
-# We will test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
+# We will test the propagation transmission at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
 
 
 def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = None):
@@ -390,7 +433,7 @@ def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] 
     experiment = piel.types.Experiment(
         name="pcb_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
-        goal="Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
+        goal="Test the propagation transmission at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
         parameters_list=parameters_list,
     )
     return experiment
@@ -421,7 +464,7 @@ def calibration_propagation_delay_experiment(
     experiment = piel.types.Experiment(
         name="calibration_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
-        goal="Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
+        goal="Test the propagation transmission at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
         parameters_list=parameters_list,
     )
     return experiment
@@ -699,9 +742,9 @@ offset_calibration_10ghz_dut_waveform_rising_edge_list = tda.offset_time_signals
     calibration_10ghz_dut_waveform_rising_edge_list
 )
 
-help(piel.visual.plot.signals.plot_multi_data_time_signal)
+help(piel.visual.plot.signals.plot_multi_data_time_signal_equivalent)
 
-piel.visual.plot.signals.plot_multi_data_time_signal(
+piel.visual.plot.signals.plot_multi_data_time_signal_equivalent(
     offset_calibration_10ghz_dut_waveform_rising_edge_list,
     xlabel=piel.types.units.ns,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg",

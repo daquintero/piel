@@ -1,10 +1,10 @@
 import numpy as np
-from piel.types import ScalarMetrics, ScalarMetricCollection
+from piel.types import ScalarMetric, ScalarMetricCollection
 
 
 def aggregate_scalar_metrics_collection(
     metrics_collection: ScalarMetricCollection,
-) -> ScalarMetrics:
+) -> ScalarMetric:
     """
     Aggregates a ScalarMetricCollection into a single ScalarMetrics instance.
 
@@ -20,7 +20,7 @@ def aggregate_scalar_metrics_collection(
         metrics_collection (ScalarMetricCollection): A ScalarMetricsCollection instances to aggregate.
 
     Returns:
-        ScalarMetrics: A single ScalarMetrics instance representing the aggregated metrics.
+        ScalarMetric: A single ScalarMetrics instance representing the aggregated metrics.
 
     Raises:
         ValueError: If the input list is empty or units are inconsistent.
@@ -34,10 +34,10 @@ def aggregate_scalar_metrics_collection(
     max_values = []
     for metric in metrics_collection.metrics:
         if metric.mean is None:
-            raise ValueError(f"ScalarMetrics '{metric}' must have 'mean' defined.")
+            raise ValueError(f"ScalarMetric '{metric}' must have 'mean' defined.")
         if metric.min is None or metric.max is None:
             raise ValueError(
-                f"ScalarMetrics '{metric}' must have 'min' and 'max' defined."
+                f"ScalarMetric '{metric}' must have 'min' and 'max' defined."
             )
         means.append(metric.mean)
         min_values.append(metric.min)
@@ -64,8 +64,8 @@ def aggregate_scalar_metrics_collection(
     # Aggregate value: set to aggregated mean (or any other logic as needed)
     aggregated_value = aggregated_mean
 
-    # Create the aggregated ScalarMetrics instance
-    aggregated_metrics = ScalarMetrics(
+    # Create the aggregated ScalarMetric instance
+    aggregated_metrics = ScalarMetric(
         value=aggregated_value,
         mean=aggregated_mean,
         min=aggregated_min,

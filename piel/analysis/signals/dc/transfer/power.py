@@ -1,5 +1,5 @@
 import numpy as np
-from piel.types import ScalarMetrics, SignalDCCollection, W, SignalDC, SignalTraceDC, V
+from piel.types import ScalarMetric, SignalDCCollection, W, SignalDC, SignalTraceDC, V
 from ..utils import (
     get_trace_values_by_datum,
 )
@@ -13,7 +13,8 @@ def calculate_power_signal_from_collection(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0,
     upper_threshold_ratio: float = 1,
-) -> ScalarMetrics:
+    **kwargs,
+) -> ScalarMetric:
     """
     Retrieves the minimum and maximum power values within a specified input voltage range,
     along with the corresponding V_in values where these extrema occur.
@@ -24,8 +25,8 @@ def calculate_power_signal_from_collection(
         upper_threshold_ratio (float, optional): The upper threshold as a fraction of V_in range (0-1). Defaults to 0.9.
 
     Returns:
-        ScalarMetrics
-            - ScalarMetrics containing min and max power.
+        ScalarMetric
+            - ScalarMetric containing min and max power.
     """
     # Validate threshold ratios
     if not (0 <= lower_threshold_ratio < upper_threshold_ratio <= 1):
@@ -95,7 +96,8 @@ def get_power_metrics(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0,
     upper_threshold_ratio: float = 1,
-) -> ScalarMetrics:
+    **kwargs,
+) -> ScalarMetric:
     """
     Retrieves the minimum and maximum power values within a specified input voltage range,
     along with the corresponding V_in values where these extrema occur.
@@ -106,8 +108,8 @@ def get_power_metrics(
         upper_threshold_ratio (float, optional): The upper threshold as a fraction of V_in range (0-1). Defaults to 0.9.
 
     Returns:
-        ScalarMetrics
-            - ScalarMetrics containing min and max power.
+        ScalarMetric
+            - ScalarMetric containing min and max power.
     """
     # Validate threshold ratios
     power_signal_dc = calculate_power_signal_from_collection(
@@ -164,8 +166,8 @@ def get_power_metrics(
         # Default to watts if unit not found
         power_unit = W
 
-    # Create ScalarMetrics for power
-    metrics = ScalarMetrics(
+    # Create ScalarMetric for power
+    metrics = ScalarMetric(
         value=mean_power,  # Not applicable
         mean=mean_power,  # Not applicable
         min=min_power,
@@ -182,7 +184,8 @@ def get_power_map_vin_metrics(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0,
     upper_threshold_ratio: float = 1,
-) -> ScalarMetrics:
+    **kwargs,
+) -> ScalarMetric:
     """
     Retrieves the mapped V_IN minimum and maximum power values within a specified input voltage range. Represents
     along with the corresponding V_in values where these power extrema occur.
@@ -193,8 +196,8 @@ def get_power_map_vin_metrics(
         upper_threshold_ratio (float, optional): The upper threshold as a fraction of V_in range (0-1). Defaults to 0.9.
 
     Returns:
-        ScalarMetrics
-            - ScalarMetrics containing min and max power.
+        ScalarMetric
+            - ScalarMetric containing min and max power.
     """
     # Validate threshold ratios
     power_signal_dc = calculate_power_signal_from_collection(
@@ -260,8 +263,8 @@ def get_power_map_vin_metrics(
         # Default to watts if unit not found
         power_unit = W
 
-    # Create ScalarMetrics for power
-    metrics = ScalarMetrics(
+    # Create ScalarMetric for power
+    metrics = ScalarMetric(
         value=None,  # Not applicable
         mean=None,  # Not applicable
         min=min_mapping_vin,

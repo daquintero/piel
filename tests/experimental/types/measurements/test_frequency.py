@@ -119,8 +119,8 @@ def test_vna_sparameter_measurement_collection_default_initialization():
 
 # Test VNAPowerSweepMeasurementCollection
 def test_vna_power_sweep_measurement_collection_initialization():
-    subcollection_1 = VNASParameterMeasurementCollection()
-    subcollection_2 = VNASParameterMeasurementCollection()
+    subcollection_1 = VNAPowerSweepMeasurement()
+    subcollection_2 = VNAPowerSweepMeasurement()
     collection = VNAPowerSweepMeasurementCollection(
         collection=[subcollection_1, subcollection_2]
     )

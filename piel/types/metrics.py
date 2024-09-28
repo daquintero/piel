@@ -4,7 +4,7 @@ from piel.types.core import NumericalTypes
 from piel.types.units import Unit, ratio
 
 
-class ScalarMetrics(Instance):
+class ScalarMetric(Instance):
     """
     Standard definition for a scalar metrics. It includes the value, mean, min, max, standard deviation and count.
     """
@@ -21,14 +21,23 @@ class ScalarMetrics(Instance):
     def data(self):
         # Create a dictionary with the scalar metrics
         data = {
-            "Metric": ["Value", "Mean", "Min", "Max", "Standard Deviation", "Count"],
-            "Value": [
+            "label": [
+                "value",
+                "mean",
+                "min",
+                "max",
+                "standard_deviation",
+                "count",
+                "unit",
+            ],
+            "value": [
                 self.value,
                 self.mean,
                 self.min,
                 self.max,
                 self.standard_deviation,
                 self.count,
+                self.unit.label,
             ],
         }
         return data
@@ -45,7 +54,7 @@ class ScalarMetricCollection(Instance):
     A collection of scalar metrics useful when analyzing multiple aspects of a design.
     """
 
-    metrics: list[ScalarMetrics] = []
+    metrics: list[ScalarMetric] = []
 
     @property
     def data(self):
@@ -94,3 +103,24 @@ class ScalarMetricCollection(Instance):
         df.set_index("Name", inplace=True)
 
         return df
+
+    def __getitem__(self, index):
+        """
+        Allows for indexing and slicing of the metrics list.
+
+        Args:
+            index: An integer or slice object for indexing.
+
+        Returns:
+            A new ScalarMetricCollection containing the specified slice of metrics.
+        """
+        if isinstance(index, int):
+            # Return a new collection with a single metric if indexed by an integer
+            metrics = [self.metrics[index]]
+        elif isinstance(index, slice):
+            # Return a new collection with a slice of the metrics list
+            metrics = self.metrics[index]
+        else:
+            raise TypeError("Invalid index type. Must be int or slice.")
+
+        return ScalarMetricCollection(name=self.name, metrics=metrics)
