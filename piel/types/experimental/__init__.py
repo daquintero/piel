@@ -41,6 +41,7 @@ from .measurements.data.frequency import (
     VNASParameterMeasurementData,
     VNASParameterMeasurementDataCollection,
     VNAPowerSweepMeasurementData,
+    FrequencyMeasurementDataCollection,
 )
 from .measurements.data.propagation import (
     PropagationDelayMeasurementData,

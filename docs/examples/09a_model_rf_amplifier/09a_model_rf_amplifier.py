@@ -175,7 +175,7 @@ fig, axs = (
 )
 # -
 
-# One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the response of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
+# One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the transmission of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
 
 
 # We can for example begin analysing specific aspects of the signals:
@@ -254,6 +254,26 @@ piel.analysis.signals.dc.compile_dc_min_max_metrics_from_dc_collection(
 # |  0 | $k$=25  |          4.65588e-05 |             0.999953 |               0.414141 |               0.585859 |             1000.02 |                999.623 |
 # |  1 | $k$=100 |          4.6999e-18  |             1        |               0.484848 |               0.515152 |             1000.02 |                999.623 |
 #
+
+# ### RF Amplifier Design Context
+
+# When we went through the DC example, we saw how we could apply DC input energy (through voltage and current) and would get a DC output transmission (again through voltage and current).
+#
+# In RF, especially when we think about amplifiers, we are also thinking about this in these terms. We are putting some input power ($P_{in}$) and getting an output power transmission ($P_{out}$). However, one thing we need to be aware of is that the power transmission is frequency-dependent too, and hence gain and etc. is frequency-dependent too. The relationship between powers leads to $S_{xx}$ parameter port relationships. Normally, one thing we do try to mantain is the proportionality of the voltage and current for a given network impedance ~ normally $50 \Omega$ (in optics this is equivalent to mode matching in an optical waveguide). This leads to some really interesting effects and properties which we will explore further, especially because at RF frequencies there is a lot of harmonic interactions - which are less present in optical frequencies.
+
+# #### Example RF Power Sweep Response
+
+# You might want to refer to how this has been discussed and approached within `scikit-rf`: [this](https://github.com/scikit-rf/scikit-rf/issues/432) and [this](https://github.com/scikit-rf/scikit-rf/issues/903) issue. In the interest of maximizing compatibility of this data with, say electro-optic modulator optical-transmission simulations, it makes sense to boil down the fundamental data inherent to a measurement since it does not seem supported by scikit-rf.
+#
+# We will extract a non-standard `.s2p` file that contains a power sweep, which was generated from a VNA.
+
+power_sweep_frequency_array_state = pe.extract_power_sweep_s2p_to_frequency_array_state(
+    file_path="data/example_power_sweep_touchstone.s2p"
+)
+
+piel.visual.plot.signals.frequency.plot_frequency_array_state_power_in_s21_db(
+    frequency_array_state=power_sweep_frequency_array_state,
+)
 
 # ## Automated Performance Metrics Analysis
 

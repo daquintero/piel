@@ -26,7 +26,7 @@ def plot_s_parameter_measurements_to_step_responses(
     """
     The goal of this function is that it iterates through a collection of s-parameter networks,
     generates the inverse-fourier-transform step responses and plots them as defined by the plotting infrastructure.
-    Note that each step response depends on the corresponding input port for the subnetwork it is extracted from,
+    Note that each step transmission depends on the corresponding input port for the subnetwork it is extracted from,
     as it is derived from the S11 or S22 based on the return loss, hence matching in a real transmission line network.
 
     It will plot the transformations on top of each other rather than sequentially.

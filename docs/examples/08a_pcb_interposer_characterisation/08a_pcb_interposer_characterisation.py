@@ -248,7 +248,7 @@ s_parameter_measurement_data_sweep
 
 s_parameter_measurement_data_sweep.collection[0].network
 
-# Let's plot the basic s-parameter `dB` magnitude response:
+# Let's plot the basic s-parameter `dB` magnitude transmission:
 
 s_parameter_measurement_data_sweep.collection[0].network.plot_s_db(0, 0)
 
@@ -279,7 +279,7 @@ piel.visual.experimental.frequency.measurement_data_collection.plot_s_parameter_
 
 # ### Time-Domain Analysis: DUT & Reference Paths
 #
-# Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain response is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
+# Let's consider we want to measure the propagation velocity of a pulse through one of our coaxial cables. If you are doing a similar experiment, make sure to use ground ESD straps to avoid damage to the equipment. As there is frequency dispersion in the RF transmission lines, we also know the time-domain transmission is different according to the type of signal applied to the device. We can compare an analysis between the different pulse frequencies.
 #
 # Let's configure the propagation delay measurement measurement in order to save the files in a reasonable location. We need to define how a specific experiment instance, in this case a measurement looks like. This involves the device configuration and stimulus parameters.
 
@@ -369,7 +369,7 @@ oscilloscope
 # We want to create an `Experiment` according to our data analysis. It will be easier to understand measurements comparing a `PCB` trace and an identical `calibration` set of cables.
 
 
-# We will test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
+# We will test the propagation transmission at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
 
 
 def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] = None):
@@ -390,7 +390,7 @@ def pcb_propagation_delay_experiment(square_wave_frequency_Hz_list: list[float] 
     experiment = piel.types.Experiment(
         name="pcb_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
-        goal="Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
+        goal="Test the propagation transmission at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.",
         parameters_list=parameters_list,
     )
     return experiment
@@ -421,7 +421,7 @@ def calibration_propagation_delay_experiment(
     experiment = piel.types.Experiment(
         name="calibration_multi_frequency_through_propagation_measurement",
         experiment_instances=experiment_instance_list,
-        goal="Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
+        goal="Test the propagation transmission at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
         parameters_list=parameters_list,
     )
     return experiment

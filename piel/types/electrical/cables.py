@@ -1,7 +1,7 @@
 from typing import Optional, Union
 from piel.types.core import QuantityType
 from piel.types.materials import MaterialReferenceType
-from piel.types.frequency import RFPhysicalComponent
+from piel.types.frequency.core import RFPhysicalComponent
 from ..connectivity.physical import PhysicalComponent
 
 

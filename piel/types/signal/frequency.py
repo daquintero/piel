@@ -1,5 +1,5 @@
 from ..core import PielBaseModel
-from ..frequency import FrequencyNetworkModel
+from ..frequency.core import FrequencyTransmissionModel
 
 
 class TwoPortCalibrationNetworkCollection(PielBaseModel):
@@ -7,22 +7,22 @@ class TwoPortCalibrationNetworkCollection(PielBaseModel):
     Two-port representation of the corresponding networks
     """
 
-    through: FrequencyNetworkModel
+    through: FrequencyTransmissionModel
     """
     This should correspond to a two-port through network.
     """
 
-    short: FrequencyNetworkModel
+    short: FrequencyTransmissionModel
     """
     This should correspond to a two-port short network either reciprocal or non-reciprocal.
     """
 
-    open: FrequencyNetworkModel
+    open: FrequencyTransmissionModel
     """
     This should correspond to a two-port open network either reciprocal or non-reciprocal.
     """
 
-    load: FrequencyNetworkModel
+    load: FrequencyTransmissionModel
     """
     This should correspond to a two-port load network either reciprocal or non-reciprocal.
     """

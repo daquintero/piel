@@ -47,6 +47,10 @@ def extract_data_from_measurement_collection(
         )
         # Identify correct data mapping
         measurement_data_type = measurement_to_data_map[measurement_i.type]
+        logger.debug(f"measurement_i.type: {measurement_i.type}")
+        logger.debug(
+            f"measurement_to_data_method_map: {measurement_to_data_method_map}"
+        )
         extract_data_method = measurement_to_data_method_map[measurement_i.type]
         try:
             measurement_data_i = extract_data_method(measurement_i)
