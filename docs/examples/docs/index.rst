@@ -9,4 +9,5 @@ Examples
    tools
    integrations
    flows
+   devices
    experimental
