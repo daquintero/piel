@@ -78,9 +78,13 @@ def calculate_power_signal_from_collection(
             )
             break
 
-    logger.debug(f"Voltage values: {voltage}")
-    logger.debug(f"Current values: {current}")
-    logger.debug(f"Power values: {power_values}")
+    try:
+        logger.debug(f"Voltage values: {voltage}")
+        logger.debug(f"Current values: {current}")
+        logger.debug(f"Power values: {power_values}")
+    except Exception:
+        pass
+
     if power_values is None or len(power_values) == 0:
         raise ValueError("Power trace not found or empty in the collection.")
 

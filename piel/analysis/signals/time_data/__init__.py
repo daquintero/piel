@@ -10,4 +10,6 @@ from .metrics import (
     extract_statistical_metrics_collection,
 )
 from .offset import offset_to_first_rising_edge
-from .remove import remove_before_first_rising_edge
+from .remove import (
+    remove_before_first_rising_edge,
+)
