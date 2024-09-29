@@ -12,7 +12,7 @@ from piel.visual.plot.table import (
 from piel.visual.plot.basic import plot_simple
 from piel.visual.style import secondary_color_palette
 from piel.types.experimental import PropagationDelayMeasurementDataCollection
-from piel.analysis.signals.time_data import (
+from piel.analysis.signals.time import (
     extract_rising_edges,
     resize_data_time_signal_units,
 )

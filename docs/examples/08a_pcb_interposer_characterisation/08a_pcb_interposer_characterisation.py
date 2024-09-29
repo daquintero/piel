@@ -2,7 +2,7 @@
 
 import piel
 import piel.experimental as pe
-import piel.analysis.signals.time_data as tda
+import piel.analysis.signals.time as tda
 from piel.models.physical.electrical import E8364A, cables
 from datetime import datetime
 import os
@@ -699,9 +699,9 @@ offset_calibration_10ghz_dut_waveform_rising_edge_list = tda.offset_time_signals
     calibration_10ghz_dut_waveform_rising_edge_list
 )
 
-help(piel.visual.plot.signals.plot_multi_data_time_signal)
+help(piel.visual.plot.signals.plot_multi_data_time_signal_equivalent)
 
-piel.visual.plot.signals.plot_multi_data_time_signal(
+piel.visual.plot.signals.plot_multi_data_time_signal_equivalent(
     offset_calibration_10ghz_dut_waveform_rising_edge_list,
     xlabel=piel.types.units.ns,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg",

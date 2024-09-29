@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 # Import the functions to be tested
-from piel.analysis.signals.time_data import (
+from piel.analysis.signals.time import (
     offset_to_first_rising_edge,
     remove_before_first_rising_edge,
 )

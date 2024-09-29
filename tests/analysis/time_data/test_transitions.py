@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 from piel.types import DataTimeSignalData, MultiDataTimeSignal
-from piel.analysis.signals.time_data import extract_rising_edges
+from piel.analysis.signals.time import extract_rising_edges
 
 
 @pytest.fixture
