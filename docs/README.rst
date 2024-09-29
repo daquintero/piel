@@ -9,6 +9,8 @@
 
    ``piel < 0.1`` is still in active development. The API is starting to stabilize, but use it currently at your own risk.
 
+   Note this documentation is for the next 0.1.0 unreleased version of piel. To see documentation for 0.0.56 use the stable tab.
+
 
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.

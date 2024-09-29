@@ -30,7 +30,7 @@ from .measurements.data.frequency import (
     extract_power_sweep_data_from_vna_measurement,
     extract_power_sweep_s2p_to_frequency_array_state,
     extract_power_sweep_s2p_to_dataframe,
-    extract_power_sweep_from_file,
+    extract_power_sweep_s2p_to_frequency_transmission_collection,
     convert_row_to_sdict,
 )
 from .measurements.data.extract import (

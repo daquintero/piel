@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 # Import the functions to be tested
-from piel.analysis.signals.time_data import (
+from piel.analysis.signals.time import (
     concatenate_metrics_collection,
     extract_mean_metrics_list,
     extract_peak_to_peak_metrics_list,

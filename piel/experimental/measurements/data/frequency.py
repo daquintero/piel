@@ -309,7 +309,7 @@ def convert_row_to_sdict(row) -> SDict:
     return sdict
 
 
-def extract_power_sweep_from_file(
+def extract_power_sweep_s2p_to_frequency_transmission_collection(
     file_path: PathTypes,
     name: str = "Power Sweep",
     input_frequency_Hz: NumericalTypes = 0,  # Default frequency set to 0 GHz
@@ -339,7 +339,7 @@ def extract_power_sweep_from_file(
 
     Example:
     --------
-    >>> ft_collection = extract_power_sweep_from_file('path_to_file.s2p', input_frequency_Hz=2e9)
+    >>> ft_collection = extract_power_sweep_s2p_to_frequency_transmission_collection('path_to_file.s2p',input_frequency_Hz=2e9)
     >>> print(ft_collection)
     FrequencyTransmissionCollection(
         name='Power Sweep',

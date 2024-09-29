@@ -1,7 +1,6 @@
 from typing import Any
 from piel.types import MultiDataTimeSignal, Unit
 import numpy as np
-import matplotlib.pyplot as plt
 from piel.visual.plot.position import create_axes_per_figure
 from piel.visual.plot.core import save
 import logging
@@ -9,17 +8,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def plot_multi_data_time_signal_equivalent(
+def plot_multi_data_time_signal_different(
     multi_signal: MultiDataTimeSignal,
     fig: Any = None,
     axs: Any = None,
     subplots_kwargs: dict = None,
-    xlabel: str | Unit = None,
-    ylabel: str | Unit = None,
+    xlabel: str | Unit | list[Unit] = None,
+    ylabel: str | Unit | list[Unit] | list = None,
+    title: str | Unit = None,
     **kwargs,
 ):
     """
-    Plots all rising edge signals on the same figure with a shared x-axis.
+    Plots all rising edge signals on the same figure, but with a shared x-axis, but multiple y axes.
 
     Args:
         multi_signal (List[DataTimeSignalData]): List of rising edge signals.
@@ -28,8 +28,10 @@ def plot_multi_data_time_signal_equivalent(
     Returns:
         None
     """
+    signal_amount = len(multi_signal)
+
     x_correction = 1
-    y_correction = 1
+    y_correction = np.repeat(1, signal_amount)
 
     if not multi_signal:
         raise ValueError("The multi_signal list is empty.")
@@ -46,38 +48,60 @@ def plot_multi_data_time_signal_equivalent(
         xlabel = xlabel.label
 
     if ylabel is None:
-        ylabel = r"Voltage $V$"
+        ylabel = np.repeat(r"Voltage $V$", signal_amount)
     elif isinstance(ylabel, str):
+        pass
+    elif isinstance(ylabel, list):
         pass
     elif isinstance(ylabel, Unit):
         y_correction = ylabel.base
         logger.warning(
-            f"Data correction of 1/{y_correction} from unit definition {ylabel} will be applied on y-axis."
+            f"Data correction of 1/{y_correction} from unit definition {ylabel} will be applied on all y-axis."
         )
         ylabel = ylabel.label
+    elif isinstance(ylabel, list):
+        # THis should be a list of units
+        i = 0
+        for unit_i in ylabel:
+            if isinstance(unit_i, Unit):
+                y_correction[i] = unit_i.base
+
+            i += 1
 
     if subplots_kwargs is None:
         subplots_kwargs = {}
 
     if (fig is None) or (axs is None):
-        fig, axs = create_axes_per_figure(rows=1, columns=1, **subplots_kwargs)
+        fig, axs = create_axes_per_figure(
+            rows=len(multi_signal), columns=1, **subplots_kwargs
+        )
 
+    if title is None:
+        pass
+    else:
+        fig.suptitle(title)
+
+    i = 0
     for signal in multi_signal:
         if (len(signal.time_s) == 0) or (signal.time_s is None):
             raise ValueError(f"Signal '{signal.data_name}' has an empty time_s array.")
 
         time = np.array(signal.time_s) / x_correction
-        data = np.array(signal.data) / y_correction
+        data = np.array(signal.data) / y_correction[i]
 
-        axs[0].plot(
+        axs[i].plot(
             time,
             data,
             label=signal.data_name,
-            color=plt.rcParams["axes.prop_cycle"].by_key()["color"][0],
+            # color=plt.rcParams["axes.prop_cycle"].by_key()["color"][i],
         )
+        # print(i)
+
+        axs[i].set_ylabel(ylabel[i])
+
+        i += 1
 
     fig.supxlabel(xlabel)
-    fig.supylabel(ylabel)
 
     save(fig, **kwargs)
 

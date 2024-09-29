@@ -1,5 +1,6 @@
 from typing import Literal
-from ..core import PielBaseModel, ArrayTypes
+from piel.types.core import PielBaseModel, ArrayTypes
+from piel.types.units import Unit, s, V
 
 
 class DataTimeSignalData(PielBaseModel):
@@ -11,12 +12,16 @@ class DataTimeSignalData(PielBaseModel):
     time_s: ArrayTypes = []
     data: ArrayTypes = []
     data_name: str = ""
+    time_s_unit: Unit = s
+    data_unit: Unit = V
 
 
-MultiDataTimeSignal = list[DataTimeSignalData, ...]
+MultiDataTimeSignal = list[DataTimeSignalData]
 """
 Collection of DataTimeSignals that can be used to analyse a set of signals together in a particular files flow.
 """
+MultiDataTimeSignalCollectionTypes = ["equivalent", "different"]
+
 
 EdgeTransitionAnalysisTypes = Literal["mean", "peak_to_peak", "rise_time"]
 MultiDataTimeSignalAnalysisTypes = Literal["delay"]

@@ -83,6 +83,13 @@ from piel.types.electro_optic.transition import (
     SParameterCollection,
 )
 
+from piel.types.electro_optic.modulator import (
+    ElectroOpticModulatorMetrics,
+    ElectroOpticModulator,
+)
+
+from piel.types.electro_optic.laser import PulsedLaserMetrics, PulsedLaser
+
 from piel.types.electronic.core import (
     ElectronicCircuit,
     ElectronicChip,
@@ -154,6 +161,7 @@ from piel.types.signal.time_data import (
     DataTimeSignalData,
     EdgeTransitionAnalysisTypes,
     MultiDataTimeSignal,
+    MultiDataTimeSignalCollectionTypes,
     MultiDataTimeSignalAnalysisTypes,
     DataTimeSignalAnalysisTypes,
 )

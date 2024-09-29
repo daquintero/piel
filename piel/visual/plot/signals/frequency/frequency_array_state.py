@@ -1,7 +1,8 @@
 from typing import Any
 import numpy as np
 from piel.types import FrequencyTransmissionArrayState
-from piel.visual.plot.basic import plot_simple, create_axes_per_figure
+from piel.visual.plot.basic import plot_simple
+from piel.visual.plot.position import create_axes_per_figure
 
 
 def plot_frequency_array_state_power_in_s21_db(

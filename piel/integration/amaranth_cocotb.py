@@ -63,7 +63,7 @@ async def truth_table_test(dut):
     for signal in signals:
         script_content += f"    {signal.lower()}_data = []\n"
 
-    script_content += "    time_data = []\n\n"
+    script_content += "    time = []\n\n"
 
     # Loop over each row in the truth table to generate test cases
     for i in range(num_tests):
@@ -84,13 +84,13 @@ async def truth_table_test(dut):
         for signal in signals:
             script_content += f"    {signal.lower()}_data.append(dut.{signal}.value)\n"
 
-        script_content += "    time_data.append(get_sim_time())\n\n"
+        script_content += "    time.append(get_sim_time())\n\n"
 
     # Store the results in a CSV file
     script_content += "    simulation_data = {\n"
     for signal in signals:
         script_content += f'        "{signal.lower()}": {signal.lower()}_data,\n'
-    script_content += '        "time": time_data\n'
+    script_content += '        "time": time\n'
     script_content += "    }\n\n"
     script_content += (
         f'    pd.DataFrame(simulation_data).to_csv("{str(output_file)}") \n'

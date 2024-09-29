@@ -2,8 +2,8 @@ import pytest
 import numpy as np
 
 # Import the functions to be tested
-from piel.analysis.signals.time_data import offset_time_signals
-from piel.analysis.signals.time_data import extract_rising_edges
+from piel.analysis.signals.time import offset_time_signals
+from piel.analysis.signals.time import extract_rising_edges
 
 # Import necessary classes
 from piel.types import DataTimeSignalData, MultiDataTimeSignal, Unit

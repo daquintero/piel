@@ -1,2 +1,2 @@
-from . import time_data
+from . import time
 from . import dc
