@@ -94,3 +94,24 @@ class ScalarMetricCollection(Instance):
         df.set_index("Name", inplace=True)
 
         return df
+
+    def __getitem__(self, index):
+        """
+        Allows for indexing and slicing of the metrics list.
+
+        Args:
+            index: An integer or slice object for indexing.
+
+        Returns:
+            A new ScalarMetricCollection containing the specified slice of metrics.
+        """
+        if isinstance(index, int):
+            # Return a new collection with a single metric if indexed by an integer
+            metrics = [self.metrics[index]]
+        elif isinstance(index, slice):
+            # Return a new collection with a slice of the metrics list
+            metrics = self.metrics[index]
+        else:
+            raise TypeError("Invalid index type. Must be int or slice.")
+
+        return ScalarMetricCollection(name=self.name, metrics=metrics)

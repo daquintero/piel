@@ -9,38 +9,6 @@ from piel.types.units import V
 from piel.analysis.metrics import aggregate_scalar_metrics_collection
 
 
-def concatenate_metrics_collection(
-    metrics_collection_list: list[ScalarMetricCollection], **kwargs
-) -> ScalarMetricCollection:
-    """
-    Concatenates multiple ScalarMetricCollection instances into a single ScalarMetricCollection.
-
-    Args:
-        metrics_collection_list (List[ScalarMetricCollection]): List of ScalarMetricCollection instances to concatenate.
-
-    Returns:
-        ScalarMetricCollection: A new ScalarMetricCollection containing all metrics from the input collections.
-
-    Raises:
-        ValueError: If the input list is empty.
-    """
-    if not metrics_collection_list:
-        raise ValueError(
-            "The metrics_collection_list is empty. Provide at least one ScalarMetricCollection."
-        )
-
-    total_metrics_list = list()
-
-    for collection in metrics_collection_list:
-        if not isinstance(collection, ScalarMetricCollection):
-            raise TypeError(
-                f"Collection {collection} is the issue. All items in metrics_collection_list must be instances of ScalarMetricCollection."
-            )
-        total_metrics_list.extend(collection.metrics)
-
-    return ScalarMetricCollection(metrics=total_metrics_list, **kwargs)
-
-
 def extract_mean_metrics_list(
     multi_data_time_signal: MultiDataTimeSignal, **kwargs
 ) -> ScalarMetricCollection:
@@ -90,7 +58,9 @@ def extract_mean_metrics_list(
 
 
 def extract_peak_to_peak_metrics_list(
-    multi_data_time_signal: MultiDataTimeSignal, **kwargs
+    multi_data_time_signal: MultiDataTimeSignal,
+    metric_kwargs_list: list[dict] = None,
+    **kwargs,
 ) -> ScalarMetricCollection:
     """
     Extracts peak-to-peak metrics from a collection of signals. The peak-to-peak value is defined as the
@@ -109,11 +79,15 @@ def extract_peak_to_peak_metrics_list(
     if not multi_data_time_signal:
         raise ValueError("The multi_data_time_signal list is empty.")
 
+    if metric_kwargs_list is None:
+        metric_kwargs_list = [dict().copy() for _ in range(len(multi_data_time_signal))]
+
     if kwargs.get("unit") is None:
         kwargs["unit"] = V
 
     metrics_list = []
 
+    i = 0
     for signal in multi_data_time_signal:
         if not signal.data:
             raise ValueError(f"Signal '{signal.data_name}' has an empty data array.")
@@ -131,15 +105,17 @@ def extract_peak_to_peak_metrics_list(
             max=peak_to_peak,  # Max is already represented in peak-to-peak
             standard_deviation=None,  # Not applicable
             count=None,  # Not applicable
-            **kwargs,
+            unit=kwargs.get("unit"),
+            **metric_kwargs_list[i],
         )
 
         metrics_list.append(scalar_metric)
+        i += 1
 
     return ScalarMetricCollection(metrics=metrics_list, **kwargs)
 
 
-def extract_statistical_metrics(
+def extract_multi_time_signal_statistical_metrics(
     multi_data_time_signal: MultiDataTimeSignal,
     analysis_type: EdgeTransitionAnalysisTypes = "peak_to_peak",
     **kwargs,
@@ -192,9 +168,8 @@ def extract_statistical_metrics_collection(
     metrics_list = list()
 
     for analysis in analysis_types:
-        aggregated_metrics = extract_statistical_metrics(
-            multi_data_time_signal,
-            analysis_type=analysis,
+        aggregated_metrics = extract_multi_time_signal_statistical_metrics(
+            multi_data_time_signal, analysis_type=analysis
         )
         metrics_list.append(aggregated_metrics)
 
