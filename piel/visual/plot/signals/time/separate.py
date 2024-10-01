@@ -15,7 +15,7 @@ def plot_multi_data_time_signal_different(
     subplots_kwargs: dict = None,
     xlabel: str | Unit | list[Unit] = None,
     ylabel: str | Unit | list[Unit] | list = None,
-    title: str | Unit = None,
+    title: str | Unit | list = None,
     **kwargs,
 ):
     """
@@ -78,7 +78,7 @@ def plot_multi_data_time_signal_different(
 
     if title is None:
         pass
-    else:
+    elif title is str:
         fig.suptitle(title)
 
     i = 0
@@ -98,6 +98,9 @@ def plot_multi_data_time_signal_different(
         # print(i)
 
         axs[i].set_ylabel(ylabel[i])
+
+        if isinstance(title, list):
+            axs[i].set_title(title[i], loc="left")
 
         i += 1
 

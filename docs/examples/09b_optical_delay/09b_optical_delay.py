@@ -129,6 +129,20 @@ piel.visual.plot.signals.time.plot_multi_data_time_signal_different(
     low_threshold_pulse_list, xlabel=piel.types.ns
 )
 
+# We can easily perform some analysis on these signals:
+
+high_threshold_pkpk_metrics = (
+    piel.analysis.signals.time.extract_peak_to_peak_metrics_list(
+        high_threshold_pulse_list, unit=piel.types.units.V
+    )
+)
+
+high_threshold_pkpk_metrics[0:1].table
+
+piel.analysis.metrics.aggregate_scalar_metrics_collection(
+    high_threshold_pkpk_metrics
+).table
+
 # Now we can recompose this back using our noise generation function.
 
 low_threshold_pulse_signal = piel.analysis.signals.time.compose_pulses_into_signal(
