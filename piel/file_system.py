@@ -94,7 +94,7 @@ def copy_source_folder(
     Copies the files from a source_directory to a target_directory
 
     Args:
-        source_directory(PathTypes): Source directory.
+        source_directory(PathTypes): ScalarSource directory.
         target_directory(PathTypes): Target directory.
         delete(bool): Delete target directory. Default: False.
 
@@ -149,7 +149,7 @@ def copy_example_design(
     We copy the example simple_design from docs to the `/foss/designs` in the `iic-osic-tools` environment.
 
     Args:
-        project_source(str): Source of the project.
+        project_source(str): ScalarSource of the project.
         example_name(str): Name of the example design.
         target_directory(PathTypes): Target directory.
         target_project_name(str): Name of the target project.

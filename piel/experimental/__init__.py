@@ -22,13 +22,17 @@ from .measurements.data.dc import (
     extract_dc_sweep_experiment_data_from_csv,
     extract_dc_metrics_from_experiment_data,
 )
+from .measurements.data.electro_optic import (
+    extract_electro_optic_dc_path_transmission_from_csv,
+    extract_electro_optic_dc_network_from_measurement_collection,
+)
 from .measurements.data.propagation import (
     extract_propagation_delay_data_from_measurement,
 )
 from .measurements.data.frequency import (
     extract_s_parameter_data_from_vna_measurement,
     extract_power_sweep_data_from_vna_measurement,
-    extract_power_sweep_s2p_to_frequency_array_state,
+    extract_power_sweep_s2p_to_network_transmission,
     extract_power_sweep_s2p_to_dataframe,
     extract_power_sweep_s2p_to_frequency_transmission_collection,
     convert_row_to_sdict,

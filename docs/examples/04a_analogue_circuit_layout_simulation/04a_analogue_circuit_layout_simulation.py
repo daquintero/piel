@@ -27,15 +27,15 @@
 # There are several open-source PDKs. At the moment some of the most popular ones are:
 #
 # **SKY130nm**
-# -  [Main Open-Source Release](https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/tree/ac7fb61f06e6470b94e8afdf7c25268f62fbd7b1)
+# -  [Main Open-ScalarSource Release](https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/tree/ac7fb61f06e6470b94e8afdf7c25268f62fbd7b1)
 # -  [`gdsfactory` layout PDK integration](https://github.com/gdsfactory/skywater130)
 # -  [`hdl21` integration](https://github.com/dan-fritchman/Hdl21/tree/main/pdks/Sky130)
 #
 # **GF180nm**
-# -  [Main Open-Source Release](https://github.com/google/gf180mcu-pdk)
+# -  [Main Open-ScalarSource Release](https://github.com/google/gf180mcu-pdk)
 #
 # **IHP130nm**
-# -  [Main Open-Source Release](https://github.com/IHP-GmbH/IHP-Open-PDK)
+# -  [Main Open-ScalarSource Release](https://github.com/IHP-GmbH/IHP-Open-PDK)
 #
 # **Any PDK**
 # -  [`gdsfactory` import instructions](https://gdsfactory.github.io/gdsfactory/notebooks/09_pdk_import.html)

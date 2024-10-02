@@ -31,6 +31,8 @@ class Unit(PielBaseModel):
 
 A = Unit(name="ampere", datum="ampere", base=1, label=r"Current $A$")
 dB = Unit(name="decibel", datum="dB", base=1, label=r"Ratio $dB$")
+dBm = Unit(name="decibel_milliwatt", datum="dBm", base=1, label=r"Power $dBm$")
+degree = Unit(name="degree", datum="1", base=1, label=r"Degree")
 GHz = Unit(name="gigahertz", datum="hertz", base=1e9, label=r"Frequency $GHz$")
 Hz = Unit(name="hertz", datum="hertz", base=1, label=r"Frequency $Hz$")
 nm = Unit(name="nanometer", datum="meter", base=1e-9, label=r"Length $nm$")

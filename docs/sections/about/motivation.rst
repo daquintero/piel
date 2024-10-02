@@ -41,7 +41,7 @@ Why is it called ``piel``?
 funny way of thinking, it aims to compose together a body of electronic
 and photonic design tool projects.
 
-Open-Source Motivation
+Open-ScalarSource Motivation
 ----------------------
 
 Standing on the shoulders of open-source giants.
