@@ -4,15 +4,18 @@ from piel.types.experimental import (
     VNASParameterMeasurement,
 )
 from piel.types import (
-    FrequencyTransmissionState,
-    FrequencyTransmissionCollection,
     NumericalTypes,
     PathTypes,
-    SDict,
     VNAPowerSweepMeasurement,
     VNAPowerSweepMeasurementData,
-    FrequencyTransmissionArrayState,
+    NetworkTransmission,
+    Phasor,
+    PathTransmission,
+    ScalarSource,
+    dBm,
+    degree,
 )
+import numpy as np
 import logging
 
 logger = logging.getLogger(__name__)
@@ -35,11 +38,11 @@ def extract_s_parameter_data_from_vna_measurement(
 def extract_power_sweep_data_from_vna_measurement(
     measurement: VNAPowerSweepMeasurement, **kwargs
 ) -> VNAPowerSweepMeasurementData:
-    logger.debug("extracting frequecny array state")
-    frequency_array_state = extract_power_sweep_s2p_to_frequency_array_state(
-        file_path=measurement.spectrum_file,
+    logger.debug("Extracting frequency array state")
+    frequency_array_state = extract_power_sweep_s2p_to_network_transmission(
+        file_path=measurement.spectrum_file
     )
-    logger.debug(f"frequecny array state: {frequency_array_state}")
+    logger.debug(f"Frequency array state: {frequency_array_state}")
     return VNAPowerSweepMeasurementData(
         name=measurement.name, network=frequency_array_state
     )
@@ -149,68 +152,85 @@ def extract_power_sweep_s2p_to_dataframe(
     return df
 
 
-def convert_power_sweep_s2p_to_frequency_array_state(
+def convert_power_sweep_s2p_to_network_transmission(
     dataframe,
-) -> FrequencyTransmissionArrayState:
+) -> NetworkTransmission:
     """
-    Converts a pandas DataFrame containing S2P power sweep data into a FrequencyTransmissionArrayState object.
-
-    This function takes a DataFrame structured with specific S-parameter columns and transforms it into
-    a FrequencyTransmissionArrayState instance, facilitating further analysis or processing within
-    the application's context.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        A pandas DataFrame containing S2P power sweep data. The DataFrame is expected to have columns
-        corresponding to the following parameters:
-        - `p_in_dbm`
-        - `s_11_db`
-        - `s_11_deg`
-        - `s_21_db`
-        - `s_21_deg`
-        - `s_12_db`
-        - `s_12_deg`
-        - `s_22_db`
-        - `s_22_deg`
-        - `input_frequency_Hz`
-
-    Returns:
-    --------
-    FrequencyTransmissionArrayState
-        An instance of FrequencyTransmissionArrayState populated with the data from the DataFrame.
-
-    Example:
-    --------
-    >>> df = extract_power_sweep_s2p_to_dataframe('path_to_file.s2p', input_frequency_Hz=1e9)
-    >>> state = convert_power_sweep_s2p_to_frequency_array_state(df)
-    >>> print(state)
-    FrequencyTransmissionArrayState(p_in_dbm=[-10.0, -9.9977, ...], s_11_db=[-8.311036, -8.307557, ...], ...)
-
-    Notes:
-    ------
-    - The FrequencyTransmissionArrayState class must be defined elsewhere in your codebase.
-    - Ensure that the DataFrame `df` contains all the required columns before invoking this function.
+    Converts a pandas DataFrame containing S2P power sweep data into a NetworkTransmission object.
     """
-    s2p_dict = dataframe.to_dict(orient="list")
-    logger.debug(f"s2p dict {str(s2p_dict.keys())}")
-    logger.debug("extracting here")
-    frequency_transmission_array_state = FrequencyTransmissionArrayState(**s2p_dict)
-    logger.debug("extracted")
-    logger.debug(
-        f"frequency transmission array state {frequency_transmission_array_state}"
+    # Extract the input frequency, assuming it's the same for all rows
+    input_frequencies = dataframe["input_frequency_Hz"].unique()
+    if len(input_frequencies) != 1:
+        logger.warning("Multiple input frequencies found; using the first one.")
+    input_frequency_Hz = input_frequencies[0]
+
+    # Extract input power in dBm
+    p_in_dbm = dataframe["p_in_dbm"].tolist()
+
+    # Create Phasor for input (assuming phase = 0 for input power)
+    phasor = Phasor(
+        magnitude=p_in_dbm,
+        phase=0.0,  # No phase information for input power
+        magnitude_unit=dBm,
+        phase_unit=degree,
     )
-    return frequency_transmission_array_state
+
+    # Create ScalarSource for input
+    scalar_source = ScalarSource(
+        frequency=input_frequency_Hz,
+        phasor=phasor,
+    )
+
+    # Define S-parameters and corresponding port mappings
+    s_params = ["s_11", "s_21", "s_12", "s_22"]
+    port_mappings = {
+        "s_11": ("in0", "in0"),
+        "s_21": ("in0", "out0"),
+        "s_12": ("out0", "in0"),
+        "s_22": ("out0", "out0"),
+    }
+
+    # Create network transmissions
+    network = []
+    for s_param in s_params:
+        db_col = f"{s_param}_db"
+        deg_col = f"{s_param}_deg"
+
+        # Convert dB and degrees to linear magnitude and radians
+        magnitude_linear = 10 ** (dataframe[db_col] / 20)
+        phase_rad = np.deg2rad(dataframe[deg_col])
+
+        # Compute complex S-parameter values
+        transmission = magnitude_linear * (np.cos(phase_rad) + 1j * np.sin(phase_rad))
+
+        # Retrieve port mapping
+        ports = port_mappings[s_param]
+
+        # Create PathTransmission instance
+        path_transmission = PathTransmission(
+            ports=(ports[0], ports[1]),
+            transmission=transmission.tolist(),  # Convert to list for JSON serializability
+        )
+        network.append(path_transmission)
+
+    # Create NetworkTransmission instance
+    network_transmission = NetworkTransmission(
+        input=scalar_source,
+        network=network,
+    )
+
+    logger.debug(f"Converted DataFrame to NetworkTransmission: {network_transmission}")
+    return network_transmission
 
 
-def extract_power_sweep_s2p_to_frequency_array_state(
+def extract_power_sweep_s2p_to_network_transmission(
     file_path: PathTypes, input_frequency_Hz: float = 0, **kwargs
-) -> FrequencyTransmissionArrayState:
+) -> NetworkTransmission:
     """
-    Extracts power sweep data from an S2P file and converts it into a FrequencyTransmissionArrayState object.
+    Extracts power sweep data from an S2P file and converts it into a NetworkTransmission object.
 
     This function combines the functionalities of extracting data from an S2P file into a pandas DataFrame
-    and then converting that DataFrame into a FrequencyTransmissionArrayState instance. It serves as a
+    and then converting that DataFrame into a NetworkTransmission instance. It serves as a
     convenient single-step process for obtaining structured transmission state data from an S2P file.
 
     Parameters:
@@ -226,26 +246,26 @@ def extract_power_sweep_s2p_to_frequency_array_state(
 
     Returns:
     --------
-    FrequencyTransmissionArrayState
-        An instance of FrequencyTransmissionArrayState populated with the extracted and converted data.
+    NetworkTransmission
+        An instance of NetworkTransmission populated with the extracted and converted data.
 
     Example:
     --------
-    >>> state = extract_power_sweep_s2p_to_frequency_array_state('path_to_file.s2p', input_frequency_Hz=1e9)
+    >>> state = extract_power_sweep_s2p_to_network_transmission('path_to_file.s2p',input_frequency_Hz=1e9)
     >>> print(state)
-    FrequencyTransmissionArrayState(p_in_dbm=[-10.0, -9.9977, ...], s_11_db=[-8.311036, -8.307557, ...], ...)
+    NetworkTransmission(p_in_dbm=[-10.0, -9.9977, ...], s_11_db=[-8.311036, -8.307557, ...], ...)
 
     Notes:
     ------
     - This function internally calls `extract_power_sweep_s2p_to_dataframe` and
       `convert_power_sweep_s2p_to_frequency_array_state`.
-    - Ensure that the FrequencyTransmissionArrayState class is properly defined and accessible in your environment.
+    - Ensure that the NetworkTransmission class is properly defined and accessible in your environment.
     """
     df = extract_power_sweep_s2p_to_dataframe(file_path, input_frequency_Hz, **kwargs)
-    return convert_power_sweep_s2p_to_frequency_array_state(df)
+    return convert_power_sweep_s2p_to_network_transmission(df)
 
 
-def convert_row_to_sdict(row) -> SDict:
+def convert_row_to_sdict(row):
     """
     Converts a single DataFrame row containing S-parameter data into an SDict.
 
@@ -289,7 +309,7 @@ def convert_row_to_sdict(row) -> SDict:
         "s_22": ("out0", "out0"),
     }
 
-    sdict: SDict = {}
+    sdict = {}
 
     for s_param, ports in port_map.items():
         db_col = f"{s_param}_db"
@@ -314,9 +334,9 @@ def extract_power_sweep_s2p_to_frequency_transmission_collection(
     name: str = "Power Sweep",
     input_frequency_Hz: NumericalTypes = 0,  # Default frequency set to 0 GHz
     **kwargs,
-) -> FrequencyTransmissionCollection:
+) -> NetworkTransmission:
     """
-    Extracts power sweep data from an S2P file and returns a FrequencyTransmissionCollection.
+    Extracts power sweep data from an S2P file and returns a NetworkTransmission.
     TODO improve performance as this is pretty slow.
 
     Parameters:
@@ -325,7 +345,7 @@ def extract_power_sweep_s2p_to_frequency_transmission_collection(
         The path to the S2P file to be processed.
 
     name : str, optional
-        The name of the FrequencyTransmissionCollection. Default is "Power Sweep".
+        The name of the NetworkTransmission. Default is "Power Sweep".
 
     input_frequency_Hz : NumericalTypes, optional
         The input frequency in Hertz. Default is 1 GHz.
@@ -334,18 +354,18 @@ def extract_power_sweep_s2p_to_frequency_transmission_collection(
 
     Returns:
     --------
-    FrequencyTransmissionCollection
-        A collection containing FrequencyTransmissionState instances for each power sweep point.
+    NetworkTransmission
+        A collection containing NetworkTransmission instances for each power sweep point.
 
     Example:
     --------
     >>> ft_collection = extract_power_sweep_s2p_to_frequency_transmission_collection('path_to_file.s2p',input_frequency_Hz=2e9)
     >>> print(ft_collection)
-    FrequencyTransmissionCollection(
+    NetworkTransmission(
         name='Power Sweep',
         collection=[
-            FrequencyTransmissionState(input_frequency_Hz=2e9, input_power_dBm=-10.0, transmission=SDict(...)),
-            FrequencyTransmissionState(input_frequency_Hz=2e9, input_power_dBm=-9.99765625, transmission=SDict(...)),
+            NetworkTransmission(input_frequency_Hz=2e9, input_power_dBm=-10.0, transmission=SDict(...)),
+            NetworkTransmission(input_frequency_Hz=2e9, input_power_dBm=-9.99765625, transmission=SDict(...)),
             ...
         ]
     )
@@ -361,16 +381,16 @@ def extract_power_sweep_s2p_to_frequency_transmission_collection(
     print(f"Dataframe Import time: {post_df - pre_df}")
 
     # Initialize the collection list
-    collection: list[FrequencyTransmissionState] = []
+    collection: list[NetworkTransmission] = []
 
     pre_instance = time.time()
-    # Iterate over each row in the DataFrame to create FrequencyTransmissionState instances
+    # Iterate over each row in the DataFrame to create NetworkTransmission instances
     for index, row in df.iterrows():
         # Convert the current row to SDict
         sdict = convert_row_to_sdict(row)
 
-        # Create FrequencyTransmissionState
-        ft_state = FrequencyTransmissionState(
+        # Create NetworkTransmission
+        ft_state = NetworkTransmission(
             input_frequency_Hz=input_frequency_Hz,
             input_power_dBm=row["p_in_dbm"],
             transmission=sdict,  # SDict specific to this row
@@ -379,7 +399,7 @@ def extract_power_sweep_s2p_to_frequency_transmission_collection(
     post_instance = time.time()
     print(f"Instance creation time: {post_instance - pre_instance}. TODO improve.")
 
-    # Create FrequencyTransmissionCollection
-    ft_collection = FrequencyTransmissionCollection(name=name, collection=collection)
+    # Create NetworkTransmission
+    ft_collection = NetworkTransmission(name=name, collection=collection)
 
     return ft_collection

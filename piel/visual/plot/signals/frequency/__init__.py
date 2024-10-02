@@ -1,1 +1,1 @@
-from .frequency_array_state import plot_frequency_array_state_power_in_s21_db
+from .network_transmission import plot_two_port_gain_in_dBm

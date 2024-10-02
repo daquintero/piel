@@ -67,8 +67,8 @@ The goal of this page is to provide a list of open-source references and toolset
 
    * - Name
      - Usage
-     - Source
-   * - General Open-Source Electronics Reviews
+     - ScalarSource
+   * - General Open-ScalarSource Electronics Reviews
      - Available popular open-source general electronics tools
      - https://github.com/ajaymnk/open-electronics
    * - Delay and Dead Time in Integrated MOSFET Drivers

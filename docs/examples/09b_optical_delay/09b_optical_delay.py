@@ -9,7 +9,7 @@
 import piel
 import piel.experimental as pe
 
-# ## Characterizing a Pulsed Laser Source
+# ## Characterizing a Pulsed Laser ScalarSource
 
 # To measure delay in time, you will probably need a time optical source. In this case, let's create a `PulsedLaser`. We will create a model of this laser:
 #

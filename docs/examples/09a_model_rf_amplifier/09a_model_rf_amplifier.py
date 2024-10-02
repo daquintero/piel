@@ -259,7 +259,7 @@ piel.analysis.signals.dc.compile_dc_min_max_metrics_from_dc_collection(
 
 # When we went through the DC example, we saw how we could apply DC input energy (through voltage and current) and would get a DC output transmission (again through voltage and current).
 #
-# In RF, especially when we think about amplifiers, we are also thinking about this in these terms. We are putting some input power ($P_{in}$) and getting an output power transmission ($P_{out}$). However, one thing we need to be aware of is that the power transmission is frequency-dependent too, and hence gain and etc. is frequency-dependent too. The relationship between powers leads to $S_{xx}$ parameter port relationships. Normally, one thing we do try to mantain is the proportionality of the voltage and current for a given network impedance ~ normally $50 \Omega$ (in optics this is equivalent to mode matching in an optical waveguide). This leads to some really interesting effects and properties which we will explore further, especially because at RF frequencies there is a lot of harmonic interactions - which are less present in optical frequencies.
+# In RF, especially when we think about amplifiers, we are also thinking about this in these terms. We are putting some input power ($P_{in}$) and getting an output power transmission ($P_{out}$). However, one thing we need to be aware of is that the power transmission is frequency-dependent too, and hence gain and etc. is frequency-dependent too. The relationship between powers leads to $S_{xx}$ parameter port relationships. Normally, one thing we do try to maintain is the proportionality of the voltage and current for a given network impedance ~ normally $50 \Omega$ (in optics this is equivalent to mode matching in an optical waveguide). This leads to some really interesting effects and properties which we will explore further, especially because at RF frequencies there is a lot of harmonic interactions - which are less present in optical frequencies.
 
 # #### Example RF Power Sweep Response
 
@@ -267,12 +267,12 @@ piel.analysis.signals.dc.compile_dc_min_max_metrics_from_dc_collection(
 #
 # We will extract a non-standard `.s2p` file that contains a power sweep, which was generated from a VNA.
 
-power_sweep_frequency_array_state = pe.extract_power_sweep_s2p_to_frequency_array_state(
+power_sweep_frequency_array_state = pe.extract_power_sweep_s2p_to_network_transmission(
     file_path="data/example_power_sweep_touchstone.s2p"
 )
 
-piel.visual.plot.signals.frequency.plot_frequency_array_state_power_in_s21_db(
-    frequency_array_state=power_sweep_frequency_array_state,
+piel.visual.plot.signals.frequency.plot_two_port_gain_in_dBm(
+    frequency_array_state=power_sweep_frequency_array_state
 )
 
 # ## Automated Performance Metrics Analysis

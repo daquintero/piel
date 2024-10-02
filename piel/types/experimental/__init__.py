@@ -54,6 +54,10 @@ from .measurements.data.oscilloscope import (
 from .measurements.dc import (
     VoltageCurrentSignalNamePair,
 )
+from .measurements.electro_optic import (
+    ElectroOpticDCMeasurement,
+    ElectroOpticDCMeasurementCollection,
+)
 from .measurements.frequency import (
     VNASParameterMeasurementConfiguration,
     VNAPowerSweepMeasurementConfiguration,
