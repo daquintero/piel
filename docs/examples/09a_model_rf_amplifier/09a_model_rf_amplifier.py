@@ -171,9 +171,12 @@ fig, axs = (
         fig=fig,
         axs=axs,
         label_list=[r"$k$=100"],
+        path="../../_static/img/examples/09a_model_rf_amplifier/example_dc_sigmoid_response.png",
     )
 )
 # -
+
+# ![example_dc_sigmoid_response](../../_static/img/examples/09a_model_rf_amplifier/example_dc_sigmoid_response.png)
 
 # One of the complexitites of DC signal analysis, is that sometimes, some of these analogue responses may be dependent on multiple bias references. It is possible to perform DC analysis of the transmission of the entire system accordingly and create a big design space. This is also a good application for machine learning in tuning multiple control points. In our case, we will explore some DC signal analysis just between our reference $v_{in}$ and $V_{out}$
 
@@ -272,8 +275,11 @@ power_sweep_frequency_array_state = pe.extract_power_sweep_s2p_to_network_transm
 )
 
 piel.visual.plot.signals.frequency.plot_two_port_gain_in_dBm(
-    frequency_array_state=power_sweep_frequency_array_state
+    network_transmission=power_sweep_frequency_array_state,
+    path="../../_static/img/examples/09a_model_rf_amplifier/example_power_sweep_plot.png",
 )
+
+# ![example_power_sweep_plot](../../_static/img/examples/09a_model_rf_amplifier/example_power_sweep_plot.png)
 
 # ## Automated Performance Metrics Analysis
 

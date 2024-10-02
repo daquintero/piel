@@ -1,10 +1,8 @@
-from piel import return_path
 from piel.types.experimental import (
     VNASParameterMeasurementData,
     VNASParameterMeasurement,
 )
 from piel.types import (
-    NumericalTypes,
     PathTypes,
     VNAPowerSweepMeasurement,
     VNAPowerSweepMeasurementData,
@@ -327,79 +325,3 @@ def convert_row_to_sdict(row):
         sdict[ports] = complex_s
 
     return sdict
-
-
-def extract_power_sweep_s2p_to_frequency_transmission_collection(
-    file_path: PathTypes,
-    name: str = "Power Sweep",
-    input_frequency_Hz: NumericalTypes = 0,  # Default frequency set to 0 GHz
-    **kwargs,
-) -> NetworkTransmission:
-    """
-    Extracts power sweep data from an S2P file and returns a NetworkTransmission.
-    TODO improve performance as this is pretty slow.
-
-    Parameters:
-    -----------
-    file_path : PathTypes
-        The path to the S2P file to be processed.
-
-    name : str, optional
-        The name of the NetworkTransmission. Default is "Power Sweep".
-
-    input_frequency_Hz : NumericalTypes, optional
-        The input frequency in Hertz. Default is 1 GHz.
-        This parameter is used for all entries in the collection.
-        If your S2P file contains frequency information, you should modify this function to extract it accordingly.
-
-    Returns:
-    --------
-    NetworkTransmission
-        A collection containing NetworkTransmission instances for each power sweep point.
-
-    Example:
-    --------
-    >>> ft_collection = extract_power_sweep_s2p_to_frequency_transmission_collection('path_to_file.s2p',input_frequency_Hz=2e9)
-    >>> print(ft_collection)
-    NetworkTransmission(
-        name='Power Sweep',
-        collection=[
-            NetworkTransmission(input_frequency_Hz=2e9, input_power_dBm=-10.0, transmission=SDict(...)),
-            NetworkTransmission(input_frequency_Hz=2e9, input_power_dBm=-9.99765625, transmission=SDict(...)),
-            ...
-        ]
-    )
-    """
-    file_path = return_path(file_path)
-
-    import time
-
-    pre_df = time.time()
-    # Extract DataFrame from S2P file
-    df = extract_power_sweep_s2p_to_dataframe(file_path=file_path, **kwargs)
-    post_df = time.time()
-    print(f"Dataframe Import time: {post_df - pre_df}")
-
-    # Initialize the collection list
-    collection: list[NetworkTransmission] = []
-
-    pre_instance = time.time()
-    # Iterate over each row in the DataFrame to create NetworkTransmission instances
-    for index, row in df.iterrows():
-        # Convert the current row to SDict
-        sdict = convert_row_to_sdict(row)
-
-        # Create NetworkTransmission
-        ft_state = NetworkTransmission(
-            input_frequency_Hz=input_frequency_Hz,
-            input_power_dBm=row["p_in_dbm"],
-            transmission=sdict,  # SDict specific to this row
-        )
-        collection.append(ft_state)
-    post_instance = time.time()
-    print(f"Instance creation time: {post_instance - pre_instance}. TODO improve.")
-
-    # Create NetworkTransmission
-    ft_collection = NetworkTransmission(name=name, collection=collection)
-
-    return ft_collection

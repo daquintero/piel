@@ -1,6 +1,7 @@
 from piel.types.connectivity.core import Instance
 from piel.types.connectivity.generic import ComponentTypes, ConnectionTypes
 from piel.types.core import PathTypes
+from piel.base.experimental.experiment import index_experiment
 from .measurements.generic import MeasurementConfigurationTypes
 
 
@@ -75,6 +76,8 @@ class Experiment(Instance):
     Optional parameter to specify the `parent_directory` of the Experiment, where the directories containing the data
     and metadata of the `ExperimentInstances` are constructed.
     """
+
+    __getitem__ = index_experiment
 
     @property
     def parameters(self):

@@ -5,4 +5,7 @@ from .transfer.power import (
     get_power_map_vin_metrics,
 )
 from .utils import get_trace_values_by_datum, get_trace_values_by_unit
-from .metrics import compile_dc_min_max_metrics_from_dc_collection
+from .metrics import (
+    compile_dc_min_max_metrics_from_dc_collection,
+    compile_dc_transition_metrics_from_dc_collection,
+)

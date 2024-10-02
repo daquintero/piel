@@ -3,12 +3,14 @@ from piel.types import ScalarMetrics, SignalDCCollection
 from ..utils import (
     get_trace_values_by_datum,
 )  # Ensure this utility is correctly implemented
+from typing import Literal
 
 
 def get_out_min_max(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0.1,
     upper_threshold_ratio: float = 0.9,
+    **kwargs,
 ) -> ScalarMetrics:
     """
     Retrieves the minimum and maximum output voltage values within a specified input voltage range.
@@ -92,10 +94,13 @@ def get_out_min_max(
 
 
 def get_out_response_in_transition_range(
-    collection: SignalDCCollection,
+    collection: "SignalDCCollection",
     lower_threshold_ratio: float = 0.1,
     upper_threshold_ratio: float = 0.9,
-) -> ScalarMetrics:
+    transition_type: Literal["analogue", "digital"] = "analogue",
+    transition_direction: Literal["positive", "negative"] = "positive",
+    **kwargs,
+) -> "ScalarMetrics":
     """
     Calculates the equivalent input voltage range (V_in) corresponding to specified thresholds of output voltage (V_out).
 
@@ -103,6 +108,9 @@ def get_out_response_in_transition_range(
         collection (SignalDCCollection): The collection of input and output DC signals.
         lower_threshold_ratio (float, optional): The lower threshold as a fraction of V_out's final value (0-1). Defaults to 0.1.
         upper_threshold_ratio (float, optional): The upper threshold as a fraction of V_out's final value (0-1). Defaults to 0.9.
+        transition_type (Literal["analogue", "digital"], optional): Type of transition. Defaults to "analogue".
+        transition_direction (Literal["positive", "negative"], optional): Direction of transition. Defaults to "positive".
+        **kwargs: Additional keyword arguments.
 
     Returns:
         ScalarMetrics: Metrics including min and max V_in values corresponding to the specified V_out threshold range.
@@ -138,19 +146,22 @@ def get_out_response_in_transition_range(
 
     # Define specified thresholds based on output voltage's final value
     V_out_final = np.max(output_voltage)  # Assuming V_out approaches a final value
+
     lower_threshold = lower_threshold_ratio * V_out_final
     upper_threshold = upper_threshold_ratio * V_out_final
 
-    # Select indices where output voltage is within the specified threshold range
+    # Depending on transition direction, adjust the threshold comparison
     selected_indices = (output_voltage >= lower_threshold) & (
         output_voltage <= upper_threshold
     )
+
     corresponding_input_voltages = input_voltage[selected_indices]
 
     if len(corresponding_input_voltages) == 0:
         raise ValueError(
             "No input voltages found corresponding to the specified output voltage threshold range."
-            f"input_voltage is {input_voltage}, output_voltage is {output_voltage}, selected_indices is {selected_indices}, collection is {collection}"
+            f" Input_voltage: {input_voltage}, Output_voltage: {output_voltage}, "
+            f"Selected_indices: {selected_indices}, Collection: {collection}"
         )
 
     # Identify the unit for input voltage
@@ -163,15 +174,49 @@ def get_out_response_in_transition_range(
     if input_unit is None:
         raise ValueError("Input voltage unit not found.")
 
-    # Compute min and max input voltages in the corresponding range
-    metrics = ScalarMetrics(
-        value=None,  # Not applicable
-        mean=None,  # Not applicable
-        min=np.min(corresponding_input_voltages),
-        max=np.max(corresponding_input_voltages),
-        standard_deviation=None,  # Not applicable
-        count=None,  # Not applicable
-        unit=input_unit,
-    )
+    # Calculate metrics based on transition type
+    if transition_type == "analogue":
+        # Compute min and max input voltages in the corresponding range
+        metrics = ScalarMetrics(
+            value=None,  # Not applicable
+            mean=None,  # Not applicable
+            min=np.min(corresponding_input_voltages),
+            max=np.max(corresponding_input_voltages),
+            standard_deviation=None,  # Not applicable
+            count=None,  # Not applicable
+            unit=input_unit,
+        )
+    elif transition_type == "digital":
+        # For digital transitions, assuming binary states, find unique states within the range
+        unique_voltages = np.unique(corresponding_input_voltages)
+        if len(unique_voltages) < 2:
+            raise ValueError(
+                "Not enough unique input voltage levels found for a digital transition."
+                f" Unique_voltages: {unique_voltages}"
+            )
+        elif len(unique_voltages) > 2:
+            # If more than two unique levels, determine the two closest to the transition thresholds
+            # Sort unique voltages based on proximity to V_out_final
+            if transition_direction == "positive":
+                unique_voltages_sorted = np.sort(unique_voltages)
+            else:
+                unique_voltages_sorted = np.sort(unique_voltages)[::-1]
+            # Take the two extreme values as the digital levels
+            digital_low = unique_voltages_sorted[0]
+            digital_high = unique_voltages_sorted[1]
+        else:
+            digital_low, digital_high = unique_voltages
+
+        metrics = ScalarMetrics(
+            value=None,  # Not applicable
+            mean=None,  # Not applicable
+            min=digital_low,
+            max=digital_high,
+            standard_deviation=None,  # Not applicable
+            count=None,  # Not applicable
+            unit=input_unit,
+        )
+    else:
+        raise ValueError("transition_type must be either 'analogue' or 'digital'.")
 
     return metrics

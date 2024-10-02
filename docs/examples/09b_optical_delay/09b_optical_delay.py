@@ -159,6 +159,8 @@ piel.visual.plot.signals.time.plot_multi_data_time_signal_different(
     path="../../_static/img/examples/09b_optical_delay/high_low_signal_decomposition.png",
 )
 
+# ![high_low_signal_decomposition](../../_static/img/examples/09b_optical_delay/high_low_signal_decomposition.png)
+
 # You can also do this analysis all in one:
 
 low_threshold_pulse_signal, high_threshold_pulse_signal = (
