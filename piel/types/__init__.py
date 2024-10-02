@@ -1,4 +1,13 @@
-# Top Level Types Declaration, all should be imported here.
+"""
+Top Level Types Declaration, all should be imported here.
+
+These types are intended to be pure static types. They can only contain parameter definitions of the data types,
+add data type validators, and the only functions that can be added in these types is overwriting the base class
+base hidden methods. No other methods can be added here. This is because these classes are intended to be pure data
+types which are operated upon purely. If we begin adding custom methods on the type definitions, not only do they become bloated,
+but functional composition complexity is increased and the "static" data types become a hell to manage.
+"""
+
 from piel.types.analogue import AnalogueModule, AnalogModule
 
 from piel.types.core import (

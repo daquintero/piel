@@ -13,6 +13,7 @@ def calculate_power_signal_from_collection(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0,
     upper_threshold_ratio: float = 1,
+    **kwargs,
 ) -> ScalarMetrics:
     """
     Retrieves the minimum and maximum power values within a specified input voltage range,
@@ -95,6 +96,7 @@ def get_power_metrics(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0,
     upper_threshold_ratio: float = 1,
+    **kwargs,
 ) -> ScalarMetrics:
     """
     Retrieves the minimum and maximum power values within a specified input voltage range,
@@ -182,6 +184,7 @@ def get_power_map_vin_metrics(
     collection: SignalDCCollection,
     lower_threshold_ratio: float = 0,
     upper_threshold_ratio: float = 1,
+    **kwargs,
 ) -> ScalarMetrics:
     """
     Retrieves the mapped V_IN minimum and maximum power values within a specified input voltage range. Represents

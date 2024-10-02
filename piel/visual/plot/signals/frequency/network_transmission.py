@@ -1,6 +1,7 @@
 from typing import Optional, Tuple
 import numpy as np
 from piel.types import NetworkTransmission
+from piel.visual.plot.core import save
 from piel.visual.plot.basic import plot_simple
 from piel.visual.plot.position import create_axes_per_figure
 import matplotlib.figure as mpl_fig
@@ -11,10 +12,13 @@ logger = logging.getLogger(__name__)
 
 
 def plot_two_port_gain_in_dBm(
-    frequency_array_state: NetworkTransmission,
+    network_transmission: NetworkTransmission,
     fig: Optional[mpl_fig.Figure] = None,
     axs: Optional[mpl_axes.Axes] = None,
     label: Optional[str] = None,
+    xlabel: str = None,
+    ylabel: str = None,
+    **kwargs,
 ) -> Tuple[mpl_fig.Figure, mpl_axes.Axes]:
     """
     Plots input power (p_in_dbm) vs S21 gain (s_21_db) from a NetworkTransmission object.
@@ -42,12 +46,18 @@ def plot_two_port_gain_in_dBm(
     if (fig is None) or (axs is None):
         fig, axs = create_axes_per_figure(rows=1, columns=1)
 
+    if xlabel is None:
+        xlabel = r"$P_{in}$ $dBm$"
+
+    if ylabel is None:
+        ylabel = r"$S_{21}$ $dB$"
+
     # Extract input power in dBm from ScalarSource.phasor.magnitude
     try:
-        p_in_dbm = np.array(frequency_array_state.input.phasor.magnitude)
+        p_in_dbm = np.array(network_transmission.input.phasor.magnitude)
     except AttributeError as e:
         logger.error(
-            "Failed to extract 'p_in_dbm' from NetworkTransmission.input.phasor.magnitude."
+            f"Failed to extract 'p_in_dbm' from NetworkTransmission.input.phasor.magnitude: {network_transmission}"
         )
         raise e
 
@@ -55,7 +65,7 @@ def plot_two_port_gain_in_dBm(
     s_21_db = None
 
     # Iterate through network transmissions to find S21
-    for path_transmission in frequency_array_state.network:
+    for path_transmission in network_transmission.network:
         if path_transmission.ports == ("in0", "out0"):
             # Compute magnitude in dB from complex transmission
             transmission = np.array(path_transmission.transmission)
@@ -79,9 +89,12 @@ def plot_two_port_gain_in_dBm(
         s_21_db,
         fig=fig,
         axs=axs,
+        xlabel=xlabel,
+        ylabel=ylabel,
         label=plot_label,
-        xlabel=r"$P_{in}$ $dBm$",
-        ylabel=r"$S_{21}$ $dB$",
+        **kwargs,
     )
+
+    save(fig, **kwargs)
 
     return fig, axs

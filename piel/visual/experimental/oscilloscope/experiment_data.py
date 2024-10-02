@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from piel.visual import save
 from piel.types.experimental import ExperimentData
+from . import measurement_data_collection
 from typing import Optional
 
 
@@ -56,5 +57,22 @@ def plot_signal_propagation_measurements(
 
     # Save the figure if 'path' is provided in kwargs
     save(fig, **kwargs)
+
+    return fig, ax
+
+
+def plot_oscilloscope_signals_time(
+    experiment_data: ExperimentData,
+    measurement_section: Optional[list[str]] = None,
+    *args,
+    **kwargs,
+):
+    # TODO Implement validation that it's a time-propagation delay measurement
+    fig, ax = measurement_data_collection.plot_oscilloscope_signals_time(
+        data_collection=experiment_data.data,
+        parameters_list=experiment_data.experiment.parameters_list,
+        measurement_section=measurement_section,
+        **kwargs,
+    )
 
     return fig, ax

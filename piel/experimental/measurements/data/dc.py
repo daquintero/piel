@@ -357,26 +357,14 @@ def extract_dc_sweep_experiment_data_from_csv(
 
     parameters_list = unique_operating_points.to_dict(orient="records")
 
-    # Iterate through the unique operating points and extract the DC sweep data
-    dc_sweep_data = []
-
-    for _, operating_point in unique_operating_points.iterrows():
-        operating_point_data = dataframe[
-            (dataframe[unique_operating_point_columns] == operating_point).all(axis=1)
-        ]
-
-        dc_sweep = extract_signal_data_from_dataframe(
-            dataframe=operating_point_data,
-            input_signal_name_list=input_signal_name_list,
-            output_signal_name_list=output_signal_name_list,
-            power_signal_name_list=power_signal_name_list,
-            **kwargs,
-        )
-
-        dc_sweep_data.append(dc_sweep)
-
-    # Save the data in a collections
-    data_collection = DCSweepMeasurementDataCollection(collection=dc_sweep_data)
+    data_collection = extract_dc_sweeps_from_operating_point_csv(
+        file_path=file_path,
+        input_signal_name_list=input_signal_name_list,
+        output_signal_name_list=output_signal_name_list,
+        power_signal_name_list=power_signal_name_list,
+        unique_operating_point_columns=unique_operating_point_columns,
+        **kwargs,
+    )
 
     # Create metadata containers for automatic plotting/analysis.
     experiment = Experiment(

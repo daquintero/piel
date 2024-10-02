@@ -1,5 +1,5 @@
 from .plot.core import save
-from .plot.basic import plot_simple, plot_simple_multi_row
+from .plot.basic import plot_simple, plot_simple_multi_row, plot_simple_multi_row_list
 from .plot.position import (
     create_axes_per_figure,
     create_plot_containers,
