@@ -11,7 +11,7 @@ from piel.analysis.metrics import (
 )
 
 # Import necessary classes and units
-from piel.types import ScalarMetrics, ScalarMetricCollection, Unit
+from piel.types import ScalarMetric, ScalarMetricCollection, Unit
 
 
 def create_scalar_metrics(
@@ -23,11 +23,11 @@ def create_scalar_metrics(
     standard_deviation: float,
     count: int,
     unit: Unit,
-) -> ScalarMetrics:
+) -> ScalarMetric:
     """
-    Helper function to create a ScalarMetrics instance.
+    Helper function to create a ScalarMetric instance.
     """
-    return ScalarMetrics(
+    return ScalarMetric(
         name=name,
         value=value,
         mean=mean,
@@ -48,7 +48,7 @@ def create_scalar_metric_collection(metrics: list) -> ScalarMetricCollection:
 
 def test_convert_scalar_metric_unit_success():
     """
-    Test converting ScalarMetrics unit successfully when units are compatible.
+    Test converting ScalarMetric unit successfully when units are compatible.
     """
     # Original metric in volts
     original_unit = Unit(name="volt", datum="voltage", base=1, label="V")
@@ -93,7 +93,7 @@ def test_convert_scalar_metric_unit_success():
 
 def test_convert_scalar_metric_unit_incompatible_units():
     """
-    Test converting ScalarMetrics unit raises ValueError when units are incompatible.
+    Test converting ScalarMetric unit raises ValueError when units are incompatible.
     """
     # Original metric in volts
     original_unit = Unit(name="volt", datum="voltage", base=1, label="V")
@@ -120,7 +120,7 @@ def test_convert_scalar_metric_unit_incompatible_units():
 
 def test_convert_scalar_metric_unit_none_values():
     """
-    Test converting ScalarMetrics unit when some numerical fields are None.
+    Test converting ScalarMetric unit when some numerical fields are None.
     """
     # Original metric in volts
     original_unit = Unit(name="volt", datum="voltage", base=1, label="V")

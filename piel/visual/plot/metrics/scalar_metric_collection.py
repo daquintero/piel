@@ -25,7 +25,7 @@ def plot_basic_scalar_metric_collection_component(
 
     Args:
         scalar_metric_collection (ScalarMetricCollection): The collection of scalar metrics to plot.
-        metric_component (str): The component of the ScalarMetrics to plot (e.g., 'mean', 'min', 'max', 'value', 'standard_deviation', 'count').
+        metric_component (str): The component of the ScalarMetric to plot (e.g., 'mean', 'min', 'max', 'value', 'standard_deviation', 'count').
         fig (matplotlib.figure.Figure, optional): Existing figure to plot on. If None, a new figure is created.
         axs (list[matplotlib.axes.Axes], optional): Existing list of axes to plot on. If None, new axes are created. Plots on [0] by default.
         subplots_kwargs (dict, optional): Keyword arguments to pass to create_axes_per_figure.

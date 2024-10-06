@@ -57,23 +57,23 @@ def create_signal_dc_collection(
 @pytest.fixture
 def mock_get_out_min_max(monkeypatch):
     def mock_get_out_min_max(collection, **kwargs):
-        return ScalarMetrics(min=1.0, max=4.0, unit=VOLTAGE_UNIT)
+        return ScalarMetric(min=1.0, max=4.0, unit=VOLTAGE_UNIT)
 
 
 @pytest.fixture
 def mock_get_out_response_in_transition_range(monkeypatch):
     def mock_get_out_response_in_transition_range(collection, **kwargs):
-        return ScalarMetrics(min=0.5, max=3.5, unit=VOLTAGE_UNIT)
+        return ScalarMetric(min=0.5, max=3.5, unit=VOLTAGE_UNIT)
 
 
 @pytest.fixture
 def mock_get_power_metrics(monkeypatch):
     def mock_get_power_metrics(collection, **kwargs):
-        return ScalarMetrics(min=0.0, max=8.0, unit=POWER_UNIT)
+        return ScalarMetric(min=0.0, max=8.0, unit=POWER_UNIT)
 
 
-# Mock ScalarMetrics
-from piel.types import ScalarMetrics
+# Mock ScalarMetric
+from piel.types import ScalarMetric
 
 
 # def test_compile_dc_min_max_metrics_from_dc_collection(

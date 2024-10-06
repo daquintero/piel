@@ -9,7 +9,6 @@ from piel.types import (
     NetworkTransmission,
     Phasor,
     PathTransmission,
-    ScalarSource,
     dBm,
     degree,
 )
@@ -169,14 +168,9 @@ def convert_power_sweep_s2p_to_network_transmission(
     phasor = Phasor(
         magnitude=p_in_dbm,
         phase=0.0,  # No phase information for input power
+        frequency=input_frequency_Hz,
         magnitude_unit=dBm,
         phase_unit=degree,
-    )
-
-    # Create ScalarSource for input
-    scalar_source = ScalarSource(
-        frequency=input_frequency_Hz,
-        phasor=phasor,
     )
 
     # Define S-parameters and corresponding port mappings
@@ -213,7 +207,7 @@ def convert_power_sweep_s2p_to_network_transmission(
 
     # Create NetworkTransmission instance
     network_transmission = NetworkTransmission(
-        input=scalar_source,
+        input=phasor,
         network=network,
     )
 

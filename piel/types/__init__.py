@@ -39,7 +39,7 @@ from piel.types.connectivity.physical import (
 )
 from piel.types.connectivity.metrics import ComponentMetrics
 from piel.types.connectivity.timing import (
-    TimeMetrics,
+    TimeMetric,
     DispersiveTimeMetrics,
     TimeMetricsTypes,
     ZeroTimeMetrics,
@@ -117,7 +117,7 @@ from piel.types.materials import (
     MaterialSpecificationType,
 )
 
-from piel.types.metrics import ScalarMetrics, ScalarMetricCollection
+from piel.types.metrics import ScalarMetric, ScalarMetricCollection
 
 from piel.types.photonic import (
     PhotonicCircuitComponent,
@@ -135,13 +135,17 @@ from piel.types.signal.dc_data import (
     SignalDC,
 )
 
-from piel.types.signal.frequency.core import (
-    Phasor,
+from piel.types.signal.frequency.core import Phasor
+
+from piel.types.signal.frequency.transmission import (
     PathTransmission,
     NetworkTransmission,
-    FrequencyTransmissionMetricsCollection,
     FrequencyTransmissionModel,
-    ScalarSource,
+)
+
+from piel.types.signal.frequency.metrics import (
+    FrequencyMetricCollection,
+    FrequencyMetric,
 )
 
 # from piel.types.signal.frequency.sax_core import (

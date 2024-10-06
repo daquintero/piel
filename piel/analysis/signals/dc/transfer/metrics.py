@@ -1,5 +1,5 @@
 import numpy as np
-from piel.types import ScalarMetrics, SignalDCCollection
+from piel.types import ScalarMetric, SignalDCCollection
 from ..utils import (
     get_trace_values_by_datum,
 )  # Ensure this utility is correctly implemented
@@ -11,7 +11,7 @@ def get_out_min_max(
     lower_threshold_ratio: float = 0.1,
     upper_threshold_ratio: float = 0.9,
     **kwargs,
-) -> ScalarMetrics:
+) -> ScalarMetric:
     """
     Retrieves the minimum and maximum output voltage values within a specified input voltage range.
 
@@ -21,7 +21,7 @@ def get_out_min_max(
         upper_threshold_ratio (float, optional): The upper threshold as a fraction of V_in range (0-1). Defaults to 0.9.
 
     Returns:
-        ScalarMetrics: Metrics including min and max values of the output voltage in the specified input voltage range.
+        ScalarMetric: Metrics including min and max values of the output voltage in the specified input voltage range.
     """
     # Validate threshold ratios
     if not (0 <= lower_threshold_ratio < upper_threshold_ratio <= 1):
@@ -80,7 +80,7 @@ def get_out_min_max(
         raise ValueError("Output voltage unit not found.")
 
     # Compute min and max output voltages in the linear region
-    metrics = ScalarMetrics(
+    metrics = ScalarMetric(
         value=None,  # Not applicable
         mean=None,  # Not applicable
         min=np.min(linear_output_voltages),
@@ -100,7 +100,7 @@ def get_out_response_in_transition_range(
     transition_type: Literal["analogue", "digital"] = "analogue",
     transition_direction: Literal["positive", "negative"] = "positive",
     **kwargs,
-) -> "ScalarMetrics":
+) -> "ScalarMetric":
     """
     Calculates the equivalent input voltage range (V_in) corresponding to specified thresholds of output voltage (V_out).
 
@@ -113,7 +113,7 @@ def get_out_response_in_transition_range(
         **kwargs: Additional keyword arguments.
 
     Returns:
-        ScalarMetrics: Metrics including min and max V_in values corresponding to the specified V_out threshold range.
+        ScalarMetric: Metrics including min and max V_in values corresponding to the specified V_out threshold range.
     """
     # Validate threshold ratios
     if not (0 <= lower_threshold_ratio < upper_threshold_ratio <= 1):
@@ -177,7 +177,7 @@ def get_out_response_in_transition_range(
     # Calculate metrics based on transition type
     if transition_type == "analogue":
         # Compute min and max input voltages in the corresponding range
-        metrics = ScalarMetrics(
+        metrics = ScalarMetric(
             value=None,  # Not applicable
             mean=None,  # Not applicable
             min=np.min(corresponding_input_voltages),
@@ -207,7 +207,7 @@ def get_out_response_in_transition_range(
         else:
             digital_low, digital_high = unique_voltages
 
-        metrics = ScalarMetrics(
+        metrics = ScalarMetric(
             value=None,  # Not applicable
             mean=None,  # Not applicable
             min=digital_low,

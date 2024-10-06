@@ -19,7 +19,7 @@ from piel.types import (
     V,
     A,
     W,
-    ScalarMetrics,
+    ScalarMetric,
 )
 
 # Sample Units
@@ -68,7 +68,7 @@ def create_signal_dc_collection(
 #     # Call get_out_min_max
 #     metrics = get_out_min_max(collection, lower_threshold_ratio=0.1, upper_threshold_ratio=0.9)
 #
-#     assert isinstance(metrics, ScalarMetrics), "Should return a ScalarMetrics instance."
+#     assert isinstance(metrics, ScalarMetric), "Should return a ScalarMetric instance."
 #     assert metrics.min == 1.0, f"Expected min=1.0, got {metrics.min}"
 #     assert metrics.max == 6.0, f"Expected max=6.0, got {metrics.max}"
 #     assert metrics.unit == VOLTAGE_UNIT, "Unit should be voltage."
@@ -122,7 +122,7 @@ def test_get_out_min_max_no_traces():
 #     # Call get_out_response_in_transition_range
 #     metrics = get_out_response_in_transition_range(collection, lower_threshold_ratio=0.2, upper_threshold_ratio=0.8)
 #
-#     assert isinstance(metrics, ScalarMetrics), "Should return a ScalarMetrics instance."
+#     assert isinstance(metrics, ScalarMetric), "Should return a ScalarMetric instance."
 #     assert metrics.min == 1.0, f"Expected min=1.0, got {metrics.min}"
 #     assert metrics.max == 5.0, f"Expected max=5.0, got {metrics.max}"
 #     assert metrics.unit == VOLTAGE_UNIT, "Unit should be voltage."
@@ -205,7 +205,7 @@ def test_calculate_power_signal_from_collection_no_power():
 #     # Call get_power_metrics
 #     metrics = get_power_metrics(collection, lower_threshold_ratio=0.0, upper_threshold_ratio=1.0)
 #
-#     assert isinstance(metrics, ScalarMetrics), "Should return a ScalarMetrics instance."
+#     assert isinstance(metrics, ScalarMetric), "Should return a ScalarMetric instance."
 #     assert metrics.min == 0.0, f"Expected min=0.0, got {metrics.min}"
 #     assert metrics.max == 12.0, f"Expected max=12.0, got {metrics.max}"
 #     assert metrics.mean == 3.75, f"Expected mean=3.75, got {metrics.mean}"
@@ -228,7 +228,7 @@ def test_calculate_power_signal_from_collection_no_power():
 #     # Call get_power_map_vin_metrics
 #     metrics = get_power_map_vin_metrics(collection, lower_threshold_ratio=0.0, upper_threshold_ratio=1.0)
 #
-#     assert isinstance(metrics, ScalarMetrics), "Should return a ScalarMetrics instance."
+#     assert isinstance(metrics, ScalarMetric), "Should return a ScalarMetric instance."
 #     assert metrics.min == 0.0, f"Expected min V_in=0.0, got {metrics.min}"
 #     assert metrics.max == 4.0, f"Expected max V_in=4.0, got {metrics.max}"
 #     assert metrics.unit == V, "Unit should be voltage."

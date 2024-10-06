@@ -1,4 +1,4 @@
-from piel.types import RFAmplifierCollection, ComponentMetrics, ScalarMetrics
+from piel.types import RFAmplifierCollection, ComponentMetrics, ScalarMetric
 import pandas as pd
 
 
@@ -36,13 +36,13 @@ def compose_amplifier_collection_performance_dataframe(
                 # Use getattr to safely access the metric; default to None if not present
                 metric_obj = getattr(metrics, metric, None)
 
-                if isinstance(metric_obj, ScalarMetrics):
-                    # Assuming ScalarMetrics has 'min' and 'max' attributes
+                if isinstance(metric_obj, ScalarMetric):
+                    # Assuming ScalarMetric has 'min' and 'max' attributes
                     # You may need to adjust based on actual implementation
                     record[f"{metric}_min"] = getattr(metric_obj, "min", None)
                     record[f"{metric}_max"] = getattr(metric_obj, "max", None)
                 else:
-                    # For non-ScalarMetrics (e.g., strings), assign directly
+                    # For non-ScalarMetric (e.g., strings), assign directly
                     record[metric] = metric_obj
 
             records.append(record)

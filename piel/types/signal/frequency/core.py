@@ -30,154 +30,38 @@ It is not exactly clear to me the most fundamental way to implement this that do
 """
 
 from __future__ import annotations
-from piel.types.core import PielBaseModel, ArrayTypes, NumericalTypes
-from piel.types.metrics import ScalarMetrics
-from piel.types.connectivity.physical import PhysicalComponent
+from __future__ import annotations
+from piel.types.core import ArrayTypes, NumericalTypes
 from piel.types.connectivity.abstract import Instance
-from piel.types.signal.frequency.sax_core import SType
-from piel.types.photonic import PortMap
 from piel.types.units import Unit, Hz, dBm, degree
-from typing import Any
-
-
-"""
-A combination of two port names (str, str). TODO update this to piel.Port
-"""
 
 
 class Phasor(Instance):
     """
-    Contains magnitude and phase frequency response information. Can represent both an array or individual response.
+    Contains magnitude and phase frequency response information.
+    Can represent both an array or individual response. Equivalent to a single-frequency response.
+    Contains a very clear notation to translate with a complex number and this term.
+
+    .. math::
+
+         Ae^{i(\omega t+\theta)}
     """
 
     magnitude: NumericalTypes | ArrayTypes
+    """
+    Should represent an absolute value real number.
+    """
+
     phase: NumericalTypes | ArrayTypes
-    magnitude_unit: Unit = dBm
-    phase_unit: Unit = degree
-
-
-class ScalarSource(Instance):
     """
-    TODO modify this so it can represent spectral information too, general abstraction for now.
+    Should represent an absolute value real number.
     """
 
-    phasor: Phasor | list[Phasor]
     frequency: NumericalTypes | ArrayTypes
+    """
+    Should represent an absolute value real number.
+    """
+
     frequency_unit: Unit = Hz
-
-
-class PathTransmission(Instance):
-    ports: PortMap
-    transmission: NumericalTypes | ArrayTypes
-
-
-class NetworkTransmission(Instance):
-    """
-    This corresponds to a transmission component or array collection of the power or frequency transmission.
-    For example, for the reflected power (ie S11 transmission), this contains magnitude and phase information from a source.
-    Instead of responding to a given input. Note that this does not contain mode information, but could
-    be extended to implement this.
-
-    This can represent frequency to single-state conversion and a sckit-rf collective model too, based on its definition.
-
-    This implementation is flexible because making the transmission individual is kind of essential when dealing with both electronic-photonic s-parameter state
-    management, or otherwise it involves writing a mapping function. This is not the fastest approach, but certainly complete.
-    Maybe someone can come up with a more complete approach that is not so resource intensive or we can abstract this into
-    defined base-types (but I think this is it though if any validation is to be applied?)
-
-    This can also be equivalent to a sckit-rf Network static data container, just that it decomposes each specific transmission to a given
-    frequency or power-point. It implements translation between RF models and Photonic models which are more-port specific
-    as defined by SAX. This enables more specific electronic-photonic state mapping.
-
-    TODO come up with a more resource managed version of this.
-    """
-
-    input: ScalarSource
-    """
-    The combined definition of the input state phasor with magnitude and phase information.
-    Could be extended to a spectral input incidence.
-    """
-
-    network: list[PathTransmission] = []
-    """
-    Contains the entire frequency transmission response per component. Can be defined both per state and per full collection.
-
-    TODO implement port mapping already.
-    """
-
-
-# class NetworkTransmission(Instance):
-#     input_frequency_Hz: ArrayTypes | None = None
-#     p_in_dbm: ArrayTypes | None = None
-#     s_11_db: ArrayTypes | None = None
-#     s_11_deg: ArrayTypes | None = None
-#     s_12_db: ArrayTypes | None = None
-#     s_12_deg: ArrayTypes | None = None
-#     s_21_db: ArrayTypes | None = None
-#     s_21_deg: ArrayTypes | None = None
-#     s_22_db: ArrayTypes | None = None
-#     s_22_deg: ArrayTypes | None = None
-
-# class NetworkTransmission(Instance):
-#     pass
-
-
-class FrequencyTransmissionMetricsCollection(PielBaseModel):
-    """
-    A collection of frequency-related metrics for RF components.
-
-    Attributes:
-    -----------
-    bandwidth_Hz : ScalarMetrics
-        The bandwidth of the RF component in Hertz.
-        Represented as a ScalarMetrics object, which may include
-        properties like mean, standard deviation, etc.
-
-    center_transmission_dB : ScalarMetrics
-        The center transmission of the RF component in decibels.
-        Represented as a ScalarMetrics object, which may include
-        properties like mean, standard deviation, etc.
-    """
-
-    bandwidth_Hz: ScalarMetrics = ScalarMetrics()
-    center_transmission_dB: ScalarMetrics = ScalarMetrics()
-
-
-FrequencyTransmissionModel = NetworkTransmission | SType | Any | None
-"""
-Corresponds to a container that contains a s-parameter transmission model, for example.
-
-This type alias is currently a placeholder (Any | None).
-The idea is that this is a collective static data representation compatible with both a sax-translation as
-with the standard sckit-rf network models.
-"""
-
-
-class RFPhysicalComponent(PhysicalComponent):
-    """
-    Represents a physical RF (Radio Frequency) component with frequency-related properties.
-
-    This class extends the PhysicalComponent class to include RF-specific attributes.
-
-    Attributes:
-    -----------
-    network : FrequencyTransmissionModel | None
-        A representation of the component's frequency network, typically containing
-        s-parameter data. This is currently a placeholder and may be None.
-
-    metrics : FrequencyTransmissionMetricsCollection
-        A collection of frequency-related metrics for this RF component,
-        including bandwidth and center transmission.
-
-    Inherits all attributes from PhysicalComponent.
-
-    Notes:
-    ------
-    - The 'network' attribute is currently using a placeholder type (Any | None)
-      and is intended to be updated with a proper s-parameter representation in the future.
-    - This class combines physical component properties with RF-specific metrics,
-      making it suitable for modeling and analyzing RF devices in a physical context.
-    """
-
-    network: FrequencyTransmissionModel | None = None
-    metrics: list[FrequencyTransmissionMetricsCollection] = []
+    phase_unit: Unit = degree
+    magnitude_unit: Unit = dBm

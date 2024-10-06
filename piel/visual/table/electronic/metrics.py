@@ -1,5 +1,5 @@
 from typing import Optional, Union, Set, List, Dict
-from piel.types import RFAmplifierCollection, ComponentMetrics, ScalarMetrics
+from piel.types import RFAmplifierCollection, ComponentMetrics, ScalarMetric
 
 default_metric_header_map = {
     "bandwidth_Hz": r"\textbf{Bandwidth} (GHz)",
@@ -36,8 +36,8 @@ def escape_latex(s: str) -> str:
 
 
 # Function to format metric values
-def format_amplifier_metric(metric: str, metric_obj: Optional[ScalarMetrics]) -> str:
-    if isinstance(metric_obj, ScalarMetrics):
+def format_amplifier_metric(metric: str, metric_obj: Optional[ScalarMetric]) -> str:
+    if isinstance(metric_obj, ScalarMetric):
         min_val = getattr(metric_obj, "min", None)
         max_val = getattr(metric_obj, "max", None)
         if min_val is not None and max_val is not None:
@@ -112,7 +112,7 @@ def format_amplifier_metric(metric: str, metric_obj: Optional[ScalarMetrics]) ->
         except (ValueError, TypeError):
             value = "N/A"
     else:
-        # For non-ScalarMetrics or missing metrics
+        # For non-ScalarMetric or missing metrics
         if metric_obj is not None:
             value = str(metric_obj)
         else:
@@ -155,7 +155,7 @@ def compose_amplifier_collection_performance_latex_table(
                 for attr in dir(metrics):
                     if not attr.startswith("_"):
                         attr_value = getattr(metrics, attr)
-                        if isinstance(attr_value, ScalarMetrics) or isinstance(
+                        if isinstance(attr_value, ScalarMetric) or isinstance(
                             attr_value, str
                         ):
                             all_metrics.add(attr)
