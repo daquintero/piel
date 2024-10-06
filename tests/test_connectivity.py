@@ -31,8 +31,8 @@ def test_create_all_connections():
     )
     assert len(connections) == 3
     # assert isinstance(connections[0], PhysicalConnection)
-    # assert len(connections[0].connections) == 1
-    # assert connections[0].connections[0] == (port1, port2)
+    # assert len(connections[0].portss) == 1
+    # assert connections[0].portss[0] == (port1, port2)
 
 
 def test_create_connection_list_from_ports_lists():

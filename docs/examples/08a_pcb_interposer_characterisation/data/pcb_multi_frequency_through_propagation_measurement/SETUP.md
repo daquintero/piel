@@ -1,6 +1,6 @@
 # pcb_multi_frequency_through_propagation_measurement
 
-**Goal**: Test the propagation response at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
+**Goal**: Test the propagation transmission at multiple frequencies. Use a through connection to measure the approximate propagation delay through the calibration cables and PCB trace.
 
 ## Experiment Parameters 
 

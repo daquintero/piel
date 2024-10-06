@@ -24,11 +24,11 @@ def create_cocotb_truth_table_verification_python_script(
         }
         create_cocotb_truth_table_verification_python_script(truth_table)
     """
-    # Extract input and output ports
+    # Extract input and output connection
     input_ports = truth_table.input_ports
     output_ports = truth_table.output_ports
 
-    # Get the implementation dictionary with only the specified ports
+    # Get the implementation dictionary with only the specified connection
     truth_table_dict = truth_table.implementation_dictionary
 
     # Resolve the module path and create the tb directory if it doesn't exist
@@ -68,7 +68,7 @@ async def truth_table_test(dut):
     # Loop over each row in the truth table to generate test cases
     for i in range(num_tests):
         script_content += f"    # Test case {i + 1}\n"
-        for signal in input_ports:  # Input ports are the inputs to the DUT
+        for signal in input_ports:  # Input connection are the inputs to the DUT
             value = truth_table_dict[signal][i]
             script_content += f'    dut.{signal}.value = cocotb.binary.BinaryValue("{value}")\n'  # Assign binary string values directly
 

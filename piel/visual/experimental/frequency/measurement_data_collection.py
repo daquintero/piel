@@ -1,7 +1,7 @@
 from piel.types.experimental.measurements.data.frequency import (
     VNASParameterMeasurementDataCollection,
 )
-from piel.types import MinimumMaximumType
+from piel.types import ScalarMetric
 from piel.visual import (
     create_plot_containers,
     save,
@@ -19,7 +19,7 @@ def plot_s_parameter_measurements_to_step_responses(
     data_collection: VNASParameterMeasurementDataCollection,
     parameters_list: list = None,
     network_port_index: int = 0,
-    time_range_s: MinimumMaximumType = None,
+    time_range_s: ScalarMetric = None,
     figure_kwargs: dict = None,
     **kwargs,
 ):

@@ -140,7 +140,7 @@ def convert_optical_transitions_to_truth_table(
     phase_bit_array_length = len(transitions_dataframe["phase"][0])
     truth_table_raw = dict()
 
-    # Check if all input and output ports are in the dataframe
+    # Check if all input and output connection are in the dataframe
     for port_i in ports_list:
         truth_table_raw[port_i] = transitions_dataframe.loc[:, port_i].values
 
@@ -324,7 +324,7 @@ def filter_and_correct_truth_table(
     truth_table_dictionary: dict, input_ports: list, output_ports: list
 ):
     """
-    Ensures each unique value of the specified input ports maps to a unique set of values of the output ports.
+    Ensures each unique value of the specified input connection maps to a unique set of values of the output connection.
     If conflicts are found (i.e., the same input maps to different outputs), it retains the first unique mapping.
     It returns a corrected truth table dictionary with only the unique mappings.
 
@@ -339,7 +339,7 @@ def filter_and_correct_truth_table(
     Raises:
         ValueError: If input_ports or output_ports are not found in truth_table_dictionary.
     """
-    # Ensure the specified ports are in the truth table dictionary
+    # Ensure the specified connection are in the truth table dictionary
     for port in input_ports + output_ports:
         if port not in truth_table_dictionary:
             raise ValueError(f"Port '{port}' not found in truth_table_dictionary.")

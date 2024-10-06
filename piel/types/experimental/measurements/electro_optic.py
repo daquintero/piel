@@ -1,11 +1,11 @@
 from piel.types.core import PathTypes
-from piel.types.connectivity.abstract import PortMap
+from piel.types.connectivity.generic import ConnectionTypes
 from piel.types.experimental.measurements.core import Measurement, MeasurementCollection
 
 
 class ElectroOpticDCMeasurement(Measurement):
     dc_transmission_file: PathTypes
-    port_map: PortMap
+    connection: ConnectionTypes
 
 
 class ElectroOpticDCMeasurementCollection(MeasurementCollection):

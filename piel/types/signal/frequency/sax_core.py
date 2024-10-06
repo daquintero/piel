@@ -30,7 +30,7 @@ FloatArrayND = Complex[Array, "..."]
 ComplexArrayND = Complex[Array, "..."]
 """ N-dimensional complex array """
 
-PortMap = Dict[str, int]
+ConnectionTypes = Dict[str, int]
 """ A mapping from a port name (str) to a port index (int) """
 
 PortCombination = Tuple[str, str]
@@ -50,7 +50,7 @@ Example:
 
 """
 
-SDense = Tuple[ComplexArrayND, PortMap]
+SDense = Tuple[ComplexArrayND, ConnectionTypes]
 """ A dense S-matrix (2D array) or multidimensional batched S-matrix (N+2)-D array
 combined with a port map. If (N+2)-D array the S-matrix dimensions are the last two.
 
@@ -59,12 +59,12 @@ Example:
 .. code-block::
 
     Sd = jnp.arange(9, dtype=float).reshape(3, 3)
-    port_map = {"in0": 0, "in1": 2, "out0": 1}
-    sdense = Sd, port_map
+    connection = {"in0": 0, "in1": 2, "out0": 1}
+    sdense = Sd, connection
 
 """
 
-SCoo = Tuple[IntArray1D, IntArray1D, ComplexArrayND, PortMap]
+SCoo = Tuple[IntArray1D, IntArray1D, ComplexArrayND, ConnectionTypes]
 """ A sparse S-matrix in COO format (recommended for internal library use only)
 
 An `SCoo` is a sparse matrix based representation of an S-matrix consisting of three arrays and a port map.
@@ -78,8 +78,8 @@ Example:
     Si = jnp.arange(3, dtype=int)
     Sj = jnp.array([0, 1, 0], dtype=int)
     Sx = jnp.array([3.0, 4.0, 1.0])
-    port_map = {"in0": 0, "in1": 2, "out0": 1}
-    scoo: sax.SCoo = (Si, Sj, Sx, port_map)
+    connection = {"in0": 0, "in1": 2, "out0": 1}
+    scoo: sax.SCoo = (Si, Sj, Sx, connection)
 
 """
 

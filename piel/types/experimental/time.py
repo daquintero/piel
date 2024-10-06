@@ -1,6 +1,6 @@
 from typing import Optional
 from piel.types.signal.time_sources import SignalTimeSources
-from piel.types.core import MinimumMaximumType
+from piel.types.metrics import ScalarMetric
 from .device import DeviceConfiguration, Device, MeasurementDevice
 
 
@@ -33,7 +33,7 @@ class OscilloscopeConfiguration(DeviceConfiguration):
     not the measurement setup connectivity.
     """
 
-    bandwidth_Hz: MinimumMaximumType = None
+    bandwidth_Hz: ScalarMetric = None
 
 
 class Oscilloscope(MeasurementDevice):

@@ -25,3 +25,5 @@ from piel.analysis.signals.time.core.remove import (
 from piel.analysis.signals.time.integration.extract_pulse_metrics import (
     extract_peak_to_peak_metrics_after_split_pulses,
 )
+from . import core
+from . import integration

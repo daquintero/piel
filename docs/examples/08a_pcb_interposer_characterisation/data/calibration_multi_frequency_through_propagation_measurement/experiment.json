@@ -1,7 +1,7 @@
 {
     "name": "calibration_multi_frequency_through_propagation_measurement",
     "attrs": {},
-    "goal": "Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
+    "goal": "Test the propagation transmission at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.",
     "experiment_instances": [
         {
             "name": "calibration_1000000000.0_Hz",
@@ -92,9 +92,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -124,9 +126,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 }
@@ -229,9 +233,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -261,9 +267,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 }
@@ -366,9 +374,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -398,9 +408,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 }
@@ -503,9 +515,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -535,9 +549,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 }

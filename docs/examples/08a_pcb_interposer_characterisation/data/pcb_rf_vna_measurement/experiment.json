@@ -174,9 +174,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -206,9 +208,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -238,9 +242,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 }
@@ -248,7 +254,7 @@
             "goal": "",
             "parameters": {},
             "index": 0,
-            "date_configured": "2024-09-26 03:53:34.735903",
+            "date_configured": "2024-10-15 16:25:07.745202",
             "date_measured": "",
             "measurement_configuration_list": [
                 {
@@ -437,9 +443,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -469,9 +477,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 },
@@ -501,9 +511,11 @@
                         "count": null,
                         "unit": {
                             "name": "second",
+                            "label": "Time $s$",
+                            "shorthand": "s",
+                            "symbol": "",
                             "datum": "second",
-                            "base": 1,
-                            "label": "Time $s$"
+                            "base": 1
                         }
                     }
                 }
@@ -511,7 +523,7 @@
             "goal": "",
             "parameters": {},
             "index": 1,
-            "date_configured": "2024-09-26 03:53:34.736044",
+            "date_configured": "2024-10-15 16:25:07.745355",
             "date_measured": "",
             "measurement_configuration_list": [
                 {

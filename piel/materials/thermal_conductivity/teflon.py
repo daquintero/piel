@@ -12,7 +12,7 @@ material_references: MaterialReferencesTypes = [
 def teflon(temperature_range_K: TemperatureRangeTypes, *args, **kwargs):
     """
     Trade Names for FEP resins include DuPont Teflon™, Daikin Neoflon™, Dyneon Hostaflon™, NiFlon, Sinoflon.
-    ScalarSource: https://trc.nist.gov/cryogenics/materials/Teflon/Teflon_rev.htm
+    Source: https://trc.nist.gov/cryogenics/materials/Teflon/Teflon_rev.htm
 
     Args:
         temperature_range_K:

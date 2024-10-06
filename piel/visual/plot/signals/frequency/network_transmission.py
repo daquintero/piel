@@ -52,7 +52,7 @@ def plot_two_port_gain_in_dBm(
     if ylabel is None:
         ylabel = r"$S_{21}$ $dB$"
 
-    # Extract input power in dBm from ScalarSource.phasor.magnitude
+    # Extract input power in dBm from ScalarSource.input.magnitude
     try:
         p_in_dbm = np.array(network_transmission.input.magnitude)
     except AttributeError as e:
@@ -66,12 +66,14 @@ def plot_two_port_gain_in_dBm(
 
     # Iterate through network transmissions to find S21
     for path_transmission in network_transmission.network:
-        if path_transmission.ports == ("in0", "out0"):
+        if path_transmission.connection == ("in0", "out0"):
             # Compute magnitude in dB from complex transmission
-            transmission = np.array(path_transmission.transmission)
+            transmission = np.array(path_transmission.transmission.magnitude)
             # Avoid log of zero by adding a small epsilon
-            epsilon = 1e-12
-            s_21_db = 20 * np.log10(np.abs(transmission) + epsilon)
+            # Convert if linear units
+            # epsilon = 1e-12
+            # s_21_db = 20 * np.log10(np.abs(transmission) + epsilon)
+            s_21_db = transmission
             break
 
     if s_21_db is None:

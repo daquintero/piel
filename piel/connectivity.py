@@ -28,19 +28,19 @@ def create_all_connections(
     connection_type_output: Optional[ConnectionTypes] = Connection,
 ) -> list[ConnectionTypes]:
     """
-    This function receives a list of ports and creates the connections between them as two-port relationships.
-    It returns a list of connections. More than two ports can be provided, and it will create all the possible connections.
+    This function receives a list of connection and creates the connections between them as two-port relationships.
+    It returns a list of connections. More than two connection can be provided, and it will create all the possible connections.
 
     Parameters
     ----------
     ports : list[Port]
-        The ports list to create connections.
+        The connection list to create connections.
 
     connection_factory : Optional[Callable[[list[Port]], Connection]], optional
-        A function that creates a connection object from a list of ports.
-        The function should receive a list of ports and return a connection object.
+        A function that creates a connection object from a list of connection.
+        The function should receive a list of connection and return a connection object.
         If not provided, a default connection factory will be used.
-        The default connection factory creates a tuple of ports as a connection object.
+        The default connection factory creates a tuple of connection as a connection object.
         The default is None.
 
     connection_type_output : Optional[type[Connection]], optional
@@ -58,8 +58,8 @@ def create_all_connections(
 
     def default_connection_factory(ports: list[Port, Port]) -> ConnectionTypes:
         """
-        This function creates a connection object from a list of ports, by default it creates a tuple of ports as a
-        connection object. Should be two ports.
+        This function creates a connection object from a list of connection, by default it creates a tuple of connection as a
+        connection object. Should be two connection.
         """
         raw_connection = tuple(ports)
 
@@ -75,10 +75,10 @@ def create_all_connections(
 
     connection_factory = connection_factory or default_connection_factory
 
-    # Ensure that ports is a list
+    # Ensure that connection is a list
     if not isinstance(ports, list):
         # Raise descriptive error
-        raise TypeError(f"Expected a list of ports, got {type(ports)} instead.")
+        raise TypeError(f"Expected a list of connection, got {type(ports)} instead.")
 
     connections = []
     for i, port1 in enumerate(ports):
@@ -97,7 +97,7 @@ def create_connection_list_from_ports_lists(
     port_connection_list: list[list[Port]],
 ) -> list[ConnectionTypes]:
     """
-    When a list of a list of ports is provided, we construct all the required connections accordingly. TODO more docs.
+    When a list of a list of connection is provided, we construct all the required connections accordingly. TODO more docs.
     """
     connection_list = list()
     for raw_connection_i in port_connection_list:
@@ -112,15 +112,15 @@ def create_component_connections(
     connection_reference_str_list: list[str] | list[list[str]],
 ) -> list[ConnectionTypes]:
     """
-    The way this function works is by composing the ports namespaces from the names of the components,
-    and a given ports dot notation which corresponds to that component.
+    The way this function works is by composing the connection namespaces from the names of the components,
+    and a given connection dot notation which corresponds to that component.
 
     Notes
     -----
 
     The dot notation would be in the format ``"component_1.port1"``. Hence, the input to a connection would be
     ``["component1.port1", "component2.port1"]`` and this function would compile into generating the corresponding
-    ports. This is by splitting the component name and port name accordingly and then programmatically acquiring
+    connection. This is by splitting the component name and port name accordingly and then programmatically acquiring
     the corresponding `Port` reference and creating the `Connection` from this.
 
     Parameters
@@ -158,7 +158,7 @@ def create_component_connections(
         component1_name, port1_name = connection_reference[0].split(".")
         component2_name, port2_name = connection_reference[1].split(".")
 
-        # Initialize ports
+        # Initialize connection
         port1 = None
         port2 = None
 
@@ -169,10 +169,10 @@ def create_component_connections(
             if component.name == component2_name:
                 port2 = component.get_port(port2_name)
 
-        # Check if the ports were found
+        # Check if the connection were found
         if port1 is None or port2 is None:
             raise ValueError(
-                f"Could not find the ports for the connection {connection_reference}"
+                f"Could not find the connection for the connection {connection_reference}"
             )
 
         # Create the connection
@@ -186,14 +186,14 @@ def create_sequential_component_path(
     components: list[ComponentTypes], name: str = "", **kwargs
 ) -> ComponentTypes:
     """
-    This function takes in a list of components and creates a sequential path connectivity of components with all the ports defined in each component.
-    By default, the connectivity will be implemented with the first two ports of the components. There is a clear input and output on each component.
+    This function takes in a list of components and creates a sequential path connectivity of components with all the connection defined in each component.
+    By default, the connectivity will be implemented with the first two connection of the components. There is a clear input and output on each component.
     The timing metric calculations is provided by the timing model of each connection of the component, if there is none defined it will assume a default zero
-    time connectivity between the relevant ports. For the output component collection, it will output the timing of the network as a whole based on the
+    time connectivity between the relevant connection. For the output component collection, it will output the timing of the network as a whole based on the
     defined subcomponents.
-    This will create an output component with all the subcomponents, TODO more than two ports, and the list of ports
+    This will create an output component with all the subcomponents, TODO more than two connection, and the list of connection
 
-    Creates a sequential path connectivity of components with all the ports defined in each component.
+    Creates a sequential path connectivity of components with all the connection defined in each component.
 
     Parameters:
     -----------
@@ -218,13 +218,13 @@ def create_sequential_component_path(
         next_component = components[i + 1]
 
         # Assume the first port is output and the second is input
-        if len(current_component.ports) < 1 or len(next_component.ports) < 1:
+        if len(current_component.connection) < 1 or len(next_component.connection) < 1:
             raise ValueError(
-                f"Component {current_component.name} or {next_component.name} doesn't have enough ports."
+                f"Component {current_component.name} or {next_component.name} doesn't have enough connection."
             )
 
-        output_port = current_component.ports[1]
-        input_port = next_component.ports[0]
+        output_port = current_component.connection[1]
+        input_port = next_component.connection[0]
 
         # Create connection with timing information
         connection_time = (
@@ -248,26 +248,26 @@ def create_sequential_component_path(
     total_time = TimeMetric(value=total_time_value)
     # TODO implement full network timing analysis
 
-    top_level_ports = [components[0].ports[0], components[-1].ports[-1]]
-    # TODO best define top level ports
+    top_level_ports = [components[0].connection[0], components[-1].connection[-1]]
+    # TODO best define top level connection
 
     top_level_connection = Connection(ports=top_level_ports, time=total_time)
     top_level_physical_connection = PhysicalConnection(
         connections=[top_level_connection]
     )
-    # Define abstract path. Note that this is not a physical connection, just that there is a connection path between the ports.
+    # Define abstract path. Note that this is not a physical connection, just that there is a connection path between the connection.
     # TODO this may have to be redefined
 
     connections.append(top_level_physical_connection)
 
     ports = [
-        components[0].ports[0],
-        components[-1].ports[-1],
+        components[0].connection[0],
+        components[-1].connection[-1],
     ]
 
     logger.debug(f"Sequential Component connections: {connections}")
     logger.debug(f"Sequential Component components: {components}")
-    logger.debug(f"Sequential Component ports: {ports}")
+    logger.debug(f"Sequential Component connection: {ports}")
 
     # Create a new component that encapsulates this path
     path_component = PhysicalComponent(
@@ -277,3 +277,46 @@ def create_sequential_component_path(
     )
 
     return path_component
+
+
+def get_port_index_from_name(port: Port, starting_index: int | None = None) -> int:
+    """
+    Extracts the numerical index from a port identifier and adjusts based on starting index.
+    If port numbering starts at 0, adds 1. If starts at 1 or is None, leaves as is.
+
+    Parameters:
+    - port (int or str): The port identifier.
+    - starting_index (int, optional): The starting index (0 or 1). Defaults to None.
+
+    Returns:
+    - int: The adjusted numerical index of the port.
+
+    Raises:
+    - ValueError: If starting_index is not 0, 1, or None.
+    - ValueError: If the port string does not contain a numerical index.
+    - TypeError: If the port is neither int nor str.
+    """
+    import re
+
+    if isinstance(port, int):
+        port_index = port
+    elif isinstance(port, str):
+        match = re.search(r"\d+", port)
+        if match:
+            port_index = int(match.group())
+        else:
+            raise ValueError(f"Cannot extract port number from string '{port}'")
+    else:
+        raise TypeError(f"Unsupported port type: {type(port)}. Must be int or str.")
+
+    # Adjust based on starting index
+    if starting_index == 0:
+        return port_index + 1
+    elif starting_index == 1:
+        return port_index
+    elif starting_index is None:
+        return port_index
+    else:
+        raise ValueError(
+            f"Unsupported starting index: {starting_index}. Must be 0 or 1."
+        )

@@ -11,7 +11,7 @@ class TaperParameters:
 @h.generator
 def taper(params: TaperParameters) -> h.Module:
     """
-    Implements a `hdl21` taper resistor class. We need to include the mapping ports as we expect our gdsfactory component to be with the instance of the model.
+    Implements a `hdl21` taper resistor class. We need to include the mapping connection as we expect our gdsfactory component to be with the instance of the model.
     """
 
     @h.module

@@ -11,7 +11,7 @@ class ViaStackParameters:
 @h.generator
 def via_stack(params: ViaStackParameters) -> h.Module:
     """
-    Implements a `hdl21` taper resistor class. We need to include the mapping ports as we expect our gdsfactory component to be with the instance of the model.
+    Implements a `hdl21` taper resistor class. We need to include the mapping connection as we expect our gdsfactory component to be with the instance of the model.
     """
 
     @h.module
@@ -22,7 +22,7 @@ def via_stack(params: ViaStackParameters) -> h.Module:
 
         e1, e2, e3, e4 = h.Ports(4)
         # TODO PR this valid to hdl21
-        # All bottom ports connected together
+        # All bottom connection connected together
         # e1 = e2 = e3 = e4
         # Top port e5 is output of via
         r1 = h.IdealResistor(r=1e3)(p=e1, n=e2)

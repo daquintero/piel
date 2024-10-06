@@ -119,7 +119,7 @@ instances:
       nrd: 0.29 / w
       nrs: 0.29 / w
       pd: 2*int((nf+1)/2) * (w/nf + 0.29)
-      ports:
+      connection:
         b: VSS
         d: o
         g: i
@@ -142,7 +142,7 @@ instances:
       nrd: 0.29 / w
       nrs: 0.29 / w
       pd: 2*int((nf+1)/2) * (w/nf + 0.29)
-      ports:
+      connection:
         b: VDD
         d: o
         g: i
@@ -153,7 +153,7 @@ instances:
       sd: UNIT_0
       w: UNIT_1
 name: SkyInv
-ports:
+connection:
   VDD: ps,s
   VSS: ns,s
   i: ps,g

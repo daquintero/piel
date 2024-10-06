@@ -113,7 +113,7 @@ def create_coaxial_cable(
         "geometry": geometry,
         "heat_transfer": heat_transfer,
         "connections": [physical_connection],
-        "ports": ports,
+        "connection": ports,
         **kwargs,
     }
 

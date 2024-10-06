@@ -8,23 +8,23 @@ def get_matched_ports_tuple_index(
     prefix: str = "in",
 ) -> (tuple, tuple):
     """
-        This function returns the input ports of a component. However, input ports may have different sets of prefixes
-        and suffixes. This function implements different sorting algorithms for different ports names. The default
-        algorithm is `prefix`, which sorts the ports by their prefix. The Endianness implementation means that the tuple
+        This function returns the input connection of a component. However, input connection may have different sets of prefixes
+        and suffixes. This function implements different sorting algorithms for different connection names. The default
+        algorithm is `prefix`, which sorts the connection by their prefix. The Endianness implementation means that the tuple
         order is determined according to the last numerical index order of the port numbering. Returns just a tuple of
         the index.
-    Returns the indices of ports that match specified criteria. The function supports sorting by a prefix or by a selected tuple of ports.
+    Returns the indices of connection that match specified criteria. The function supports sorting by a prefix or by a selected tuple of connection.
 
         Args:
             ports_index (dict): A dictionary where keys are port names and values are their indices.
-            selected_ports_tuple (tuple, optional): A tuple of selected ports to match. Defaults to None.
+            selected_ports_tuple (tuple, optional): A tuple of selected connection to match. Defaults to None.
             sorting_algorithm (Literal["prefix", "selected_ports"], optional): The sorting algorithm to use. Defaults to "prefix".
-            prefix (str, optional): The prefix to filter ports when using the "prefix" sorting algorithm. Defaults to "in".
+            prefix (str, optional): The prefix to filter connection when using the "prefix" sorting algorithm. Defaults to "in".
 
         Returns:
             tuple[tuple, tuple]:
-                - The first tuple contains the indices of the matched ports in the specified order.
-                - The second tuple contains the names of the matched ports in the specified order.
+                - The first tuple contains the indices of the matched connection in the specified order.
+                - The second tuple contains the names of the matched connection in the specified order.
 
         Raises:
             ValueError: If an unsupported sorting algorithm is specified.
@@ -52,7 +52,7 @@ def get_matched_ports_tuple_index(
         matched_ports_list = [
             item for item in ports_index_list if item.startswith(prefix)
         ]
-        matched_ports_list.sort()  # Sort the ports numerically by their suffix
+        matched_ports_list.sort()  # Sort the connection numerically by their suffix
         matched_ports_name_tuple_order = tuple(matched_ports_list)
         matches_ports_index_tuple_order = tuple(
             [ports_index[port] for port in matched_ports_list]
@@ -78,16 +78,16 @@ def get_input_ports_index(
     prefix: str = "in",
 ) -> tuple:
     """
-    This function returns the input ports of a component. However, input ports may have different sets of prefixes
-    and suffixes. This function implements different sorting algorithms for different ports names. The default
-    algorithm is `prefix`, which sorts the ports by their prefix. The Endianness implementation means that the tuple
+    This function returns the input connection of a component. However, input connection may have different sets of prefixes
+    and suffixes. This function implements different sorting algorithms for different connection names. The default
+    algorithm is `prefix`, which sorts the connection by their prefix. The Endianness implementation means that the tuple
     order is determined according to the last numerical index order of the port numbering. Returns the indices and
-    names of input ports for a component, sorted by a specified algorithm. The default sorting algorithm uses a prefix.
+    names of input connection for a component, sorted by a specified algorithm. The default sorting algorithm uses a prefix.
 
     Args:
         ports_index (dict): A dictionary where keys are port names and values are their indices.
         sorting_algorithm (Literal["prefix"], optional): The sorting algorithm to use. Defaults to "prefix".
-        prefix (str, optional): The prefix to filter and sort ports when using the "prefix" sorting algorithm. Defaults to "in".
+        prefix (str, optional): The prefix to filter and sort connection when using the "prefix" sorting algorithm. Defaults to "in".
 
     Returns:
         tuple: A tuple where each element is a pair of port index and port name, sorted as specified.

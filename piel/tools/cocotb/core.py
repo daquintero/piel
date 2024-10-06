@@ -1,5 +1,5 @@
 """
-The objective of this file is to provide the simulation ports and interconnection to consider modelling digital and mixed signal logic.
+The objective of this file is to provide the simulation connection and interconnection to consider modelling digital and mixed signal logic.
 
 The main simulation driver is cocotb, and this generates a set of files that correspond to time-domain digital
 simulations. The cocotb verification software can also be used to perform mixed signal simulation, and digital files

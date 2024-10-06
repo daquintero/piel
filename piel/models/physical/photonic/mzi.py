@@ -52,7 +52,7 @@ def mzi(
         straight_y: straight for length_y and delta_length.
         straight_x_top: top straight for length_x.
         straight_x_bot: bottom straight for length_x.
-        extend_ports_straight_x: optional extend ports for straight_x_bot/top.
+        extend_ports_straight_x: optional extend connection for straight_x_bot/top.
         splitter: splitter function.
         combiner: combiner function.
         with_splitter: if False removes splitter.
@@ -65,9 +65,9 @@ def mzi(
         cross_section_x_top: optional top cross_section (defaults to cross_section).
         cross_section_x_bot: optional bottom cross_section (defaults to cross_section).
         mirror_bot: if true, mirrors the bottom arm.
-        add_optical_ports_arms: add all other optical ports in the arms
+        add_optical_ports_arms: add all other optical connection in the arms
             with top_ and bot_ prefix.
-        add_electrical_ports_bot: add electrical ports to the bottom arm.
+        add_electrical_ports_bot: add electrical connection to the bottom arm.
         min_length: minimum length for the straight_x_bot/top.
 
     .. code::

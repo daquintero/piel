@@ -16,8 +16,8 @@ def create_pcb(
 
     Args:
         port_name_list (List[str], optional): The list of port names. Defaults to None.
-        connection_tuple_list (List[Tuple[str, str]], optional): The list of connections between ports. Defaults to None.
-        port_factory (Optional[Callable[[str], PhysicalPort]], optional): The factory function to create the ports.
+        connection_tuple_list (List[Tuple[str, str]], optional): The list of connections between connection. Defaults to None.
+        port_factory (Optional[Callable[[str], PhysicalPort]], optional): The factory function to create the connection.
             Needs to contain the port definition parameters. Defaults to None.
     """
 
@@ -35,12 +35,12 @@ def create_pcb(
     if port_factory is None:
         port_factory = default_port_factory
 
-    # Create ports based on port_name_list
+    # Create connection based on port_name_list
     ports_list = [
         port_factory(name=port_name, pcb_name=pcb_name) for port_name in port_name_list
     ]
 
-    # Create a dictionary to quickly lookup ports by name
+    # Create a dictionary to quickly lookup connection by name
     port_dict = {port.name: port for port in ports_list}
 
     # Create connections

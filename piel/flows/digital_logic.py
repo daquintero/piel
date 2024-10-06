@@ -50,14 +50,14 @@ def generate_verilog_and_verification_from_truth_table(
     - None
 
     Steps:
-    1. Combines the input and output ports into a single list.
+    1. Combines the input and output connection into a single list.
     2. Constructs an Amaranth module from the provided truth table.
     3. Determines the appropriate directory and source folder for the design.
     4. Generates a Verilog file from the Amaranth module.
     5. Creates a testbench to verify the generated module logic and produces a VCD file.
     """
 
-    # Combine input and output ports into a single list for ports
+    # Combine input and output connection into a single list for connection
 
     # Construct Amaranth module from the truth table
     amaranth_module = construct_amaranth_module_from_truth_table(
@@ -135,7 +135,7 @@ def read_simulation_data_to_truth_table(
     >>> read_simulation_data_to_truth_table("simulation_data.csv", ["input_port"], ["output_port"])
     TruthTable(input_ports=["input_port"], output_ports=["output_port"], ...)
     """
-    # Combine input and output ports into a single list for ports
+    # Combine input and output connection into a single list for connection
     ports_list = input_ports + output_ports
     # Read the simulation files from the file
     simulation_dataframe = read_simulation_data(file_path, *args, **kwargs)

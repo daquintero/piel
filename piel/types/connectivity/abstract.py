@@ -16,7 +16,7 @@ class Port(Instance):
 
 class Connection(Instance):
     """
-    This represents the fundamental data structure to identify a connection between two ports.
+    This represents the fundamental data structure to identify a connection between two connection.
 
     Note that any connection has a
     """
@@ -27,7 +27,7 @@ class Connection(Instance):
 
 class Component(Instance):
     """
-    This represents the fundamental data structure to identify a component with ports and internal or external connectivity.
+    This represents the fundamental data structure to identify a component with connection and internal or external connectivity.
     """
 
     ports: list[Port] = []
@@ -50,12 +50,3 @@ class Component(Instance):
         """
         port_dict = {port.name: port for port in self.ports if port.name is not None}
         return port_dict.get(port_name, None)
-
-
-# Type alias for a tuple of port names as strings.
-PortMap = tuple[str, ...] | tuple[Port, ...] | tuple[int, ...]
-"""
-PortMap:
-    A tuple representing the names of ports in a photonic circuit.
-    Each element in the tuple is a string corresponding to a port name.
-"""

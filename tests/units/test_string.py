@@ -7,6 +7,7 @@ from piel.types.units import (
     GHz,
     Hz,
     nm,
+    m,
     ns,
     mm2,
     mW,
@@ -82,7 +83,7 @@ def test_get_unit_by_datum():
     assert get_unit_by_datum("second") == s
     assert get_unit_by_datum("watt") == W
     assert get_unit_by_datum("Hertz") == Hz
-    assert get_unit_by_datum("meter") == nm  # Assuming nm is representative for 'meter'
+    assert get_unit_by_datum("meter") == m
 
     # Test units with unique data
     assert get_unit_by_datum("ampere") == A

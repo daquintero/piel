@@ -5,10 +5,10 @@ from piel.types.experimental import (
     Oscilloscope,
     OscilloscopeConfiguration,
 )
-from piel.types import PulseSource
+from piel.types import PulseSource, ScalarMetric
 
 
-# Fixtures for SignalTimeSources and MinimumMaximumType
+# Fixtures for SignalTimeSources and ScalarMetric
 @pytest.fixture
 def mock_signal_time_sources():
     # Replace this with a mock implementation of SignalTimeSources
@@ -25,8 +25,8 @@ def mock_signal_time_sources():
 
 @pytest.fixture
 def mock_minimum_maximum_type():
-    # Replace this with a mock implementation of MinimumMaximumType
-    return (1, 100)
+    # Replace this with a mock implementation of ScalarMetric
+    return ScalarMetric(min=1, max=100)
 
 
 # Test WaveformGeneratorConfiguration

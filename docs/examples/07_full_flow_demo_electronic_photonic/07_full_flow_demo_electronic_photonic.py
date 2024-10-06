@@ -220,7 +220,7 @@ truth_table.implementation_dictionary
 # Inputs truth table, input port list, output port list, module
 # No outputs
 
-# Define all the relevant ports from the dictionary
+# Define all the relevant connection from the dictionary
 
 piel.flows.generate_verilog_and_verification_from_truth_table(
     truth_table=truth_table,
@@ -361,7 +361,7 @@ cocotb_simulation_data
 #         custom_model_function (Callable): Function to create a custom model library.
 #         library_defaults (Dict[str, Any]): Default parameters for the custom model library.
 #         s_parameters_function (Callable): Function to convert model output to S-parameters matrix.
-#         input_ports_order (Tuple[str, str]): Order of input ports for the S-parameters function.
+#         input_ports_order (Tuple[str, str]): Order of input connection for the S-parameters function.
 
 #     Returns:
 #         List[Any]: List of unitaries corresponding to the phase array.

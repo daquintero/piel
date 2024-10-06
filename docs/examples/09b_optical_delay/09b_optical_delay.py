@@ -44,6 +44,76 @@ piel.visual.plot.signals.time.plot_time_signal_data(
 
 # Note you can also use any of the time-domain analysis functionality in piel with this data as you like.
 
+# ## Understanding Optical Pulses Propagation Timing
+#
+# One of the main complexities of creating multi-physical systems is translating the dimensionality between the physics
+# that connect them. For example, we know that a photonic pulse contains multiple frequencies. If dispersion is present,
+# the propagation time of the pulse could account for all the propagation decompositions of each frequency. However, in the context of a
+# bucket photodetector, those time-dimensions don't matter for conversion. However, they might matter for nonlinear optical interactions.
+# As such, it is essential, computationally, to reduce the dimensional size of certain properties according to the type of analysis that is being
+# performed according to the level of timing-interactions between the physical domains.
+#
+#
+# In this sense, the [uCIE](https://www.uciexpress.org/) standard is a concept that implements this principles in the electronic SOC design world. It is unclear to me whether it extends into photonic signal transfer as well.
+
+
+# Based on
+# Chrostowski's *Silicon Photonic Design* and Pozar's *Microwave Engineering*, and also available in the [`piel` theory section](https://piel.readthedocs.io/en/latest/sections/codesign/principles/index.html#propagation-dispersion).
+#
+# One important aspect we care about when doing co-simulation of electronic-photonic networks is the time synchronisation between the physical domains.
+#
+# In a photonic waveguide, the time it takes for a pulse of light with wavelength $\lambda$ to propagate through it is dependent on the group refractive index of the material at that waveguide $n_{g}$. This is because we treat a pulse of light as a packet of wavelengths.
+#
+# $$
+# v_g (\lambda) = \frac{c}{n_{g}}
+# $$
+#
+# If we wanted to determine how long it takes a single phase front of the wave to propagate, this is defined by the phase velocity $v_p$ which is also wavelength and material dependent. We use the effective refractive index of the waveguide $n_{eff}$ to calculate this, which in vacuum is the same as the group refractive index $n_g$, but not in silicon for example. You can think about it as how the material geometry and properties influence the propagation and phase of light compared to a vacuum.
+#
+# $$
+# v_p (\lambda) = \frac{c}{n_{eff}}
+# $$
+#
+# Formally, in a silicon waveguide, the relationship between the group index and the effective index is:
+#
+# $$
+# n_g (\lambda) = n_{eff} (\lambda) - \lambda \frac{d n_{eff}}{d \lambda}
+# $$
+#
+# If we want to understand how our optical pulses spread throughout a waveguide, in terms of determining the total length of our pulse, we can extract the dispersion parameter $D (\lambda)$:
+#
+# $$
+# D(\lambda) = \frac{d \left( \frac{n_g}{c} \right)}{d \lambda} = - \frac{\lambda}{c} \frac{d^2 n_{eff}}{d \lambda^2}
+# $$
+#
+# The propagation delay $t_p$ in the interconnect is linearly related to the propagation velocity $v_{p}$.
+#
+# $$
+# t_p = \frac{l}{v_p}
+# $$
+
+from piel.models.transient.photonic import v_g_from_n_g
+
+# For example in air, the group velocity is the same as the speed-of-light:
+
+v_g_air = v_g_from_n_g(1)
+v_g_air
+
+# We can compute the time it takes to travel 1 meter:
+
+t_pg_air = (1 / v_g_air) / piel.types.ns.base
+t_pg_air
+
+# ```
+# 3.33564095198152
+# ```
+
+# So that's about 3.33 ns. Note the interesting thing: we can work out at what frequency our electronics has to operate to be clocked at a 1m optical vaccum loop period:
+
+1 / (t_pg_air * piel.types.ns.base) / piel.types.MHz.base
+
+# So that's about `~300 MHz`. Note, that's pretty cool that with relatively low RF clock speeds we can begin to have information processing within the fastest (vaccum) time frame of optical light propagation. What happens if we begin to "slow down" our light within dielectric mediums?
+
 # ## Equivalent Experimental Measurement Analysis
 
 optical_delay_signal = pe.DPO73304.extract_to_data_time_signal(

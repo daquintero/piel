@@ -402,8 +402,8 @@ class SchematicEditor:
             self._connected_ports[net[1]] = net[0]
         self._net_grid = widgets.VBox(net_rows)
 
-        # process ports
-        ports = netlist.get("ports", {})
+        # process connection
+        ports = netlist.get("connection", {})
         schematic.ports = ports
 
         new_rows = []

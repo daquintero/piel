@@ -25,7 +25,7 @@ def create_one_port_square_wave_waveform_generator(
     # Configure the waveform generator
     configuration = WaveformGeneratorConfiguration(signal=signal)
 
-    # Configure the ports
+    # Configure the connection
     ports = [
         PhysicalPort(
             name="CH1",
@@ -45,7 +45,7 @@ def AWG70001A(signal: SignalTimeSources, **kwargs) -> WaveformGenerator:
     # Configure the waveform generator
     configuration = WaveformGeneratorConfiguration(signal=signal)
 
-    # Configure the ports
+    # Configure the connection
     ports = [
         PhysicalPort(
             name="CH1",

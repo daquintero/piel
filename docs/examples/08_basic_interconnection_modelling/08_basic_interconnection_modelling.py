@@ -107,6 +107,8 @@ basic_coaxial_cable_materials
 
 temperature_range_limits_K = tuple([70, 273])
 
+help(calculate_coaxial_cable_heat_transfer)
+
 basic_coaxial_cable_heat_transfer = calculate_coaxial_cable_heat_transfer(
     temperature_range_K=temperature_range_limits_K,
     geometry_class=basic_coaxial_cable,
@@ -219,7 +221,7 @@ def one_port_measurement_configuration(
     # First we instantiate our short calibration connector and our VNA
     components = [one_port_component, vna]
 
-    # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA ports.
+    # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA connection.
     vna_port1_connections = piel.create_component_connections(
         components=components,
         connection_reference_str_list=[
@@ -258,7 +260,7 @@ def one_port_measurement_configuration(
     return experiment_instances, parameters
 
 
-# We need to do a similar thing with the remaining one ports, so let's run this now.
+# We need to do a similar thing with the remaining one connection, so let's run this now.
 
 short_experimental_instance_list, short_parameters_list = (
     one_port_measurement_configuration(short_1port, vna, "short", "vna_ports")
@@ -278,7 +280,7 @@ def two_port_measurement_configuration(
     components = [two_port_component, vna]
     port = "12"
 
-    # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA ports.
+    # We need to create connections between PORT1 and PORT2 accordingly, note that we need to calibrate both VNA connection.
     vna_connections = piel.create_component_connections(
         components=components,
         connection_reference_str_list=[
@@ -402,7 +404,7 @@ reinstantiated_vna_self_calibration_experiment_data.data.collection
 
 # ### A HW Calibrated Open-Measurement
 #
-# Our two unconnected ports with the calibration applied at the machine might give a measurement such as this one.
+# Our two unconnected connection with the calibration applied at the machine might give a measurement such as this one.
 #
 # <figure>
 # <img src="../../_static/img/examples/08_basic_interconnection_modelling/experimental_cal_open.jpg" alt="drawing" width="70%"/>
@@ -428,7 +430,7 @@ fig.savefig(
 
 # ![skrf_plot_open](../../_static/img/examples/08_basic_interconnection_modelling/skrf_plot_open.jpg)
 
-# This is the same data you should get if you connect the open calibration port from the calibration kit into any of the VNA ports.
+# This is the same data you should get if you connect the open calibration port from the calibration kit into any of the VNA connection.
 
 # It is important to note we can also map the keys to the data index using the `Experiment` metadata. Normally, it would simply be easier to have keys map to the corresponding `MeasurementData` instance. However, when there are multiple parameters in a given set of measurements, it can be too much to reasonably index. Hence, it is in this case that a parameter index mapping can be useful. We can simply use the `parameters_list` we initially composed for our `Experiment` and `pandas` or whatever else.
 
@@ -446,7 +448,7 @@ rf_vna_self_calibration_data.experiment.parameters
 
 # ### A HW Calibrated Short Measurement
 
-# Now, let's connect a short calibration port into one of the VNA ports. You can note that obviously the insertion loss doesn't change as this is just a port to port measurement and should affect mainly the phase.
+# Now, let's connect a short calibration port into one of the VNA connection. You can note that obviously the insertion loss doesn't change as this is just a port to port measurement and should affect mainly the phase.
 #
 # We can, for example, also use the data directly without having to use any `piel` data structures. This can be useful if you want to use this functionality to create the metadata and directories but not interact with other functionality in the package.
 #
@@ -500,7 +502,6 @@ calibrated_vna_port1_load_network = hfss_touchstone_2_network(calibrated_load_da
 for m in range(2):
     for n in range(2):
         calibrated_vna_port1_load_network.plot_s_db(ax=axs[m, n], m=m, n=n)
-plt.tight_layout()
 fig.savefig(
     "../../_static/img/examples/08_basic_interconnection_modelling/basic_plot_through.jpg"
 )
@@ -538,7 +539,7 @@ piel.visual.experimental.frequency.experiment_data.plot_s_parameter_real_and_ima
 
 # We can also create a set of automatic plots directly from the `ExperimentData` and create a `REPORT.md` on the experiment directory.
 
-# + active=""
+# +
 # report_info = pe.create_report_from_experiment_directory(
 #     experiment_directory=vna_self_calibration_experiment_directory,
 # )
@@ -554,10 +555,13 @@ piel.visual.experimental.frequency.experiment_data.plot_s_parameter_real_and_ima
 
 # We can also create a parametric plot with automatically analyzed operation points accordingly.
 
-report_info = pe.create_report_from_experiment_directory(
-    experiment_directory=vna_self_calibration_experiment_directory,
-    plot_kwargs={"parametric": True},
-)
+# +
+# # This takes a while to run, uncomment if interested
+# report_info = pe.create_report_from_experiment_directory(
+#     experiment_directory=vna_self_calibration_experiment_directory,
+#     plot_kwargs={"parametric": True},
+# )
+# -
 
 # **Plotting from Operating Points**
 #

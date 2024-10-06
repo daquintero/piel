@@ -93,7 +93,7 @@ rf_calibration_pcb
 # -
 
 # ```python
-# PCB(name='PCB3', ports=[PhysicalPort(name='SIG14', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='OPEN', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SHORT', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG5', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES4', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG8', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='L50', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='GND', domain='RF', connector='smp_plug', manifold=None)], connections=[PhysicalConnection(connections=[Connection(name=None, ports=(PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None)))], components=None), PhysicalConnection(connections=[Connection(name=None, ports=(PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None)))], components=None), PhysicalConnection(connections=[Connection(name=None, ports=(PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='GND', domain='RF', connector='smp_plug', manifold=None)))], components=None)], components=[], environment=Environment(temperature_K=273.0, region=None), manufacturer=None, model=None)
+# PCB(name='PCB3', connection=[PhysicalPort(name='SIG14', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES2', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='OPEN', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SHORT', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG5', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES3', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='RES4', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG8', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='L50', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='GND', domain='RF', connector='smp_plug', manifold=None)], connections=[PhysicalConnection(connections=[Connection(name=None, connection=(PhysicalPort(name='SIG6', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG7', domain='RF', connector='smp_plug', manifold=None)))], components=None), PhysicalConnection(connections=[Connection(name=None, connection=(PhysicalPort(name='SIG1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='SIG2', domain='RF', connector='smp_plug', manifold=None)))], components=None), PhysicalConnection(connections=[Connection(name=None, connection=(PhysicalPort(name='RES1', domain='RF', connector='smp_plug', manifold=None), PhysicalPort(name='GND', domain='RF', connector='smp_plug', manifold=None)))], components=None)], components=[], environment=Environment(temperature_K=273.0, region=None), manufacturer=None, model=None)
 # ```
 
 # A `Component` might contain subcomponents and there are parameters like `Environment`. In any case, we have all the flexibility of `python` of composing all the `ExperimentInstances` we want. As long as we create an `Experiment` with multiple `ExperimentInstances`, then it is pretty straightforward to just export that to a JSON model file. Using `pydantic`, we can also reinstantiate the model back into `python` which is quite powerful for this type of experiment management.
@@ -136,7 +136,7 @@ def create_calibration_vna_experiments(measurements: dict, **kwargs):
         )
         experiment_components = [vna, blue_extension_cable, rf_calibration_pcb]
 
-        # Connect the iteration ports
+        # Connect the iteration connection
         measurement_name = measurement_i[0]
         measurement_port1 = measurement_i[1][0]
         measurement_port2 = measurement_i[1][1]
@@ -252,7 +252,50 @@ s_parameter_measurement_data_sweep.collection[0].network
 
 s_parameter_measurement_data_sweep.collection[0].network.plot_s_db(0, 0)
 
-# Let's plot the two s-parameter measurement data in a basic form:
+# So one of the things we might want do do is determine specifically the performance of this transmission network. We can use some of the `piel` frequency domain analysis functions:
+
+network_transmission = piel.tools.skrf.convert_skrf_network_to_network_transmission(
+    s_parameter_measurement_data_sweep.collection[0].network
+)
+network_transmission.network[3].connection
+
+# We might want to visualise this data in a standard dataframe:
+
+network_transmission_dataframe = (
+    piel.analysis.signals.frequency.extract_two_port_network_transmission_to_dataframe(
+        network_transmission
+    )
+)
+
+network_transmission_dataframe
+
+# Let's plot to verify this:
+
+# Note this matches exactly to the `skrf`-plotting function. Now we can  use this datastructure with some electronic-photonic frequency cosimulation.
+
+piel.visual.plot_simple(
+    x_data=network_transmission_dataframe.frequency_Hz,
+    y_data=network_transmission_dataframe.s_21_magnitude_dBm,
+    xlabel=piel.types.GHz,
+    ylabel=piel.types.dBm,
+    title="Transmission S21 through PCB Traces",
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_s21_signal_trace.jpg",
+)
+
+piel.visual.plot_simple(
+    x_data=network_transmission_dataframe.frequency_Hz,
+    y_data=network_transmission_dataframe.s_11_magnitude_dBm,
+    xlabel=piel.types.GHz,
+    ylabel=piel.types.dBm,
+    title="Reflection S11 through PCB Traces",
+    path="../../_static/img/examples/08a_pcb_interposer_characterisation/pcb_s11_signal_trace.jpg",
+)
+
+# +
+# dir(s_parameter_measurement_data_sweep.collection[0].network)
+# -
+
+# #### Time-Domain Transformations
 
 import matplotlib.pyplot as plt
 
@@ -687,6 +730,10 @@ calibration_10ghz_dut_measurements
 
 help(tda.extract_rising_edges)
 
+help(tda.core)
+
+help(piel.analysis.metrics.statistics)
+
 calibration_10ghz_dut_waveform_rising_edge_list = tda.extract_rising_edges(
     signal=calibration_10ghz_dut_waveform,
     lower_threshold_ratio=0.1,
@@ -699,9 +746,9 @@ offset_calibration_10ghz_dut_waveform_rising_edge_list = tda.offset_time_signals
     calibration_10ghz_dut_waveform_rising_edge_list
 )
 
-help(piel.visual.plot.signals.plot_multi_data_time_signal_equivalent)
+help(piel.visual.plot.signals.time.overlay)
 
-piel.visual.plot.signals.plot_multi_data_time_signal_equivalent(
+piel.visual.plot.signals.time.overlay.plot_multi_data_time_signal_equivalent(
     offset_calibration_10ghz_dut_waveform_rising_edge_list,
     xlabel=piel.types.units.ns,
     path="../../_static/img/examples/08a_pcb_interposer_characterisation/extracted_rising_edges.jpg",
@@ -713,7 +760,7 @@ piel.visual.plot.signals.plot_multi_data_time_signal_equivalent(
 # We can technically also extract some statistical metrics from this data which we could use to compare with the measured statistics:
 
 offset_calibration_10ghz_dut_waveform_rising_edge_metrics = (
-    tda.extract_statistical_metrics(
+    tda.core.metrics.extract_multi_time_signal_statistical_metrics(
         offset_calibration_10ghz_dut_waveform_rising_edge_list,
         analysis_types="peak_to_peak",
     )
@@ -732,7 +779,7 @@ offset_calibration_10ghz_dut_waveform_rising_edge_metrics.table
 # You can also extract this in a collection form, which is easier to compose with larger more measurements:
 
 offset_calibration_10ghz_dut_waveform_rising_edge_metrics = (
-    tda.extract_statistical_metrics_collection(
+    tda.core.metrics.extract_statistical_metrics_collection(
         offset_calibration_10ghz_dut_waveform_rising_edge_list,
         analysis_types=["peak_to_peak"],
     )
@@ -758,11 +805,13 @@ calibration_10ghz_dut_measurements.table.iloc[2]
 #
 # We might also want to export nice tables of metrics. We can do this through `pandas` and `latex`. Let's make a little metrics collection which we might want to customize:
 
-example_nice_metrics_collection_concatenated = tda.concatenate_metrics_collection(
-    [
-        offset_calibration_10ghz_dut_waveform_rising_edge_metrics,
-        calibration_10ghz_dut_measurements,
-    ]
+example_nice_metrics_collection_concatenated = (
+    piel.analysis.metrics.concatenate_metrics_collection(
+        [
+            offset_calibration_10ghz_dut_waveform_rising_edge_metrics,
+            calibration_10ghz_dut_measurements,
+        ]
+    )
 )
 example_nice_metrics_collection_concatenated.table
 
