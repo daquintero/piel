@@ -2,7 +2,7 @@ def crossing_simple(cross_transmission=0.9999):
     import sax
 
     """
-    An ideal crosser functionality swaps the input of the diagonal ports with some crossing loss.
+    An ideal crosser functionality swaps the input of the diagonal connection with some crossing loss.
 
     .. code::
 

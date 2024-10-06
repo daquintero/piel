@@ -21,14 +21,23 @@ class ScalarMetric(Instance):
     def data(self):
         # Create a dictionary with the scalar metrics
         data = {
-            "Metric": ["Value", "Mean", "Min", "Max", "Standard Deviation", "Count"],
-            "Value": [
+            "label": [
+                "value",
+                "mean",
+                "min",
+                "max",
+                "standard_deviation",
+                "count",
+                "unit",
+            ],
+            "value": [
                 self.value,
                 self.mean,
                 self.min,
                 self.max,
                 self.standard_deviation,
                 self.count,
+                self.unit.label,
             ],
         }
         return data

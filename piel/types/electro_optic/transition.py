@@ -103,7 +103,7 @@ class OpticalStateTransitions(PielBaseModel):
             List[str]: A list of keys from the first transmission files entry, excluding the keys specified in `_ignore_keys`.
 
         Notes:
-            The keys specified in `_ignore_keys` will be excluded from the list of ports.
+            The keys specified in `_ignore_keys` will be excluded from the list of connection.
         """
         if not self.transmission_data:
             return []

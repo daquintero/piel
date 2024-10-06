@@ -339,7 +339,7 @@ mzi2x2_simple_simulation_data_lines = piel.visual.points_to_lines_fixed_transien
 
 # #### Basic Plots
 #
-# Here we are plotting how the electrical phase applied by the testbench 5-bit digital files, maps onto the optical phase applied on the heated waveguide, and we can use `sax` to measure the optical amplitude and phase at both ports of the MZI2x2.
+# Here we are plotting how the electrical phase applied by the testbench 5-bit digital files, maps onto the optical phase applied on the heated waveguide, and we can use `sax` to measure the optical amplitude and phase at both connection of the MZI2x2.
 #
 # Note, that for now, we will assume that our applied optical phase is applied onto an ideal phase shifter, where the bandwidth is infinite, and where the applied operation translates to the optical input perfectly. We will make a more realistic time-dependent model of our circuit later.
 #

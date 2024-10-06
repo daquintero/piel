@@ -118,7 +118,7 @@ def _find_target_instance_port(
 
     # Search in external modules
     for ext_module in proto_dict.get("ext_modules", []):
-        for port in ext_module.get("ports", []):
+        for port in ext_module.get("connection", []):
             if port["signal"] == target_signal:
                 for instance in module.get("instances", []):
                     if instance["name"] == current_instance_name:
@@ -148,9 +148,9 @@ def _generate_top_level_connections(proto_dict: ParsedProtoVLSIR):
     """
     top_level_connections = {}
 
-    # Iterate over the top-level module ports
+    # Iterate over the top-level module connection
     for module in proto_dict.get("modules", []):
-        for port in module.get("ports", []):
+        for port in module.get("connection", []):
             port_signal = port["signal"]
             connection = _find_port_connection(proto_dict, port_signal)
             if connection:
@@ -208,7 +208,7 @@ def _extract_instance_parameters(proto_dict: ParsedProtoVLSIR):
                 instance_info["settings"][param_name] = param_value
 
             # Extract connections and add to settings
-            instance_info["settings"]["ports"] = {}
+            instance_info["settings"]["connection"] = {}
             for connection in instance.get("connections", []):
                 portname = connection["portname"]
                 target = connection["target"][0]
@@ -221,7 +221,7 @@ def _extract_instance_parameters(proto_dict: ParsedProtoVLSIR):
                     # Handle cases where 'target' does not have 'sig' or 'slice'
                     target_signal = "unknown_signal"
 
-                instance_info["settings"]["ports"][portname] = target_signal
+                instance_info["settings"]["connection"][portname] = target_signal
 
             instance_parameters[instance_name] = instance_info
 
@@ -256,7 +256,12 @@ def _generate_raw_netlist_dict_from_proto_dict(proto_dict: ParsedProtoVLSIR):
     """
     Generate a raw netlist dictionary from the proto_dict.
     """
-    raw_netlist_dict = {"name": "", "instances": {}, "connections": {}, "ports": {}}
+    raw_netlist_dict = {
+        "name": "",
+        "instances": {},
+        "connections": {},
+        "connection": {},
+    }
 
     # Extract the top-level module name
     if proto_dict.get("modules"):
@@ -269,7 +274,7 @@ def _generate_raw_netlist_dict_from_proto_dict(proto_dict: ParsedProtoVLSIR):
     raw_netlist_dict["connections"] = _parse_connections(proto_dict)
 
     # Generate top-level connections
-    raw_netlist_dict["ports"] = _generate_top_level_connections(proto_dict)
+    raw_netlist_dict["connection"] = _generate_top_level_connections(proto_dict)
 
     return raw_netlist_dict
 

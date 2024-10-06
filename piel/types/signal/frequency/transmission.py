@@ -2,15 +2,17 @@ from __future__ import annotations
 from piel.types.connectivity.abstract import Instance
 from piel.types.signal.frequency.sax_core import SType
 from piel.types.signal.frequency.generic import PhasorTypes
-from piel.types.photonic import PortMap
+from piel.types.connectivity.generic import ConnectionTypes
+from piel.base.signal.frequency.transmission import get_phasor_length
+from pydantic import model_validator
 from typing import Any
 
 
 class PathTransmission(Instance):
-    ports: PortMap
+    connection: ConnectionTypes
     transmission: PhasorTypes
     """
-    A frequency-domain representation of transmission requires the full phasor response which can be represented
+    A frequency-domain representation of transmission requires the full input response which can be represented
     as an array, an individual value, or a static-typed data structure - as per performance requirements.
     """
 
@@ -36,9 +38,9 @@ class NetworkTransmission(Instance):
 
     input: PhasorTypes
     """
-    The combined definition of the input state phasor with magnitude and phase information.
+    The combined definition of the input state input with magnitude and phase information.
     Could be extended to a spectral input incidence. The length of the PhasorType should match the length of the
-    equivalent PathTransmission for one dimension of the phasor representation.
+    equivalent PathTransmission for one dimension of the input representation.
     """
 
     network: list[PathTransmission] = []
@@ -47,6 +49,26 @@ class NetworkTransmission(Instance):
 
     TODO implement port mapping already.
     """
+
+    @model_validator(mode="after")
+    def check_length_consistency(cls, model):
+        input_phasor = model.input
+        network = model.network
+
+        input_length = get_phasor_length(
+            input_phasor.magnitude
+        )  # Assumes the input declaration has been validated already
+        # TODO update for non-Phasor input values.
+
+        for idx, path_trans in enumerate(network):
+            trans = path_trans.transmission
+            trans_length = get_phasor_length(trans)
+            if trans_length != input_length:
+                raise ValueError(
+                    f"Length mismatch at network[{idx}]: transmission length {trans_length} does not match input length {input_length}"
+                )
+
+        return model
 
 
 FrequencyTransmissionModel = NetworkTransmission | SType | Any | None

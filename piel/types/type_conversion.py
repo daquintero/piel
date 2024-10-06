@@ -172,7 +172,7 @@ def convert_dataframe_to_bits(
 
     Args:
         dataframe (pd.DataFrame): The simulation files as a Pandas dataframe.
-        ports_list (LogicSignalsList): List of column names (ports) to convert to binary string format.
+        ports_list (LogicSignalsList): List of column names (connection) to convert to binary string format.
 
     Returns:
         pd.DataFrame: The dataframe with specified columns converted to binary string format.

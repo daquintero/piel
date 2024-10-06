@@ -33,10 +33,10 @@ import pandas as pd
 
 # ## Coupler Modelling
 #
-# A coupler represents a multi-port connection of optical ports towards another subset of optical ports. They can have many physical implementations, such as directional couplers, multi-mode interference couplers (MMIs), permittivity grid couplers such as those inverse designed, etc.
+# A coupler represents a multi-port connection of optical connection towards another subset of optical connection. They can have many physical implementations, such as directional couplers, multi-mode interference couplers (MMIs), permittivity grid couplers such as those inverse designed, etc.
 #
 # ### 1x2 Coupler
-# A 1x2 coupler, also known as a Y-branch, routes two optical ports into one, or viceversa as this is a reversible linear component. Note that we represent the electric fields as $E_{f}$ as phasors equivalent to $E=Ae^{j\omega + \phi}$. The transfer-matrix model for this device without considering propagation loss is:
+# A 1x2 coupler, also known as a Y-branch, routes two optical connection into one, or viceversa as this is a reversible linear component. Note that we represent the electric fields as $E_{f}$ as phasors equivalent to $E=Ae^{j\omega + \phi}$. The transfer-matrix model for this device without considering propagation loss is:
 #
 # \begin{equation}
 # \begin{bmatrix}
@@ -49,7 +49,7 @@ import pandas as pd
 # \end{bmatrix} E_{o1}
 # \end{equation}
 #
-# Assuming that all the power from the input port is conserved to the two output ports, then the transfer matrix can be written as:
+# Assuming that all the power from the input port is conserved to the two output connection, then the transfer matrix can be written as:
 #
 # \begin{equation}
 # \begin{bmatrix}
@@ -206,7 +206,7 @@ mzi2x2_2x2().plot()
 
 # ![mzi2x2_2x2](../_static/img/examples/06a_analytical_mzm_model/mzi2x2_2x2.png)
 
-# The total transfer-matrix model transmission can be computed from multiplying the transfer together for an equivalent field phasor analysis. Let's consider this in the case of a symmetric 50:50 2x2 coupler matrix and a lossless phase shifter model as above:
+# The total transfer-matrix model transmission can be computed from multiplying the transfer together for an equivalent field input analysis. Let's consider this in the case of a symmetric 50:50 2x2 coupler matrix and a lossless phase shifter model as above:
 #
 # \begin{equation}
 # [E_O] = [C_{out}] [\phi] [C_{in}] E_{in}

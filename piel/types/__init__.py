@@ -14,17 +14,15 @@ from piel.types.core import (
     PathTypes,
     PielBaseModel,
     NumericalTypes,
-    MinimumMaximumType,
     ArrayTypes,
-    QuantityType,
     TupleIntType,
     TupleFloatType,
     TupleNumericalType,
     PackageArrayType,
     ModuleType,
 )
-
 from piel.types.connectivity.core import Instance
+from piel.types.constants import c
 from piel.types.connectivity.abstract import Connection, Component, Port
 from piel.types.connectivity.generic import (
     ConnectionTypes,
@@ -121,7 +119,6 @@ from piel.types.metrics import ScalarMetric, ScalarMetricCollection
 
 from piel.types.photonic import (
     PhotonicCircuitComponent,
-    PortMap,
     OpticalTransmissionCircuit,
     RecursiveNetlist,
     SParameterMatrixTuple,
@@ -136,6 +133,8 @@ from piel.types.signal.dc_data import (
 )
 
 from piel.types.signal.frequency.core import Phasor
+
+from piel.types.signal.frequency.generic import PhasorTypes
 
 from piel.types.signal.frequency.transmission import (
     PathTransmission,
@@ -158,7 +157,7 @@ from piel.types.signal.frequency.metrics import (
 #     IntArray1D,
 #     IntArrayND,
 #     Int,
-#     PortMap,
+#     ConnectionTypes,
 #     PortCombination,
 #     SDict,
 #     SType,
@@ -190,7 +189,11 @@ from piel.types.signal.time_sources import (
     SignalTimeSources,
 )
 
+from piel.types.symbolic import SymbolicValue
+
 from piel.types.reference import Reference
+
+from piel.types.quantity import Quantity
 
 # Always last
 from piel.types.type_conversion import (
@@ -203,7 +206,7 @@ from piel.types.type_conversion import (
     convert_dataframe_to_bits,
 )
 
-from .units import (
+from piel.types.units import (
     Unit,
     BaseSIUnitNameList,
     A,
@@ -214,6 +217,8 @@ from .units import (
     Hz,
     nm,
     ns,
+    m,
+    MHz,
     mm2,
     mW,
     ohm,

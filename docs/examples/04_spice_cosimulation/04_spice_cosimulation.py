@@ -28,7 +28,7 @@ get_generic_pdk().activate()
 # mzi2x2_2x2_phase_shifter_netlist_flat.keys()
 # -
 
-# Note that this netlist just gives us electrical ports and connectivity for this component.
+# Note that this netlist just gives us electrical connection and connectivity for this component.
 
 # + active=""
 # mzi2x2_2x2_phase_shifter_netlist_flat["connections"]
@@ -114,7 +114,7 @@ to_svg(our_short_resistive_mzi_2x2_2x2_phase_shifter)
 
 # We will exemplify how `piel` microservices enable the extraction and configuration of the SPICE circuit. This is done by implementing a SPICE netlist construction backend to the circuit composition functions in `sax`, and is composed in a way that is then integrated into `hdl21` or any SPICE-based solver through the `VLSIR` `Netlist`.
 #
-# The way this is achieved is by extracting all the `instances`, `connections`, `ports`, `measurement` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
+# The way this is achieved is by extracting all the `instances`, `connections`, `connection`, `measurement` which is essential to compose our circuit using our `piel` SPICE backend solver. It follows a very similar principle to all the other `sax` based circuit composition tools, which are very good.
 
 our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
     allow_multiple=True, exclude_port_types="optical"
@@ -124,17 +124,19 @@ our_resistive_heater_netlist = straight_heater_metal_simple().get_netlist(
 
 # We might want to extract our connections of our gdsfactory netlist, and convert it to names that can directly form part of a SPICE netlist. However, to do this we need to assign what type of element each component each gdsfactory instance is. We show an algorithm that does the following in order to construct our SPICE netlist:
 #
-# 1. Parse the gdsfactory netlist, assign the electrical ports for the model. Extract all instances and
+# 1. Parse the gdsfactory netlist, assign the electrical connection for the model. Extract all instances and
 # required measurement from the netlist.
 # 2. Verify that the measurement have been provided. Each model describes the type of
-# component this is, how many ports it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
+# component this is, how many connection it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
 # netlist, this is reasonable as it is composed, and not a generator class. This generates a large amount of instantiated ``hdl21`` modules that are generated from `generators`.
-# 3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the ports accordingly.
+# 3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the connection accordingly.
 #
 # `piel` does this for you already:
 
-our_resistive_heater_spice_netlist = piel.integration.gdsfactory_netlist_with_hdl21_generators(
-    our_resistive_heater_netlist
+our_resistive_heater_spice_netlist = (
+    piel.integration.gdsfactory_netlist_with_hdl21_generators(
+        our_resistive_heater_netlist
+    )
 )
 our_resistive_heater_spice_netlist
 
@@ -171,7 +173,7 @@ our_resistive_heater_circuit.instances
 #  'via_stack_2': Instance(name=via_stack_2 of=Module(name=ViaStack))}
 # ```
 
-# Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly. Note that the unconnected ports need to be exposed for proper SPICE composition.
+# Note that each component is mapped into `hdl21` according to the same structure and names as in the `gdsfactory` netlist, if you have defined your generator components correctly. Note that the unconnected connection need to be exposed for proper SPICE composition.
 
 our_resistive_heater_circuit.ports
 
@@ -221,7 +223,7 @@ h.netlist(
 # .ENDS
 # ```
 
-# One of the main complexities of this translation is that for the SPICE to be generated, the network has to be valid. Sometimes, in direct `gdsfactory` components, there could be incomplete or undeclared port networks. This means that for the SPICE to be generated, we have to fix the connectivity in some form, and means that there might not be a direct translation from `gdsfactory`. This is inherently related to the way that the construction of the netlists are generated. This means that to some form, we need to connect the unconnected ports in order for the full netlist to be generated. The complexity is in components such as the via where there are four ports to it on each side. SPICE would treat them as four different inputs that need to be connected.
+# One of the main complexities of this translation is that for the SPICE to be generated, the network has to be valid. Sometimes, in direct `gdsfactory` components, there could be incomplete or undeclared port networks. This means that for the SPICE to be generated, we have to fix the connectivity in some form, and means that there might not be a direct translation from `gdsfactory`. This is inherently related to the way that the construction of the netlists are generated. This means that to some form, we need to connect the unconnected connection in order for the full netlist to be generated. The complexity is in components such as the via where there are four connection to it on each side. SPICE would treat them as four different inputs that need to be connected.
 
 # Now let's extract the SPICE for our heater circuit:
 
@@ -368,7 +370,7 @@ h.netlist(example_straight_resistor, sys.stdout, fmt="spice")
 
 # ### Creating our Stimulus
 
-# Let's first look into how to map a numpy files into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the ports of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing.
+# Let's first look into how to map a numpy files into a SPICE waveform. We will create a testbench using the `hdl21` interface. So the first thing is that we need to add our *stimulus* sources, or otherwise where would our pulses come from. We need to construct this into our testbench module. This means we need to generate the connectivity of our signal sources in relation to the connection of our circuit. We create a custom testbench module that we will use to perform this simulation. This needs to contain also our voltage sources for whatever test that we would be performing.
 
 
 @h.module
@@ -388,8 +390,10 @@ class OperatingPointTb:
 
 # #### A Simple DC Operating Point Simulation
 
-simple_operating_point_simulation = piel.tools.hdl21.configure_operating_point_simulation(
-    testbench=OperatingPointTb, name="simple_operating_point_simulation"
+simple_operating_point_simulation = (
+    piel.tools.hdl21.configure_operating_point_simulation(
+        testbench=OperatingPointTb, name="simple_operating_point_simulation"
+    )
 )
 simple_operating_point_simulation
 
@@ -673,7 +677,7 @@ for power_i in transient_simulation_results["power(xtop.vpulse)"]:
     mzi2x2_analogue_active_unitary_array.append(mzi2x2_active_unitary_i)
 transient_simulation_results["unitary"] = mzi2x2_analogue_active_unitary_array
 
-# Note that this operation is very computationally intensive, as we are getting the unitary at every particular point in time within the analog simulation resolution. However, it is reasonable computable within about a minute. We can now see how our optical ports change following the principles in the digital simulation.
+# Note that this operation is very computationally intensive, as we are getting the unitary at every particular point in time within the analog simulation resolution. However, it is reasonable computable within about a minute. We can now see how our optical connection change following the principles in the digital simulation.
 
 optical_port_input = np.array([1, 0])
 output_amplitude_array_0 = np.array([])

@@ -18,7 +18,8 @@
                 }
             ],
             "connections": [],
-            "components": []
+            "components": [],
+            "metrics": []
         },
         {
             "name": "E8364A",
@@ -43,9 +44,10 @@
             ],
             "connections": [],
             "components": [],
+            "metrics": [],
             "environment": {
-                "temperature_K": null,
-                "region": null
+                "temperature_K": 293,
+                "region": ""
             },
             "manufacturer": "Agilent",
             "model": "E8364A"
@@ -75,8 +77,12 @@
                 "min": 0,
                 "max": 0,
                 "standard_deviation": 0,
+                "count": null,
                 "unit": {
                     "name": "second",
+                    "label": "Time $s$",
+                    "shorthand": "s",
+                    "symbol": "",
                     "datum": "second",
                     "base": 1
                 }
@@ -105,8 +111,12 @@
                 "min": 0,
                 "max": 0,
                 "standard_deviation": 0,
+                "count": null,
                 "unit": {
                     "name": "second",
+                    "label": "Time $s$",
+                    "shorthand": "s",
+                    "symbol": "",
                     "datum": "second",
                     "base": 1
                 }

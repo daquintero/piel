@@ -40,7 +40,7 @@ def straight_heater_metal_undercut(
         length_undercut: length of each undercut section.
         length_straight: from where the trenches start to the via_stack.
         length_straight_input: from input port to where trenches start.
-        cross_section: for waveguide ports.
+        cross_section: for waveguide connection.
         cross_section_heater: for heated sections. heater metal only.
         cross_section_waveguide_heater: for heated sections.
         cross_section_heater_undercut: for heated sections with undercut.
@@ -128,11 +128,11 @@ def straight_heater_metal_undercut(
 
         if not p1:
             raise ValueError(
-                f"No ports for port_orientation1 {port_orientation1} in {valid_orientations}"
+                f"No connection for port_orientation1 {port_orientation1} in {valid_orientations}"
             )
         if not p2:
             raise ValueError(
-                f"No ports for port_orientation2 {port_orientation2} in {valid_orientations}"
+                f"No connection for port_orientation2 {port_orientation2} in {valid_orientations}"
             )
 
         c.add_ports(p1, prefix="l_")
@@ -213,11 +213,11 @@ def straight_heater_metal_simple(
 
         if not p1:
             raise ValueError(
-                f"No ports for port_orientation1 {port_orientation1} in {valid_orientations}"
+                f"No connection for port_orientation1 {port_orientation1} in {valid_orientations}"
             )
         if not p2:
             raise ValueError(
-                f"No ports for port_orientation2 {port_orientation2} in {valid_orientations}"
+                f"No connection for port_orientation2 {port_orientation2} in {valid_orientations}"
             )
 
         # c.add_ports(p1, prefix="l_")

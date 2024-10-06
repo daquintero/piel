@@ -177,7 +177,7 @@ def configure_parametric_designs_openlane_v1(
     Args:
         add_id(bool): Add an ID to the design name. Defaults to True.
         parameter_sweep_dictionary(dict): Dictionary of parameters to sweep.
-        source_design_directory(str | pathlib.Path): ScalarSource design directory.
+        source_design_directory(str | pathlib.Path): Source design directory.
 
     Returns:
         configuration_sweep(list): List of configurations to sweep.

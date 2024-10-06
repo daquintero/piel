@@ -21,7 +21,7 @@ def layout_truth_table_through_openlane(
     `layout_amaranth_truth_table_through_openlane` function for further processing.
 
     Args:
-        truth_table (TruthTable): The truth table to be converted. It includes input ports, output ports, and the table logic.
+        truth_table (TruthTable): The truth table to be converted. It includes input connection, output connection, and the table logic.
         parent_directory (PathTypes): The directory where the OpenLane project will be created.
         target_directory_name (Optional[str]): Name of the target directory. If not specified, a default name will be used.
         openlane_version (Literal["v1", "v2"]): Specifies the OpenLane version to use. Defaults to "v2".

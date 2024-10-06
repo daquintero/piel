@@ -59,7 +59,7 @@ LogicImplementationType = Literal["combinatorial", "sequential", "memory"]
 
 class TruthTable(PielBaseModel):
     """
-    A model representing a truth table for a digital circuit, including its input and output ports.
+    A model representing a truth table for a digital circuit, including its input and output connection.
 
     Attributes:
         input_ports (LogicSignalsList): List of input signal names for the truth table.
@@ -67,7 +67,7 @@ class TruthTable(PielBaseModel):
 
     Properties:
         keys_list (list[str]): A combined list of input and output signal names.
-        dataframe (pd.DataFrame): A pandas DataFrame representation of the truth table, excluding input and output ports.
+        dataframe (pd.DataFrame): A pandas DataFrame representation of the truth table, excluding input and output connection.
         implementation_dictionary (dict): A dictionary including only the keys specified within input_ports and output_ports.
     """
 
@@ -89,14 +89,14 @@ class TruthTable(PielBaseModel):
         Returns a combined list of input and output signal names.
 
         Returns:
-            list[str]: The concatenated list of input and output ports.
+            list[str]: The concatenated list of input and output connection.
         """
         return self.input_ports + self.output_ports
 
     @property
     def dataframe(self) -> pd.DataFrame:
         """
-        Returns a pandas DataFrame representation of the truth table, excluding the input and output ports.
+        Returns a pandas DataFrame representation of the truth table, excluding the input and output connection.
 
         Returns:
             pd.DataFrame: A DataFrame with the truth table files, excluding input and output port keys.
@@ -114,7 +114,7 @@ class TruthTable(PielBaseModel):
         Returns a dictionary including only the keys specified within input_ports and output_ports.
 
         Returns:
-            dict: A dictionary with keys that are part of the input and output ports.
+            dict: A dictionary with keys that are part of the input and output connection.
         """
         selected_ports = set(self.input_ports + self.output_ports)
         filtered_dict = {k: v for k, v in self.dict().items() if k in selected_ports}

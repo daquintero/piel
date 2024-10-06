@@ -32,21 +32,25 @@ def extract_peak_to_peak_metrics_after_split_pulses(
     - ScalarMetricCollection: Collection of extracted scalar metrics.
     """
 
-    # Extract pulses from the full signal
-    pulses: List[DataTimeSignalData] = extract_pulses_from_signal(
-        full_data=full_signal,
-        pre_pulse_time_s=pre_pulse_time_s,
-        post_pulse_time_s=post_pulse_time_s,
-        noise_std_multiplier=noise_std_multiplier,
-        min_pulse_height=min_pulse_height,
-        min_pulse_distance_s=min_pulse_distance_s,
-        data_time_signal_kwargs=data_time_signal_kwargs,
-    )
-    print(len(pulses))
+    try:
+        # Extract pulses from the full signal
+        pulses: List[DataTimeSignalData] = extract_pulses_from_signal(
+            full_data=full_signal,
+            pre_pulse_time_s=pre_pulse_time_s,
+            post_pulse_time_s=post_pulse_time_s,
+            noise_std_multiplier=noise_std_multiplier,
+            min_pulse_height=min_pulse_height,
+            min_pulse_distance_s=min_pulse_distance_s,
+            data_time_signal_kwargs=data_time_signal_kwargs,
+        )
+        # print(len(pulses))
 
-    # Extract peak-to-peak metrics from the pulses
-    metrics: ScalarMetricCollection = extract_peak_to_peak_metrics_list(
-        multi_data_time_signal=pulses, **(metrics_kwargs or {})
-    )
+        # Extract peak-to-peak metrics from the pulses
+        metrics: ScalarMetricCollection = extract_peak_to_peak_metrics_list(
+            multi_data_time_signal=pulses, **(metrics_kwargs or {})
+        )
+    except Exception as e:
+        print(e)
+        metrics = ScalarMetricCollection()
 
     return metrics

@@ -78,7 +78,7 @@ def construct_amaranth_module_from_truth_table(
                 if len(truth_table_dict[inputs[0]]) == 0:
                     raise ValueError("No truth table inputs provided: " + str(inputs))
 
-                # Initialize signals for input and output ports and assign them as attributes
+                # Initialize signals for input and output connection and assign them as attributes
                 self.input_signal = am.Signal(
                     len(truth_table_dict[inputs[0]][0]), name=inputs[0]
                 )

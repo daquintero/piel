@@ -154,24 +154,41 @@ def convert_power_sweep_s2p_to_network_transmission(
 ) -> NetworkTransmission:
     """
     Converts a pandas DataFrame containing S2P power sweep data into a NetworkTransmission object.
+
+    The DataFrame is expected to have the following columns:
+        - 'input_frequency_Hz': Frequency in Hz.
+        - 'p_in_dbm': Input power in dBm.
+        - S-parameter magnitude and phase columns for each S-parameter, e.g., 's_11_db', 's_11_deg', etc.
+
+    Assumptions:
+        - All rows correspond to the same input frequency. If multiple frequencies are present, the first one is used.
+        - Each row represents a different input power level.
     """
-    # Extract the input frequency, assuming it's the same for all rows
+    # Extract the unique input frequencies
     input_frequencies = dataframe["input_frequency_Hz"].unique()
     if len(input_frequencies) != 1:
         logger.warning("Multiple input frequencies found; using the first one.")
     input_frequency_Hz = input_frequencies[0]
+    logger.debug(f"Using input frequency: {input_frequency_Hz} Hz")
 
-    # Extract input power in dBm
+    # Number of data points (input power levels)
+    num_points = len(dataframe)
+    logger.debug(f"Number of data points (input power levels): {num_points}")
+
+    # Extract input power in dBm as a list
     p_in_dbm = dataframe["p_in_dbm"].tolist()
+    logger.debug(f"Input power (dBm): {p_in_dbm}")
 
-    # Create Phasor for input (assuming phase = 0 for input power)
+    # Create Phasor for input
     phasor = Phasor(
         magnitude=p_in_dbm,
-        phase=0.0,  # No phase information for input power
-        frequency=input_frequency_Hz,
+        phase=[0.0] * num_points,  # No phase information for input power
+        frequency=[input_frequency_Hz]
+        * num_points,  # Replicate frequency to match length
         magnitude_unit=dBm,
         phase_unit=degree,
     )
+    logger.debug(f"Input Phasor created: {phasor}")
 
     # Define S-parameters and corresponding port mappings
     s_params = ["s_11", "s_21", "s_12", "s_22"]
@@ -182,27 +199,59 @@ def convert_power_sweep_s2p_to_network_transmission(
         "s_22": ("out0", "out0"),
     }
 
-    # Create network transmissions
-    network = []
+    # Initialize network transmissions list
+    network: list[PathTransmission] = []
+
     for s_param in s_params:
         db_col = f"{s_param}_db"
         deg_col = f"{s_param}_deg"
 
-        # Convert dB and degrees to linear magnitude and radians
-        magnitude_linear = 10 ** (dataframe[db_col] / 20)
-        phase_rad = np.deg2rad(dataframe[deg_col])
+        # Check if the required columns exist in the DataFrame
+        if db_col not in dataframe.columns or deg_col not in dataframe.columns:
+            logger.error(f"Missing columns for {s_param}: {db_col}, {deg_col}")
+            raise ValueError(
+                f"DataFrame must contain columns '{db_col}' and '{deg_col}' for S-parameter '{s_param}'."
+            )
 
-        # Compute complex S-parameter values
-        transmission = magnitude_linear * (np.cos(phase_rad) + 1j * np.sin(phase_rad))
+        # Extract magnitude in dB and phase in degrees
+        s_db = dataframe[db_col].tolist()
+        s_deg = dataframe[deg_col].tolist()
+        logger.debug(
+            f"S-parameter {s_param}: magnitude (dB)={s_db}, phase (deg)={s_deg}"
+        )
+
+        # Convert dB to linear magnitude
+        magnitude_linear = 10 ** (np.array(s_db) / 20)
+        magnitude_linear = magnitude_linear.tolist()
+        logger.debug(f"S-parameter {s_param}: linear magnitude={magnitude_linear}")
+
+        # Ensure phase is in degrees and convert if necessary
+        # Assuming 's_deg' is already in degrees. If in radians, convert using np.rad2deg.
+        phase_deg = s_deg  # Modify if conversion is needed
+
+        # Create Phasor for transmission
+        transmission_phasor = Phasor(
+            magnitude=s_db,
+            phase=phase_deg,
+            frequency=[input_frequency_Hz]
+            * num_points,  # Replicate frequency to match length
+            phase_unit=degree,
+        )
+        logger.debug(
+            f"S-parameter {s_param} Transmission Phasor created: {transmission_phasor}"
+        )
 
         # Retrieve port mapping
-        ports = port_mappings[s_param]
+        connection = port_mappings[s_param]
 
         # Create PathTransmission instance
         path_transmission = PathTransmission(
-            ports=(ports[0], ports[1]),
-            transmission=transmission.tolist(),  # Convert to list for JSON serializability
+            connection=connection,  # Assuming connection is a tuple of (input_port, output_port)
+            transmission=transmission_phasor,
         )
+        logger.debug(f"PathTransmission for {s_param} created: {path_transmission}")
+
+        # Append to network list
         network.append(path_transmission)
 
     # Create NetworkTransmission instance
@@ -210,8 +259,8 @@ def convert_power_sweep_s2p_to_network_transmission(
         input=phasor,
         network=network,
     )
+    logger.debug(f"NetworkTransmission created: {network_transmission}")
 
-    logger.debug(f"Converted DataFrame to NetworkTransmission: {network_transmission}")
     return network_transmission
 
 

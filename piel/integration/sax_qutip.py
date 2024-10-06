@@ -41,7 +41,7 @@ def sax_to_ideal_qutip_unitary(
 
     Args:
         sax_input (sax.SType): A dictionary of S-parameters in the form of a SDict from `sax`.
-        input_ports_order (tuple | None): The order of the input ports. If None, the default order is used.
+        input_ports_order (tuple | None): The order of the input connection. If None, the default order is used.
 
     Returns:
         qobj_unitary (qutip.Qobj): A QuTip QObj representation of the S-parameters in a unitary matrix.
@@ -67,7 +67,7 @@ def verify_sax_model_is_unitary(
 
     Args:
         model (dict): The model to verify.
-        input_ports_order (tuple | None): The order of the input ports. If None, the default order is used.
+        input_ports_order (tuple | None): The order of the input connection. If None, the default order is used.
 
     Returns:
         bool: True if the model is unitary, False otherwise.

@@ -1,16 +1,20 @@
 import numpy as np
 import pandas as pd
 from typing import List, Optional, Any
+import logging
+from piel.types import Unit
 from .position import create_axes_per_figure
 import matplotlib.pyplot as plt
+
+logger = logging.getLogger(__name__)
 
 
 def plot_simple(
     x_data: np.ndarray,
     y_data: np.ndarray,
     label: Optional[str] = None,
-    ylabel: Optional[str] = None,
-    xlabel: Optional[str] = None,
+    ylabel: str | Unit | None = None,
+    xlabel: str | Unit | None = None,
     fig: Optional[Any] = None,
     axs: Optional[list[Any]] = None,
     title: Optional[str] = None,
@@ -62,14 +66,40 @@ def plot_simple(
     if plot_args is None:
         plot_args = list()
 
-    ax = axs[0]
-    ax.plot(x_data, y_data, *plot_args, **plot_kwargs)
+    x_correction = 1
+    if xlabel is None:
+        pass
+    elif isinstance(xlabel, str):
+        pass
+    elif isinstance(xlabel, Unit):
+        x_correction = xlabel.base
+        logger.warning(
+            f"Data correction of 1/{x_correction} from unit definition {xlabel} will be applied on x-axis"
+        )
+        xlabel = xlabel.label
 
-    if ylabel is not None:
-        ax.set_ylabel(ylabel)
+    y_correction = 1
+    if ylabel is None:
+        pass
+    elif isinstance(ylabel, str):
+        pass
+    elif isinstance(ylabel, Unit):
+        y_correction = ylabel.base
+        logger.warning(
+            f"Data correction of 1/{y_correction} from unit definition {ylabel} will be applied on y-axis."
+        )
+        ylabel = ylabel.label
+
+    ax = axs[0]
+    x_data = np.array(x_data)
+    y_data = np.array(y_data)
+    ax.plot(x_data / x_correction, y_data / y_correction, *plot_args, **plot_kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
+
+    if ylabel is not None:
+        ax.set_ylabel(ylabel)
 
     if title is not None:
         ax.set_title(title, **title_kwargs)

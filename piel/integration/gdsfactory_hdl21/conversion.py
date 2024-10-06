@@ -171,14 +171,14 @@ def gdsfactory_netlist_to_spice_string_connectivity_netlist(
     connected. This means we need to convert the gdsfactory dictionary netlist into a form that allows us to map the
     connectivity for every instance. Then we can define that as a line of the SPICE netlist with a particular
     electrical model. For passives this works fine when it's a two port network such as sources, or electrical
-    elements. However, non-passive elements like transistors have three ports or more which are provided in an ordered form.
+    elements. However, non-passive elements like transistors have three connection or more which are provided in an ordered form.
 
     This means that the order of translations is as follows:
 
     .. code-block::
 
         1. Extract all instances and required measurement from the netlist, and assign the corresponding parameters on instantiation.
-        2. Verify that the measurement have been provided. Each model describes the type of component this is, how many ports it requires and so on.
+        2. Verify that the measurement have been provided. Each model describes the type of component this is, how many connection it requires and so on.
         3. Map the connections to each instance port as part of the instance dictionary.
 
     We should get as an output a dictionary in the structure:

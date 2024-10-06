@@ -35,7 +35,7 @@ def verify_amaranth_truth_table(
         None
 
     Raises:
-        AttributeError: If the specified ports are not found in the Amaranth module.
+        AttributeError: If the specified connection are not found in the Amaranth module.
 
     Examples:
         >>> am_module = MyAmaranthModule()  # Assuming this is a defined Amaranth module.

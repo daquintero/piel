@@ -1,6 +1,6 @@
 # calibration_multi_frequency_through_propagation_measurement
 
-**Goal**: Test the propagation response at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.
+**Goal**: Test the propagation transmission at multiple frequencies through interconnect cables. Use a through connection to measure the approximate propagation delay between identical cables.
 
 ## Experiment Parameters 
 

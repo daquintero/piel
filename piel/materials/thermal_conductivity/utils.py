@@ -22,7 +22,11 @@ def get_thermal_conductivity_fit(
 
     Returns:
     """
-    material_name = material[0]
+    try:
+        print(material)
+        material_name = material[0]
+    except Exception as e:
+        raise e
 
     if type(temperature_range_K) is tuple:
         # TODO how to compare this with the TemperatureRangeLimitType?

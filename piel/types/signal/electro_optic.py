@@ -5,7 +5,7 @@ from piel.types.signal.frequency.transmission import PathTransmission
 
 class ElectroOpticDCPathTransmission(Instance):
     """
-    It is not logically possible to decouple the output signal from the ports at which this is measured, due to the
+    It is not logically possible to decouple the output signal from the connection at which this is measured, due to the
     vectorial and non-scalar nature of the electro-optic network relationship.
     """
 

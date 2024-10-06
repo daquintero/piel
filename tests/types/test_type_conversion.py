@@ -3,6 +3,8 @@ import numpy as np
 import jax.numpy as jnp
 import pandas as pd
 import qutip
+
+import piel.types
 from piel.types import (
     convert_array_type,
     convert_tuple_to_string,
@@ -11,7 +13,7 @@ from piel.types import (
     convert_to_bits,
     convert_dataframe_to_bits,
     PielBaseModel,
-    QuantityType,
+    Quantity,
     a2d,
 )  # Adjust the import based on your actual module structure
 
@@ -166,12 +168,12 @@ def test_piel_base_model_supplied_parameters():
     assert "field2" not in supplied_params
 
 
-# Test cases for QuantityType
+# Test cases for Quantity
 def test_quantity_type_initialization():
-    quantity = QuantityType(units="kg")
-    assert quantity.units == "kg"
+    quantity = Quantity(unit=piel.types.m)
+    assert quantity.unit == piel.types.m
 
 
 def test_quantity_type_default():
-    quantity = QuantityType()
-    assert quantity.units is None
+    quantity = Quantity()
+    assert quantity.unit == piel.types.ratio

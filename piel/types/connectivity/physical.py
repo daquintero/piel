@@ -19,7 +19,7 @@ class PhysicalPort(Port):
 
 class PhysicalConnection(PielBaseModel):
     """
-    Describes a set of physical ports which are all connected. Represents a physical connection between interfaces.
+    Describes a set of physical connection which are all connected. Represents a physical connection between interfaces.
 
     The components represent the physical implementation of the connections for the same connection index.
     """

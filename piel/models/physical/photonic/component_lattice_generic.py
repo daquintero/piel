@@ -191,7 +191,7 @@ def component_lattice_generic(
         for element_i in column_j:
             # Row in column
             if element_i != 0:
-                # Connect the adjacent input waveguide ports to the first element columns
+                # Connect the adjacent input waveguide connection to the first element columns
                 # if j == 0:
                 route_0 = get_route(
                     interconnection_ports_array[j][i].ports["o2"],
@@ -266,7 +266,7 @@ def component_lattice_generic(
             i += 1
         j += 1
 
-    # Append electrical ports to component to total connectivity can be constructed.
+    # Append electrical connection to component to total connectivity can be constructed.
     j = 0
     k = 0
     for column_j in network:
@@ -278,7 +278,7 @@ def component_lattice_generic(
                     element_references[k].ports
                 ).items()
                 if len(electrical_ports_list_i) > 0:
-                    # Electrical ports exist in component
+                    # Electrical connection exist in component
                     for electrical_port_i in electrical_ports_list_i:
                         C.add_port(
                             port=electrical_port_i[1],

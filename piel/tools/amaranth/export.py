@@ -25,7 +25,7 @@ def generate_verilog_from_amaranth_truth_table(
 
     Args:
         amaranth_module (amaranth.Elaboratable): The Amaranth module to be converted.
-        truth_table (TruthTable): A truth table object containing input and output ports.
+        truth_table (TruthTable): A truth table object containing input and output connection.
         target_file_name (str): The name of the target file to write the Verilog code to.
         target_directory (PathTypes): The target directory where the file will be saved.
             Can be a direct path or a module type path.
@@ -75,7 +75,7 @@ def generate_verilog_from_amaranth_truth_table(
 
     target_file_path = target_directory / target_file_name
 
-    # Iterate over ports list and construct a list of references for the strings provided in `keys_list`.
+    # Iterate over connection list and construct a list of references for the strings provided in `keys_list`.
     module_ports_list = []
     for port_i in ports_list:
         if hasattr(amaranth_module, port_i):

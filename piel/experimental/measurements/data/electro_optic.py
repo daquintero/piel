@@ -5,7 +5,7 @@ from piel.types import (
     ElectroOpticDCPathTransmission,
     ElectroOpticDCNetworkTransmission,
     ElectroOpticDCMeasurementCollection,
-    PortMap,
+    ConnectionTypes,
     PathTransmission,
     SignalDC,
     SignalTraceDC,
@@ -82,7 +82,7 @@ def fill_missing_pm_out(
 
     # Create a new PathTransmission instance with filled data
     filled_path_transmission = PathTransmission(
-        ports=path_transmission.output.ports, transmission=filled_transmission
+        ports=path_transmission.output.connection, transmission=filled_transmission
     )
 
     # Compose a new ElectroOpticDCPathTransmission instance
@@ -95,7 +95,7 @@ def fill_missing_pm_out(
 
 def extract_electro_optic_dc_path_transmission_from_csv(
     file: str,
-    port_map: PortMap,
+    port_map: ConnectionTypes,
     dc_voltage_column: str = "bias_v",
     dc_current_column: str = "bias_current",
     optical_power_column: str = "pm_out",
@@ -108,7 +108,7 @@ def extract_electro_optic_dc_path_transmission_from_csv(
 
     Parameters:
     - file (str): Path to the CSV file.
-    - port_map (PortMap): The port mapping information.
+    - connection (ConnectionTypes): The port mapping information.
     - dc_voltage_column (str): The name of the DC voltage column in the CSV.
     - dc_current_column (str): The name of the DC current column in the CSV.
     - optical_power_column (str): The name of the optical power column in the CSV.
@@ -202,7 +202,7 @@ def extract_electro_optic_dc_network_from_measurement_collection(
     for measurement in measurement_collection.collection:
         # Extract the CSV file path and port mapping from the measurement
         csv_file = measurement.dc_transmission_file
-        port_map = measurement.port_map
+        port_map = measurement.connection
 
         # Extract the ElectroOpticDCPathTransmission from the CSV
         path_transmission = extract_electro_optic_dc_path_transmission_from_csv(

@@ -135,7 +135,7 @@ Our example GDSFactory netlist format is in the simplified form:
             "via_stack_1": {"x": -10.5, "y": 0.0, "rotation": 0, "mirror": 0},
             "via_stack_2": {"x": 25.5, "y": 0.0, "rotation": 0, "mirror": 0}
         },
-        "ports": {
+        "connection": {
             "e1": "taper_1,e2",
             "e2": "taper_2,e2"
         },
@@ -158,12 +158,12 @@ compatible with ``hdl21``, then it is fine to create the integration accordingly
 
 The algorithm can be to:
 
-1. Parse the gdsfactory netlist, assign the electrical ports for the model. Extract all instances and
+1. Parse the gdsfactory netlist, assign the electrical connection for the model. Extract all instances and
 required measurement from the netlist.
 2. Verify that the measurement have been provided. Each model describes the type of
-component this is, how many ports it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
+component this is, how many connection it requires and so on. Create a ``hdl21`` top level module for every gdsfactory
 netlist, this is reasonable as it is composed, and not a generator class. This generates a large amount of instantiated ``hdl21`` modules that are generated from `generators`.
-3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the ports accordingly.
+3. Map the connections to each instance port as part of the instance dictionary. This parses the connectivity in the ``gdsfactory`` netlist and connects the connection accordingly.
 
 The connections are a bit more complex. So each of our connections dictionary is in the form:
 
@@ -182,8 +182,8 @@ The connections are a bit more complex. So each of our connections dictionary is
                 }
             },
 
-We know what our top model ports are. We know our internal instance ports as well, and this will be provided by the
-model too. For the sake of easiness, we can describe these as ``hdl21`` equivalent ``InOut`` or ``Port` `ports and
+We know what our top model connection are. We know our internal instance connection as well, and this will be provided by the
+model too. For the sake of easiness, we can describe these as ``hdl21`` equivalent ``InOut`` or ``Port` `connection and
 not have to deal with directionality. After instance declaration, and measurement for each of these components with the
 corresponding port topology, it is then straightforward to parse the connectivity and implement the network,
 and extract the SPICE."""
@@ -232,7 +232,7 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> AnalogueModule:
 
     Part of the complexity of this function is the multiport nature of some components and measurement, and assigning the
     parameters accordingly into the SPICE function. This is because not every SPICE component will be bi-port,
-    and many will have multi-ports and parameters accordingly. Each model can implement the composition into a
+    and many will have multi-connection and parameters accordingly. Each model can implement the composition into a
     SPICE circuit, but they depend on a set of parameters that must be set from the instance. Another aspect is
     that we may want to assign the component ID according to the type of component. However, we can also assign the
     ID based on the individual instance in the circuit, which is also a reasonable approximation. However,
@@ -256,7 +256,7 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> AnalogueModule:
         circuit.add(val=instance_i, name=instance_name_i)
         instance_id += 1
 
-    # Create top level ports
+    # Create top level connection
     for port_name_i, _ in spice_netlist["ports"].items():
         # TODO include directionality on port_settings so that it can be easily interconencted with hdl21
         circuit.add(val=h.Port(name=port_name_i))
@@ -264,14 +264,14 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> AnalogueModule:
     # Create the connectivity
     connections_list = convert_connections_to_tuples(spice_netlist["connections"])
     for connection_tuple in connections_list:
-        # Connects the corresponding ports.
+        # Connects the corresponding connection.
         first_instance = getattr(circuit, connection_tuple[0][0])
         second_instance = getattr(circuit, connection_tuple[1][0])
         first_port_name = connection_tuple[0][1]
         second_port = getattr(second_instance, connection_tuple[1][1])
         first_instance.connect(first_port_name, second_port)
 
-    # Expose all the missing electrical warning connection internal ports to the outer circuit composition so that full modelling can be performed, and no construction errors.
+    # Expose all the missing electrical warning connection internal connection to the outer circuit composition so that full modelling can be performed, and no construction errors.
     if "warnings" in spice_netlist:
         if "electrical" in spice_netlist["warnings"]:
             if "unconnected_ports" in spice_netlist["warnings"]["electrical"]:
@@ -286,7 +286,7 @@ def construct_hdl21_module(spice_netlist: dict, **kwargs) -> AnalogueModule:
                     circuit_port_i = getattr(circuit, instance_port_spice_name_i)
                     instance_i.connect(port_name_i, circuit_port_i)
 
-    # Create the top level connectivity between the top circuit ports to the instances ports.
+    # Create the top level connectivity between the top circuit connection to the instances connection.
     for circuit_port_name_i, instance_port_name_raw_i in spice_netlist["ports"].items():
         instance_name_i, instance_port_name_i = instance_port_name_raw_i.split(",")
         instance_i = getattr(circuit, instance_name_i)

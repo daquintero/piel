@@ -1,21 +1,21 @@
 """
 This module defines type aliases for components and files structures used in photonic circuit design and simulation.
-It includes type definitions for ports, S-parameter matrices, and photonic circuit components.
+It includes type definitions for connection, S-parameter matrices, and photonic circuit components.
 """
 
 from typing import Any
 from .core import ArrayTypes
-from piel.types.connectivity.abstract import PortMap
+from piel.types.connectivity.generic import ConnectionTypes
 
 
 # Type alias for an S-parameter matrix, which includes a matrix of array measurement and a tuple of port names.
-SParameterMatrixTuple = tuple[ArrayTypes, PortMap]
+SParameterMatrixTuple = tuple[ArrayTypes, ConnectionTypes]
 """
 SParameterMatrixTuple:
     A tuple representing an S-parameter matrix used in circuit simulations.
     It includes:
     - ArrayTypes: A matrix (numpy or jax array) representing the S-parameters.
-    - PortMap: A tuple of strings representing the corresponding port names.
+    - ConnectionTypes: A tuple of strings representing the corresponding port names.
 """
 
 # Type alias for a callable representing an optical transmission circuit in SAX.
