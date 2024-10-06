@@ -1,20 +1,18 @@
-from piel.types import Unit, ScalarMetrics, ScalarMetricCollection
+from piel.types import Unit, ScalarMetric, ScalarMetricCollection
 
 from pydantic import ValidationError
 
 
-def convert_scalar_metric_unit(
-    metric: ScalarMetrics, target_unit: Unit
-) -> ScalarMetrics:
+def convert_scalar_metric_unit(metric: ScalarMetric, target_unit: Unit) -> ScalarMetric:
     """
     Converts the units of a single ScalarMetrics instance to the target unit.
 
     Args:
-        metric (ScalarMetrics): The original scalar metric.
+        metric (ScalarMetric): The original scalar metric.
         target_unit (Unit): The target unit to convert to.
 
     Returns:
-        ScalarMetrics: A new ScalarMetrics instance with converted values and updated unit.
+        ScalarMetric: A new ScalarMetrics instance with converted values and updated unit.
 
     Raises:
         ValueError: If the original unit and target unit have different 'datum'.
@@ -35,7 +33,7 @@ def convert_scalar_metric_unit(
             return None
         return value * conversion_factor
 
-    # Create a new ScalarMetrics instance with converted values
+    # Create a new ScalarMetric instance with converted values
     try:
         converted_metric = metric.model_copy(
             update={

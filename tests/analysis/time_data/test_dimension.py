@@ -2,11 +2,17 @@ import pytest
 import numpy as np
 
 # Import the functions to be tested
-from piel.analysis.signals.time import (
+from piel.analysis.metrics.join import (
     concatenate_metrics_collection,
+)
+
+from piel.analysis.signals.time.core.metrics import (
+    extract_multi_time_signal_statistical_metrics,
+)
+
+from piel.analysis.signals.time.core.metrics import (
     extract_mean_metrics_list,
     extract_peak_to_peak_metrics_list,
-    extract_statistical_metrics,
     extract_statistical_metrics_collection,
 )
 from piel.analysis.metrics import (
@@ -20,7 +26,7 @@ from piel.analysis.metrics import (
 # Import necessary classes and units
 from piel.types import (
     ScalarMetricCollection,
-    ScalarMetrics,
+    ScalarMetric,
     Unit,
 )
 from piel.types.units import V, A, W, ratio
@@ -32,7 +38,7 @@ POWER_UNIT = W
 RATIO_UNIT = ratio
 
 
-# Helper function to create ScalarMetrics
+# Helper function to create ScalarMetric
 def create_scalar_metric(
     name: str,
     value: float = None,
@@ -42,8 +48,8 @@ def create_scalar_metric(
     std_dev: float = None,
     count: int = None,
     unit: Unit = ratio,
-) -> ScalarMetrics:
-    return ScalarMetrics(
+) -> ScalarMetric:
+    return ScalarMetric(
         value=value,
         mean=mean,
         min=min_val,
@@ -56,7 +62,7 @@ def create_scalar_metric(
 
 # Helper function to create ScalarMetricCollection
 def create_scalar_metric_collection(
-    metrics: list[ScalarMetrics],
+    metrics: list[ScalarMetric],
 ) -> ScalarMetricCollection:
     return ScalarMetricCollection(metrics=metrics)
 
@@ -108,7 +114,7 @@ def test_rename_metrics_collection_length_mismatch():
 
 def test_aggregate_scalar_metrics_collection_success():
     """
-    Test aggregating multiple ScalarMetricCollections into a single ScalarMetrics.
+    Test aggregating multiple ScalarMetricCollections into a single ScalarMetric.
     """
     # Create ScalarMetricCollections
     metric1 = create_scalar_metric(
@@ -137,7 +143,7 @@ def test_aggregate_scalar_metrics_collection_success():
     # Expected aggregated max: max(15, 30, 35, 45) = 45
     # Expected aggregated std_dev: sqrt(((10-25)^2 + (20-25)^2 + (30-25)^2 + (40-25)^2) / 3) = sqrt((225 + 25 + 25 + 225)/3) = sqrt(500/3) ≈ 12.9099
 
-    assert isinstance(aggregated_metrics, ScalarMetrics)
+    assert isinstance(aggregated_metrics, ScalarMetric)
     assert aggregated_metrics.mean == 25.0
     assert aggregated_metrics.min == 5.0
     assert aggregated_metrics.max == 45.0
@@ -155,7 +161,7 @@ def test_aggregate_scalar_metrics_collection_empty():
 
 def test_convert_scalar_metric_unit_success():
     """
-    Test converting a ScalarMetrics unit successfully.
+    Test converting a ScalarMetric unit successfully.
     """
     # Original metric in volts
     metric = create_scalar_metric(
@@ -531,12 +537,12 @@ def test_extract_statistical_metrics_mean_success():
     multi_data_time_signal = [signal1, signal2]
 
     # Extract statistical metrics with 'mean'
-    aggregated_metrics = extract_statistical_metrics(
+    aggregated_metrics = extract_multi_time_signal_statistical_metrics(
         multi_data_time_signal, analysis_type="mean"
     )
 
     # Aggregate: mean of means = (20 + 50) / 2 = 35
-    # assert isinstance(aggregated_metrics, ScalarMetrics)
+    # assert isinstance(aggregated_metrics, ScalarMetric)
     # assert aggregated_metrics.mean == 35.0
     # assert aggregated_metrics.min == 5.0  # From metric1.min=10 and metric2.min=40 (assuming custom logic)
     # assert aggregated_metrics.max == 45.0  # From metric1.max=30 and metric2.max=60 (assuming custom logic)
@@ -561,12 +567,12 @@ def test_extract_statistical_metrics_peak_to_peak_success():
     multi_data_time_signal = [signal1, signal2]
 
     # Extract statistical metrics with 'peak_to_peak'
-    aggregated_metrics = extract_statistical_metrics(
+    aggregated_metrics = extract_multi_time_signal_statistical_metrics(
         multi_data_time_signal, analysis_type="peak_to_peak"
     )
 
     # Aggregate: mean of peak_to_peak = (10 + 10) / 2 = 10
-    # assert isinstance(aggregated_metrics, ScalarMetrics)
+    # assert isinstance(aggregated_metrics, ScalarMetric)
     # assert aggregated_metrics.min == 0.0  # min of peak_to_peak
     # assert aggregated_metrics.max == 0.0  # max of peak_to_peak (since both are 10)
     # assert aggregated_metrics.unit == V  # As per default
@@ -585,7 +591,7 @@ def test_extract_statistical_metrics_invalid_analysis_type():
     multi_data_time_signal = [signal1]
 
     with pytest.raises(TypeError, match="Undefined analysis type."):
-        extract_statistical_metrics(
+        extract_multi_time_signal_statistical_metrics(
             multi_data_time_signal, analysis_type="invalid_type"
         )
 

@@ -5,7 +5,8 @@ It provides structured measurement using pydantic for validation and includes ty
 
 from typing import Any
 from piel.types.connectivity.physical import PhysicalComponent, PhysicalPort
-from piel.types.signal.frequency.core import RFPhysicalComponent
+from piel.types.radio_frequency import RFPhysicalComponent
+
 
 # Type alias for a photonic circuit component in gdsfactory.
 ElectronicCircuitComponent = Any

@@ -1,5 +1,5 @@
 from .core import MeasurementData, MeasurementDataCollection
-from piel.types.signal.frequency.core import FrequencyTransmissionModel
+from piel.types.signal.frequency.transmission import FrequencyTransmissionModel
 
 
 class VNASParameterMeasurementData(MeasurementData):

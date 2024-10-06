@@ -6,7 +6,7 @@ from piel.types import (
     PhysicalConnection,
     ConnectionTypes,
     ComponentTypes,
-    TimeMetrics,
+    TimeMetric,
     PhysicalComponent,
 )
 
@@ -211,7 +211,7 @@ def create_sequential_component_path(
         )
 
     connections = []
-    total_time_value = 0  # = TimeMetrics(name=name, attrs={}, value=0, mean=0, min=0, max=0, standard_deviation=0)
+    total_time_value = 0  # = TimeMetric(name=name, attrs={}, value=0, mean=0, min=0, max=0, standard_deviation=0)
 
     for i in range(len(components) - 1):
         current_component = components[i]
@@ -228,7 +228,7 @@ def create_sequential_component_path(
 
         # Create connection with timing information
         connection_time = (
-            output_port.time if hasattr(output_port, "time") else TimeMetrics(value=0)
+            output_port.time if hasattr(output_port, "time") else TimeMetric(value=0)
         )
         connection_i = Connection(
             ports=[output_port, input_port],
@@ -245,7 +245,7 @@ def create_sequential_component_path(
         # TODO total_time.max += connection_time.max
         # Assuming standard deviation is not simply additive
 
-    total_time = TimeMetrics(value=total_time_value)
+    total_time = TimeMetric(value=total_time_value)
     # TODO implement full network timing analysis
 
     top_level_ports = [components[0].ports[0], components[-1].ports[-1]]

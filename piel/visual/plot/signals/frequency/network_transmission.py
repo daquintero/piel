@@ -54,7 +54,7 @@ def plot_two_port_gain_in_dBm(
 
     # Extract input power in dBm from ScalarSource.phasor.magnitude
     try:
-        p_in_dbm = np.array(network_transmission.input.phasor.magnitude)
+        p_in_dbm = np.array(network_transmission.input.magnitude)
     except AttributeError as e:
         logger.error(
             f"Failed to extract 'p_in_dbm' from NetworkTransmission.input.phasor.magnitude: {network_transmission}"

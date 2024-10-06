@@ -38,6 +38,7 @@ PortCombination = Tuple[str, str]
 
 SDict = Dict[PortCombination, ComplexArrayND]
 """ A mapping from a port combination to an S-parameter or an array of S-parameters
+Equivalent to a PathTransmission definition.
 
 Example:
 

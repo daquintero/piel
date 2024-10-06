@@ -1,6 +1,6 @@
 from piel.types.connectivity.abstract import Instance
 from piel.types.signal.dc_data import SignalDC
-from piel.types.signal.frequency.core import PathTransmission
+from piel.types.signal.frequency.transmission import PathTransmission
 
 
 class ElectroOpticDCPathTransmission(Instance):

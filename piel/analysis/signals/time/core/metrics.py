@@ -1,7 +1,7 @@
 import numpy as np
 from piel.types import (
     MultiDataTimeSignal,
-    ScalarMetrics,
+    ScalarMetric,
     EdgeTransitionAnalysisTypes,
     ScalarMetricCollection,
 )
@@ -20,7 +20,7 @@ def extract_mean_metrics_list(
         multi_data_time_signal (List[DataTimeSignalData]): A list of rising edge signals.
 
     Returns:
-        ScalarMetricCollection: A collection of ScalarMetrics instances containing the extracted metrics.
+        ScalarMetricCollection: A collection of ScalarMetric instances containing the extracted metrics.
     """
     if not multi_data_time_signal:
         raise ValueError("The multi_signal list is empty.")
@@ -43,7 +43,7 @@ def extract_mean_metrics_list(
         count = None
 
         # Assuming 'value' is the mean; adjust if different meaning is intended
-        scalar_metric = ScalarMetrics(
+        scalar_metric = ScalarMetric(
             value=mean_val,
             mean=mean_val,
             min=min_val,
@@ -70,7 +70,7 @@ def extract_peak_to_peak_metrics_list(
         multi_data_time_signal (MultiDataTimeSignal): A collection of time signals to analyze.
 
     Returns:
-        ScalarMetricCollection: A collection of ScalarMetrics instances containing the peak-to-peak values
+        ScalarMetricCollection: A collection of ScalarMetric instances containing the peak-to-peak values
                              for each signal.
 
     Raises:
@@ -98,7 +98,7 @@ def extract_peak_to_peak_metrics_list(
         max_val = float(np.max(data_array))
         peak_to_peak = max_val - min_val
 
-        scalar_metric = ScalarMetrics(
+        scalar_metric = ScalarMetric(
             value=peak_to_peak,  # Using peak-to-peak as the primary value
             mean=peak_to_peak,  # Mean is not applicable for peak-to-peak
             min=peak_to_peak,  # Min is already represented in peak-to-peak
@@ -119,7 +119,7 @@ def extract_multi_time_signal_statistical_metrics(
     multi_data_time_signal: MultiDataTimeSignal,
     analysis_type: EdgeTransitionAnalysisTypes = "peak_to_peak",
     **kwargs,
-) -> ScalarMetrics:
+) -> ScalarMetric:
     """
     Extracts scalar metrics from a collection of rising edge signals.
 
@@ -128,7 +128,7 @@ def extract_multi_time_signal_statistical_metrics(
         analysis_type (piel.types.EdgeTransitionAnalysisTypes): The type of analysis to perform.
 
     Returns:
-        ScalarMetrics: Aggregated ScalarMetrics instance containing the extracted metrics.
+        ScalarMetric: Aggregated ScalarMetrics instance containing the extracted metrics.
 
     """
     if analysis_type == "mean":
@@ -158,7 +158,7 @@ def extract_statistical_metrics_collection(
         analysis_types (list[EdgeTransitionAnalysisTypes], optional): The types of analyses to perform. Defaults to ["peak_to_peak"].
 
     Returns:
-        ScalarMetricCollection: A collection of aggregated ScalarMetrics instances for each analysis type.
+        ScalarMetricCollection: A collection of aggregated ScalarMetric instances for each analysis type.
     """
     if not isinstance(analysis_types, list):
         raise TypeError(

@@ -4,7 +4,7 @@ from piel.types.core import NumericalTypes
 from piel.types.units import Unit, ratio
 
 
-class ScalarMetrics(Instance):
+class ScalarMetric(Instance):
     """
     Standard definition for a scalar metrics. It includes the value, mean, min, max, standard deviation and count.
     """
@@ -45,7 +45,7 @@ class ScalarMetricCollection(Instance):
     A collection of scalar metrics useful when analyzing multiple aspects of a design.
     """
 
-    metrics: list[ScalarMetrics] = []
+    metrics: list[ScalarMetric] = []
 
     @property
     def data(self):

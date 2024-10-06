@@ -15,7 +15,7 @@ from piel.types import (
     DataTimeSignalData,
     MultiDataTimeSignal,
     PathTypes,
-    ScalarMetrics,
+    ScalarMetric,
     ScalarMetricCollection,
 )
 from piel.file_system import return_path
@@ -307,7 +307,7 @@ def extract_to_signal_measurement(file: PathTypes, **kwargs) -> ScalarMetricColl
 
         row["raw_name"] = row["name"]
         # del row["name"]
-        metrics_i = ScalarMetrics(
+        metrics_i = ScalarMetric(
             # name=metrics_information.analysis_type,
             unit=metrics_information.unit,
             attrs={"raw_name": row["raw_name"]},

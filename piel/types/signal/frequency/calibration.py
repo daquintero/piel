@@ -1,5 +1,5 @@
-from ..core import PielBaseModel
-from ..frequency.core import FrequencyTransmissionModel
+from piel.types.core import PielBaseModel
+from piel.types.signal.frequency.transmission import FrequencyTransmissionModel
 
 
 class TwoPortCalibrationNetworkCollection(PielBaseModel):
