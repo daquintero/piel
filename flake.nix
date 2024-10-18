@@ -11,6 +11,7 @@
 
   outputs = { self, nixpkgs, poetry2nix, nix-eda, openlane2 }:
     let
+
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       edaPkgs = import nix-eda { inherit pkgs; };
