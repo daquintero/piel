@@ -1,64 +1,82 @@
 # file: flake.nix
 {
-  description = "Python application packaged using poetry2nix and additional EDA tools";
+  description = "Python application packaged using a standard virtual environment and additional EDA tools";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    poetry2nix.url = "github:nix-community/poetry2nix";
     nix-eda.url = "github:efabless/nix-eda";
     openlane2.url = "github:efabless/openlane2";
   };
 
-  outputs = { self, nixpkgs, poetry2nix, nix-eda, openlane2 }:
+  outputs = { self, nixpkgs, nix-eda, openlane2 }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs { inherit system; };
       edaPkgs = import nix-eda { inherit pkgs; };
       openlane = import openlane2 { inherit pkgs; };
 
-      # Use the same Python version as OpenLane
+      # Define the Python version to use
       python = pkgs.python311Full;
 
-      # create a custom "mkPoetryApplication" API function that under the hood uses
-      # the packages and versions (python3, poetry etc.) from our pinned nixpkgs above:
-      inherit (poetry2nix.lib.mkPoetry2Nix { inherit pkgs; }) mkPoetryApplication defaultPoetryOverrides;
+      # List of Python dependencies
+      pythonDeps = with python.pkgs; [
+        setuptools
+        flit-core
+        hatchling
+        scikit-build-core
+        scikit-learn
+        rectpack
+        vlsir
+        vlsirtools
+        hdl21
+        sky130-hdl21
+        gdsfactory
+        sky130
+        thewalrus
+        # Add other dependencies as needed
+      ];
 
-      pypkgs-build-requirements = {
-        rectpack = [ "setuptools" ];
-        vlsir = [ "setuptools" ];
-        vlsirtools = [ "setuptools" ];
-        hdl21 = [ "flit-core" ];
-        sky130-hdl21 = [ "flit-core" ];
-        gdsfactory = [ "flit-core" ];
-        sky130 = [ "flit-core" ];
-        thewalrus = [ "setuptools" ];
+      # Create a Python environment with the specified packages
+      pythonEnv = python.withPackages (ps: pythonDeps);
+
+      # Define the Python application using buildPythonApplication
+      app = pkgs.python311Full.buildPythonApplication {
+        pname = "piel";
+        version = "1.0.0"; # Replace with your actual version
+
+        src = ./.;
+
+        # Specify build inputs (dependencies)
+        buildInputs = pythonDeps;
+
+        # If using a setup.py or pyproject.toml, ensure it's properly configured
+        # For example, if using setuptools:
+        # setupBuildInputs = [ setuptools ];
+
+        # If your project specifies entry points in setup.py or pyproject.toml,
+        # they will be automatically handled. Otherwise, you can define scripts here.
+        # Example:
+        # scripts = [ "bin/piel" ];
+
+        # Propagate build inputs to ensure dependencies are available to consumers
+        propagatedBuildInputs = pythonDeps;
+
+        # Optionally, define build flags or phases if needed
+        # For example, to enable tests:
+        # doCheck = true;
+        # checkPhase = ''
+        #   pytest tests
+        # '';
       };
-      custom_overrides = defaultPoetryOverrides.extend (final: prev:
-        builtins.mapAttrs (package: build-requirements:
-          (builtins.getAttr package prev).overridePythonAttrs (old: {
-            buildInputs = (old.buildInputs or [ ]) ++ (builtins.map (pkg: if builtins.isString pkg then builtins.getAttr pkg prev else pkg) build-requirements);
-          })
-        ) pypkgs-build-requirements
-      );
 
-      app = mkPoetryApplication {
-        projectDir = ./.;
-        preferWheels = true;
-        extras = [] ;
-        overrides = custom_overrides;
-        python=python;
-      };
-
-      # Test support for overriding the app passed to the environment
-      # Override app to depend on hatchling and scikit-build-core
-      overridden = app.overrideAttrs (old: {
+      # Override the application if additional customizations are needed
+      overriddenApp = app.overrideAttrs (old: {
         name = "${old.pname}-overridden-${old.version}";
         nativeBuildInputs = old.nativeBuildInputs or [] ++ [
           pkgs.python3Packages.hatchling
           pkgs.python3Packages.scikit-build-core
           pkgs.python3Packages.scikit-learn
         ];
-        # Include scikit-build-core in propagatedBuildInputs to ensure it's available to dependencies
         propagatedBuildInputs = old.propagatedBuildInputs or [] ++ [
           pkgs.python3Packages.hatchling
           pkgs.python3Packages.scikit-build-core
@@ -66,61 +84,52 @@
         ];
       });
 
+      # Define a dependency environment if needed
       depEnv = app.dependencyEnv.override {
-        app = overridden;
+        app = overriddenApp;
       };
-      packages.x86_64-linux.piel = nixpkgs.legacyPackages.x86_64-linux.piel;
+
+      # Include any legacy packages if necessary
+      packagesLegacy = pkgs.legacyPackages.${system};
+      packagesLegacy.piel = pkgs.legacyPackages.${system}.piel;
+
+      # Define the development shell environment
+      shellEnv = pkgs.mkShell {
+        buildInputs = [
+          app
+          edaPkgs.ngspice
+          edaPkgs.xschem
+          edaPkgs.verilator
+          edaPkgs.yosys
+          openlane.openlane2
+          pkgs.verilog
+          pkgs.gtkwave
+        ];
+        shellHook = ''
+          echo "Setting Up Piel-Nix Environment"
+          export PATH=${app}/bin:$PATH
+          export PYTHONPATH=${app}/lib/python${python.version}/site-packages:$PYTHONPATH
+        '';
+      };
 
     in
     {
-        packages.${system} = {
-            default = app;
-            python = python;
-        };
+      # Define the package outputs
+      packages.${system} = {
+        default = app;
+        python = python;
+      };
 
-        apps.${system}.default = {
-            type = "app";
-            # replace <script> with the name in the [tool.poetry.scripts] section of your pyproject.toml
-            program = "${app}/bin/piel";
-        };
+      # Define application entries
+      apps.${system}.default = {
+        type = "app";
+        program = "${app}/bin/piel"; # Replace with your actual entry point
+      };
 
-        shell.${system}.default = pkgs.mkShell {
-        buildInputs = [
-          app
-          edaPkgs.ngspice
-          edaPkgs.xschem
-          edaPkgs.verilator
-          edaPkgs.yosys
-          openlane.openlane2
-          pkgs.verilog
-          pkgs.gtkwave
-        ];
-        # Optionally, set PYTHONPATH to include the app's path in other shells if needed
-        shellHook = ''
-            echo "Setting Piel-Nix Environment Up"
-            export PATH=${app}/bin:$PATH
-            export PATH=${app}/lib/python${python.version}/site-packages:$PATH
-        '';
-        };
+      # Define the default shell environment
+      shell.${system}.default = shellEnv;
 
-        devShells.${system}.default = pkgs.mkShell {
-        buildInputs = [
-          app
-          edaPkgs.ngspice
-          edaPkgs.xschem
-          edaPkgs.verilator
-          edaPkgs.yosys
-          openlane.openlane2
-          pkgs.verilog
-          pkgs.gtkwave
-        ];
-        # Optionally, set PYTHONPATH to include the app's path in other shells if needed
-        shellHook = ''
-            echo "Setting Piel-Nix Environment Up"
-            export PATH=${app}/bin:$PATH
-            export PATH=${app}/lib/python${python.version}/site-packages:$PATH
-        '';
-        };
-
+      # Define the development shell environment
+      devShells.${system}.default = shellEnv;
     };
 }
