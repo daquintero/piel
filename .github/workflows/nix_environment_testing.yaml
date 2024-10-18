@@ -25,9 +25,9 @@ jobs:
           mkdir -p ~/.config/nix
           echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 
-      # Step 5: Build the flake
+      # Step 5: Build the flake with no options
       - name: Build Flake
-        run: nix build .#yourPackageName
+        run: nix build .
 
       # Step 6: Run flake checks/tests
       - name: Run Flake Checks
