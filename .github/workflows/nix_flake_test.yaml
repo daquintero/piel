@@ -23,6 +23,7 @@ jobs:
         run: |
           mkdir -p ~/.config/nix
           echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+          git commit -am ":robot: Clean commit for nix build"
 
       # Step 5: Build the flake with no options
       - name: Build Flake
