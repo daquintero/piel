@@ -43,7 +43,7 @@
       # Packages for different systems
       packages.${system} = {
         default = pkgs.buildEnv {
-          name = "piel-env";
+          name = "piel";
           paths = [
             pythonEnv
             installDepsScript
