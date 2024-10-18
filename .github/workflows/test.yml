@@ -62,4 +62,4 @@ jobs:
     - name: Run tests
       run: |
         source venv/bin/activate
-        uv run pytest -rA tests
+        python -m pytest -rA tests
