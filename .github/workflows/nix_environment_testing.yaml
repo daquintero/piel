@@ -1,0 +1,36 @@
+name: nix-flake-test
+on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches:
+      - develop
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Install Nix
+      - name: Install Nix with Extra Options
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix/pr/1145 | sh -s -- install --no-confirm --extra-conf "
+            extra-substituters = https://openlane.cachix.org
+            extra-trusted-public-keys = openlane.cachix.org-1:qqdwh+QMNGmZAuyeQJTH9ErW57OWSvdtuwfBKdS254E=
+          "
+      # Step 3: Enable Nix Flakes
+      - name: Enable Nix Flakes
+        run: |
+          mkdir -p ~/.config/nix
+          echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+      # Step 5: Build the flake with no options
+      - name: Build Flake
+        run: nix build .
+
+      # Step 6: Run flake checks/tests
+      - name: Run Flake Checks
+        run: nix flake check

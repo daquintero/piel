@@ -201,3 +201,4 @@ RUN_*
 *.sif
 .idea/
 docs/autoapi/
+result
