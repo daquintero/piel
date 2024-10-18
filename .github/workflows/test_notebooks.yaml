@@ -62,4 +62,4 @@ jobs:
     - name: Run tests
       run: |
         source venv/bin/activate
-        uv run python docs/examples/run_all_notebooks.py
+        python docs/examples/run_all_notebooks.py

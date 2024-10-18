@@ -1,4 +1,5 @@
 import jax.numpy as jnp  # TODO add typing
+import logging
 from itertools import product
 from typing import Optional, Callable, Any
 from ..types import (
@@ -22,6 +23,8 @@ from ..tools.sax.utils import sax_to_s_parameters_standard_matrix
 from ..tools.qutip import fock_states_only_individual_modes
 from ..models.frequency.defaults import get_default_models
 from ..integration.thewalrus_qutip import fock_transition_probability_amplitude
+
+logger = logging.getLogger(__name__)
 
 
 def compose_phase_address_state(
@@ -196,7 +199,7 @@ def calculate_classical_transition_probability_amplitudes(
             )
         else:
             classical_transition_target_mode_probability = None
-            print(
+            logger.debug(
                 ValueError(
                     "No target mode index provided and no method to determine it. Will continue."
                 )
@@ -298,6 +301,8 @@ def compose_network_matrix_from_models(
         switch_fabric_switch_phase_configurations = dict()
         switch_amount = len(switch_instance_list_i)
         switch_instance_valid_phase_configurations_i = []
+        logger.debug("switch_states")
+        logger.debug(switch_states)
         for phase_configuration_i in product(switch_states, repeat=switch_amount):
             switch_instance_valid_phase_configurations_i.append(phase_configuration_i)
 
@@ -495,13 +500,13 @@ def generate_s_parameter_circuit_from_photonic_circuit(
             netlist[specific_model_key],
             models=models,
         )
-        print("Error in generating S-parameters. Check the following:")
-        print("Required measurement for the top-level circuit:")
-        print(required_models)
-        print("Required measurement for the specific model:")
-        print(specific_model_key)
-        print("Required measurement for the specific model:")
-        print(specific_model_required)
+        logger.error("Error in generating S-parameters. Check the following:")
+        logger.error("Required measurement for the top-level circuit:")
+        logger.error(required_models)
+        logger.error("Required measurement for the specific model:")
+        logger.error(specific_model_key)
+        logger.error("Required measurement for the specific model:")
+        logger.error(specific_model_required)
 
         raise e
 

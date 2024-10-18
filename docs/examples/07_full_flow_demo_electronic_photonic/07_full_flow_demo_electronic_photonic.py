@@ -13,7 +13,6 @@
 
 # All the imports we will need throughout this flows.
 
-# +
 # We begin by importing a parametric circuit from `gdsfactory`:
 import hdl21 as h
 import numpy as np
@@ -25,9 +24,6 @@ from piel.models.physical.photonic import (
     component_lattice_generic,
     straight_heater_metal_simple,
 )
-
-
-# -
 
 # First, let's set up the filesystem in the directory in which all our files will be generated and stored. This is really an extension of a full mixed-signal design compatible with the tools supported by `piel`.
 
@@ -116,6 +112,7 @@ optical_logic_verification_models["straight_heater_metal_undercut_length200"] = 
 chain_fock_state_transitions = piel.flows.get_state_phase_transitions(
     circuit_component=chain_3_mode_lattice_circuit,
     models=optical_logic_verification_models,
+    switch_states=[0, np.pi],
     mode_amount=3,
     target_mode_index=2,
 )
