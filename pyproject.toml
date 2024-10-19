@@ -188,6 +188,9 @@ exclude = "docs"
 addopts = "-rav"
 minversion = "6.0"
 testpaths = ["tests/"]
+markers = [
+    "full_env: Tests to run within a full environment"
+]
 
 
 [tool.ruff.lint.per-file-ignores]
