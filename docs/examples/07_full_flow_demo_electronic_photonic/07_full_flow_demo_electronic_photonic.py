@@ -4,11 +4,10 @@
 # <strong>⚠️ Warning:</strong> This example requires using the piel nix environment which are locally available when cloning and installing the `stable` verision of the github source code. See example setup as follows
 # </div>
 #
-# Note that this is only tested in an ubuntu environment:
+# Note that this is only CI tested in an ubuntu environment:
 # ```
 # git clone https://github.com/daquintero/piel.git
 # source scripts/install_piel_nix.sh
-# nix develop .
 # ```
 #
 # You can verify you have the tools required by running the following magic cells:

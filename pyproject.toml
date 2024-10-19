@@ -1,10 +1,6 @@
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.poetry]
 name = "piel"
-version = "0.0.56"
+version = "0.1.0"
 description = "Photonic Integrated Electronics: microservices to codesign photonics, electronics, communications, quantum, and more."
 authors = ["Dario Quintero <darioaquintero@gmail.com>"]
 license = "MIT"
@@ -178,6 +174,10 @@ priority = "primary"
 name = "jaxsource"
 priority = "supplemental"
 url = "https://storage.googleapis.com/jax-releases/jax_releases.html"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 # Tool configurations
 
