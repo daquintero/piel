@@ -49,15 +49,10 @@ jobs:
     - name: Install and Build Nix with script
       run: source scripts/install_piel_nix.sh
 
-    # Step 6: Run piel tests
-    - name: Run piel tests
-      run: nix develop . --command coverage run -m pytest -rA tests
-
     - name: Run Coverage Tests
       run: |
         nix develop . --command bash -c "
-          set -e  # Exit immediately if a command exits with a non-zero status
-          coverage run -m pytest -rA tests &&
+          coverage run -m pytest -rA tests/ &&
           coverage report -m &&
           total=\$(coverage report | tail -n1 | awk '{print \$NF}' | tr -d '%') &&
           echo \"total=\${total}\" >> \$GITHUB_ENV &&
