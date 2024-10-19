@@ -53,8 +53,8 @@ jobs:
     - name: Run tests
       run: |
         source venv/bin/activate
-        uv run coverage run -m pytest -rA tests
-        uv run coverage report -m
+        python -m coverage run -m pytest -rA tests
+        python -m coverage report -m
         echo "total=$(coverage report --format=total)" >> $GITHUB_ENV
         echo '### Total coverage: ${{ env.total }}%'
 
@@ -68,7 +68,7 @@ jobs:
         filename: piel_coverage.json
         label: Coverage
         message: ${{ env.total }}%
-        minColorRange: 60
+        minColorRange: 40
         maxColorRange: 95
         valColorRange: ${{ env.total }}
         style: "for-the-badge"
