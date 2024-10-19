@@ -96,7 +96,7 @@ def test_create_empty_piel_project(tmp_path):
 def test_get_module_folder_type_location(tmp_path):
     module_dir = create_dummy_module(tmp_path)
     module = types.ModuleType("dummy_module")
-    module.__file__ = str(module_dir / "dummy_file.py")
+    module.__path__ = str(module_dir / "dummy_file.py")
 
     src_folder = get_module_folder_type_location(module, "digital_source")
     tb_folder = get_module_folder_type_location(module, "digital_testbench")
