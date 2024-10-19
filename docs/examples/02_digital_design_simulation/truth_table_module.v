@@ -4,27 +4,27 @@
 (* generator = "Amaranth" *)
 module top(phase_map_out, detector_in);
   reg \$auto$verilog_backend.cc:2334:dump_module$1  = 0;
-  (* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:82" *)
+  (* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:82" *)
   input [1:0] detector_in;
   wire [1:0] detector_in;
-  (* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:86" *)
+  (* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:86" *)
   output [1:0] phase_map_out;
   reg [1:0] phase_map_out;
   always @* begin
     if (\$auto$verilog_backend.cc:2334:dump_module$1 ) begin end
     (* full_case = 32'd1 *)
-    (* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:112" *)
+    (* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:112" *)
     casez (detector_in)
-      /* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
+      /* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
       2'h0:
           phase_map_out = 2'h0;
-      /* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
+      /* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
       2'h1:
           phase_map_out = 2'h2;
-      /* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
+      /* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
       2'h2:
           phase_map_out = 2'h3;
-      /* src = "/nix/store/xb6l9p24ndhj4r0lqcch4gi492xpgn1c-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
+      /* src = "/nix/store/li0p6589931jpjhq811qb8x0gyrv28pp-python3.11-piel-0.1.0/lib/python3.11/site-packages/piel/tools/amaranth/construct.py:115" */
       2'h3:
           phase_map_out = 2'h3;
     endcase

@@ -705,7 +705,7 @@ def return_path(
         if as_piel_module:
             output_path = treat_as_module(output_path)
     elif isinstance(input_path, types.ModuleType):
-        output_path = pathlib.Path(input_path._path__[0])
+        output_path = pathlib.Path(input_path.__path__[0])
     elif isinstance(input_path, os.PathLike):
         output_path = pathlib.Path(input_path)
         if as_piel_module:
