@@ -51,7 +51,7 @@ jobs:
 
     # Step 6: Run piel tests
     - name: Run piel tests
-      run: nix develop . --command python -m pytest -rA tests
+      run: nix develop . --command coverage run -m pytest -rA tests
 
     #----------------------------------------------
     #    add matrix specifics and run test suite
