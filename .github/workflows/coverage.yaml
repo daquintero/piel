@@ -53,15 +53,16 @@ jobs:
     - name: Run piel tests
       run: nix develop . --command coverage run -m pytest -rA tests
 
-    #----------------------------------------------
-    #    add matrix specifics and run test suite
-    #----------------------------------------------
-    - name: Run tests
+    - name: Run Coverage Tests
       run: |
-        source venv/bin/activate
-        python -m coverage report -m
-        echo "total=$(coverage report --format=total)" >> $GITHUB_ENV
-        echo '### Total coverage: ${{ env.total }}%'
+        nix develop . --command bash -c "
+          set -e  # Exit immediately if a command exits with a non-zero status
+          coverage run -m pytest -rA tests &&
+          coverage report -m &&
+          total=\$(coverage report | tail -n1 | awk '{print \$NF}' | tr -d '%') &&
+          echo \"total=\${total}\" >> \$GITHUB_ENV &&
+          echo \"### Total coverage: \${total}%\"
+        "
 
     - name: "Create badge"
       # if: ${{ github.ref == 'refs/heads/latest' }}
