@@ -4,17 +4,25 @@ Environment
 
 .. include:: tools_environment.rst
 
-``piel CLI`` (Recommended - In Active Development)
+``piel CLI`` (Recommended - CI Tested)
 ========================================================================
 
-``piel`` is a command line interface (CLI) that is designed to be a simple and easy to use tool for managing the ``piel`` toolchain. It is necessary to first install ``piel`` in a given python environment and then the CLI tool should automatically be active in that envrionment. You then just need to run ``$ piel`` in the terminal to see the available commands.
+``piel`` is a command line interface (CLI) that is designed to be a simple and easy to use tool for managing the ``piel`` toolchain. It is necessary to first install ``piel`` in a given python environment and then the CLI tool should automatically be active in that environment. You then just need to run ``$ piel`` in the terminal to see the available commands.
 
 .. include:: piel_cli/common_useful_commands.rst
 
-``nix`` Configuration (In Passive Development)
+``nix`` Configuration (Recommended - CI Tested)
 ========================================================================
 
-If you want to enter the corresponding `nix-shell` environment, you can run the following command which will print the updated command you just need to copy paste into your terminal to activate the `nix-shell` environment.
+This is the recommended way to access the entire toolset environment. This will install all the external dependencies such as ``openlane``, ``ngspice``, ``cocotb`` and so on. It can be easily extended in a standard nix-pkgs flow. However, in order to run this flow you need to have nix installed which is feasible in Linux and MacOS. The entire ``piel`` package gets tested in this  `nix environment in the CI <https://github.com/daquintero/piel/blob/develop/.github/workflows/nix_environment_testing.yaml>`_ so it is reproducible to some level.
+
+If you have ``piel`` cloned locally, all you need to do is:
+
+.. code-block::
+
+    nix develop .
+
+If you want to enter the corresponding `nix-shell` environment which is extensible with further packages, you can run the following command which will print the updated command you just need to copy paste into your terminal to activate the `nix-shell` environment.
 
 .. code-block:: bash
 

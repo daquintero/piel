@@ -111,6 +111,7 @@
           source .venv/bin/activate     # Activate the virtual environment
           echo "Virtual environment activated. Installing additional packages with pip..."
           uv pip install -e .[dev]
+          uv pip install -r requirements_notebooks.txt
         '';
       };
     };
