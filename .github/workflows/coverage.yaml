@@ -68,7 +68,7 @@ jobs:
         filename: piel_coverage.json
         label: Coverage
         message: ${{ env.total }}%
-        minColorRange: 40
+        minColorRange: 60
         maxColorRange: 95
         valColorRange: ${{ env.total }}
         style: "for-the-badge"
