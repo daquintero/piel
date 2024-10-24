@@ -50,6 +50,7 @@ GHz = Unit(
     name="gigahertz", datum="hertz", base=1e9, label=r"Frequency $GHz$", shorthand="GHz"
 )
 Hz = Unit(name="hertz", datum="hertz", base=1, label=r"Frequency $Hz$", shorthand="Hz")
+H = Unit(name="Henry", datum="henry", base=1, label=r"Henry $H$", shorthand="H")
 nm = Unit(
     name="nanometer", datum="meter", base=1e-9, label=r"Length $nm$", shorthand="nm"
 )
