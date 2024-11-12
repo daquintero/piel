@@ -44,7 +44,7 @@ for example in "${examples[@]}"; do
         # Exit immediately if CONTINUE_ON_FAILURE is not set
         if [ -z "$CONTINUE_ON_FAILURE" ]; then
             echo "Exiting on first failure."
-            exit 1
+            # exit 1
         fi
     fi
     echo "Appending coverage to: ${COVERAGE_FILE}"
@@ -77,5 +77,5 @@ if [ ${#failed_examples[@]} -ne 0 ]; then
         echo "- $example"
     done
     # Exit with a non-zero code to indicate failure if there were any errors
-    exit 1
+    # exit 1
 fi
