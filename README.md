@@ -9,8 +9,6 @@ Status](https://readthedocs.org/projects/piel/badge/?style=for-the-badge)](https
 [![MIT](https://img.shields.io/github/license/gdsfactory/gdsfactory?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
 
-**`piel < 0.1` is still in active development. The API is starting to stabilize, but use it currently at your own risk.**
-
 Microservices to codesign photonics, electronics, communications,
 quantum, and more.
 

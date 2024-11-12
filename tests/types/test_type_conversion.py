@@ -5,16 +5,18 @@ import pandas as pd
 import qutip
 
 import piel.types
-from piel.types import (
+from piel.conversion import (
     convert_array_type,
     convert_tuple_to_string,
     convert_2d_array_to_string,
     absolute_to_threshold,
     convert_to_bits,
     convert_dataframe_to_bits,
+    a2d,
+)
+from piel.types import (
     PielBaseModel,
     Quantity,
-    a2d,
 )  # Adjust the import based on your actual module structure
 
 
