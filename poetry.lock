@@ -6023,6 +6023,30 @@ files = [
 ]
 
 [[package]]
+name = "sky130"
+version = "0.11.1"
+description = "skywater130 pdk"
+optional = true
+python-versions = ">=3.10"
+groups = ["main"]
+markers = "extra == \"tools\" or extra == \"dev\""
+files = []
+develop = false
+
+[package.dependencies]
+gdsfactory = ">=7.26.0,<8"
+
+[package.extras]
+dev = ["pre-commit", "pytest", "pytest-cov", "pytest_regressions"]
+docs = ["jupyter-book (==1.0.0)", "jupytext"]
+
+[package.source]
+type = "git"
+url = "https://github.com/daquintero/skywater130.git"
+reference = "dario/patch_for_rladder_gplugins"
+resolved_reference = "de557f49ccbd30271243aba7ee7a175036796d46"
+
+[[package]]
 name = "sky130-hdl21"
 version = "6.0.0"
 description = "SkyWater 130nm PDK Package for Hdl21"
@@ -6434,6 +6458,26 @@ files = [
 
 [package.extras]
 test = ["flake8", "mypy", "pytest"]
+
+[[package]]
+name = "sphinxcontrib-pdfembed"
+version = "0.1"
+description = "Sphinx extension to embedd a pdf files webpages"
+optional = true
+python-versions = "*"
+groups = ["main"]
+markers = "extra == \"dev\""
+files = []
+develop = false
+
+[package.dependencies]
+Sphinx = ">=0.6"
+
+[package.source]
+type = "git"
+url = "https://github.com/SuperKogito/sphinxcontrib-pdfembed.git"
+reference = "HEAD"
+resolved_reference = "52dd1127bdbc0d43c737ed0caa3eb2c6d63ca648"
 
 [[package]]
 name = "sphinxcontrib-qthelp"
@@ -7541,10 +7585,10 @@ test = ["big-O", "importlib-resources ; python_version < \"3.9\"", "jaraco.funct
 type = ["pytest-mypy"]
 
 [extras]
-dev = ["amaranth", "amaranth-yosys", "bokeh", "bump-my-version", "cocotb", "cookiecutter", "coverage", "devtools", "flake8", "gdsfactory", "gplugins", "hdl21", "ipyevents", "ipytree", "ipywidgets", "jupyter", "jupyter-bokeh", "jupyter-core", "jupyter-packaging", "jupyterlab", "jupytext", "kfactory", "kweb", "myst-parser", "nbsphinx", "pandoc", "pre-commit", "pydata-sphinx-theme", "pytest", "qutip", "ruff", "sax", "scikit-rf", "sky130-hdl21", "sphinx", "sphinx-autoapi", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-book_theme", "sphinx-copybutton", "sphinx-gallery", "sphinx-pydantic", "sphinx-rtd-theme", "sphinx-version-warning", "tabulate", "thewalrus", "tox", "vlsirtools", "watchdog"]
-tools = ["amaranth", "amaranth-yosys", "cocotb", "gdsfactory", "gplugins", "hdl21", "qutip", "sax", "scikit-rf", "sky130-hdl21", "tabulate", "thewalrus", "vlsirtools"]
+dev = ["amaranth", "amaranth-yosys", "bokeh", "bump-my-version", "cocotb", "cookiecutter", "coverage", "devtools", "flake8", "gdsfactory", "gplugins", "hdl21", "ipyevents", "ipytree", "ipywidgets", "jupyter", "jupyter-bokeh", "jupyter-core", "jupyter-packaging", "jupyterlab", "jupytext", "kfactory", "kweb", "myst-parser", "nbsphinx", "pandoc", "pre-commit", "pydata-sphinx-theme", "pytest", "qutip", "ruff", "sax", "scikit-rf", "sky130", "sky130-hdl21", "sphinx", "sphinx-autoapi", "sphinx-autobuild", "sphinx-autodoc-typehints", "sphinx-book_theme", "sphinx-copybutton", "sphinx-gallery", "sphinx-pydantic", "sphinx-rtd-theme", "sphinx-version-warning", "sphinxcontrib-pdfembed", "tabulate", "thewalrus", "tox", "vlsirtools", "watchdog"]
+tools = ["amaranth", "amaranth-yosys", "cocotb", "gdsfactory", "gplugins", "hdl21", "qutip", "sax", "scikit-rf", "sky130", "sky130-hdl21", "tabulate", "thewalrus", "vlsirtools"]
 
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.12"
-content-hash = "97c105f067ad91bf0037d69c50ad3fc415553e2db115f2f7ecc837b6ff8d1a3e"
+content-hash = "54332f613df948a81eaf7c86634ce7ef462b5a73ea3d3f976d8b5826b918cd45"
