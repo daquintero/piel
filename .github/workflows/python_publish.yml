@@ -8,6 +8,7 @@
 
 name: Upload Python Package
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Create Release"]
     types:
