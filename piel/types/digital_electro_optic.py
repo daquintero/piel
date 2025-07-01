@@ -46,7 +46,7 @@ class BitPhaseMap(PielBaseModel):
         Returns:
             pd.DataFrame: A DataFrame containing the bits and their corresponding phases.
         """
-        return pd.DataFrame(self.dict())
+        return pd.DataFrame(self.model_dump())
 
 
 """

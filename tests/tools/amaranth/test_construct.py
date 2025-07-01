@@ -1,4 +1,6 @@
 import pytest
+
+pytest.importorskip("amaranth")
 import amaranth as am
 from piel.tools.amaranth import (
     construct_amaranth_module_from_truth_table,

@@ -1,4 +1,6 @@
 import pytest
+
+pytest.importorskip("amaranth")
 import amaranth as am
 from piel.tools.amaranth import verify_amaranth_truth_table
 from piel.types import TruthTable  # Adjust the import based on your actual module path

@@ -1,5 +1,7 @@
 import pytest
 import numpy as np
+
+pytest.importorskip("skrf")
 import skrf as rf
 
 # Import the function to be tested

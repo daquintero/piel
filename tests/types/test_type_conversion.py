@@ -2,6 +2,8 @@ import pytest
 import numpy as np
 import jax.numpy as jnp
 import pandas as pd
+
+pytest.importorskip("qutip")
 import qutip
 
 import piel.types
