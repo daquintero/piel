@@ -1,6 +1,8 @@
 # test_network_conversion.py
 
 import pytest
+
+pytest.importorskip("skrf")
 import skrf
 import numpy as np
 

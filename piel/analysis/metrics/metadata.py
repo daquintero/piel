@@ -26,8 +26,8 @@ def rename_metrics_collection(
     # Create a new list of metrics with updated names
     updated_metrics = []
     for metric, new_name in zip(collection.metrics, new_names):
-        updated_metric = metric.copy(update={"name": new_name})
+        updated_metric = metric.model_copy(update={"name": new_name})
         updated_metrics.append(updated_metric)
 
     # Return a new ScalarMetricCollection with the updated metrics
-    return collection.copy(update={"metrics": updated_metrics})
+    return collection.model_copy(update={"metrics": updated_metrics})

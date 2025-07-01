@@ -103,7 +103,7 @@ class TruthTable(PielBaseModel):
         """
         data = {
             k: v
-            for k, v in self.dict().items()
+            for k, v in self.model_dump().items()
             if k not in {"input_ports", "output_ports"}
         }
         return pd.DataFrame(data)
@@ -117,7 +117,7 @@ class TruthTable(PielBaseModel):
             dict: A dictionary with keys that are part of the input and output connection.
         """
         selected_ports = set(self.input_ports + self.output_ports)
-        filtered_dict = {k: v for k, v in self.dict().items() if k in selected_ports}
+        filtered_dict = {k: v for k, v in self.model_dump().items() if k in selected_ports}
         return filtered_dict
 
 

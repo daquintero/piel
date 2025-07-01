@@ -86,7 +86,7 @@ def test_offset_time_signals_empty_time_s():
     multi_signal = [signal]
 
     with pytest.raises(
-        ValueError, match="Signal 'EmptySignal' has an empty time_s array\."
+        ValueError, match=r"Signal 'EmptySignal' has an empty time_s array\."
     ):
         offset_time_signals(multi_signal)
 
@@ -329,7 +329,7 @@ def test_extract_rising_edges_empty_data():
     )
 
     with pytest.raises(
-        ValueError, match="time_s and data must be of the same length\."
+        ValueError, match=r"time_s and data must be of the same length\."
     ):
         extract_rising_edges(
             signal, lower_threshold_ratio=0.1, upper_threshold_ratio=0.9
@@ -571,7 +571,7 @@ def test_extract_rising_edges_mismatched_time_data_lengths():
     )
 
     with pytest.raises(
-        ValueError, match="time_s and data must be of the same length\."
+        ValueError, match=r"time_s and data must be of the same length\."
     ):
         extract_rising_edges(
             signal, lower_threshold_ratio=0.1, upper_threshold_ratio=0.9
@@ -623,7 +623,7 @@ def test_extract_rising_edges_signal_with_no_data():
     )
 
     with pytest.raises(
-        ValueError, match="time_s and data must be of the same length\."
+        ValueError, match=r"time_s and data must be of the same length\."
     ):
         extract_rising_edges(
             signal, lower_threshold_ratio=0.1, upper_threshold_ratio=0.9

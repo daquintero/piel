@@ -113,7 +113,7 @@ def test_convert_scalar_metric_unit_incompatible_units():
     # Call function and expect ValueError
     with pytest.raises(
         ValueError,
-        match="Cannot convert from unit 'volt' \(datum: voltage\) to unit 'ampere' \(datum: ampere\). Units are incompatible.",
+        match=r"Cannot convert from unit 'volt' \(datum: voltage\) to unit 'ampere' \(datum: ampere\). Units are incompatible.",
     ):
         convert_scalar_metric_unit(metric, target_unit)
 

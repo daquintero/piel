@@ -57,7 +57,7 @@ def create_scalar_metric(
         standard_deviation=std_dev,
         count=count,
         unit=unit,
-    ).copy(update={"name": name})
+    ).model_copy(update={"name": name})
 
 
 # Helper function to create ScalarMetricCollection
@@ -108,7 +108,7 @@ def test_rename_metrics_collection_length_mismatch():
 
     new_names = ["New Metric1", "Extra Metric"]
 
-    with pytest.raises(ValueError, match="Number of new names \(2\) does not match"):
+    with pytest.raises(ValueError, match=r"Number of new names \(2\) does not match"):
         rename_metrics_collection(collection, new_names)
 
 
